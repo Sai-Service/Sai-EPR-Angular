@@ -1,0 +1,240 @@
+<div class="form-bg">
+    <form [formGroup]="divisionMasterForm" (ngSubmit)="divisionMaster(divisionMasterForm.value)" id="form_1">
+        <div id="Panel1" class="auto-style103">
+            <div class="container">
+                <div class="row">
+                    <div class="PageHeader">
+                        <div class="col">&nbsp;&nbsp;Division&nbsp;Master</div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <input hidden formControlName="divisionId">
+                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                    <ng-template #thenBlock>
+                    <div class="col">
+                        <div class="c">Division&nbsp;Code&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input formControlName="divisionCode" [(ngModel)]='divisionCode' value={{divisionCode}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
+                            placeholder="Enter division code">
+                        <div *ngIf="submitted && f. divisionCode.errors" class="invalid-feedback">
+                            <div *ngIf="f.divisionCode.errors.required">Division code must be a valid for 1 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.divisionCode.errors?.maxLength">Division code must be a valid for 1 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Please
+                            Enter division code </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Division&nbsp;Name&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input formControlName="divisionName" value={{divisionName}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
+                            placeholder="Enter division name">
+                        <div *ngIf="submitted && f. divisionName.errors" class="invalid-feedback">
+                            <div *ngIf="f.divisionName.errors.required">Division name is required</div>
+                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
+                    </div> -->
+                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
+                    </div> -->
+                        </div>
+                        <span
+                            *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Please
+                            Enter division name </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Start&nbsp;Date&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input type="date" formControlName="startDate" class="form-control" placeholder="Enter Start date"  min="{{minDate | date:'yyyy-MM-dd'}}">
+                        <span
+                            *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
+                            Enter start date </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Status&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+                        <!-- <select formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option> 
+                        </select> -->
+                        <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                            <div *ngIf="f.status.errors.required">status is required</div>
+                            <span
+                                *ngIf="!divisionMasterForm.get('status').valid && divisionMasterForm.get('status').touched">Please
+                                Enter valid status </span>
+                        </div>
+                    </div>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                    <div class="col">
+                        <div class="c">Division&nbsp;Code&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input disabled formControlName="divisionCode" value={{divisionCode}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
+                            placeholder="Enter division code">
+                        <div *ngIf="submitted && f. divisionCode.errors" class="invalid-feedback">
+                            <div *ngIf="f.divisionCode.errors.required">Division code must be a valid for 1 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.divisionCode.errors?.maxLength">Division code must be a valid for 1 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Please
+                            Enter division code </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Division&nbsp;Name&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input disabled formControlName="divisionName" value={{divisionName}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
+                            placeholder="Enter division name">
+                        <div *ngIf="submitted && f. divisionName.errors" class="invalid-feedback">
+                            <div *ngIf="f.divisionName.errors.required">Division name is required</div>
+                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
+                    </div> -->
+                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
+                    </div> -->
+                        </div>
+                        <span
+                            *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Please
+                            Enter division name </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Start&nbsp;Date&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input type="date" disabled formControlName="startDate" class="form-control" placeholder="Enter Start date">
+                        <span
+                            *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
+                            Enter start date </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Status&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <select formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                            <div *ngIf="f.status.errors.required">status is required</div>
+                            <span
+                                *ngIf="!divisionMasterForm.get('status').valid && divisionMasterForm.get('status').touched">Please
+                                Enter valid Company status </span>
+                        </div>
+                    </div>
+                    </ng-template>
+                    <div class="w-100"></div>
+                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                    <ng-template #thenBlockInactive>
+                    </ng-template>
+                    <ng-template #elseBlockInactive>
+                            <div class="col">
+                                <div class="c">Inactive&nbsp;Date:&nbsp;</div>
+                            </div>
+                    <div class="col">
+                            <input disabled type="text" formControlName="endDate" class="form-control"
+                            [ngModel]="endDate | date:'yyyy-MM-dd'">
+                        </div>
+                    </ng-template>
+                    <div class="w-100"></div>
+                </div>
+            </div>
+            <table class="autostyle1">
+                <tr>
+                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                    <ng-template #thenBlock1>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register"
+                            [disabled]="!divisionMasterForm.valid" (click)="newMast()">New</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register"
+                            (click)="searchMast()">Search</button>
+                    </td>
+                    </ng-template>
+                    <ng-template #elseBlock1>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register"
+                            [disabled]="!divisionMasterForm.valid" (click)="updateMast()">Update</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register"
+                            (click)="searchMast()">Search</button>
+                    </td>
+                    </ng-template>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+<br>
+<div class="container1">
+    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
+        <tbody>
+            <tr class="auto-style5">
+               
+                <th scope="col">Division Id</th>
+                <th scope="col">Division Code</th>
+                <th scope="col">Division Name</th> 
+                <th scope="col">Start Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+            <td>{{com.divisionId}}</td>
+            <td>{{com.divisionCode}}</td>
+            <td>{{com.divisionName}}</td>
+            <td>{{com.startDate}}</td>
+            <td>{{com.status}}</td>
+            <td><button (click)="Select(com.divisionId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>

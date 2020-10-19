@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+
+import { Component, NgModule, VERSION } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import {FormsModule, NgForm} from '@angular/forms';
+import { Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA }      from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +13,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'erpReplica';
+//   ngOnInit() {
+//   $("#menu-toggle").click(function(e) {
+//     e.preventDefault();
+//     $("#wrapper").toggleClass("toggled");
+//   });
+// }
 }

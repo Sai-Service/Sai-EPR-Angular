@@ -1,0 +1,205 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="form-bg">
+    <div class="center">
+        <form [formGroup]="commonMasterForm" (ngSubmit)="commonMaster(commonMasterForm.value)" id="form_1" >
+            <div id="Panel1" class="auto-style103">
+                <div class="container">
+                    <div class="row">
+                        <table style="width: 100%;background-color: white;">
+                            <tr>
+                                <td class="PageHeader">
+                                    &nbsp;&nbsp;Common&nbsp;Master
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="center">
+                            <table style="width: fit-content;">
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input formControlName="cmnType" [(ngModel)]='cmnType' value={{cmnType}} class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
+                                        placeholder="Enter common type">
+                                    <div *ngIf="submitted && f. cmnType.errors" class="invalid-feedback">
+                                        <div *ngIf="f.cmnType.errors.required">Enter common type</div>
+                                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                                </div> -->
+                                        <div *ngIf="f.cmnType.errors?.maxLength">Enter common type
+                                        </div>
+                                    </div>
+                                    <span
+                                        *ngIf="!commonMasterForm.get('cmnType').valid && commonMasterForm.get('cmnType').touched">
+                                        Enter common type </span>
+                                       </td>
+                                       <td style="width: 15%" class="LabelFontStyle">Common&nbsp;Description&nbsp;:&nbsp;</td>
+                                       <td>
+                                        <input formControlName="cmnDesc" [(ngModel)]='cmnDesc' value={{cmnDesc}} class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.cmnDesc.errors }"
+                                        placeholder="Enter common Description">
+                                    <div *ngIf="submitted && f. cmnDesc.errors" class="invalid-feedback">
+                                        <div *ngIf="f.cmnDesc.errors.required">Enter common Description</div>
+                                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                                </div> -->
+                                        <div *ngIf="f.cmnDesc.errors?.maxLength">Enter common Description
+                                        </div>
+                                    </div>
+                                    <span
+                                        *ngIf="!commonMasterForm.get('cmnDesc').valid && commonMasterForm.get('cmnDesc').touched">
+                                        Enter common Description </span>
+                                       </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Application&nbsp;:&nbsp;</td>
+                               <td>
+                                <select formControlName="application" id="application" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  applicationList">
+                                        {{sc.application}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
+                                    <div *ngIf="f.application.errors.required">Select Application</div>
+                                    <span
+                                        *ngIf="!commonMasterForm.get('application').valid && commonMasterForm.get('application').touched">Please
+                                        Enter valid OU Id </span>
+                                </div>
+                               </td>
+                                <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="divisionId" id="divisionId" class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
+                                            {{sc.divisionName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
+                                        <span
+                                            *ngIf="!commonMasterForm.get('divisionId').valid && commonMasterForm.get('divisionId').touched">Please
+                                            Enter valid Division Name </span>  
+                                            </div>          
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="saveComnMast">Save</button>
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="cmnType" id="cmnType" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  cmnTypeList">
+                                                {{sc.cmnType}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <button type="submit" class="btn btn-primary" id="register"
+                                               (click)="searchMast()">Search</button>
+                                    </td>    
+                                </tr>
+                            </table>
+                            <br>
+                            <!-- <ng-container *ngIf="commonMasterForm.controls.itemRows!=null">  -->
+                                <!-- <div class="container1" *ngFor="let itemRows of commonMasterForm.controls.itemRows.controls;let i=index" [commonMasterForm]='Id'> -->
+                                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                        <tbody>
+                                            <tr class="GridHeader">
+                                                <th scope="col">Code</th>
+                                                <th scope="col">Meaning</th>
+                                                <th scope="col">Description</th> 
+                                                <th scope="col">Active Date</th>
+                                                <th scope="col">Inactive Date</th>
+                                                <th scope="col">Select one</th>
+                                            </tr>        
+                                        </tbody>
+                                        <!-- <ng-container *ngIf="commonMasterForm.controls.itemRows!=null"> 
+                                            <div class="container1" *ngFor="let itemRows of commonMasterForm.controls.itemRows.controls;let i=index" [commonMasterForm]='Id'> -->
+                                        <tr  class="ItemStyle" style="text-decoration:none;">
+                                            <td>1</td>
+                                            <td>Model</td>
+                                            <td>Swift</td>
+                                            <td>22-Sep-2020</td>
+                                            <td></td>
+                                            <!-- <td></td> -->
+                                            <td>
+                                            <!-- Trigger the modal with a button -->
+                                            <button type="button" data-toggle="modal" data-target="#myModal">
+                                                ...
+                                              </button>
+                                            <!-- The Modal -->
+          <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+              
+                <!-- Modal Header -->
+                <div class="modal-header">
+                 <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+                 color: black;">
+                Additional Information
+                </label>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>
+                            <label>
+                                Service&nbsp;Vehicle&nbsp;Code&nbsp;:&nbsp;
+                            </label>
+                        </td>
+                       <td>
+                        <input type="text" class="form-control">
+                       </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>
+                                Service&nbsp;Sub&nbsp;Code&nbsp;:&nbsp;
+                            </label>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>
+                                Credit&nbsp;Note&nbsp;Item&nbsp;:&nbsp;
+                            </label>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                        </td>
+                    </tr>
+                </table>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>                                    
+            </td>
+            </tr>    
+            </table>
+            <ng-container *ngIf="commonMasterForm.controls.itemRows!=null"> 
+                <div class="container1" *ngFor="let itemRows of commonMasterForm.controls.itemRows.controls;let i=index" [commonMasterForm]='1'>                       
+                </div>  
+            </ng-container>  
+                            <button type="button" (click)="addRow()" [disabled]="commonMasterForm.invalid" class="btn btn-primary">
+                                Add Row
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

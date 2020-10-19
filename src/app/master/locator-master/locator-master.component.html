@@ -1,0 +1,421 @@
+<div class="form-bg">
+    <form [formGroup]="locatorMasterForm" (ngSubmit)="locatorMaster(locatorMasterForm.value)">
+        <div id="Panel1" class="auto-style103">
+            <div class="container">
+                <div class="row">
+                    <div class="PageHeader">  
+                        <div class="col">&nbsp;&nbsp;Locator&nbsp;Master</div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <div class="w-100"></div>
+                    <input hidden formControlName="locatorId">
+                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                    <ng-template #thenBlock>
+                    <div class="col">
+                        <div class="c">Location&nbsp;:</div>   
+                    </div>
+                    <div class="col">
+                        <select formControlName="locId" id="locId" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  locationIdList" [ngValue]="sc.locId"  >
+                                {{sc.locCode}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
+                            <div *ngIf="f.locId.errors.required">Location is required</div>
+                            <span
+                                *ngIf="!locatorMasterForm.get('locId').valid && locatorMasterForm.get('locId').touched">Please
+                                Enter Location Name </span>
+                        </div>  
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Subinventory&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <select formControlName="subinventoryId" id="subinventoryId" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryId"  >
+                               {{sc.subInventoryId}}-{{sc.subInventoryCode}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f.subinventoryId.errors" class="invalid-feedback">
+                            <div *ngIf="f.subinventoryId.errors.required">Subinventory is required</div>
+                            <span
+                                *ngIf="!locatorMasterForm.get('subinventoryId').valid && locatorMasterForm.get('subinventoryId').touched">Please
+                                Enter Subinventory </span>
+                        </div>  
+                    </div>
+                    <div class="w-100"></div>  
+                    <div class="col">
+                        <div class="c">Floor&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.segment1.errors }"
+                            placeholder="Enter Floor">
+                        <div *ngIf="submitted && f. segment1.errors" class="invalid-feedback">
+                            <div *ngIf="f.segment1.errors.required">Floor must be a valid for 5 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.segment1.errors?.maxLength">Floor must be a valid for 1 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('segment1').valid && locatorMasterForm.get('segment1').touched">Please
+                            Enter Floor </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Rack&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <input formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
+                            placeholder="Enter Rack">
+                        <div *ngIf="submitted && f. segment2.errors" class="invalid-feedback">
+                            <div *ngIf="f.segment2.errors.required">Rack must be a valid for 5 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.segment2.errors?.maxLength">Rack must be a valid for 5 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('segment2').valid && locatorMasterForm.get('segment2').touched">Please
+                            Enter Rack </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Rack&nbsp;Number&nbsp;:</div>
+                    </div>
+                    <div class="col">   
+                        <input formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
+                            placeholder="Enter Rack Number">
+                        <div *ngIf="submitted && f. segment3.errors" class="invalid-feedback">
+                            <div *ngIf="f.segment3.errors.required">Rack Number must be a valid for 5 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.segment3.errors?.maxLength">Rack Number must be a valid for 1 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
+                            Enter Rack Number </span>
+                    </div>   
+                    <div class="w-100"></div>
+                    <div class="col">
+                    <div class="c">Row&nbsp;:</div>
+                    </div>
+                    <div class="col">   
+                        <input formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
+                            placeholder="Enter Row">
+                        <div *ngIf="submitted && f. segment4.errors" class="invalid-feedback">
+                            <div *ngIf="f.segment4.errors.required">Row must be a valid for 5 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.segment4.errors?.maxLength">Row must be a valid for 1 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('segment4').valid && locatorMasterForm.get('segment4').touched">Please
+                            Enter Row </span>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col">
+                    <div class="c">Row&nbsp;Number&nbsp;:</div>
+                    </div>
+                    <div class="col">   
+                        <input formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
+                            placeholder="Enter Row Number">
+                        <div *ngIf="submitted && f. segment5.errors" class="invalid-feedback">
+                            <div *ngIf="f.segment5.errors.required">Row Number must be a valid for 5 digit</div>
+                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                            <div *ngIf="f.segment5.errors?.maxLength">Row Number must be a valid for 1 digit
+                            </div>
+                        </div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('segment5').valid && locatorMasterForm.get('segment5').touched">Please
+                            Enter Row Number </span>
+                    </div>  
+                    <div class="w-100"></div>
+                    <div class="col">
+                    <div class="c">Concatenated&nbsp;Locator&nbsp;:</div>
+                    </div>
+                <div class="col">   
+                    <input formControlName="segmentName" [(ngModel)]='segmentName' value={{segmentName}} (keyup)="onKey($event)" class="form-control">
+                </div> 
+                <div class="w-100"></div>
+                <div class="col">
+                    <div class="c">Status&nbsp;</div>
+                </div>
+                <div class="col"> 
+                    <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+                </div> 
+                <!-- <div class="col">
+                    <div class="c">Address&nbsp;</div>
+                </div>
+                <td><input type="checkbox" formControlName="copyAddv" [(ngModel)]='copyAddv'(change)="copyAdd($event)"></td> -->
+                </ng-template>
+                <ng-template #elseBlock>
+                <div class="col">
+                    <div class="c">Location&nbsp;Id&nbsp;:</div>   
+                </div>
+                <div class="col">
+                    <input disabled formControlName="locId"  value={{locId}} class="form-control">
+                    <!-- <select disabled formControlName="locId" id="locId" class="form-control">
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  locationIdList" [ngValue]="sc.locId"  >
+                            {{sc.locCode}}
+                        </option>
+                    </select> -->
+                    <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
+                        <div *ngIf="f.locId.errors.required">Location is required</div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('locId').valid && locatorMasterForm.get('locId').touched">Please
+                            Enter Location Name </span>
+                    </div>  
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                    <div class="c">Subinventory&nbsp;:</div>
+                </div>
+                <div class="col">
+                    <input disabled formControlName="subinventoryId" id="subinventoryId" class="form-control"> 
+                    <!-- <select disabled formControlName="subinventoryId" id="subinventoryId" class="form-control">
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subinventoryId"  >
+                            {{sc.locCode}}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && f.subinventoryId.errors" class="invalid-feedback">
+                        <div *ngIf="f.subinventoryId.errors.required">Subinventory is required</div>
+                        <span
+                            *ngIf="!locatorMasterForm.get('subinventoryId').valid && locatorMasterForm.get('subinventoryId').touched">Please
+                            Enter Subinventory </span>
+                    </div>   -->
+                </div>
+                <div class="w-100"></div>  
+                <div class="col">
+                    <div class="c">Floor&nbsp;:</div>
+                </div>
+                <div class="col">
+                    <input disabled formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.segment1.errors }"
+                        placeholder="Enter Floor">
+                    <div *ngIf="submitted && f. segment1.errors" class="invalid-feedback">
+                        <div *ngIf="f.segment1.errors.required">Floor must be a valid for 5 digit</div>
+                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                </div> -->
+                        <div *ngIf="f.segment1.errors?.maxLength">Floor must be a valid for 1 digit
+                        </div>
+                    </div>
+                    <span
+                        *ngIf="!locatorMasterForm.get('segment1').valid && locatorMasterForm.get('segment1').touched">Please
+                        Enter Floor </span>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                    <div class="c">Rack&nbsp;:</div>
+                </div>
+                <div class="col">
+                    <input disabled formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
+                        placeholder="Enter Rack">
+                    <div *ngIf="submitted && f. segment2.errors" class="invalid-feedback">
+                        <div *ngIf="f.segment2.errors.required">Rack must be a valid for 5 digit</div>
+                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                </div> -->
+                        <div *ngIf="f.segment2.errors?.maxLength">Rack must be a valid for 5 digit
+                        </div>
+                    </div>
+                    <span
+                        *ngIf="!locatorMasterForm.get('segment2').valid && locatorMasterForm.get('segment2').touched">Please
+                        Enter Rack </span>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                    <div class="c">Rack&nbsp;Number&nbsp;:</div>
+                </div>
+                <div class="col">   
+                    <input disabled formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
+                        placeholder="Enter Rack Number">
+                    <div *ngIf="submitted && f. segment3.errors" class="invalid-feedback">
+                        <div *ngIf="f.segment3.errors.required">Rack Number must be a valid for 5 digit</div>
+                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                </div> -->
+                        <div *ngIf="f.segment3.errors?.maxLength">Rack Number must be a valid for 1 digit
+                        </div>
+                    </div>
+                    <span
+                        *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
+                        Enter Rack Number </span>
+                </div>   
+                <div class="w-100"></div>
+                <div class="col">
+                <div class="c">Row&nbsp;:</div>
+                </div>
+                <div class="col">   
+                    <input disabled formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
+                        placeholder="Enter Row">
+                    <div *ngIf="submitted && f. segment4.errors" class="invalid-feedback">
+                        <div *ngIf="f.segment4.errors.required">Row must be a valid for 5 digit</div>
+                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                </div> -->
+                        <div *ngIf="f.segment4.errors?.maxLength">Row must be a valid for 1 digit
+                        </div>
+                    </div>
+                    <span
+                        *ngIf="!locatorMasterForm.get('segment4').valid && locatorMasterForm.get('segment4').touched">Please
+                        Enter Row </span>
+                </div>
+                <div class="w-100"></div>
+                <div class="col">
+                <div class="c">Row&nbsp;Number&nbsp;:</div>
+                </div>
+                <div class="col">   
+                    <input disabled formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
+                        placeholder="Enter Row Number">
+                    <div *ngIf="submitted && f. segment5.errors" class="invalid-feedback">
+                        <div *ngIf="f.segment5.errors.required">Row Number must be a valid for 5 digit</div>
+                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                </div> -->
+                        <div *ngIf="f.segment5.errors?.maxLength">Row Number must be a valid for 1 digit
+                        </div>
+                    </div>
+                    <span
+                        *ngIf="!locatorMasterForm.get('segment5').valid && locatorMasterForm.get('segment5').touched">Please
+                        Enter Row Number </span>
+                </div>  
+                <div class="w-100"></div>
+                <div class="col">
+                <div class="c">Concatenated&nbsp;Locator&nbsp;:</div>
+                </div>
+            <div class="col">   
+                <input disabled formControlName="segmentName" [(ngModel)]='segmentName' value={{segmentName}} class="form-control">
+            </div>
+            <div class="w-100"></div>
+                    <div class="col">
+                        <div class="c">Status&nbsp;:</div>
+                    </div>
+                    <div class="col">
+                        <select formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                            <div *ngIf="f.status.errors.required">status is required</div>
+                            <span
+                                *ngIf="!locatorMasterForm.get('status').valid && locatorMasterForm.get('status').touched">Please
+                                Enter status </span>
+                        </div>
+                    </div>
+            </ng-template>
+            <div class="w-100"></div>
+            <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                <ng-template #thenBlockInactive>
+                </ng-template>
+                <ng-template #elseBlockInactive>
+                        <div class="col">
+                            <div class="c">Inactive&nbsp;Date&nbsp;:</div>
+                        </div>
+                <div class="col">
+                        <input disabled type="text" formControlName="endDate" class="form-control"
+                        [ngModel]="endDate | date:'yyyy-MM-dd'">
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <table class="autostyle1">
+            <tr>
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                <ng-template #thenBlock1>
+                <td>   
+                    <!-- [disabled]="!locatorMasterForm.valid" -->
+                    <button type="submit" class="btn btn-primary" id="register"
+                        (click)="newMast()">New</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register"
+                        (click)="searchMast()">Search</button>
+                </td>
+                </ng-template>
+                <ng-template #elseBlock1>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register"
+                        [disabled]="!locatorMasterForm.valid" (click)="updateMast()">Update</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register"
+                        (click)="searchMast()">Search</button>
+                </td>
+                </ng-template>
+            </tr>
+        </table>
+    </div>
+</form>
+</div>
+<br>
+<div class="container1">
+    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
+        <tbody>
+            <tr class="auto-style5">
+                <th scope="col">Location Id</th> 
+                <th scope="col">Location Id</th>
+                <th scope="col">Subinventory</th>
+                <th scope="col">Floor</th> 
+                <th scope="col">Rack</th>
+                <th scope="col">Rack Number</th>
+                <th scope="col">Row</th> 
+                <th scope="col">Row Number</th>
+                <th scope="col">Concatenated Locator</th>
+                <th scope="col">Status</th> 
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+            <td>{{com.locatorId}}</td>
+            <td>{{com.locId}}</td>
+            <td>{{com.subinventoryId}}</td>
+            <td>{{com.segment1}}</td>
+            <td>{{com.segment2}}</td>
+            <td>{{com.segment3}}</td>
+            <td>{{com.segment4}}</td>
+            <td>{{com.segment5}}</td>
+            <td>{{com.segmentName}}</td>
+            <td>{{com.status}}</td>
+            <td><button (click)="Select(com.locatorId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>
