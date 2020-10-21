@@ -1,0 +1,115 @@
+.PageHeader {
+    font-size:large;
+    font-weight: bold;
+    margin: 0;
+    height: 22px;
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    vertical-align: middle;
+    text-align: center;
+    padding: 2px;
+    color: black;
+    /* background-color:#b6c0c9;   */
+    background: linear-gradient(to left,#c4bbf3,#5536ec);
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+} 
+
+.btn-primary{
+   background: linear-gradient(to left,#c4bbf3,#5536ec);
+    width: 5rem;
+}
+
+.btn-primary:hover{
+    background: linear-gradient(to left,#2ea3c0,#0a7cdf);
+}
+
+.GridHeader {
+    border-top-width: 1px;
+    border-style: solid;
+    border-top-color: rgb(217,0,25);
+    border-left: none;
+    border-right: none;
+    height: 25px;
+    padding: 0px 10px 0px 10px;
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-size: 11px;
+    /* font-weight: bold; */
+    text-align: center;
+    color: #1F2436;
+    background-color: #fff;
+    border-bottom: 2px solid rgb(158, 155, 155);
+  }
+
+  .ItemStyle{
+    border-left: none;
+    border-right: none;
+    height: 25px;
+    padding: 0px 10px 0px 10px;
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-size: 11px;
+    /* font-weight: bold; */
+    text-align: center;
+    color: #1F2436;
+    background-color: #fff;
+    border-bottom: 2px solid rgb(158, 155, 155);   
+}
+  
+
+.auto-style103{
+    margin: 1px auto;
+    border: 1px solid #1d1de9;
+    padding-bottom: 10px;
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 3px;
+    box-shadow: 2px 10px 15px #d6d6e9 inset;
+    min-height: 30px;
+    background-color: #fefeff;
+    }
+
+    .xl7{
+        font-size: small;
+        font-weight: bold;
+        vertical-align: middle;
+        margin-bottom: 0px;
+        color: #3a5a87;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .form-control{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: small;
+        color: #3c3c3c;  
+        height: 28px;
+        width: 198px;
+        vertical-align: middle;
+        border-color: #3a5a87;
+      }
+
+  
+  .center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+/* #div2-2{
+    margin-left: auto;
+    margin-right: auto;
+  } */
+
+  .LabelFontStyle {
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-weight: normal;
+    color: #5536ec;
+    font-size: small;
+    text-align: right;
+    vertical-align: middle;
+    padding-top: 0px;
+    /* padding-right: 4px; */
+    padding-bottom: 0px;
+    border-color: Gray;
+    height: 25px;
+  }

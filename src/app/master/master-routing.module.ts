@@ -13,6 +13,7 @@ import { ItemMasterComponent } from './item-master/item-master.component';
 import { CommonMasterComponent } from './common-master/common-master.component';
 import { DocumentSequenceMasterComponent } from './document-sequence-master/document-sequence-master.component';
 import { EpmloyeeMasterComponent } from './epmloyee-master/epmloyee-master.component';
+import { CustomerMasterComponent } from './customer-master/customer-master.component';
 
 const routes: Routes = [
   {path:'division', component:DivisionMasterComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:'CommonMaster', component:CommonMasterComponent},
   {path:'DocumentSequenceMaster',component:DocumentSequenceMasterComponent},
   {path:'EmployeeMaster', component:EpmloyeeMasterComponent},
+  {path:'customerMaster', component:CustomerMasterComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

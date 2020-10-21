@@ -65,7 +65,10 @@ export class MasterService {
   recvTypeIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
-  taxCategoryList(): Observable<any> {
+//   taxCategoryList(): Observable<any> {
+//   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+// } 
+custTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 } 
 getTaxCat(ouId): Observable<any> {
@@ -365,11 +368,19 @@ SupliMasterSubmitForSite(SupliMasterRecord) {
   const url = this.ServerUrl + '/supp/site';  
   return this.http.post(url, SupliMasterRecord, options);
 }
-UpdateSupliMasterById(SupliMasterRecord,suppId) {
+UpdateSupliMasterById(SupliMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/supp/${suppId}`);
+  const url = (this.ServerUrl + '/supp');
+  return this.http.put(url, SupliMasterRecord, options);
+}
+UpdateSiteSupliMasterById(SupliMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  // const url = (this.ServerUrl + `/supp/${suppId}`); 
+  const url = (this.ServerUrl + '/supp/site'); 
   return this.http.put(url, SupliMasterRecord, options);
 }
 ///////////////////////////common Master///////////////////////

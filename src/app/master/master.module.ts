@@ -17,11 +17,12 @@ import { ItemMasterComponent } from './item-master/item-master.component';
 import { CommonMasterComponent } from './common-master/common-master.component';
 import { DocumentSequenceMasterComponent } from './document-sequence-master/document-sequence-master.component';
 import { EpmloyeeMasterComponent } from './epmloyee-master/epmloyee-master.component';
+import { CustomerMasterComponent } from './customer-master/customer-master.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
-  declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent],
+  declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent],
   imports: [
     CommonModule,
     MasterRoutingModule,

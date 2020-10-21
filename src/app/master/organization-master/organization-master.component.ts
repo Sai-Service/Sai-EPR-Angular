@@ -45,8 +45,9 @@ export class OrganizationMasterComponent implements OnInit {
   public minDate = new Date();
   displayButton = true;
   displayInactive = true;
-  display = true;
   Status1: any;
+  display = true;
+  
   endDate: Date;
 
   public statusList: Array<string> = [];

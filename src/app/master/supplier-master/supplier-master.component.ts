@@ -25,7 +25,7 @@ interface IsupplierMaster {
   mobile2: number;
   emailId: string;
   contactPerson: string;
-  contactNo:number;
+  contactNo: number;
   taxCategoryName: string;
   ticketNo: string;
   creditDays: number;
@@ -44,8 +44,11 @@ interface IsupplierMaster {
   scity: string;
   pinCd: string;
   sstate: string;
-  smobile1:string
-  smobile2:string
+  status:string;
+  smobile1: string;
+  smobile2: string;
+  endDate: Date;
+  sstatus: string;
   // aadharNo:string;
 }
 
@@ -73,7 +76,7 @@ export class SupplierMasterComponent implements OnInit {
   mobile2: number;
   emailId: string;
   contactPerson: string;
-  contactNo:number;
+  contactNo: number;
   taxCategoryName: string;
   ticketNo: string;
   creditDays: number;
@@ -82,31 +85,40 @@ export class SupplierMasterComponent implements OnInit {
   gstNo: string;
   panNo: string;
   tanNo: string;
+  status:string;
   supplierSiteMasterList:any[];
-  lstcomments: any[];
-  array:any[];
+  lstcomments: any;
+  lstcomments2: any[];
+  array: any[];
   lstcommentsId: any[];
   displayButton = true;
   ouId: string;
   existing: string;
   ExeAddress: string;
-  saddress1:string;
+  saddress1: string;
   saddress2: string;
-  saddress3:string;
-  saddress4:string;
+  saddress3: string;
+  saddress4: string;
   scity: string;
-  pinCd:string;
-  sstate:string;
-  smobile1:string
-  smobile2:string
+  pinCd: string;
+  sstate: string;
+  smobile1: string;
+  smobile2: string;
+  suppSiteId: number;
+  endDate: Date;
+  sstatus: string;
+  displayInactive = true;
+  Status1: any;
   // aadharNo:string;
-  ouIdSelected:number;
+  ouIdSelected: number;
   public cityList: Array<string>[];
   public pinCodeList: Array<string>[];
   public stateList: Array<string>[];
   public taxCategoryList: Array<string>[];
   public ouIdList: Array<string>[];
-public lstcommentsTax: any[];
+  public statusList: Array<string> = [];
+  // public supplierSiteMasterList1 : Array<string>[][];
+  public lstcommentsTax: any[];
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
@@ -124,7 +136,7 @@ public lstcommentsTax: any[];
       contactPerson: [''],
       taxCategoryName: ['', Validators.required],
       ticketNo: ['', Validators.required],
-      creditDays: ['',[Validators.required, Validators.pattern('[0-9]*')]],
+      creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       remarks: [''],
       state: ['', [Validators.required]],
@@ -142,8 +154,12 @@ public lstcommentsTax: any[];
       scity: [],
       pinCd: [],
       sstate: [],
-      smobile1:[],
-      smobile2:[],
+      smobile1: [],
+      smobile2: [],
+      suppSiteId: [],
+      endDate: [],
+      sstatus: ['', [Validators.nullValidator]],
+      status: ['', [Validators.nullValidator]],
       // aadharNo:[],
 
       // address1E: ['', [Validators.required]],
@@ -159,7 +175,8 @@ public lstcommentsTax: any[];
   get f() { return this.supplierMasterForm.controls; }
 
   ngOnInit(): void {
-
+    this.lstcomments= [];
+    this.lstcomments.supplierSiteMasterList=[];
     this.service.cityList()
       .subscribe(
         data => {
@@ -167,7 +184,13 @@ public lstcommentsTax: any[];
           console.log(this.cityList);
         }
       );
-
+      this.service.statusList()
+      .subscribe(
+        data => {
+          this.statusList = data;
+          console.log(this.statusList);
+        }
+      );
     // this.service.pinCodeList()
     //   .subscribe(
     //     data => {
@@ -194,10 +217,10 @@ public lstcommentsTax: any[];
 
   supplierMaster(supplierMaster: any) {
   }
-  
+
   transData(val) {
     // delete val.divisionId;
-    // delete val.suppId;
+    delete val.suppSiteId;
     delete val.existing;
     delete val.ExeAddress;
     delete val.saddress1;
@@ -206,11 +229,11 @@ public lstcommentsTax: any[];
     delete val.saddress4;
     delete val.scity;
     delete val.pinCd;
-    delete val.sstate;  
-    delete val.smobile1; 
-    delete val.smobile2; 
+    delete val.sstate;
+    delete val.smobile1;
+    delete val.smobile2;
     delete val.aadharNo;
-    
+
     // delete val.suppNo;
     // delete val.name;
     // delete val.address1;
@@ -255,6 +278,7 @@ public lstcommentsTax: any[];
     delete val.ExeAddress;
     delete val.existing;
     delete val.ExeAddress;
+    delete val.status;
     return val;
   }
 
@@ -270,12 +294,52 @@ public lstcommentsTax: any[];
           this.supplierMasterForm.reset();
         }
       }
-    });     
-  }  
-
+    });
+  }
+  UpdateSitesupplierMastExeSite() {
+    const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
+    this.service.UpdateSiteSupliMasterById(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD UPDATED SUCCESSFUILY');
+        window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert('ERROR OCCOURED IN PROCEESS');
+          this.supplierMasterForm.reset();
+        }
+      }
+    });
+  }
+  transDataSupp(val) {
+    delete val.suppSiteId;
+    delete val.existing;
+    delete val.ExeAddress;
+    delete val.saddress1;
+    delete val.saddress2;
+    delete val.saddress3;
+    delete val.saddress4;
+    delete val.scity;
+    delete val.pinCd;
+    delete val.sstate;
+    delete val.smobile1;
+    delete val.smobile2;
+    // delete val.aadharNo;
+    // delete val.remarks;
+    delete val.existing;
+    delete val.ExeAddress;
+    delete val.existing;
+    delete val.ExeAddress;
+    delete val.contactNo;
+    delete val.tanNo;
+    delete val.gstNo;
+    delete val.panNo;
+    delete val.emailId;
+    // delete val.endDate;
+    return val;
+  }
   updatesupplierMast() {
-    const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
-    this.service.UpdateSupliMasterById(formValue, formValue.suppId).subscribe((res: any) => {
+    const formValue: IsupplierMaster = this.transDataSupp(this.supplierMasterForm.value);
+    this.service.UpdateSupliMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFUILY');
         window.location.reload();
@@ -296,7 +360,7 @@ public lstcommentsTax: any[];
     this.router.navigate(['admin']);
   }
 
-  createSitesupplierMast() { 
+  createSitesupplierMast() {
     const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
     this.service.SupliMasterSubmitForSite(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -308,17 +372,37 @@ public lstcommentsTax: any[];
           this.supplierMasterForm.reset();
         }
       }
-    });     
+    });
   }
 
-  Select(suppId: number) {
-    let select = this.lstcomments.find(d => d.suppId === suppId);
+  Select(suppSiteId: number) {
+alert(suppSiteId);
+    this.lstcomments2 = this.lstcomments.supplierSiteMasterList;
+    console.log(this.lstcomments2);
+    let select = this.lstcomments2.find(d => d.suppSiteId === suppSiteId);
+    // let select = this.lstcomments.find(d => d.suppSiteId === suppSiteId);
     if (select) {
-      alert(select);
-      this.supplierMasterForm.patchValue(select);
-      // this.contactPerson = select.supplierSiteMasterList.contactPerson;
-      // this.ouId = select.supplierSiteMasterList.ouId;
-      this.displayButton = false;
+      this.suppSiteId = select.suppSiteId
+      this.saddress1 = select.address1
+      this.saddress2 = select.address2
+      this.saddress3 = select.address3
+      this.saddress4 = select.address4
+      this.scity = select.city
+      this.pinCd = select.pinCd
+      this.sstate = select.state
+      this.contactNo = select.contactNo
+      this.contactPerson = select.contactPerson
+      this.emailId = select.emailId
+      this.gstNo = select.gstNo
+      this.smobile1 = select.mobile1
+      this.smobile2 = select.mobile2
+      this.ouId = select.ouId
+      this.panNo = select.panNo
+      this.tanNo = select.tanNo
+      this.taxCategoryName = select.taxCategoryDesc
+      // ticketNo not in  json
+
+      // this.displayButton = false;
     }
   }
   ExeAddressEvent(e) {
@@ -357,11 +441,9 @@ public lstcommentsTax: any[];
       .subscribe(
         data => {
           this.lstcomments = data;
-          // this.supplierSiteMasterList= this.lstcomments[0].supplierSiteMasterList
-          // console.log(this.supplierSiteMasterList);
-                 //  this.array = this.lstcomments.this.supplierSiteMasterList;
-                    console.log(this.lstcomments);
+          console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
+          this.city = this.lstcomments.city
         }
       );
   }
@@ -391,4 +473,26 @@ public lstcommentsTax: any[];
         }
       );
   }
+  onOptionsSelected(event: any) {
+    this.Status1 = this.supplierMasterForm.get('sstatus').value;
+    // alert(this.Status1);
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = false;
+      this.endDate = new Date();
+    }
+    else if (this.Status1 === 'Active') {
+      this.supplierMasterForm.get('endDate').reset();
+    }
+  }   
+  onOptionsSelectedSupp(event: any) {
+    this.Status1 = this.supplierMasterForm.get('status').value;
+    // alert(this.Status1);
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = false;
+      this.endDate = new Date();
+    }
+    else if (this.Status1 === 'Active') {
+      this.supplierMasterForm.get('endDate').reset();
+    }
+  } 
 }
