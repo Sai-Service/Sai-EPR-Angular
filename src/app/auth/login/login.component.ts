@@ -34,6 +34,9 @@ export class LoginComponent implements OnInit {
       console.log('Res', res);
       if (res.code === 200) {
         this.router.navigate(['/admin']);
+        var users=res.obj;
+          sessionStorage.setItem('emplId',users.emplId);
+          // sessionStorage.setItem('emplId',users.emplId);
        } //else if (res.code === 204) {
       //   console.log('Email and password does not match');
       //   alert('Email and password does not match');

@@ -14,6 +14,11 @@ import { CommonMasterComponent } from './common-master/common-master.component';
 import { DocumentSequenceMasterComponent } from './document-sequence-master/document-sequence-master.component';
 import { EpmloyeeMasterComponent } from './epmloyee-master/epmloyee-master.component';
 import { CustomerMasterComponent } from './customer-master/customer-master.component';
+import { GlCodeCombinationComponent } from './gl-code-combination/gl-code-combination.component';
+import { HsnSacMasterComponent } from './hsn-sac-master/hsn-sac-master.component';
+import { OPMasterDtoComponent } from './opmaster-dto/opmaster-dto.component';
+import { JaiRegimeMasterComponent } from './jai-regime-master/jay-regime-master.component';
+
 
 const routes: Routes = [
   {path:'division', component:DivisionMasterComponent},
@@ -30,6 +35,10 @@ const routes: Routes = [
   {path:'DocumentSequenceMaster',component:DocumentSequenceMasterComponent},
   {path:'EmployeeMaster', component:EpmloyeeMasterComponent},
   {path:'customerMaster', component:CustomerMasterComponent},
+  {path: 'GlCodeCombination', component:GlCodeCombinationComponent},
+  {path:'HsnSacMaster', component:HsnSacMasterComponent},
+  {path:'OPMasterDto',component:OPMasterDtoComponent},
+  {path:'JaiRegimeMaster', component:JaiRegimeMasterComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

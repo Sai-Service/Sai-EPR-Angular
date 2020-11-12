@@ -18,11 +18,15 @@ import { CommonMasterComponent } from './common-master/common-master.component';
 import { DocumentSequenceMasterComponent } from './document-sequence-master/document-sequence-master.component';
 import { EpmloyeeMasterComponent } from './epmloyee-master/epmloyee-master.component';
 import { CustomerMasterComponent } from './customer-master/customer-master.component';
+import { GlCodeCombinationComponent } from './gl-code-combination/gl-code-combination.component';
+import { HsnSacMasterComponent } from './hsn-sac-master/hsn-sac-master.component';
+import { OPMasterDtoComponent } from './opmaster-dto/opmaster-dto.component';
+import { JaiRegimeMasterComponent } from './jai-regime-master/jay-regime-master.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
-  declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent],
+  declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent],
   imports: [
     CommonModule,
     MasterRoutingModule,

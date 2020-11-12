@@ -129,6 +129,7 @@ export class ItemMasterComponent implements OnInit {
   batteryNo:string;
 
   lstcomments: any[];
+  public YesNoList: Array<string> = [];
   public categoryIdList: Array<string> = [];
   public uomList: Array<string> = [];
   public costingList: Array<string> = [];
@@ -228,6 +229,13 @@ export class ItemMasterComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.service.YesNoList()
+      .subscribe(
+        data => {
+          this.YesNoList = data;
+          console.log(this.YesNoList);
+        }
+      )
     this.service.categoryIdList()
     .subscribe(
       data => {
@@ -408,13 +416,7 @@ export class ItemMasterComponent implements OnInit {
       }
     );
    
-    this.service.ewInsSiteList()
-    .subscribe(
-      data => {
-        this.ewInsSiteList = data;
-        console.log(this.ewInsSiteList);
-      }
-    );
+    
     
     this.service.itemTypeList()
     .subscribe(
@@ -432,13 +434,13 @@ export class ItemMasterComponent implements OnInit {
       }
     );
     
-    this.service.insSiteList()
-    .subscribe(
-      data => {
-        this.insSiteList = data;
-        console.log(this.insSiteList);
-      }
-    );
+    // this.service.insSiteList(customerId)
+    // .subscribe(
+    //   data => {
+    //     this.insSiteList = data;
+    //     console.log(this.insSiteList);
+    //   }
+    // );
 
     this.service.ripsList()
     .subscribe(
@@ -476,7 +478,15 @@ export class ItemMasterComponent implements OnInit {
 
   itemMaster(itemMaster: any) {
   }
-
+  
+  UomEvent(e) {
+    if (e.target.checked) {
+    this.stockable='Y'
+    }
+    else{
+      this.stockable = 'N';
+    }
+  }
   stockableEvent(e) {
     if (e.target.checked) {
     this.stockable='Y'
@@ -486,6 +496,30 @@ export class ItemMasterComponent implements OnInit {
     }
   }
   purchasableEvent(e) {
+    if (e.target.checked) {
+    this.purchasable='Y'
+    }
+    else{
+      this.purchasable = 'N';
+    }
+  }
+  twoToneEvent(e) {
+    if (e.target.checked) {
+    this.purchasable='Y'
+    }
+    else{
+      this.purchasable = 'N';
+    }
+  }
+  ripsEvent(e) {
+    if (e.target.checked) {
+    this.purchasable='Y'
+    }
+    else{
+      this.purchasable = 'N';
+    }
+  }
+  holdEvent(e) {
     if (e.target.checked) {
     this.purchasable='Y'
     }
@@ -525,6 +559,32 @@ export class ItemMasterComponent implements OnInit {
       this.itemMasterForm.patchValue(this.lstcomments);
         }
       );
+  }
+  onEwInsNameSelected(customerId: any) {
+    console.log(customerId);
+    this.SearchonEwInsName(customerId);
+  }
+  SearchonEwInsName(customerId: number) {
+    this.service.ewInsSiteList(customerId)
+    .subscribe(
+      data => {
+        this.ewInsSiteList = data;
+        console.log(this.ewInsSiteList);
+      }
+    );
+  }
+  onInsurerNameSelected(customerId: any) {
+    console.log(customerId);
+    this.Search(customerId);
+  }
+  Search(customerId: number) {
+    this.service.insSiteList(customerId)
+     .subscribe(
+      data => {
+        this.insSiteList = data;
+        console.log(this.insSiteList);
+      }
+    );
   }
   newItemMast(){}
   resetItemMast(){this.router.navigate(['admin']);}

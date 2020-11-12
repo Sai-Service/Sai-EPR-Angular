@@ -111,13 +111,13 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">UOM&nbsp;:&nbsp;</td>
                                     <td>
-                                        <select formControlName="uom" id="uom" class="form-control">
+                                        <input type="checkbox" formControlName="uom" [(ngModel)]='uom'(change)="UomEvent($event)">
+                                        <!-- <select formControlName="uom" id="uom" class="form-control">
                                           <option>--Select--</option>
-                                          <option *ngFor="let sc of  uomList">
-                                              {{sc.uomList}}
-                                              <!-- -{{sc.divisionName}} -->
-                                          </option>
-                                      </select>
+                                          <option *ngFor="let sc of YesNoList">
+                                            {{sc.code}}
+                                        </option>
+                                      </select> -->
                                       <div *ngIf="submitted && f. uom.errors" class="invalid-feedback">
                                           <div *ngIf="f.uom.errors.required">Enter UOM </div>
                                           <div *ngIf="f.uom.errors?.maxLength">Enter UOM
@@ -191,14 +191,14 @@
                                 <select formControlName="costCenter" id="costCenter" class="form-control">
                                   <option>--Select--</option>
                                   <option *ngFor="let sc of costCenterList">
-                                      {{sc.costCenterList}}
+                                      {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                       <!-- -{{sc.divisionName}} -->
                                   </option>
                               </select>
                               <div *ngIf="submitted && f. costCenter.errors" class="invalid-feedback">
                                   <div *ngIf="f.costCenter.errors.required">Enter cost center </div>
                                   <div *ngIf="f.costCenter.errors?.maxLength">Enter cost center
-                                  </div>
+                                  </div>,
                               </div>
                               <span
                                   *ngIf="!itemMasterForm.get('costCenter').valid && itemMasterForm.get('costCenter').touched">Please
@@ -211,7 +211,7 @@
                                         <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control">
                                           <option>--Select--</option>
                                           <option *ngFor="let sc of hsnSacCodeList">
-                                              {{sc.hsnSacCodeList}}
+                                              {{sc.hsnsaccode}}
                                               <!-- -{{sc.divisionName}} -->
                                           </option>
                                       </select>
@@ -245,13 +245,13 @@
                               </td>
                               <td style="width: 15%" class="LabelFontStyle">Margin&nbsp;Category&nbsp;:&nbsp;</td>
                               <td>
-                                <select formControlName="marginCategory" id="marginCategory" class="form-control">
+                                  <input formControlName="marginCategory" id="marginCategory" class="form-control">
+                                <!-- <select formControlName="marginCategory" id="marginCategory" class="form-control">
                                   <option>--Select--</option>
                                   <option *ngFor="let sc of marginCategoryList">
                                       {{sc.marginCategoryList}}
-                                      <!-- -{{sc.divisionName}} -->
                                   </option>
-                              </select>
+                              </select> -->
                               <div *ngIf="submitted && f. marginCategory.errors" class="invalid-feedback">
                                   <div *ngIf="f.marginCategory.errors.required">Enter margin category </div>
                                   <div *ngIf="f.marginCategory.errors?.maxLength">Enter margin category
@@ -322,7 +322,7 @@
                                 <select formControlName="mainModel" id="mainModel" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let mm of mainModelList">
-                                        {{mm.mainModelList}}
+                                        {{mm.code}}
                                         <!-- -{{sc.divisionName}} -->
                                     </option>
                                 </select>
@@ -340,7 +340,7 @@
                                 <select formControlName="colorCode" id="colorCode" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let cc of colorCodeList">
-                                        {{cc.colorCodeList}}
+                                        {{cc.code}}
                                         <!-- -{{sc.divisionName}} -->
                                     </option>
                                 </select>
@@ -354,13 +354,13 @@
                                     Enter color code</span>
                             </td>   
                             <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Code&nbsp;:&nbsp;</td>
-                        <td>
-                            <select formControlName="variantCode" id="variantCode" class="form-control">
+                        <td><input type="text" formControlName="variantCode" id="variantCode" class="form-control">
+                            <!-- <select formControlName="variantCode" id="variantCode" class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let vc of variantCodeList">
                                     {{vc.variantCodeList}}
                                 </option>
-                            </select>
+                            </select> -->
                             <div *ngIf="submitted && f. variantCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.variantCode.errors.required">Enter variant code </div>
                                 <div *ngIf="f.variantCode.errors?.maxLength">Enter variant code
@@ -435,12 +435,13 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">Octrai&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="octraiBillDate" id="octraiBillDate" class="form-control">
+                                <input type="date" formControlName="octraiBillDate" id="octraiBillDate" class="form-control">
+                                <!-- <select formControlName="octraiBillDate" id="octraiBillDate" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let ob of octraiBillDateList">
                                         {{ob.octraiBillDateList}}
                                     </option>
-                                </select>
+                                </select> -->
                                 <div *ngIf="submitted && f. octraiBillDate.errors" class="invalid-feedback">
                                     <div *ngIf="f.octraiBillDate.errors.required">Enter octrai bill date </div>
                                     <div *ngIf="f.octraiBillDate.errors?.maxLength">Enter octrai bill date
@@ -452,12 +453,13 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">Octrai&nbsp;Type&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="octraiType" id="octraiType" class="form-control">
+                                <input type="text" formControlName="octraiType" id="octraiType" class="form-control">
+                                <!-- <select formControlName="octraiType" id="octraiType" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let ot of octraiTypeList">
                                         {{ot.octraiTypeList}}
                                     </option>
-                                </select>
+                                </select> -->
                                 <div *ngIf="submitted && f. octraiType.errors" class="invalid-feedback">
                                     <div *ngIf="f.octraiType.errors.required">Enter octrai type </div>
                                     <div *ngIf="f.octraiType.errors?.maxLength">Enter octrai type
@@ -505,7 +507,7 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date&nbsp;:&nbsp;</td>
                             <td>
-                                <input type="ewdate" formControlName="ewdate" value={{ewdate}} class="form-control"
+                                <input type="date" formControlName="ewdate" value={{ewdate}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
                                 placeholder="Enter EW date">
                             <div *ngIf="submitted && f. ewdate.errors" class="invalid-feedback">
@@ -521,12 +523,13 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Period&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="ewPeriod" id="ewPeriod" class="form-control">
+                                <input type="text" formControlName="ewPeriod" id="ewPeriod" class="form-control">
+                                <!-- <select formControlName="ewPeriod" id="ewPeriod" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of ewPeriodList">
                                         {{sc.codeDesc}}
                                     </option>
-                                </select>
+                                </select> -->
                                 <div *ngIf="submitted && f. ewPeriod.errors" class="invalid-feedback">
                                     <div *ngIf="f.ewPeriod.errors.required">Enter EW period </div>
                                     <div *ngIf="f.ewPeriod.errors?.maxLength">Enter EW period
@@ -568,10 +571,10 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Insurer&nbsp;Name&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="ewInsName" id="ewInsName" class="form-control">
+                                <select formControlName="ewInsName" id="ewInsName" class="form-control" (ngModelChange)='onEwInsNameSelected($event)' >
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of ewInsNameList">
-                                        {{sc.codeDesc}}
+                                        {{sc.custName}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f. ewInsName.errors" class="invalid-feedback">
@@ -587,8 +590,8 @@
                             <td>
                                 <select formControlName="ewInsSite" id="ewInsSite" class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of ewInsSiteList">
-                                        {{sc.codeDesc}}
+                                    <option *ngFor="let sc of ewInsSiteList" >
+                                        {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.address4}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f. ewInsSite.errors" class="invalid-feedback">
@@ -605,7 +608,7 @@
                                 <select formControlName="itemType" id="itemType" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of itemTypeList">
-                                        {{sc.codeDesc}}
+                                        {{sc.code}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f. itemType.errors" class="invalid-feedback">
@@ -621,10 +624,10 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">Insurer&nbsp;Name&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="insName" id="insName" class="form-control">
+                                <select formControlName="insName" id="insName" (ngModelChange)='onInsurerNameSelected($event)' class="form-control" >
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of insNameList">
-                                        {{sc.codeDesc}}
+                                    <option *ngFor="let sc of insNameList" [value]="sc.customerId">
+                                        {{sc.custName}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f. insName.errors" class="invalid-feedback">
@@ -641,7 +644,7 @@
                                 <select formControlName="insSite" id="insSite" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of insSiteList">
-                                        {{sc.codeDesc}}
+                                        {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.address4}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f. insSite.errors" class="invalid-feedback">
@@ -671,12 +674,13 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">RIPS&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="rips" id="rips" class="form-control">
+                                <input type="checkbox" formControlName="rips" [(ngModel)]='rips'(change)="ripsEvent($event)">
+                                <!-- <select formControlName="rips" id="rips" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of ripsList">
                                         {{sc.codeDesc}}
                                     </option>
-                                </select>
+                                </select> -->
                                 <div *ngIf="submitted && f. rips.errors" class="invalid-feedback">
                                     <div *ngIf="f.rips.errors.required">Enter RIPS </div>
                                     <div *ngIf="f.rips.errors?.maxLength">Enter RIPS
@@ -688,12 +692,13 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">Two&nbsp;Tone&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="twoTone" id="twoTone" class="form-control">
+                                <input type="checkbox" formControlName="twoTone" [(ngModel)]='twoTone'(change)="twoToneEvent($event)">
+                                <!-- <select formControlName="twoTone" id="twoTone" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of twoToneList">
                                         {{sc.codeDesc}}
                                     </option>
-                                </select>
+                                </select> -->
                                 <div *ngIf="submitted && f. twoTone.errors" class="invalid-feedback">
                                     <div *ngIf="f.twoTone.errors.required">Enter two tone</div>
                                     <div *ngIf="f.twoTone.errors?.maxLength">Enter two tone
@@ -707,12 +712,13 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">Hold&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="hold" id="hold" class="form-control">
+                                <input type="checkbox" formControlName="hold" [(ngModel)]='hold'(change)="holdEvent($event)">
+                                <!-- <select formControlName="hold" id="hold" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of holdList">
                                         {{sc.codeDesc}}
                                     </option>
-                                </select>
+                                </select> -->
                                 <div *ngIf="submitted && f. hold.errors" class="invalid-feedback">
                                     <div *ngIf="f.hold.errors.required">Enter hold</div>
                                     <div *ngIf="f.hold.errors?.maxLength">Enter hold
@@ -727,7 +733,7 @@
                                 <select formControlName="holdReason" id="holdReason" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of holdReasonList">
-                                        {{sc.codeDesc}}
+                                        {{sc.code}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f. holdReason.errors" class="invalid-feedback">
@@ -900,7 +906,6 @@
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  categoryIdList">
                                                     {{sc.categoryIdList}}
-                                                    <!-- -{{sc.divisionName}} -->
                                                 </option>
                                             </select>
                                             <div *ngIf="submitted && f. categoryId.errors" class="invalid-feedback">
@@ -916,9 +921,8 @@
                                         <td>
                                             <select formControlName="uom" id="uom" class="form-control">
                                               <option>--Select--</option>
-                                              <option *ngFor="let sc of  uomList">
-                                                  {{sc.uomList}}
-                                                  <!-- -{{sc.divisionName}} -->
+                                              <option *ngFor="let sc of YesNoList">
+                                                {{sc.code}}
                                               </option>
                                           </select>
                                           <div *ngIf="submitted && f. uom.errors" class="invalid-feedback">
@@ -934,9 +938,8 @@
                                       <td>
                                         <select formControlName="costing" id="costing" class="form-control">
                                           <option>--Select--</option>
-                                          <option *ngFor="let sc of costingList">
-                                              {{sc.costingList}}
-                                              <!-- -{{sc.divisionName}} -->
+                                          <option *ngFor="let sc of YesNoList">
+                                            {{sc.code}}
                                           </option>
                                       </select>
                                       <div *ngIf="submitted && f. costing.errors" class="invalid-feedback">
@@ -991,7 +994,7 @@
                                     <select formControlName="costCenter" id="costCenter" class="form-control">
                                       <option>--Select--</option>
                                       <option *ngFor="let sc of costCenterList">
-                                          {{sc.costCenterList}}
+                                          {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                           <!-- -{{sc.divisionName}} -->
                                       </option>
                                   </select>
@@ -1011,7 +1014,7 @@
                                             <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control">
                                               <option>--Select--</option>
                                               <option *ngFor="let sc of hsnSacCodeList">
-                                                  {{sc.hsnSacCodeList}}
+                                                  {{sc.hsnsaccode}}
                                                   <!-- -{{sc.divisionName}} -->
                                               </option>
                                           </select>
@@ -1195,10 +1198,9 @@
                                         <td>
                                             <select formControlName="uom" id="uom" class="form-control">
                                               <option>--Select--</option>
-                                              <option *ngFor="let sc of  uomList">
-                                                  {{sc.uomList}}
-                                                  <!-- -{{sc.divisionName}} -->
-                                              </option>
+                                              <option *ngFor="let sc of YesNoList">
+                                                {{sc.code}}
+                                            </option>
                                           </select>
                                           <div *ngIf="submitted && f. uom.errors" class="invalid-feedback">
                                               <div *ngIf="f.uom.errors.required">Enter UOM </div>
@@ -1270,7 +1272,7 @@
                                     <select formControlName="costCenter" id="costCenter" class="form-control">
                                       <option>--Select--</option>
                                       <option *ngFor="let sc of costCenterList">
-                                          {{sc.costCenterList}}
+                                          {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                           <!-- -{{sc.divisionName}} -->
                                       </option>
                                   </select>
@@ -1290,7 +1292,7 @@
                                             <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control">
                                               <option>--Select--</option>
                                               <option *ngFor="let sc of hsnSacCodeList">
-                                                  {{sc.hsnSacCodeList}}
+                                                  {{sc.hsnsaccode}}
                                                   <!-- -{{sc.divisionName}} -->
                                               </option>
                                           </select>

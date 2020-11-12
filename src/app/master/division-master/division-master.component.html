@@ -26,7 +26,7 @@
                         <input formControlName="divisionCode" [(ngModel)]='divisionCode' value={{divisionCode}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
                             placeholder="Enter division code">
-                        <div *ngIf="submitted && f. divisionCode.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
                             <div *ngIf="f.divisionCode.errors.required">Division code must be a valid for 1 digit</div>
                             <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
                     </div> -->

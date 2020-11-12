@@ -59,11 +59,23 @@ export class MasterService {
   DepartmentList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
+  emplIdList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/empMst');
+  }
   DesignationList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/Designation');
   }
   recvTypeIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
+  }
+  invItemList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/itemMst');
+  } 
+  supplierCodeList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/supp');
+  }
+  suppIdList(suppId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
   }
 //   taxCategoryList(): Observable<any> {
 //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -223,11 +235,11 @@ purchasableList(): Observable<any> {
 } 
 
 costCenterList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/CostCentre');
 } 
 
 hsnSacCodeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
 } 
 
 internalOrderList(): Observable<any> {
@@ -251,11 +263,11 @@ typeList(): Observable<any> {
 } 
 
 mainModelList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 } 
 
 colorCodeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/MulColour');
 } 
 
 variantCodeList(): Observable<any> {
@@ -287,23 +299,25 @@ ewPeriodList(): Observable<any> {
 } 
 
 ewInsNameList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  // return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');
+  return this.http.get(this.ServerUrl +'/Customer/ClassCode/EWINSURER'); 
 } 
 
-ewInsSiteList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+ewInsSiteList(customerId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/Customer/${customerId}`);
 } 
 
 itemTypeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/ItemType');
 } 
 
 insNameList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');
 } 
 
-insSiteList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+insSiteList(customerId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/Customer/${customerId}`);
+  
 } 
 
 ripsList(): Observable<any> {
@@ -319,7 +333,7 @@ holdList(): Observable<any> {
 } 
 
 holdReasonList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/HoldReason');
 } 
 getItemCodePach(segment): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/${segment}`);
@@ -414,21 +428,110 @@ UpdateEmpMasterById(EmpMasterRecord,emplId) {
 getdocSeqSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/docsrlmst');
 }
-public docSeqMasterSubmit(EmpMasterRecord) {
+public docSeqMasterSubmit(docSeqMasterRecord) {
   const options = {
     headers: this.headers
   };
   const url = this.ServerUrl + '/docsrlmst/docsrlmaster';  
-  return this.http.post(url, EmpMasterRecord, options);
+  return this.http.post(url, docSeqMasterRecord, options);
 }
-UpdatedocSeqMasterById(EmpMasterRecord,docSrlId) {
+UpdatedocSeqMasterById(docSeqMasterRecord,docSrlId) {
   const options = {
     headers: this.headers
   };
   const url = (this.ServerUrl + `/docsrlmst/${docSrlId}`);
-  return this.http.put(url, EmpMasterRecord, options);
+  return this.http.put(url, docSeqMasterRecord, options);
 }
+////////////////////////Customer master//////////////////
+UpdateCustMasterById(CustMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + '/Customer');
+  return this.http.put(url, CustMasterRecord, options);
+}  
+UpdateCustExeSiteMasterById(CustMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + '/Customer/site');
+  return this.http.put(url, CustMasterRecord, options);
+}
+public CustMasterOnlySitSubmit(CustMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/Customer/site';  
+  return this.http.post(url, CustMasterRecord, options);
+}
+public CustMasterSubmit(CustMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/Customer/withSite';  
+  return this.http.post(url, CustMasterRecord, options);
+}
+getsearchByAccountNo(customerId1): Observable<any> {
+  return this.http.get(this.ServerUrl +  `/Customer/CustomerId1/${customerId1}`);
+}
+/////////////////////////////HSN-SAC CODE//////////////////////
+getHsnSacSearch(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/hsnsacMst');
+  }
+  
+  public HSNSACMasterSubmit(HsnSacMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/hsnsacMst';  
+    return this.http.post(url, HsnSacMasterRecord, options);
+  }
+  
+UpdateHSNMasterById(HsnMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + '/hsnsacMst');
+  return this.http.put(url, HsnMasterRecord, options);
+}
+///////////////////////////Purchese order/////////////////
+
+getsearchByPOHeder(poNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/poHdr/poNum/${poNo}`);
 }
 
+public poSubmit(poMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/poHdr';  
+  return this.http.post(url, poMasterRecord, options);
+}
+//////////////////Jai Regime Master////////////////
+regimeTypeLisFunt(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/cmnLookup/JaiRegimeType');
+}
+getJaiRegimeSearch(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/jairegime');
+ 
+}
+
+public JaiRegimeMasterSubmit(JaiRegimeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/jairegime';  
+  return this.http.post(url, JaiRegimeMasterRecord, options);
+}   
+
+UpdateJaiRegimeById(JaiRegimeMasterRecord,regimeId) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/jairegime/${regimeId}`);
+  return this.http.put(url, JaiRegimeMasterRecord, options);
+}
+
+} 
 
 

@@ -191,13 +191,7 @@ export class SupplierMasterComponent implements OnInit {
           console.log(this.statusList);
         }
       );
-    // this.service.pinCodeList()
-    //   .subscribe(
-    //     data => {
-    //       this.pinCodeList = data;
-    //       console.log(this.pinCodeList);
-    //     }
-    //   );
+    
     this.service.StateList()
       .subscribe(
         data => {
@@ -219,7 +213,6 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   transData(val) {
-    // delete val.divisionId;
     delete val.suppSiteId;
     delete val.existing;
     delete val.ExeAddress;
@@ -233,28 +226,6 @@ export class SupplierMasterComponent implements OnInit {
     delete val.smobile1;
     delete val.smobile2;
     delete val.aadharNo;
-
-    // delete val.suppNo;
-    // delete val.name;
-    // delete val.address1;
-    // delete val.address2;
-    // delete val.address3;
-    // delete val.address4;
-    // delete val.city;
-    // delete val.pinCode;
-    // delete val.state;
-    // delete val.mobile1;
-    // delete val.mobile2;
-    // delete val.emailId;
-    // delete val.contactPerson;
-    // // taxCategoryName: string;
-    // delete val.contactPerson;
-    // delete val.ticketNo;
-    // delete val.creditDays;
-    // delete val.creditLimit;
-    // delete val.remarks;
-    // delete val.existing;
-    // delete val.ExeAddress;
     return val;
   }
   transDataforS(val) {
@@ -275,7 +246,7 @@ export class SupplierMasterComponent implements OnInit {
     delete val.creditLimit;
     delete val.remarks;
     delete val.existing;
-    delete val.ExeAddress;
+    // delete val.ExeAddress;
     delete val.existing;
     delete val.ExeAddress;
     delete val.status;

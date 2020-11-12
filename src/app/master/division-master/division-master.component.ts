@@ -31,13 +31,14 @@ export class DivisionMasterComponent implements OnInit {
   divisionName: string;
   startDate: Date;
   endDate: Date;
+
   public status ="Active"; 
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
-  lstcomments: any[];
   display = true;
   displayButton = true;
+  lstcomments: any[];
   public minDate = new Date();
   public statusList: Array<string> = [];
 
