@@ -1,0 +1,105 @@
+form {
+    width: fit-content;
+    padding: 10px;
+   }
+  
+
+.center 
+{
+    margin-left:auto;
+    margin-right: auto;
+ }
+
+.PageHeader {
+    font-size: x-large;
+    font-weight: bold;
+    margin: 0;
+    height: 22px;
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 05px;
+    padding-left:400px;
+    padding-bottom: 10px;
+}
+
+.autostyle1{
+    margin-left: 40%;
+}
+
+.w-100
+{
+        padding:2px; 
+}
+
+col{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:black;
+    font-size: small; 
+    /* padding: 10px; */
+    margin:10px; 
+    padding:10px;
+}
+div.c {
+    text-align: right;
+    /* color: red; */
+  }
+
+  .auto-style103{
+    /* background-color: #d9dbbe; */
+    background-color: white;
+    border-color: #000066;
+    border-style: ridge;
+    height: 100%;
+    width: 82em;
+    margin-left: 24px;
+    box-shadow: darkorange;
+    /* box-shadow: 5px 5px 8px rgb(29, 29, 77); */
+    padding: 30px;
+     }
+
+     input{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: black;
+        width: 298px;
+        font-size: small; 
+        border-color: black;
+        box-shadow: 5px 5px 8px rgb(13, 13, 19);
+    }
+
+    select{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: black;
+        width: 298px;
+        font-size: small; 
+        border-color: black;
+        box-shadow: 5px 5px 8px rgb(13, 13, 19);
+    }
+
+
+    .btn-primary{
+        width: 5em;
+        border-color: black;
+        box-shadow: 5px 5px 8px rgb(13, 13, 19);
+
+    }
+
+    .btn:hover{
+        box-shadow: 5px 5px 8px rgb(60, 60, 224);  
+        background-color:lightcoral; 
+    }
+
+    .auto-style4{
+        /* */
+     color:#333333;
+     font-family:Verdana;
+     font-size:Small;
+     height:16px;
+     width: 101em;
+     /* border-collapse:collapse; */
+     text-align: left; 
+     margin-right: 0px; 
+     margin-left: 24px;
+     border-color: #35357c;
+     border-style: ridge;
+    }

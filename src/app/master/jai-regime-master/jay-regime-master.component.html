@@ -1,0 +1,295 @@
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<div class="form-bg">
+    <form [formGroup]="jaiRegimeMasterForm" (ngSubmit)="jaiRegimeMaster(jaiRegimeMasterForm.value)">
+        <div class="center">
+            <div id="Panel1" class="auto-style103">
+                <div class="container">
+                    <div class="row">
+                        <div class="PageHeader">
+                            <div class="col">&nbsp;&nbsp;TAX&nbsp;REGIME&nbsp;MASTER</div>
+                        </div>
+
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div>
+                            <input type="text" hidden  formControlName="regimeId">
+                        </div>
+                        <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                        <ng-template #thenBlock>
+                        <div class="col">
+                            <div class="c">Regime&nbsp;Code&nbsp;:</div>
+                        </div>
+
+                        <div class="col">
+                            <input type="text" formControlName="regimeCode" class="form-control"
+                                placeholder="Enter Regime code"
+                                [ngClass]="{ 'is-invalid': submitted && f.regimeCode.errors }"
+                                placeholder="Enter Tax Regime code">
+
+                            <div *ngIf="submitted && f.regimeCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.regimeCode.errors.required">Regime code must be a valid</div>
+                                <div *ngIf="f.regimeCode.errors?.maxLength">Regime code must be a valid for 7 digit>
+                                </div>
+                            </div>
+                            <!-- <span
+                        *ngIf="!jaiRegimeMasterForm.get('regimeCode').valid && jaiRegimeMasterForm.get('regimeCode').touched">Please
+                        Enter regime code 
+                    </span> -->
+                        </div>
+
+                        <div class="col">
+                            <div class="c">Regime&nbsp;Name&nbsp;:</div>
+                        </div>
+
+                        <div class="col">
+                            <input type="text" formControlName="regimeName" class="form-control" placeholder="Enter">
+                        </div>
+
+                        <!-- <div class="w-100" style="background-color:blue;">Width 100%</div> -->
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+
+                        <div class="col">
+                            <div class="c">Regime&nbsp;Type&nbsp;:</div>
+                        </div>
+
+                        <div class="col">
+                            <!-- <select formControlName="regimeType" id="regimeType" class="form-control">
+                            <option>--Select--</option>
+                         </select> -->
+                            <select formControlName="regimeType" id="regimeType" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of regimeTypeList">
+                                    {{sc.codeDesc}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- <div class="w-100"></div> -->
+                        <div class="col">
+                            <div class="c">Status&nbsp;&nbsp;:</div>
+                        </div>
+
+                        <div class="col">
+                            <input disabled formControlName="status" id="status" class="form-control" [(ngModel)]="status">
+                            <!-- <select formControlName="status" id="status" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option>
+                        </select> -->
+                        </div>
+
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+                        <div class="w-100"></div>
+
+                        <div class="col">
+                            <div class="c">Start&nbsp;Date&nbsp;:</div>
+                        </div>
+
+                        <div class="col">
+                            <input type="date" formControlName="startDate" class="form-control" placeholder="Choose"
+                                max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </div>
+
+                        <!-- <div class="w-100"></div> -->
+                        <div class="col">
+                            <div class="c">End&nbsp;Date&nbsp;:</div>
+                        </div>
+
+                        <div class="col">
+                            <input type="date" formControlName="endDate" class="form-control" placeholder="Choose"
+                                min="{{minDate | date:'yyyy-MM-dd'}}">
+                        </div>
+</ng-template>
+<ng-template #elseBlock>
+<div class="col">
+    <div class="c">Regime&nbsp;Code&nbsp;:</div>
+</div>
+
+<div class="col">
+    <input disabled type="text" formControlName="regimeCode" class="form-control"
+        placeholder="Enter Regime code"
+        [ngClass]="{ 'is-invalid': submitted && f.regimeCode.errors }"
+        placeholder="Enter Tax Regime code">
+
+    <div *ngIf="submitted && f.regimeCode.errors" class="invalid-feedback">
+        <div *ngIf="f.regimeCode.errors.required">Regime code must be a valid</div>
+        <div *ngIf="f.regimeCode.errors?.maxLength">Regime code must be a valid for 7 digit>
+        </div>
+    </div>
+    <!-- <span
+*ngIf="!jaiRegimeMasterForm.get('regimeCode').valid && jaiRegimeMasterForm.get('regimeCode').touched">Please
+Enter regime code 
+</span> -->
+</div>
+
+<div class="col">
+    <div class="c">Regime&nbsp;Name&nbsp;:</div>
+</div>
+
+<div class="col">
+    <input disabled type="text" formControlName="regimeName" class="form-control" placeholder="Enter">
+</div>
+
+<!-- <div class="w-100" style="background-color:blue;">Width 100%</div> -->
+<div class="w-100"></div>
+<div class="w-100"></div>
+<div class="w-100"></div>
+
+<div class="col">
+    <div class="c">Regime&nbsp;Type&nbsp;:</div>
+</div>
+
+<div class="col">
+    <!-- <select formControlName="regimeType" id="regimeType" class="form-control">
+    <option>--Select--</option>
+ </select> -->
+    <select disabled formControlName="regimeType" id="regimeType" class="form-control">
+        <option>--Select--</option>
+        <option *ngFor="let sc of regimeTypeList">
+            {{sc.codeDesc}}
+        </option>
+    </select>
+</div>
+
+<!-- <div class="w-100"></div> -->
+<div class="col">
+    <div class="c">Start&nbsp;Date&nbsp;:</div>
+</div>
+
+<div class="col">
+    <input disabled type="date" formControlName="startDate" class="form-control" placeholder="Choose"
+        max="{{minDate | date:'yyyy-MM-dd'}}">
+</div>
+
+
+
+<div class="w-100"></div>
+<div class="w-100"></div>
+<div class="w-100"></div>
+
+
+
+<div class="col">
+    <div class="c">Status&nbsp;&nbsp;:</div>
+</div>
+
+<div class="col">
+    <select formControlName="status" [(ngModel)]="status" id="status" class="form-control"
+    [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+    <option>--Select--</option>
+    <option *ngFor="let sc of  statusList">
+        {{sc.codeDesc}}
+    </option>
+</select>
+</div>
+<div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+<ng-template #thenBlockInactive>
+</ng-template>
+<ng-template #elseBlockInactive>
+        <div class="col">
+            <div class="c">Inactive&nbsp;Date:&nbsp;</div>
+        </div>
+<div class="col">
+        <input disabled type="text" formControlName="endDate" class="form-control"
+        [ngModel]="endDate | date:'yyyy-MM-dd'">
+    </div>
+</ng-template>
+<!-- <div class="col">
+    <div class="c">End&nbsp;Date&nbsp;:</div>
+</div>
+
+<div class="col">
+    <input  type="date" formControlName="endDate" class="form-control" placeholder="Choose"
+        min="{{minDate | date:'yyyy-MM-dd'}}">
+</div> -->
+       </ng-template>                 
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <table class="center">
+                            <tr>
+                                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                    <ng-template #thenBlock1>
+                        <td>
+                            <button type="button" class="btn btn-info btn-block" (click)="newMast()" [disabled]="!jaiRegimeMasterForm">New</button>
+                        </td>
+                        <!-- <td>
+                            <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!jaiRegimeMasterForm">Update</button>
+                        </td> -->
+                        <td>
+                            <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                        </td>
+                                </ng-template>
+                                <ng-template #elseBlock1>
+                                <!-- <td>
+                                    <button type="button" class="btn btn-info btn-block" (click)="newMast()" [disabled]="!jaiRegimeMasterForm">New</button>
+                                </td> -->
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!jaiRegimeMasterForm">Update</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                </td>
+                                </ng-template>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<br>
+<div class="container1">
+    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
+        <tbody>
+            <tr class="auto-style5">
+                <th scope="col">Regime Id</th>
+                <th scope="col">Regime Code</th>
+                <th scope="col">Regime Name</th>
+                <th scope="col">Regime Type</th>
+                <!-- <th scope="col">Tax Authority</th> -->
+                <th scope="col">Start Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+            <td>{{com.regimeId}}</td>
+            <td>{{com.regimeCode}}</td>
+            <td>{{com.regimeName}}</td>
+            <td>{{com.regimeType}}</td>  
+            <td>{{com.startDate}}</td>
+            <td>{{com.status}}</td>
+            <td><button (click)="Select(com.regimeId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+

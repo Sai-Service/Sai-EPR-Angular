@@ -1,0 +1,352 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="form-bg">
+    <div class="center">
+        <form [formGroup]="poMasterDtoForm" (ngSubmit)="poMasterDto(poMasterDtoForm.value)">
+            <div id="Panel1" class="auto-style103">
+                <div class="container">
+                    <div class="row">
+                        <table style="width: 100%;background-color: white;">
+                            <tr>
+                                <td class="PageHeader">
+                                    &nbsp;&nbsp;Purchase&nbsp;Order
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="center">
+                            <table style="width: fit-content;">
+                                <tr>
+                                    <!-- <td><input type="text" formControlName="id" [(ngModel)]='id'></td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">Department&nbsp;</td>
+                                    <td>
+                                        <select formControlName="dept" id="dept" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
+                                                {{sc.cmnTypeId}}-{{sc.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="ouId" id="ouId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                                {{sc.ouName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.ouId.errors.required">OU Id is required</div>
+                                            <span
+                                                *ngIf="!poMasterDtoForm.get('ouId').valid && poMasterDtoForm.get('ouId').touched">Please
+                                                Enter valid Operating Unit </span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Created&nbsp;:&nbsp;</td>
+                                    <td><input type="date" formControlName="poDate" class="form-control"
+                                            placeholder="Enter Creation Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                        <span
+                                            *ngIf="!poMasterDtoForm.get('poDate').valid && poMasterDtoForm.get('poDate').touched">Please
+                                            Enter Creation Date </span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Type&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="text" formControlName="poType" class="form-control" placeholder="">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Po&nbsp;Rev&nbsp;:</td>
+                                    <td>
+                                        <input type="text" formControlName="segment1" class="form-control"
+                                            placeholder="Pleasse Enter type">
+                                    </td>
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Employee&nbsp;Ticket&nbsp;No&nbsp;
+                                    </td>
+                                    <td>
+                                        <select formControlName="emplId" id="emplId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  emplIdList" [ngValue]="sc.emplId">
+                                                {{sc.ticketNo}}-{{sc.fname}}
+                                            </option>
+                                        </select>
+                                    </td> -->
+
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Supplier&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <!-- <input type="text" formControlName="supplierCode" class="form-control"
+                                            placeholder="Pleasse Enter Supplier"> -->
+                                        <select  formControlName="supplierCode" id="supplierCode" class="form-control"
+                                            [(ngModel)]='supplierCodeSelected'
+                                            (ngModelChange)='onSupplierCodeSelected($event)'>
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  supplierCodeList" [value]="sc.suppId">
+                                                {{sc.name}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Site&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <!-- <input type="text" formControlName="supplierSiteId" class="form-control"
+                                            placeholder="Pleasse Enter Supplier"> -->
+                                        <select formControlName="supplierSiteId" id="supplierSiteId" class="form-control">
+                                           <option>--Select--</option>
+                                           <option *ngFor="let sc of  suppIdList" >
+                                               {{sc.suppSiteId}}
+                                           </option>
+                                       </select>
+                                    </td>
+
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="number" formControlName="Contact" class="form-control"
+                                            placeholder="Pleasse Enter Contact Details">
+                                    </td> -->
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Ship-To&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <!-- <input  formControlName="shipToLoc"> -->
+                                        <select formControlName="shipToLoc" id="shipToLoc" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  BillShipList" [ngValue]="sc.locId">
+                                                {{sc.locCode}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && f. shipToLoc.errors" class="invalid-feedback">
+                                            <div *ngIf="f.shipToLoc.errors.required">Ship-To is required</div>
+                                            <span
+                                                *ngIf="!poMasterDtoForm.get('shipToLoc').valid && poMasterDtoForm.get('shipToLoc').touched">Please
+                                                Enter valid Ship-To </span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Bill-To&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <!-- <input formControlName="billToLoc"> -->
+                                        <select formControlName="billToLoc" id="billToLoc" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  BillShipList1" [ngValue]="sc.locId">
+                                                {{sc.locCode}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && f. billToLoc.errors" class="invalid-feedback">
+                                            <div *ngIf="f.billToLoc.errors.required">Bill-To is required</div>
+                                            <span
+                                                *ngIf="!poMasterDtoForm.get('billToLoc').valid && poMasterDtoForm.get('billToLoc').touched">Please
+                                                Enter valid Bill-To </span>
+                                        </div>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Currency&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="text" formControlName="currencyCode" class="form-control"
+                                            placeholder="Pleasse Enter Currency">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <input type="number" hidden formControlName="empId" [(ngModel)]="empId">
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Buyer&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="text" formControlName="name" class="form-control"
+                                            placeholder="Pleasse Enter Buyer">
+                                    </td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="text" formControlName="authorizationStatus" class="form-control"
+                                            placeholder="Pleasse Enter Status">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Total&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="number" formControlName="totalAmt" class="form-control"
+                                            placeholder=" ">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Description&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input type="text" formControlName="totalAmt" class="form-control"
+                                            style="width: 100%;" placeholder="Pleasse Enter description">
+                                    </td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">Base&nbsp;Amount&nbsp;:</td>
+                                    <td>
+                                        <input type="number" formControlName="baseAmount" class="form-control"
+                                            style="width: 100%;" placeholder="Pleasse Enter baseAmount">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">approveDate&nbsp;:</td>
+                                    <td> <input type="date" formControlName="approveDate"></td>
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">termsId&nbsp;:</td>
+                                    <td> <input type="text" formControlName="termsId"></td> -->
+                                </tr>
+                                <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Supplier&nbsp;Invoice&nbsp;Number:&nbsp;</td>
+                                    <td colspan="">
+                                        <input type="number" formControlName="suppInvNo" class="form-control"
+                                            style="width: 100%;" placeholder="Pleasse Enter Supplier Invoice Number">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Transaction&nbsp;Nature&nbsp;:&nbsp;
+                                    </td>
+                                    <td colspan="">
+                                        <input type="text" formControlName="TransactionNature" class="form-control"
+                                            style="width: 100%;" placeholder="Pleasse Enter Transaction Nature">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">E-Way&nbsp;bill&nbsp;No:&nbsp;</td>
+                                    <td colspan="">
+                                        <input type="text" formControlName="ewayBillNo" class="form-control"
+                                            style="width: 100%;" placeholder="Pleasse Enter E-Way bill No">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">iRNNo&nbsp;:&nbsp;</td>
+                                    <td colspan="">
+                                        <input type="text" formControlName="iRNNo" class="form-control"
+                                            style="width: 100%;" placeholder="Pleasse Enter iRNNo">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> Purchase Location</td>
+                                    <td><input type="text" formControlName="purchaseLocation"></td>
+                                    <td> Evaluator Name</td>
+                                    <td><input type="text" formControlName="evaluatorName"></td>
+                                    <td> Exchange bonus Share</td>
+                                    <td><input type="text" formControlName="exchangeBonusShare"></td>
+                                    <!-- <td> Context</td>
+                                    <td><input type="text" formControlName="context"></td> -->
+                                </tr>
+
+
+                            </table>
+                            <h6>Line Details</h6>
+                            <div class="container1">
+                                <div class="row" formArrayName="poLines">
+                                    <div class="grid_scroll"> 
+                                    <table style="width: 100%;" class="auto-style4" cellspacing="0" cellpadding="4"
+                                        rules="all">
+
+                                        <tbody>
+                                            <tr class="auto-style5">
+                                                <!-- <th align="left" scope="col">SR No </th> -->
+                                                <th scope="col">polineNum</th>
+                                                <th scope="col">InvItem</th>
+                                                <th scope="col">uom</th>
+                                                <th scope="col">itemType</th>
+                                                <th scope="col">unitPrice</th>
+                                                <th scope="col">orderedQty</th>
+                                                <th scope="col">totalPrice</th>
+                                                <th scope="col">cancelFlag</th>
+                                                <th scope="col">cancelBy</th>
+                                                <th scope="col">cancelDate</th>
+                                                <th scope="col">cancelReason</th>
+                                                <th scope="col">delearCode</th>
+                                                <th scope="col">closedCode</th>
+                                                <!-- <th scope="col">ouId</th> -->
+                                                <th scope="col">startDate</th>
+                                                <th scope="col">endDate</th>
+                                                <th scope="col">status</th>
+
+                                                <!-- <th scope="col">Num</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Rev</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">UOM</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Price</th>
+                                            <!-- <th scope="col">Promised</th>
+                                            <th scope="col">Need-By</th>
+                                            <th scope="col">Supplier Item</th>
+                                            <th scope="col">Supplier Config ID</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Charge Account</th>
+                                            <th scope="col">Reserved</th>
+                                            <th scope="col">Secondary UOM</th>
+                                            <th scope="col">Secondary Quantity</th>
+                                            <th scope="col">Grade</th> -- -->
+                                            </tr>
+                                        </tbody>
+                                        <!--  </table> -->
+                                        <!-- <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+                                        <td>{{com.locId}}</td>
+                                        <td>{{com.locCode}}</td>
+                                        <td>{{com.ouId.ouName}}</td>
+                                        <td><button (click)="Select(com.locId)">Select</button></td>
+                                    </tr> -->
+                                        <!-- <h1>TESTING</h1> -->
+
+                                        <!-- <div class="row" formArrayName="lineDetails"> -->
+                                        <tr *ngFor="let group of lineDetailsArray.controls; let i= index"
+                                            [formGroupName]="i">
+                                            <!-- <table> -->
+
+
+                                            <td> <input type="number" formControlName="polineNum"></td>
+                                            <!-- <td> <input type="text" formControlName="invItemId"></td>
+                                                  invItemList -->
+                                            <td><select formControlName="invItemId" id="invItemId" class="form-control">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  invItemList" [ngValue]="sc.itemId">
+                                                        {{sc.segment}}
+                                                    </option>
+                                                </select></td>
+
+                                            <td> <input type="text" formControlName="uom"></td>
+                                            <td> <input type="text" formControlName="itemType"></td>
+                                            <td> <input type="number" formControlName="unitPrice"></td>
+                                            <td> <input type="number" formControlName="orderedQty"></td>
+                                            <td> <input type="number" formControlName="totalPrice"></td>
+                                            <td> <input type="text" formControlName="cancelFlag"></td>
+                                            <td> <input type="text" formControlName="cancelBy"></td>
+                                            <td> <input type="date" formControlName="cancelDate"></td>
+                                            <td> <input type="text" formControlName="cancelReason"></td>
+                                            <td> <input type="number" formControlName="delearCode"></td>
+                                            <td> <input type="text" formControlName="closedCode"></td>
+                                            <!-- <td> <input type="text" formControlName="ouId"></td> -->
+                                            <td> <input type="date" formControlName="startDate"></td>
+                                            <td> <input type="date" formControlName="endDate"></td>
+                                            <td> <input type="text" formControlName="status"></td>
+
+                                            <!-- <td> <input type="text" formControlName="polineNum"></td>
+                                       <td> <input type="text" formControlName="itemType"></td>
+                                       <td> <input type="text" formControlName="invItemId"></td>
+                                       <td> <input type="text" formControlName="Rev"></td>
+                                       <td> <input type="text" formControlName="Category"></td>
+                                       <td> <input type="text" formControlName="Description"></td>
+                                       <td> <input type="text" formControlName="uom"></td>
+                                       <td> <input type="text" formControlName="orderedQty"></td>
+                                       <td> <input type="text" formControlName="unitPrice"></td>
+                                       <!-- <td> <input type="text" formControlName="Promised"></td>
+                                       <td> <input type="text" formControlName="NeedBy"></td>
+                                       <td> <input type="text" formControlName="SupplierItem"></td>
+                                       <td> <input type="text" formControlName="SupplierConfigID"></td>
+                                       <td> <input type="text" formControlName="Amount"></td>
+                                       <td> <input type="text" formControlName="ChargeAccount"></td>
+                                       <td> <input type="text" formControlName="Reserved"></td>  
+                                       <td> <input type="text" formControlName="SecondaryUOM"></td>
+                                       <td> <input type="text" formControlName="SecondaryQuantity"></td>
+                                       <td> <input type="text" formControlName="Grade"></td> -- -->
+                                            <td><button type="button" (click)="addRow()">Add Row </button> </td>
+                                            <td> <button type="button" (click)="RemoveRow(i)">Remove Row </button></td>
+                                        </tr>
+                                        <!-- </table> -->
+                                        <!-- </tbody>
+                            </table> -->
+
+                                        <!-- </div>   -->
+
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- <button type="button" (click)="SubmitButton(id)">Submit</button> -->
+                            <button type="button" (click)="newPOMast()">New</button>
+                            <input type="text" formControlName="poNo" [(ngModel)]="poNo">
+                            <button type="button" (click)="Search(poNo)">Search</button>
+
+                            <h6>Tax Details</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
