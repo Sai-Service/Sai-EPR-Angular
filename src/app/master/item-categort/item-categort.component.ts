@@ -39,6 +39,7 @@ export class ItemCategortComponent implements OnInit {
   mainType: string;
   princpleItem: string;
   categoryId: number;
+  divisionCode:string;
 
   lstcomments: any;
   displayButton = true;
@@ -68,6 +69,7 @@ export class ItemCategortComponent implements OnInit {
       mainType: [''],
       categoryId: [],
       endDate:[],
+      divisionCode:['', [Validators.required]],
     })
 
   }
@@ -185,6 +187,7 @@ export class ItemCategortComponent implements OnInit {
     if (select) {
       this.itemCategoryMasterForm.patchValue(select);
       this.divisionId= select.divisionId.divisionId;
+      this.divisionCode=select.divisionId.divisionCode;
       // this.divisionId= select.divisionId.divisionId;
       // this.compId= select.compId.compId;
       // this.mState =select.mState;

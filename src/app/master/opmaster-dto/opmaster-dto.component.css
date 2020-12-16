@@ -13,7 +13,7 @@ form {
     box-shadow: 5px 5px 8px rgb(29, 29, 77);
     padding: 10px;
     }
-.PageHeader {
+/* .PageHeader {
         font-size: x-large;
         font-weight: bold;
         margin: 0;
@@ -23,8 +23,28 @@ form {
         text-align: center;
         padding-top: 10px;
         /* padding-left:550px; */
-        padding-bottom: 10px;
+        /* padding-bottom: 10px;
+    } */ 
+
+    .PageHeader {
+        font-size:large;
+        font-weight: bold;
+        margin: 0;
+        height: 22px;
+        font-family: Verdana,Sans-serif, Arial, Helvetica;
+        vertical-align: middle;
+        text-align: center;
+        padding: 2px;
+        color: white;
+        /* background-color:#570906;   */
+        /* background-color:#ac3911; */
+        /* background-color:#e95420; */
+        background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+        /* #40758b; */
     }
+    
+
+
     
     
 .center {
@@ -36,6 +56,7 @@ form {
         width: 10em;
         border-color: black;
         box-shadow: 5px 5px 8px rgb(13, 13, 19);
+        align-self: center;
     }
     
     .btn-primary:hover{
@@ -43,9 +64,14 @@ form {
         background-color: blue;
     }
 
+    .LabelFontStyle1:before{
+        content:"*";
+        color:rgb(252, 29, 29);
+      }
 
     .LabelFontStyle {
         background-color: #FAFAFA;
+        /* background-color: rgb(144, 194, 196); */
         font-family: Verdana,Sans-serif, Arial, Helvetica;
         font-weight: normal;
         color: Black;
@@ -61,17 +87,29 @@ form {
 
     .form-control {
         font-family: Verdana,Sans-serif, Arial, Helvetica;
+        font-size: 11px;
+        outline: medium none;
+        padding: 3px;
+        vertical-align: top;
+        width: 190px;
+        height: 18%;
+       border-color: black;
+       /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
+      }
+
+    /* .form-control {
+        font-family: Verdana,Sans-serif, Arial, Helvetica;
         font-size: small;
         /* height: 13px; */
         /* height: 25px; */
-        /* border: 1px solid #DDD; */
+        /* border: 1px solid #DDD; 
         outline: medium none;
         padding: 3px;
         vertical-align: top;
         width: 198px;
        border-color: black;
        box-shadow: 5px 5px 8px rgb(13, 13, 19);
-    }
+    } */
     
 
     .vertical-center{
@@ -164,7 +202,10 @@ label{
  border-color: #35357c;
  border-style: ridge;
 }
-
+.auto-style5{
+    width: 5px;
+    font-size: small;
+}
 .grid_scroll
 {
     overflow: auto;
@@ -173,4 +214,26 @@ label{
     /* border: solid 1px orange; */
     width: 28%;
     /* width: 100px; */
+}
+
+.modal-dialog{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+    margin-bottom: auto; 
+}
+
+.modal-title{
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    color: red;
+}
+
+.rowformat{
+    font-size: 11px;
+    font-weight: bold;
+    color: red;
 }

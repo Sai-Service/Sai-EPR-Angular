@@ -21,6 +21,7 @@ export class LoginService {
     let options = {
       headers: this.headers
     };
+    // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
     const url = 'http://localhost:8081/loginpage';
     console.log(body);
     return this.httpclient.post(url, body, options);

@@ -15,15 +15,18 @@ import { RouterModule, Routes } from '@angular/router';
 // import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
+import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
 import { from } from 'rxjs';
 import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
+import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFouundComponent,
     DashboardComponent,
+    PoReceiptFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,9 @@ import { DashboardComponent } from './master/dashboard/dashboard.component';
     MasterModule,
     ChartsModule,
   ],
-  providers: [],
+  providers: [
+    {provide : LocationStrategy , useClass: HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

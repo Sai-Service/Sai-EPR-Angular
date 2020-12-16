@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
+import {Location} from '@angular/common';
 
 interface IOperatingUnit {
   ouId: number;
@@ -54,19 +55,20 @@ export class OrganizationMasterComponent implements OnInit {
   public StateList: Array<string> = [];
   public companyCodeList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
+  public divisionName : any;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private _location: Location) {
     this.operatingUnitMasterForm = fb.group({
       ouId: [],
-      ouName: ['', [Validators.required, Validators.maxLength(45)]],
-      ouDesc: ['', [Validators.required, Validators.maxLength(45)]],
+      ouName: ['', [Validators.required, Validators.maxLength(50),Validators.pattern('[a-zA-Z ]*')]],
+      ouDesc: ['', [Validators.required, Validators.maxLength(50),Validators.pattern('[a-zA-Z ]*')]],
       divisionId: ['', [Validators.required]],
       compId: ['', [Validators.required]],
-      mainBrAdd: ['', [Validators.required, Validators.maxLength(45)]],
+      mainBrAdd: ['', [Validators.required, Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
       mState: ['', [Validators.required]],
       country:[],
       startDate: ['', [Validators.required]],
-      uheadCeo:['', [Validators.nullValidator]],
+      uheadCeo:['', [Validators.nullValidator,Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
       status: ['', [Validators.required]],
       endDate:[],
     });
@@ -161,12 +163,18 @@ export class OrganizationMasterComponent implements OnInit {
   };
 
   resetMast() {
+    // alert ('Please Confirm Do you want to Reset')
     window.location.reload();
   }
 
   closeMast() {
     this.router.navigate(['admin']);
   }
+
+
+  backClicked() {
+        this._location.back();
+      }
 
   searchMast() {
     this.service.getoperatingUnitSearch()
@@ -188,6 +196,8 @@ export class OrganizationMasterComponent implements OnInit {
       this.mState =select.mState;
       this.displayButton = false;
       this.display = false;
+      // this.DivisionIDList=select.divisionId.divisionName;
+      this.divisionName=select.divisionId.divisionName;
     }
   }
   onOptionsSelected(event: any) {
@@ -200,5 +210,10 @@ export class OrganizationMasterComponent implements OnInit {
     else if (this.Status1 === 'Active') {
       this.operatingUnitMasterForm.get('endDate').reset();
     }
+  }
+
+  
+  close(){
+    this.router.navigate(['login']);
   }
 }

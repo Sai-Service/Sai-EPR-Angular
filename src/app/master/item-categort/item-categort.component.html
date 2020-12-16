@@ -1,361 +1,310 @@
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 <div class="center">
-    <div class="form-bg">
-        <div class="center">
-            <form [formGroup]="itemCategoryMasterForm" (ngSubmit)="itemCategory(itemCategoryMasterForm.value)"
-                id="form_1">
-                <div id="Panel1" class="auto-style103">
-                    <div class="center">
-                        <div class="container">
-                            <table style="width: 100%;background-color: white;">
-                                <tr>
-                                    <td class="PageHeader">
-                                        &nbsp;&nbsp;Item&nbsp;Category&nbsp;Master
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-                            <table style="width: fit-content;" class="container">
-                                <td>
-                                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td colspan="4" class="PageHeader" style="width: 100%;" >
+                &nbsp;&nbsp;Item&nbsp;Category&nbsp;Master
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <form [formGroup]="itemCategoryMasterForm" (ngSubmit)="itemCategory(itemCategoryMasterForm.value)" id="form_1">
+                <table class="center">
+                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Division&nbsp;Code&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <select formControlName="divisionId" id="divisionId" class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
-                                                    {{sc.divisionId}}-{{sc.divisionName}}
-                                                </option>
-                                            </select>
-                                            <div *ngIf="submitted && f. divisionId.errors" class="invalid-feedback">
-                                                <div *ngIf="f.divisionId.errors.required">Division Code is required
-                                                </div>
-                                                <span
-                                                    *ngIf="!itemCategoryMasterForm.get('divisionId').valid && itemCategoryMasterForm.get('divisionId').touched">Please
-                                                    Enter division Code </span>
-                                            </div>
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
-                                        <td>
-                                            <input formControlName="description" [(ngModel)]='description'
-                                                value={{description}} class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
-                                                placeholder="Enter description">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <!-- <input type="text"><i class="fa fa-sort-desc" aria-hidden="true"></i> -->
-                                            <!-- Button to Open the Modal -->
-                                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                             Open modal
-                                             </button> -->
-                                            <input type="text" value="attribute1" formControlName="attribute1"
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Division&nbsp;Code&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="divisionId" id="divisionId" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
+                                        {{sc.divisionId}}-{{sc.divisionName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f. divisionId.errors" class="invalid-feedback">
+                                    <div *ngIf="f.divisionId.errors.required">Division Code is required
+                                    </div>
+                                    <span
+                                        *ngIf="!itemCategoryMasterForm.get('divisionId').valid && itemCategoryMasterForm.get('divisionId').touched">Please
+                                        Enter division Code </span>
+                                </div>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Description&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="description" [(ngModel)]='description'
+                                value={{description}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+                                placeholder="Enter description">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Item&nbsp;Category&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="text" value="attribute1" formControlName="attribute1"
                                                 [(ngModel)]='attribute1' value={{attribute1}} class="form-control"
                                                 data-toggle="modal" data-target="#myModal"
                                                 placeholder="Select Item Category">
+ <!-- The Modal -->
+ <div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                                            <!-- The Modal -->
-                                            <div class="modal" id="myModal">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <!-- <h4 class="modal-title">Modal Heading</h4> -->
+                <label> Item Category </label>
+                <button type="button" class="close"
+                    data-dismiss="modal">&times;</button>
+            </div>
 
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <!-- <h4 class="modal-title">Modal Heading</h4> -->
-                                                            <label> Item Category </label>
-                                                            <button type="button" class="close"
-                                                                data-dismiss="modal">&times;</button>
-                                                        </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Item&nbsp;Type&nbsp;:&nbsp;</td>
+                        <td>
+                            <select formControlName="mainType" id="mainType"
+                                [(ngModel)]='mainType' class="form-control" style="width: 120px;">
+                                <option>--Select--</option>
+                                    <option *ngFor="let sc of  mainTypeList">
+                                        {{sc.codeDesc}}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Item&nbsp;Sub&nbsp;Type&nbsp;&nbsp;:&nbsp;</td>
+                        <td>
+                            <select formControlName="subType" id="subType"
+                                [(ngModel)]='subType' class="form-control" style="width: 120px;">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  subTypeList">
+                                    {{sc.codeDesc}}
+                                    <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                        Item&nbsp;Type&nbsp;:&nbsp;</td>
-                                                                    <td>
-                                                                        <select formControlName="mainType" id="mainType"
-                                                                            [(ngModel)]='mainType' class="form-control">
-                                                                            <option>--Select--</option>
-                                                                                <option *ngFor="let sc of  mainTypeList">
-                                                                                    {{sc.codeDesc}}
-                                                                            </option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                        Item&nbsp;Sub&nbsp;Type&nbsp;&nbsp;:&nbsp;</td>
-                                                                    <td>
-                                                                        <select formControlName="subType" id="subType"
-                                                                            [(ngModel)]='subType' class="form-control">
-                                                                            <option>--Select--</option>
-                                                                            <option *ngFor="let sc of  subTypeList">
-                                                                                {{sc.codeDesc}}
-                                                                                <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
-                                                                            </option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                    data-dismiss="modal"
+                    (click)="fnItemCategory(mainType, subType)">Ok</button>
+            </div>
 
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-dismiss="modal"
-                                                                (click)="fnItemCategory(mainType, subType)">Ok</button>
-                                                        </div>
+        </div>
+    </div>
+</div>
+                            </td>
+                        </tr>
+<tr>
+<td style="width: 15%" class="LabelFontStyle">Principle&nbsp;Item&nbsp;:&nbsp;</td>
+<td>
+    <select formControlName="princpleItem" id="princpleItem"
+    class="form-control">
+    <option>--Select--</option>
+    <option *ngFor="let sc of YesNoList">
+        {{sc.code}}
+    </option>
+</select>
+</td>
+<td style="width: 15%" class="LabelFontStyle">Status:&nbsp;</td>
+<td>
+    <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #elseBlock>
+<tr>
+ <td style="width: 15%" class="LabelFontStyle">Division&nbsp;Code&nbsp;:&nbsp;</td>
+<td>
+    <input disabled type="text" formControlName="divisionId" [ngModel]="divisionId" value={{divisionId}} class="form-control">
+</td>
+<td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
+<td>
+    <input formControlName="description" [(ngModel)]='description'
+    value={{description}} class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+    placeholder="Enter description">
+</td>
+<td style="width: 15%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
+<td>
+    <input type="text" disabled value="attribute1" formControlName="attribute1"
+[(ngModel)]='attribute1' value={{attribute1}} class="form-control"
+data-toggle="modal" data-target="#myModal"
+placeholder="Select Item Category">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Principle&nbsp;Item&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <!-- required y/n lov -->
-                                            <select formControlName="princpleItem" id="princpleItem"
-                                                class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of YesNoList">
-                                                    {{sc.code}}
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Status:&nbsp;</td>
-                                        <td>
-                                            <!-- <select formControlName="status" id="status" [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'
-                                                class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  statusList">
-                                                    {{sc.codeDesc}}
-                                                </option>
-                                            </select> -->
+<!-- The Modal -->
+<div class="modal" id="myModal">
+<div class="modal-dialog">
+    <div class="modal-content">
 
-                                            <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                                <ng-template #elseBlock>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Division&nbsp;Code&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <input disabled type="text" formControlName="divisionId" [ngModel]="divisionId" value={{divisionId}} class="form-control">
-                       
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
-                                        <td>
-                                            <input formControlName="description" [(ngModel)]='description'
-                                                value={{description}} class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
-                                                placeholder="Enter description">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <!-- <input type="text"><i class="fa fa-sort-desc" aria-hidden="true"></i> -->
-                                            <!-- Button to Open the Modal -->
-                                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                             Open modal
-                                             </button> -->
-                                            <input type="text" disabled value="attribute1" formControlName="attribute1"
-                                                [(ngModel)]='attribute1' value={{attribute1}} class="form-control"
-                                                data-toggle="modal" data-target="#myModal"
-                                                placeholder="Select Item Category">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <!-- <h4 class="modal-title">Modal Heading</h4> -->
+            <label> Item Category </label>
+            <button type="button" class="close"
+                data-dismiss="modal">&times;</button>
+        </div>
 
-                                            <!-- The Modal -->
-                                            <div class="modal" id="myModal">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
- 
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <!-- <h4 class="modal-title">Modal Heading</h4> -->
-                                                            <label> Item Category </label>
-                                                            <button type="button" class="close"
-                                                                data-dismiss="modal">&times;</button>
-                                                        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+            <table>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Item&nbsp;Type&nbsp;:&nbsp;</td>
+                    <td>
+                        <select formControlName="mainType" id="mainType"
+                            [(ngModel)]='mainType' class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  mainTypeList" [ngValue]="code">
+                                {{sc.codeDesc}}
+                                <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Item&nbsp;Sub&nbsp;Type&nbsp;&nbsp;:&nbsp;</td>
+                    <td>
+                        <select formControlName="subType" id="subType"
+                            [(ngModel)]='subType' class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of subTypeList" [ngValue]="code">
+                                    {{sc.codeDesc}}
+                                <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                        Item&nbsp;Type&nbsp;:&nbsp;</td>
-                                                                    <td>
-                                                                        <select formControlName="mainType" id="mainType"
-                                                                            [(ngModel)]='mainType' class="form-control">
-                                                                            <option>--Select--</option>
-                                                                            <option *ngFor="let sc of  mainTypeList" [ngValue]="code">
-                                                                                {{sc.codeDesc}}
-                                                                                <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
-                                                                            </option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                                        Item&nbsp;Sub&nbsp;Type&nbsp;&nbsp;:&nbsp;</td>
-                                                                    <td>
-                                                                        <select formControlName="subType" id="subType"
-                                                                            [(ngModel)]='subType' class="form-control">
-                                                                            <option>--Select--</option>
-                                                                            <option *ngFor="let sc of subTypeList" [ngValue]="code">
-                                                                                    {{sc.codeDesc}}
-                                                                                <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
-                                                                            </option>
-                                                                        </select>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger"
+                data-dismiss="modal"
+                (click)="fnItemCategory(mainType, subType)">Ok</button>
+        </div>
 
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-dismiss="modal"
-                                                                (click)="fnItemCategory(mainType, subType)">Ok</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Principle&nbsp;Item&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <!-- required y/n lov -->
-                                            <input formControlName="princpleItem" class="form-control">
-                                            <!-- <select formControlName="princpleItem" id="princpleItem"
-                                                class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of YesNoList">
-                                                    {{sc.code}}
-                                                </option>
-                                            </select> -->
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Status:&nbsp;</td>
-                                        <td>
-                                            <select formControlName="status" id="status" [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'
-                                                class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  statusList">
-                                                    {{sc.codeDesc}}
-                                                </option>
-                                            </select>
-
-                                            <!-- <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" > -->
-                                        </td>
-                                        
-                                 <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                                <ng-template #thenBlockInactive>
-                                </ng-template>
-                                <ng-template #elseBlockInactive>
-                                    
-                                        <td style="width: 15%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;:&nbsp;</td>
-                                        <td><input disabled type="text" formControlName="endDate" class="form-control"
-                                             [ngModel]="endDate | date:'yyyy-MM-dd'"></td>
-                                    </ng-template>
-                                        
-                                    </tr>
-                                    </ng-template>
-                                </td>
-                                
-                            </table>
-                            <br>
-                            <table class="center">
-                                <tr>
-                                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                                    <ng-template #thenBlock1>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                [disabled]="!itemCategoryMasterForm.valid"
-                                                (click)="newItemCatMast()">New</button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                (click)="resetItemCatMast()">Reset</button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                (click)="closeItemCatMast()">Close</button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                (click)="searchItemCatMast()">Search</button>
-                                        </td>
-                                    </ng-template>
-                                    <ng-template #elseBlock1>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                [disabled]="!itemCategoryMasterForm.valid"
-                                                (click)="updateItemCatMast()">Update</button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                (click)="resetItemCatMast()">Reset</button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                (click)="closeItemCatMast()">Close</button>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger" id="register"
-                                                (click)="searchMast()">Search</button>
-                                        </td>
-                                    </ng-template>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+    </div>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+    <td style="width: 15%" class="LabelFontStyle">Principle&nbsp;Item&nbsp;:&nbsp;</td>
+<td>
+    <input formControlName="princpleItem" class="form-control">
+</td>
+<td style="width: 15%" class="LabelFontStyle">Status:&nbsp;</td>
+<td>
+    <select formControlName="status" id="status" [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'
+    class="form-control">
+    <option>--Select--</option>
+    <option *ngFor="let sc of  statusList">
+        {{sc.codeDesc}}
+    </option>
+</select>
+</td>
+<div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+<ng-template #thenBlockInactive>
+</ng-template>
+<ng-template #elseBlockInactive>
+<td style="width: 15%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;:&nbsp;</td>
+<td>
+    <input disabled type="text" formControlName="endDate" class="form-control" [ngModel]="endDate | date:'yyyy-MM-dd'">
+</td>
+</ng-template>
+</tr>
+                    </ng-template> 
+                </table>
+                <br>
+                <table class="center">
+                    <tr>
+                        <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    [disabled]="!itemCategoryMasterForm.valid"
+                                    (click)="newItemCatMast()">New</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetItemCatMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeItemCatMast()">Close</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="searchItemCatMast()">Search</button>
+                            </td>
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    [disabled]="!itemCategoryMasterForm.valid"
+                                    (click)="updateItemCatMast()">Update</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetItemCatMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeItemCatMast()">Close</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="searchMast()">Search</button>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </table>
             </form>
         </div>
     </div>
 </div>
 <br>
-<!-- Grid Data start -->
 <div class="container1">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
-        style="border-color:#959595;width:100%;border-collapse:collapse;">
-        <tbody>
-            <tr class="GridHeader">
-                <!-- <th align="left" scope="col">SR No </th> -->
-                <th scope="col">Category ID</th>
-                <th scope="col">Division Code</th>
-                <th scope="col">Description</th>
-                <th scope="col">Item Category</th>
-                <th scope="col">Princple Item</th>
-                <th scope="col">Status</th>
-                <!-- <th scope="col">End Date</th> -->
-                <th scope="col">Last Updated Date</th>
-                <th scope="col">Last Update Login</th>
-                <th scope="col">Select One</th>
-            </tr>
-        </tbody>
-        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-            <td>{{com.categoryId}}</td>
-            <td>{{com.divisionId.divisionCode}}</td>
-            <td>{{com.description}}</td>
-            <td>{{com.attribute1}}</td>
-            <td>{{com.princpleItem}}</td>
-            <td>{{com.status}}</td>
-            <td>{{com.lastUpdateDate}}</td>
-            <td>{{com.lastUpdatedBy}}</td>
-            <td><button (click)="Select(com.categoryId)">Select</button></td>
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+    <tbody>
+        <tr class="GridHeader">
+            <th scope="col">Category ID</th>
+            <th scope="col">Division Code</th>
+            <th scope="col">Description</th>
+            <th scope="col">Item Category</th>
+            <th scope="col">Princple Item</th>
+            <th scope="col">Status</th>
+            <!-- <th scope="col">End Date</th> -->
+            <th scope="col">Last Updated Date</th>
+            <th scope="col">Last Update Login</th>
+            <th scope="col">Select One</th>
         </tr>
+    </tbody>
+    <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+        <td>{{com.categoryId}}</td>
+        <td>{{com.divisionId.divisionCode}}</td>
+        <td>{{com.description}}</td>
+        <td>{{com.attribute1}}</td>
+        <td>{{com.princpleItem}}</td>
+        <td>{{com.status}}</td>
+        <td>{{com.lastUpdatedDate}}</td>
+        <td>{{com.lastUpdatedBy}}</td>
+        <td><button (click)="Select(com.categoryId)">Select</button></td>
+    </tr>
     </table>
 </div>

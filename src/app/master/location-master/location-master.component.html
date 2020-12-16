@@ -1,34 +1,24 @@
-<div id="page-content-wrapper">
-<div class="form-bg">
-    <form [formGroup]="LocationMasterForm" (ngSubmit)="LocationMaster(LocationMasterForm.value)">
-        <div id="Panel1" class="auto-style103">
-            <div class="container">
-                <div class="row">
-                    <div class="PageHeader">
-                        <div class="col">&nbsp;&nbsp;Location&nbsp;Master</div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <!-- <div class="col">
-                        <div class="c">Location&nbsp;Id&nbsp;:</div>
-                    </div>
-                    <input formControlName="locId" class="form-control"> -->
-                    <!-- <div class="w-100"></div> -->
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td class="PageHeader" style="width: 100%;" >
+                &nbsp;&nbsp;Location&nbsp;Master
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <form [formGroup]="LocationMasterForm" (ngSubmit)="LocationMaster(LocationMasterForm.value)">
+                <table class="center">
                     <div *ngIf="display; then thenBlock; else elseBlock"></div>
                     <ng-template #thenBlock>
-                        <div class="col">
-                            <div class="c">Location&nbsp;Code&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="locCode" value={{locCode}} class="form-control"
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Location&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="locCode" value={{locCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locCode.errors }"
                                 placeholder="Enter Location code">
                             <div *ngIf="submitted && f. locCode.errors" class="invalid-feedback">
@@ -41,154 +31,137 @@
                             <span
                                 *ngIf="!LocationMasterForm.get('locCode').valid && LocationMasterForm.get('locCode').touched">Please
                                 Enter Location code </span>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="c">Location&nbsp;Name&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="locName" value={{locName}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Location&nbsp;Name&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="locName" value={{locName}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locName.errors }"
                                 placeholder="Enter location name">
                             <div *ngIf="submitted && f. locName.errors" class="invalid-feedback">
                                 <div *ngIf="f.locName.errors.required">Location code must be a valid </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
                                 <div *ngIf="f.locName.errors?.maxLength">Location code must be a valid
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('locName').valid && LocationMasterForm.get('locName').touched">Please
                                 Enter location name </span>
-                        </div>
-
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Operating&nbsp;Unit&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <select formControlName="ouId" id="ouId" class="form-control">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouName}}
-                                </option>
-                            </select>
-                            <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
-                                <div *ngIf="f.ouId.errors.required">OU Id is required</div>
-                                <span
-                                    *ngIf="!LocationMasterForm.get('ouId').valid && LocationMasterForm.get('ouId').touched">Please
-                                    Enter valid Operating Unit </span>
-                            </div>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Address1&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address1" value={{address1}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Operating&nbsp;Unit&nbsp;:
+                            </td>
+                            <td>
+                                <select formControlName="ouId" id="ouId" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                        {{sc.ouName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
+                                    <div *ngIf="f.ouId.errors.required">OU Id is required</div>
+                                    <div *ngIf="f.ouId.errors?.maxLength">Enter valid Operating Unit
+                                    </div>
+                                </div>
+                                <span *ngIf="!LocationMasterForm.get('ouId').valid && LocationMasterForm.get('ouId').touched">Please
+                                Enter valid Operating Unit </span>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address1&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address1" value={{address1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                 placeholder="Enter Address1">
                             <div *ngIf="submitted && f. address1.errors" class="invalid-feedback">
                                 <div *ngIf="f.address1.errors.required">Address1 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
                                 <div *ngIf="f.address1.errors?.maxLength">Address1 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address1').valid && LocationMasterForm.get('address1').touched">Please
                                 Enter Address1 </span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Address2&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address2" value={{address2}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address2&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address2" value={{address2}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
                                 placeholder="Enter Address2">
                             <div *ngIf="submitted && f. address2.errors" class="invalid-feedback">
                                 <div *ngIf="f.address2.errors.required">Address2 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
                                 <div *ngIf="f.address2.errors?.maxLength">Address2 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address2').valid && LocationMasterForm.get('address2').touched">Please
                                 Enter Address2</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Address3&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address3" value={{address3}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address3&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address3" value={{address3}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address3.errors }"
                                 placeholder="Enter Address3">
                             <div *ngIf="submitted && f. address3.errors" class="invalid-feedback">
                                 <div *ngIf="f.address3.errors.required">Address3 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
                                 <div *ngIf="f.address3.errors?.maxLength">Address3 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address3').valid && LocationMasterForm.get('address3').touched">Please
                                 Enter Address3</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Address4&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address4" value={{address4}} class="form-control"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address4&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address4" value={{address4}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address4.errors }"
                                 placeholder="Enter Address4">
                             <div *ngIf="submitted && f. address4.errors" class="invalid-feedback">
                                 <div *ngIf="f.address4.errors.required">Address4 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
                                 <div *ngIf="f.address4.errors?.maxLength">Address4 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address4').valid && LocationMasterForm.get('address4').touched">Please
                                 Enter Address4</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">City&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <select formControlName="city" id="city" class="form-control" [ngModel]="city">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  cityList">
-                                    {{sc.codeDesc}}
-                                </option>
-                            </select>
-                            <!-- <input formControlName="city" value={{city}} class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.city.errors }" placeholder="Enter City">
-                        <div *ngIf="submitted && f. city.errors" class="invalid-feedback">
-                            <div *ngIf="f.city.errors.required">City must be required and valid for 50 digit
-                            </div>
-                            <div *ngIf="f.city.errors?.maxLength">City must be a valid for 50 digit
-                            </div>
-                        </div> -->
-                            <span
-                                *ngIf="!LocationMasterForm.get('city').valid && LocationMasterForm.get('city').touched">Please
-                                Enter City</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Pin&nbsp;Code&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="number" formControlName="pinCd" value={{pinCd}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                City&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="city" id="city" class="form-control" [ngModel]="city">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  cityList">
+                                        {{sc.codeDesc}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f. city.errors" class="invalid-feedback">
+                                    <div *ngIf="f.city.errors.required">City must be required
+                                    </div>
+                                    <div *ngIf="f.city.errors?.maxLength">City must be required
+                                    </div>
+                                </div>
+                                <span *ngIf="!LocationMasterForm.get('city').valid && LocationMasterForm.get('city').touched">Please
+                                    Enter City</span>    
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Pin&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="pinCd" value={{pinCd}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }" placeholder="Enter Pin Code">
                             <div *ngIf="submitted && f. pinCd.errors" class="invalid-feedback">
                                 <div *ngIf="f.pinCd.errors.required">Pin Code must be required and valid for 6 digit
@@ -199,364 +172,323 @@
                             <span
                                 *ngIf="!LocationMasterForm.get('pinCd').valid && LocationMasterForm.get('pinCd').touched">Please
                                 Enter Pin Code</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">State&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <select formControlName="state" id="state" class="form-control">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  StateList">
-                                    {{sc.codeDesc}}
-                                </option>
-                            </select>
-                            <div *ngIf="submitted && f. state.errors" class="invalid-feedback">
-                                <div *ngIf="f.state.errors.required">State is required</div>
-                                <span
-                                    *ngIf="!LocationMasterForm.get('state').valid && LocationMasterForm.get('state').touched">Please
-                                    Enter State </span>
-                            </div>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Country&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <div class="col">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                State&nbsp;:
+                            </td>
+                            <td>
+                                <select formControlName="state1" id="state1" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  StateList">
+                                        {{sc.codeDesc}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f. state1.errors" class="invalid-feedback">
+                                    <div *ngIf="f.state1.errors.required">State is required
+                                    </div>
+                                    <div *ngIf="f.state1.errors?.maxLength">State is required
+                                    </div>
+                                </div>
+                                <span *ngIf="!LocationMasterForm.get('state1').valid && LocationMasterForm.get('state1').touched">Please
+                                    Enter State </span> 
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Country&nbsp;:
+                            </td>
+                            <td>
                                 <input type="text" disabled formControlName="country" [ngModel]="country"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Phone 1&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="number" formControlName="phone1" value={{phone1}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.phone1.errors }" placeholder="Enter Phone 1">
-                            <div *ngIf="submitted && f. phone1.errors" class="invalid-feedback">
-                                <div *ngIf="f.phone1.errors.required">Phone 1 must be required and valid for 10 digit
-                                </div>
-                                <!-- <div *ngIf="f.phone1.errors?.pattern">Phone 1 must be a valid for 10 digit
-                            </div> -->
-                                <div *ngIf="f.phone1.errors?.maxLength">Phone 1 must be a valid for 10 digit
-                                </div>
-                            </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('phone1').valid && LocationMasterForm.get('phone1').touched">Please
-                                Enter Phone 1</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Phone 2&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="number" formControlName="phone2" value={{phone2}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.phone2.errors }" placeholder="Enter Phone 1">
-                            <div *ngIf="submitted && f. phone2.errors" class="invalid-feedback">
-                                <div *ngIf="f.phone2.errors.required">Phone 2 must be required and valid for 10 digit
-                                </div>
-                                <!-- <div *ngIf="f.phone2.errors?.pattern">Phone 2 must be a valid for 10 digit
-                            </div> -->
-                                <div *ngIf="f.phone2.errors?.maxLength">Phone 2 must be a valid for 10 digit
-                                </div>
-                            </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('phone2').valid && LocationMasterForm.get('phone2').touched">Please
-                                Enter Phone 2</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Email&nbsp;ID&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
-                                placeholder="Enter email id">
-                            <div *ngIf="submitted && f. emailId.errors" class="invalid-feedback">
-                                <div *ngIf="f.emailId.errors.required">Email ID must be required </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                </div> -->
-                                <div *ngIf="f.emailId.errors?.maxLength">Email ID must be a valid
-                                </div>
-                            </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('emailId').valid && LocationMasterForm.get('emailId').touched">Please
-                                Enter Email ID</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Region&nbsp;:</div>
-                        </div>
-                        <div class="col">
+                                class="form-control">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Region&nbsp;:
+                        </td>
+                        <td>
                             <select formControlName="region" id="region" class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  regionList">
                                     {{sc.codeDesc}}
                                 </option>
                             </select>
-                            <!-- <div *ngIf="submitted && f. region.errors" class="invalid-feedback">
-                            <div *ngIf="f.region.errors.required">State is required</div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('region').valid && LocationMasterForm.get('region').touched">Please
-                                Enter region </span>
-                        </div> -->
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">GST&nbsp;No.&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="gstNo" value={{gstNo}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
-                                placeholder="Please enter GSTN no">
-                            <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
-                                <div *ngIf="f.gstNo.errors.required">GstNo is required</div>
-                                <div *ngIf="f.gstNo.errors?.pattern">GstNo must be a valid and of 15
-                                    charecter</div>
+                            <div *ngIf="submitted && f. region.errors" class="invalid-feedback">
+                                <div *ngIf="f.region.errors.required">Region be required
+                                </div>
+                                <div *ngIf="f.region.errors?.maxLength">Region be required
+                                </div>
                             </div>
                             <span
-                                *ngIf="!LocationMasterForm.get('gstNo').valid && LocationMasterForm.get('gstNo').touched">Please
-                                Enter GSTN Number 15 digit</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">PAN&nbsp;No.&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="panNo" value={{panNo}} class="form-control"
+                                *ngIf="!LocationMasterForm.get('region').valid && LocationMasterForm.get('region').touched">Please
+                                Select Region</span>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Phone 1&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="phone1" value={{phone1}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.phone1.errors }" placeholder="Enter Phone 1">
+                            <div *ngIf="submitted && f. phone1.errors" class="invalid-feedback">
+                                <div *ngIf="f.phone1.errors.required">Phone 1 must be required and valid for 10 digit
+                                </div>
+                                <div *ngIf="f.phone1.errors?.maxLength">Phone 1 must be a valid for 10 digit
+                                </div>
+                            </div>
+                            <span
+                                *ngIf="!LocationMasterForm.get('phone1').valid && LocationMasterForm.get('phone1').touched">Please
+                                Enter Phone 1</span>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Phone 2&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="phone2" value={{phone2}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.phone2.errors }" placeholder="Enter Phone 1">
+                            <div *ngIf="submitted && f. phone2.errors" class="invalid-feedback">
+                                <div *ngIf="f.phone2.errors.required">Phone 2 must be required and valid for 10 digit
+                                </div>
+                                <div *ngIf="f.phone2.errors?.maxLength">Phone 2 must be a valid for 10 digit
+                                </div>
+                            </div>
+                            <span
+                                *ngIf="!LocationMasterForm.get('phone2').valid && LocationMasterForm.get('phone2').touched">Please
+                                Enter Phone 2</span>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Email&nbsp;ID&nbsp;:
+                            </td>
+                            <td>
+                                <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                                placeholder="Enter email id">
+                            <div *ngIf="submitted && f. emailId.errors" class="invalid-feedback">
+                                <div *ngIf="f.emailId.errors.required">Email ID must be required </div>
+                                <div *ngIf="f.emailId.errors?.maxLength">Email ID must be a valid
+                                </div>
+                            </div>
+                            <span
+                                *ngIf="!LocationMasterForm.get('emailId').valid && LocationMasterForm.get('emailId').touched">Please
+                                Enter Email ID</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                GST&nbsp;No.&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="gstNo" value={{gstNo}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
+                                placeholder="Please enter GSTN no">
+                            <!-- <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
+                                <div *ngIf="f.gstNo.errors.required">GstNo is required</div>
+                                <div *ngIf="f.gstNo.errors?.pattern">GstNo must be a valid and of 15
+                                    charecter</div> -->
+                                    <div *ngIf="submitted && f. gstNo.errors" class="invalid-feedback">
+                                        <div *ngIf="f.gstNo.errors.required">GstNo must be a valid and of 15 charecter </div>
+                                        <div *ngIf="f.gstNo.errors?.maxLength">GstNo must be a valid and of 15 charecter
+                                        </div>
+                                        <div *ngIf="f.gstNo.errors?.pattern">GstNo must be a valid and of 15
+                                            charecter</div>
+                                    </div>
+                                    <span *ngIf="!LocationMasterForm.get('gstNo').valid && LocationMasterForm.get('gstNo').touched">GstNo must be a valid and of 15
+                                        charecter</span>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                PAN&nbsp;No.&nbsp;:
+                            </td>
+                            <td>
+                                <!-- (keyup)="savegstNo($event)" -->
+                                <input formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
                                 <div *ngIf="f. panNo.errors.required">panNo is required</div>
-                                <!-- <div *ngIf="f. panNo.errors.email">panNo must be a valid </div> -->
                                 <div *ngIf="f.panNo.errors?.pattern">panNo must be a valid and 10 charecter
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('panNo').valid && LocationMasterForm.get('panNo').touched">Please
                                 Enter Pan Number 10 digit</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">TAN&nbsp;No.&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="tanNo" value={{tanNo}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                TAN&nbsp;No.&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="tanNo" value={{tanNo}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
                                 placeholder="Please enter Tan no">
                             <div *ngIf="submitted && f. tanNo.errors" class="invalid-feedback">
                                 <div *ngIf="f. tanNo.errors.required">TanNo is required</div>
-                                <!-- <div *ngIf="f. panNo.errors.email">panNo must be a valid </div> -->
                                 <div *ngIf="f.tanNo.errors?.pattern">panNo must be a valid and 10 charecter
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('tanNo').valid && LocationMasterForm.get('tanNo').touched">Please
                                 Enter Tan Number 10 digit</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Start&nbsp;Date&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="date" formControlName="startDate" class="form-control"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Start&nbsp;Date&nbsp;:
+                            </td>
+                            <td>
+                                <input type="date" formControlName="startDate" class="form-control"
                                 placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
-                            <span
-                                *ngIf="!LocationMasterForm.get('startDate').valid && LocationMasterForm.get('startDate').touched">Please
+                            <span *ngIf="!LocationMasterForm.get('startDate').valid && LocationMasterForm.get('startDate').touched">Please
                                 Enter start Date </span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Status&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled type="text" [ngModel]="status" formControlName="status"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Status&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled type="text" [ngModel]="status" formControlName="status"
                                 class="form-control">
-                            <!-- <select formControlName="status" id="status" class="form-control"
-                [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                    <option>--Select--</option>
-                    <option *ngFor="let sc of  statusList">
-                        {{sc.codeDesc}}
-                    </option> 
-                </select> -->
                             <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
                                 <div *ngIf="f.status.errors.required">status is required</div>
                                 <span
                                     *ngIf="!LocationMasterForm.get('status').valid && LocationMasterForm.get('status').touched">Please
                                     Enter valid status </span>
                             </div>
-                        </div>
+                            </td>
+                        </tr>
                     </ng-template>
                     <ng-template #elseBlock>
-                        <div class="col">
-                            <div class="c">Location&nbsp;Code&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled formControlName="locCode" value={{locCode}} class="form-control"
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Location&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="locCode" value={{locCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locCode.errors }"
                                 placeholder="Enter Location code">
-                            <div *ngIf="submitted && f. locCode.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && f. locCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.locCode.errors.required">Location code must be a valid </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
                                 <div *ngIf="f.locCode.errors?.maxLength">Location code must be a valid
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('locCode').valid && LocationMasterForm.get('locCode').touched">Please
-                                Enter Location code </span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Location&nbsp;Name&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled formControlName="locName" value={{locName}} class="form-control"
+                                Enter Location code </span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Location&nbsp;Name&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="locName" value={{locName}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locName.errors }"
                                 placeholder="Enter location name">
-                            <div *ngIf="submitted && f. locName.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && f. locName.errors" class="invalid-feedback">
                                 <div *ngIf="f.locName.errors.required">Location code must be a valid </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
                                 <div *ngIf="f.locName.errors?.maxLength">Location code must be a valid
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('locName').valid && LocationMasterForm.get('locName').touched">Please
-                                Enter location name </span>
-                        </div>
-
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Operating&nbsp;Unit&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled formControlName="ouId" value={{ouId}} class="form-control">
-                            <!-- <select disabled formControlName="ouId" id="ouId" class="form-control">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouName}}
-                                </option>
-                            </select> -->
-                            <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
+                                Enter location name </span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Operating&nbsp;Unit&nbsp;:
+                            </td>
+                            <td>
+                                <!-- {{ouId.ouId}} -->
+                                <input disabled formControlName="ouId" value={{ouId}} class="form-control">
+                            <!-- <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
                                 <div *ngIf="f.ouId.errors.required">OU Id is required</div>
                                 <span
                                     *ngIf="!LocationMasterForm.get('ouId').valid && LocationMasterForm.get('ouId').touched">Please
                                     Enter valid Operating Unit </span>
-                            </div>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Address1&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address1" value={{address1}} class="form-control"
+                            </div> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address1&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address1" value={{address1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                placeholder="Enter Address1">
-                            <div *ngIf="submitted && f. address1.errors" class="invalid-feedback">
-                                <div *ngIf="f.address1.errors.required">Address1 must be required and valid for 50 digit
+                                placeholder="Enter Address1"  required minlength='10'>
+                                <div *ngIf="submitted && f. address1.errors" class="invalid-feedback">
+                                    <div *ngIf="f.address1.errors?.pattern">address1 must be a valid for 10 digit</div>
+                                    <div *ngIf="f.address1.errors.required">address1 must be required and valid for 10 digit
+                                    </div>
+                                    <div *ngIf="f.address1.errors?.minLength">address1 must be a valid for 10 digit
+                                    </div>
+                                    <!-- <div *ngIf="f.address1.errors?.maxLength">address1 must be a valid for 10 digit
+                                    </div> -->
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
-                                <div *ngIf="f.address1.errors?.maxLength">Address1 must be a valid for 50 digit
-                                </div>
-                            </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('address1').valid && LocationMasterForm.get('address1').touched">Please
-                                Enter Address1 </span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Address2&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address2" value={{address2}} class="form-control"
+                                <span
+                                    *ngIf="!LocationMasterForm.get('address1').valid && LocationMasterForm.get('address1').touched">Please
+                                    Enter address1</span>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address2&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address2" value={{address2}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
                                 placeholder="Enter Address2">
                             <div *ngIf="submitted && f. address2.errors" class="invalid-feedback">
                                 <div *ngIf="f.address2.errors.required">Address2 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
                                 <div *ngIf="f.address2.errors?.maxLength">Address2 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address2').valid && LocationMasterForm.get('address2').touched">Please
                                 Enter Address2</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Address3&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address3" value={{address3}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address3&nbsp;:&nbsp;
+                            </td>   
+                            <td>
+                                <input formControlName="address3" value={{address3}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address3.errors }"
                                 placeholder="Enter Address3">
                             <div *ngIf="submitted && f. address3.errors" class="invalid-feedback">
                                 <div *ngIf="f.address3.errors.required">Address3 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
                                 <div *ngIf="f.address3.errors?.maxLength">Address3 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address3').valid && LocationMasterForm.get('address3').touched">Please
                                 Enter Address3</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Address4&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="address4" value={{address4}} class="form-control"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address4&nbsp;:&nbsp;
+                            </td> 
+                            <td>
+                                <input formControlName="address4" value={{address4}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address4.errors }"
                                 placeholder="Enter Address4">
                             <div *ngIf="submitted && f. address4.errors" class="invalid-feedback">
                                 <div *ngIf="f.address4.errors.required">Address4 must be required and valid for 50 digit
                                 </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
                                 <div *ngIf="f.address4.errors?.maxLength">Address4 must be a valid for 50 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('address4').valid && LocationMasterForm.get('address4').touched">Please
                                 Enter Address4</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">City&nbsp;:&nbsp;</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="city" value={{city}} class="form-control">
-                            <!-- <select formControlName="city" id="city" class="form-control" [ngModel]="city">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  cityList">
-                                    {{sc.codeDesc}}
-                                </option>
-                            </select> -->
-                            <!-- <input formControlName="city" value={{city}} class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f.city.errors }" placeholder="Enter City">
-    <div *ngIf="submitted && f. city.errors" class="invalid-feedback">
-        <div *ngIf="f.city.errors.required">City must be required and valid for 50 digit
-        </div>
-        <div *ngIf="f.city.errors?.maxLength">City must be a valid for 50 digit
-        </div>
-    </div> -->
-                            <span
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                City&nbsp;:&nbsp;
+                            </td> 
+                            <td>
+                                <input formControlName="city" value={{city}} class="form-control">
+                                <span
                                 *ngIf="!LocationMasterForm.get('city').valid && LocationMasterForm.get('city').touched">Please
                                 Enter City</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Pin&nbsp;Code&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="number" formControlName="pinCd" value={{pinCd}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Pin&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input type="number" formControlName="pinCd" value={{pinCd}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }" placeholder="Enter Pin Code">
                             <div *ngIf="submitted && f. pinCd.errors" class="invalid-feedback">
                                 <div *ngIf="f.pinCd.errors.required">Pin Code must be required and valid for 6 digit
@@ -567,118 +499,85 @@
                             <span
                                 *ngIf="!LocationMasterForm.get('pinCd').valid && LocationMasterForm.get('pinCd').touched">Please
                                 Enter Pin Code</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">State&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled formControlName="state" id="state" class="form-control">
-                            <!-- <select formControlName="state" id="state" class="form-control">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  StateList">
-                                    {{sc.codeDesc}}
-                                </option>
-                            </select> -->
-                            <!-- <div *ngIf="submitted && f. state.errors" class="invalid-feedback">
-                                <div *ngIf="f.state.errors.required">State is required</div> -->
-                                <!-- <span
-                                    *ngIf="!LocationMasterForm.get('state').valid && LocationMasterForm.get('state').touched">Please
-                                    Enter State </span>
-                            </div> -->
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Country&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <div class="col">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                State&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="state1" id="state1" class="form-control">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Country&nbsp;:
+                            </td>
+                            <td>
                                 <input type="text" disabled formControlName="country" [ngModel]="country"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Phone 1&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="number" formControlName="phone1" value={{phone1}} class="form-control"
+                                class="form-control">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Region&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="region" id="region" class="form-control">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Phone 1&nbsp;:
+                            </td>
+                            <td>
+                                <input type="number" formControlName="phone1" value={{phone1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.phone1.errors }" placeholder="Enter Phone 1">
                             <div *ngIf="submitted && f. phone1.errors" class="invalid-feedback">
                                 <div *ngIf="f.phone1.errors.required">Phone 1 must be required and valid for 10 digit
                                 </div>
-                                <!-- <div *ngIf="f.phone1.errors?.pattern">Phone 1 must be a valid for 10 digit
-        </div> -->
                                 <div *ngIf="f.phone1.errors?.maxLength">Phone 1 must be a valid for 10 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('phone1').valid && LocationMasterForm.get('phone1').touched">Please
                                 Enter Phone 1</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Phone 2&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="number" formControlName="phone2" value={{phone2}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Phone 2&nbsp;:
+                            </td>
+                            <td>
+                                <input type="number" formControlName="phone2" value={{phone2}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.phone2.errors }" placeholder="Enter Phone 1">
                             <div *ngIf="submitted && f. phone2.errors" class="invalid-feedback">
                                 <div *ngIf="f.phone2.errors.required">Phone 2 must be required and valid for 10 digit
                                 </div>
-                                <!-- <div *ngIf="f.phone2.errors?.pattern">Phone 2 must be a valid for 10 digit
-        </div> -->
                                 <div *ngIf="f.phone2.errors?.maxLength">Phone 2 must be a valid for 10 digit
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('phone2').valid && LocationMasterForm.get('phone2').touched">Please
                                 Enter Phone 2</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Email&nbsp;ID&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Email&nbsp;ID&nbsp;:
+                            </td>
+                            <td>
+                                <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
                                 placeholder="Enter email id">
                             <div *ngIf="submitted && f. emailId.errors" class="invalid-feedback">
                                 <div *ngIf="f.emailId.errors.required">Email ID must be required </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-</div> -->
                                 <div *ngIf="f.emailId.errors?.maxLength">Email ID must be a valid
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('emailId').valid && LocationMasterForm.get('emailId').touched">Please
                                 Enter Email ID</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Region&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled formControlName="region" id="region" class="form-control">
-                            <!-- <select disabled formControlName="region" id="region" class="form-control">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  regionList">
-                                    {{sc.codeDesc}}
-                                </option>
-                            </select> -->
-                            <!-- <div *ngIf="submitted && f. region.errors" class="invalid-feedback">
-        <div *ngIf="f.region.errors.required">State is required</div>
-        <span
-            *ngIf="!LocationMasterForm.get('region').valid && LocationMasterForm.get('region').touched">Please
-            Enter region </span>
-    </div> -->
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">GST&nbsp;No.&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="gstNo" value={{gstNo}} class="form-control"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                GST&nbsp;No.&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="gstNo" value={{gstNo}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
                                 placeholder="Please enter GSTN no">
                             <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
@@ -689,31 +588,28 @@
                             <span
                                 *ngIf="!LocationMasterForm.get('gstNo').valid && LocationMasterForm.get('gstNo').touched">Please
                                 Enter GSTN Number 15 digit</span>
-                        </div>
-
-                        <div class="col">
-                            <div class="c">PAN&nbsp;No.&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="panNo" value={{panNo}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                PAN&nbsp;No.&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="panNo" value={{panNo}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
                                 <div *ngIf="f. panNo.errors.required">panNo is required</div>
-                                <!-- <div *ngIf="f. panNo.errors.email">panNo must be a valid </div> -->
                                 <div *ngIf="f.panNo.errors?.pattern">panNo must be a valid and 10 charecter
                                 </div>
                             </div>
                             <span
                                 *ngIf="!LocationMasterForm.get('panNo').valid && LocationMasterForm.get('panNo').touched">Please
                                 Enter Pan Number 10 digit</span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">TAN&nbsp;No.&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input formControlName="tanNo" value={{tanNo}} class="form-control"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                TAN&nbsp;No.&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="tanNo" value={{tanNo}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
                                 placeholder="Please enter Tan no">
                             <div *ngIf="submitted && f. tanNo.errors" class="invalid-feedback">
@@ -725,26 +621,24 @@
                             <span
                                 *ngIf="!LocationMasterForm.get('tanNo').valid && LocationMasterForm.get('tanNo').touched">Please
                                 Enter Tan Number 10 digit</span>
-                        </div>
-                        <!-- <div class="w-100"></div> -->
-                        <div class="col">
-                            <div class="c">Start&nbsp;Date&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <input disabled type="date" formControlName="startDate" class="form-control"
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Start&nbsp;Date&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled type="date" formControlName="startDate" class="form-control"
                                 placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
                             <span
                                 *ngIf="!LocationMasterForm.get('startDate').valid && LocationMasterForm.get('startDate').touched">Please
                                 Enter start Date </span>
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col">
-                            <div class="c">Status&nbsp;:</div>
-                        </div>
-                        <div class="col">
-                            <!-- <input disabled type="text" [ngModel]="status" formControlName="status"
-                                class="form-control"> -->
-                            <select formControlName="status" id="status" class="form-control" [ngModel]="status"
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Status&nbsp;:
+                            </td>
+                            <td>
+                                <select formControlName="status" id="status" class="form-control" [ngModel]="status"
                                 (ngModelChange)='onOptionsSelected($event)'>
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  statusList">
@@ -756,124 +650,117 @@
                                 <span
                                     *ngIf="!LocationMasterForm.get('status').valid && LocationMasterForm.get('status').touched">Please
                                     Enter valid status </span>
-                            </div>
-                        </div>
+                                    </div>
+                            </td>
+                            <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                            <ng-template #thenBlockInactive>
+                            </ng-template>
+                            <ng-template #elseBlockInactive>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Inactive&nbsp;Date:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" formControlName="endDate" class="form-control"
+                                    [ngModel]="endDate | date:'yyyy-MM-dd'">        
+                                </td>
+                            </ng-template>        
+                        </tr>
                     </ng-template>
-                    <!-- <div class="w-100"></div> -->
-                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                    <ng-template #thenBlockInactive>
-                    </ng-template>
-                    <ng-template #elseBlockInactive>
-                            <div class="col">
-                                <div class="c">Inactive&nbsp;Date:&nbsp;</div>
-                            </div>
-                    <div class="col">
-                            <input disabled type="text" formControlName="endDate" class="form-control"
-                            [ngModel]="endDate | date:'yyyy-MM-dd'">
-                        </div>
-                    </ng-template>
-                    <div class="col">
-
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                </div>
-            </div>
-            <table class="autostyle1">
-                <tr>
-                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                    <ng-template #thenBlock1>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                [disabled]="!LocationMasterForm.valid" (click)="newMast()">New</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="resetMast()">Reset</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="closeMast()">Close</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="searchMast()">Search</button>
-                        </td>
-                    </ng-template>
-                    <ng-template #elseBlock1>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                [disabled]="!LocationMasterForm.valid" (click)="updateMast()">Update</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="resetMast()">Reset</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="closeMast()">Close</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="searchMast()">Search</button>
-                        </td>
-                    </ng-template>
-                </tr>
-            </table>
+                </table>
+                <table class="center">
+                    <tr>
+                        <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    [disabled]="!LocationMasterForm.valid" (click)="newMast()">Save</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeMast()">Close</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="searchMast()">Search</button>
+                            </td>
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    [disabled]="!LocationMasterForm.valid" (click)="updateMast()">Update</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeMast()">Close</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="searchMast()">Search</button>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </table>
+    
+            </form>
         </div>
-    </form>
+    </div>
 </div>
-
 <br>
 <div class="container1">
-    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
-        <tbody>
-            <tr class="auto-style5">
-                <!-- <th align="left" scope="col">SR No </th> -->
-                <th scope="col">Location Id</th>
-                <th scope="col">Location Code</th>
-                <th scope="col">OU Name</th>
-                <th scope="col">Address1</th>
-                <th scope="col">Address2</th>
-                <th scope="col">Address3</th>
-                <th scope="col">Address4</th>
-                <th scope="col">City</th>
-                <th scope="col">Pin Code</th>
-                <th scope="col">State</th>
-                <th scope="col">Country</th>
-                <th scope="col">Phone 1</th>
-                <th scope="col">Phone 2</th>
-                <th scope="col">Email ID</th>
-                <th scope="col">GST No.</th>
-                <th scope="col">PAN No.</th>
-                <th scope="col">TAN No.</th>
-                <th scope="col">Status</th>
-                <th scope="col">Select one</th>
-            </tr>
-        </tbody>
-        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
-            <td>{{com.locId}}</td>
-            <td>{{com.locCode}}</td>
-            <td>{{com.ouId.ouName}}</td>
-            <td>{{com.address1}}</td>
-            <td>{{com.address2}}</td>
-            <td>{{com.address3}}</td>
-            <td>{{com.address4}}</td>
-            <td>{{com.city}}</td>
-            <td>{{com.pinCd}}</td>
-            <td>{{com.state}}</td>
-            <td>{{com.country}}</td>
-            <td>{{com.phone1}}</td>
-            <td>{{com.phone2}}</td>
-            <td>{{com.emailId}}</td>
-            <td>{{com.gstNo}}</td>
-            <td>{{com.panNo}}</td>
-            <td>{{com.tanNo}}</td>
-            <td>{{com.status}}</td>
-            <td><button (click)="Select(com.locId)">Select</button></td>
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+    <tbody>
+        <tr class="GridHeader">
+            <th scope="col">Location Id</th>
+            <th scope="col">Location Code</th>
+            <th scope="col">OU Name</th>
+            <th scope="col">Address1</th>
+            <th scope="col">Address2</th>
+            <th scope="col">Address3</th>
+            <th scope="col">Address4</th>
+            <th scope="col">City</th>
+            <th scope="col">Pin Code</th>
+            <th scope="col">State</th>
+            <th scope="col">Country</th>
+            <th scope="col">Phone 1</th>
+            <th scope="col">Phone 2</th>
+            <th scope="col">Email ID</th>
+            <th scope="col">GST No.</th>
+            <th scope="col">PAN No.</th>
+            <th scope="col">TAN No.</th>
+            <th scope="col">Status</th>
+            <th scope="col">Select one</th>
         </tr>
+    </tbody>
+    <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+        <td>{{com.locId}}</td>
+        <td>{{com.locCode}}</td>
+        <td>{{com.ouId.ouName}}</td>
+        <td>{{com.address1}}</td>
+        <td>{{com.address2}}</td>
+        <td>{{com.address3}}</td>
+        <td>{{com.address4}}</td>
+        <td>{{com.city}}</td>
+        <td>{{com.pinCd}}</td>
+        <td>{{com.state}}</td>
+        <td>{{com.country}}</td>
+        <td>{{com.phone1}}</td>
+        <td>{{com.phone2}}</td>
+        <td>{{com.emailId}}</td>
+        <td>{{com.gstNo}}</td>
+        <td>{{com.panNo}}</td>
+        <td>{{com.tanNo}}</td>
+        <td>{{com.status}}</td>
+        <td><button (click)="Select(com.locId)">Select</button></td>
+    </tr>
     </table>
 </div>
-<br>
-<br>
 </div>

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { LoginService } from '../login.service';
 
+
 export interface IItem {
   username:string;
   password:string;
@@ -23,6 +24,12 @@ export interface IItem {
 export class LoginComponent implements OnInit {
   username: string;
   password: string;
+  loginArray: any[];
+  divisionId:any[];
+  users:any[];
+  lstcomments1:any[];
+  divisionCode:string;
+  ticketNo:string;
 
   constructor(private router: Router, private loginService: LoginService ) { }
 
@@ -36,6 +43,12 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/admin']);
         var users=res.obj;
           sessionStorage.setItem('emplId',users.emplId);
+          sessionStorage.setItem('name',users.name);
+          sessionStorage.setItem('divisionName',users.divisionId.divisionName);
+          console.log(users.divisionId.divisionName);
+          sessionStorage.setItem('ticketNo',users.ticketNo);
+          console.log(users.ticketNo);
+         
           // sessionStorage.setItem('emplId',users.emplId);
        } //else if (res.code === 204) {
       //   console.log('Email and password does not match');

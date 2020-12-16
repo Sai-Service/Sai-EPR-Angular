@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { valHooks } from 'jquery';
 
 interface ILocationMaster {
   locId: number;
@@ -15,7 +16,8 @@ interface ILocationMaster {
   address4: string;
   city: string;
   pinCd: number;
-  state: string;
+  // state: string;
+  state1:string;
   country: string;
   phone1: number;
   phone2: number;
@@ -46,7 +48,8 @@ export class LocationMasterComponent implements OnInit {
   address4: string;
   city: string;
   pinCd: number;
-  state: string;
+  // state: string;
+  state1:string;
   public country = 'INDIA';
   phone1: number;
   phone2: number;
@@ -57,6 +60,7 @@ export class LocationMasterComponent implements OnInit {
   tanNo: string;
   ouName: string;
   startDate: Date;
+  state:string;
   public status = "Active";
   lstcomments: any[];
   submitted = false;
@@ -75,24 +79,32 @@ export class LocationMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.LocationMasterForm = fb.group({
       locId: [],
-      locCode: ['', [Validators.required, Validators.maxLength(10)]],
-      locName: ['', [Validators.required, Validators.maxLength(50)]],
+      // locCode:[],
+      locCode: ['', [Validators.required, Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
+      // locName:[],
+      locName: ['', [Validators.required, Validators.maxLength(240),Validators.pattern('[a-zA-Z ]*')]],
+      // ouId:[],
       ouId: ['', [Validators.required]],
-      address1: ['', [Validators.required, Validators.maxLength(50)]],
-      address2: [''],
+      // address1:[],
+      address1: ['', [Validators.required, Validators.maxLength(240),Validators.minLength(10),Validators.pattern('[a-zA-Z ]*')]],
+      // address2:[],
+      address2: ['',[Validators.required, Validators.maxLength(240),Validators.pattern('[a-zA-Z ]*')]],
       address3: [''],
       address4: [''],
-      city: ['', [Validators.required, Validators.maxLength(50)]],
-      pinCd: ['', [Validators.required, Validators.maxLength(6)]],
-      state: ['', [Validators.required]],
+      // city:[],
+      city: ['', [Validators.required]],
+      // pinCd:[],
+      pinCd: ['', [Validators.required, Validators.maxLength(6),Validators.minLength(6),Validators.pattern('[0-9]*')]],
+      state1: ['', [Validators.required]],
+      // state: ['', [Validators.required]],
       country: ['', [Validators.required, Validators.maxLength(50)]],
-      phone1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      phone2: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      phone1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10),Validators.minLength(10)]],
+      phone2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10),Validators.minLength(10)]],
       emailId: ['', [Validators.required, Validators.email]],
-      region: [],
+      region: ['',[Validators.required]],
       // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
-      gstNo: [],
-      panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15),Validators.minLength(15)]],
+      panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.maxLength(10),Validators.minLength(10)]],
       tanNo: [],
       startDate: ['', [Validators.required]],
       status: ['', [Validators.required]],
@@ -157,6 +169,14 @@ export class LocationMasterComponent implements OnInit {
     delete val.locId;
     return val;
   }
+
+
+  savegstNo() {
+    const gstaa=this.LocationMasterForm.get('gstNo').value;
+     var res = gstaa.substr(2,10);
+ this.panNo = res;
+   }
+
 
   newMast() {
     const formValue: ILocationMaster = this.transData(this.LocationMasterForm.value);

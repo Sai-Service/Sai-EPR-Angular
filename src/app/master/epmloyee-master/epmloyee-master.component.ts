@@ -74,6 +74,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   public locIdList: Array<string> = [];
   public titleList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
+  status1:any;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -247,4 +248,12 @@ export class EpmloyeeMasterComponent implements OnInit {
     const aaa = this.title + ' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
     this.name = aaa;
   }
+
+
+
+  // getlocHeadDashbordSearch(status){
+  //  this.service.urlTest(this.status1).subscribe((res: any) => {
+  //   this.lstcomments=status;
+  //  });
+  //  }
 }

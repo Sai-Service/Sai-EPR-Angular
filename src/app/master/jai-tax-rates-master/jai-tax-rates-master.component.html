@@ -1,0 +1,229 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="form-bg">
+    <div class="center">
+        <form [formGroup]="jaiTaxRatesMasterForm" (ngSubmit)="jaiTaxRatesMaster(jaiTaxRatesMasterForm.value)">
+            <div id="Panel1" class="auto-style103">
+                <div class="container">
+                    <div class="row">
+                        <table style="width: 100%;background-color: white;">
+                            <tr>
+                                <td class="PageHeader">
+                                    &nbsp;&nbsp;Jai&nbsp;Tax&nbsp;Rates&nbsp;Master
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="center">
+                            <table style="width: fit-content;">
+                                <tr>
+                                    <td><input hidden formControlName="taxRateId" class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="orgId" id="orgId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                                {{sc.ouName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && f. orgId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.orgId.errors.required">Org Id is required</div>
+                                            <span
+                                                *ngIf="!jaiTaxRatesMasterForm.get('orgId').valid && jaiTaxRatesMasterForm.get('orgId').touched">Please
+                                                Enter valid Operating Unit </span>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Rate&nbsp;Name:</td>
+                                    <td><input formControlName="taxRateName" value={{taxRateName}} class="form-control"
+                                            placeholder="Enter tax rate name">
+                                        <span
+                                            *ngIf="!jaiTaxRatesMasterForm.get('taxRateName').valid && jaiTaxRatesMasterForm.get('taxRateName').touched">Please
+                                            Enter valid tax rate name </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Rate&nbsp;Code:</td>
+                                    <td><input formControlName="taxRateCode" value={{taxRateCode}} class="form-control"
+                                            placeholder="Enter tax rate code">
+                                        <span
+                                            *ngIf="!jaiTaxRatesMasterForm.get('taxRateCode').valid && jaiTaxRatesMasterForm.get('taxRateCode').touched">Please
+                                            Enter valid tax rate code </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Rate&nbsp;Type:</td>
+                                    <td><input formControlName="taxRateType" value={{taxRateType}} class="form-control"
+                                            placeholder="Enter tax rate type">
+                                        <span
+                                            *ngIf="!jaiTaxRatesMasterForm.get('taxRateType').valid && jaiTaxRatesMasterForm.get('taxRateType').touched">Please
+                                            Enter valid tax rate type </span></td>
+                                </tr>
+                                <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Status:</td>
+                                <td><input formControlName="taxStatus" value={{taxStatus}} class="form-control"
+                                        placeholder="Enter tax status">
+                                    <span
+                                        *ngIf="!jaiTaxRatesMasterForm.get('taxStatus').valid && jaiTaxRatesMasterForm.get('taxStatus').touched">Please
+                                        Enter valid tax status </span></td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Recovery&nbsp;Percentage:</td>
+                                <td><input formControlName="recoveryPercentage" value={{recoveryPercentage}}
+                                        class="form-control" placeholder="Enter recovery Percentage">
+                                    <span
+                                        *ngIf="!jaiTaxRatesMasterForm.get('recoveryPercentage').valid && jaiTaxRatesMasterForm.get('recoveryPercentage').touched">Please
+                                        Enter recovery Percentage </span></td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Percentage:</td>
+                                <td><input formControlName="taxPercentage" value={{taxPercentage}} class="form-control"
+                                        placeholder="Enter tax Percentage">
+                                    <span
+                                        *ngIf="!jaiTaxRatesMasterForm.get('taxPercentage').valid && jaiTaxRatesMasterForm.get('taxPercentage').touched">Please
+                                        Enter tax Percentage </span></td>
+
+                                        <td style="width: 15%" class="LabelFontStyle">Inclusive&nbsp;Flag:</td>
+                                        <td><input formControlName="inclusiveFlag" value={{inclusiveFlag}} class="form-control"
+                                                placeholder="Enter inclusive flag">
+                                            <span
+                                                *ngIf="!jaiTaxRatesMasterForm.get('inclusiveFlag').valid && jaiTaxRatesMasterForm.get('inclusiveFlag').touched">Please
+                                                Enter inclusive flag </span></td>
+                                <tr> 
+                                    <td style="width: 15%" class="LabelFontStyle">Attribute&nbsp;Category:</td>
+                                    <td><input formControlName="attributeCategory" value={{attributeCategory}} class="form-control"
+                                            placeholder="Enter attribute Category">
+                                        <span
+                                            *ngIf="!jaiTaxRatesMasterForm.get('attributeCategory').valid && jaiTaxRatesMasterForm.get('attributeCategory').touched">Please
+                                            Enter attribute category </span></td>
+
+                                            <td style="width: 15%" class="LabelFontStyle">Record&nbsp;Type&nbsp;Code:</td>
+                                    <td><input formControlName="recordTypeCode" value={{recordTypeCode}} class="form-control"
+                                            placeholder="Enter record type code">
+                                        <span
+                                            *ngIf="!jaiTaxRatesMasterForm.get('recordTypeCode').valid && jaiTaxRatesMasterForm.get('recordTypeCode').touched">Please
+                                            Enter record type code </span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date&nbsp;:</td>
+                                    <td><input type="date" formControlName="startDate" class="form-control"
+                                            placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                        <span
+                                            *ngIf="!jaiTaxRatesMasterForm.get('startDate').valid && jaiTaxRatesMasterForm.get('startDate').touched">Please
+                                            Enter start Date </span></td>
+
+                                            <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                                            <td>
+                                                <!-- <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" > -->
+                                                <select formControlName="status" id="status" class="form-control"
+                                                    [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  statusList">
+                                                        {{sc.codeDesc}}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="!jaiTaxRatesMasterForm.get('status').valid && jaiTaxRatesMasterForm.get('status').touched">Please
+                                                    Enter valid status </span>
+                                            </td>
+        
+                                            <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                                            <ng-template #thenBlockInactive>
+                                            </ng-template>
+                                            <ng-template #elseBlockInactive>
+                                                <td style="width: 15%" class="LabelFontStyle">Inactive&nbsp;Date&nbsp;:</td>
+                                                <td>
+                                                    <input disabled type="text" formControlName="endDate" class="form-control"
+                                                        [ngModel]="endDate | date:'yyyy-MM-dd'">
+                                                </td>
+                                            </ng-template>
+                                                                            </tr>
+
+                            </table>
+                            <table class="autostyle1">
+                                <tr>
+                                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                                    <ng-template #thenBlock1>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                [disabled]="!jaiTaxRatesMasterForm.valid"
+                                                (click)="newMast()">New</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="resetMast()">Reset</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="closeMast()">Close</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="searchMast()">Search</button>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                [disabled]="!jaiTaxRatesMasterForm.valid"
+                                                (click)="updateMast()">Update</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="resetMast()">Reset</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="closeMast()">Close</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="searchMast()">Search</button>
+                                        </td>
+                                    </ng-template>
+                                </tr>
+                            </table>
+                        <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<br>
+<div class="container1">
+    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
+        <tbody>
+            <tr class="auto-style5"> 
+                <th scope="col">Tax Rate Id</th>
+                <th scope="col">Org Id</th>
+                <th scope="col">Tax Rate Name</th>
+                <th scope="col">Tax Rate Code</th>
+                <th scope="col">Tax Rate Type</th>
+                <th scope="col">Tax Status</th>
+                <th scope="col">Recovery Percentage</th>
+                <th scope="col">Tax Percentage</th>
+                <th scope="col">Inclusive Flag</th>
+                <th scope="col">Attribute Category</th>
+                <th scope="col">Record Type Code</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;"> 
+            <td>{{com.taxRateId}}</td>
+            <td>{{com.orgId}}</td>
+            <td>{{com.taxRateName}}</td>
+            <td>{{com.taxRateCode}}</td>
+            <td>{{com.taxRateType }}</td>
+            <td>{{com.taxStatus}}</td>
+            <td>{{com.recoveryPercentage}}</td>
+            <td>{{com.taxPercentage}}</td>
+            <td>{{com.inclusiveFlag}}</td>
+            <td>{{com.attributeCategory}}</td>
+            <td>{{com.recordTypeCode}}</td>
+            <td>{{com.startDate}}</td>
+            <td>{{com.status}}</td>
+            <td><button (click)="Select(com.ouId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>

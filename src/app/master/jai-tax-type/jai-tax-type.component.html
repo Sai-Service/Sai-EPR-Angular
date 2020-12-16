@@ -1,0 +1,266 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="form-bg">
+    <div class="center">
+        <form [formGroup]="jaiTaxTypeMasterForm" (ngSubmit)="jaiTaxTypeMaster(jaiTaxTypeMasterForm.value)">
+            <div id="Panel1" class="auto-style103">
+                <div class="container">
+                    <div class="row">
+                        <table style="width: 100%;background-color: white;">
+                            <tr>
+                                <td class="PageHeader">
+                                    &nbsp;&nbsp;Jai&nbsp;Tax&nbsp;Type&nbsp;Master
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="center">
+                            <table style="width: fit-content;">
+                                <tr>
+                                    <td><input hidden formControlName="taxTypeId" class="form-control"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Type&nbsp;Name:&nbsp;</td>
+
+                                    <td><input formControlName="taxTypeName" value={{taxTypeName}} class="form-control"
+                                            placeholder="Enter tax type name">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('taxTypeName').valid && jaiTaxTypeMasterForm.get('taxTypeName').touched">Please
+                                            Enter valid tax type name </span></td>
+
+
+                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Type&nbsp;Code:</td>
+                                    <td><input formControlName="taxTypeCode" value={{taxTypeCode}} class="form-control"
+                                            placeholder="Enter tax type code">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('taxTypeCode').valid && jaiTaxTypeMasterForm.get('taxTypeCode').touched">Please
+                                            Enter valid tax type code </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Recoverable&nbsp;Flag&nbsp;:</td>
+                                    <td><input formControlName="recoverableFlag" value={{recoverableFlag}}
+                                            class="form-control" placeholder="Enter recoverable Flag">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('recoverableFlag').valid && jaiTaxTypeMasterForm.get('recoverableFlag').touched">Please
+                                            Enter recoverable Flag</span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Off&nbsp;Set&nbsp;Flag:</td>
+                                    <td><input formControlName="offsetFlag" value={{offsetFlag}} class="form-control"
+                                            placeholder="Enter off set flag">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('offsetFlag').valid && jaiTaxTypeMasterForm.get('offsetFlag').touched">Please
+                                            Enter valid off set flag </span></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Self&nbsp;Assesed&nbsp;Flag:</td>
+                                    <td><input formControlName="selfAssesedFlag" value={{selfAssesedFlag}}
+                                            class="form-control" placeholder="Enter self assesed flag">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('selfAssesedFlag').valid && jaiTaxTypeMasterForm.get('selfAssesedFlag').touched">Please
+                                            Enter valid self assesed flag </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Reporting&nbsp;Only&nbsp;Flag:</td>
+                                    <td><input formControlName="reportingOnlyFlag" value={{reportingOnlyFlag}}
+                                            class="form-control" placeholder="Enter reporting only flag">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('reportingOnlyFlag').valid && jaiTaxTypeMasterForm.get('reportingOnlyFlag').touched">Please
+                                            Enter valid reporting only flag </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Upd&nbsp;Vendor&nbsp;On&nbsp;Tran&nbsp;:</td>
+                                    <td><input formControlName="updVendorOnTran" value={{updVendorOnTran}}
+                                            class="form-control" placeholder="Enter upd vendor on tran">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('updVendorOnTran').valid && jaiTaxTypeMasterForm.get('updVendorOnTran').touched">Please
+                                            Enter valid upd vendor on tran</span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Allow&nbsp;Abatement&nbsp;:</td>
+                                    <td><input formControlName="allowAbatement" value={{allowAbatement}}
+                                            class="form-control" placeholder="Enter allow abatement">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('allowAbatement').valid && jaiTaxTypeMasterForm.get('allowAbatement').touched">Please
+                                            Enter valid allow abatement</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Reverse&nbsp;Credit&nbsp;On&nbsp;Shipment:</td>
+                                    <td><input formControlName="reverseCreditOnShipment"
+                                            value={{reverseCreditOnShipment}} class="form-control"
+                                            placeholder="Enter reverse credit on shipment ">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('reverseCreditOnShipment').valid && jaiTaxTypeMasterForm.get('reverseCreditOnShipment').touched">Please
+                                            Enter valid reverse credit on shipment</span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Credit&nbsp;Basis&nbsp;Self&nbsp;Assesed&nbsp;:</td>
+                                    <td><input formControlName="creditBasisSelfAssesed" value={{creditBasisSelfAssesed}}
+                                            class="form-control" placeholder="Enter credit basis self assesed">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('creditBasisSelfAssesed').valid && jaiTaxTypeMasterForm.get('creditBasisSelfAssesed').touched">Please
+                                            Enter valid credit basis self assesed</span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Record&nbsp;Type&nbsp;Code&nbsp;:</td>
+                                    <td><input formControlName="recordTypeCode" value={{recordTypeCode}}
+                                            class="form-control" placeholder="Enter record type code">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('recordTypeCode').valid && jaiTaxTypeMasterForm.get('recordTypeCode').touched">Please
+                                            Enter valid record type code</span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        With&nbsp;Id&nbsp;Trx&nbsp;Applicable&nbsp;Flag&nbsp;:</td>
+                                    <td><input formControlName="wthldTrxApplicableFlag" value={{wthldTrxApplicableFlag}}
+                                            class="form-control" placeholder="Enter wthld Trx Applicable Flag">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('wthldTrxApplicableFlag').valid && jaiTaxTypeMasterForm.get('wthldTrxApplicableFlag').touched">Please
+                                            Enter valid wthld Trx Applicable Flag</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Id&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="regimeId" id="regimeId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  regimeIdList" [ngValue]="sc.regimeId">
+                                                {{sc.ouName}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('regimeId').valid && jaiTaxTypeMasterForm.get('regimeId').touched">Please
+                                            Enter valid regime id </span>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date&nbsp;:</td>
+                                    <td><input type="date" formControlName="startDate" class="form-control"
+                                            placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('startDate').valid && jaiTaxTypeMasterForm.get('startDate').touched">Please
+                                            Enter start Date </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <!-- <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" > -->
+                                        <select formControlName="status" id="status" class="form-control"
+                                            [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  statusList">
+                                                {{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!jaiTaxTypeMasterForm.get('status').valid && jaiTaxTypeMasterForm.get('status').touched">Please
+                                            Enter valid status </span>
+                                    </td>
+
+                                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                                    <ng-template #thenBlockInactive>
+                                    </ng-template>
+                                    <ng-template #elseBlockInactive>
+                                        <td style="width: 15%" class="LabelFontStyle">Inactive&nbsp;Date&nbsp;:</td>
+                                        <td>
+                                            <input disabled type="text" formControlName="endDate" class="form-control"
+                                                [ngModel]="endDate | date:'yyyy-MM-dd'">
+                                        </td>
+                                    </ng-template>
+                                </tr>
+
+                            </table>
+
+                            <table class="autostyle1">
+                                <tr>
+                                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                                    <ng-template #thenBlock1>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                [disabled]="!jaiTaxTypeMasterForm.valid"
+                                                (click)="newMast()">New</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="resetMast()">Reset</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="closeMast()">Close</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="searchMast()">Search</button>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                [disabled]="!jaiTaxTypeMasterForm.valid"
+                                                (click)="updateMast()">Update</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="resetMast()">Reset</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="closeMast()">Close</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="searchMast()">Search</button>
+                                        </td>
+                                    </ng-template>
+                                </tr>
+                            </table>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<br>
+<div class="container1">
+    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
+        <tbody>
+            <tr class="auto-style5"> 
+                <th scope="col">Tax Type Id</th>
+                <th scope="col">Regime Id</th>
+                <th scope="col">Tax Type Name</th>
+                <th scope="col">Tax Type Code</th>
+                <th scope="col">Recoverable Flag</th>
+                <th scope="col">Off Set Flag</th>
+                <th scope="col">Self Assesed Flag</th>
+                <th scope="col">Reporting Only Flag</th>
+                <th scope="col">Upd Vendor On Tran </th>
+                <th scope="col">Allow Abatement</th>
+                <th scope="col">Reverse Credit On Shipment</th>
+                <th scope="col">Credit Basis Self Assesed</th>
+                <th scope="col">Record Type Code</th>
+                <th scope="col">WIth ld Trx Applicable Flag</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+            <td>{{com.taxTypeId }}</td>
+            <td>{{com.taxTypeName }}</td>
+            <td>{{com.taxTypeCode}}</td>
+            <td>{{com.recoverableFlag}}</td>
+            <td>{{com.offsetFlag}}</td>
+            <td>{{com.selfAssesedFlag }}</td>
+            <td>{{com.reportingOnlyFlag}}</td>
+            <td>{{com.updVendorOnTran}}</td>
+            <td>{{com.allowAbatement}}</td>
+            <td>{{com.reverseCreditOnShipment}}</td>
+            <td>{{com.creditBasisSelfAssesed}}</td>
+            <td>{{com.recordTypeCode}}</td>
+            <td>{{com.wthldTrxApplicableFlag}}</td>
+            <td>{{com.startDate}}</td>
+            <td>{{com.status}}</td>
+            <td><button (click)="Select(com.taxTypeId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+<br>
+<br>

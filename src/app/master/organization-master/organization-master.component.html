@@ -1,402 +1,385 @@
-<div class="form-bg">
-    <form [formGroup]="operatingUnitMasterForm" (ngSubmit)="operatingUnitMaster(operatingUnitMasterForm.value)">
-        <div id="Panel1" class="auto-style103">
-            <div class="container">
-                <div class="row">
-                    <div class="PageHeader">
-                        <div class="col">&nbsp;&nbsp;Operating&nbsp;Unit&nbsp;Master</div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                    <!-- <input hidden formControlName="ouId" class="form-control"> -->
-                    <div class="w-100"></div>
-                    <!-- <div class="col">  
-                        <div class="c">Operating&nbsp;Unit&nbsp;Id</div>
-                    </div>
-                    <div class="col">
-                        <input formControlName="ouId" value={{ouId}} class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.ouId.errors }" placeholder="Enter OU Id">
-                        <div *ngIf="submitted && f.ouId.errors" class="invalid-feedback">
-                            <div *ngIf="f.ouId.errors.required">OU Id must be a valid for 3 digit</div>
-                            <div *ngIf="f.ouId.errors?.maxLength">>OU Id must be a valid for 3 digit
-                            </div>
-                        </div>
-                        <span
-                            *ngIf="!operatingUnitMasterForm.get('ouId').valid && operatingUnitMasterForm.get('ouId').touched">Please
-                            Enter OU Id </span>
-                    </div> -->
-                    <div class="w-100"></div>
-                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
-                    <ng-template #thenBlock>
-                    <div class="col"> 
-                        <div class="c">Operating&nbsp;Unit&nbsp;code&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input formControlName="ouName" value={{ouName}} class="form-control"
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td colspan="4" class="PageHeader" style="width: 100%;" >
+                &nbsp;&nbsp;Operating&nbsp;Unit&nbsp;Master
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <form [formGroup]="operatingUnitMasterForm" (ngSubmit)="operatingUnitMaster(operatingUnitMasterForm.value)">
+                <table class="center">
+                <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Operating&nbsp;Unit&nbsp;code&nbsp;:
+                        </td>
+                        <td>
+                            <input formControlName="ouName" value={{ouName}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.ouName.errors }"
                             placeholder="Enter OU code">
                         <div *ngIf="submitted && f.ouName.errors" class="invalid-feedback">
                             <div *ngIf="f.ouName.errors.required">OU code is required</div>
-                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
-                    </div> -->
                         </div>
                         <span
                             *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Please
                             Enter OU code </span>
-                    </div>
-                    <!-- <div class="w-100"></div> -->
-                    <div class="col"> 
-                        <div class="c">Operating&nbsp;Unit&nbsp;Name&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input formControlName="ouDesc" value={{ouDesc}} class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Operating&nbsp;Unit&nbsp;Name&nbsp;:
+                        </td>
+                        <td>
+                            <input formControlName="ouDesc" value={{ouDesc}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.ouDesc.errors }"
                             placeholder="Enter OU name">
                         <div *ngIf="submitted && f.ouDesc.errors" class="invalid-feedback">
                             <div *ngIf="f.ouDesc.errors.required">OU name is required</div>
-                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
-                    </div> -->
                         </div>
                         <span
                             *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Please
                             Enter OU name </span>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="c">Division&nbsp;Name&nbsp;:</div>
-                    </div>
-                    <!-- [ngValue]="sc.divisionId"  [ngValue]="sc" -->
-                    <div class="col">   
-                        <select formControlName="divisionId" id="divisionId" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
-                                {{sc.divisionName}}
-                            </option>
-                            <!-- <option>--Select--</option>
-                            <option *ngFor="let sc of  DivisionIDList" >
-                                {{sc.divisionId}}
-                            </option> -->
-                        </select>
-                        <!-- <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
-                            <div *ngIf="f.divisionId.errors.required">Division Name is required</div> -->
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
-                                Enter valid Division Name </span>
-                        <!-- </div> -->
-                    </div>
-                    <div class="col">
-                        <div class="c">Company&nbsp;Name&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <!-- <option *ngFor="let sc of  companyCodeList"  [ngValue]="sc"  -->
-                        <select formControlName="compId" id="compId" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  companyCodeList" [ngValue]="sc.compId"  >
-                                {{sc.compName}}
-                            </option>
-                        </select>
-                        <!-- <div *ngIf="submitted && f.compId.errors" class="invalid-feedback">
-                            <div *ngIf="f.compId.errors.required">Company Name is required</div> -->
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Please
-                                Enter valid Company Name </span>
-                        <!-- </div> -->
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="c">Main&nbsp;Branch&nbsp;Address:</div>
-                    </div>
-                    <div class="col">
-                        <input formControlName="mainBrAdd" value={{mainBrAdd}} class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Division&nbsp;Name&nbsp;:
+                        </td>
+                        <td>
+                            <select formControlName="divisionId" id="divisionId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
+                                    {{sc.divisionName}}
+                                </option>
+                            </select>
+<span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
+  Enter valid Division Name </span>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Company&nbsp;Name&nbsp;:
+                        </td>
+                        <td>
+                            <select formControlName="compId" id="compId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  companyCodeList" [ngValue]="sc.compId"  >
+                                    {{sc.compName}}
+                                </option>
+                            </select>
+<span *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Please
+  Enter valid Company Name </span>
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Main&nbsp;Branch&nbsp;Address&nbsp;:
+                        </td>
+                        <td>
+                            <input formControlName="mainBrAdd" value={{mainBrAdd}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.mainBrAdd.errors }"
                             placeholder="Enter Main Branch Address">
                         <div *ngIf="submitted && f.mainBrAdd.errors" class="invalid-feedback">
                             <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address is required</div>
-                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
-                    </div> -->
                         </div>
                         <span
                             *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Please
                             Enter Main Branch Address </span>
-                    </div>
-                    <div class="col">
-                        <div class="c">State&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <select formControlName="mState" id="mState" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  StateList">
-                                {{sc.codeDesc}}
-                            </option>
-                        </select>
-                        <!-- <div *ngIf="submitted && f.mState.errors" class="invalid-feedback">
-                            <div *ngIf="f.mState.errors.required">State is required</div> -->
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">Please
-                                Enter State </span>
-                        <!-- </div> -->
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="c">Country&nbsp;:</div>
-                    </div>
-                    <!-- value={{country}} -->
-                    <div class="col">  
-                        <input type="text"  disabled  formControlName="country" [ngModel]="country"  class="form-control">
-                    </div>
-                    <div class="col">  
-                        <div class="c">Start&nbsp;Date&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input type="date" formControlName="startDate" class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            State&nbsp;:
+                        </td>
+                        <td>
+                            <select formControlName="mState" id="mState" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  StateList">
+                                    {{sc.codeDesc}}
+                                </option>
+                            </select>
+ <span  *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">Please
+ Enter State </span>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Country&nbsp;:
+                        </td>
+                        <td>
+                            <input type="text"  disabled  formControlName="country" [ngModel]="country"  class="form-control">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Start&nbsp;Date&nbsp;:
+                        </td>
+                        <td>
+                            <input type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
                         <span
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
                             Enter start Date </span>
-                    </div>
-                    <div class="w-100"></div> 
-                    <div class="col">  
-                        <div class="c">Unit&nbsp;Head/CEO&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input type="text" formControlName="uheadCeo" class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Unit&nbsp;Head/CEO&nbsp;:
+                        </td>
+                        <td>
+                            <input type="text" formControlName="uheadCeo" class="form-control"
                             placeholder="Enter unit Head/CEO">
                         <span
                             *ngIf="!operatingUnitMasterForm.get('uheadCeo').valid && operatingUnitMasterForm.get('uheadCeo').touched">Please
                             Enter unit Head/CEO </span>
-                    </div>
-                    <div class="col">
-                        <div class="c">Status&nbsp;:</div>
-                    </div>
-                    <div class="col"> 
-                        <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                        <!-- <select formControlName="status" id="status" class="form-control"
-                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  statusList">
-                                {{sc.codeDesc}}
-                            </option> 
-                        </select> -->
-                        <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
-                            <div *ngIf="f.status.errors.required">status is required</div>
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('status').valid && operatingUnitMasterForm.get('status').touched">Please
-                                Enter valid status </span>
-                        </div>
-                    </div>
-                    </ng-template>
-                    <ng-template #elseBlock>
-                    <div class="col">
-                        <div class="c">OU&nbsp;Code&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled formControlName="ouName" value={{ouName}} class="form-control"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Status&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+                            <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                                <div *ngIf="f.status.errors.required">status is required</div>
+                                <span
+                                    *ngIf="!operatingUnitMasterForm.get('status').valid && operatingUnitMasterForm.get('status').touched">Please
+                                    Enter valid status </span>
+                          </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template #elseBlock>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            OU&nbsp;Code&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled formControlName="ouName" value={{ouName}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.ouName.errors }"
                             placeholder="Enter OU name">
                         <div *ngIf="submitted && f.ouName.errors" class="invalid-feedback">
                             <div *ngIf="f.ouName.errors.required">OU code is required</div>
-                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
-                    </div> -->
                         </div>
                         <span
                             *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Please
                             Enter OU code </span>
-                    </div>
-                    <!-- <div class="w-100"></div> -->
-                    <div class="col">
-                        <div class="c">OU&nbsp;Name&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled formControlName="ouDesc" value={{ouDesc}} class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            OU&nbsp;Name&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled formControlName="ouDesc" value={{ouDesc}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.ouDesc.errors }"
                             placeholder="Enter OU Description">
                         <div *ngIf="submitted && f.ouDesc.errors" class="invalid-feedback">
                             <div *ngIf="f.ouDesc.errors.required">OU name is required</div>
-                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
-                    </div> -->
                         </div>
                         <span
                             *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Please
                             Enter OU name </span>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="c">Division&nbsp;Name&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled type="text" formControlName="divisionId" [ngModel]="divisionId" value={{divisionId}} class="form-control">
-                        <!-- <select formControlName="divisionId"  id="divisionId" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  DivisionIDList"  [ngValue]="sc.divisionId.divisionId">
-                                {{sc.divisionName}}
-                            </option>
-                        </select> -->
-                        <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
-                            <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
-                                Enter valid Division Name </span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="c">Company&nbsp;Name&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled type="text" formControlName="compId" value={{compId}} [ngModel]="compId" class="form-control">
-                        <!-- <select disabled formControlName="compId" [ngModel]="compId" id="compId" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  companyCodeList" [ngValue]="sc.compId">
-                                {{sc.compName}}
-                            </option>
-                        </select> -->
-                        <div *ngIf="submitted && f.compId.errors" class="invalid-feedback">
-                            <div *ngIf="f.compId.errors.required">Company Name is required</div>
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Please
-                                Enter valid Company Name </span>
-                        </div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="c">Main&nbsp;Branch&nbsp;Address&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input formControlName="mainBrAdd" value={{mainBrAdd}} class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Division&nbsp;Name&nbsp;:
+                        </td>
+                        <td>
+                            <!-- <input  type="text" formControlName="divisionName" [ngModel]="divisionName" value={{divisionName}} class="form-control">
+                            <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
+                                <span
+                                    *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
+                                    Enter valid Division Name </span>
+                            </div>     -->
+                            <select formControlName="divisionId" id="divisionId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
+                                    {{sc.divisionName}}
+                                </option>
+                            </select>
+<span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
+  Enter valid Division Name </span>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Company&nbsp;Name&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="compId" value={{compId}} [ngModel]="compId" class="form-control">
+                            <div *ngIf="submitted && f.compId.errors" class="invalid-feedback">
+                                <div *ngIf="f.compId.errors.required">Company Name is required</div>
+                                <span
+                                    *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Please
+                                    Enter valid Company Name </span>
+                            </div>    
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Main&nbsp;Branch&nbsp;Address&nbsp;:
+                        </td>
+                        <td>
+                            <input formControlName="mainBrAdd" value={{mainBrAdd}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.mainBrAdd.errors }"
                             placeholder="Enter Main Branch Address">
                         <div *ngIf="submitted && f.mainBrAdd.errors" class="invalid-feedback">
                             <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address is required</div>
-                            <!-- <div *ngIf="f.divisionName.errors?.pattern">Division must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.divisionName.errors?.maxLength">orgId must be a valid for 3 digit
-                    </div> -->
                         </div>
                         <span
                             *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Please
                             Enter Main Branch Address </span>
-                    </div>
-                    <div class="col">
-                        <div class="c">State&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled type="text" formControlName="mState" value={{mState}} [ngModel]="mState" class="form-control">
-                        <!-- <select disabled formControlName="mState" id="mState" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  StateList">
-                                {{sc.codeDesc}}
-                            </option>
-                        </select> -->
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            State&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="mState" value={{mState}} [ngModel]="mState" class="form-control">
                         <div *ngIf="submitted && f.mState.errors" class="invalid-feedback">
                             <div *ngIf="f.mState.errors.required">State is required</div>
                             <span
                                 *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">Please
                                 Enter State </span>
                         </div>
-                    </div>
-                    <div class="w-100"></div>
-                    <div class="col">
-                        <div class="c">Country&nbsp;:</div>
-                    </div>
-                    <!-- value={{country}} -->
-                    <div class="col">  
-                        <input type="text" disabled  formControlName="country" [ngModel]="country"  class="form-control">
-                    </div>
-                    <div class="col">  
-                        <div class="c">Start&nbsp;Date&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled type="date" formControlName="startDate" class="form-control"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Country&nbsp;:
+                        </td> 
+                        <td>
+                            <input type="text" disabled  formControlName="country" [ngModel]="country"  class="form-control">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Start&nbsp;Date&nbsp;:
+                        </td> 
+                        <td>
+                            <input disabled type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
                         <span
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
                             Enter start Date </span>
-                    </div>
-                    <div class="w-100"></div> 
-                    <div class="col">  
-                        <div class="c">Unit&nbsp;Head/CEO&nbsp;:</div>
-                    </div>
-                    <div class="col">
-                        <input disabled type="text" formControlName="uheadCeo" class="form-control"
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Unit&nbsp;Head/CEO&nbsp;:
+                        </td> 
+                        <td>
+                            <input disabled type="text" formControlName="uheadCeo" class="form-control"
                             placeholder="Enter unit Head/CEO">
                         <span
                             *ngIf="!operatingUnitMasterForm.get('uheadCeo').valid && operatingUnitMasterForm.get('uheadCeo').touched">Please
                             Enter unit Head/CEO </span>
-                    </div>
-                    <div class="col">
-                        <div class="c">Status&nbsp;:</div>
-                    </div>
-                    <div class="col"> 
-                        <!-- <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" > -->
-                        <select formControlName="status" id="status" class="form-control"
-                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  statusList">
-                                {{sc.codeDesc}}
-                            </option> 
-                        </select>
-                        <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
-                            <div *ngIf="f.status.errors.required">status is required</div>
-                            <span
-                                *ngIf="!operatingUnitMasterForm.get('status').valid && operatingUnitMasterForm.get('status').touched">Please
-                                Enter valid status </span>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Status&nbsp;:
+                        </td> 
+                        <td>
+                            <select formControlName="status" id="status" class="form-control"
+                            [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  statusList">
+                                    {{sc.codeDesc}}
+                                </option> 
+                            </select>
+                            <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                                <div *ngIf="f.status.errors.required">status is required</div>
+                                <span
+                                    *ngIf="!operatingUnitMasterForm.get('status').valid && operatingUnitMasterForm.get('status').touched">Please
+                                    Enter valid status </span>
+                            </div>    
+                        </td> 
+                        <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                        <ng-template #thenBlockInactive>
+                        </ng-template>
+                        <ng-template #elseBlockInactive>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Inactive&nbsp;Date:&nbsp;
+                            </td> 
+                            <td>
+                                <input disabled type="text" formControlName="endDate" class="form-control"
+                                [ngModel]="endDate | date:'yyyy-MM-dd'">    
+                            </td>
+                        </ng-template>
+                    </tr>
                 </ng-template>
-                <div class="w-100"></div>
-                <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                <ng-template #thenBlockInactive>
-                </ng-template>
-                <ng-template #elseBlockInactive>
-                        <div class="col">
-                            <div class="c">Inactive&nbsp;Date:&nbsp;</div>
-                        </div>
-                <div class="col">
-                        <input disabled type="text" formControlName="endDate" class="form-control"
-                        [ngModel]="endDate | date:'yyyy-MM-dd'">
-                    </div>
-                </ng-template>
-            </div>
-        </div>
-                <div class="w-100"></div>
-                <div class="w-100"></div>
-
-                    <div class="w-100"></div>
-
-                    <div class="w-100"></div>
-                    <div class="w-100"></div>
-                <!-- </div>
-            </div> -->
-            <table class="autostyle1">
+                
+            </table>
+            <table class="center">
                 <tr>
                     <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                     <ng-template #thenBlock1>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
-                            [disabled]="!operatingUnitMasterForm.valid" (click)="newMast()">New</button>
+                            [disabled]="!operatingUnitMasterForm.valid" (click)="newMast()">Save</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+   Reset
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+        </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                    </td>
+                </tr>
+            </table>
+          </div> 
+      </div>
+    </div>
+  </div>
+
+                  </td>
+                    <td>
+                        <!-- <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Yes</button> -->
+                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Close
+  </button>
+  
+  <!-- Modal -->
+  <!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"> -->
+    <div class="modal fade" id="exampleModalLong">
+    <!-- <div class="modal-dialog" role="document"> -->
+        <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> -->
+        <div class="modal-body">
+            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+            </label>
+        </div>
+        <div class="modal-footer">
+         <table class="center">
+             <tr>
+                 <td>
+                    <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                 </td>
+                 <td>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                 </td>
+             </tr>
+         </table>
+          
+        </div>
+      </div>
+    </div>
+  </div>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
@@ -408,9 +391,46 @@
                         <button type="submit" class="btn btn-primary" id="register"
                             [disabled]="!operatingUnitMasterForm.valid" (click)="updateMast()">Update</button>
                     </td>
-                    <td>
+                    <!-- <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
-                    </td>
+                    </td> -->
+                    <td>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                           Reset
+                          </button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+                                </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                  </div> 
+                              </div>
+                            </div>
+                          </div>
+                        
+                                          </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                     </td>
@@ -421,39 +441,36 @@
                     </ng-template>
                 </tr>
             </table>
+            </form>
         </div>
-    </form>
-</div>
-
-<br>
-<div class="container1">
-    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
-        <tbody>
-            <tr class="auto-style5">
-                <!-- <th align="left" scope="col">SR No </th> -->
+     </div>
+     <br>
+     <div class="container1">
+         <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+            <tbody>
+                <tr class="GridHeader">
                 <th scope="col">Operating Unit Id</th>
                 <th scope="col">Operating Unit Code</th>
                 <th scope="col">Operating Unit Name</th>
-                <th scope="col">Division ID</th>
-                <th scope="col">Company Code</th>
+                <th scope="col">Division Name</th>
+                <th scope="col">Company Name</th>
                 <th scope="col">Main Branch Address</th>
                 <th scope="col">State</th>
                 <th scope="col">End Date</th>
                 <th scope="col">Select one</th>
+                </tr>
+            </tbody>
+            <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                <td>{{com.ouId}}</td>
+                <td>{{com.ouName}}</td>
+                <td>{{com.ouDesc}}</td>
+                <td>{{com.divisionId.divisionName}}</td>
+                <td>{{com.compId.compName}}</td>
+                <td>{{com.mainBrAdd}}</td>
+                <td>{{com.mState}}</td>
+                <td>{{com.endDate}}</td>
+                <td><button class="btn btn-secondary" (click)="Select(com.ouId)">Select</button></td>    
             </tr>
-        </tbody>
-        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
-            <td>{{com.ouId}}</td>
-            <td>{{com.ouName}}</td>
-            <td>{{com.ouDesc}}</td>
-            <td>{{com.divisionId.divisionName}}</td>
-            <td>{{com.compId.compName}}</td>
-            <td>{{com.mainBrAdd}}</td>
-            <td>{{com.mState}}</td>
-            <td>{{com.endDate}}</td>
-            <td><button (click)="Select(com.ouId)">Select</button></td>
-        </tr>
-    </table>
+         </table>
+     </div>
 </div>
-<br>
-<br>

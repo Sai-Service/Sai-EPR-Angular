@@ -45,12 +45,12 @@ export class DivisionMasterComponent implements OnInit {
   // private DivisionMasterService:DivisionMasterService
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.divisionMasterForm = fb.group({
-      divisionCode: ['', [Validators.required]],
+      divisionCode: ['', [Validators.required,Validators.maxLength(10),Validators.pattern('[a-zA-Z]*')]],
       // divisionCode:['', [Validators.required, Validators.pattern('[0-9]*'),Validators.maxLength(1)]],
-      divisionName: ['', Validators.required],
+      divisionName: ['', [Validators.required,Validators.maxLength(20),Validators.pattern('[a-zA-Z ]*')]],
       status: ['', Validators.nullValidator],
       divisionId: [],
-      startDate: [],
+      startDate: ['',[Validators.required]],
       endDate: [],
     });
   }
@@ -111,7 +111,7 @@ export class DivisionMasterComponent implements OnInit {
     const formValue: IDivision = this.divisionMasterForm.value;
     this.service.UpdateDivMasterById(formValue, formValue.divisionId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        // alert('RECORD UPDATED SUCCESSFUILY');
         window.location.reload();
       } else {
         if (res.code === 400) {

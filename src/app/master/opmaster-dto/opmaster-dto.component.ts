@@ -10,6 +10,8 @@ import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
 
 interface IpostPO {
+  poHeaderId:number;
+  poLineId:number;
   ouId: number;
   poDate: Date;
   poType: string;
@@ -22,6 +24,8 @@ interface IpostPO {
   segment1: string;
   totalAmt: string;
   // termsId: string;
+  ewayBillNo: string;
+  iRNNo: string;
   approveDate: Date;
   dept: number;
   empId: any,
@@ -47,55 +51,15 @@ interface IpostPO {
   cancelReason: string;
   delearCode: string;
   closedCode: string;
+  poChargeAcc: number;
   // ouId
   startDate: Date;
   endDate: Date;
   status: string;
+
+
 }
-// interface IpoMasterDto {
-//   ouId: number;
-//   poHeaderId: string;
-//   poDate: Date;
-//   poType: string;
-//   // shipToState: string;
-//   Contact: number;
-//   supplierSiteId: string;
-//   supplierCode: string;
-//   billToLoc: string;
-//   shipToLoc: string;
-//   currencyCode: string;
-//   authorizationStatus: string;
-//   segment1: string;
-//   totalAmt: string;
-//   polineNum: number;
-//   itemType: string;
-//   invItemId: number;
-//   Rev: string;
-//   Category: string;
-//   Description: string;
-//   uom: string
-//   orderedQty: number;
-//   unitPrice: number;
-//   Promised: Date;
-//   NeedBy: Date;
-//   SupplierItem: string;
-//   SupplierConfigID: string;
-//   Amount: number;
-//   ChargeAccount: string;
-//   Reserved: string;
-//   SecondaryUOM: string;
-//   SecondaryQuantity: string;
-//   Grade: string;
-//   suppInvNo: number;
-//   ewayBillNo: string;
-//   iRNNo: string;
-//   approveDate: Date;
-//   Buyer: string;
-//   termsId: string;
-//   deptId: number;
-//   emplId: number;
-//   baseAmount: number;
-// }
+
 
 @Component({
   selector: 'app-opmaster-dto',
@@ -104,50 +68,8 @@ interface IpostPO {
 })
 export class OPMasterDtoComponent implements OnInit {
   poMasterDtoForm: FormGroup;
-  // ouId: number;
-  // poHeaderId: string;
-  // poDate: Date;
-  // poType: string;
-  // shipToState: string;
-  // Contact: number;
-  // supplierSiteId: string;
-  // supplierCode: string;
-  // billToLoc: string;
-  // shipToLoc: string;
-  // currencyCode: string;
-  // authorizationStatus: string;
-  // segment1: string;
-  // totalAmt: string;
-  // polineNum: number;
-  // itemType: string;
-  // invItemId: number;
-  // Rev: string;
-  // Category: string;
-  // deptId: number;
-  // emplId: number;
-  // Description: string;
-  // uom: string
-  // orderedQty: number;
-  // unitPrice: number;
-  // Promised: Date;
-  // NeedBy: Date;
-  // SupplierItem: string;
-  // SupplierConfigID: string;
-  // Amount: number;
-  // ChargeAccount: string;
-  // Reserved: string;
-  // SecondaryUOM: string;
-  // SecondaryQuantity: string;
-  // Grade: string;
-  // id: number;
-  // suppInvNo: number;
-  // ewayBillNo: string;
-  // iRNNo: string;
-  // approveDate: Date;
-  // Buyer: string;
-  // termsId: string;
-  // baseAmount: number;
-
+  poHeaderId:number;
+  poLineId:number;
   ouId: number;
   poDate: Date;
   poType: string;
@@ -156,10 +78,10 @@ export class OPMasterDtoComponent implements OnInit {
   billToLoc: string;
   shipToLoc: string;
   currencyCode: string;
-  authorizationStatus: string;
+   authorizationStatus:string;
+  // public authorizationStatus = 'Inprogress';
   segment1: string;
   totalAmt: string;
-  // termsId: string;
   approveDate: Date;
   dept: number;
   empId: any;
@@ -169,48 +91,78 @@ export class OPMasterDtoComponent implements OnInit {
   purchaseLocation: string;
   evaluatorName: string;
   exchangeBonusShare: string;
-  // context: string;
-  poNo:string;
+  poChargeAcc: number;
+  ewayBillNo: string;
+  iRNNo: string;
+  uom: string;
+  itemType: string;
+  unitPrice: number;
+  orderedQty: number;
+  totalPrice: number;
+  cancelFlag: string;
+  cancelBy: string;
+  cancelDate: Date;
+  cancelReason: string;
+  delearCode: string;
+  closedCode: string;
+  polineNum:number;
+  // polineNum:any[];
+  startDate: Date;
+  endDate: Date;
+  status: string;
+  poNo: string;
 
-  name: string;
+  segment11: string;
+  segment2: number;
+  segment3: number;
+  segment4: number;
+  segment5: number;
+  segment6: number;
+  segment7: number;
+  segment8: number;
+  segment9: number;
+  segmentName: string;
+  invItemId:number;
+
+  // name: string;
   submitted = false;
   lstcomments: any[];
   lstcomments1: any;
-  supplierCodeSelected:any;
+  invItemList:any[];
+  siteIdList:any[];
+  supplierCodeSelected: any;
   public OUIdList: Array<string> = [];
   public DepartmentList: Array<string> = [];
-  public invItemList: Array<string> = [];
+  // public invItemList: Array<string> = [];
   public supplierCodeList: Array<string> = [];
   public suppIdList: Array<string> = [];
-  public BillShipList: Array<string> = []; 
-  public BillShipList1: Array<string> = [];   
+  public BillShipList: Array<string> = [];
+  public BillShipList1: Array<string> = [];
+  // public siteIdList :Array<string> =[];
+  public segmentNameList: any;
 
   public minDate = new Date();
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.poMasterDtoForm = fb.group({
-      // itemRows: this.fb.array([this.inItemRows()]),
-      ouId: ['', [Validators.required]],
-      // poHeaderId: [],
+      
+      poHeaderId:[],
+      ouId: ['', [Validators.required]],     
       poDate: ['', [Validators.required]],
       poType: ['', [Validators.required]],
       segment1: [''],
-      // shipToState: [],
-      // Contact: [],
       supplierSiteId: [],
+      segmentName: [],
       supplierCode: [],
       billToLoc: [],
       shipToLoc: [],
       currencyCode: [],
       authorizationStatus: [],
       totalAmt: [],
-      // id: [],
       suppInvNo: [],
       ewayBillNo: [],
       iRNNo: [],
-      approveDate: [],
-      // Buyer: [],
-      // termsId: [],
+      approveDate: ['', [Validators.nullValidator]],
       TransactionNature: [],
       dept: [],
       baseAmount: [],
@@ -218,33 +170,15 @@ export class OPMasterDtoComponent implements OnInit {
       purchaseLocation: [],
       evaluatorName: [],
       exchangeBonusShare: [],
-      poNo:[],
-      // context: [],
-      // name: [],
-
-      //     ouId: [],
-      // poDate:  [],
-      // poType:  [],
-      // supplierSiteId: string;
-      // supplierCode: string;
-      // billToLoc: string;
-      // shipToLoc: string;
-      // currencyCode: string;
-      // authorizationStatus: string;
-      // segment1: string;
-      // totalAmt: string;
-      // termsId: string;
-      // approveDate: Date;
-      // deptId: number;
-      // emplId: number,
-      // baseAmount: number;
-      // suppInvNo: number;
+      poNo: [],
+    
       poLines: this.fb.array([this.lineDetailsGroup()])
     });
   }
   ngOnInit(): void {
+    // this.polineNum[0]= 1;
     console.log(sessionStorage.getItem('emplId'));
-    this.empId = sessionStorage.getItem('emplId');
+    this.empId = Number(sessionStorage.getItem('emplId'));
 
     this.service.OUIdList()
       .subscribe(
@@ -260,29 +194,29 @@ export class OPMasterDtoComponent implements OnInit {
           console.log(this.DepartmentList);
         }
       );
-    this.service.invItemList() 
+    this.service.invItemList()
       .subscribe(
         data => {
           this.invItemList = data;
           console.log(this.invItemList);
         }
-      );  
-      
-      this.service.supplierCodeList() 
+      );
+
+    this.service.supplierCodeList()
       .subscribe(
         data => {
           this.supplierCodeList = data;
           console.log(this.supplierCodeList);
         }
-      );    
-      this.service.getLocationSearch() 
+      );
+    this.service.getLocationSearch()
       .subscribe(
         data => {
           this.BillShipList = data;
           console.log(this.BillShipList);
         }
       );
-      this.service.getLocationSearch() 
+    this.service.getLocationSearch()
       .subscribe(
         data => {
           this.BillShipList1 = data;
@@ -293,25 +227,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
-      // polineNum: [],
-      // itemType: [],
-      // invItemId: [],
-      // Rev: [],
-      // Category: [],
-      // Description: [],
-      // uom: [],
-      // orderedQty: [],
-      // unitPrice: [],
-      // Promised: [],
-      // NeedBy: [],
-      // SupplierItem: [],
-      // SupplierConfigID: [],
-      // Amount: [],
-      // ChargeAccount: [],
-      // Reserved: [],
-      // SecondaryUOM: [],
-      // SecondaryQuantity: [],
-      // Grade: [],
+      poLineId:[],
       polineNum: [],
       invItemId: [],
       uom: [],
@@ -329,6 +245,18 @@ export class OPMasterDtoComponent implements OnInit {
       startDate: [],
       endDate: [],
       status: [],
+      poChargeAcc: [],
+
+      segmentName:[],
+      segment11: [],
+      segment2: [],
+      segment3: [],
+      segment4: [],
+      segment5: [],
+      segment6: [],
+      segment7: [],
+      segment8: [],
+      segment9: [],   //51
     });
   }
 
@@ -336,7 +264,9 @@ export class OPMasterDtoComponent implements OnInit {
     return <FormArray>this.poMasterDtoForm.get('poLines')
   }
   addRow() {
+    
     this.lineDetailsArray.push(this.lineDetailsGroup());
+    this.polineNum=this.polineNum  + 1;
   }
   RemoveRow(index) {
     this.lineDetailsArray.removeAt(index);
@@ -347,24 +277,54 @@ export class OPMasterDtoComponent implements OnInit {
   // Search(poNo){
   //   alert(poNo)
   // }
-  Search(poNo){
+  Search(poNo) {
     alert(poNo);
     console.log(this.poMasterDtoForm.value);
     this.service.getsearchByPOHeder(poNo)
       .subscribe(
         data => {
           this.lstcomments1 = data;
-          // console.log(this.lstcomments1.supplierSiteMasterList);
           this.poMasterDtoForm.patchValue(this.lstcomments1);
-          // this.city = this.lstcomments.city
         }
       );
   }
   transData(val) {
     delete val.id;
-delete val.poNo;
-delete val.poHeaderId;
-
+    delete val.poNo;
+    delete val.poHeaderId;  
+    delete val.poLineId;
+    delete val.segment1;
+    delete val.posegment11;
+    delete val.segment2;
+    delete val.segment3;
+    delete val.segment4;
+    delete val.segment5;
+    delete val.segment6;
+    delete val.segment7;
+    delete val.segment8;
+    delete val.segment9;
+    delete val.segmentName;
+    console.log(val);
+    return val;
+  }
+  transUData(val) {
+    delete val.id;
+    delete val.poNo;
+        delete val.posegment11;
+    delete val.segment2;
+    delete val.segment3;
+    delete val.segment4;
+    delete val.segment5;
+    delete val.segment6;
+    delete val.segment7;
+    delete val.segment8;
+    delete val.segment9;
+    delete val.segmentName;
+    
+  //   const authorizationStatus= 'APPROVED';
+  //  const approveDate =new Date();
+  //   val.obj = {authorizationStatus, approveDate};
+    console.log(val);
     return val;
   }
   newPOMast() {
@@ -372,7 +332,9 @@ delete val.poHeaderId;
     this.service.poSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.poMasterDtoForm.reset();
+        this.authorizationStatus ='Incomplete';
+
+        // this.poMasterDtoForm.reset();
       } else {
         if (res.code === 400) {
           alert('Code already present in the data base');
@@ -381,15 +343,99 @@ delete val.poHeaderId;
       }
     });
   }
-  onSupplierCodeSelected(suppId: any) { 
+  onSupplierCodeSelected(suppId: any) {
     // alert(suppId);
-    this.service.suppIdList(suppId) 
+    this.service.suppIdList(suppId)
+      .subscribe(
+        data => {
+          this.suppIdList = data;
+          console.log(this.suppIdList);
+          
+        }
+      );
+  }
+  onSiteSelected(siteId: any){
+    alert(siteId);
+    this.service.siteIdList(siteId)
     .subscribe(
       data => {
-        this.suppIdList = data;
-        console.log(this.suppIdList);
+        this.siteIdList = data;
+        console.log(this.siteIdList);
+        
+      
       }
     );
   }
+  // filterCatalogues() {
+  //   //  this.authorizationStatus ='Inprogress';
+  // }
+  Submit() { }
+  fnCancatination(segment1, segment2, segment3, segment4, segment5, segment6, segment7, segment8, segment9) {
+    const segmentName1 = segment1 + '.' + segment2 + '.' + segment3 + '.' + segment4 + '.' + segment5 + '.' + segment6 + '.' + segment7 + '.' + segment8 + '.' + segment9;
+    this.segmentName = segmentName1;
+    // this.poChargeAcc = aaa;
+    // alert(aaa);
+    this.service.segmentNameList(segmentName1)
+      .subscribe(
+        data => {
+          this.segmentNameList = data;
+          console.log(this.segmentNameList);
+          this.poChargeAcc = this.segmentNameList.codeCombinationId
+          // alert(this.poChargeAcc);
+        }
+      );
+  }
+
  
+Approve(){
+  const formValue: IpostPO = this.transUData(this.poMasterDtoForm.value);
+  this.service.ApprovePo(formValue).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert('RECORD UPDATED SUCCESSFUILY');
+      this.approveDate =new Date();
+      // window.location.reload();
+    } else {
+      if (res.code === 400) {
+        alert('ERROR OCCOURED IN PROCEESS');
+        this.poMasterDtoForm.reset();
+      }
+    }
+  });
+}
+
+DeletePo(segment1){
+  alert(segment1)
+}
+
+onOptioninvItemIdSelected($event){
+  
+  // this.invItemId = this.poMasterDtoForm.get('invItemId').value;
+  alert(this.invItemId);
+  let select = this.invItemList.find(d => d.invItemId === this.invItemId);
+  alert(select)
+  if (select) {
+    // alert(select);
+   
+    // this.ouId= select.taxCategoryLinesCollection
+var index= 0;
+for (let ele of select.taxCategoryLinesCollection ){
+alert("hi")
+  if(ele.taxCategoryName.orgId === this.ouId ){
+    alert("hi1")
+    if(ele.taxCategoryName.taxCategoryName === null ){
+      alert("hi3")
+      alert("Tax not attached to item")
+    }
+  }
+}
+    
+//     for(var element in select.taxCategoryLinesCollection ){
+// element.taxCategoryName.orgId;
+
+
+//     }
+    // .taxCategoryName.orgId;
+    // alert(this.ouId);
+}
+}
 }
