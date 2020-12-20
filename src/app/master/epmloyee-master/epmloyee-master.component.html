@@ -123,7 +123,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 10%" class="LabelFontStyle1">
+                        <td style="width: 10%" class="LabelFontStyle">
                             Full&nbsp;Name&nbsp;:
                         </td>
                         <td>
@@ -175,7 +175,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 10%" class="LabelFontStyle1">
+                        <td style="width: 10%" class="LabelFontStyle">
                             Designation&nbsp;&nbsp;:
                         </td>  
                         <td>
@@ -252,7 +252,7 @@
                             *ngIf="!employeeMasterForm.get('contact1').valid && employeeMasterForm.get('contact1').touched">Please
                             Enter Contact Number of 10 digit</span>
                         </td>
-                        <td style="width: 10%" class="LabelFontStyle1">
+                        <td style="width: 10%" class="LabelFontStyle">
                             Contact&nbsp;No.&nbsp;2:
                         </td> 
                         <td>
@@ -339,7 +339,7 @@
                             Division&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <input  formControlName="divisionId" class="form-control" [(ngModel)]='divisionId'>
+                            <input  formControlName="divisionName" class="form-control" [(ngModel)]='divisionName'>
                             <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
                                 <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
                                 <span
@@ -439,7 +439,7 @@
                             Location&nbsp;Id&nbsp;:
                         </td>
                         <td>
-                            <input formControlName="locId" class="form-control" [(ngModel)]='locId' >    
+                            <input disabled formControlName="locCode" class="form-control" [(ngModel)]='locCode' >    
                             <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
                                 <div *ngIf="f.locId.errors.required">locId is required</div>
                                 <span *ngIf="!employeeMasterForm.get('locId').valid && employeeMasterForm.get('locId').touched">Please
@@ -662,6 +662,7 @@
                 <th scope="col">Email ID</th>
                 <th scope="col">Contact No1</th>
                 <th scope="col">Contact No2</th>
+                <th scope="col">Status</th>
                 <th scope="col">Select one</th>
             </tr>
         </tbody>
@@ -684,7 +685,7 @@
                 (click)="onKey()"> <u>{{com.status}}</u>
             </button>
             </td> -->
-            <td><button (click)="Select(com.emplId)">Select</button></td>
+            <td><button class="btn btn-primary" (click)="Select(com.emplId)">Select</button></td>
         </tr>
     </table>
 </div>

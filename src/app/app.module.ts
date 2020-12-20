@@ -21,6 +21,7 @@ import { from } from 'rxjs';
 import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     AdminModule,
     MasterModule,
     ChartsModule,
+    // NgbModule.forRoot(),
   ],
   providers: [
     {provide : LocationStrategy , useClass: HashLocationStrategy}

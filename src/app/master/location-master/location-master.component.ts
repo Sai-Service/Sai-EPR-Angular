@@ -68,47 +68,52 @@ export class LocationMasterComponent implements OnInit {
   display = true;
   Status1: any;
   endDate: Date;
+  attribute1:string;
+  // ouName:string;
   displayButton = true;
   public minDate = new Date();
   public OUIdList: Array<string> = [];
   public StateList: Array<string> = [];
   public statusList: Array<string> = [];
   public cityList: Array<string> = [];
+  public cityList1: any;
   public regionList: Array<string> = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.LocationMasterForm = fb.group({
       locId: [],
       // locCode:[],
-      locCode: ['', [Validators.required, Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
+      locCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(35),Validators.pattern('[a-zA-Z0-9.]*')]],
       // locName:[],
-      locName: ['', [Validators.required, Validators.maxLength(240),Validators.pattern('[a-zA-Z ]*')]],
+      locName: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(240),Validators.pattern('[a-zA-Z 0-9]*')]],
       // ouId:[],
       ouId: ['', [Validators.required]],
       // address1:[],
-      address1: ['', [Validators.required, Validators.maxLength(240),Validators.minLength(10),Validators.pattern('[a-zA-Z ]*')]],
+      address1: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(250),Validators.pattern('[a-zA-Z 0-9]*')]],
       // address2:[],
-      address2: ['',[Validators.required, Validators.maxLength(240),Validators.pattern('[a-zA-Z ]*')]],
-      address3: [''],
-      address4: [''],
+      address2: ['',[Validators.required, Validators.minLength(3),Validators.maxLength(250),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address3: ['',[Validators.maxLength(250)]],
+      address4: ['',[Validators.maxLength(250),]],
       // city:[],
       city: ['', [Validators.required]],
       // pinCd:[],
-      pinCd: ['', [Validators.required, Validators.maxLength(6),Validators.minLength(6),Validators.pattern('[0-9]*')]],
+      pinCd: ['', [Validators.required, Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state1: ['', [Validators.required]],
       // state: ['', [Validators.required]],
       country: ['', [Validators.required, Validators.maxLength(50)]],
-      phone1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10),Validators.minLength(10)]],
-      phone2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10),Validators.minLength(10)]],
-      emailId: ['', [Validators.required, Validators.email]],
+      phone1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(6),Validators.maxLength(12)]],
+      phone2: ['', [Validators.pattern('[0-9]*'),Validators.minLength(10), Validators.maxLength(10)]],
+      emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       region: ['',[Validators.required]],
       // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
-      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15),Validators.minLength(15)]],
-      panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.maxLength(10),Validators.minLength(10)]],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [],
       startDate: ['', [Validators.required]],
       status: ['', [Validators.required]],
       endDate: [],
+      ouName:[],
+      // attribute1:[],
     });
   }
   get f() { return this.LocationMasterForm.controls; }
@@ -160,6 +165,9 @@ export class LocationMasterComponent implements OnInit {
           console.log(this.regionList);
         }
       );
+
+
+     
   }
 
   LocationMaster(val) {
@@ -183,18 +191,23 @@ export class LocationMasterComponent implements OnInit {
     this.service.LocationMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.LocationMasterForm.reset();
+        window.location.reload();
+        // this.LocationMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
-          this.LocationMasterForm.reset();
+          // this.LocationMasterForm.reset();
+          window.location.reload();
         }
       }
     });
   }
 
   updateMast() {
+    let select = this.lstcomments.find(d => d.ouId.ouName === this.ouName);
+    this.ouId =select.ouId.ouId;
     const formValue: ILocationMaster = this.LocationMasterForm.value;
+    formValue.ouId=this.ouId;
     this.service.UpdateLocationMasterById(formValue, formValue.locId).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFUILY');
@@ -202,7 +215,8 @@ export class LocationMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
-          this.LocationMasterForm.reset();
+          // this.LocationMasterForm.reset();
+          window.location.reload();
         }
       }
     });
@@ -232,6 +246,8 @@ export class LocationMasterComponent implements OnInit {
     if (select) {
       console.log(select);
       this.LocationMasterForm.patchValue(select);
+      this.ouName=select.ouId.ouName;
+      // this.compName= select.compId.compName;
       this.displayButton = false;
       this.display = false;
       this.ouId = select.ouId.divisionId.ouId;
@@ -248,6 +264,21 @@ export class LocationMasterComponent implements OnInit {
     else if (this.Status1 === 'Active') {
       this.LocationMasterForm.get('endDate').reset();
     }
+  }
+
+
+  onOptionsSelectedCity (city: any){
+    // alert(city);
+    this.service.cityList1(city)
+    .subscribe(
+      data => {
+        this.cityList1 = data;
+        console.log(this.cityList1);
+        this.state1=this.cityList1.attribute1;
+        console.log(this.cityList1.attribute1);
+        // this.country = 'INDIA';
+      }
+    );
   }
 
 }

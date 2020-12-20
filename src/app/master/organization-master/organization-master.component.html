@@ -22,11 +22,10 @@
                             [ngClass]="{ 'is-invalid': submitted && f.ouName.errors }"
                             placeholder="Enter OU code">
                         <div *ngIf="submitted && f.ouName.errors" class="invalid-feedback">
-                            <div *ngIf="f.ouName.errors.required">OU code is required</div>
+                            <div *ngIf="f.ouName.errors.required">Code cannot be blank, have spaces or have special characters</div>
                         </div>
                         <span
-                            *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Please
-                            Enter OU code </span>
+                            *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Code cannot be blank, have spaces or have special characters</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Operating&nbsp;Unit&nbsp;Name&nbsp;:
@@ -36,11 +35,10 @@
                             [ngClass]="{ 'is-invalid': submitted && f.ouDesc.errors }"
                             placeholder="Enter OU name">
                         <div *ngIf="submitted && f.ouDesc.errors" class="invalid-feedback">
-                            <div *ngIf="f.ouDesc.errors.required">OU name is required</div>
+                            <div *ngIf="f.ouDesc.errors.required">Name cannot be blank or have special characters</div>
                         </div>
                         <span
-                            *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Please
-                            Enter OU name </span>
+                            *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Name cannot be blank or have special characters</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Division&nbsp;Name&nbsp;:
@@ -52,8 +50,7 @@
                                     {{sc.divisionName}}
                                 </option>
                             </select>
-<span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
-  Enter valid Division Name </span>    
+<span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Division name cannot be balnk</span>    
                         </td>
                     </tr>
                     <tr>
@@ -67,8 +64,7 @@
                                     {{sc.compName}}
                                 </option>
                             </select>
-<span *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Please
-  Enter valid Company Name </span>
+<span *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Company name cannot be balnk</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Main&nbsp;Branch&nbsp;Address&nbsp;:
@@ -78,11 +74,10 @@
                             [ngClass]="{ 'is-invalid': submitted && f.mainBrAdd.errors }"
                             placeholder="Enter Main Branch Address">
                         <div *ngIf="submitted && f.mainBrAdd.errors" class="invalid-feedback">
-                            <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address is required</div>
+                            <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address cannot be blank</div>
                         </div>
                         <span
-                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Please
-                            Enter Main Branch Address </span>
+                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             State&nbsp;:
@@ -94,8 +89,7 @@
                                     {{sc.codeDesc}}
                                 </option>
                             </select>
- <span  *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">Please
- Enter State </span>    
+ <span  *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">State cannot be blank</span>    
                         </td>
                     </tr>
                     <tr>
@@ -171,25 +165,22 @@
                             *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Please
                             Enter OU name </span>
                         </td>
-                        <td style="width: 15%" class="LabelFontStyle">
+                        <td style="width: 15%" class="LabelFontStyle1">
                             Division&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <!-- <input  type="text" formControlName="divisionName" [ngModel]="divisionName" value={{divisionName}} class="form-control">
-                            <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
-                                <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
-                                <span
-                                    *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
-                                    Enter valid Division Name </span>
-                            </div>     -->
-                            <select formControlName="divisionId" id="divisionId" class="form-control">
+                            <select formControlName="divisionName"  id="divisionName" class="form-control"  [(ngModel)]="divisionName">
                                 <option>--Select--</option>
-                                <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
+                                <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionName">
                                     {{sc.divisionName}}
                                 </option>
                             </select>
-<span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
-  Enter valid Division Name </span>  
+                            <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionId.errors.required">Division name cannot be balnk</div>
+                                <span
+                                    *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
+                                    Division name cannot be balnk </span>
+                            </div>    
                         </td>
                     </tr>
                     <tr>
@@ -197,12 +188,16 @@
                             Company&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <input disabled type="text" formControlName="compId" value={{compId}} [ngModel]="compId" class="form-control">
+                            <select disabled formControlName="compName"  id="compName" class="form-control"  [(ngModel)]="compName">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  companyCodeList" [ngValue]="sc.compName">
+                                    {{sc.compName}}
+                                </option>
+                            </select>
                             <div *ngIf="submitted && f.compId.errors" class="invalid-feedback">
-                                <div *ngIf="f.compId.errors.required">Company Name is required</div>
+                                <div *ngIf="f.compId.errors.required">Company name cannot be balnk</div>
                                 <span
-                                    *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Please
-                                    Enter valid Company Name </span>
+                                    *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Company name cannot be balnk</span>
                             </div>    
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
@@ -213,11 +208,10 @@
                             [ngClass]="{ 'is-invalid': submitted && f.mainBrAdd.errors }"
                             placeholder="Enter Main Branch Address">
                         <div *ngIf="submitted && f.mainBrAdd.errors" class="invalid-feedback">
-                            <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address is required</div>
+                            <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address cannot be blank</div>
                         </div>
                         <span
-                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Please
-                            Enter Main Branch Address </span>
+                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
                             State&nbsp;:
@@ -353,15 +347,10 @@
     <!-- <div class="modal-dialog" role="document"> -->
         <div class="modal-dialog">
       <div class="modal-content">
-        <!-- <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div> -->
         <div class="modal-body">
             <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
             </label>
         </div>
         <div class="modal-footer">
@@ -446,31 +435,36 @@
      </div>
      <br>
      <div class="container1">
+
          <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
-            <tbody>
+            <thead>
                 <tr class="GridHeader">
-                <th scope="col">Operating Unit Id</th>
-                <th scope="col">Operating Unit Code</th>
-                <th scope="col">Operating Unit Name</th>
-                <th scope="col">Division Name</th>
-                <th scope="col">Company Name</th>
-                <th scope="col">Main Branch Address</th>
-                <th scope="col">State</th>
-                <th scope="col">End Date</th>
-                <th scope="col">Select one</th>
+                <th scope="col" style="width: 100px;">OU Id</th>
+                <th scope="col"style="width: 160px;">Operating Unit Code</th>
+                <th scope="col" style="width: 160px;">Operating Unit Name</th>
+                <th scope="col" style="width: 160px;">Division Name</th>
+                <th scope="col" style="width: 160px;">Company Name</th>
+                <th scope="col" style="width: 160px;">Main Branch Address</th>
+                <th scope="col" style="width: 160px;">State</th>
+                <!-- <th scope="col">End Date</th> -->
+                <th scope="col" style="width: 160px;">Select one</th>
                 </tr>
-            </tbody>
+            </thead>
+                <tbody>
+                    <div class="grid_scroll" style="width: 100%;">
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-                <td>{{com.ouId}}</td>
-                <td>{{com.ouName}}</td>
-                <td>{{com.ouDesc}}</td>
-                <td>{{com.divisionId.divisionName}}</td>
-                <td>{{com.compId.compName}}</td>
-                <td>{{com.mainBrAdd}}</td>
-                <td>{{com.mState}}</td>
-                <td>{{com.endDate}}</td>
-                <td><button class="btn btn-secondary" (click)="Select(com.ouId)">Select</button></td>    
+                <td style="width: 107px;">{{com.ouId}}</td>
+                <td style="width: 180px;">{{com.ouName}}</td>
+                <td style="width: 180px;">{{com.ouDesc}}</td>
+                <td style="width: 190px;">{{com.divisionId.divisionName}}</td>
+                <td style="width: 180px;">{{com.compId.compName}}</td>
+                <td style="width: 170px;">{{com.mainBrAdd}}</td>
+                <td style="width: 170px;">{{com.mState}}</td>
+                <!-- <td>{{com.endDate}}</td> -->
+                <td style="width: 140px;"><button class="btn btn-secondary" (click)="Select(com.ouId)" >Select</button></td>
             </tr>
+        </div>
+        </tbody>
          </table>
-     </div>
-</div>
+        </div>
+    

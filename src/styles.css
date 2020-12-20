@@ -137,11 +137,7 @@
   }
 
 
-  .grid_scroll{
-  overflow: auto;
-   height: 200px; 
-  width: 100%;
-}
+
 
   .GridFont{
     font-family: "Calibri";

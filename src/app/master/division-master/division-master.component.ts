@@ -45,9 +45,9 @@ export class DivisionMasterComponent implements OnInit {
   // private DivisionMasterService:DivisionMasterService
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.divisionMasterForm = fb.group({
-      divisionCode: ['', [Validators.required,Validators.maxLength(10),Validators.pattern('[a-zA-Z]*')]],
+      divisionCode: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10),Validators.pattern('[a-zA-Z]*')]],
       // divisionCode:['', [Validators.required, Validators.pattern('[0-9]*'),Validators.maxLength(1)]],
-      divisionName: ['', [Validators.required,Validators.maxLength(20),Validators.pattern('[a-zA-Z ]*')]],
+      divisionName: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(20),Validators.pattern('[a-zA-Z 0-9]*')]],
       status: ['', Validators.nullValidator],
       divisionId: [],
       startDate: ['',[Validators.required]],
@@ -97,11 +97,14 @@ export class DivisionMasterComponent implements OnInit {
     this.service.divisionMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.divisionMasterForm.reset();
+        window.location.reload();
+        // this.divisionMasterForm.reset();
+        // this.divisionMasterForm.get('status').reset();
       } else {
         if (res.code === 400) {
           alert('Code already present in the data base');
-          this.divisionMasterForm.reset();
+          // this.divisionMasterForm.reset();
+          window.location.reload();
         }
       }
     });
@@ -154,6 +157,7 @@ export class DivisionMasterComponent implements OnInit {
 
   Select(divisionId: number) {
     let select = this.lstcomments.find(d => d.divisionId === divisionId);
+    this.divisionMasterForm.get('status').reset();
     if (select) {
       this.divisionMasterForm.patchValue(select);
       this.displayButton = false;

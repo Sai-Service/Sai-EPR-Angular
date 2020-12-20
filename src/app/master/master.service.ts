@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -36,6 +36,9 @@ export class MasterService {
   DivisionIDList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/divMst');
   }
+  poTypeList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/PoTypes');
+  }
   companyCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/CompMst');
   }
@@ -50,7 +53,10 @@ export class MasterService {
   } 
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
-  }   
+  } 
+  locationCodeList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Location');
+  }  
   subinventoryIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/subInvMst');
   }
@@ -59,6 +65,9 @@ export class MasterService {
   }
   DepartmentList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
+  }
+  DepartmentListById(dept): Observable<any> {
+    return this.http.get(this.ServerUrl +`/divMst/${dept}`);
   }
   emplIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/empMst');
@@ -75,6 +84,7 @@ export class MasterService {
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+  
   suppIdList(suppId): Observable<any> {
     return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
   }
@@ -94,6 +104,24 @@ custTypeList(): Observable<any> {
 getTaxCat(ouId): Observable<any> {
   return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
 }
+BranchList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Branch');
+} 
+CostCenterList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/CostCentre');
+} 
+NaturalAccountList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+} 
+InterBrancList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_InterBranch');
+} 
+FutureList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Future');
+} 
+SubAccountList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_SubAccount');
+} 
   /////////////////////////////////////////Division Master////////////////////////////////////////////
    public divisionMasterSubmit(divMasterRecord) {
     const options = {
@@ -179,9 +207,14 @@ UpdateLocationMasterById(LocationMasterRecord,locId) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/locationMst/${locId}`);
+  const url = (this.ServerUrl + `/locationMst`);
   return this.http.put(url, LocationMasterRecord, options);
 }
+
+cityList1(city): Observable<any> {
+  return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`);
+}
+
 
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
@@ -433,9 +466,6 @@ UpdateEmpMasterById(EmpMasterRecord,emplId) {
   const url = (this.ServerUrl + `/empMst/${emplId}`);
   return this.http.put(url, EmpMasterRecord, options);
 }
-
-
-urlTest(){};
 //////////////////////////////Document Sequence master///////////////////////
 getdocSeqSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/docsrlmst');
@@ -520,7 +550,23 @@ public poSubmit(poMasterRecord) {
   return this.http.post(url, poMasterRecord, options);
 }
 
-ApprovePo(ApprovePoRecord) {
+public applyPOTax(poMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/poHdr/apply';  
+  return this.http.post(url, poMasterRecord, options);
+}
+
+ApprovePo(ApprovePoRecord,segment1) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/poHdr/poApprove/${segment1}`);
+  return this.http.put(url, ApprovePoRecord, options);
+}
+
+UpdatePoDetails(ApprovePoRecord) {
   const options = {
     headers: this.headers
   };
@@ -528,6 +574,52 @@ ApprovePo(ApprovePoRecord) {
   return this.http.put(url, ApprovePoRecord, options);
 }
 
+ItemDetailsList(invItemId, taxCat, billTo) {
+  const REQUEST_PARAMS = new HttpParams().set('itemId', invItemId)
+  .set('taxCategoryName', taxCat)
+  .set('locId', billTo)
+  const REQUEST_URI = this.ServerUrl +'/itemMst/ItemDetails';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+   
+  });
+}
+
+taxCalforItem(itemId,taxCatId,diss,baseAmount) {  
+  const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCatId)
+  .set('disAmt', diss)
+
+  const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+   
+  });
+}
+
+// addDiscount(totTaxAmt,taxTypeName)
+public addDiscountM(poMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/poHdr/taxDetails';  
+  return this.http.post(url, poMasterRecord, options);
+}
+public addDiscount(totTaxAmt: number, taxTypeName: string) {
+  const body = {
+    'totTaxAmt': totTaxAmt, 
+    'taxTypeName': taxTypeName, 
+  };
+  let options = {
+    headers: this.headers
+  };
+  // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
+  const url = 'http://localhost:8081/taxDetails';
+  console.log(body);
+  return this.httpclient.post(url, body, options);
+
+}
 //////////////////Jai Regime Master////////////////
 regimeTypeLisFunt(): Observable<any> {
   return this.http.get(this.ServerUrl + '/cmnLookup/JaiRegimeType');
@@ -658,8 +750,6 @@ UpdateJaiTaxCategoryLineMasterById(JaiTaxCategoryLineMasterRecord) {
   return this.http.put(url, JaiTaxCategoryLineMasterRecord, options);
 }
 
-
-
 /////////////////   PO Receipt URL //////////////////
 
 getsearchByPOlines(segment1): Observable<any> {
@@ -667,4 +757,5 @@ getsearchByPOlines(segment1): Observable<any> {
 }
 
 } 
+
 

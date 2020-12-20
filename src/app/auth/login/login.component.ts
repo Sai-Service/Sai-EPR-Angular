@@ -36,20 +36,43 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   
+  // login() {
+  //   this.loginService.login(this.username, this.password).subscribe((res: any) => {
+  //     console.log('Res', res);
+  //     if (res.code === 200) {
+  //       this.router.navigate(['/admin']);
+  //       var users=res.obj;
+  //         sessionStorage.setItem('emplId',users.emplId);
+  //         sessionStorage.setItem('name',users.name);
+  //         sessionStorage.setItem('divisionName',users.divisionId.divisionName);
+  //         console.log(users.divisionId.divisionName);
+  //         sessionStorage.setItem('ticketNo',users.ticketNo);
+  //         console.log(users.ticketNo);
+         
+          
+  //      } 
+  //      else if (res.code === 400) {
+  //       alert('Incorrect username or password');
+  //     }
+  //   });
+  // }
+
   login() {
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
         this.router.navigate(['/admin']);
         var users=res.obj;
+        sessionStorage.setItem('divisionName',users.divisionId.divisionName);
+        console.log(users.divisionId.divisionName);
+        sessionStorage.setItem('ticketNo',users.ticketNo);
+        console.log(users.ticketNo);
           sessionStorage.setItem('emplId',users.emplId);
+          sessionStorage.setItem('dept',users.deptId);
           sessionStorage.setItem('name',users.name);
-          sessionStorage.setItem('divisionName',users.divisionId.divisionName);
-          console.log(users.divisionId.divisionName);
-          sessionStorage.setItem('ticketNo',users.ticketNo);
-          console.log(users.ticketNo);
-         
-          // sessionStorage.setItem('emplId',users.emplId);
+          sessionStorage.setItem('ouName',users.locId.ouId.ouName); 
+          sessionStorage.setItem('ouId',users.locId.ouId.ouId); 
+console.log(users.locId.ouId.ouId);
        } //else if (res.code === 204) {
       //   console.log('Email and password does not match');
       //   alert('Email and password does not match');
@@ -60,6 +83,7 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
 
 
   // login(){

@@ -1,4 +1,4 @@
-    .PageHeader {
+.PageHeader {
     font-size:large;
     font-weight: bold;
     margin: 0;
@@ -202,3 +202,31 @@ font-weight: bold;
 .modal-header{
   text-align: center;
 }
+
+
+.ItemStyle{
+  text-align: center;
+}
+
+
+
+
+table thead {
+  /* position: fixed; */
+
+position: fixed;
+  /* width: 400rem; */
+}
+
+/* table th, table td {
+  width: 160px;
+
+} */
+/* .ItemStyle tr td  {
+  width: 160px;
+} */
+
+/* .grid_scroll{
+  overflow: auto;
+   height: 200px; 
+} */

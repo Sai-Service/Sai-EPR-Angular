@@ -57,22 +57,23 @@ export class CompanyMasterComponent implements OnInit {
   public StateList: Array<string> = []; 
   public statusList: Array<string> = [];
   public cityList: Array<string> = [];
+  public cityList1: any;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.CompanyMasterForm = fb.group({
       compId: [],
-      compCode: ['', [Validators.required, Validators.maxLength(30)]],
-      compName: ['', [Validators.required, Validators.maxLength(30)]],
-      address1: ['', [Validators.required, Validators.maxLength(30)]],
-      address2: ['', [Validators.required, Validators.maxLength(30)]],
-      address3: ['', [Validators.required, Validators.maxLength(30)]],
-      address4: ['', [Validators.required, Validators.maxLength(30)]],
+      compCode: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9]*')]],
+      compName: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(50),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address1: ['', [Validators.required,Validators.minLength(1), Validators.maxLength(10),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address2: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address3: ['', [Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address4: ['', [Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
       city: ['', [Validators.required, Validators.maxLength(50)]],
-      pinCd: ['', [Validators.required, , Validators.pattern('[0-9]*'), Validators.maxLength(6)]],
+      pinCd: ['', [Validators.required, Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state: ['', [Validators.required]],
-      emailId: ['', [Validators.required, Validators.email]],
-      webSite: ['', [Validators.required]],
+      emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      webSite: ['', [Validators.required,Validators.pattern('([\\DA-Zda-z.-]+)\\.([A-Za-z.]{2,6})[/\\wW .-]*/?')]],
       startDate: ['', [Validators.required]],
       country: ['', [Validators.required]],
       status: ['', [Validators.required]],
@@ -122,11 +123,13 @@ export class CompanyMasterComponent implements OnInit {
     this.service.CompanyMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.CompanyMasterForm.reset();
+        // this.CompanyMasterForm.reset();
+        window.location.reload();
       } else {
         if (res.code === 400) {
           alert('Code already present in the data base');
-          this.CompanyMasterForm.reset();
+          // this.CompanyMasterForm.reset();
+          window.location.reload();
         }
       }
     });
@@ -141,7 +144,8 @@ export class CompanyMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
-          this.CompanyMasterForm.reset();
+          // this.CompanyMasterForm.reset();
+          window.location.reload();
         }
       }
     });
@@ -185,5 +189,19 @@ export class CompanyMasterComponent implements OnInit {
     else if (this.Status1 === 'Active') {
       this.CompanyMasterForm.get('endDate').reset();
     }
+  }
+
+  onOptionsSelectedCity (city: any){
+    // alert(city);
+    this.service.cityList1(city)
+    .subscribe(
+      data => {
+        this.cityList1 = data;
+        console.log(this.cityList1);
+        this.state=this.cityList1.attribute1;
+        console.log(this.cityList1.attribute1);
+        // this.country = 'INDIA';
+      }
+    );
   }
 }

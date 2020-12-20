@@ -20,15 +20,14 @@
                             <td>
                                 <input formControlName="divisionCode" [(ngModel)]='divisionCode' value={{divisionCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
-                                placeholder="Enter division code">
+                                placeholder="Enter division code" style="text-transform: uppercase;">
                             <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
-                                <div *ngIf="f.divisionCode.errors.required">Division code must be a valid for 1 digit</div>
-                                <div *ngIf="f.divisionCode.errors?.maxLength">Division code must be a valid for 1 digit
-                                </div>
+                                <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div>
+                                <div *ngIf="f.divisionCode.errors?.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
+                                <div *ngIf="f.divisionCode.errors?.pattern">Minimum one characters and maximum 10 characters</div>
                             </div>
                             <span
-                                *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Please
-                                Enter division code </span>    
+                                *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Division code cannot be blank, have spaces or have special characters.</span>    
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Division&nbsp;Name&nbsp;:
@@ -38,10 +37,9 @@
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
                                 placeholder="Enter division name">
                             <div *ngIf="submitted && f. divisionName.errors" class="invalid-feedback">
-                                <div *ngIf="f.divisionName.errors.required">Division name is required</div>
+                                <div *ngIf="f.divisionName.errors.required">Division Name cannot be blank or have special characters</div>
                             </div>
-                            <span *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Please
-                                Enter division name </span>
+                            <span *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span>
                             </td>
                         </tr>
                         <tr>
@@ -86,7 +84,7 @@
                                 *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Please
                                 Enter division code </span>    
                             </td>
-                            <td style="width: 18%" class="LabelFontStyle">
+                            <td style="width: 18%" class="LabelFontStyle1">
                                 Division&nbsp;Name&nbsp;:
                             </td>
                             <td>
@@ -94,13 +92,11 @@
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
                                 placeholder="Enter division name">
                             <div *ngIf="submitted && f. divisionName.errors" class="invalid-feedback">
-                                <div *ngIf="f.divisionName.errors.required">Division name is required</div>
-                                <div *ngIf="f.locCode.errors?.pattern">Division name is required
-                                </div>
+                                <div *ngIf="f.divisionName.errors.required">Division Name cannot be blank or have special characters</div>
+                                <div *ngIf="f.locCode.errors?.pattern">Division Name cannot be blank or have special characters</div>
                             </div>
                             <span
-                                *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Please
-                                Enter division name </span>    
+                                *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span>    
                             </td>
                         </tr>
                         <tr>
@@ -112,7 +108,7 @@
                                 <span *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
                                     Enter start date </span>        
                             </td>
-                            <td style="width: 18%" class="LabelFontStyle">
+                            <td style="width: 18%" class="LabelFontStyle1">
                                 Status&nbsp;:
                             </td>
                             <td>
@@ -154,7 +150,7 @@
                         <td>
                             <button type="submit" class="btn btn-primary" id="register"
                                 [disabled]="!divisionMasterForm.valid" (click)="newMast()">Save</button>
-                        </td>
+                            </td>
                         <td>
                             <!-- <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> -->
                        <!-- Button trigger modal -->
@@ -212,7 +208,7 @@
                                     <div class="modal-body">
                                         <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+                                            Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
                                         </label>
                                     </div>
                                     <div class="modal-footer">
@@ -239,43 +235,8 @@
                         </ng-template>
                         <ng-template #elseBlock1>
                         <td>
-                            <!-- <button type="submit" class="btn btn-primary" id="register"
-                                [disabled]="!divisionMasterForm.valid" (click)="updateMast()">Update</button> -->
-
-
-                                <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-    Update
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <!-- <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div> -->
-        <div class="modal-body" >
-            RECORD UPDATED SUCCESSFUILY
-        </div>
-        <div class="modal-footer">
-         <table class="center">
-             <tr>
-                 <td>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 </td>
-                 <td>
-                    <button type="button" class="btn btn-primary" [disabled]="!divisionMasterForm.valid" (click)="updateMast()">Update</button>
-                 </td>
-             </tr>
-         </table>
-        </div>
-      </div>
-    </div>
-  </div>
+                            <button type="submit" class="btn btn-primary" id="register"
+                                [disabled]="!divisionMasterForm.valid" (click)="updateMast()">Update</button>
                         </td>
                         <!-- <td>
                             <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
@@ -335,20 +296,20 @@
 <br>
 <div class="container1">
     <div class="grid_scroll">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
         <tr class="GridHeader">
-        <th scope="col">Division Id</th>
-        <th scope="col">Division Code</th>
-        <th scope="col">Division Name</th> 
-        <th scope="col">Start Date</th>
-        <th scope="col">Status</th>
-        <th scope="col">Select one</th>
+        <th scope="col" style="width: 4rem;">Division Id</th>
+        <th scope="col" style="width: 4rem;">Division Code</th>
+        <th scope="col" style="width: 14rem;">Division Name</th> 
+        <th scope="col" style="width: 5rem;">Start Date</th>
+        <th scope="col" style="width: 5rem;">Status</th>
+        <th scope="col" style="width: 5rem;">Select one</th>
     </tr>
    </tbody>
    <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-    <td>{{com.divisionId}}</td>
-            <td>{{com.divisionCode}}</td>
+    <td style="width: 4rem;">{{com.divisionId}}</td>
+            <td style="width: 4rem;">{{com.divisionCode}}</td>
             <td>{{com.divisionName}}</td>
             <td>{{com.startDate | date:'dd-MM-yyyy'}}</td>
             <!-- yyyy-MM-dd -->

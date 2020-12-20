@@ -65,6 +65,8 @@ export class EpmloyeeMasterComponent implements OnInit {
   display = true;
   displayButton = true;
   displayRolePass: boolean;
+  divisionName:string;
+  locCode:string;
   
   public minDate = new Date();
   public maxDate = new Date();
@@ -79,35 +81,30 @@ export class EpmloyeeMasterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.employeeMasterForm = fb.group({
-      // divisionCode: ['', [Validators.required]],
-      // // divisionCode:['', [Validators.required, Validators.pattern('[0-9]*'),Validators.maxLength(1)]],
-      // divisionName: ['', Validators.required],
-      // status: ['', Validators.nullValidator],
-      // divisionId: [],
-      // startDate: [],
-      // endDate: [],
       emplId: [],
-      ticketNo: ['', [Validators.required]],
-      divisionId: ['', [Validators.required]],
-      title: ['', [Validators.required]],
-      fname: ['', [Validators.required]],
-      mname: ['', [Validators.required]],
-      lname: ['', [Validators.required]],
-      name: ['', [Validators.required]],
+      ticketNo: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      divisionId: ['', [Validators.required,]],
+      title: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10)]],
+      fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
+      mname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
+      lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
+      name: ['', [Validators.required,Validators.maxLength(100)]],
       locId: ['', [Validators.required]],
       deptId: ['', [Validators.required]],
       designation: [''],
       dob: ['', [Validators.required]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
-      emailId: ['', [Validators.required,Validators.email]],
-      contact1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      contact2: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      loginPass: ['', [Validators.required]],
+      emailId: ['', [Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      contact1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      contact2: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      loginPass: [''],
       status: ['', [Validators.required]],
-      endDate:['', [Validators.nullValidator]],
-      loginAccess:['', [Validators.nullValidator]],
-      roleId:['', [Validators.nullValidator]],
+      endDate:[''],
+      loginAccess:[''],
+      roleId:[''],
       startDate:[],
+      divisionName:[],
+      locCode:[],
     });
   }
 
@@ -192,7 +189,12 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
 
   updateMast() {
+    let select = this.lstcomments.find(d => d.divisionId.divisionName === this.divisionName);
+    this.divisionId =select.divisionId.divisionId;
+    this.locId=select.locId.locId;
     const formValue: IEmployeeMaster = this.employeeMasterForm.value;
+    formValue.divisionId=this.divisionId;
+    formValue.locId=this.locId;
     this.service.UpdateEmpMasterById(formValue, formValue.emplId).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFUILY');
@@ -229,6 +231,8 @@ export class EpmloyeeMasterComponent implements OnInit {
     if (select) {
       this.employeeMasterForm.patchValue(select);
       this.divisionId = select.divisionId.divisionId;
+      this.divisionName=select.divisionId.divisionName;
+      this.locCode=select.locId.locCode;
       this.locId = select.locId.locId;
       this.displayButton = false;
       this.display = false;

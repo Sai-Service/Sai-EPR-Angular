@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
 import {Location} from '@angular/common';
+// import { NgbPaginationConfig} from '@ng-bootstrap/ng-bootstrap';
+// import '@angular/localize/init';
+// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 interface IOperatingUnit {
   ouId: number;
@@ -35,7 +38,9 @@ export class OrganizationMasterComponent implements OnInit {
   ouDesc: string;
   // divId:number;
   divisionId: number;
+  divisionName:string;
   compId: number;
+  compName:String;
   mainBrAdd: string;
   mState: string;
   startDate: Date;
@@ -54,16 +59,19 @@ export class OrganizationMasterComponent implements OnInit {
   public statusList: Array<string> = [];
   public StateList: Array<string> = [];
   public companyCodeList: Array<string> = [];
-  public DivisionIDList: Array<string> = [];
-  public divisionName : any;
+  public DivisionIDList: any[];
+  // page = 1;
+  // pageSize =10;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private _location: Location) {
     this.operatingUnitMasterForm = fb.group({
       ouId: [],
-      ouName: ['', [Validators.required, Validators.maxLength(50),Validators.pattern('[a-zA-Z ]*')]],
-      ouDesc: ['', [Validators.required, Validators.maxLength(50),Validators.pattern('[a-zA-Z ]*')]],
+      ouName: ['', [Validators.required,Validators.minLength(1), Validators.maxLength(50),Validators.pattern('[a-zA-Z 0-9]*')]],
+      ouDesc: ['', [Validators.required,Validators.minLength(1),Validators.pattern('[a-zA-Z ]*')]],
       divisionId: ['', [Validators.required]],
+      divisionName:[''],
       compId: ['', [Validators.required]],
+      compName:[''],
       mainBrAdd: ['', [Validators.required, Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
       mState: ['', [Validators.required]],
       country:[],
@@ -72,11 +80,18 @@ export class OrganizationMasterComponent implements OnInit {
       status: ['', [Validators.required]],
       endDate:[],
     });
+
+  //   for(let i = 1; i <= 100; i++){
+  //     this.lstcomments.push({Name: 'Shop ' + i});
+  //  }
   }
   get f() { return this.operatingUnitMasterForm.controls; }
 
 
   ngOnInit(): void {
+
+  
+
     this.service.statusList()
       .subscribe(
         data => {
@@ -122,11 +137,13 @@ export class OrganizationMasterComponent implements OnInit {
     this.service.operatingUnitMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.operatingUnitMasterForm.reset();
+        window.location.reload();
+        // this.operatingUnitMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
-          this.operatingUnitMasterForm.reset();
+          // this.operatingUnitMasterForm.reset();
+          window.location.reload();
         }
       }
     });
@@ -148,7 +165,12 @@ export class OrganizationMasterComponent implements OnInit {
     return val;
   }
   updateMast() {
+    let select = this.lstcomments.find(d => d.divisionId.divisionName === this.divisionName);
+   this.divisionId =select.divisionId.divisionId;
+   let select1 = this.lstcomments.find(d => d.compId.compName === this.compName);
+   this.compId =select.compId.compId;
     const formValue: IOperatingUnit =this.operatingUnitMasterForm.value;
+    formValue.divisionId=this.divisionId;
     this.service.UpdateoperatingUnitMasterById(formValue, formValue.ouId).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFUILY');
@@ -156,7 +178,8 @@ export class OrganizationMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
-          this.operatingUnitMasterForm.reset();
+          // this.operatingUnitMasterForm.reset();
+          window.location.reload();
         }
       }
     });
@@ -191,15 +214,14 @@ export class OrganizationMasterComponent implements OnInit {
     let select = this.lstcomments.find(d => d.ouId === ouId);
     if (select) {
       this.operatingUnitMasterForm.patchValue(select);
-      this.divisionId= select.divisionId.divisionId;
-      this.compId= select.compId.compId;
+      this.divisionName= select.divisionId.divisionName;
+      this.compName= select.compId.compName;
       this.mState =select.mState;
       this.displayButton = false;
       this.display = false;
-      // this.DivisionIDList=select.divisionId.divisionName;
-      this.divisionName=select.divisionId.divisionName;
     }
   }
+  
   onOptionsSelected(event: any) {
     this.Status1 = this.operatingUnitMasterForm.get('status').value;
     // alert(this.Status1);
@@ -210,6 +232,10 @@ export class OrganizationMasterComponent implements OnInit {
     else if (this.Status1 === 'Active') {
       this.operatingUnitMasterForm.get('endDate').reset();
     }
+  }
+
+  onOptionsDivSelected(sc : any) {
+alert(sc);
   }
 
   

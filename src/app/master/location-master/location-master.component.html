@@ -22,15 +22,12 @@
                                 [ngClass]="{ 'is-invalid': submitted && f.locCode.errors }"
                                 placeholder="Enter Location code">
                             <div *ngIf="submitted && f. locCode.errors" class="invalid-feedback">
-                                <div *ngIf="f.locCode.errors.required">Location code must be a valid </div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
-                                <div *ngIf="f.locCode.errors?.maxLength">Location code must be a valid
-                                </div>
+                                <div *ngIf="f.locCode.errors.required">Code cannot be blank, have spaces or have special characters</div>
+                                <div *ngIf="f.locCode.errors?.maxLength">Code cannot be blank, have spaces or have special characters</div>
+                                <div *ngIf="f.locCode.errors?.pattern">Code cannot be blank, have spaces or have special characters</div>
                             </div>
                             <span
-                                *ngIf="!LocationMasterForm.get('locCode').valid && LocationMasterForm.get('locCode').touched">Please
-                                Enter Location code </span>
+                                *ngIf="!LocationMasterForm.get('locCode').valid && LocationMasterForm.get('locCode').touched">Code cannot be blank, have spaces or have special characters</span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">
                                 Location&nbsp;Name&nbsp;:
@@ -40,13 +37,11 @@
                                 [ngClass]="{ 'is-invalid': submitted && f.locName.errors }"
                                 placeholder="Enter location name">
                             <div *ngIf="submitted && f. locName.errors" class="invalid-feedback">
-                                <div *ngIf="f.locName.errors.required">Location code must be a valid </div>
-                                <div *ngIf="f.locName.errors?.maxLength">Location code must be a valid
-                                </div>
+                                <div *ngIf="f.locName.errors.required">Name cannot be blank or have special characters</div>
+                                <div *ngIf="f.locName.errors?.maxLength">Name cannot be blank or have special characters</div>
                             </div>
                             <span
-                                *ngIf="!LocationMasterForm.get('locName').valid && LocationMasterForm.get('locName').touched">Please
-                                Enter location name </span>
+                                *ngIf="!LocationMasterForm.get('locName').valid && LocationMasterForm.get('locName').touched">Name cannot be blank or have special characters</span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">
                                 Operating&nbsp;Unit&nbsp;:
@@ -102,7 +97,7 @@
                                 *ngIf="!LocationMasterForm.get('address2').valid && LocationMasterForm.get('address2').touched">Please
                                 Enter Address2</span>
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Address3&nbsp;:&nbsp;
                             </td>
                             <td>
@@ -121,7 +116,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Address4&nbsp;:&nbsp;
                             </td>
                             <td>
@@ -142,9 +137,9 @@
                                 City&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="city" id="city" class="form-control" [ngModel]="city">
+                                <select formControlName="city" id="city" class="form-control" [ngModel]="city" (ngModelChange)='onOptionsSelectedCity($event)' >
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  cityList">
+                                    <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
                                         {{sc.codeDesc}}
                                     </option>
                                 </select>
@@ -166,6 +161,8 @@
                             <div *ngIf="submitted && f. pinCd.errors" class="invalid-feedback">
                                 <div *ngIf="f.pinCd.errors.required">Pin Code must be required and valid for 6 digit
                                 </div>
+                                <div *ngIf="f.pinCd.errors.pattern">Pin Code must be required and valid for 6 digit
+                                </div>
                                 <div *ngIf="f.pinCd.errors?.maxLength">Pin Code must be a valid for 6 digit
                                 </div>
                             </div>
@@ -179,7 +176,7 @@
                                 State&nbsp;:
                             </td>
                             <td>
-                                <select formControlName="state1" id="state1" class="form-control">
+                                <!-- <select formControlName="state1" id="state1" class="form-control">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  StateList">
                                         {{sc.codeDesc}}
@@ -192,9 +189,11 @@
                                     </div>
                                 </div>
                                 <span *ngIf="!LocationMasterForm.get('state1').valid && LocationMasterForm.get('state1').touched">Please
-                                    Enter State </span> 
+                                    Enter State </span>  -->
+                                    <input type="text" disabled formControlName="state1" [ngModel]="state1"
+                                    class="form-control">
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Country&nbsp;:
                             </td>
                             <td>
@@ -239,7 +238,7 @@
                                 *ngIf="!LocationMasterForm.get('phone1').valid && LocationMasterForm.get('phone1').touched">Please
                                 Enter Phone 1</span>
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Phone 2&nbsp;:
                             </td>
                             <td>
@@ -299,7 +298,7 @@
                             </td>
                             <td>
                                 <!-- (keyup)="savegstNo($event)" -->
-                                <input formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
+                                <input disabled formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
@@ -311,7 +310,7 @@
                                 *ngIf="!LocationMasterForm.get('panNo').valid && LocationMasterForm.get('panNo').touched">Please
                                 Enter Pan Number 10 digit</span>
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 TAN&nbsp;No.&nbsp;:
                             </td>
                             <td>
@@ -362,14 +361,6 @@
                                 <input disabled formControlName="locCode" value={{locCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locCode.errors }"
                                 placeholder="Enter Location code">
-                            <!-- <div *ngIf="submitted && f. locCode.errors" class="invalid-feedback">
-                                <div *ngIf="f.locCode.errors.required">Location code must be a valid </div>
-                                <div *ngIf="f.locCode.errors?.maxLength">Location code must be a valid
-                                </div>
-                            </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('locCode').valid && LocationMasterForm.get('locCode').touched">Please
-                                Enter Location code </span> -->
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Location&nbsp;Name&nbsp;:
@@ -378,27 +369,13 @@
                                 <input disabled formControlName="locName" value={{locName}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locName.errors }"
                                 placeholder="Enter location name">
-                            <!-- <div *ngIf="submitted && f. locName.errors" class="invalid-feedback">
-                                <div *ngIf="f.locName.errors.required">Location code must be a valid </div>
-                                <div *ngIf="f.locName.errors?.maxLength">Location code must be a valid
-                                </div>
-                            </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('locName').valid && LocationMasterForm.get('locName').touched">Please
-                                Enter location name </span> -->
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">
                                 Operating&nbsp;Unit&nbsp;:
                             </td>
                             <td>
                                 <!-- {{ouId.ouId}} -->
-                                <input disabled formControlName="ouId" value={{ouId}} class="form-control">
-                            <!-- <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
-                                <div *ngIf="f.ouId.errors.required">OU Id is required</div>
-                                <span
-                                    *ngIf="!LocationMasterForm.get('ouId').valid && LocationMasterForm.get('ouId').touched">Please
-                                    Enter valid Operating Unit </span>
-                            </div> -->
+                                <input disabled formControlName="ouName" value={{ouName}} [(ngModel)]="ouName" class="form-control">
                             </td>
                         </tr>
                         <tr>
@@ -439,7 +416,7 @@
                                 *ngIf="!LocationMasterForm.get('address2').valid && LocationMasterForm.get('address2').touched">Please
                                 Enter Address2</span>
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Address3&nbsp;:&nbsp;
                             </td>   
                             <td>
@@ -458,7 +435,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle1">
+                            <td style="width: 15%" class="LabelFontStyle">
                                 Address4&nbsp;:&nbsp;
                             </td> 
                             <td>
@@ -480,8 +457,7 @@
                             </td> 
                             <td>
                                 <input formControlName="city" value={{city}} class="form-control">
-                                <span
-                                *ngIf="!LocationMasterForm.get('city').valid && LocationMasterForm.get('city').touched">Please
+                                <span *ngIf="!LocationMasterForm.get('city').valid && LocationMasterForm.get('city').touched">Please
                                 Enter City</span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">
@@ -515,11 +491,26 @@
                                 <input type="text" disabled formControlName="country" [ngModel]="country"
                                 class="form-control">
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <td style="width: 15%" class="LabelFontStyle1">
                                 Region&nbsp;:
                             </td>
                             <td>
-                                <input disabled formControlName="region" id="region" class="form-control">
+                                <select formControlName="region" id="region" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  regionList">
+                                        {{sc.codeDesc}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f. region.errors" class="invalid-feedback">
+                                    <div *ngIf="f.region.errors.required">Region be required
+                                    </div>
+                                    <div *ngIf="f.region.errors?.maxLength">Region be required
+                                    </div>
+                                </div>
+                                <span
+                                    *ngIf="!LocationMasterForm.get('region').valid && LocationMasterForm.get('region').touched">Please
+                                    Select Region</span>
+                                <!-- <input disabled formControlName="region" id="region" class="form-control"> -->
                             </td>
                         </tr>
                         <tr>
@@ -551,8 +542,7 @@
                                 <div *ngIf="f.phone2.errors?.maxLength">Phone 2 must be a valid for 10 digit
                                 </div>
                             </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('phone2').valid && LocationMasterForm.get('phone2').touched">Please
+                            <span *ngIf="!LocationMasterForm.get('phone2').valid && LocationMasterForm.get('phone2').touched">Please
                                 Enter Phone 2</span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">
@@ -567,8 +557,7 @@
                                 <div *ngIf="f.emailId.errors?.maxLength">Email ID must be a valid
                                 </div>
                             </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('emailId').valid && LocationMasterForm.get('emailId').touched">Please
+                            <span  *ngIf="!LocationMasterForm.get('emailId').valid && LocationMasterForm.get('emailId').touched">Please
                                 Enter Email ID</span>
                             </td>
                         </tr>
@@ -593,7 +582,7 @@
                                 PAN&nbsp;No.&nbsp;:
                             </td>
                             <td>
-                                <input formControlName="panNo" value={{panNo}} class="form-control"
+                                <input disabled formControlName="panNo" value={{panNo}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
@@ -618,8 +607,7 @@
                                 <div *ngIf="f.tanNo.errors?.pattern">panNo must be a valid and 10 charecter
                                 </div>
                             </div>
-                            <span
-                                *ngIf="!LocationMasterForm.get('tanNo').valid && LocationMasterForm.get('tanNo').touched">Please
+                            <span *ngIf="!LocationMasterForm.get('tanNo').valid && LocationMasterForm.get('tanNo').touched">Please
                                 Enter Tan Number 10 digit</span>
                             </td>
                         </tr>
@@ -630,8 +618,7 @@
                             <td>
                                 <input disabled type="date" formControlName="startDate" class="form-control"
                                 placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
-                            <span
-                                *ngIf="!LocationMasterForm.get('startDate').valid && LocationMasterForm.get('startDate').touched">Please
+                            <span *ngIf="!LocationMasterForm.get('startDate').valid && LocationMasterForm.get('startDate').touched">Please
                                 Enter start Date </span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">
@@ -676,12 +663,72 @@
                                     [disabled]="!LocationMasterForm.valid" (click)="newMast()">Save</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="register"
-                                    (click)="resetMast()">Reset</button>
+                                <!-- <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetMast()">Reset</button> -->
+                                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Reset
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                    </td>
+                </tr>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="register"
-                                    (click)="closeMast()">Close</button>
+                                <!-- <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeMast()">Close</button> -->
+                                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Close
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                       <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                    </td>
+                    <td>
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register"
@@ -694,12 +741,72 @@
                                     [disabled]="!LocationMasterForm.valid" (click)="updateMast()">Update</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="register"
-                                    (click)="resetMast()">Reset</button>
+                                <!-- <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetMast()">Reset</button> -->
+                                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Reset
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                    </td>
+                </tr>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" id="register"
-                                    (click)="closeMast()">Close</button>
+                                <!-- <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeMast()">Close</button> -->
+                                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Close
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                       <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                    </td>
+                    <td>
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register"
@@ -719,13 +826,23 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
     <tbody>
         <tr class="GridHeader">
-            <th scope="col">Location Id</th>
+            <th scope="col" style="width: 2rem;">Location Id</th>
             <th scope="col">Location Code</th>
-            <th scope="col">OU Name</th>
-            <th scope="col">Address1</th>
-            <th scope="col">Address2</th>
-            <th scope="col">Address3</th>
-            <th scope="col">Address4</th>
+            <th>
+                <table style="border: none;">
+                    <tr style="border: none;">
+                        <td style="border: none;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;OU&nbsp;&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </table>
+            </th>
+            <th style="width: 10%;text-align: center;">
+                Address1
+            </th>
+            <th scope="col" >Address2</th>
+            <th scope="col" >Address3</th>
+            <th scope="col" >Address4</th>
             <th scope="col">City</th>
             <th scope="col">Pin Code</th>
             <th scope="col">State</th>
@@ -743,11 +860,11 @@
     <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
         <td>{{com.locId}}</td>
         <td>{{com.locCode}}</td>
-        <td>{{com.ouId.ouName}}</td>
-        <td>{{com.address1}}</td>
-        <td>{{com.address2}}</td>
-        <td>{{com.address3}}</td>
-        <td>{{com.address4}}</td>
+        <td>&nbsp;&nbsp;{{com.ouId.ouName}}&nbsp;&nbsp;</td>
+        <td >{{com.address1}}</td>
+        <td >{{com.address2}}</td>
+        <td >{{com.address3}}</td>
+        <td >{{com.address4}}</td>
         <td>{{com.city}}</td>
         <td>{{com.pinCd}}</td>
         <td>{{com.state}}</td>
@@ -759,7 +876,7 @@
         <td>{{com.panNo}}</td>
         <td>{{com.tanNo}}</td>
         <td>{{com.status}}</td>
-        <td><button (click)="Select(com.locId)">Select</button></td>
+        <td><button class="btn btn-primary" (click)="Select(com.locId)">Select</button></td>
     </tr>
     </table>
 </div>
