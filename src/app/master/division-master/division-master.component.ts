@@ -45,9 +45,9 @@ export class DivisionMasterComponent implements OnInit {
   // private DivisionMasterService:DivisionMasterService
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.divisionMasterForm = fb.group({
-      divisionCode: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10),Validators.pattern('[a-zA-Z]*')]],
+      divisionCode: ['', [Validators.required,Validators.minLength(2),Validators.maxLength(2),Validators.pattern('[a-zA-Z]*')]],
       // divisionCode:['', [Validators.required, Validators.pattern('[0-9]*'),Validators.maxLength(1)]],
-      divisionName: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(20),Validators.pattern('[a-zA-Z 0-9]*')]],
+      divisionName: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(20),Validators.pattern('[a-zA-Z 0-9]*')]],
       status: ['', Validators.nullValidator],
       divisionId: [],
       startDate: ['',[Validators.required]],

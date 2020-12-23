@@ -22,6 +22,7 @@ interface IOperatingUnit {
   uheadCeo:string;
   status:string;
   endDate: Date;
+  city:string;
 }
 
 @Component({
@@ -45,7 +46,9 @@ export class OrganizationMasterComponent implements OnInit {
   mState: string;
   startDate: Date;
   uheadCeo:string;
-  
+  city:string;
+  attribute1:string;
+
   public status ="Active"; 
   public country = 'INDIA';
   public minDate = new Date();
@@ -53,6 +56,7 @@ export class OrganizationMasterComponent implements OnInit {
   displayInactive = true;
   Status1: any;
   display = true;
+  public cityList1: any;
   
   endDate: Date;
 
@@ -60,25 +64,27 @@ export class OrganizationMasterComponent implements OnInit {
   public StateList: Array<string> = [];
   public companyCodeList: Array<string> = [];
   public DivisionIDList: any[];
+  public cityList: Array<string> = [];
   // page = 1;
   // pageSize =10;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private _location: Location) {
     this.operatingUnitMasterForm = fb.group({
       ouId: [],
-      ouName: ['', [Validators.required,Validators.minLength(1), Validators.maxLength(50),Validators.pattern('[a-zA-Z 0-9]*')]],
-      ouDesc: ['', [Validators.required,Validators.minLength(1),Validators.pattern('[a-zA-Z ]*')]],
+      ouName: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(15),Validators.pattern('[a-zA-Z 0-9]*')]],
+      ouDesc: ['', [Validators.required,Validators.minLength(5),Validators.pattern('[a-zA-Z -]*')]],
       divisionId: ['', [Validators.required]],
       divisionName:[''],
       compId: ['', [Validators.required]],
       compName:[''],
-      mainBrAdd: ['', [Validators.required, Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
+      mainBrAdd: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(35),Validators.pattern('[a-zA-Z 0-9]*')]],
       mState: ['', [Validators.required]],
       country:[],
       startDate: ['', [Validators.required]],
       uheadCeo:['', [Validators.nullValidator,Validators.maxLength(35),Validators.pattern('[a-zA-Z ]*')]],
       status: ['', [Validators.required]],
       endDate:[],
+      city:['',[Validators.required]]
     });
 
   //   for(let i = 1; i <= 100; i++){
@@ -123,6 +129,17 @@ export class OrganizationMasterComponent implements OnInit {
         console.log(this.DivisionIDList);
       }
     );
+
+
+    this.service.cityList()
+    .subscribe(
+      data => {
+        this.cityList = data;
+        console.log(this.cityList);
+        // this.country = 'INDIA';
+      }
+    );
+
   }
   operatingUnitMaster(val) {
 
@@ -199,8 +216,8 @@ export class OrganizationMasterComponent implements OnInit {
         this._location.back();
       }
 
-  searchMast() {
-    this.service.getoperatingUnitSearch()
+  searchMast(pageNo) {
+    this.service.getoperatingUnitSearch(pageNo)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -241,5 +258,20 @@ alert(sc);
   
   close(){
     this.router.navigate(['login']);
+  }
+
+
+  onOptionsSelectedCity (city: any){
+    // alert(city);
+    this.service.cityList1(city)
+    .subscribe(
+      data => {
+        this.cityList1 = data;
+        console.log(this.cityList1);
+        this.mState=this.cityList1.attribute1;
+        console.log(this.cityList1.attribute1);
+        // this.country = 'INDIA';
+      }
+    );
   }
 }

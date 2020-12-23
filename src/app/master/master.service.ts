@@ -180,8 +180,8 @@ public operatingUnitMasterSubmit(operatingUnitMasterRecord) {
   const url = this.ServerUrl + '/opUnit/hrOperatingUnits';  
   return this.http.post(url, operatingUnitMasterRecord, options);
 }
-getoperatingUnitSearch(): Observable<any> {
-  return this.http.get(this.ServerUrl + '/opUnit');
+getoperatingUnitSearch(pageNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`);
 
 }
 UpdateoperatingUnitMasterById(operatingUnitMasterRecord,ouId) {

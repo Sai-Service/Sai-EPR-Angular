@@ -14,31 +14,61 @@
                     <div id="Panel1" class="auto-style103">
                         <table class="center">
                             <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                                <td>
+                                   <table>
+                                       <tr>
+                                           <td class="form-control">
+                                            {{ouName}}
+                                           </td>
+                                       </tr>
+                                   </table>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
+                                <td>
+                                   <table>
+                                       <tr>
+                                           <td class="form-control">{{loginArray}} </td>
+                                       </tr>
+                                   </table>
+                               </td>
                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;Customer&nbsp;Type&nbsp;:&nbsp;</td>
                                <td>
-                                <select formControlName="custType" [(ngModel)]="custType"
-                                 (ngModelChange)='onOptioncustTypeSelected($event)' class="form-control">
-                                  <option value="Person">Person</option>
-                                   <option value="Orgnization">Orgnization</option>
-                                     </select>
-                               </td>
-                               <td style="width: 15%" class="LabelFontStyle1">&nbsp;Class&nbsp;Code&nbsp;Type&nbsp;:&nbsp;</td>
-                               <td>
-                                <input formControlName="classCodeType" [(ngModel)]='classCodeType' value={{classCodeType}}  (keyup)="onKey($event)"  class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }"
-                                placeholder="Enter class Code Type">
-                            <div *ngIf="submitted && f. classCodeType.errors" class="invalid-feedback">
-                                <div *ngIf="f.classCodeType.errors.required">classCodeType must be a valid</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                        </div> -->
-                                <div *ngIf="f.classCodeType.errors?.maxLength">classCodeType  Name must be a valid 
-                                </div>
+                                <select formControlName="custType" [(ngModel)]="custType"
+                                 (ngModelChange)='onOptioncustTypeSelected($event)' class="form-control">
+                                  <option value="Person">Person</option>
+                                   <option value="Orgnization">Orgnization</option>
+                                </select>
+                                <div *ngIf="submitted && f. custType.errors" class="invalid-feedback">
+                                    <div *ngIf="f.custType.errors.required">classCodeType must be a valid</div>
+                                    <div *ngIf="f.custType.errors?.pattern">orgId must be a valid for 3 digit
                             </div>
-                            <span
-                                *ngIf="!customerMasterForm.get('classCodeType').valid && customerMasterForm.get('classCodeType').touched">Please
-                                Enter classCodeType</span> 
+                                    <div *ngIf="f.custType.errors?.maxLength">classCodeType  Name must be a valid 
+                                    </div>
+                                </div>
+                                <span
+                                    *ngIf="!customerMasterForm.get('custType').valid && customerMasterForm.get('custType').touched">Please
+                                    Enter classCodeType</span> 
                                </td>
-                               <td style="width: 15%" class="LabelFontStyle1">Account&nbsp;No&nbsp;:&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;Class&nbsp;Code&nbsp;Type&nbsp;:&nbsp;</td>
+                                <td>
+                                 <input formControlName="classCodeType" [(ngModel)]='classCodeType' value={{classCodeType}}  (keyup)="onKey($event)"  class="form-control"
+                                 [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }"
+                                 placeholder="Enter class Code Type">
+                             <div *ngIf="submitted && f. classCodeType.errors" class="invalid-feedback">
+                                 <div *ngIf="f.classCodeType.errors.required">classCodeType must be a valid</div>
+                                 <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                         </div> -->
+                                 <div *ngIf="f.classCodeType.errors?.maxLength">classCodeType  Name must be a valid 
+                                 </div>
+                             </div>
+                             <span
+                                 *ngIf="!customerMasterForm.get('classCodeType').valid && customerMasterForm.get('classCodeType').touched">Please
+                                 Enter classCodeType</span> 
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle1">Account&nbsp;No&nbsp;:&nbsp;</td>
                                <td>
                                 <input formControlName="customerId1"  value={{customerId1}} class="form-control"
                                 placeholder="Enter ticket No">
@@ -47,11 +77,11 @@
                         </table>
                         <table class="center">
                             <tr>
-                                <td *ngIf="displayPerson" style="width: 10%" class="LabelFontStyle1">&nbsp;Title&nbsp;:&nbsp;</td>
+                                <td *ngIf="displayPerson" style="width: 10%" class="LabelFontStyle1">&nbsp;Title&nbsp;:&nbsp;</td>
                                 <td *ngIf="displayPerson">
-                                    <select formControlName="title" id="title" [(ngModel)]='title' class="form-control" style="width: 70px;">
+                                    <select formControlName="title" id="title" [(ngModel)]='title' class="form-control" style="width: 70px;">
                                         <option>-Title-</option>
-                                        <option *ngFor="let sc of  titleList"> {{sc.code}}</option>
+                                        <option *ngFor="let sc of  titleList"> {{sc.code}}</option>
                                          </select>
                                          <div *ngIf="submitted && f. title.errors" class="invalid-feedback">
                                             <div *ngIf="f.title.errors.required">Title must be a valid</div>
@@ -65,7 +95,7 @@
                                             Enter ticket No </span>
                                 </td>
                                 <div *ngIf="displayPerson">
-                                    <td style="width: 15%" class="LabelFontStyle1">Firts&nbsp;Name&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Firts&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
                                         <input formControlName="fName" [(ngModel)]='fName' value={{fName}}  (keyup)="onKey($event)"  class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
@@ -81,13 +111,13 @@
                                             *ngIf="!customerMasterForm.get('fName').valid && customerMasterForm.get('fName').touched">Please
                                             First Name </span>
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Middle&nbsp;Name&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Middle&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
                                         <input formControlName="mName" [(ngModel)]='mName' value={{mName}}  (keyup)="onKey($event)"  class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                                         placeholder="Enter full name">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Last&nbsp;Name&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Last&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
                                         <input formControlName="lName" [(ngModel)]='lName' value={{lName}}  (keyup)="onKey($event)"  class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
@@ -106,10 +136,10 @@
                                 </div>
                             </tr>
                             <tr *ngIf="displayPerson">
-                                <td style="width: 15%" class="LabelFontStyle1">Full&nbsp;Name&nbsp;:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Full&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td colspan="3">
-                                    <input formControlName="custName" value="custName" [(ngModel)]='custName' (keyup)="onKey($event)" class="form-control"
-                                    placeholder="Enter Full name" style="width: 100%;">
+                                    <input formControlName="custName" value="custName" [(ngModel)]='custName' (keyup)="onKey($event)" class="form-control"
+                                    placeholder="Enter Full name" style="width: 100%;">
                                     <div *ngIf="submitted && f. custName.errors" class="invalid-feedback">
                                         <div *ngIf="f.custName.errors.required">Full Name must be a valid</div>
                                         <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
@@ -123,10 +153,10 @@
                                 </td>
                             </tr>
                             <tr *ngIf="displayOrgnization">
-                                <td style="width: 15%" class="LabelFontStyle">Full&nbsp;Name&nbsp;:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Full&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td colspan="3">
-                                    <input formControlName="custName" value="custName" [(ngModel)]='custName' (keyup)="onKey($event)" class="form-control"
-                                    placeholder="Enter Full name" style="width: 100%;">
+                                    <input formControlName="custName" value="custName" [(ngModel)]='custName' (keyup)="onKey($event)" class="form-control"
+                                    placeholder="Enter Full name" style="width: 100%;">
                                     <div *ngIf="submitted && f. custName.errors" class="invalid-feedback">
                                         <div *ngIf="f.custName.errors.required">Full Name must be a valid</div>
                                         <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
@@ -142,7 +172,7 @@
                         </table>
                         <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;" >
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
                                 <td>
                          <input formControlName="address1" [(ngModel)]='address1' value={{address1}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -158,7 +188,7 @@
                                     *ngIf="!customerMasterForm.get('address1').valid && customerMasterForm.get('address1').touched">Please
                                     Enter address </span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address2&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address2&nbsp;:&nbsp;</td>
                                 <td>
                          <input formControlName="address2" [(ngModel)]='address2' value={{address2}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -174,7 +204,7 @@
                                     *ngIf="!customerMasterForm.get('address2').valid && customerMasterForm.get('address2').touched">Please
                                     Enter address </span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address3&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address3&nbsp;:&nbsp;</td>
                                 <td>
                          <input formControlName="address3" [(ngModel)]='address3' value={{address3}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -192,7 +222,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Address4&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Address4&nbsp;:&nbsp;</td>
                                 <td>
                          <input formControlName="address4" [(ngModel)]='address4' value={{address4}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -206,11 +236,11 @@
                                     *ngIf="!customerMasterForm.get('address4').valid && customerMasterForm.get('address4').touched">Please
                                     Enter address </span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select formControlName="city" id="city" class="form-control">
+                                    <select formControlName="city" id="city" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  cityList">
+                                        <option *ngFor="let sc of  cityList">
                                             {{sc.codeDesc}}
                                         </option>
                                     </select>
@@ -223,7 +253,7 @@
                                         *ngIf="!customerMasterForm.get('city').valid && customerMasterForm.get('city').touched">Please
                                         Enter city </span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -239,12 +269,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;State&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;State&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select formControlName="state" id="state" class="form-control">
-                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  stateList">
-                                        {{sc.codeDesc}}
+                                    <select formControlName="state" id="state" class="form-control">
+                                         <option>--Select--</option>
+                                        <option *ngFor="let sc of  stateList">
+                                        {{sc.codeDesc}}
                                        </option>
                                     </select>
                                     <div *ngIf="submitted && f. state.errors" class="invalid-feedback">
@@ -258,7 +288,7 @@
                                 </td>
                               </tr>
                               <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;" >
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;1&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;1&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -272,7 +302,7 @@
                                     *ngIf="!customerMasterForm.get('mobile1').valid && customerMasterForm.get('mobile1').touched">Please
                                     Enter mobile must be 10 digit</span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;2&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;2&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="mobile2" [(ngModel)]='mobile2' value={{mobile2}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -286,7 +316,7 @@
                                     *ngIf="!customerMasterForm.get('mobile2').valid && customerMasterForm.get('mobile2').touched">Please
                                     Enter mobile must be 10 digit</span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;3&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;3&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="mobile3" [(ngModel)]='mobile3' value={{mobile3}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -294,7 +324,7 @@
                                  </td>
                               </tr>
                               <tr>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;</td> 
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;</td> 
                                 <td>
                                     <input formControlName="emailId" [(ngModel)]='emailId' value={{emailId}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -308,13 +338,13 @@
                                     *ngIf="!customerMasterForm.get('emailId').valid && customerMasterForm.get('emailId').touched">Please
                                     Enter Email id must</span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Email&nbsp;ID&nbsp;2&nbsp;:&nbsp;</td> 
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Email&nbsp;ID&nbsp;2&nbsp;:&nbsp;</td> 
                                 <td>
                                     <input formControlName="emailId1" [(ngModel)]='emailId1' value={{emailId1}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.emailId1.errors }"
                                     placeholder="Enter emailId">
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;Name&nbsp;:&nbsp;</td> 
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;Name&nbsp;:&nbsp;</td> 
                                 <td>
                                     <input formControlName="contactPerson" [(ngModel)]='contactPerson' value={{contactPerson}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -330,7 +360,7 @@
                                 </td>
                               </tr>
                               <tr>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;No&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="contactNo" [(ngModel)]='contactNo' value={{contactNo}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
@@ -346,7 +376,7 @@
                                 </td> 
                               </tr>
                               <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Date&nbsp;Of&nbsp;Birth&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Date&nbsp;Of&nbsp;Birth&nbsp;:&nbsp;</td>
                                 <td>
                                     <input type="date" formControlName="birthDate" [(ngModel)]='birthDate' value={{birthDate}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
@@ -360,13 +390,13 @@
                                     *ngIf="!customerMasterForm.get('birthDate').valid && customerMasterForm.get('birthDate').touched">Please
                                     Enter birth date must</span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Wedding&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Wedding&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>
                                     <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate' value={{weddingDate}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }"
                                     placeholder="Enter weddingDate">
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Start&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Start&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>
                                     <input type="date" formControlName="startDate" class="form-control"
                                     placeholder="Enter start Date"
@@ -400,7 +430,7 @@
                                 </ng-template>
                             </tr>
                               <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input  formControlName="gstNo" [(ngModel)]='gstNo' value={{gstNo}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
@@ -414,7 +444,7 @@
                                     *ngIf="!customerMasterForm.get('gstNo').valid && customerMasterForm.get('gstNo').touched">Please
                                     Enter gstN o must</span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pan&nbsp;No&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input  formControlName="panNo" [(ngModel)]='panNo' value={{panNo}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
@@ -428,31 +458,14 @@
                                     *ngIf="!customerMasterForm.get('panNo').valid && customerMasterForm.get('panNo').touched">Please
                                     Enter pan no must</span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Tan&nbsp;No&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Tan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input  formControlName="panNo" [(ngModel)]='panNo' value={{panNo}}  (keyup)="onKey($event)"  class="form-control"
                                     [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                     placeholder="Enter tan No">
-                                </td> 
+                                </td> 
                               </tr>
                               <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                                <td>
-                                    <select formControlName="ouId" id="ouId" class="form-control"  [(ngModel)]='ouId'  (ngModelChange)='onOuIdSelected($event)'>
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  ouIdList" [ngValue]="sc.ouId"  >
-                                            {{sc.ouName}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
-                                        <div *ngIf="f.ouId.errors.required">Enter Operating Unit </div>
-                                        <div *ngIf="f.ouId.errors?.maxLength">Enter Operating Unit
-                                        </div>
-                                    </div>
-                                    <span
-                                        *ngIf="!customerMasterForm.get('ouId').valid && customerMasterForm.get('ouId').touched">Please
-                                        Operating Unit </span>
-                                </td>
                             </tr>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">
@@ -476,17 +489,17 @@
                         <table class="center">
                             <tr>
                                 <td>
-                                    <button type="submit" class="btn btn-primary" id="register"  [disabled]="!customerMasterForm.valid" (click)="newMast()">withSite</button>
+                                    <button type="submit" class="btn btn-primary" id="register"  [disabled]="!customerMasterForm.valid" (click)="newMast()">withSite</button>
                                 </td>
-                                 <td>
-                                     <button type="submit" class="btn btn-primary" id="register"  (click)="updateMast()">Update</button>
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                 <td>
+                                     <button type="submit" class="btn btn-primary" id="register"  (click)="updateMast()">Update</button>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary" id="register"
-                                      (click)="closesMast()">Close</button>
+                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" id="register"
+                                      (click)="closesMast()">Close</button>
                                 </td>
                             </tr>
 
@@ -505,12 +518,12 @@
                         </table>
                        <table>
                            <tr>
-                               <td colspan="8" style="width: 15%" class="LabelFontStyle"style="text-align: left;font-weight: bold;">
+                               <td colspan="8" style="width: 15%" class="LabelFontStyle"style="text-align: left;font-weight: bold;">
                                 &nbsp;Existing&nbsp;Available&nbsp;Site&nbsp;:
                                </td>
                            </tr>
                        </table>
-                       <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                       <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
                         <tbody>
                             <tr class="GridHeader">
                                 <th scope="col">Customer Site Id</th>
@@ -533,7 +546,7 @@
                                         <!-- <th scope="col">Tax Category</th> -->
                                         <!-- <th scope="col">Select one</th> -->
                             </tr>
-                            <tr  *ngFor="let com of lstcomments.customerSiteMasterList" class="ItemStyle" style="text-decoration:none;">
+                            <tr  *ngFor="let com of lstcomments.customerSiteMasterList" class="ItemStyle" style="text-decoration:none;">
                                 <td>{{com.customerSiteId}}</td>
                                 <td>{{com.ouId}}</td>
                                 <td>{{com.address1}}</td>   
@@ -785,3 +798,5 @@
         </div>
     </div>
 </div>
+
+

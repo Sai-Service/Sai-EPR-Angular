@@ -211,12 +211,12 @@ font-weight: bold;
 
 
 
-table thead {
-  /* position: fixed; */
+/* table thead {
+
 
 position: fixed;
-  /* width: 400rem; */
-}
+  
+} */
 
 /* table th, table td {
   width: 160px;
@@ -225,6 +225,8 @@ position: fixed;
 /* .ItemStyle tr td  {
   width: 160px;
 } */
+
+
 
 /* .grid_scroll{
   overflow: auto;

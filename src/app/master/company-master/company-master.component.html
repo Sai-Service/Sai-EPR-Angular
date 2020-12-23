@@ -20,7 +20,7 @@
                             <td>
                                 <input formControlName="compCode" value={{compCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.compCode.errors }"
-                                placeholder="Enter Company code">
+                                placeholder="Enter Company code" uppercase  style="text-transform: uppercase;">
                             <div *ngIf="submitted && f. compCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.compCode.errors.required">Code cannot be blank, have spaces or have special characters </div>
                                 <div *ngIf="f.compCode.errors?.pattern">Code cannot be blank, have spaces or have special characters</div>
@@ -261,7 +261,7 @@
                                 Company&nbsp;Name&nbsp;:
                             </td>
                             <td>
-                                <input formControlName="compName" value={{compName}} class="form-control"
+                                <input disabled formControlName="compName" value={{compName}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.compName.errors }"
                                 placeholder="Enter Company Name">
                             <div *ngIf="submitted && f. compName.errors" class="invalid-feedback">

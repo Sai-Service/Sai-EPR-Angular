@@ -30,7 +30,7 @@ interface IpostPO {
   dept: number;
   ouName: string;
   empId: any,
-  Description: string;
+  description: string;
   baseAmount: number;
   suppInvNo: number;
   TransactionNature: string;
@@ -111,7 +111,7 @@ export class OPMasterDtoComponent implements OnInit {
   empId: any;
   name: string;
   ouName: string;
-  Description: string;
+  description: string;
   totTaxAmt: number;
   baseAmount: number;
   suppInvNo: number;
@@ -194,6 +194,7 @@ export class OPMasterDtoComponent implements OnInit {
   totAmtDiss = true;
   displayButton = true;
   displayLine = true;
+  displayPoLine =true;
   DissRecoverableFlag = false;
   DissinclusiveFlag = false;
   DissselfAssesedFlag = false;
@@ -271,7 +272,7 @@ export class OPMasterDtoComponent implements OnInit {
       recoverableFlag: [],
       selfAssesedFlag: [],
       inclusiveFlag: [],
-      Description: [''],
+      description: [''],
 
       totTaxAmt: [],
       ouName: [],
@@ -530,8 +531,8 @@ export class OPMasterDtoComponent implements OnInit {
   patchResultList(i, taxCalforItem) {
 
     let control = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
-    // alert('in patch'+ control);
-    this.taxCalforItem.forEach(x => {
+    // alert('in patch'+ this.taxCalforItem);
+    taxCalforItem.forEach(x => {
       console.log('in patch' + taxCalforItem);
       console.log(x.taxRateName);
       control.push(this.fb.group({
@@ -604,13 +605,25 @@ export class OPMasterDtoComponent implements OnInit {
           if (status === 'Inprogress') {
             this.displayButton = false;
             this.displayNewButton = false;
+            this.displayTaxDetailForm = true;
+            this.displayPoLine =false;
+          
             let control = this.poMasterDtoForm.get('poLines') as FormArray;
            
-            for (let i = 0; i < data.poLines.length - 1; i++) {
+            for (let i = 0; i < this.lstcomments1.poLines.length-1; i++) {
               var poLine: FormGroup = this.lineDetailsGroup();
+              // this.displayLine=false;
               control.push(poLine);
+              // var TaxLine: FormGroup = this.TaxDetailsGroup();
+              // control.push(TaxLine);
             }
+            // alert('length of tax details '+ data.poLines.taxAmounts.length);
+            // for (let i = 0; i < data.poLines.taxAmounts.length - 1; i++) {
+            //   var TaxLine: FormGroup = this.TaxDetailsGroup();
+            //   control.push(TaxLine);
+            // }
             this.poMasterDtoForm.patchValue(this.lstcomments1);
+            // this.lineDetailsArray.removeAt(this.lstcomments1.poLines.length - 1);
           }
           if (status === 'APPROVED') {
             this.displayButton = false;
@@ -763,7 +776,8 @@ export class OPMasterDtoComponent implements OnInit {
     // alert(this.totalAmt);
     formValue.baseAmount = this.baseAmount;
     formValue.totTaxAmt = this.totTaxAmt;
-    formValue.poType = 'Standard Purchase Orde';
+    // formValue.poType = 'Standard Purchase Orde';
+    formValue.poType= this.poType;
     this.service.poSubmit(formValue).subscribe((res: any) => {
       var obj = res.obj;
       sessionStorage.setItem('poNo', obj);
@@ -924,6 +938,8 @@ export class OPMasterDtoComponent implements OnInit {
           if (this.ItemDetailsList.segmentName === null) {
             (patch.controls[index]).patchValue(
               {
+                invDescription: this.ItemDetailsList.invDescription,
+                invCategory:this.ItemDetailsList.invCategory,
                 uom: this.ItemDetailsList.uom,
                 hsnSacCode: this.ItemDetailsList.hsnSacCode,
                 taxCategoryName: this.ItemDetailsList.taxCategoryName,
@@ -939,6 +955,8 @@ export class OPMasterDtoComponent implements OnInit {
             (patch.controls[index]).patchValue(
               {
                 uom: this.ItemDetailsList.uom,
+                invDescription: this.ItemDetailsList.invDescription,
+                invCategory:this.ItemDetailsList.invCategory,
                 hsnSacCode: this.ItemDetailsList.hsnSacCode,
                 taxCategoryName: this.ItemDetailsList.taxCategoryName,
                 segmentName: this.ItemDetailsList.segmentName,
@@ -958,11 +976,62 @@ export class OPMasterDtoComponent implements OnInit {
 
 
 
-  taxDetails(i, taxCategoryId) {
-    // alert(taxCategoryId);
+  taxDetails(op, i, taxCategoryId) {
+    alert(op);
     this.poLineTax = i;
     this.displaytaxDisscountButton = false;
     this.displayTaxDetailForm = false;
+    if(op === 'Search'){
+      // let control = this.poMasterDtoForm.get('poLines') as FormArray;
+           
+      // for (let i = 0; i < this.lstcomments1.poLines.length - 1; i++) {
+        // var poLine: FormGroup = this.lineDetailsGroup();
+        // this.displayLine=false;
+        // control.push(poLine);
+        let taxControl = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
+        var TaxLine: FormGroup = this.TaxDetailsGroup();
+        // taxControl.push(TaxLine);
+        // this.poMasterDtoForm.patchValue(this.lstcomments1);
+        var taxItems: any[] = this.lstcomments1.poLines[i].taxAmounts;
+        alert(taxItems);
+        //this.patchResultList(i, taxItems);
+        taxItems.forEach(x => {
+          console.log('in patch' + taxItems);
+          console.log(x.totTaxAmt);
+          taxControl.push(this.fb.group({
+            totTaxAmt: x.totTaxAmt,
+        lineNumber: x.lineNumber,
+        taxRateName: x.taxRateName,
+        taxTypeName: x.taxTypeName,
+        taxPointBasis: x.taxPointBasis,
+        precedence1: x.precedence1,
+        precedence2: x.precedence2,
+        precedence3: x.precedence3,
+        precedence4: x.precedence4,
+        precedence5: x.precedence5,
+        precedence6: x.precedence6,
+        precedence7: x.precedence7,
+        precedence8: x.precedence8,
+        precedence9: x.precedence9,
+        precedence10: x.precedence10,
+        currencyCode: x.currencyCode,
+        totTaxPer: x.totTaxPer,
+        recoverableFlag: x.recoverableFlag,
+        selfAssesedFlag: x.selfAssesedFlag,
+        inclusiveFlag: x.inclusiveFlag,
+            // totTaxAmt: x.totTaxAmt,
+            // lineNumber: x.lineNumber,
+            // taxRateName: 0,
+            // taxPointBasis: x.taxPointBasis,
+            // totTaxPer: x.totTaxPer,
+            // recoverableFlag: x.recoverableFlag,
+               }));
+        });
+      // }
+    }else{
+    // this.poLineTax = i;
+    // this.displaytaxDisscountButton = false;
+    // this.displayTaxDetailForm = false;
     // alert('hi')
     var itemId = this.ItemDetailsList.itemId;
     var taxCategoryId = taxCategoryId;
@@ -981,7 +1050,7 @@ export class OPMasterDtoComponent implements OnInit {
       );
    
   }
-
+  }
   
   addDiscount(i) {
    

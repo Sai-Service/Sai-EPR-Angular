@@ -20,7 +20,7 @@
                         <td>
                             <input formControlName="ouName" value={{ouName}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.ouName.errors }"
-                            placeholder="Enter OU code">
+                            placeholder="Enter OU code" uppercase  style="text-transform: uppercase;">
                         <div *ngIf="submitted && f.ouName.errors" class="invalid-feedback">
                             <div *ngIf="f.ouName.errors.required">Code cannot be blank, have spaces or have special characters</div>
                         </div>
@@ -80,19 +80,39 @@
                             *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
+                            City&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <select formControlName="city" id="city" class="form-control" [ngModel]="city" (ngModelChange)='onOptionsSelectedCity($event)' >
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
+                                    {{sc.codeDesc}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f. city.errors" class="invalid-feedback">
+                                <div *ngIf="f.city.errors.required">City must be required
+                                </div>
+                                <div *ngIf="f.city.errors?.maxLength">City must be required
+                                </div>
+                            </div>
+                            <span *ngIf="!operatingUnitMasterForm.get('city').valid && operatingUnitMasterForm.get('city').touched">Please
+                                Enter City</span>    
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle1">
                             State&nbsp;:
                         </td>
                         <td>
-                            <select formControlName="mState" id="mState" class="form-control">
+                            <input type="text" disabled formControlName="mState" [ngModel]="mState"
+                            class="form-control">
+                            <!-- <select formControlName="mState" id="mState" class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  StateList">
                                     {{sc.codeDesc}}
                                 </option>
                             </select>
- <span  *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">State cannot be blank</span>    
+                        <span  *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">State cannot be blank</span>     -->
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 15%" class="LabelFontStyle">
                             Country&nbsp;:
                         </td>
@@ -109,6 +129,8 @@
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
                             Enter start Date </span>
                         </td>
+                    </tr>
+                    <tr>
                         <td style="width: 15%" class="LabelFontStyle">
                             Unit&nbsp;Head/CEO&nbsp;:
                         </td>
@@ -119,8 +141,6 @@
                             *ngIf="!operatingUnitMasterForm.get('uheadCeo').valid && operatingUnitMasterForm.get('uheadCeo').touched">Please
                             Enter unit Head/CEO </span>
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 15%" class="LabelFontStyle">
                             Status&nbsp;:
                         </td>
@@ -188,7 +208,11 @@
                             Company&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <select disabled formControlName="compName"  id="compName" class="form-control"  [(ngModel)]="compName">
+
+                            <input disabled formControlName="compName" value={{compName}}  [(ngModel)]="compName" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.compName.errors }"
+                            placeholder="Enter Main Branch Address">
+                            <!-- <select disabled formControlName="compName"  id="compName" class="form-control"  [(ngModel)]="compName">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  companyCodeList" [ngValue]="sc.compName">
                                     {{sc.compName}}
@@ -198,7 +222,7 @@
                                 <div *ngIf="f.compId.errors.required">Company name cannot be balnk</div>
                                 <span
                                     *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Company name cannot be balnk</span>
-                            </div>    
+                            </div>     -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Main&nbsp;Branch&nbsp;Address&nbsp;:
@@ -214,6 +238,20 @@
                             *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
+                            City&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="city" value={{city}} [ngModel]="city" class="form-control">
+                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                            <div *ngIf="f.city.errors.required">State is required</div>
+                            <span
+                                *ngIf="!operatingUnitMasterForm.get('city').valid && operatingUnitMasterForm.get('city').touched">Please
+                                Enter State </span>
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
                             State&nbsp;:
                         </td>
                         <td>
@@ -225,8 +263,6 @@
                                 Enter State </span>
                         </div>
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 15%" class="LabelFontStyle">
                             Country&nbsp;:
                         </td> 
@@ -243,18 +279,18 @@
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
                             Enter start Date </span>
                         </td>
+                    </tr>
+                    <tr>
                         <td style="width: 15%" class="LabelFontStyle">
                             Unit&nbsp;Head/CEO&nbsp;:
                         </td> 
                         <td>
-                            <input disabled type="text" formControlName="uheadCeo" class="form-control"
+                            <input type="text" formControlName="uheadCeo" class="form-control"
                             placeholder="Enter unit Head/CEO">
                         <span
                             *ngIf="!operatingUnitMasterForm.get('uheadCeo').valid && operatingUnitMasterForm.get('uheadCeo').touched">Please
                             Enter unit Head/CEO </span>
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Status&nbsp;:
                         </td> 
@@ -372,7 +408,7 @@
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
-                            (click)="searchMast()">Search</button>
+                        (click)="searchMast(0)">Search</button>
                     </td>
                 </ng-template>
                 <ng-template #elseBlock1>
@@ -425,7 +461,7 @@
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
-                            (click)="searchMast()">Search</button>
+                            (click)="searchMast(0)">Search</button>
                     </td>
                     </ng-template>
                 </tr>
@@ -433,9 +469,19 @@
             </form>
         </div>
      </div>
-     <br>
-     <div class="container1">
-
+     <!-- <br> -->
+     <div class="container1" >
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              <li class="page-item"><a class="page-link" href="#ouTable" (click)="searchMast(0)">Previous</a></li>
+              <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(1)">1</a></li>
+              <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(2)">2</a></li>
+              <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(3)">3</a></li>
+              <li class="page-item"><a class="page-link" href="#ouTable" (click)="searchMast(4)">4</a></li>
+              <li class="page-item"><a class="page-link" href="#ouTable" (click)="searchMast(5)">Next</a></li>
+            </ul>
+          </nav>
+          <div id="ouTable">
          <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
             <thead>
                 <tr class="GridHeader">
@@ -445,13 +491,14 @@
                 <th scope="col" style="width: 160px;">Division Name</th>
                 <th scope="col" style="width: 160px;">Company Name</th>
                 <th scope="col" style="width: 160px;">Main Branch Address</th>
+                <th scope="col" style="width: 160px;">City</th>
                 <th scope="col" style="width: 160px;">State</th>
                 <!-- <th scope="col">End Date</th> -->
                 <th scope="col" style="width: 160px;">Select one</th>
                 </tr>
             </thead>
                 <tbody>
-                    <div class="grid_scroll" style="width: 100%;">
+                    <!-- <div class="grid_scroll" style="width: 100%;"> -->
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
                 <td style="width: 107px;">{{com.ouId}}</td>
                 <td style="width: 180px;">{{com.ouName}}</td>
@@ -459,12 +506,14 @@
                 <td style="width: 190px;">{{com.divisionId.divisionName}}</td>
                 <td style="width: 180px;">{{com.compId.compName}}</td>
                 <td style="width: 170px;">{{com.mainBrAdd}}</td>
+                <td style="width: 170px;">{{com.city}}</td>
                 <td style="width: 170px;">{{com.mState}}</td>
                 <!-- <td>{{com.endDate}}</td> -->
                 <td style="width: 140px;"><button class="btn btn-secondary" (click)="Select(com.ouId)" >Select</button></td>
             </tr>
-        </div>
+        <!-- </div> -->
         </tbody>
          </table>
+        </div>
         </div>
     

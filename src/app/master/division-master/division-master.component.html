@@ -20,14 +20,18 @@
                             <td>
                                 <input formControlName="divisionCode" [(ngModel)]='divisionCode' value={{divisionCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
-                                placeholder="Enter division code" style="text-transform: uppercase;">
-                            <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
+                                placeholder="Enter division code" style="text-transform: uppercase;" uppercase>
+                                <div *ngIf="submitted && f. divisionCode.errors" class="invalid-feedback">
+                                    <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div>
+                                    <div *ngIf="f.divisionCode.errors?.pattern">Minimum Two characters and maximum Two characters</div>
+                                    <div *ngIf="f. divisionCode.errors?.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
+                                </div>
+                            <!-- <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div>
                                 <div *ngIf="f.divisionCode.errors?.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
                                 <div *ngIf="f.divisionCode.errors?.pattern">Minimum one characters and maximum 10 characters</div>
-                            </div>
-                            <span
-                                *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Division code cannot be blank, have spaces or have special characters.</span>    
+                            </div> -->
+                            <span *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Division code cannot be blank, have spaces or have special characters.</span>    
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Division&nbsp;Name&nbsp;:

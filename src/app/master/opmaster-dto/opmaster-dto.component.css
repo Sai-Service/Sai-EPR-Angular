@@ -351,3 +351,10 @@ button{
       /* font-weight: bold; */
     }
     
+
+
+    .modal {
+      width: 40rem;
+      margin-left: 30%;
+      }
+      

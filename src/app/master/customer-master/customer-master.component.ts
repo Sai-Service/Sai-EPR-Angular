@@ -52,6 +52,7 @@ interface IcustomerMaster {
   sendDate: Date;
   sstatus: string;
   accountNo:number;
+  divisionName: string;
 }
 
 @Component({
@@ -114,6 +115,8 @@ export class CustomerMasterComponent implements OnInit {
   sstatus: string;
   accountNo:number;
   ExeAddress: string;
+  divisionName: string;
+  name:string;
   public status = "Active";
   displayInactive = true;
   Status1: any;
@@ -130,6 +133,11 @@ export class CustomerMasterComponent implements OnInit {
   public ouIdList: Array<string>[];
   public taxCategoryList: Array<string>[];
   public statusList: Array<string> = [];
+  loginName:string;
+  ouName:string;
+  // ouId:number;
+
+  loginArray:string;
   lstcomments2: any[];
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.customerMasterForm = fb.group({
@@ -183,6 +191,7 @@ export class CustomerMasterComponent implements OnInit {
       accountNo:['', [Validators.required]],
       ExeAddress: [],
       customerId:[],
+      divisionName: [],
     })
 
   }
@@ -192,6 +201,12 @@ export class CustomerMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.customerSiteMasterList=[];
+    this.name=  sessionStorage.getItem('name');
+    this.loginArray=sessionStorage.getItem('divisionName');
+   this.loginName=sessionStorage.getItem('name');
+   console.log(this.loginArray);
+   this.ouName = (sessionStorage.getItem('ouName'));
+  //  this.ouId = Number(sessionStorage.getItem('ouId'));
     // this.searchByAccount = [];
     // this.searchByAccount.customerSiteMasterList = [];
 

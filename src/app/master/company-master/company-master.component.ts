@@ -63,10 +63,10 @@ export class CompanyMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.CompanyMasterForm = fb.group({
       compId: [],
-      compCode: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9]*')]],
-      compName: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(50),Validators.pattern('[a-zA-Z 0-9]*')]],
-      address1: ['', [Validators.required,Validators.minLength(1), Validators.maxLength(10),Validators.pattern('[a-zA-Z 0-9]*')]],
-      address2: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
+      compCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(10),Validators.pattern('[a-zA-Z 0-9]*')]],
+      compName: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(50),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address1: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address2: ['', [Validators.required, Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
       address3: ['', [Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
       address4: ['', [Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
       city: ['', [Validators.required, Validators.maxLength(50)]],

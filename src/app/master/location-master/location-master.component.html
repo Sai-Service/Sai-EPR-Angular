@@ -20,7 +20,7 @@
                             <td>
                                 <input formControlName="locCode" value={{locCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.locCode.errors }"
-                                placeholder="Enter Location code">
+                                placeholder="Enter Location code" uppercase  style="text-transform: uppercase;">
                             <div *ngIf="submitted && f. locCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.locCode.errors.required">Code cannot be blank, have spaces or have special characters</div>
                                 <div *ngIf="f.locCode.errors?.maxLength">Code cannot be blank, have spaces or have special characters</div>
