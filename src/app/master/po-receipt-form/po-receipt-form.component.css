@@ -125,7 +125,7 @@
   .grid_scroll{
   overflow: auto;
    height: 200px; 
-  width: 73%;
+  width: 100%;
 }
 
   .GridFont{
@@ -188,6 +188,6 @@ font-weight: bold;
 
 
 
-.modal-header{
-  text-align: center;
-}
+
+
+

@@ -78,15 +78,35 @@ export class MasterService {
   recvTypeIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
-  invItemList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/itemMst');
-  } 
+
+  invItemList(itemType,deptName) {  
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+    .set('Dept', deptName)
+  
+    const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+     
+    });
+  }
+ 
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
   
-  suppIdList(suppId): Observable<any> {
-    return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
+  // suppIdList(suppId, ouId): Observable<any> {
+  //   return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
+  // }
+
+  suppIdList(suppId, ouId) {  
+    const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
+    .set('ouId', ouId)
+  
+    const REQUEST_URI = this.ServerUrl +'/supp/ouSites';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+     
+    });
   }
   
   siteIdList(siteId): Observable<any> {
@@ -180,10 +200,15 @@ public operatingUnitMasterSubmit(operatingUnitMasterRecord) {
   const url = this.ServerUrl + '/opUnit/hrOperatingUnits';  
   return this.http.post(url, operatingUnitMasterRecord, options);
 }
+// getoperatingUnitSearch(): Observable<any> {
+//   return this.http.get(this.ServerUrl + '/opUnit');
+
+// }
 getoperatingUnitSearch(pageNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`);
 
 }
+
 UpdateoperatingUnitMasterById(operatingUnitMasterRecord,ouId) {
   const options = {
     headers: this.headers
@@ -200,6 +225,9 @@ public LocationMasterSubmit(LocationMasterRecord) {
   const url = this.ServerUrl + '/locationMst';   
   return this.http.post(url, LocationMasterRecord, options);
 }
+getLocationSearch1(ouId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
+}
 getLocationSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/locationMst');
 }
@@ -207,14 +235,9 @@ UpdateLocationMasterById(LocationMasterRecord,locId) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/locationMst`);
+  const url = (this.ServerUrl + `/locationMst/${locId}`);
   return this.http.put(url, LocationMasterRecord, options);
 }
-
-cityList1(city): Observable<any> {
-  return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`);
-}
-
 
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
@@ -538,6 +561,14 @@ UpdateHSNMasterById(HsnMasterRecord) {
 }
 ///////////////////////////Purchese order/////////////////
 
+TransactionNatureList(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/cmnLookup/TranNature');
+}
+purchaseLocationList(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
+                                         
+}
+
 getsearchByPOHeder(poNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/poHdr/poNum/${poNo}`);
 }
@@ -749,11 +780,96 @@ UpdateJaiTaxCategoryLineMasterById(JaiTaxCategoryLineMasterRecord) {
   const url = (this.ServerUrl + `/jaiCateLines`);
   return this.http.put(url, JaiTaxCategoryLineMasterRecord, options);
 }
+//////////////////////////////
+regimNameList(regimeId): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/jairegime/${regimeId}`);
+}
 
-/////////////////   PO Receipt URL //////////////////
+
+locationNameList(locCode): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/locationMst/LocationCode/${locCode}`);
+}
+regimeIdList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/jairegime');
+
+}
+
+public JaiTaxtypeMasterSubmit(JaiTaxtypeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/jaiTaxType';  
+  return this.http.post(url, JaiTaxtypeMasterRecord, options);
+}  
+
+
+getJaiTaxTypeSearch(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/jaiTaxType');
+
+}
+
+///////////GL CodeCombination//////////////
+branchlist():Observable<any>{
+  return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/SS_Branch');
+} 
+
+locationlist():Observable<any>{
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Location');
+}
+costcentre():Observable<any>{
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/CostCentre');
+}
+naturalaccount():Observable<any>{
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+}
+interbranch():Observable<any>{
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
+}
+getnaturalaccount(naturalAccount1):Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${naturalAccount1}`);
+}
+getbranch(branch1):Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${branch1}`);
+}
+getloc(loc1):Observable<any>{
+  return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${loc1}`);
+}
+getcostCentre(costCentre1):Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${costCentre1}`);
+}
+getInterBranch(InterBranch1):Observable<any>{
+  return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeValueWise?lookupType=SS_InterBranch& +${InterBranch1}`);
+}
+glCodeCombinationSubmit(glcodecmbnmstRecord){
+  const comb ={headers:this.headers
+  };
+  const url=this.ServerUrl + '/glCodeCmbn/GlCodeCombinations'
+  return this.http.post(url,glcodecmbnmstRecord,comb)
+}
+getGlCodeCombinationSearch():Observable<any>{
+  return this.http.get(this.ServerUrl + '/glCodeCmbn');
+}
+UpdateGlMasterById(GlMasterRecord){
+  const options={
+    headers:this.headers
+    };
+    const url=(this.ServerUrl + `/glCodeCmbn`);
+    return this.http.put(url,GlMasterRecord,options);
+}
+
+cityList1(city): Observable<any> {
+  return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`);
+}
+// receipt service 
 
 getsearchByPOlines(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`);
+}
+
+delearCodeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/DealerMst');
 }
 
 } 

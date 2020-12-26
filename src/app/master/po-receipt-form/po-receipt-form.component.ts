@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 
@@ -18,9 +18,10 @@ interface IpoReceipt{
   recDate:Date;
   Comments:string;
   gstDocNo:string;
-  EwayBill:string;
+  // EwayBill:string;
+  ewayBillNo:string;
   docDate:Date;
-  EwayBillDate:Date;
+  ewayBillDate:Date;
 }
 
 @Component({
@@ -46,9 +47,10 @@ export class PoReceiptFormComponent implements OnInit {
   recDate:Date;
   Comments:string;
   gstDocNo:string;
-  EwayBill:string;
+  // EwayBill:string;
+  ewayBillNo:string;
   docDate:Date;
-  EwayBillDate:Date;  
+  ewayBillDate:Date;  
 
   // loginArray: any[];
   loginArray:string;
@@ -62,7 +64,6 @@ export class PoReceiptFormComponent implements OnInit {
    lstcomments1:any[];
    divisionId:any[];
    loginName:string;
-
   //  check box selection
   names: any;
   selectedAll: any;
@@ -84,12 +85,36 @@ export class PoReceiptFormComponent implements OnInit {
       recDate:[''],
       Comments:['',Validators.required],
       gstDocNo:[''],
-      EwayBill:[''],
+      ewayBillNo:[''],
       docDate:[''],
-      EwayBillDate:[''],
+      ewayBillDate:[''],
+      poLines: this.fb.array([this.lineDetailsGroup()]),
     })
-
    }
+
+   lineDetailsGroup() {
+    return this.fb.group({
+      orderedQty: [],
+      itemType:[],
+      itemName:[],
+      taxCategoryName:[],
+      ctgDescription:[],
+      itemDesc:[],
+      subInvDesc:[],
+      locatorDesc:[],
+      uom:[],
+      unitPrice:[],
+      taxPercentage:[],
+      taxAmount:[],
+      sacCode:[],
+      totalAmt:[],
+      poChargeAcc:[],
+      qtyReceived:[],
+    });
+  }
+  get lineDetailsArray() {
+    return <FormArray>this.poReceiptForm.get('poLines')
+  }
 
 
    selectAll() {
@@ -120,6 +145,7 @@ return true;
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
    this.loginName=sessionStorage.getItem('name')
+   this.ouName = (sessionStorage.getItem('ouName'));
     
     console.log(this.loginArray);
 
@@ -200,4 +226,7 @@ return true;
         //   // this.displayButton = false;
         // }
       }
+
+
+     
 }
