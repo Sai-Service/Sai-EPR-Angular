@@ -60,7 +60,7 @@ lookupValueDesc1:string;
 lookupValueDesc2:string;
 lookupValueDesc3:string;
 lookupValueDesc5:string;
-lookupValue:any;
+
 
 public branchList:Array<string>=[];
 public locationList:Array<string>=[];
@@ -132,6 +132,13 @@ public statusList:Array<string>=[];
     
     const combination=segment1+'.'+segment2+'.'+segment3+'.'+segment4+'.'+segment5;
     this.segmentName=combination;
+    this.service.getnaturalaccount(segment4).subscribe(
+      data=>{this.naturalaccount=data;
+        console.log(this.naturalaccount);
+        this.GlCodeCombinaionForm.patchValue(this.naturalaccount);
+      this.accountType=this.naturalaccount.accountType;
+      }
+    );
   }
   postingAllowedEvent(e){
     if(e.target.checked){
@@ -163,80 +170,56 @@ public statusList:Array<string>=[];
     return val;
   }
 
-  onOptionsSelectedBranch(event:any)
+  onOptionsSelectedBranch(segment:any, lType:string)
   {
-    var branch1=this.GlCodeCombinaionForm.get('segment1').value;
-    // alert(branch1);
-    this.service.getbranch(branch1).subscribe(
-      data=>{this.branch=data;
-        console.log(this.branch);
-        this.GlCodeCombinaionForm.patchValue(this.branch);
-        console.log(this.branch.lookupValueDesc);
-        
-        this.lookupValueDesc1  =this.branch.lookupValueDesc;
-      }
+    // alert(segment);
+    // var InterBranch1=this.GlCodeCombinaionForm.get('segment1').value;
+     this.service.getInterBranch(segment, lType).subscribe(
+           data=>{this.branch=data;
+             console.log(this.branch);
+             this.GlCodeCombinaionForm.patchValue(this.branch);
+    
+
+    
+    if(lType==='SS_Interbranch'){
+       this.lookupValueDesc5  =this.branch.lookupValueDesc;
+    }
+     if(lType==='NaturalAccount'){      
+        this.lookupValueDesc4  =this.branch.lookupValueDesc;
+    //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+      //  this.accountType=this.branch.accountType;
+      
+      
+     }
+    if(lType==='CostCentre'){
+      this.lookupValueDesc3  =this.branch.lookupValueDesc;
+    }
+    if(lType==='SS_Location'){
+      this.lookupValueDesc2  =this.branch.lookupValueDesc;
+    }
+    if(lType==='SS_Branch'){
+      this.lookupValueDesc1 =this.branch.lookupValueDesc;
+    }
+    this.accountType=this.branch.naturalAccount.accountType;
+        }
     ); 
 
    }
- 
-   onOptionsSelectedlocation(event:any)
-  {
-    var loc1=this.GlCodeCombinaionForm.get('segment2').value;
-    // alert(loc1);
-    this.service.getloc(loc1).subscribe(
-      data=>{this.loc=data;
-        console.log(this.loc);
-        this.GlCodeCombinaionForm.patchValue(this.loc);
-        console.log(this.loc.lookupValueDesc);
-        
-        this.lookupValueDesc2  =this.loc.lookupValueDesc;
-      }
-    ); 
-
-   }
-
-   onOptionsSelectedcostCentre(event:any)
-  {
-    var costCentre1=this.GlCodeCombinaionForm.get('segment3').value;
-    // alert(costCentre1);
-    this.service.getcostCentre(costCentre1).subscribe(
-      data=>{this.costCentre2=data;
-        console.log(this.costCentre2);
-        this.GlCodeCombinaionForm.patchValue(this.costCentre2);
-        this.lookupValueDesc3  =this.costCentre2.lookupValueDesc;
-      }
-    ); 
-
-   }ng
+       
   onOptionsSelectedNatural(event:any)
   {
     var naturalAccount1=this.GlCodeCombinaionForm.get('segment4').value;
-    // alert(naturalAccount1);
+    alert(naturalAccount1);
     this.service.getnaturalaccount(naturalAccount1).subscribe(
       data=>{this.naturalaccount=data;
         console.log(this.naturalaccount);
         this.GlCodeCombinaionForm.patchValue(this.naturalaccount);
+        this.accountType=this.naturalaccount.accountType;
         this.lookupValueDesc4  =this.naturalaccount.lookupValueDesc;
       }
     ); 
 
    }
-
-   onOptionsSelectedInterBranch(event:any)
-   {
-     var InterBranch1=this.GlCodeCombinaionForm.get('segment5').value;
-     var interBranch = this.interBranch
-     let select1= this.interBranch.find(d=>d.interBranch.lookupValue===InterBranch1);     
-    //  alert('lookupType'+select1);
-     this.service.getInterBranch(InterBranch1).subscribe(
-       data=>{this.InterBranch3=data;
-         console.log(this.InterBranch3);
-         this.GlCodeCombinaionForm.patchValue(this.InterBranch3);
-         this.lookupValueDesc5  =this.InterBranch3.lookupValueDesc;
-       }
-     ); 
- 
-    }
   
  
    newMast(){
@@ -272,8 +255,11 @@ public statusList:Array<string>=[];
     if(select1)
     {
       this.GlCodeCombinaionForm.patchValue(select1);
+    
       this.displayButton=false;
        this.display=false;
+       
+        
 
     }
     

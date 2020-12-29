@@ -15,8 +15,8 @@
                     </div>
                     <ng-template #thenBlock1>
                     <tr>
-                        <td style="width: 20%;" class="LabelFontStyle" >
-                            Account:
+                        <td style="width: 20%;" class="LabelFontStyle1" >
+                            Account&nbsp;:
                         </td>
                         <td>
                             <table>
@@ -37,99 +37,93 @@
                                                     <div class="modal-header">
                                                         <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
                                                         color: black;margin-left: 40%;">
-                                                       Code Combination
+                                                       Code&nbsp;Combination&nbsp;
                                                        </label>
                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>                                        
                                                     </div>
                                                     <div class="modal-body">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 30%;" class="LabelFontStyle1">
-                                                                    Branch&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <select class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event)'
-                                                                style="width: 140px;">
+                                                       <table style="width: 100%;" class="center">
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Branch&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Branch")' style="width: 140px;">
                                                                     <option> select</option>
                                                                     <option *ngFor="let branch of branchList">
                                                                         {{branch.lookupValue}}
                                                                     </option>
                                                                 </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} 
-                                                                    style="border:none;width: 160px;">
-                                                                </td>
-                                                                </tr>
-                                                            <tr>
-                                                                <td style="width: 30%;" class="LabelFontStyle1">
-                                                                    Location&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <select class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code"
-                                                                 (ngModelChange)='onOptionsSelectedlocation($event)' style="width: 140px;">
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Location&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Location")' style="width: 140px;">
                                                                     <option> select</option>
                                                                     <option *ngFor= "let Location of locationList">
                                                                         {{Location.lookupValue}}
                                                                     </option>
                                                                 </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input  disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 160px;">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="width: 40%;" class="LabelFontStyle1">
-                                                                    Cost&nbsp;Centre&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <select class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" 
-                                                                (ngModelChange)='onOptionsSelectedcostCentre($event)' style="width: 140px;">
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Cost&nbsp;Centre&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" (ngModelChange)='onOptionsSelectedBranch($event,"CostCentre")' style="width: 140px;">
                                                                     <option > select</option>
                                                                     <option *ngFor="let costcentre of costCentre">
                                                                         {{costcentre.lookupValue}}
                                                                     </option>
                                                                 </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 160px;">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="width: 40%;" class="LabelFontStyle1">
-                                                                    Naural&nbsp;Account&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <select class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedNatural($event)' 
-                                                                placeholder="Please enter natural account code" style="width: 140px;">
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Naural&nbsp;Account&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code" style="width: 140px;">
                                                                     <option> select</option>
                                                                     <option *ngFor="let naturalaccount of naturalAccount">
                                                                         {{naturalaccount.lookupValue}}                                                        
                                                                     </option>
                                                                 </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 160px;">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="width: 30%;" class="LabelFontStyle1">
-                                                                    Inter&nbsp;Branch&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <select class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" 
-                                                                (ngModelChange)='onOptionsSelectedInterBranch($event)' style="width: 140px;">
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Inter&nbsp;Branch&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Interbranch")' style="width: 140px;">
                                                                     <option> select</option>
                                                                     <option *ngFor="let interbranch of interBranch">
                                                                         {{interbranch.lookupValue}}
                                                                     </option>
                                                                 </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 160px;">
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                       </table>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-primary" 
@@ -138,7 +132,7 @@
                                                       </div>
                                                 </div>
                                             </div>
-                                          </div>
+                                          </div>    
                                     </td>
                                 </tr>
                             </table>
@@ -200,7 +194,7 @@
                                         <input disabled type="text" formControlName="segmentName" class="form-control" id="segmentName"
                                         [(ngModel)]='segmentName' value={{segmentName}} data-target="#myModal" placeholder="Please enter code combination"
                                         >
-                                        <!-- <span>Please enter code combination</span> -->
+                                        <span>Please enter code combination</span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width:1rem ; text-align: right;">
@@ -212,8 +206,8 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
-                                                        color: black;margin-left: 35%;">
-                                                       Code&nbsp;Combination&nbsp;
+                                                        color: black;">
+                                                       Code Combination
                                                        </label>
                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>                                        
                                                     </div>
@@ -221,58 +215,62 @@
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 30%;" class="LabelFontStyle">
-                                                                    Branch&nbsp;:&nbsp;
+                                                                    Branch
                                                                 </td>
                                                                 <td>
                                                                 <input disabled type="text" class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code">
+                                                                    
                                                                 </td>
-                                                                <td> 
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} 
-                                                                    style="border:none;width: 160px;">
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;">
+                                                                </td>
+                                                                </tr>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Location
+                                                                </td>
+                                                                <td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code" >
+                                                                    </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;">
+                                                                </td>
+                                                       
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Cost Centre
+                                                                </td>
+                                                                <td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" >
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="width: 30%;" class="LabelFontStyle">
-                                                                    Location&nbsp;:&nbsp;
+                                                                    Naural Account
                                                                 </td>
                                                                 <td>
-                                                                <input disabled type="text"  class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code">   
+                                                                   
+                                                                <input disabled type="text" class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code">
+                                                                    
                                                                 </td>
                                                                 <td>
-                                                                    <input  disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 160px;">
+                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;">
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="width: 30%;" class="LabelFontStyle">
-                                                                    Cost&nbsp;Centre&nbsp;:&nbsp;
+                                                                    Inter Branch
                                                                 </td>
                                                                 <td>
-                                                                <input disabled type="text" class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code">
-                                                                </td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" >
+                                                                   </td>
                                                                 <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 160px;">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="width: 30%;" class="LabelFontStyle">
-                                                                    Naural&nbsp;Account&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <input disabled type="text" class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedNatural($event)' placeholder="Please enter natural account code">
-                                                                </td>
-                                                                <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 160px;">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="width: 30%;" class="LabelFontStyle">
-                                                                    Inter&nbsp;Branch&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                <input disabled type="text" class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code">
-                                                                </td>
-                                                                <td>
-                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 160px;">
+                                                                    <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;">
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -390,7 +388,8 @@
                 <th scope="col">Status</th>
                 <th scope="col">Select</th>
             </tr>
-            <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+        </tbody>
+            <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
                  <td>{{com.segmentName}}</td>
                  <td>{{com.accountType}}</td>
                  <td>{{com.detailPostingAllowedFlag}}</td>
@@ -399,7 +398,5 @@
                  <td>{{com.status}}</td>
                  <td><button class="btn btn-secondary" (click)="(Selectgl(com.codeCombinationId))">Select</button></td>
             </tr>
-
-        </tbody>
     </table>
 </div>

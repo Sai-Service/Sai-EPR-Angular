@@ -269,6 +269,17 @@ public LocatorMasterSubmit(LocatorMasterRecord) {
   const url = this.ServerUrl + '/lctrmst/locatormaster';  
   return this.http.post(url, LocatorMasterRecord, options);
 }
+
+
+public poSaveSubmit(poRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment';  
+  return this.http.post(url, poRecord, options);
+}
+
+
 UpdateLocatorMasterById(LocatorMasterRecord,locatorId) {
   const options = {
     headers: this.headers
@@ -810,6 +821,70 @@ getJaiTaxTypeSearch(): Observable<any> {
 
 }
 
+// ///////////GL CodeCombination//////////////
+// branchlist():Observable<any>{
+//   return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/SS_Branch');
+// } 
+
+// locationlist():Observable<any>{
+//   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Location');
+// }
+// costcentre():Observable<any>{
+//   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/CostCentre');
+// }
+// naturalaccount():Observable<any>{
+//   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+// }
+// interbranch():Observable<any>{
+//   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
+// }
+// getnaturalaccount(naturalAccount1):Observable<any>{
+//   return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${naturalAccount1}`);
+// }
+// getbranch(branch1):Observable<any>{
+//   return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${branch1}`);
+// }
+// getloc(loc1):Observable<any>{
+//   return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${loc1}`);
+// }
+// getcostCentre(costCentre1):Observable<any>{
+//   return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${costCentre1}`);
+// }
+// getInterBranch(InterBranch1):Observable<any>{
+//   return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeValueWise?lookupType=SS_InterBranch& +${InterBranch1}`);
+// }
+// glCodeCombinationSubmit(glcodecmbnmstRecord){
+//   const comb ={headers:this.headers
+//   };
+//   const url=this.ServerUrl + '/glCodeCmbn/GlCodeCombinations'
+//   return this.http.post(url,glcodecmbnmstRecord,comb)
+// }
+// getGlCodeCombinationSearch():Observable<any>{
+//   return this.http.get(this.ServerUrl + '/glCodeCmbn');
+// }
+// UpdateGlMasterById(GlMasterRecord){
+//   const options={
+//     headers:this.headers
+//     };
+//     const url=(this.ServerUrl + `/glCodeCmbn`);
+//     return this.http.put(url,GlMasterRecord,options);
+// }
+
+cityList1(city): Observable<any> {
+  return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`);
+}
+// receipt service 
+
+getsearchByPOlines(segment1): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`);
+}
+
+delearCodeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/DealerMst');
+}
+
+
+
 ///////////GL CodeCombination//////////////
 branchlist():Observable<any>{
   return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/SS_Branch');
@@ -827,8 +902,8 @@ naturalaccount():Observable<any>{
 interbranch():Observable<any>{
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
 }
-getnaturalaccount(naturalAccount1):Observable<any>{
-  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${naturalAccount1}`);
+getnaturalaccount(naturalAccount):Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${naturalAccount}`);
 }
 getbranch(branch1):Observable<any>{
   return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${branch1}`);
@@ -839,9 +914,17 @@ getloc(loc1):Observable<any>{
 getcostCentre(costCentre1):Observable<any>{
   return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupValueWise/${costCentre1}`);
 }
-getInterBranch(InterBranch1):Observable<any>{
-  return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeValueWise?lookupType=SS_InterBranch& +${InterBranch1}`);
-}
+getInterBranch(InterBranch1, lType):Observable<any>{
+  
+    const REQUEST_PARAMS = new HttpParams().set('lookupType', lType).set('lookupValue', InterBranch1)
+    const REQUEST_URI = this.ServerUrl +'/fndAcctLookup/lookupTypeValueWise';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+     
+    });
+  } 
+  
+  
 glCodeCombinationSubmit(glcodecmbnmstRecord){
   const comb ={headers:this.headers
   };
@@ -857,19 +940,6 @@ UpdateGlMasterById(GlMasterRecord){
     };
     const url=(this.ServerUrl + `/glCodeCmbn`);
     return this.http.put(url,GlMasterRecord,options);
-}
-
-cityList1(city): Observable<any> {
-  return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`);
-}
-// receipt service 
-
-getsearchByPOlines(segment1): Observable<any> {
-  return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`);
-}
-
-delearCodeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/DealerMst');
 }
 
 } 

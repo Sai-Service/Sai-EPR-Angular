@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators ,FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
+import { ThemeService } from 'ng2-charts';
 import { MasterService } from '../master.service';
 
 interface IpoReceipt{
@@ -22,6 +23,10 @@ interface IpoReceipt{
   ewayBillNo:string;
   docDate:Date;
   ewayBillDate:Date;
+  locId:string;
+  poHeaderId:number;
+  poLineId:number;
+  suppId:number;
 }
 
 @Component({
@@ -51,6 +56,9 @@ export class PoReceiptFormComponent implements OnInit {
   ewayBillNo:string;
   docDate:Date;
   ewayBillDate:Date;  
+  locId:string;
+  poHeaderId:number;
+  suppId:number;
 
   // loginArray: any[];
   loginArray:string;
@@ -64,6 +72,7 @@ export class PoReceiptFormComponent implements OnInit {
    lstcomments1:any[];
    divisionId:any[];
    loginName:string;
+   poLineId:number;
   //  check box selection
   names: any;
   selectedAll: any;
@@ -88,12 +97,16 @@ export class PoReceiptFormComponent implements OnInit {
       ewayBillNo:[''],
       docDate:[''],
       ewayBillDate:[''],
+      locId:[''],
+      poHeaderId:[''],
+      suppId:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
 
    lineDetailsGroup() {
     return this.fb.group({
+      poLineId:[],
       orderedQty: [],
       itemType:[],
       itemName:[],
@@ -110,6 +123,7 @@ export class PoReceiptFormComponent implements OnInit {
       totalAmt:[],
       poChargeAcc:[],
       qtyReceived:[],
+      locId:[],
     });
   }
   get lineDetailsArray() {
@@ -146,8 +160,10 @@ return true;
     this.loginArray=sessionStorage.getItem('divisionName');
    this.loginName=sessionStorage.getItem('name')
    this.ouName = (sessionStorage.getItem('ouName'));
+   this.locId=(sessionStorage.getItem('locId'));
     
     console.log(this.loginArray);
+    console.log(this.locId);
 
 
     
@@ -227,6 +243,25 @@ return true;
         // }
       }
 
-
+      refresh()
+      {
+        window.location.reload();
+      }
      
+
+      poSave(){
+        // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
+        const formValue: IpoReceipt = this.poReceiptForm.value;
+    this.service.poSaveSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        this.poReceiptForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          this.poReceiptForm.reset();
+        }
+      }
+    });
+      }
 }
