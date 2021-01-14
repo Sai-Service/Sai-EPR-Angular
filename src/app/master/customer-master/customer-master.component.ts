@@ -119,11 +119,15 @@ export class CustomerMasterComponent implements OnInit {
   name:string;
   public status = "Active";
   displayInactive = true;
+  displayNewButton = true;
+  displayNewButton1=true;
+  displayNewButtonWithSite=false;
   Status1: any;
   lstcomments: any;
   searchByAccount: any;
   displayButton = true;
   public minDate = new Date();
+  public cityList1: any;
 
   public custTypeList: Array<string>[];
   public titleList: Array<string>[];
@@ -131,49 +135,56 @@ export class CustomerMasterComponent implements OnInit {
   public pinCdList: Array<string>[];
   public stateList: Array<string>[];
   public ouIdList: Array<string>[];
+  public classCodeTypeList:Array<string>[];
   public taxCategoryList: Array<string>[];
   public statusList: Array<string> = [];
   loginName:string;
   ouName:string;
+  public maxDate = new Date();
+  // public maxDate = new Date();
   // ouId:number;
 
   loginArray:string;
   lstcomments2: any[];
+
+ 
+
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
       title: ['', Validators.required],
       custType: ['', Validators.required],
-      fName: ['', Validators.required],
-      mName: ['', Validators.required],
-      lName: ['', Validators.required],
+      fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
+      mName: [''],
+      lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
       custName: ['', Validators.required],
-      address1: ['', Validators.required],
-      address2: ['', Validators.required],
-      address3: ['', Validators.required],
-      address4: ['', Validators.required],
+      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address3: ['',[Validators.maxLength(100)]],
+      address4: ['',[Validators.maxLength(100)]],
       city: ['', Validators.required],
-      pinCd: ['', Validators.required],
+      pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state: ['', Validators.required],
-      mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      mobile3: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      emailId: ['', [Validators.required, Validators.email]],
-      emailId1: ['', [Validators.email]],
-      contactPerson: ['', [Validators.required]],
-      contactNo: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      mobile1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
+      mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
+      mobile3: ['',[Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
+      emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
+      contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
       weddingDate: [''],
       startDate: ['', [Validators.required]],
       endDate: [''],
-      gstNo: [''],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
-      panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [''],
       status: ['', [Validators.required]],
-      classCodeType: [],
+      classCodeType: [''],
       ouId: ['', [Validators.required]],
-      location: ['', [Validators.required]],
+      location: [''],
       saddress1: [''],
       saddress2: [''],
       saddress3: [''],
@@ -188,10 +199,12 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      accountNo:['', [Validators.required]],
+      accountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       ExeAddress: [],
       customerId:[],
       divisionName: [],
+      ouName:[],
+      loginArray:[],
     })
 
   }
@@ -206,9 +219,19 @@ export class CustomerMasterComponent implements OnInit {
    this.loginName=sessionStorage.getItem('name');
    console.log(this.loginArray);
    this.ouName = (sessionStorage.getItem('ouName'));
+   this.ouId = (sessionStorage.getItem('ouId'));
+   console.log(this.ouId);
+   this.weddingDate = new Date();
   //  this.ouId = Number(sessionStorage.getItem('ouId'));
     // this.searchByAccount = [];
     // this.searchByAccount.customerSiteMasterList = [];
+    // this.startDate = new Date();
+
+    this.startDate = new Date();
+    // var date = new Date();
+    console.log(this.startDate);
+    this.startDate.setMonth(this.startDate.getMonth()-216);
+    console.log(this.startDate);
 
     this.service.custTypeList()
       .subscribe(
@@ -218,6 +241,16 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
 
+      this.service.classCodeTypeList()
+      .subscribe(
+        data => {
+          this.classCodeTypeList = data;
+          console.log(this.classCodeTypeList);
+        }
+      );
+
+
+      
       this.service.statusList()
       .subscribe(
         data => {
@@ -385,6 +418,7 @@ export class CustomerMasterComponent implements OnInit {
   }
   newMast() {
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
+    formValue.customerId1=this.accountNo;
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
@@ -482,6 +516,7 @@ export class CustomerMasterComponent implements OnInit {
   //     );
   // }
   searchByCustAccount(customerId1) {
+    this.displayNewButton =false;
     this.service.getsearchByAccountNo(customerId1)
       .subscribe(
         data => {
@@ -493,6 +528,8 @@ export class CustomerMasterComponent implements OnInit {
       );
   }
   Select(customerSiteId: number) {
+  
+    this.displayNewButton1=false;
     alert(customerSiteId);
         this.lstcomments2 = this.lstcomments.customerSiteMasterList;
         console.log(this.lstcomments2);
@@ -519,5 +556,19 @@ export class CustomerMasterComponent implements OnInit {
     
           // this.displayButton = false;
         }
+      }
+
+      onOptionsSelectedCity (city: any){
+        // alert(city);
+        this.service.cityList1(city)
+        .subscribe(
+          data => {
+            this.cityList1 = data;
+            console.log(this.cityList1);
+            this.state=this.cityList1.attribute1;
+            console.log(this.cityList1.attribute1);
+            // this.country = 'INDIA';
+          }
+        );
       }
 }

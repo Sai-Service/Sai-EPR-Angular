@@ -517,17 +517,19 @@
                                                             [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                                     </td>
                                                     <td>
-                                                        <input type="text" disabled formControlName="locId" class="form-control"
-                                                        [(ngModel)]='locId'  placeholder="">
+                                                        <input hidden type="text" disabled formControlName="locId" class="form-control"
+                                                        [(ngModel)]='locId' >
                                                     </td>
                                                     <td>
                                                         <input hidden type="text" disabled formControlName="poHeaderId" class="form-control"
-                                                        [(ngModel)]='poHeaderId'  placeholder=""> 
+                                                        [(ngModel)]='poHeaderId'> 
                                                     </td>
                                                     <td>
-                                                        <input hidden type="number" disabled formControlName="suppId" class="form-control"> 
+                                                        <input hidden  type="number" disabled formControlName="suppNo" class="form-control"> 
+                                                        <input hidden type="number" disabled formControlName="supplierSiteId" class="form-control"> 
+                                                        <input hidden type="number" disabled formControlName="emplId" class="form-control"> 
                                                     </td>
-
+                                                    
                                                     <!-- <td>
                                                         <div ng-if="ewayBillDate == null">
                                                             <input type="date" formControlName="ewayBillDate"
@@ -606,16 +608,18 @@
                                                                 [formGroupName]="i" class="auto-style5">
                                                                 <tr>
                                                                     <input hidden type="text" disabled formControlName="poLineId" class="form-control"> 
+                                                                    <!-- <input hidden type="text" disabled formControlName="locId" class="form-control">  -->
+                                                                                                                                       
                                                                     <td>
                                                                         <input type="checkbox">
                                                                     </td>
                                                                     <td> <input type="text"
                                                                             formControlName="qtyReceived"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 50px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="itemType"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 70px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="itemName"
@@ -623,7 +627,7 @@
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="ctgDescription"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 150px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="itemDesc"
@@ -631,46 +635,46 @@
                                                                     </td>
                                                                     <td>
                                                                         <input type="text" disabled formControlName="locId" class="form-control"
-                                                                        [(ngModel)]='locId' placeholder="">
+                                                                        [(ngModel)]='locId' style="height: 20px;width: 60px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="subInvDesc"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width:60px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="locatorDesc"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 100px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="uom" class="form-control"
-                                                                            style="height: 20px;"></td>
+                                                                            style="height: 20px;width: 40px;"></td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="taxCategoryName"
                                                                             class="form-control" style="height: 20px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="unitPrice"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
-                                                                            formControlName="unitPrice"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            formControlName="baseAmount"
+                                                                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
                                                                     </td>
-                                                                    <td> <input disabled type="text"
-                                                                            formControlName="taxPercentage"
-                                                                            class="form-control" style="height: 20px;">
+                                                                    <td>  <input disabled type="text"
+                                                                            formControlName="taxPercentage" 
+                                                                            class="form-control" style="height: 20px;width: 80px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="taxAmount"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
                                                                             formControlName="sacCode"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            class="form-control" style="height: 20px;width: 80px;">
                                                                     </td>
                                                                     <td> <input disabled type="text"
-                                                                            formControlName="totalAmt"
-                                                                            class="form-control" style="height: 20px;">
+                                                                            formControlName="totAmount"
+                                                                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
                                                                     </td>
                                                                 </tr>
                                                             </ng-container>

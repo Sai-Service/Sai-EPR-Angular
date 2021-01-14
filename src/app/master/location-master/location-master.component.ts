@@ -265,7 +265,11 @@ export class LocationMasterComponent implements OnInit {
       this.LocationMasterForm.get('endDate').reset();
     }
   }
-
+  
+  onKey(event: any) {
+    const gstNo1 = this.gstNo.substr(3,10);
+    this.panNo = gstNo1;
+  }
 
   onOptionsSelectedCity (city: any){
     // alert(city);
