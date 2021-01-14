@@ -72,7 +72,8 @@ interface IpostPO {
   invCategory: string;
   uom: string;
   hsnSacCode: string;
-  taxCategoryName: string;
+  // taxCategoryName: string;
+  taxCategoryName:any;
   itemType: string;
   unitPrice: number;
   orderedQty: number;
@@ -177,7 +178,8 @@ export class OPMasterDtoComponent implements OnInit {
   invDescription: string;
   invCategory: string;
   hsnSacCode: string;
-  taxCategoryName: string;
+  // taxCategoryName: string;
+  taxCategoryName:any;
   divisionName: string;
   taxCategoryId: number;
   itemType: string;
@@ -199,16 +201,17 @@ export class OPMasterDtoComponent implements OnInit {
   segment3: number;
   segment4: number;
   segment5: number;
-  segment6: number;
-  segment7: number;
-  segment8: number;
-  segment9: number;
+  // segment6: number;
+  // segment7: number;
+  // segment8: number;
+  // segment9: number;
   segmentName: string;
   invItemId: number;
   public searchInput: String = '';
   public searchResult: Array<any> = [];
   public seriesList: Array<any> = [];
   public delearCodeList: Array<string> = [];
+  public taxCategoryList:any;
 
   lineNumber: number;
   taxRateName: string;
@@ -235,6 +238,8 @@ export class OPMasterDtoComponent implements OnInit {
   displayModal = true;
   displayContexValue = true;
   displayDept = true;
+  displaySuppcode=true;
+  dispDivision= true;
   totAmtDiss = true;
   displayButton = true;
   displayLine = true;
@@ -352,10 +357,10 @@ export class OPMasterDtoComponent implements OnInit {
       segment3: [],
       segment4: [],
       segment5: [],
-      segment6: [],
-      segment7: [],
-      segment8: [],
-      segment9: [],
+      // segment6: [],
+      // segment7: [],
+      // segment8: [],
+      // segment9: [],
       lookupValueDesc4: [],
       lookupValueDesc1: [],
       lookupValueDesc2: [],
@@ -424,6 +429,14 @@ this.currentOp = 'insert';
     //       console.log(this.invItemList);
     //     }
     //   );
+    this.service.taxCategoryList()
+    .subscribe(
+      data1 => {
+        this.taxCategoryList = data1;
+        console.log(this.taxCategoryList);
+        data1 = this.taxCategoryList;
+      }
+    );
 
     this.service.supplierCodeList()
       .subscribe(
@@ -843,10 +856,10 @@ this.currentOp = 'insert';
     delete val.segment3;
     delete val.segment4;
     delete val.segment5;
-    delete val.segment6;
-    delete val.segment7;
-    delete val.segment8;
-    delete val.segment9;
+    // delete val.segment6;
+    // delete val.segment7;
+    // delete val.segment8;
+    // delete val.segment9;
     delete val.lookupValueDesc4;
     delete val.lookupValueDesc1;
     delete val.lookupValueDesc2;
@@ -962,10 +975,10 @@ this.currentOp = 'insert';
     delete val.segment3;
     delete val.segment4;
     delete val.segment5;
-    delete val.segment6;
-    delete val.segment7;
-    delete val.segment8;
-    delete val.segment9;
+    // delete val.segment6;
+    // delete val.segment7;
+    // delete val.segment8;
+    // delete val.segment9;
     delete val.lookupValueDesc4;
     delete val.lookupValueDesc1;
     delete val.lookupValueDesc2;
@@ -1012,6 +1025,8 @@ this.currentOp = 'insert';
         alert('RECORD INSERTED SUCCESSFUILY');
         this.displayButton = false;
         this.displayNewButton = false;
+        this.displaySuppcode =false;
+        this.dispDivision =false;
       } else {
         if (res.code === 400) {
           // alert('Code already present in the data base');
@@ -1040,6 +1055,21 @@ this.currentOp = 'insert';
           }
         }
       );
+  }
+  onOptionTaxCatSelected(i, taxCategoryName){
+    alert(taxCategoryName);
+    // let val = this.poMasterDtoForm.get('taxCategoryName').value;
+    // alert('val ' +val);
+    let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
+    alert(selectedValue);
+    this.taxCategoryId = selectedValue.taxCategoryId
+    alert( ' this.taxCategoryId '+this.taxCategoryId)
+    var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+    (patch.controls[i]).patchValue(
+      {
+        taxCategoryId: Number(this.taxCategoryId ),
+      });
+      alert(this.taxCategoryId);
   }
   onOptioninvItemIdSelected(itemId, index) {
 
@@ -1136,8 +1166,8 @@ this.currentOp = 'insert';
       + this.poMasterDtoForm.get('segment2').value + '.'
       + this.poMasterDtoForm.get('segment3').value + '.'
       + this.poMasterDtoForm.get('segment4').value + '.'
-      + this.poMasterDtoForm.get('segment5').value + '.'
-      + this.poMasterDtoForm.get('segment6').value;
+      + this.poMasterDtoForm.get('segment5').value ;
+      // + this.poMasterDtoForm.get('segment6').value;
     //  + this.poMasterDtoForm.get('segment7').value + '.'
     //  + this.poMasterDtoForm.get('segment8').value + '.' 
     //  + this.poMasterDtoForm.get('segment9').value  ;
@@ -1168,7 +1198,7 @@ this.currentOp = 'insert';
     this.poMasterDtoForm.get('segment3').reset();
     this.poMasterDtoForm.get('segment4').reset();
     this.poMasterDtoForm.get('segment5').reset();
-    this.poMasterDtoForm.get('segment6').reset();
+    // this.poMasterDtoForm.get('segment6').reset();
     this.poMasterDtoForm.get('lookupValueDesc1').reset();
     this.poMasterDtoForm.get('lookupValueDesc2').reset();
     this.poMasterDtoForm.get('lookupValueDesc3').reset();
@@ -1189,11 +1219,33 @@ this.currentOp = 'insert';
     console.log(arrayControl[index].baseAmtLineWise);
 
     console.log((this.poMasterDtoForm.controls['poLines'][index]));
+   
+    var itemId = this.ItemDetailsList.itemId;
+    // var taxCategoryId = taxCategoryId;
+    // this.taxCatId = taxCategoryId;
+    var diss = 0;
+    var sum = 0;
+    // var baseAmount = this.sum;
+    this.service.taxCalforItem(itemId, this.taxCategoryId, diss, baseAmount)
+      .subscribe(
+        (data: any[]) => {
+          this.taxCalforItem = data;
+         console.log(this.taxCalforItem);
+         alert(this.taxCalforItem.length);
+         for (let i = 0; i < this.taxCalforItem.length; i++) {
 
-    (patch.controls[index]).patchValue({ baseAmtLineWise: arrayControl[index].baseAmtLineWise, 
-                                          taxAmtLineWise: 0,
-                                          totAmtLineWise: arrayControl[index].baseAmtLineWise,
-    });
+          if (this.taxCalforItem[i].totTaxPer != 0) {
+            sum = sum + this.taxCalforItem[i].totTaxAmt
+          }
+      }
+      (patch.controls[index]).patchValue({ baseAmtLineWise: arrayControl[index].baseAmtLineWise, 
+        taxAmtLineWise: sum,
+        totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
+});
+        });
+        // alert('for '+this.taxCalforItem.length);
+       
+    
     // index = index+1 
     this.baseAmountCal(baseAmount);
   }
@@ -1271,7 +1323,7 @@ this.currentOp = 'insert';
 
 
   taxDetails(op, i, taxCategoryId) {
-
+alert(taxCategoryId);
     // alert(this.currentOp+ i);
     // alert('taxCategoryId ' + taxCategoryId);
     this.poLineTax = i;
@@ -1355,8 +1407,7 @@ this.currentOp = 'insert';
   }
 
   addDiscount(i) {
-
-    const formValue: IpostPO = this.poMasterDtoForm.value;
+ const formValue: IpostPO = this.poMasterDtoForm.value;
     formValue.polineNum = this.poLineTax;
     const aa = this.poLineTax;
     // alert(aa);
@@ -1508,6 +1559,7 @@ this.currentOp = 'insert';
     // this.lineDetailsArray.controls[i].get('taxAmounts')
     // this.poMasterDtoForm.lineDetailsGroup.TaxDetailsArray.clear();
     this.lineDetailsArray.clear();
+    window.location.reload();
   }
   closeMast() {
     this.router.navigate(['admin']);
@@ -1572,7 +1624,7 @@ this.currentOp = 'insert';
       this.poMasterDtoForm.get('segment3').reset();
       this.poMasterDtoForm.get('segment4').reset();
       this.poMasterDtoForm.get('segment5').reset();
-      this.poMasterDtoForm.get('segment6').reset();
+      // this.poMasterDtoForm.get('segment6').reset();
       this.poMasterDtoForm.get('lookupValueDesc1').reset();
       this.poMasterDtoForm.get('lookupValueDesc2').reset();
       this.poMasterDtoForm.get('lookupValueDesc3').reset();
@@ -1587,7 +1639,7 @@ this.currentOp = 'insert';
       this.segment3 = temp[2];
       this.segment4 = temp[3];
       this.segment5 = temp[4];
-      this.segment6 = temp[5];
+      // this.segment6 = temp[5];
     }
     // alert(segmentName1);
     this.displayModal = false;

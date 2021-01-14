@@ -280,7 +280,7 @@ this.lstcompolines.poLines[i].qtyReceived= arrayControl[i].qtyReceived;
 this.lstcompolines.poLines[i].baseAmount= arrayControl[i].baseAmount;
 this.lstcompolines.poLines[i].taxAmount= arrayControl[i].taxAmount;
 this.lstcompolines.poLines[i].totAmount= arrayControl[i].totAmount;
-this.locId=Number(sessionStorage.getItem('locId'));
+// this.locId=Number(sessionStorage.getItem('locId'));
 alert(this.lstcompolines.poLines[i].qtyReceived)
         }
         console.log(this.lstcompolines);
