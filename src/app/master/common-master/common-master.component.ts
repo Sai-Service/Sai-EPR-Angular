@@ -104,7 +104,7 @@ export class CommonMasterComponent implements OnInit {
         }
       }
   }
-  searchMast(){}
+  // searchMast(){}
 
 
-}
+  }}
