@@ -91,7 +91,19 @@ export class CommonMasterComponent implements OnInit {
 
   }
 
-  saveComnMast(){}
+  saveComnMast(){
+    const formValue: ICommon = this.commonMasterForm.value;
+    this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert('Error occured while storing Common Master details ' + res.message);
+          window.location.reload();
+        }
+      }
+  }
   searchMast(){}
 
 
