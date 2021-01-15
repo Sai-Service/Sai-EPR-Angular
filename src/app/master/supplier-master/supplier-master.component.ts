@@ -119,6 +119,9 @@ export class SupplierMasterComponent implements OnInit {
   public statusList: Array<string> = [];
   // public supplierSiteMasterList1 : Array<string>[][];
   public lstcommentsTax: any[];
+  // public cityList: Array<string>[];
+  public cityList1: any;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
@@ -466,4 +469,40 @@ alert(suppSiteId);
       this.supplierMasterForm.get('endDate').reset();
     }
   } 
+
+  onOptionsSelectedCity (city: any){
+    // alert(city);
+    this.service.cityList1(city)
+    .subscribe(
+      data => {
+        this.cityList1 = data;
+        console.log(this.cityList1);
+        this.state=this.cityList1.attribute1;
+        console.log(this.cityList1.attribute1);
+        // this.country = 'INDIA';
+      }
+    );
+  }
+
+
+  onKey(event: any) {
+    const gstNo1 = this.gstNo.substr(3,10);
+    this.panNo = gstNo1;
+  }
+
+
+    onOptionsSelectedCity1(city: any){
+        // alert(city);
+        this.service.cityList1(city)
+        .subscribe(
+          data => {
+            this.cityList1 = data;
+            console.log(this.cityList1);
+            // this.state=this.cityList1.attribute1;
+            this.sstate=this.cityList1.attribute1;
+            console.log(this.cityList1.attribute1);
+            // this.country = 'INDIA';
+          }
+        );
+      }
 }

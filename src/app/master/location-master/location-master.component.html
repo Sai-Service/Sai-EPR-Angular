@@ -277,12 +277,8 @@
                             </td>
                             <td>
                                 <input formControlName="gstNo" value={{gstNo}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
+                                [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (keyup)="onKey($event)"
                                 placeholder="Please enter GSTN no">
-                            <!-- <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
-                                <div *ngIf="f.gstNo.errors.required">GstNo is required</div>
-                                <div *ngIf="f.gstNo.errors?.pattern">GstNo must be a valid and of 15
-                                    charecter</div> -->
                                     <div *ngIf="submitted && f. gstNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.gstNo.errors.required">GstNo must be a valid and of 15 charecter </div>
                                         <div *ngIf="f.gstNo.errors?.maxLength">GstNo must be a valid and of 15 charecter

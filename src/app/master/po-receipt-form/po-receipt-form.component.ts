@@ -23,10 +23,16 @@ interface IpoReceipt{
   ewayBillNo:string;
   docDate:Date;
   ewayBillDate:Date;
-  locId:string;
+  locId:number;
   poHeaderId:number;
   poLineId:number;
-  suppId:number;
+  suppNo:number;
+  supplierSiteId:number;
+  emplId:number;
+  totAmount:number;
+  invItemId:number;
+  billToLoc:number;
+  categoryId:number;
 }
 
 @Component({
@@ -56,9 +62,16 @@ export class PoReceiptFormComponent implements OnInit {
   ewayBillNo:string;
   docDate:Date;
   ewayBillDate:Date;  
-  locId:string;
+  locId:number;
   poHeaderId:number;
-  suppId:number;
+  suppNo:number;
+  supplierSiteId:number;
+  emplId:string;
+  totAmount:number;
+  invItemId:number;
+  billToLoc:number;
+  categoryId:number;
+
 
   // loginArray: any[];
   loginArray:string;
@@ -73,6 +86,7 @@ export class PoReceiptFormComponent implements OnInit {
    divisionId:any[];
    loginName:string;
    poLineId:number;
+  //  supplierSiteId:number;
   //  check box selection
   names: any;
   selectedAll: any;
@@ -99,7 +113,9 @@ export class PoReceiptFormComponent implements OnInit {
       ewayBillDate:[''],
       locId:[''],
       poHeaderId:[''],
-      suppId:[''],
+      suppNo:[''],
+      supplierSiteId:[''],
+      emplId:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -124,6 +140,11 @@ export class PoReceiptFormComponent implements OnInit {
       poChargeAcc:[],
       qtyReceived:[],
       locId:[],
+      baseAmount:[],
+      totAmount:[],
+      invItemId:[''],
+      billToLoc:[''],
+      categoryId:[''],
     });
   }
   get lineDetailsArray() {
@@ -160,8 +181,8 @@ return true;
     this.loginArray=sessionStorage.getItem('divisionName');
    this.loginName=sessionStorage.getItem('name')
    this.ouName = (sessionStorage.getItem('ouName'));
-   this.locId=(sessionStorage.getItem('locId'));
-    
+   this.locId=Number(sessionStorage.getItem('locId'));
+    this.emplId=(sessionStorage.getItem('emplId'));
     console.log(this.loginArray);
     console.log(this.locId);
 
@@ -252,7 +273,19 @@ return true;
       poSave(){
         // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
         const formValue: IpoReceipt = this.poReceiptForm.value;
-    this.service.poSaveSubmit(formValue).subscribe((res: any) => {
+        // var test = this.lstcompolines;
+        var arrayControl = this.poReceiptForm.get('poLines').value
+        for(let i =0; i<this.lstcompolines.poLines.length; i++){
+this.lstcompolines.poLines[i].qtyReceived= arrayControl[i].qtyReceived;
+this.lstcompolines.poLines[i].baseAmount= arrayControl[i].baseAmount;
+this.lstcompolines.poLines[i].taxAmount= arrayControl[i].taxAmount;
+this.lstcompolines.poLines[i].totAmount= arrayControl[i].totAmount;
+// this.locId=Number(sessionStorage.getItem('locId'));
+alert(this.lstcompolines.poLines[i].qtyReceived)
+        }
+        console.log(this.lstcompolines);
+        
+    this.service.poSaveSubmit(this.lstcompolines).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
         this.poReceiptForm.reset();

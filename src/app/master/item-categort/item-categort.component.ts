@@ -69,7 +69,7 @@ export class ItemCategortComponent implements OnInit {
       mainType: [''],
       categoryId: [],
       endDate:[],
-      divisionCode:['', [Validators.required]],
+      // divisionCode:[''],
     })
 
   }
