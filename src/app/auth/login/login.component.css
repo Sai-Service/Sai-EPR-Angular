@@ -12,7 +12,7 @@
 
       .back-image{
         /* background-image: url(src/assets/images/background1.jpg); */
-        background-image: url(src/assets/images/background1.jpg);
+        background-image: url(/assets/images/background1.jpg);
   
         background-repeat: no-repeat;
          padding: 10px;

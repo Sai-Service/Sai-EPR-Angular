@@ -737,12 +737,21 @@ this.currentOp = 'insert';
     this.hideArray[index] = true;
 
   }
-  RemoveRow(index) {
+  RemoveRow1(index) {
     this.lineDetailsArray.removeAt(index);
     this.displayPoLine[index] = true;
     this.hideArray[index] = true;
   }
+  RemoveRow(index) {
+    if (index === 0){
 
+    }else{
+      this.lineDetailsArray.removeAt(index);
+    }
+    this.lineDetailsArray.removeAt(index);
+    this.displayPoLine[index] = true;
+    this.hideArray[index] = true;
+  }
 
 
   Search(poNo) {
