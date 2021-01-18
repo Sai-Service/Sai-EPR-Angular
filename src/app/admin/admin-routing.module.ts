@@ -11,6 +11,10 @@ const routes: Routes = [
         path: 'master',
         loadChildren: () => import('../master/master.module').then(mod => mod.MasterModule)
       },
+      {
+        path: 'transaction',
+        loadChildren: () => import('../transaction/transaction.module').then(mod => mod.TransactionModule)
+      },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
 ];
