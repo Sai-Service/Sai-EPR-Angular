@@ -268,7 +268,15 @@ return true;
       {
         window.location.reload();
       }
+
+      openlocator(i){}
      
+
+      // onKey(event: any) {
+      //   const aaa = this.segment1 + '.' + this.segment2 + '.' + this.segment3 + '.' + this.segment4 + '.' + this.segment5;
+      //   this.segmentName = aaa;
+      // }
+
 
       poSave(){
         // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
