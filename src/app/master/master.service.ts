@@ -473,8 +473,46 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   }
   //////////////////////////////////////document sequence master//////////
-  departmentList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');}
-
+  getdocSeqSearch(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/docsrlmst');
+  }
+  public docSeqMasterSubmit(docSeqMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/docsrlmst/docsrlmaster';
+    return this.http.post(url, docSeqMasterRecord, options);
+  }
+  UpdatedocSeqMasterById(docSeqMasterRecord,docSrlId) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/docsrlmst/${docSrlId}`);
+    return this.http.put(url, docSeqMasterRecord, options);
+  }
+  
+  getLocationId(orgCode):Observable<any>{
+    return this.http.get(this.ServerUrl +`/locationMst/locListOuwise/${orgCode}`);
+  }
+  
+  getOrganizationId(divCode):Observable<any>{
+    return this.http.get(this.ServerUrl +`/docsrlmst/divName/${divCode}`);
+  }
+  FinancialYear():Observable<any>{
+    return this.http.get(this.ServerUrl +'/docsrlmst/getYear');
+  }
+  docTypeList():Observable<any>{
+    return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/DocType');
+  }
+  getTransType(transType,OrgId):Observable<any>{
+    return this.http.get(this.ServerUrl +`/docsrlmst/getTransTy?trnsType=${transType}&ouId=${OrgId}`)
+  }
+  getSrlNo(doctype,trantype):Observable<any>{
+    return this.http.get(this.ServerUrl +`/docsrlmst/getTypeDtls?trnsType=${doctype}&TypeId=${trantype}`)
+  }
+  getcoCent(deptype):Observable<any>{
+    return this.http.get(this.ServerUrl +`/cmnLookup/lookup?codeDesc=${deptype}&cmnType=Dept`)
+  }
   /////////////////////////////EMPLOYEE MASTER////////////////////////////
    
  getEmpSearch(): Observable<any> {
@@ -495,23 +533,23 @@ UpdateEmpMasterById(EmpMasterRecord,emplId) {
   return this.http.put(url, EmpMasterRecord, options);
 }
 //////////////////////////////Document Sequence master///////////////////////
-getdocSeqSearch(): Observable<any> {
-  return this.http.get(this.ServerUrl + '/docsrlmst');
-}
-public docSeqMasterSubmit(docSeqMasterRecord) {
-  const options = {
-    headers: this.headers
-  };
-  const url = this.ServerUrl + '/docsrlmst/docsrlmaster';  
-  return this.http.post(url, docSeqMasterRecord, options);
-}
-UpdatedocSeqMasterById(docSeqMasterRecord,docSrlId) {
-  const options = {
-    headers: this.headers
-  };
-  const url = (this.ServerUrl + `/docsrlmst/${docSrlId}`);
-  return this.http.put(url, docSeqMasterRecord, options);
-}
+// getdocSeqSearch(): Observable<any> {
+//   return this.http.get(this.ServerUrl + '/docsrlmst');
+// }
+// public docSeqMasterSubmit(docSeqMasterRecord) {
+//   const options = {
+//     headers: this.headers
+//   };
+//   const url = this.ServerUrl + '/docsrlmst/docsrlmaster';  
+//   return this.http.post(url, docSeqMasterRecord, options);
+// }
+// UpdatedocSeqMasterById(docSeqMasterRecord,docSrlId) {
+//   const options = {
+//     headers: this.headers
+//   };
+//   const url = (this.ServerUrl + `/docsrlmst/${docSrlId}`);
+//   return this.http.put(url, docSeqMasterRecord, options);
+// }
 ////////////////////////Customer master//////////////////
 UpdateCustMasterById(CustMasterRecord) {
   const options = {

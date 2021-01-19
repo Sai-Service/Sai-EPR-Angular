@@ -69,10 +69,10 @@ export class LoginComponent implements OnInit {
         console.log(users.ticketNo);
           sessionStorage.setItem('emplId',users.emplId);
           sessionStorage.setItem('dept',users.deptId);
+          sessionStorage.setItem('deptName',users.deptName);
           sessionStorage.setItem('name',users.name);
           sessionStorage.setItem('ouName',users.ouName); 
           sessionStorage.setItem('ouId',users.ouId); 
-          sessionStorage.setItem('locId',users.locId);
 console.log(users.ouId);
 console.log(users.ouName);
        } //else if (res.code === 204) {
@@ -85,6 +85,7 @@ console.log(users.ouName);
       }
     });
   }
+
 
 
 

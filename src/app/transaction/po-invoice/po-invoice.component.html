@@ -11,6 +11,12 @@
             <td class="PageHeader1">
                 <button data-toggle="modal" data-target="#myModel" style="margin-right: 90%;">Find</button>
             </td>
+            <!-- <td>               <date-range-picker
+                [class]="'col-md-6 col-sm-6 form-control'"
+                [options]="daterangepickerOptions"
+                (rangeSelected)="rangeSelected($event)"
+              >
+              </date-range-picker></td> -->
         </tr>
     </table >
     <div class="center" style="width: 100%;">
@@ -185,7 +191,12 @@
                                 </td>        
                                  <td><input type="text" class="form-control" placeholder=""></td>
                             </tr>
+                            <!-- <tr><td>
+                                <input type="text" ngxDaterangepickerMd [(ngModel)]="selected" class="form-control"/>
+                            </td></tr> -->
+                            
                         </table>
+                        <!-- <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end' (change)="getDater($event)">jjj</ejs-daterangepicker> -->
                     </div>
   
     <!-- <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade modal-lg" tabindex="-1" role="dialog"

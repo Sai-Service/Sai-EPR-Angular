@@ -737,11 +737,6 @@ this.currentOp = 'insert';
     this.hideArray[index] = true;
 
   }
-  RemoveRow1(index) {
-    this.lineDetailsArray.removeAt(index);
-    this.displayPoLine[index] = true;
-    this.hideArray[index] = true;
-  }
   RemoveRow(index) {
     if (index === 0){
 
@@ -752,6 +747,7 @@ this.currentOp = 'insert';
     this.displayPoLine[index] = true;
     this.hideArray[index] = true;
   }
+
 
 
   Search(poNo) {

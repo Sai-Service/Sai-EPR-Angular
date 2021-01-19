@@ -2,10 +2,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import {Moment} from 'moment/moment';
 
-import { DateRangePickerComponent } from 'ngx-daterange';
-import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
+// import { DateRangePickerComponent } from 'ngx-daterange';
+// import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
 import { MasterService } from 'src/app/master/master.service';
 
 interface IpoInvoice {
@@ -18,7 +19,103 @@ interface IpoInvoice {
   styleUrls: ['./po-invoice.component.css']
 })
 export class PoInvoiceComponent implements OnInit {
+  // public start: Date = new Date ("10/07/2017"); 
+  // public end: Date = new Date ("11/25/2017");
 
+  // getDater(data){
+  //   console.log(data);
+  // }
+  // isTimePickerEnabled = true;
+  // daterangepickerOptions = {
+  //   startDate: null,
+  //   endDate: null,
+  //   format: "DD.MM.YYYY HH:mm",
+  //   minDate: moment()
+  //     .add(-2, "months")
+  //     .format("DD.MM.YYYY HH:mm"),
+  //   maxDate: moment()
+  //     .add(2, "months")
+  //     .format("DD.MM.YYYY HH:mm"),
+  //   inactiveBeforeStart: true,
+  //   autoApply: false,
+  //   showRanges: true,
+  //   preDefinedRanges: [
+  //     {
+  //       name: "Day After tomorrow",
+  //       value: {
+  //         start: moment().add(2, "days"),
+  //         end: moment().add(2, "days")
+  //       }
+  //     },
+  //     {
+  //       name: "Today",
+  //       value: {
+  //         start: moment(),
+  //         end: moment()
+  //       }
+  //     },
+  //     {
+  //       name: "Tomorrow",
+  //       value: {
+  //         start: moment().add(1, "days"),
+  //         end: moment().add(1, "days")
+  //       }
+  //     },
+  //     {
+  //       name: "This week",
+  //       value: {
+  //         start: moment(),
+  //         end: moment().add(7, "days")
+  //       }
+  //     }
+  //   ],
+  //   singleCalendar: false,
+  //   displayFormat: "DD.MM.YYYY HH:mm",
+  //   position: "left",
+  //   disabled: false,
+  //   noDefaultRangeSelected: true,
+  //   timePicker: {
+  //     minuteInterval: 5,
+  //     twentyFourHourFormat: true
+  //   },
+  //   disableBeforeStart: true
+  // };
+
+  // rangeSelected(data) {
+  //   debugger;
+  // }
+  // singleCalendar(event) {
+  //   this.daterangepickerOptions.singleCalendar = event.target.checked;
+  // }
+  // autoApply(event) {
+  //   this.daterangepickerOptions.autoApply = event.target.checked;
+  // }
+  // inactiveBeforeStart(event) {
+  //   this.daterangepickerOptions.inactiveBeforeStart = event.target.checked;
+  // }
+  // showRanges(event) {
+  //   this.daterangepickerOptions.showRanges = event.target.checked;
+  // }
+  // setTimePicker(event) {
+  //   this.isTimePickerEnabled = event.target.checked;
+  //   this.daterangepickerOptions.timePicker = event.target.checked
+  //     ? {
+  //         minuteInterval: 5,
+  //         twentyFourHourFormat:
+  //           this.daterangepickerOptions.timePicker &&
+  //           !!this.daterangepickerOptions.timePicker.twentyFourHourFormat
+  //       }
+  //     : null;
+  // }
+  // setPosition() {}
+  // prettyPrintJSON(object) {
+  //   return JSON.stringify(object, null, "  ");
+  // }
+
+
+
+
+  // public Moment = new Date();
     poInvoiceForm: FormGroup;
     showModal: boolean;
     content: number;
@@ -175,5 +272,9 @@ export class PoInvoiceComponent implements OnInit {
   poInvoice(poInvoiceForm){
   
   }
+ 
+  // public today = new Date();
+  // public priorDate = new Date().setDate(this.today.getDate() - 30)
+  // selected: {startDate: Moment, endDate: Moment};
   }
   
