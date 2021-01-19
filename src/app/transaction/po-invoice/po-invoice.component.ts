@@ -2,7 +2,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+ import * as moment from 'moment';
+//import {moment} from 'moment';
 
  import { DateRangePickerComponent } from 'ngx-daterange';
  import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
@@ -18,6 +19,8 @@ interface IpoInvoice {
   styleUrls: ['./po-invoice.component.css']
 })
 export class PoInvoiceComponent implements OnInit {
+  // public start: Date = new Date ("10/07/2017"); 
+  // public end: Date = new Date ("11/25/2017");
 
   @ViewChild('dateRangePicker', { static: true })
   dateRangePicker: DateRangePickerComponent;
@@ -160,5 +163,9 @@ export class PoInvoiceComponent implements OnInit {
   poInvoice(poInvoiceForm){
   
   }
+ 
+  // public today = new Date();
+  // public priorDate = new Date().setDate(this.today.getDate() - 30)
+  // selected: {startDate: Moment, endDate: Moment};
   }
   

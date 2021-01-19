@@ -3,13 +3,13 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { data } from 'jquery';
 
 
 interface IserialMaster {
   docSrlId: number;
   docSrlNo: number;
   deptId: string;
-  // locId:string;
   divisionId: number;
   recvTypeId: number;
   financialYear: string;
@@ -17,7 +17,7 @@ interface IserialMaster {
   status: string
   docSrlType: string;
   docSrlOu: number;
-  docSrlLoc: number;
+  docSrlLoc: any;
   startDate: Date;
   endDate: Date
 }
@@ -34,17 +34,18 @@ export class DocumentSequenceMasterComponent implements OnInit {
   docSrlId: number;
   docSrlNo: number;
   deptId: string;
-  // locId:string;
   divisionId: number;
   recvTypeId: number;
   financialYear: string;
   docSrlPrefix: string;
   docSrlType: string;
   docSrlOu: number;
-  docSrlLoc: number;
+  docSrlLoc: any;
   startDate: Date;
-  endDate: Date
-
+  endDate: Date;
+  organizationCode:any;
+  tySrlNo:number;
+  attribute1:string;
   public status = "Active";
   displayInactive = true;
   Status1: any;
@@ -55,17 +56,21 @@ export class DocumentSequenceMasterComponent implements OnInit {
   public minDate = new Date();
   public statusList: Array<string> = [];
   public recvTypeIdList: Array<string> = [];
-  public DepartmentList: Array<string> = [];
-  public locIdList: Array<string> = [];
+  public DepartmentList: any [];
+  public locIdList: any [];
   public DivisionIDList: Array<string> = [];
   public ouIdList: Array<string>[];
+  public FinancialYear:Array<string>=[];
+  public docTypeList:Array<string>=[];
+  public transtype:any[];
+  // public tySrlNo:any[];
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.DocSeriealMasterForm = fb.group({
       docSrlId: [''],
-      docSrlNo: ['', [Validators.required]],
+      docSrlNo: [''],
       deptId: ['', [Validators.required]],
-      // locId: ['', [Validators.required]],
       divisionId: ['', [Validators.required]],
       recvTypeId: ['', [Validators.required]],
       financialYear: ['', [Validators.required]],
@@ -76,6 +81,8 @@ export class DocumentSequenceMasterComponent implements OnInit {
       docSrlLoc: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: [],
+      tySrlNo:[],
+      attribute1:[],
     })
   }
 
@@ -89,14 +96,20 @@ export class DocumentSequenceMasterComponent implements OnInit {
           console.log(this.statusList);
         }
       );
-    this.service.recvTypeIdList()
-      .subscribe(
-        data => {
-          this.recvTypeIdList = data;
-          console.log(this.recvTypeIdList);
-        }
-      );
-    this.service.locationIdList()
+    // this.service.recvTypeIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.recvTypeIdList = data;
+    //       console.log(this.recvTypeIdList);
+    //     }
+    //   );
+      this.service.docTypeList()
+        .subscribe(
+          data =>{ this.docTypeList = data;
+          });
+
+    this.service.
+    locationIdList()
       .subscribe(
         data => {
           this.locIdList = data;
@@ -110,6 +123,11 @@ export class DocumentSequenceMasterComponent implements OnInit {
           console.log(this.DivisionIDList);
         }
       );
+      this.service.FinancialYear()
+      .subscribe(
+        data => {this.FinancialYear = data;
+        }
+        );
     this.service.DepartmentList()
       .subscribe(
         data => {
@@ -144,11 +162,46 @@ export class DocumentSequenceMasterComponent implements OnInit {
     return val;
   }
 
+  // documentSequence(event:any)
+  // documentSequence()
+  // {
+  //   const docSeq =this.DocSeriealMasterForm.get('divisionId').value;
+  //   const docLoc=this.DocSeriealMasterForm.get('docSrlLoc').value;
+  //   this.docSrlNo=Number(docSeq+''+docLoc);
+  //   alert(docLoc);
+  //   // this.DocSeriealMasterForm.patchValue(this.divisionId);
+  // }
+
   newMast() {
+
+    const finYear=this.DocSeriealMasterForm.get('financialYear').value;
+    const docSeq =this.DocSeriealMasterForm.get('divisionId').value;
+    const docLoc : number=this.DocSeriealMasterForm.get('docSrlLoc').value;
+
+    let select = this.locIdList.find(d => d.locId === docLoc);
+  
+    var b= select.locCode;
+    var temp = b.split('.');
+    alert(temp[1]);
+    const intialval=this.DocSeriealMasterForm.get('docSrlPrefix').value;
+   
+    // const docsrlno=this.DocSeriealMasterForm.get('tySrlNo').value;
+    // console.log(docsrlno);
+    // let select = this.locIdList.find (d => d.locId === docLoc );
+    // this.d
+alert(this.attribute1 +'--'+ this.DocSeriealMasterForm.get('attribute1').value);
+    this.docSrlNo=Number(finYear+''+docSeq+''+temp[1]+''+this.attribute1+''+this.tySrlNo+''+this.docSrlPrefix);
+    // alert('this.docSrlNo'+this.docSrlNo)
+    // alert(this.tySrlNo);
+
     const formValue: IserialMaster = this.transData(this.DocSeriealMasterForm.value);
+formValue.docSrlNo = this.docSrlNo;
+alert(formValue.docSrlNo);
+    // formValue.docSrlNo =this.docSrlNo
     this.service.docSeqMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
+
         this.DocSeriealMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -156,6 +209,7 @@ export class DocumentSequenceMasterComponent implements OnInit {
           this.DocSeriealMasterForm.reset();
         }
       }
+
     });
   }
 
@@ -201,5 +255,70 @@ export class DocumentSequenceMasterComponent implements OnInit {
     }
   }
 
+  onOptionSelectedLocation(event:any)
+  {
+    var orgCode= this.DocSeriealMasterForm.get('docSrlOu').value;
+    alert('ou '+ orgCode);
+    this.service.getLocationId(orgCode).subscribe(
+      data=>{this.locIdList=data;
+        console.log(this.locIdList);
+        // this.DocSeriealMasterForm.patchValue(this.organizationCode);
 
+      }
+    );
+
+  }
+  onOptionSelectedOrganization(event:any)
+  {
+    var divCode=this.DocSeriealMasterForm.get('divisionId').value;
+    alert('ou '+ divCode);
+    this.service.getOrganizationId(divCode).subscribe(
+      data => {this.ouIdList = data;
+
+      }
+      );
+  }
+  onOptionSelectedtransType(event:any)
+  {
+
+   // var transType=event;
+   var ouId=this.DocSeriealMasterForm.get('docSrlOu').value;
+   alert(ouId);
+    this.service.getTransType(event,ouId)
+      .subscribe(data => {
+        this.transtype = data;
+        // this.transId=this.transtype.
+        }
+        );
+
+  }
+  onOptionSelectedSerialType(event:any){
+    var type=this.DocSeriealMasterForm.get('docSrlType').value;
+    alert(type);
+    this.service.getSrlNo(type,event)
+    .subscribe(data=> {
+      this.tySrlNo = data.tySrlNo;
+      console.log( this.tySrlNo
+
+      );
+
+    });
+
+  }
+  onOptionSelectedCostCentre(event){
+    alert(event);
+    let select = this.DepartmentList.find(d => d.cmnTypeId === event);
+    // const dept='Dept';
+    alert(select);
+    console.log(select.code);
+    
+     this.service.getcoCent(select.code)
+       .subscribe(data =>{
+          this.attribute1 = data.attribute1;
+          alert(this.attribute1+'attribute1');
+          // this.deptId=data.cmnTypeId;
+        } );
+
+  }
 }
+
