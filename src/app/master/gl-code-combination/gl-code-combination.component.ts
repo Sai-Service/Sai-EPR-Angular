@@ -89,6 +89,11 @@ public statusList:Array<string>=[];
      detailBudgetingAllowedFlag:['',[Validators.required]],
      lookupValueDesc:['',[Validators.required]],
      codeCombinationId:[],
+     lookupValueDesc4:[],
+lookupValueDesc1:[],
+lookupValueDesc2:[],
+lookupValueDesc3:[],
+lookupValueDesc5:[],
      status:['',[Validators.required]]
    });
    }
@@ -177,7 +182,8 @@ public statusList:Array<string>=[];
      this.service.getInterBranch(segment, lType).subscribe(
            data=>{this.branch=data;
              console.log(this.branch);
-             this.GlCodeCombinaionForm.patchValue(this.branch);
+    if (this.branch != null) {
+    //          this.GlCodeCombinaionForm.patchValue(this.branch);
     
 
     
@@ -186,6 +192,7 @@ public statusList:Array<string>=[];
     }
      if(lType==='NaturalAccount'){      
         this.lookupValueDesc4  =this.branch.lookupValueDesc;
+      //  this.accountType=this.branch.naturalAccount.accountType;
     //   // this.GlCodeCombinaionForm.patchValue(this.branch);
       //  this.accountType=this.branch.accountType;
       
@@ -200,7 +207,8 @@ public statusList:Array<string>=[];
     if(lType==='SS_Branch'){
       this.lookupValueDesc1 =this.branch.lookupValueDesc;
     }
-    this.accountType=this.branch.naturalAccount.accountType;
+  }
+   
         }
     ); 
 

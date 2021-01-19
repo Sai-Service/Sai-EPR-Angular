@@ -738,6 +738,11 @@ this.currentOp = 'insert';
 
   }
   RemoveRow(index) {
+    if (index === 0){
+
+    }else{
+      this.lineDetailsArray.removeAt(index);
+    }
     this.lineDetailsArray.removeAt(index);
     this.displayPoLine[index] = true;
     this.hideArray[index] = true;
