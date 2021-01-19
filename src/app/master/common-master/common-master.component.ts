@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
 import { Router } from '@angular/router';
-import { Validators,FormArray } from '@angular/forms';
+import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
@@ -13,7 +13,9 @@ import { MasterService } from '../master.service';
 
 interface ICommon {
   cmnType: string;
-  cmnDesc:string;
+  cmnDesc: string;
+  application: string;
+  divisionId: string;
 }
 
 @Component({
@@ -22,40 +24,34 @@ interface ICommon {
   styleUrls: ['./common-master.component.css']
 })
 export class CommonMasterComponent implements OnInit {
-
-  // constructor() { }
-
-  // ngOnInit(): void {
-  // }
   commonMasterForm: FormGroup;
   cmnType: string;
-  cmnDesc:string;
+  cmnDesc: string;
+  lstcomments: any[];
   submitted = false;
-
-
   public applicationList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
   public cmnTypeList: Array<string> = [];
-  // public array: Array<string> = [];
-  // public group: Array<string> = [];
-
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
+  
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.commonMasterForm = fb.group({
       itemRows: this.fb.array([this.inItemRows()]),
       cmnType: ['', [Validators.required]],
       cmnDesc: ['', [Validators.required]],
+      application: ['', [Validators.required]],
+      divisionId: ['', [Validators.required]],
     });
   }
 
-  inItemRows(){
+  inItemRows() {
     return this.fb.group({
-      cmnType:[''] ,
-      cmnDesc:['']
+      cmnType: [''],
+      cmnDesc: ['']
     });
   }
 
-  addRow(){
-    const control=<FormArray>this.commonMasterForm.controls['itemRows'];
+  addRow() {
+    const control = <FormArray>this.commonMasterForm.controls['itemRows'];
     control.push(this.inItemRows());
   }
 
@@ -63,35 +59,36 @@ export class CommonMasterComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.DivisionIDList()
-    .subscribe(
-      data => {
-        this.DivisionIDList = data;
-        console.log(this.DivisionIDList);    
-      }
-    );
+      .subscribe(
+        data => {
+          this.DivisionIDList = data;
+          console.log(this.DivisionIDList);
+        }
+      );
 
     this.service.applicationList()
-    .subscribe(
-      data => {
-        this.applicationList = data;
-        console.log(this.applicationList);
-      }
-    );
+      .subscribe(
+        data => {
+          this.applicationList = data;
+          console.log(this.applicationList);
+        }
+      );
 
     this.service.cmnTypeList()
-    .subscribe(
-      data => {
-        this.cmnTypeList = data;
-        console.log(this.cmnTypeList);
-      }
-    );
+      .subscribe(
+        data => {
+          this.cmnTypeList = data;
+          console.log(this.cmnTypeList);
+        }
+      );
   }
 
   commonMaster(commonMaster: any) {
 
   }
 
-  saveComnMast(){
+  saveComnMast() {
+    alert("Hi1")
     const formValue: ICommon = this.commonMasterForm.value;
     this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -103,8 +100,17 @@ export class CommonMasterComponent implements OnInit {
           window.location.reload();
         }
       }
+    });
   }
-  // searchMast(){}
 
+  searchCmnMst(searchText){
+    this.service.getCommonLookupSearch(searchText)
+  .subscribe(
+    data => {
+      this.lstcomments = data;
+      console.log(this.lstcomments);
+    }
+  );
+};
+}
 
-  }}

@@ -185,10 +185,27 @@ public CompanyMasterSubmit(companyMasterRecord) {
   const url = this.ServerUrl + '/CompMst/ComanyMaster';  
   return this.http.post(url, companyMasterRecord, options);
 }
+
 getcompanySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/CompMst');
 
 }
+
+
+public commonMasterSubmit(commonMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/cmnLookup';  
+  return this.http.post(url, commonMasterRecord, options);
+}
+
+getCommonLookupSearch(searchText): Observable<any> {
+  return this.http.get(this.ServerUrl + `/CompMst/${searchText}`);
+
+}
+
+
 UpdateCompanyMasterById(ComMasterRecord,compId) {
   const options = {
     headers: this.headers

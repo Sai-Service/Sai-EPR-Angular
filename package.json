@@ -27,6 +27,7 @@
     "jquery": "^3.5.1",
     "ng-sidebar": "^9.4.2",
     "ng2-charts": "^2.4.2",
+    "ngx-daterange": "^1.0.43",
     "ngx-pagination": "^5.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",

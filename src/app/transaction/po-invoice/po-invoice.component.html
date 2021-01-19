@@ -11,6 +11,20 @@
             <td class="PageHeader1">
                 <button data-toggle="modal" data-target="#myModel" style="margin-right: 90%;">Find</button>
             </td>
+            <td><date-range-picker [instanceId]="'secondDateRange'" [options]="secondFieldOptions" 
+                [controlName]="'secondDateRange'" #dateRangePicker>
+              <div class="form-group">
+                  <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="date-range-icon">
+                      <i class="material-icons">event</i>
+                    </span>
+                  </div>
+                  <input id="secondDateRange" class="form-control" type="text" name="dateRange"
+                      [value]="dateRangePicker.range" placeholder="From - To" formControlName="secondDateRange" />
+                </div>
+              </div>
+            </date-range-picker></td>
         </tr>
     </table >
     <div class="center" style="width: 100%;">
