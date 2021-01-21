@@ -14,8 +14,11 @@ import { MasterService } from '../master.service';
 interface ICommon {
   cmnType: string;
   cmnDesc: string;
+  code:string;
+  codeDesc:string;
   application: string;
   divisionId: string;
+  startDate:Date;
 }
 
 @Component({
@@ -27,11 +30,15 @@ export class CommonMasterComponent implements OnInit {
   commonMasterForm: FormGroup;
   cmnType: string;
   cmnDesc: string;
+  startDate:Date;
+  code:string;
+  codeDesc:string;
   lstcomments: any[];
   submitted = false;
   public applicationList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
   public cmnTypeList: Array<string> = [];
+  public minDate=new Date();
   
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.commonMasterForm = fb.group({

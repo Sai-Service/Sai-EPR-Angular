@@ -18,7 +18,7 @@
                         </td>
                         <td>
                             <input disabled formControlName="docSrlNo" [(ngModel)]="docSrlNo" value={{docSrlNo}} class="form-control"
-                            >
+                             placeholder="Enter document sequence no">
                         <!-- <div *ngIf="submitted && f. docSrlNo.errors" class="invalid-feedback">
                             <div *ngIf="f.docSrlNo.errors.required">Document sequence no must be a valid</div>
                             <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
@@ -66,7 +66,7 @@
                           Location&nbsp;Code&nbsp;:
                       </td>
                       <td>
-                          <select formControlName="docSrlLoc" id="docSrlLoc" class="form-control" ngModel="docSrlLoc">
+                          <select formControlName="docSrlLoc" id="docSrlLoc" class="form-control" ngModel='docSrlLoc'>
                               <option>--Select--</option>
                               <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                                   {{sc.locId}}-{{sc.locCode}}
@@ -141,12 +141,18 @@
                             Transaction&nbsp;Type&nbsp;:
                         </td>
                         <td>
+                          <div *ngIf="trandistype; then thenBlock1; else elseBlock1"></div>
+                          <ng-template #thenBlock1>
                             <select  formControlName="recvTypeId" class="form-control" value={{recvTypeId}} (ngModelChange)="onOptionSelectedSerialType($event)">
                               <option>--Select--</option>
                               <option *ngFor="let tt of transtype" [ngValue]="tt.transId">{{tt.name}}</option>
                               </select>
                             <span *ngIf="!DocSeriealMasterForm.get('recvTypeId').valid && DocSeriealMasterForm.get('recvTypeId').touched">Please
                                 Enter Order/receivable transaction Type  </span>
+                          </ng-template >
+                          <ng-template #elseBlock1>
+                            <input disabled formControlName="recvTypeId" class="form-control" [(ngModel)]="recvTypeId">
+                          </ng-template>
                         </td>
                          <td>
                           <input hidden formControlName="tySrlNo" [(ngModel)]="tySrlNo">
@@ -157,7 +163,7 @@
                             Intial&nbsp;Value&nbsp;:
                         </td>
 <td>                       <!-- (keyup)="documentSequence($event)" <td> -->
-                            <input formControlName="docSrlPrefix" [(ngModel)]='docSrlPrefix' value={{docSrlPrefix}} class="form-control"
+                            <input formControlName="docSrlPrefix" [(ngModel)]="docSrlPrefix" value={{docSrlPrefix}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.docSrlPrefix.errors }"
                             placeholder="Enter Intial Value">
                         <div *ngIf="submitted && f. docSrlPrefix.errors" class="invalid-feedback">
@@ -220,7 +226,7 @@
                         Operating&nbsp;Unit&nbsp;:
                     </td>
                     <td>
-                        <input formControlName="docSrlOu" id="docSrlOu" class="form-control">
+                        <input  disabled formControlName="docSrlOu" id="docSrlOu" class="form-control">
                     </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Location&nbsp;Code&nbsp;:
@@ -244,7 +250,7 @@
                             Financial&nbsp;Year&nbsp;:
                         </td>
                         <td>
-                            <input formControlName="financialYear" [(ngModel)]='financialYear' value={{financialYear}} class="form-control"
+                            <input disabled formControlName="financialYear" [(ngModel)]='financialYear' value={{financialYear}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.financialYear.errors }"
                             placeholder="Enter Financial Year">
                         <div *ngIf="submitted && f. financialYear.errors" class="invalid-feedback">
@@ -264,7 +270,7 @@
                             Document&nbsp;Type:
                         </td>
                         <td>
-                            <input formControlName="docSrlType" [(ngModel)]='docSrlType' value={{docSrlType}} class="form-control"
+                            <input disabled formControlName="docSrlType" [(ngModel)]='docSrlType' value={{docSrlType}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.docSrlType.errors }"
                             placeholder="Enter Document Serieal type">
                         <div *ngIf="submitted && f. docSrlType.errors" class="invalid-feedback">
@@ -288,7 +294,7 @@
                             Intial&nbsp;Value&nbsp;:
                         </td>
                         <td>
-                            <input formControlName="docSrlPrefix" [(ngModel)]='docSrlPrefix' value={{docSrlPrefix}} class="form-control"
+                            <input disabled formControlName="docSrlPrefix" [(ngModel)]='docSrlPrefix' value={{docSrlPrefix}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.docSrlPrefix.errors }"
                             placeholder="Enter Intial Value">
                         <div *ngIf="submitted && f. docSrlPrefix.errors" class="invalid-feedback">
@@ -306,7 +312,7 @@
                             Start&nbsp;Date&nbsp;:
                         </td>
                         <td>
-                            <input type="date" formControlName="startDate" class="form-control"
+                            <input disabled type="date" formControlName="startDate" class="form-control"
             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
         <span  *ngIf="!DocSeriealMasterForm.get('startDate').valid && DocSeriealMasterForm.get('startDate').touched">Please
             Enter start Date </span>
@@ -353,7 +359,7 @@
                     <ng-template #thenBlock1>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
-                            [disabled]="!DocSeriealMasterForm.valid" (click)="newMast()">New</button>
+                            [disabled]="!DocSeriealMasterForm.valid" (click)="newMast()">Save</button>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
@@ -398,7 +404,7 @@
             <th scope="col">Department ID</th>
             <th scope="col">Location ID</th>
             <th scope="col">Division ID</th>
-            <th scope="col">Order/receivable transaction Type</th>
+            <th scope="col">transaction Type</th>
             <th scope="col">Financial Year</th>
             <th scope="col">Intial Value</th>
             <th scope="col">Select one</th>
@@ -410,7 +416,7 @@
         <td>{{com.deptId}}</td>
         <td>{{com.docSrlLoc}}</td>
         <td>{{com.divisionId}}</td>
-        <td>{{com.recvTypeId}}</td>
+        <td>{{com.docSrlType}}</td>
         <td>{{com.financialYear}}</td>
         <td>{{com.docSrlPrefix}}</td>
         <td><button class="btn btn-primary" (click)="Select(com.docSrlId)">Select</button></td>

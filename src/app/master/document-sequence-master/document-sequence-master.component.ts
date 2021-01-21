@@ -52,12 +52,13 @@ export class DocumentSequenceMasterComponent implements OnInit {
   inactiveDate: Date;
   lstcomments: any[];
   display = true;
+  trandistype =true;
   displayButton = true;
   public minDate = new Date();
   public statusList: Array<string> = [];
   public recvTypeIdList: Array<string> = [];
   public DepartmentList: any [];
-  public locIdList: any [];
+  public locIdList: any[];
   public DivisionIDList: Array<string> = [];
   public ouIdList: Array<string>[];
   public FinancialYear:Array<string>=[];
@@ -142,6 +143,8 @@ export class DocumentSequenceMasterComponent implements OnInit {
           console.log(this.ouIdList);
         }
       );
+
+      this.searchMast();
   }
 
   DocSeriealMaster(DocSeriealMasterForm: any) {
@@ -177,36 +180,41 @@ export class DocumentSequenceMasterComponent implements OnInit {
     const finYear=this.DocSeriealMasterForm.get('financialYear').value;
     const docSeq =this.DocSeriealMasterForm.get('divisionId').value;
     const docLoc : number=this.DocSeriealMasterForm.get('docSrlLoc').value;
-
-    let select = this.locIdList.find(d => d.locId === docLoc);
-  
-    var b= select.locCode;
-    var temp = b.split('.');
-    alert(temp[1]);
+    let select =this.locIdList.find(d=>d.locId=== docLoc);
+    var b=select.locCode;
+    var temp=b.split('.');
+    // alert(temp[1]);
     const intialval=this.DocSeriealMasterForm.get('docSrlPrefix').value;
-   
     // const docsrlno=this.DocSeriealMasterForm.get('tySrlNo').value;
     // console.log(docsrlno);
     // let select = this.locIdList.find (d => d.locId === docLoc );
     // this.d
-alert(this.attribute1 +'--'+ this.DocSeriealMasterForm.get('attribute1').value);
+// alert(this.attribute1 +'--'+ this.DocSeriealMasterForm.get('attribute1').value);
+    if(this.DocSeriealMasterForm.get('docSrlType').value==="PO")
+    {
+      this.docSrlNo=Number(finYear+''+docSeq+''+temp[1]+''+this.attribute1+''+1+''+this.docSrlPrefix);
+    }
+    else
+    {
     this.docSrlNo=Number(finYear+''+docSeq+''+temp[1]+''+this.attribute1+''+this.tySrlNo+''+this.docSrlPrefix);
-    // alert('this.docSrlNo'+this.docSrlNo)
-    // alert(this.tySrlNo);
+    }
+    alert('this.docSrlNo'+this.docSrlNo)
+    //alert(this.tySrlNo);
 
     const formValue: IserialMaster = this.transData(this.DocSeriealMasterForm.value);
-formValue.docSrlNo = this.docSrlNo;
-alert(formValue.docSrlNo);
-    // formValue.docSrlNo =this.docSrlNo
+    formValue.docSrlNo =this.docSrlNo
     this.service.docSeqMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-
-        this.DocSeriealMasterForm.reset();
+        
+        // this.DocSeriealMasterForm.reset();
+                  window.location.reload();
+                alert("reset")
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
-          this.DocSeriealMasterForm.reset();
+            this.DocSeriealMasterForm.reset();
+          //  window.location.reload();
         }
       }
 
@@ -221,7 +229,7 @@ alert(formValue.docSrlNo);
         window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+           alert('ERROR OCCOURED IN PROCEESS');
           this.DocSeriealMasterForm.reset();
         }
       }
@@ -258,7 +266,7 @@ alert(formValue.docSrlNo);
   onOptionSelectedLocation(event:any)
   {
     var orgCode= this.DocSeriealMasterForm.get('docSrlOu').value;
-    alert('ou '+ orgCode);
+    // alert('ou '+ orgCode);
     this.service.getLocationId(orgCode).subscribe(
       data=>{this.locIdList=data;
         console.log(this.locIdList);
@@ -271,19 +279,25 @@ alert(formValue.docSrlNo);
   onOptionSelectedOrganization(event:any)
   {
     var divCode=this.DocSeriealMasterForm.get('divisionId').value;
-    alert('ou '+ divCode);
+    // alert('ou '+ divCode);
     this.service.getOrganizationId(divCode).subscribe(
       data => {this.ouIdList = data;
 
       }
       );
   }
-  onOptionSelectedtransType(event:any)
+  onOptionSelectedtransType(event)
   {
+// alert(event);
+if(event==='PO')
+{
 
+  this.trandistype=false;
+  this.recvTypeId=1;
+}
    // var transType=event;
    var ouId=this.DocSeriealMasterForm.get('docSrlOu').value;
-   alert(ouId);
+  //  alert(ouId);
     this.service.getTransType(event,ouId)
       .subscribe(data => {
         this.transtype = data;
@@ -294,7 +308,7 @@ alert(formValue.docSrlNo);
   }
   onOptionSelectedSerialType(event:any){
     var type=this.DocSeriealMasterForm.get('docSrlType').value;
-    alert(type);
+    // alert(type);
     this.service.getSrlNo(type,event)
     .subscribe(data=> {
       this.tySrlNo = data.tySrlNo;
@@ -306,16 +320,13 @@ alert(formValue.docSrlNo);
 
   }
   onOptionSelectedCostCentre(event){
-    alert(event);
+    // alert(event);
     let select = this.DepartmentList.find(d => d.cmnTypeId === event);
     // const dept='Dept';
-    alert(select);
-    console.log(select.code);
-    
      this.service.getcoCent(select.code)
        .subscribe(data =>{
           this.attribute1 = data.attribute1;
-          alert(this.attribute1+'attribute1');
+          // alert(this.attribute1+'attribute1');
           // this.deptId=data.cmnTypeId;
         } );
 

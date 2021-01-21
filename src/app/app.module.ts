@@ -25,6 +25,7 @@ import { from } from 'rxjs';
 import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
+// import { FlexFieldComponent } from './flex-field/flex-field.component';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     PageNotFouundComponent,
     DashboardComponent,
     PoReceiptFormComponent,
+    // FlexFieldComponent,
     
   ],
   imports: [

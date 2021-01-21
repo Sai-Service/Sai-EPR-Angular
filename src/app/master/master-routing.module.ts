@@ -24,6 +24,7 @@ import { JaiTaxCategoryLineComponent } from './jai-tax-category-line/jai-tax-cat
 import { JaiTaxRatesMasterComponent } from './jai-tax-rates-master/jai-tax-rates-master.component';
 import { JaiTaxTypeComponent } from './jai-tax-type/jai-tax-type.component';
 import { PoReceiptFormComponent } from './po-receipt-form/po-receipt-form.component';
+import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
 const routes: Routes = [
@@ -51,7 +52,8 @@ const routes: Routes = [
   {path:'jaiTaxRatesMaster', component:JaiTaxRatesMasterComponent},
   {path:'JaiTaxType', component:JaiTaxTypeComponent},
  {path:'PoReceiptForm',component:PoReceiptFormComponent},
-  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
+ {path:'FlexField',component:FlexFieldComponent},
+   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -80,16 +80,21 @@
                              
                          </td>
                     </tr>
+                </table>
+                <table class="center">
                     <tr >
-                        <td style="align-items: center;" ></td>
-                        <td><button type="submit" class="btn btn-primary" id="register"
+                       <td><button type="submit" class="btn btn-primary" id="register"
                             (click)="saveComnMast()">Save</button></td>
-                        <td></td>
-                        <td></td>
+                        <td><button type="submit" class="btn btn-primary" id="register"
+                           >Reset</button></td>
+                        <td><button type="submit" class="btn btn-primary" >close</button></td>
                     </tr>
-                    <tr style="border:1px solid #959595;">
-                        <td style="width: 15%" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
-                        <td>
+                </table>
+                <br>
+                <table style="width: 100%; background-color: #FFE4B5;">
+                    <tr>
+                        <td style="width: 15%;" class="LabelFontStyle">Common&nbsp;Type&nbsp;:&nbsp;</td>
+                        <td >
                             <select formControlName="cmnType" id="cmnType" class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  cmnTypeList">
@@ -97,16 +102,15 @@
                                 </option>
                             </select>
                         </td>
-                        <td class="text-center align-middle">
+                        <td style="width:100% ;" colspan="8" >
                             <button type="submit" class="btn btn-primary" id="register"
                                    (click)="searchCmnMst($event)">Search</button>
                         </td> 
-                        <td></td>
-                        <td></td>
-                    </tr>
+                        </tr>
                 </table>
                 <br>
-                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;"> -->
+                    <table>
                     <tbody>
                      <tr class="GridHeader">
                          <th scope="col">Code</th>
@@ -117,12 +121,21 @@
                          <th scope="col">Select one</th>
                      </tr>   
                     </tbody>
-                    <tr  class="ItemStyle" style="text-decoration:none;">
-                     <td>1</td>
-                     <td>Model</td>
-                     <td>Swift</td>
-                     <td>22-Sep-2020</td>
-                     <td></td>
+                    <!-- <tr ></tr> class="ItemStyle" style="text-decoration:none;"> -->
+                    <tr>
+                        <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
+                            placeholder="Enter code"> </td>
+                     <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
+                        placeholder="Enter code Description "></td>
+                     <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
+                        placeholder="Enter code Description "></td>
+                     <td><input type="date" formControlName="startDate" class="form-control"
+                        placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
+                     <td><input type="date" formControlName="startDate" class="form-control"
+                        placeholder="Enter End Date" min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
                      <!-- <td></td> -->
                      <td>
                      <!-- Trigger the modal with a button -->
@@ -181,7 +194,7 @@
                  
                  <!-- Modal footer -->
                  <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addRow()">Ok</button>
                  </div>
                  
                  </div>
@@ -194,7 +207,7 @@
                          <div class="container1" *ngFor="let itemRows of commonMasterForm.controls.itemRows.controls;let i=index" [commonMasterForm]='1'>                       
                          </div>  
                      </ng-container>  
-                                     <button type="button" (click)="addRow()" [disabled]="commonMasterForm.invalid" class="btn btn-primary">
+                                     <button type="button"  [disabled]="commonMasterForm.invalid" (click)="addRow()" class="btn btn-primary">
                                          Add Row
                                      </button>
             </form>
