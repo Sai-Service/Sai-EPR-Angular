@@ -110,7 +110,22 @@
     background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
     /* #40758b; */
 }
-
+.PageHeader1 {
+  font-size:large;
+  font-weight: bold;
+  margin: 0;
+  height: 10px;
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  vertical-align: middle;
+  text-align: center;
+  padding: 2px;
+  color: white;
+  /* background-color:#570906;   */
+  /* background-color:#ac3911; */
+  /* background-color:#e95420; */
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  /* #40758b; */
+}
 .LabelFontStyle {
     /* background-color: #FAFAFA; */
     font-family: Verdana,Sans-serif, Arial, Helvetica;
@@ -131,9 +146,9 @@
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-size: 11px;
     outline: medium none;
-    padding: 3px;
+    /* padding: 3px; */
     vertical-align: top;
-    width: 190px;
+    /* width: 150px; */
     height: 18%;
    border-color: gray;
    /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
@@ -142,10 +157,11 @@
   .center {
     margin-left: auto;
     margin-right: auto;
+    margin-top: 0%;
   }
 
   td{
-    padding: 6px;
+    /* padding: 6px; */
   }
   
   span{

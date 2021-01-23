@@ -37,6 +37,10 @@ interface IpoReceipt{
 
 interface Ilocator {
   segment1:string;
+  segment2:string;
+  segment3:string;
+  segment4:string;
+  segment5:string;
 }
 
 @Component({
@@ -76,6 +80,10 @@ export class PoReceiptFormComponent implements OnInit {
   billToLoc:number;
   categoryId:number;
   // segment1:string;
+  segment2:string;
+  segment3:string;
+  segment4:string;
+  segment5:string;
 
   // loginArray: any[];
   loginArray:string;
@@ -150,6 +158,10 @@ export class PoReceiptFormComponent implements OnInit {
       billToLoc:[''],
       categoryId:[''],
       segment1:[''],
+      segment2:[''],
+      segment3:[''],
+      segment4:[''],
+      segment5:[''],
     });
   }
   get lineDetailsArray() {
