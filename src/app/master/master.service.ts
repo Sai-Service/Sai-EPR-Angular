@@ -709,7 +709,21 @@ public addDiscount(totTaxAmt: number, taxTypeName: string) {
   const url = 'http://localhost:8081/taxDetails';
   console.log(body);
   return this.httpclient.post(url, body, options);
+}
 
+//////////////////FlexField////////////////
+
+public flexFieldSubmit(FlexFieldRecord)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl + '/FlexHeader' ;
+  return this.http.post(url,FlexFieldRecord,options);
+}
+
+applList():Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAppl`);
 }
 //////////////////Jai Regime Master////////////////
 regimeTypeLisFunt(): Observable<any> {
