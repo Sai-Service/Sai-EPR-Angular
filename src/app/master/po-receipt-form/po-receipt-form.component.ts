@@ -35,6 +35,14 @@ interface IpoReceipt{
   categoryId:number;
 }
 
+interface Ilocator {
+  segment1:string;
+  segment2:string;
+  segment3:string;
+  segment4:string;
+  segment5:string;
+}
+
 @Component({
   selector: 'app-po-receipt-form',
   templateUrl: './po-receipt-form.component.html',
@@ -71,7 +79,11 @@ export class PoReceiptFormComponent implements OnInit {
   invItemId:number;
   billToLoc:number;
   categoryId:number;
-
+  // segment1:string;
+  segment2:string;
+  segment3:string;
+  segment4:string;
+  segment5:string;
 
   // loginArray: any[];
   loginArray:string;
@@ -145,6 +157,11 @@ export class PoReceiptFormComponent implements OnInit {
       invItemId:[''],
       billToLoc:[''],
       categoryId:[''],
+      segment1:[''],
+      segment2:[''],
+      segment3:[''],
+      segment4:[''],
+      segment5:[''],
     });
   }
   get lineDetailsArray() {
@@ -231,7 +248,7 @@ return true;
     this.router.navigate(['login']);
   }
 
-
+  okLocator(){}
 
   Select(suppSiteId: number) {
     // alert(suppSiteId);
@@ -296,7 +313,7 @@ alert(this.lstcompolines.poLines[i].qtyReceived)
     this.service.poSaveSubmit(this.lstcompolines).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.poReceiptForm.reset();
+        // this.poReceiptForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');

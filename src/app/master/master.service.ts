@@ -870,6 +870,12 @@ regimeIdList(): Observable<any> {
 
 }
 
+LedgerList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/SSLedger');
+}
+
+
+
 public JaiTaxtypeMasterSubmit(JaiTaxtypeMasterRecord) {
   const options = {
     headers: this.headers
@@ -957,7 +963,7 @@ getInterBranch(InterBranch1, lType):Observable<any>{
   } 
   
 lookupNameList(mlookupValue, mlookupType) {  
-  alert('servie=call');
+  // alert('servie=call');
   const REQUEST_PARAMS = new HttpParams().set('lookupType', mlookupType)
                                          .set('lookupValue', mlookupValue)
 
