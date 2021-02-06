@@ -1,0 +1,142 @@
+<div class="center">
+    <table style="width:100% ;background-color:white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width:100%;">
+                Descriptive FlexField Segment
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width:100%;">
+        <div class="form-bg">
+            <form [formGroup]="flexFieldForm" (ngSubmit)="flexField(flexFieldForm.value)">
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%;" class="LabelFontStyle1">Application:</td>
+                        <td>
+                            <select class="form-control"  formControlName="applicationId" id="applicationId" [(ngModel)]="applicationId" value={{applicationId}} >
+                                        <option> select</option>
+                                       <option *ngFor="let sc of  applList" [ngValue]="sc.applicationId">
+                                  {{sc.applicationName}}
+                              </option>
+                                    </select>
+                            </td>
+                        <td style="width: 15%;" class="LabelFontStyle1">Title:</td>
+                        <td><input type="text" class="form-control" formControlName="title" [(ngModel)]='title'
+                                value="{{title}}"></td>
+                    </tr>
+                </table>
+                <br>
+                <div class="center" formArrayName="flexCodeLn">
+
+                        <div class="grid_scroll">
+                            <table style="width: 100%;" class="center">
+                                <tbody>
+                                    <tr class="GridHeader">
+                                        <th scope="col">Code</th>
+                                        <th scope="col">Name</th>
+                                        <!-- <th scope="col">Description</th>  -->
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th scope="col">Segment</th>
+                                    </tr>
+                                </tbody>
+                                <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"
+                                    [formGroupName]="i" class="auto-style5">
+                                    <tr>
+                                        <td><input type="text" class="form-control" formControlName="descFlexConCode"
+                                                [(ngModel)]='descFlexConCode' value={{descFlexConCode}} (click)="addRow()">
+                                        </td>
+                                        <td><input type="text" class="form-control" formControlName="descFlexFieldName"
+                                                [(ngModel)]='descFlexFieldName' value={{descFlexFieldName}}></td>
+                                        <!-- <td><input type="text" class="form-control"></td> -->
+                                        <td><input type="date"></td>
+                                        <td><input type="date" class="form-control"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#myModal">
+                                                <!-- class="Modalbutton1" -->
+                                                Segments
+                                            </button>
+                                            <div class="center" formArrayName="flexLn">
+    
+                                                <div class="grid_scroll">
+                                                    <div class="modal fade" id="myModal">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+                                                                color: black;margin-left: 40%;">
+                                                                        Segments Summary
+                                                                    </label>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal">&times;</button>
+                                                                </div>
+    
+                                                                <div class="modal-body1">
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr class="GridHeader">
+                                                                                <th>Number</th>
+                                                                                <th>Name</th>
+                                                                                <th>Window Prompt</th>
+                                                                                <th>Column</th>
+                                                                                <th>value set</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <!-- <ng-container
+                                                                            *ngFor="let taxDet of FlexLnDetailsArray(i).controls; let j= index"
+                                                                            [formGroupName]="j"> -->
+                                                                            <tbody>
+    
+                                                                                <td><input type="text" class="form-control">
+                                                                                </td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                        formControlName="formLeftPrompt"
+                                                                                        [(ngModel)]='formLeftPrompt'
+                                                                                        value={{formLeftPrompt}}></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                        formConttrolName="formAbovePrompt"
+                                                                                        [(ngModel)]='formAbovePrompt'
+                                                                                        value={{formAbovePrompt}}></td>
+                                                                                <td><input type="text" class="form-control"
+                                                                                        formControlName="applicationColName"
+                                                                                        [(ngModel)]='applicationColName'
+                                                                                        value={{applicationColName}}></td>
+                                                                                <td><input type="text" class="form-control">
+                                                                                </td>
+                                                                            </tbody>
+                                                                        <!-- </ng-container> -->
+                                                                    </table>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+    
+    
+                                    </tr>
+                                </ng-container>
+                            </table>
+    
+                        </div>
+                    </div>
+                <table class="center">
+                    <tr>
+                        <td><button type="button" class="btn btn-primary" (click)="newFlexField()">Save</button></td>
+                        <td><button type="button" class="btn btn-primary">Reset</button></td>
+                        <td><button type="button" class="btn btn-primary">Close</button></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+
+    </div>
+</div>

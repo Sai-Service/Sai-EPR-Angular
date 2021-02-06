@@ -60,7 +60,7 @@ lookupValueDesc1:string;
 lookupValueDesc2:string;
 lookupValueDesc3:string;
 lookupValueDesc5:string;
-
+recFagDiss=true;
 
 public branchList:Array<string>=[];
 public locationList:Array<string>=[];
@@ -262,6 +262,12 @@ lookupValueDesc5:[],
     this.GlCodeCombinaionForm.get('status').reset();
     if(select1)
     {
+      if(select1.detailPostingAllowedFlag === 'N'){
+      this.recFagDiss =true;
+      }
+      if(select1.detailPostingAllowedFlag === 'Y'){
+        this.recFagDiss =false;
+        }
       this.GlCodeCombinaionForm.patchValue(select1);
     
       this.displayButton=false;

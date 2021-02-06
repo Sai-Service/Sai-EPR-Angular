@@ -149,7 +149,15 @@
                             <input disabled type="text" class="form-control" formControlName="accountType" [(ngModel)]='accountType'  value={{accountType}}>
                         </td>
                         <td>
-                            <input disabled type="checkbox" id="detailPostingAllowedFlag" formControlName="detailPostingAllowedFlag" value="detailPostingAllowedFlag" [(ngModel)]='detailPostingAllowedFlag' (change)="postingAllowedEvent($event)">
+                            <!-- <input disabled type="checkbox" id="detailPostingAllowedFlag" formControlName="detailPostingAllowedFlag" value="detailPostingAllowedFlag" [(ngModel)]='detailPostingAllowedFlag' (change)="postingAllowedEvent($event)"> -->
+                            <div *ngIf="recFagDiss; then thenBlockrec; else elseBlockrec"></div>
+                                    <ng-template #thenBlockrec>
+                                    <input  type="checkbox"  id="detailPostingAllowedFlag" [formControl]="detailPostingAllowedFlag"   value="detailPostingAllowedFlag" [(ngModel)]="detailPostingAllowedFlag" (change)="postingAllowedEvent($event)">
+                                    </ng-template>
+                                    <ng-template #elseBlockrec>  
+                                        <input  type="checkbox" checked   id="detailPostingAllowedFlag" [formControl]="detailPostingAllowedFlag"   value="detailPostingAllowedFlag" [(ngModel)]="detailPostingAllowedFlag" (change)="postingAllowedEvent($event)">
+                                    </ng-template>
+
                             <label for="Posting" class="LabelFontStyle">&nbsp;Allow &nbsp;Posting</label> 
                         </td>
                     </tr>
