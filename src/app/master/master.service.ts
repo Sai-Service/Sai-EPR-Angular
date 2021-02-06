@@ -9,8 +9,8 @@ export class MasterService {
   httpclient: any;
   headers: any;
 
-  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  ServerUrl='http://localhost:8081'; 
+  ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
+  // ServerUrl='http://localhost:8081'; 
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -851,6 +851,12 @@ locationNameList(locCode): Observable<any>
 {
   return this.http.get(this.ServerUrl +`/locationMst/LocationCode/${locCode}`);
 }
+
+locationNameList1(locId): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/locationMst/${locId}`);
+}
+
 regimeIdList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/jairegime');
 
@@ -930,8 +936,41 @@ cityList1(city): Observable<any> {
 }
 // receipt service 
 
+getLocatorPoLines(locatorDesc,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+}
+
+
 getsearchByPOlines(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`);
+}
+
+getsearchByReceiptNo(segment1): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
+}
+
+
+
+public poDateWiseFind(content) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/DatewisePODto';  
+  return this.http.post(url, content, options);
+}
+
+
+
+public receiptDateWiseFind(content) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/DatewiseReceiptDto';  
+  return this.http.post(url, content, options);
+}
+
+getsearchByRcvSupp(rcvSupp1): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/rcvSupp1/${rcvSupp1}`);
 }
 
 delearCodeList(): Observable<any> {

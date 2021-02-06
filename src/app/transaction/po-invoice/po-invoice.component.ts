@@ -1,6 +1,6 @@
 // import { Component, OnInit } from '@angular/core';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators ,FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
  import * as moment from 'moment';
 //import {moment} from 'moment';
@@ -8,9 +8,14 @@ import { Router } from '@angular/router';
  import { DateRangePickerComponent } from 'ngx-daterange';
  import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
 import { MasterService } from 'src/app/master/master.service';
+import { TransactionService } from 'src/app/transaction/transaction.service'
 
 interface IpoInvoice {
-
+  suppNo : number;
+  suppInvDate:Date;
+  invoiceDate:Date;
+  invoiceAmt:number;
+  termsDate:Date;
 }
 
 @Component({
@@ -84,20 +89,96 @@ export class PoInvoiceComponent implements OnInit {
     showModal: boolean;
     content: number;
     title: string;
-  
+    suppNo:number;
+    suppId:number;
+    invoiceNum:string;
+    invoiceAmt:number;
+    invoiceDate:Date;
+    suppInvDate:Date;
+    termsDate:Date;
+    termsId:number;
+    glDate:Date;
+    currency:string;
+    segment1:string;
+    displayinvoiceLine:Array<boolean>=[];
+    hideArray: Array<boolean> = [];
+    lstInvLineDeatails :any=[];
+    // lines Details start
+
+
+    lessThanValue:number;
+    greaterThanValue:number;
+
+lineNumber:number;
+lineTypeLookupCode:string;
+
     ouId:number;
   
     submitted = false;
     public OUIdList: Array<string> = [];
     public TypeList: Array<string> =[];
+    public lstsearchapinv:any;
     
     
-    constructor (private fb: FormBuilder, private service :MasterService) {
+    constructor (private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService) {
        this.poInvoiceForm = fb.group({
         ouId:[''],
+        suppNo:[''],
+        suppId:[''],
+        invoiceNum:[''],
+        invoiceAmt:[''],
+        invoiceDate:[''],
+        // suppInvDate:[''],
+        // termsDate:[''],
+        // termsId:[''],
+        // glDate:[''],
+        // currency:[''],
+        obj: this.fb.array([this.lineDetailsGroup()]),
+        invLines:this.fb.array([this.invLineDetails()]),
     });
   }
+
+  invLineDetails(){
+    return this.fb.group({
+      lineNumber:[],
+      lineTypeLookupCode:[],
+      segment1:[],
+    })
+  }
+
+  invLineDetailsArray() : FormArray{
+    return <FormArray>this.poInvoiceForm.get('invLines')
+  }
+
+
+  lineDetailsGroup(){
+    return this.fb.group({
+      ouId:[],
+      poType:[],
+      segment1:[],  
+      suppInvNo:[],
+      suppInvDate:[],
+      suppNo:[],
+      invoiceNum:[],
+        invoiceAmt:[''],
+        invoiceDate:[''],
+        termsDate:[''],
+        termsId:[''],
+        glDate:[''],
+        currency:[''],
+    })
+  }
   
+   lineDetailsArray() : FormArray{
+    return <FormArray>this.poInvoiceForm.get('obj')
+  }
+
+
+  // get lineDetailsArray() {
+  //   return <FormArray>this.poInvoiceForm.get('poLines')
+  // }
+
+
   get g() { return this.poInvoiceForm.controls; }
   
     ngOnInit(): void {
@@ -130,11 +211,59 @@ export class PoInvoiceComponent implements OnInit {
     // onReset(event: Event): void {
     //   this.dateRangePicker.reset(event);
     // }
-  
-    fnCancatination(content){}
+    transData(val){
+      return val;
+    }
+    apInvFind(content){
+      // alert(content);
+      const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
+      this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.lstsearchapinv=res.obj;
+          this.lstsearchapinv.forEach(f => {
+            var invLnGrp: FormGroup = this.lineDetailsGroup();
+            this.lineDetailsArray().push(invLnGrp);
+          });
+          this.poInvoiceForm.get('obj').patchValue(this.lstsearchapinv);
+        }
+         else {
+          if (res.code === 400) {
+            alert('Data already present in the data base');
+            // this.LocationMasterForm.reset();
+            window.location.reload();
+          }
+        }
+      });
+    }
+
+
+    apInvFind1(content){
+      // alert(content);
+      const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
+      this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.lstsearchapinv=res.obj;
+          let control=this.poInvoiceForm.get('obj') as FormArray;
+          for (let i=0;i<=this.lstsearchapinv.length-1;i++){
+            var poLine : FormGroup=this.lineDetailsGroup();
+            control.push(poLine);
+            // this.poInvoiceForm.patchValue(this.lstsearchapinv);
+          }
+          this.poInvoiceForm.patchValue(this.lstsearchapinv);
+        }
+         else {
+          if (res.code === 400) {
+            alert('Data already present in the data base');
+            // this.LocationMasterForm.reset();
+            window.location.reload();
+          }
+        }
+      });
+    }
     @HostListener("window:keyup.control.f", ["$event"]) f(e: KeyboardEvent) {
       console.log("control+ f", e);
       alert('control+ f'+e);
+
     }
     triggerKeyboardEvent(el: any, keyString: string) {
       var eventObj = document.createEvent("Events") as any;
@@ -164,8 +293,68 @@ export class PoInvoiceComponent implements OnInit {
   
   }
  
+  invoiceDetails(i){
+    var displayinvoiceLine: Boolean = this.hideArray[i];
+    this.hideArray[i] = !displayinvoiceLine;
+  }
+
   // public today = new Date();
   // public priorDate = new Date().setDate(this.today.getDate() - 30)
   // selected: {startDate: Moment, endDate: Moment};
+
+  selectINVLineDtl(i){
+    // alert(i);
+    // alert(invoiceNum);
+    // var poControls=this.poInvoiceForm.get('obj').value;
+
+    var invoiceNum=this.lineDetailsArray().controls[i].get('invoiceNum').value;
+    alert(invoiceNum);
+    this.transactionService.getApInvLineDetails(invoiceNum)
+    .subscribe(
+      data => {
+        this.lstInvLineDeatails = data;
+        console.log(this.lstInvLineDeatails);
+        // if (res.code === 200) {
+          // this.lstsearchapinv=res.obj;
+          data.invLines.forEach(f => {
+            var invLnGrp: FormGroup = this.invLineDetails();
+            this.invLineDetailsArray().push(invLnGrp);
+          // });
+          this.poInvoiceForm.get('invLines').patchValue(data.invLines);
+        }
+        //  else {
+        //   if (res.code === 400) {
+        //     alert('Data already present in the data base');
+        //     // this.LocationMasterForm.reset();
+        //     window.location.reload();
+          // }
+        // }
+      // }
+    );
   }
+
+
+    )}
+
+
+
+
+    public onChange1(event) {
+      this.greaterThanValue = event.target.value;
+    }
   
+    public onChange(event) {
+      this.lessThanValue=event.target.value;
+      // alert('$event ' +event.target.value);
+      // var aa = this.poInvoiceForm.get('greaterThanValue').value;
+      // alert(aa+'aa');
+      if (this.greaterThanValue > this.lessThanValue) {
+        alert('Plese enter correct value')
+        this.poInvoiceForm.get('greaterThanValue').reset();
+      }
+      // if (this.greaterThanValue > this.lessThanValue) {
+      //   // console.log('Incorrect');
+      //   this.greaterThanValue = this.lessThanValue - 1;
+      // }
+    }
+}

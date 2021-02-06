@@ -50,7 +50,7 @@
     outline: medium none;
     padding: 3px;
     vertical-align: top;
-    width: 190px;
+    width: 150px;
     height: 18%;
    border-color: black;
   }
@@ -62,7 +62,7 @@
 
 
   td{
-    padding: 3px;
+    padding: 0px;
   }
   
   span{
@@ -124,8 +124,14 @@
 
   .grid_scroll{
   overflow: auto;
-   height: 200px; 
+   height: 250px; 
   width: 100%;
+}
+
+.grid_scroll1{
+  overflow: auto;
+  height: 400px; 
+ width: 100%;
 }
 
   .GridFont{
