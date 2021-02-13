@@ -70,13 +70,14 @@
                                 <td style="width: 15%" class="LabelFontStyle1">
                                     &nbsp;Class&nbsp;Code&nbsp;Type&nbsp;:&nbsp;</td>
                                 <td>
+                                    <input formControlName="classCodeType" [(ngModel)]="classCodeType" value={{classCodeType}} class="form-control">
                                     <!-- [ngValue]="cmnTypeId" -->
-                                    <select formControlName="classCodeType" id="classCodeType" class="form-control">
+                                    <!-- <select formControlName="classCodeType" id="classCodeType" class="form-control">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  classCodeTypeList">
                                             {{sc.code}}
                                         </option>
-                                    </select>
+                                    </select> -->
                                     <div *ngIf="submitted && f. classCodeType.errors" class="invalid-feedback">
                                         <div *ngIf="f.classCodeType.errors.required">classCodeType Name must be a valid
                                         </div>
@@ -104,9 +105,10 @@
                         </table>
                         <table class="center">
                             <tr>
-                                <td *ngIf="displayPerson" style="width: 10%" class="LabelFontStyle1">
+                                <!-- *ngIf="displayPerson" -->
+                                <td  style="width: 10%" class="LabelFontStyle1">
                                     &nbsp;Title&nbsp;:&nbsp;</td>
-                                <td *ngIf="displayPerson">
+                                <td >
                                     <select formControlName="title" id="title" [(ngModel)]='title' class="form-control"
                                         style="width: 70px;">
                                         <option>-Title-</option>
@@ -189,8 +191,9 @@
                                 <td style="width: 15%" class="LabelFontStyle">Full&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td colspan="3">
                                     <input formControlName="custName" value="custName" [(ngModel)]='custName'
-                                        (keyup)="onKey($event)" class="form-control" placeholder="Enter Full name"
+                                        class="form-control" placeholder="Enter Full name" 
                                         style="width: 100%;">
+                                        <!-- (keyup)="onKey($event)"  (keyup)="onKey($event)"-->
                                     <div *ngIf="submitted && f. custName.errors" class="invalid-feedback">
                                         <div *ngIf="f.custName.errors.required">Full Name must be a valid</div>
                                         <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit

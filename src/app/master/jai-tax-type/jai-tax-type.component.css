@@ -110,3 +110,7 @@
     text-align: center;
     line-height: 10px;   
 } */
+
+td{
+    padding: 0px;
+}

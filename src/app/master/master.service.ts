@@ -9,8 +9,8 @@ export class MasterService {
   httpclient: any;
   headers: any;
 
-  ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  // ServerUrl='http://localhost:8081'; 
+  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
+  ServerUrl='http://localhost:8081'; 
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -93,6 +93,11 @@ export class MasterService {
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+
+  supplierCodeList1(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/supp');
+  }
+
   taxCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');
   }
@@ -117,6 +122,9 @@ export class MasterService {
   segmentNameList(segmentName) : Observable<any> {
     return this.http.get(this.ServerUrl +`/glCodeCmbn/codeComb/${segmentName}`);
   }
+
+
+
 //   taxCategoryList(): Observable<any> {
 //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 // } 
@@ -676,6 +684,11 @@ ItemDetailsList(invItemId, taxCat, billTo) {
   });
 }
 
+expenceItemDetailsList(invItemId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/itemMst/ItemDetailsExp/${invItemId}`);
+}
+
+
 taxCalforItem(itemId,taxCatId,diss,baseAmount) {  
   const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
   .set('baseAmt', baseAmount)
@@ -970,9 +983,14 @@ public poDateWiseFind(content) {
     headers: this.headers
   };
   const url = this.ServerUrl + '/rcvShipment/DatewisePODto';  
+  // const url = this.ServerUrl + '/rcvShipment/rcvPoDate';  
   return this.http.post(url, content, options);
 }
 
+
+POApproveDateWise(poDate,locId){
+  return this.http.get(this.ServerUrl + `/rcvShipment/rcvPoDate?poDate=${poDate}&billToLoc=${locId}`); 
+}
 
 
 public receiptDateWiseFind(content) {

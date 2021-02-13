@@ -154,15 +154,23 @@
    /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
   }
 
+.ItemStyle{
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-size: 11px;
+  height: 18%;
+  text-align: center;
+}
+
+
   .center {
     margin-left: auto;
     margin-right: auto;
     margin-top: 0%;
   }
 
-  /* td{
-    padding: 6px;
-  } */
+  td{
+    padding: 0px;
+  }
   
   span{
     font-size: xx-small;

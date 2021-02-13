@@ -103,6 +103,7 @@ interface IpostPO {
   recoverableFlag: string;
   selfAssesedFlag: string;
   inclusiveFlag: string;
+  taxCategoryId:number;
 }
 
 
@@ -203,6 +204,7 @@ export class OPMasterDtoComponent implements OnInit {
   segment3: number;
   segment4: number;
   segment5: number;
+  diss1 : number =0;
   // segment6: number;
   // segment7: number;
   // segment8: number;
@@ -234,6 +236,7 @@ export class OPMasterDtoComponent implements OnInit {
   taxCatId: number;
   selfAssesedFlag: string;
   inclusiveFlag: string;
+  displayOnStatus=true;
   displayNewButton = true;
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
@@ -246,9 +249,14 @@ export class OPMasterDtoComponent implements OnInit {
   displayButton = true;
   displayLine = true;
   // displayPoLine =true;
+  displayTaxDetailData= true;
   DissRecoverableFlag = false;
   DissinclusiveFlag = false;
   DissselfAssesedFlag = false;
+  displayNewButtonApprove =false;
+displayNewButtonUpdate=false;
+displayNewButtonSave=true;
+displayNewButtonReset=true;
   disTaxDiss: Array<boolean> = [];
   taxCat: string;
   sum = 0;
@@ -273,6 +281,7 @@ export class OPMasterDtoComponent implements OnInit {
   DepartmentListById: any;
   public supplierCodeList: any[];
   // public suppIdList: Array<string> = [];
+  public approvedArray : any [];
   public suppIdList: any
   public BillShipList: Array<string> = [];
   public BillShipList1: Array<string> = [];
@@ -293,7 +302,7 @@ export class OPMasterDtoComponent implements OnInit {
   public taxCalforItem: any[];
   public ItemDetailsList: any;
   public segmentNameList: any;
-
+public TaxDetailData : any[];
   hideArray: Array<boolean> = [];
   displayPoLine: Array<boolean> = [];
   public maxDate = new Date();
@@ -382,7 +391,7 @@ export class OPMasterDtoComponent implements OnInit {
   ngOnInit(): void {
     this.currentOp = 'insert';
     this.hideArray[0] = true;
-
+    
     console.log(sessionStorage.getItem('emplId'));
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
@@ -643,6 +652,8 @@ export class OPMasterDtoComponent implements OnInit {
       uom: [],
       hsnSacCode: [],
       taxCategoryName: [],
+  diss1:[],
+
       itemType: [],
       unitPrice: [],
       orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
@@ -742,8 +753,8 @@ export class OPMasterDtoComponent implements OnInit {
     if (invItemId != null) {
       this.lineDetailsArray.push(this.lineDetailsGroup());
       // arrayControl[index].itemType.focus();
-     
-    } else { alert('Kindly Insert the line-Details first'); }
+    //  alert
+    } else { ('Kindly Insert the line-Details first'); }
     var index = index + 1
 
     var aa = index + 1;
@@ -772,6 +783,7 @@ export class OPMasterDtoComponent implements OnInit {
 
 
   Search(poNo) {
+
     this.poMasterDtoForm.reset();
     this.currentOp = 'Search';
     console.log(this.poMasterDtoForm.value);
@@ -780,28 +792,54 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           console.log(data);
           if (data.code === 400) {
+            this.displayNewButtonApprove =false;
+this.displayNewButtonUpdate= false;
+this.displayNewButtonSave=false;
+this.displayNewButtonReset=false;
             alert(data.message);
             window.location.reload();
           } if (data.code === 200) {
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
+            // alert(lenC);
             this.lstcomments1 = data.obj;
             const status = this.lstcomments1.authorizationStatus;
             if (status === 'Inprogress') {
+              this.displayNewButtonApprove =true;
+              this.displayNewButtonUpdate= true;
+              this.displayNewButtonSave=false;
+              this.displayNewButtonReset=false;
+
+              this.displayOnStatus=true;
               this.displayButton = false;
               this.displayNewButton = false;
               this.displayTaxDetailForm = true;
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
-              // for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
-              for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
+             
+              
+            // for (let i = 0; i <= this.lstcomments1.poLines.length -1; i++) {
+              // this.poMasterDtoForm.patchValue(this.lstcomments1);
+            for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
                 this.displayPoLine[i] = false;
                 this.hideArray[i] = true;
                 control.push(poLine);
               }
+              // alert('PO LINE LENGTH '+ this.lstcomments1.poLines.length)
+            
               var len = this.lstcomments1.poLines.length - 1
               this.lineDetailsArray.removeAt(len);
+              for(var j=0; j<this.lstcomments1.poLines.length; j++){
+                //var aa =j+1;
+                // alert('aa '+j);
+                console.log(control);
+                
+                (control.controls[j]).patchValue(
+                  {
+                    diss1 :this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
+                  })
+              }
               this.poMasterDtoForm.patchValue(this.lstcomments1);
 
               // alert('displayPoLine.length ' + this.displayPoLine.length);
@@ -846,10 +884,20 @@ export class OPMasterDtoComponent implements OnInit {
 
               // this.lineDetailsArray.removeAt(this.lstcomments1.poLines.length - 1);
             }
-            if (status === 'APPROVED') {
+            if (status === "APPROVED") {
+
+              this.displayNewButtonApprove =false;
+              this.displayNewButtonUpdate= false;
+              this.displayNewButtonSave=false;
+              this.displayNewButtonReset=false;
+
+              this.displayOnStatus=false;
               this.displayButton = false;
               this.displayLine = false;
               this.displayNewButton = false;
+              this.approvedArray =this.lstcomments1.poLines;
+              console.log(this.approvedArray);
+              
               // let control = this.poMasterDtoForm.get('poLines') as FormArray;
               // for (let i = 0; i < data.poLines.length - 1; i++) {
               //   var poLine: FormGroup = this.lineDetailsGroup();
@@ -1063,7 +1111,10 @@ export class OPMasterDtoComponent implements OnInit {
     return val;
   }
   newPOMast() {
-
+ this.displayNewButtonApprove =true;
+this.displayNewButtonUpdate= true;
+this.displayNewButtonSave=false;
+this.displayNewButtonReset=false;
     this.authorizationStatus = 'Inprogress';
     const formValue: IpostPO = this.transData(this.poMasterDtoForm.value);
     formValue.authorizationStatus = 'Inprogress';
@@ -1080,10 +1131,8 @@ export class OPMasterDtoComponent implements OnInit {
     }
     this.totalAmt = (this.baseAmount + this.totTaxAmt);
     formValue.totalAmt = this.totalAmt;
-    // alert(this.totalAmt);
     formValue.baseAmount = this.baseAmount;
     formValue.totTaxAmt = this.totTaxAmt;
-    // formValue.poType = 'Standard Purchase Orde';
     formValue.poType = this.poType;
     formValue.dept = Number(this.dept);
     formValue.supplierCode = this.supplierCode;
@@ -1094,20 +1143,32 @@ export class OPMasterDtoComponent implements OnInit {
       if (res.code === 200) {
         alert('PO INSERTED SUCCESSFUILY');
         this.segment1 = sessionStorage.getItem('poNo');
+        this.displayNewButtonApprove =true;
+        this.displayNewButtonUpdate= true;
+        this.displayNewButtonSave=false;
+        this.displayNewButtonReset=false;
+
         this.displayButton = false;
         this.displayNewButton = false;
         this.displaySuppcode = false;
         this.dispDivision = false;
-      } else {
+      } 
+      
         if (res.code === 400) {
           // alert('Code already present in the data base');
-          // this.poMasterDtoForm.reset();
           alert(res.message);
+          this.poMasterDtoForm.reset();
+          // alert(res.message);
+
         }
-      }
+      
     });
   }
+  // saveButton(){
+  //   this.displayNewButtonSave=true;
+  // }
   onSupplierCodeSelected(supp: string) {
+    // this.displayNewButtonSave=true;
     //let value = $event.target.value.split("-")[1].trim();
     var value = supp.substr(supp.indexOf('@') + 1, supp.length);
     let selectedValue = this.supplierCodeList.find(v => v.suppNo == value);
@@ -1131,16 +1192,18 @@ export class OPMasterDtoComponent implements OnInit {
     // alert(taxCategoryName);
     // let val = this.poMasterDtoForm.get('taxCategoryName').value;
     // alert('val ' +val);
+    // alert('taxCategoryName '+taxCategoryName);
     let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
     // alert(selectedValue);
     this.taxCategoryId = selectedValue.taxCategoryId
+    // alert('selectedValue.taxCategoryId '+ selectedValue.taxCategoryId)
     // alert(' this.taxCategoryId ' + this.taxCategoryId)
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     (patch.controls[i]).patchValue(
       {
         taxCategoryId: Number(this.taxCategoryId),
       });
-    alert(this.taxCategoryId);
+    // alert(this.taxCategoryId);
     /////////TAX DETAIL CALCULATION//////
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
@@ -1153,7 +1216,7 @@ export class OPMasterDtoComponent implements OnInit {
         (data: any[]) => {
           this.taxCalforItem = data;
           console.log(this.taxCalforItem);
-          alert(this.taxCalforItem.length);
+          // alert(this.taxCalforItem.length);
           for (let i = 0; i < this.taxCalforItem.length; i++) {
 
             if (this.taxCalforItem[i].totTaxPer != 0) {
@@ -1167,17 +1230,19 @@ export class OPMasterDtoComponent implements OnInit {
           });
         });
 
-
+        this.patchResultList(i, this.taxCalforItem);
   }
   onOptioninvItemIdSelected(itemId, index) {
-
+   
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
-    // alert(selectedValue.itemId);
+    alert(selectedValue.itemId);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-    // this.invItemId = arrayControl[index].invItemId
+    this.itemType = arrayControl[index].itemType
+    alert(this.itemType)
     this.invItemId = selectedValue.itemId;
     console.log(this.invItemId, this.taxCat);
+    if(this.itemType === "GOODS"){
     this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
       .subscribe(
         data => {
@@ -1187,10 +1252,10 @@ export class OPMasterDtoComponent implements OnInit {
           console.log(patch.controls);
           console.log(patch.controls[index]);
           this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-
           if (this.ItemDetailsList.segmentName === null) {
             (patch.controls[index]).patchValue(
               {
+                diss1 : 0,
                 invDescription: this.ItemDetailsList.invDescription,
                 invCategory: this.ItemDetailsList.invCategory,
                 uom: this.ItemDetailsList.uom,
@@ -1208,6 +1273,7 @@ export class OPMasterDtoComponent implements OnInit {
             // alert('segment value is not null');
             (patch.controls[index]).patchValue(
               {
+                diss1 : 0,
                 uom: this.ItemDetailsList.uom,
                 invDescription: this.ItemDetailsList.invDescription,
                 invCategory: this.ItemDetailsList.invCategory,
@@ -1223,6 +1289,37 @@ export class OPMasterDtoComponent implements OnInit {
 
         }
       );
+    }
+    if(this.itemType === "EXPENCE"){
+      alert('in expence');
+      this.service.expenceItemDetailsList(this.invItemId)
+      .subscribe(
+        data => {
+          this.ItemDetailsList = data;
+          console.log(this.ItemDetailsList);
+          var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+          this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+            // alert('segment value is not null');
+            alert(this.ItemDetailsList.uom);
+            (patch.controls[index]).patchValue(
+              {
+                diss1 : 0,
+                uom: this.ItemDetailsList.uom,
+                invDescription: this.ItemDetailsList.invDescription,
+                invCategory: this.ItemDetailsList.invCategory,
+                hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                segmentName: this.ItemDetailsList.segmentName,
+                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                invItemId: this.invItemId,
+              }
+            );
+       
+
+        }
+      );
+    }
   }
   onContextValueSelected(contextValue: any) {
     if (contextValue === 'TrueValue') {
@@ -1256,7 +1353,7 @@ export class OPMasterDtoComponent implements OnInit {
   fnCancatination(index) {
     // alert(index);
 
-
+  
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
@@ -1286,8 +1383,10 @@ export class OPMasterDtoComponent implements OnInit {
               this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
             }
           } else if (this.segmentNameList.code === 400) {
+            var arrayControl = this.poMasterDtoForm.get('poLines').value
+            (patch.controls[index]).patchValue({ segmentName: ''})
             alert(this.segmentNameList.message);
-            this.poMasterDtoForm.get('segmentName').reset();
+            
           }
         }
       );
@@ -1307,6 +1406,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   onKey(index) {
     console.log(index);
+    alert(index+ ' index')
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
@@ -1341,7 +1441,11 @@ export class OPMasterDtoComponent implements OnInit {
             taxAmtLineWise: sum,
             totAmtLineWise: arrayControl[index].baseAmtLineWise + sum,
           });
+          this.patchResultList(index, this.taxCalforItem);
         });
+        console.log(this.poMasterDtoForm.value);
+        
+       
     // alert('for '+this.taxCalforItem.length);
 
 
@@ -1355,10 +1459,12 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   UpdatePOMast() {
-
+    this.supplierCode = this.poMasterDtoForm.get('supplierCode').value
+alert(this.supplierCode);
     const formValue: IpostPO = this.transUpdateData(this.poMasterDtoForm.value);
     console.log(formValue);
-
+    alert(formValue.supplierCode);
+    formValue.supplierCode = this.supplierCode;
     formValue.ouId = this.ouId;
     formValue.currencyCode = 'INR';
     var arrayControl = this.poMasterDtoForm.get('poLines').value
@@ -1381,6 +1487,10 @@ export class OPMasterDtoComponent implements OnInit {
         alert('PO UPDATED SUCCESSFUILY');
         // this.authorizationStatus = 'APPROVED';
         this.displayNewButton = false;
+        this.displayNewButtonApprove =true;
+        this.displayNewButtonUpdate= false;
+        this.displayNewButtonSave=false;
+        this.displayNewButtonReset=false;
         // window.location.reload();
       } else {
         if (res.code === 400) {
@@ -1391,6 +1501,10 @@ export class OPMasterDtoComponent implements OnInit {
     });
   }
   Approve() {
+    this.displayNewButtonApprove =false;
+    this.displayNewButtonUpdate= false;
+    this.displayNewButtonSave=false;
+    this.displayNewButtonReset=false;
     const formValue: IpostPO = this.transUData(this.poMasterDtoForm.value);
     formValue.ouId = this.ouId;
     formValue.dept = Number(this.dept);
@@ -1398,6 +1512,10 @@ export class OPMasterDtoComponent implements OnInit {
     this.service.ApprovePo(formValue, formValue.segment1).subscribe((res: any) => {
       if (res.code === 200) {
         alert('PO APPROVED SUCCESSFUILY');
+        this.displayNewButtonApprove =false;
+        this.displayNewButtonUpdate= false;
+        this.displayNewButtonSave=false;
+        this.displayNewButtonReset=false;
         this.authorizationStatus = 'APPROVED';
         this.approveDate = new Date();
         this.displayNewButton = false;
@@ -1492,8 +1610,10 @@ export class OPMasterDtoComponent implements OnInit {
       var itemId = this.ItemDetailsList.itemId;
       var taxCategoryId = taxCategoryId;
       this.taxCatId = taxCategoryId;
-      var diss = 0;
-      var baseAmount = this.sum;
+      // var diss = 0;
+    var arrayControl = this.poMasterDtoForm.get('poLines').value
+     var diss = arrayControl[i].diss1;
+      var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
       this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmount)
         .subscribe(
           (data: any[]) => {
@@ -1515,21 +1635,23 @@ export class OPMasterDtoComponent implements OnInit {
     // alert(aa);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     const invItemId = arrayControl[this.poLineTax].invItemId
-
-    console.log(this.poMasterDtoForm);
+    this.taxCat =arrayControl[this.poLineTax].taxCategoryId
+    console.log(this.taxCat);
     var arrayControltaxAmounts = this.lineDetailsArray.controls[aa].get('taxAmounts').value
     // alert(arrayControltaxAmounts[aa])
     var diss = arrayControltaxAmounts[0].totTaxAmt;
     // alert(arrayControltaxAmounts[aa].totTaxAmt);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
+    // alert(baseAmount);
+    // alert(this.poLineTax);
 
     console.log(invItemId, this.taxCat, diss, baseAmount);
 
     let control = this.lineDetailsArray.controls[aa].get('taxAmounts') as FormArray;
     control.clear();
-
-    this.service.taxCalforItem(invItemId, this.taxCatId, diss, baseAmount)
+    // this.taxCatId
+    this.service.taxCalforItem(invItemId, this.taxCat, diss, baseAmount)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
@@ -1543,10 +1665,11 @@ export class OPMasterDtoComponent implements OnInit {
           }
           const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
           var tolAmoutLine = sum + TotAmtLineWise1
-          // alert('tolAmoutLine ' + tolAmoutLine);
+          // alert(this.taxCalforItem[0].totTaxAmt);
           var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           (patch.controls[aa]).patchValue(
             {
+              diss1 : this.taxCalforItem[0].totTaxAmt,
               taxAmtLineWise: sum,
               totAmtLineWise: tolAmoutLine,
             }
@@ -1582,7 +1705,7 @@ export class OPMasterDtoComponent implements OnInit {
   onOptioninvitemTypeSelected(itemType: any) {
     // alert(itemType);
     if (itemType === 'GOODS') {
-alert(this.deptName)
+// alert(this.deptName)
       this.service.invItemList(itemType, this.deptName)
         .subscribe(
           data => {
@@ -1590,6 +1713,8 @@ alert(this.deptName)
             console.log(this.invItemList);
           }
         );
+        (document.getElementById("invDescription")as any).disabled= true;   
+        (document.getElementById("hsnSacCode")as any).disabled= true;
     } if (itemType === 'EXPENCE') {
       var deptName = 'NA';
       this.service.invItemList(itemType, deptName)
@@ -1599,6 +1724,8 @@ alert(this.deptName)
             console.log(this.invItemList);
           }
         );
+        (document.getElementById("invDescription")as any).disabled= false;
+        (document.getElementById("hsnSacCode")as any).disabled= false;
     }
   }
 
@@ -1735,6 +1862,27 @@ alert(this.deptName)
       this.poMasterDtoForm.get('lookupValueDesc5').reset();
     }
     if (segmentName1 != null) {
+      // this.service.segmentNameList(this.segmentName1)
+      // .subscribe(
+      //   data => {
+
+      //     this.segmentNameList = data;
+      //     if (this.segmentNameList.code === 200) {
+      //       if (this.segmentNameList.length == 0) {
+      //         alert('Invalid Code Combination');
+      //       } else {
+      //         console.log(this.segmentNameList);
+      //         this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
+      //       }
+      //     } else if (this.segmentNameList.code === 400) {
+      //       var arrayControl = this.poMasterDtoForm.get('poLines').value
+      //       var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+      //       (patch.controls[i]).patchValue({ segmentName: ''})
+      //       alert(this.segmentNameList.message);
+            
+      //     }
+      //   }
+      // );
       var temp = segmentName1.split('.');
       // alert(temp[0]);
       this.segment11 = temp[0];
@@ -1919,5 +2067,11 @@ alert(this.deptName)
   // array.push({
   // formdate : fromvalue.formdate,
   // });
+  Select(polineNum: number) {
+    let select = this.approvedArray.find(d => d.polineNum === polineNum);
+    this.TaxDetailData = select.taxAmounts;
+    console.log(this.TaxDetailData);
+    this.displayTaxDetailData= false;
+  }
 
 }

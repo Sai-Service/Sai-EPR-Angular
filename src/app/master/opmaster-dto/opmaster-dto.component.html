@@ -9,7 +9,7 @@
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
                         <td>
-                            <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control">
+                            <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control" #myinput>
                         </td>
                         <td colspan="8" style="text-align: left; width: 100%;">
                             <button type="submit" [disabled]="!poNo" (click)="Search(poNo)" class="btn btn-primary"><i
@@ -137,7 +137,7 @@
                                     </td>
                                     <td>
                                         <select formControlName="billToLoc" id="billToLoc" [(ngModel)]="billToLoc"
-                                            class="form-control">
+                                            class="form-control" >
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  BillShipList1" [ngValue]="sc.locId">
                                                 {{sc.locCode}}
@@ -717,7 +717,7 @@
                                                 <tr>
 
                                                     <td style="margin-right: 20%;"><button type="button"
-                                                            class="btn btn-primary" data-dismiss="modal"
+                                                            class="btn btn-primary" data-dismiss="modal" class="close"
                                                             (click)="Submit()">Ok</button></td>
                                                 </tr>
                                             </table>
@@ -726,7 +726,9 @@
                                 </div>
                             </div>
                         </table>
-
+                        <div *ngIf="displayOnStatus; then thenBlockOnStatus; else elseBlockOnStatus"></div>
+                        <ng-template #thenBlockOnStatus>
+                            <!-- <div *ngIf="displayOnStatus"> -->
                         <table style="width: 100%;background-color: white;">
                             <tr>
                                 <td class="PageHeader1">
@@ -767,7 +769,8 @@
                                             [formGroupName]="i" class="auto-style5">
                                             <tr>
                                                 <input type="number" hidden formControlName="poLineId">
-
+<input type="text" hidden formControlName="taxCategoryId">
+<input type="text" hidden formControlName="diss1" value={{diss1}}>
                                                 <input type="number" hidden formControlName="polineNum">
                                                 <div *ngIf="displayLine; then thenBlock; else elseBlock"></div>
                                                 <ng-template #thenBlock>
@@ -850,7 +853,7 @@
                                                     <td> <input disabled type="text" formControlName="invCategory"
                                                             class="form-control" style="width: 4rem;"></td>
                                                     <td> <input type="text" disabled formControlName="invDescription"
-                                                            class="form-control"></td>
+                                                            class="form-control" id="invDescription"></td>
                                                     <td> <input disabled type="text" formControlName="uom"
                                                             style="width: 3rem;" class="form-control"></td>
                                                     <td>
@@ -882,6 +885,9 @@
                                                             *ngIf="!poMasterDtoForm.get('orderedQty').valid && poMasterDtoForm.get('orderedQty').touched">Qty
                                                             cannot be blank, have negetive value</span> -->
                                                     <!-- </td> -->
+                                                  
+                                                        <input hidden formControlName="diss1" value={{diss1}}>
+                                                   
                                                     <td> <input type="number" formControlName="unitPrice"
                                                             style="width: 4rem;" class="form-control"
                                                             (change)="onKey(i)"></td>
@@ -893,19 +899,21 @@
                                                             style="width: 4rem;" class="form-control"></td>
                                                     <td> <input disabled type="number" formControlName="totAmtLineWise"
                                                             style="width: 4rem;" class="form-control"></td>
-                                                    <td> <input disabled type="text" formControlName="hsnSacCode"
+                                                    <td> <input disabled type="text" formControlName="hsnSacCode" id="hsnSacCode"
                                                             style="width: 4rem;" class="form-control"></td>
                                                     <!-- <td>
                                                         <input formControlName="segmentName" value={{segmentName}}
-                                                            data-toggle="modal" data-target="#myModel"
+                                                            data-toggle="modal" data-target=
+                                                            "#myModel"
                                                             placeholder="Select Item Category" class="form-control">
                                                     </td> -->
                                                     <td>
+                                                        <!-- <div class="row" id="modals"> -->
                                                         <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
                                                             placeholder="Select Item Category" class="form-control"
                                                             (click)="openCodeComb(i)">
-
+                                                        <!-- </div> -->
 
                                                         <!-- <a formControlName="segmentName" 
                                                             data-toggle="modal" data-target="#myModel"
@@ -930,6 +938,7 @@
                                                     </td>
                                                 </ng-template>
                                                 <ng-template #elseBlock>
+                                                    <input type="text" hidden formControlName="diss1">
                                                     <td> <input disabled type="number" style="width: 2rem;"
                                                             formControlName="polineNum" class="form-control"></td>
                                                     <td> <input disabled type="text" formControlName="itemType"
@@ -972,6 +981,7 @@
                                                             style="width: 4rem;" class="form-control" >
                                                        
                                                     </td>
+                                                    <input  formControlName="diss1" value={{diss1}}>
                                                     <td> <input disabled type="number" formControlName="unitPrice"
                                                             style="width: 4rem;" class="form-control" (change)="onKey(i)"></td>
 
@@ -1027,7 +1037,7 @@
                                                                     </td>
                                                                 </tr>
                                                             </table>
-                                                            <br>
+                                                            <!-- <br> -->
                                                             <div class="center" formArrayName="taxAmounts">
                                                                 <div class="grid_scroll">
                                                                     <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all"
@@ -1282,6 +1292,159 @@
                                 </div>
                             </div>
                         </div>
+                        </ng-template>
+                    <!-- </div> -->
+                        <ng-template #elseBlockOnStatus>
+                            <table style="width: 100%;background-color: white;">
+                                <tr>
+                                    <td class="PageHeader1">
+                                        &nbsp;&nbsp;Line&nbsp;Details
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                            cellspacing="0" cellpadding="4" rules="all" class="center">
+                                <tr>
+                                    <th>Tax Details</th>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Item Type</th>
+                                    <th scope="col">Inventory Item</th>
+                                    <th scope="col">Inventory Category</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">uom</th>
+                                    <th scope="col">Tax Category</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Base Amount</th>
+                                    <th scope="col">Tax Amount</th>
+                                    <th scope="col">Total Amont</th>
+                                    <th scope="col">HSN/ SAC code</th>
+                                    <th scope="col">PO Charge Account</th>
+                                </tr>
+                                <tr *ngFor="let com of approvedArray" class="ItemStyle" style="text-decoration:none;">
+                                    <td><button (click)="Select(com.polineNum)">Select</button></td>
+                                    <td>{{com.polineNum}}</td>
+                                    <td>{{com.itemType}}</td>
+                                    <td>{{com.segment}}</td>
+                                    <td>{{com.invCategory}}</td>
+                                    <td>{{com.invDescription}}</td>
+                                    <td>{{com.uom}}</td>
+                                    <td>{{com.taxCategoryName}}</td>
+                                    <td>{{com.orderedQty}}</td>
+                                    <td>{{com.unitPrice}}</td>
+                                    <td>{{com.baseAmtLineWise}}</td>
+                                    <td>{{com.taxAmtLineWise}}</td>
+                                    <td>{{com.totAmtLineWise}}</td>
+                                    <td>{{com.hsnSacCode}}</td>
+                                    <td>{{com.segmentName}}</td>
+                                    </tr>
+
+                            </table>
+                            <!-- <br> -->
+                            <div *ngIf="displayTaxDetailData; then thenBlock4; else elseBlock4"></div>
+                            <ng-template #thenBlock4>
+                                </ng-template>
+                                <ng-template #elseBlock4>
+                                   
+                                        <table style="width: 100%;background-color: white;">
+                                            <tr>
+                                                <td class="PageHeader1">
+                                                    &nbsp;&nbsp;Tax&nbsp;Details&nbsp;of&nbsp;PO&nbsp;Line&nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                            cellspacing="0" cellpadding="4" rules="all" class="center">
+                                        <tr>
+                                            <th scope="col">SL. NO.</th>
+                                            <th scope="col">Tax Rate Name
+                                            </th>
+                                            <th scope="col">Tax Type</th>
+                                            <th scope="col">Tax Point Basis
+                                            </th>
+                                            <th scope="col">
+                                                <table style="text-align: center; width: 100%;">
+                                                    <tr style="border-bottom: solid 1px Gray;">
+                                                        <td colspan="10" style="text-align: center;">
+                                                            Precedence</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            1</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            2</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            3</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            4</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            5</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            6</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            7</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            8</td>
+                                                        <td
+                                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                                            9</td>
+                                                        <td style="width: 2rem;">
+                                                            10</td>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                            <th scope="col">Currency</th>
+                                            <th scope="col">Tax Rate</th>
+                                            <th scope="col">Tax Amount</th>
+                                            <th scope="col">Recoverable
+                                                <!-- Amount -->
+                                            </th>
+                                            <th scope="col">Inclusive</th>
+                                            <th scope="col">Self
+                                                Assesed/Reverse
+                                                Charge
+                                            </th>
+                                        </tr>
+                                        <tr *ngFor="let com of TaxDetailData" class="ItemStyle" style="text-decoration:none;">
+                                            
+                                            <td>{{com.lineNumber}}</td>
+                                            <td>{{com.taxRateName}}</td>
+                                            <td>{{com.taxTypeName}}</td>
+                                            <td>{{com.taxPointBasis}}</td>
+                                            <td >
+                                            <table style="text-align: center; width: 100%; border: solid1px gray;"><tr>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence1}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence2}}</td>
+                                                <td  style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence3}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence4}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence5}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence6}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence7}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence8}}</td>
+                                                <td style="width: 2rem; border-right: solid 1px Gray;">{{com.precedence9}}</td>
+                                                <td style="width: 2rem;">{{com.precedence10}}</td>
+                                            </tr></table>
+                                        </td>
+                                            <td>{{com.currencyCode}}</td>
+                                            <td>{{com.totTaxPer}}</td>
+                                            <td>{{com.totTaxAmt}}</td>
+                                            <td>{{com.recoverableFlag}}</td>
+                                            <td>{{com.inclusiveFlag}}</td>
+                                            <td>{{com.selfAssesedFlag}}</td>
+
+                                        </tr>
+                                    </table>
+                                </ng-template>
+                           
+                        </ng-template>
                     </div>
                     <!-- <table>
                       
@@ -1292,31 +1455,53 @@
             <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
         </td>
         <td>
-            <div *ngIf="displayNewButton; then thenBlock; else elseBlock"></div>
-            <ng-template #thenBlock>
-                <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
-                <button type="button" class="btn btn-primary" (click)="clearFormArray()"
-                    style="width: 8rem;">Reset</button>
-                <button type="button" class="btn btn-primary" disabled style="width: 8rem;">Update</button>
-                <button type="button" disabled class="btn btn-primary" style="width: 8rem;">Approve</button>
+            <div *ngIf="displayNewButtonReset ; then thenBlockReset; else elseBlockReset"></div>
+            <ng-template #thenBlockReset>
+            <button type="button" class="btn btn-primary" (click)="clearFormArray()"
+            style="width: 8rem;">Reset</button>
             </ng-template>
-            <ng-template #elseBlock>
-                <button type="button" class="btn btn-primary" disabled style="width: 8rem;">Save</button>
-                <button type="button" class="btn btn-primary" (click)="UpdatePOMast()"
-                    style="width: 8rem;">Update</button>
-                <button type="button" disabled class="btn btn-primary" style="width: 8rem;">Reset</button>
-                <button type="button" class="btn btn-primary" (click)="Approve()" style="width: 8rem;">Approve</button>
+            <ng-template #elseBlockReset>
+                <button type="button" disabled class="btn btn-primary" (click)="clearFormArray()"
+                style="width: 8rem;">Reset</button>   
             </ng-template>
         </td>
+        <td>
+            <div *ngIf="displayNewButtonSave ; then thenBlockSave; else elseBlockSave"></div>
+            <ng-template #thenBlockSave>
+                <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
+            </ng-template>
+            <ng-template #elseBlockSave>
+                <button type="button" disabled class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
+            </ng-template>
+        </td>
+        <td>
+            <div *ngIf="displayNewButtonUpdate ; then thenBlockUpdate; else elseBlockUpdate"></div>
+            <ng-template #thenBlockUpdate>
+                <button type="button" class="btn btn-primary" (click)="UpdatePOMast()" style="width: 8rem;">Update</button>
+            </ng-template>
+            <ng-template #elseBlockUpdate>
+                <button type="button" disabled class="btn btn-primary" (click)="UpdatePOMast()" style="width: 8rem;">Update</button>
+            </ng-template>
+        </td>
+        <td>
+            <div *ngIf="displayNewButtonApprove ; then thenBlockApprove; else elseBlockApprove"></div>
+            <ng-template #thenBlockApprove>
+                <button type="button" class="btn btn-primary" (click)="Approve()" style="width: 8rem;">Approve</button>
+            </ng-template>
+            <ng-template #elseBlockApprove>
+                <button type="button" class="btn btn-primary" disabled (click)="Approve()" style="width: 8rem;">Approve</button>
+            </ng-template>
+        </td>
+               
 
-        <div *ngIf="displaytaxDisscountButton; then thenBlocktaxDisscount; else elseBlocktaxDisscount">
+        <!-- <div *ngIf="displaytaxDisscountButton; then thenBlocktaxDisscount; else elseBlocktaxDisscount">
         </div>
         <ng-template #thenBlocktaxDisscount>
         </ng-template>
         <ng-template #elseBlocktaxDisscount>
             <td> <button type="button" class="btn btn-primary" (click)="Apply()" style="width: 8rem;">Apply</button>
             </td>
-        </ng-template>
+        </ng-template> -->
         <!-- <button type="button" class="btn btn-primary"   (click)="actionMethod($event)">Give Kitchen access</button> -->
     </tr>
 </table>
@@ -1344,7 +1529,7 @@
                                 Branch&nbsp;:
                             </td>
                             <td>
-                                <select formControlName="segment11" id="segment11" [(ngModel)]="segment11"
+                                <select formControlName="segment11" id="segment11" [(ngModel)]="segment11" 
                                     class="form-control" (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  BranchList">
@@ -1510,10 +1695,14 @@
                     </table>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >&times;</button>
                     <!-- [disabled]="(segment6.value === null || segment5.value=== null)" -->
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
+                    [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
+                        (click)="fnCancatination(content)">OK</button>
+                    <!-- <button type="button" class="btn btn-primary" 
                         [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                        (click)="fnCancatination(content)">Ok</button>
+                        (click)="fnCancatination(content)" data-dismiss="modal">Ok</button> -->
                 </div>
             </div>
         </div>

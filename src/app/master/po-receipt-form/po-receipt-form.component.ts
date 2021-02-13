@@ -115,6 +115,7 @@ export class PoReceiptFormComponent implements OnInit {
   selectAllFlag:string;
   selectFlag:string;
   rcvSupp1:number;
+  // poStatus:string;
   
 
   // loginArray: any[];
@@ -127,6 +128,8 @@ export class PoReceiptFormComponent implements OnInit {
    public lstSupLineDetails:any[];
    public lstPODateWiseData:any[];
    public lstReceiptDateWiseData:any[];
+   public lstPOApproveDateWise:any;
+   public ApproveDateWise:any[];
    supplierList:any[];
    lstcomments2: any[];
    lstcomments: any;
@@ -147,7 +150,9 @@ export class PoReceiptFormComponent implements OnInit {
   names: any;
   selectedAll: any;
   selectedNames: any;
+  poDate:Date;
 
+  displaySaveButton =false;
   TRUER=false; recFagDiss=true; 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -184,6 +189,7 @@ export class PoReceiptFormComponent implements OnInit {
       frmDate :[''],
       toDate:[''],
       frmDate1:[''],
+      poDate:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -236,7 +242,7 @@ export class PoReceiptFormComponent implements OnInit {
   //   }
   
   selectAll(e) {
-    alert(e.target.checked);
+    // alert(e.target.checked);
     let control=this.poReceiptForm.get('poLines') as FormArray;
     // if( e.target.checked === true){
     //   this.TRUER=true;
@@ -271,6 +277,7 @@ return true;
 
 
   ngOnInit(): void {
+    // this.lstPOApproveDateWise.obj= [];
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
    this.loginName=sessionStorage.getItem('name')
@@ -310,7 +317,8 @@ return true;
  
 
   suppFind(rcvSupp1){
-    alert(rcvSupp1);
+    this.displaySaveButton =false;
+    // alert(rcvSupp1);
     console.log(this.poReceiptForm.value);
     this.service.getsearchByRcvSupp(rcvSupp1)
       .subscribe(
@@ -329,7 +337,9 @@ return true;
   }
 
   ReceiptFind(segment1){
-    alert(segment1);
+    // this.lineDetailsArray.clear();
+    this.displaySaveButton =false;
+    // alert(segment1);
     console.log(this.poReceiptForm.value);
     this.service.getsearchByReceiptNo(segment1)
       .subscribe(
@@ -368,7 +378,52 @@ return true;
  
 
   poFind(segment1) {
-    alert(segment1);
+    // alert(segment1);
+
+    console.log(this.poReceiptForm.value);
+    this.service.getsearchByPOlines(segment1)
+      .subscribe(
+        data => {
+          if (data.code===400){
+            alert(data.message);
+            // alert(data.obj);
+          }
+          if(data.code ===200){
+            this.lstcompolines = data.obj;
+          if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
+            console.log(this.poStatus);
+            // this.displaySaveButton =true; 
+            this.disabled = false;
+              this.disabledLine=false;
+              let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =false;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          }
+          else{
+          this.lstcompolines = data.obj;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+        }
+        }
+      }
+      );
+    }
+
+
+
+
+  poFind1(segment1) {
+    this.displaySaveButton =false;
+    // alert(segment1);
     console.log(this.poReceiptForm.value);
     this.service.getsearchByPOlines(segment1)
       .subscribe(
@@ -384,6 +439,8 @@ return true;
           var poLines:FormGroup=this.lineDetailsGroup();
           var length1=this.lstcompolines.poLines.length-1;
           this.lineDetailsArray.removeAt(length1);
+          this.disabled = false;
+          this.disabledLine=false;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
         }
@@ -392,10 +449,9 @@ return true;
       
   }
 
-
-
-  poFind1(segment1) {
-    alert(segment1);
+  poFind11(segment1) {
+    this.displaySaveButton =true;
+    // alert(segment1);
     console.log(this.poReceiptForm.value);
     this.service.getsearchByPOlines(segment1)
       .subscribe(
@@ -422,36 +478,43 @@ return true;
   }
 
   PODateWise(){
+    this.displaySaveButton =false;
     var frmDate=this.poReceiptForm.get('frmDate').value;
-    alert(frmDate);
+    // alert(frmDate);
     const formValue: IPODateWise = (this.poReceiptForm.value);
     formValue.toDate=frmDate;
     formValue.billToLocId=this.locId;
     var reqArr = [];
     reqArr.push({
        frmDate: formValue.frmDate,
-      //  toDate: formValue.frmDate,
-      toDate:'2021-02-05',
+       toDate: formValue.frmDate,
+      // toDate:'2021-02-05',
        billToLocId:this.locId
 });
 // then to get the JSON string
 var jsonString = JSON.stringify(reqArr);
     this.service.poDateWiseFind(reqArr[0]).subscribe((res: any) => {
       this.lstPODateWiseData=res;
-
-      // // if (res.code === 200) {
-      // //   alert('RECORD INSERTED SUCCESSFUILY');
-      // //   // window.location.reload();
-      // //   // this.operatingUnitMasterForm.reset();
-      // // } else {
-      // //   if (res.code === 400) {
-      // //     alert('Data already present in the data base');
-      // //     // this.operatingUnitMasterForm.reset();
-      // //     window.location.reload();
-      // //   }
-      // }
     });
   }
+
+
+  POApproveDateWise(){
+    this.displaySaveButton =false;
+    this.service.POApproveDateWise(this.poDate,this.locId)
+    .subscribe(
+      data => {
+        // var ApproveDateWise=data;
+        this.lstPOApproveDateWise = data;
+        this.ApproveDateWise = this.lstPOApproveDateWise.obj;
+    //  this.lstPOApproveDateWise=ApproveDateWise[0].obj;
+
+        console.log(this.lstPOApproveDateWise);
+      }
+    );
+  }
+
+
 
   xyz(e){
 
@@ -461,16 +524,17 @@ this.xyzdis=true;
   }
 
   ReceiptDateWiseFind(){
+    this.displaySaveButton =false;
     var frmDate=this.poReceiptForm.get('frmDate1').value;
-    alert(frmDate);
+    // alert(frmDate);
     const formValue: IPODateWise = (this.poReceiptForm.value);
     formValue.toDate=frmDate;
     formValue.billToLocId=this.locId;
     var reqArr = [];
     reqArr.push({
        frmDate: frmDate,
-      //  toDate: formValue.frmDate,
-      toDate:'2021-02-05',
+       toDate: formValue.toDate,
+      // toDate:'2021-02-05',
        billToLocId:this.locId
 });
 // then to get the JSON string
@@ -487,14 +551,14 @@ var jsonString = JSON.stringify(reqArr);
 
   okLocator(i){
     var poControls=this.poReceiptForm.get('poLines').value;
-    alert( this.lineDetailsArray.controls[i].get('segment2').value);
+    // alert( this.lineDetailsArray.controls[i].get('segment2').value);
     poControls[i].locatorDesc=this.lineDetailsArray.controls[i].get('segment11').value+'.'+
     this.lineDetailsArray.controls[i].get('segment2').value+'.'+
     this.lineDetailsArray.controls[i].get('segment3').value+'.'+
     this.lineDetailsArray.controls[i].get('segment4').value+'.'+
     this.lineDetailsArray.controls[i].get('segment5').value;
     this.locatorDesc=poControls[i].locatorDesc;
-    alert(poControls[i].locatorDesc);
+    // alert(poControls[i].locatorDesc);
     this.service.getLocatorPoLines(this.locatorDesc,this.locId)
       .subscribe(
         data => {
@@ -507,7 +571,7 @@ var jsonString = JSON.stringify(reqArr);
 
   openLocator(i){
     let locatorDesc=this.lineDetailsArray.controls[i].get('locatorDesc').value;
-    alert(locatorDesc);
+    // alert(locatorDesc);
     if (locatorDesc != null){
       var temp=locatorDesc.split('.');
       this.segment11=temp[0];
@@ -521,7 +585,7 @@ var jsonString = JSON.stringify(reqArr);
   calculation(i){
     var patch = this.poReceiptForm.get('poLines') as FormArray;
     let quantity=this.lineDetailsArray.controls[i].get('qtyReceived').value;
-    alert(quantity); 
+    // alert(quantity); 
     let unitPrri=this.lineDetailsArray.controls[i].get('unitPrice').value;
     let taxPer=this.lineDetailsArray.controls[i].get('taxPercentage').value;
     // this.lineDetailsArray.controls[i]
@@ -553,6 +617,7 @@ refresh()
 
 
       poSave(){
+        this.displaySaveButton =false;
         const totlCalControls=this.poReceiptForm.get('poLines').value;
         this.baseAmount=0;
         this.taxAmt=0;

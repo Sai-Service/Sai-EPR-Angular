@@ -366,7 +366,12 @@ export class CustomerMasterComponent implements OnInit {
   }
   onKey(event: any) {
     const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
-    this.custName = aaa;
+  var person = this.customerMasterForm.get('custType').value;
+  // alert(person);
+if (person === 'Person'){
+  this.custName = aaa;
+}
+   
   }
   mergeCustName(fName, mName, lName) {
     const aaa = fName + ' ' + mName + ' ' + lName;
@@ -407,11 +412,11 @@ export class CustomerMasterComponent implements OnInit {
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.customerMasterForm.reset();
+        // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
-          this.customerMasterForm.reset();
+          // this.customerMasterForm.reset();
         }
       }
     });

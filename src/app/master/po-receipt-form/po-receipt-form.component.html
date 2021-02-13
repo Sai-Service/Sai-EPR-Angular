@@ -78,13 +78,18 @@
                         <!-- data-target="#exampleModalScrollable"   -->
                         <input type="date" formControlName="frmDate1"
                         [(ngModel)]='frmDate1' value={{frmDate1}}    data-toggle="modal" 
-                        data-target="#exampleModalScrollable" (keydown.tab)="ReceiptDateWiseFind()"
-                        class="form-control" style="width: 130px;" >
+                        class="form-control" style="width: 130px;"  [ngModel]="frmDate1 | date:'yyyy-MM-dd'" >
+                        <!-- (keydown.tab)="ReceiptDateWiseFind()"   data-target="#exampleModalScrollable" -->
                 </td>
                 <td>
                     <table>
                         <tr>  
                             <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable"
+                                [disabled]="!frmDate1"
+                                 (click)="ReceiptDateWiseFind()" style="width: 2rem;">
+                                    <i class="fa fa-search"></i>
+                                  </button>
                                 <div class="modal fade" id="exampleModalScrollable"
                                     tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalScrollableTitle"
@@ -126,7 +131,7 @@
                                                              <td>{{com.receiptDate}}</td>
                                                              <td>{{com.suppNo}}</td>
                                                              <td>{{com.supplierName}}</td>
-                                                             <td><button class="btn-primary" (click)="poFind1(com.segment1)" data-dismiss="modal"> Select</button></td>
+                                                             <td><button class="btn-primary"  (click)="poFind1(com.segment1)" data-dismiss="modal"> Select</button></td>
                                                             </tr>
                                                     </tbody>
                                                 </table>
@@ -155,7 +160,7 @@
                                 <!-- <div class="container"> -->
                                 <button type="button" class="btn btn-primary"
                                     style="width: 2rem;" data-toggle="modal"
-                                    data-target="#myModal" (click)="suppFind(rcvSupp1)">
+                                    data-target="#myModal" [disabled]="!rcvSupp1" (click)="suppFind(rcvSupp1)">
                                     <i class="fa fa-search"></i>
                                 </button>
 
@@ -227,7 +232,7 @@
             </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;Po/Shipment&nbsp;Date&nbsp;:&nbsp;
+                    &nbsp;Po&nbsp;Dt&nbsp;Wise&nbsp;Receipt:&nbsp;
                 </td>
                 <td>
                     <table>
@@ -238,7 +243,7 @@
                             <td>
                                 <button type="button" class="btn btn-primary"
                                     data-toggle="modal" data-target="#exampleModalCenter"
-                                    (click)="PODateWise()" style="width: 2rem;">
+                                    (click)="PODateWise()"  [disabled]="!frmDate" style="width: 2rem;">
                                     <i class="fa fa-search"></i>
                                 </button>
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1"
@@ -292,7 +297,66 @@
                         </tr>
                     </table>
                 </td>
-
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Po&nbsp;Approve&nbsp;Dt&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="date" formControlName="poDate" [(ngModel)]='poDate' value={{poDate}} class="form-control">
+                            </td>
+                            <td>
+                                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
+[disabled]="!poDate"
+(click)="POApproveDateWise()" style="width: 2rem;">
+    <i class="fa fa-search"></i>
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            <label
+            style="color: black;font-size: small;text-align: center;margin-left: 18rem;">
+            Po/Shipment&nbsp;Approve&nbsp;Date&nbsp;Wise&nbsp;Details
+        </label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="auto-style4" class="GridFont"
+            cellspacing="0" cellpadding="4" border="0"
+            id="ctl00_cpForm_grdActions"
+            style="border-color:#959595;border-collapse:collapse;">
+            <tbody>
+                <tr class="GridHeader">
+                    <th scope="col">PO/Shipment No</th>
+                    <th scope="col">PO/Shipment Date</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Po Approve Date</th>
+                    <th scope="col">Select</th>
+                </tr>
+                <tr *ngFor="let com of ApproveDateWise" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                     <td>{{com.segment1}}</td>
+                     <td>{{com.poDate | date:'yyyy-MM-dd'}}</td>
+                     <td>{{com.totalAmt}}</td>
+                     <td>{{com.approveDate}}</td>
+                     <td><button class="btn-primary" (click)="poFind11(com.segment1)" data-dismiss="modal">Select</button></td>
+                    </tr>
+            </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
          </table>
      </td>
@@ -561,13 +625,13 @@
                                             <th scope="col">Sub-Inventory</th>
                                             <th scope="col">Locator</th>
                                             <th scope="col">UOM</th>
-                                            <th scope="col">Tax&nbsp;Category</th>
+                                            <th scope="col">Tax Category</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Base&nbsp;Amount</th>
-                                            <th scope="col">Tax&nbsp;Percentage</th>
-                                            <th scope="col">Tax&nbsp;Amount</th>
-                                            <th scope="col">HSN/SAC&nbsp;code</th>
-                                            <th scope="col">Tax&nbsp;Total&nbsp;Amount</th>
+                                            <th scope="col">Base Amount</th>
+                                            <th scope="col">Tax Percentage</th>
+                                            <th scope="col">Tax& Amount</th>
+                                            <th scope="col">HSN/SAC code</th>
+                                            <th scope="col">Tax Total Amount</th>
                                             <!-- <th scope="col">PO&nbsp;Charge&nbsp;Account</th> -->
                                         </tr>
                                     </thead>
@@ -614,7 +678,7 @@
                                                     </td>
                                                     <td> <input disabled type="text"
                                                             formControlName="ctgDescription"
-                                                            class="form-control" style="height: 20px;width: 150px;">
+                                                            class="form-control" style="height: 20px;width: 100px;">
                                                     </td>
                                                     <td> <input disabled type="text"
                                                             formControlName="itemDesc"
@@ -725,7 +789,7 @@
                                                     </td>
                                                     <td>  <input disabled type="text"
                                                             formControlName="taxPercentage" 
-                                                            class="form-control" style="height: 20px;width: 80px;">
+                                                            class="form-control" style="height: 20px;width: 50px;">
                                                     </td>
                                                     <td> <input disabled type="text"
                                                             formControlName="taxAmount"
@@ -765,8 +829,8 @@
                                                                 class="form-control" style="height: 20px;">
                                                         </td>
                                                         <td> <input disabled type="text" disabled
-                                                                formControlName="ctgDescription"
-                                                                class="form-control" style="height: 20px;width: 150px;">
+                                                                formControlName="ctgDescription" value={{ctgDescription}}
+                                                                class="form-control" style="height: 20px;width: 100px;">
                                                         </td>
                                                         <td> <input disabled type="text" disabled
                                                                 formControlName="itemDesc"
@@ -805,7 +869,7 @@
                                                         </td>
                                                         <td>  <input disabled type="text"
                                                                 formControlName="taxPercentage" 
-                                                                class="form-control" style="height: 20px;width: 80px;">
+                                                                class="form-control" style="height: 20px;width: 50px;">
                                                         </td>
                                                         <td> <input disabled type="text"
                                                                 formControlName="taxAmount"
@@ -843,8 +907,14 @@
                                             </button>
                                         </td>
                                         <td>
+                                            <div *ngIf="displaySaveButton; then thenBlockSave; else elseBlockSave"></div>
+                            <ng-template #thenBlockSave>
                                             <!-- [disabled]="!poReceiptForm.valid" -->
                                             <button type="submit" class="btn btn-primary"   (click)="poSave()">Save</button>
+                                            </ng-template>
+                                            <ng-template #elseBlockSave>
+                                                <button disabled type="submit" class="btn btn-primary"   (click)="poSave()">Save</button>
+                                            </ng-template>
                                         </td>
                                         <td>
                                             <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
