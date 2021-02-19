@@ -4,11 +4,17 @@
     outline: medium none;
     padding: 3px;
     vertical-align: top;
-    width: 190px;
+    width: 120px;
     height: 18%;
    border-color: black;
   }
 
+
+  .grid_scroll{
+    overflow: auto;
+     height: 200px; 
+    width: 100%;
+    }
 
   .btn-primary{
     width: 5em;
@@ -22,6 +28,10 @@
     font-size: 11px;
     vertical-align: middle;
     text-align: center;
-    line-height: 10px; /* Tamaño de linea */
+    line-height: 10px; 
     width: 5rem;
+  }
+
+  td{
+padding: 6px;    
   }

@@ -114,7 +114,7 @@
             <input disabled type="text" formControlName="ouName" value={{ouName}} class="form-control" style="width: 80px;height: 25px;">
             </ng-template>
             <ng-template #elseOUName>
-                <select formControlName="ouId"  id="ouId" class="form-control" style="width: 90px;height: 25px;font-size: 10px;">
+                <select formControlName="ouId"  id="ouId" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
                 <option>--Select--</option>
                 <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">{{sc.ouName}}</option>
                 </select>
@@ -123,11 +123,11 @@
         <td>
             <div *ngIf="displaypoType; then thenpoType; else elsepoType"></div>
             <ng-template #thenpoType>
-            <input disabled type="text" formControlName="poType" class="form-control" style="width: 120px;height: 25px;">
+            <input disabled type="text" formControlName="poType" class="form-control" style="width: 150px;height: 25px;">
             </ng-template>
             <ng-template #elsepoType>
                 <select formControlName="poType" name="poType" id="poType" class="form-control"
-                [(ngModel)]="poType" style="width: 90px;height: 25px;font-size: 10px;">
+                [(ngModel)]="poType" style="width: 160px;height: 25px;font-size: 10px;">
                 <option disabled>--Select--</option>
                 <option *ngFor="let sc of  poTypeList" [ngValue]="sc.codeDesc"
                     [selected]="sc.cmnId===60">
@@ -148,12 +148,12 @@
         <td>
             <div *ngIf="displayname; then thenname; else elsename"></div>
             <ng-template #thenname>
-            <input disabled type="text" class="form-control" formControlName="name"  style="width: 120px;height: 25px;font-size: 10px;">
+            <input disabled type="text" class="form-control" formControlName="name"  style="width: 160px;height: 25px;font-size: 10px;">
             </ng-template>
             <ng-template #elsename>
             <select formControlName="name" id="name" class="form-control" 
             (ngModelChange)='onOptionsSelectedsuppName($event)'
-            style="width: 120px;height: 25px;font-size: 10px;">
+            style="width: 160px;height: 25px;font-size: 10px;">
                 <option>--Select--</option>
                 <option *ngFor="let item of  supplierCodeList" [ngValue]="item.suppNo"  >
                     {{item.name}}
@@ -162,28 +162,39 @@
             </ng-template>
         </td>
         <td>
+            <input hidden type="text" class="form-control" formControlName="suppId" value={{suppId}} >
             <div *ngIf="displaysuppNo; then thensuppNo; else elsesuppNo"></div>
             <ng-template #thensuppNo>
-            <input disabled type="text" class="form-control" formControlName="suppNo" value={{suppNo}} style="width: 100px;height: 25px;font-size: 10px;">
+            <input disabled type="text" class="form-control" formControlName="suppNo" value={{suppNo}} style="width: 50px;height: 25px;font-size: 10px;">
             </ng-template>
             <ng-template #elsesuppNo>
-                <input disabled type="text" class="form-control" formControlName="suppNo" value={{suppNo}} style="width: 100px;height: 25px;font-size: 10px;">
+                <input disabled type="text" class="form-control" formControlName="suppNo" value={{suppNo}} style="width: 50px;height: 25px;font-size: 10px;">
             </ng-template>
         </td>
         <td>
             <div *ngIf="displaysiteName; then thensiteName; else elsesiteName"></div>
             <ng-template #thensiteName>
-                <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}} placeholder="" style="width: 40px;height: 25px;font-size: 10px;"> 
+                <input hidden formControlName="suppSiteId" > 
+                <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}  style="width: 40px;height: 25px;font-size: 10px;"> 
             </ng-template>
             <ng-template #elsesiteName>
-                <select formControlName="siteName" id="siteName" #myinput
+                <!-- <select formControlName="suppSiteId" id="suppSiteId" #myinput
                 data-live-search="true" (ngModelChange)='onSiteSelected($event)'
-                class="form-control"  style="width: 100px;height: 25px;font-size: 10px;">
+                class="form-control"  style="width: 70px;height: 25px;font-size: 10px;">
                 <option>--Select--</option>
                 <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
                     {{sc.siteName}}
                 </option>
-            </select>
+            </select> -->
+            <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
+            data-live-search="true" (ngModelChange)='onSiteSelected($event)'
+            class="form-control" style="width: 70px;height: 25px;font-size: 10px;">
+            <option>--Select--</option>
+            <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
+                {{sc.suppSiteId}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
+                {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
+            </option>
+        </select>
         </ng-template>
         </td>
         <td>
@@ -204,7 +215,15 @@
             <input disabled type="text" class="form-control" formControlName="taxAmt" value={{taxAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
         </td>
         <td>
+            <div *ngIf="displayglDate; then thenglDate; else elseglDate"></div>
+            <ng-template #thenglDate>
             <input disabled class="form-control" formControlName="glDate" value={{glDate}} style="width: 90px;height: 25px;font-size: 10px;">
+            </ng-template>
+            <ng-template #elseglDate>
+                <input disabled type="text" formControlName="glDate" value={{glDate}} class="form-control"
+                [ngModel]="glDate | date:'yyyy-MM-dd'" style="width: 80px;height: 25px;font-size: 10px;"> 
+            <!-- <input disabled class="form-control" formControlName="glDate" value={{glDate}} style="width: 90px;height: 25px;font-size: 10px;"> -->
+            </ng-template>
         </td>
         <td>
             <div *ngIf="displaycurrency; then thencurrency; else elsecurrency"></div>
@@ -219,7 +238,20 @@
             <input type="date" class="form-control" formControlName="paymentRateDate" value={{paymentRateDate}} style="width: 120px;height: 25px;font-size: 10px;">
         </td>
         <td>
+            <div *ngIf="displaydistributionSet; then thendistributionSet; else elsedistributionSet"></div>
+            <ng-template #thendistributionSet>
             <input type="text" class="form-control" formControlName="distributionSet" value={{distributionSet}} style="width: 120px;height: 25px;font-size: 10px;">
+            </ng-template>
+            <ng-template #elsedistributionSet>
+                <!-- (ngModelChange)='onOptionsSelectedsuppName($event)' -->
+            <select formControlName="distributionSet" id="distributionSet" class="form-control" 
+            style="width: 160px;height: 25px;font-size: 10px;">
+                <option>--Select--</option>
+                <option *ngFor="let distributionSet of  distributionSetNameList" [ngValue]="distributionSet.distributionSetName"  >
+                    {{distributionSet.distributionSetName}}
+                </option>
+            </select>
+            </ng-template>
         </td>
         <!-- <td>
             <input type="text" class="form-control" formControlName="matchAction" value={{matchAction}}  style="width: 120px;height: 25px;font-size: 10px;">
@@ -259,10 +291,10 @@
             <input type="text" class="form-control" formControlName="taxationCountry" value={{taxationCountry}} style="width: 120px;height: 25px;font-size: 10px;">
         </td>
         <td>
-            <input type="date" class="form-control" formControlName="suppInvDate" placeholder="" style="width: 120px;height: 25px;font-size: 10px;">
+            <input type="text" class="form-control"  placeholder="" style="width: 120px;height: 25px;font-size: 10px;">
         </td>
         <td>
-            <input type="date" class="form-control" formControlName="suppInvDate" placeholder="" style="width: 120px;height: 25px;font-size: 10px;">
+            <input type="text" class="form-control"  placeholder="" style="width: 120px;height: 25px;font-size: 10px;">
         </td>
         <!-- <td>
             <input type="text" class="form-control" formControlName="remitToSuppName" value={{remitToSuppName}} style="width: 120px;height: 25px;font-size: 10px;">
@@ -493,11 +525,11 @@ id="'myDateRange'">
     <div class="classic-tabs">
         <!-- Nav tabs -->
         <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
-          <li class="nav-item ml-0">
+          <!-- <li class="nav-item ml-0">
             <a class="nav-link waves-light active"  data-toggle="tab" href="#panel1001" role="tab">General</a>
-          </li>
+          </li> -->
           <li class="nav-item">
-            <a class="nav-link waves-light"   data-toggle="tab" href="#panel1002" role="tab">Lines</a>
+            <a class="nav-link waves-light active"   data-toggle="tab" href="#panel1002" role="tab">Lines</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link waves-light" data-toggle="tab" href="#panel1003" role="tab">Holds</a>
@@ -518,7 +550,7 @@ id="'myDateRange'">
     
         <div class="tab-content rounded-bottom">
           <!--Panel 1-->
-          <div class="tab-pane fade in show active" id="panel1001" role="tabpanel">
+          <!-- <div class="tab-pane fade in show active" id="panel1001" role="tabpanel">
            <table class="center" style="width: 100%;">
                <tr>
   <td style="position: inherit;" valign="top">
@@ -681,10 +713,10 @@ id="'myDateRange'">
   </td>
                </tr>
            </table>
-          </div>
+          </div> -->
           <!--/.Panel 1-->
           <!--Panel 2-->
-          <div class="tab-pane fade" id="panel1002" role="tabpanel">
+          <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
               <!-- <div id="Panel1" class="auto-style103"> -->
                   <div class="grid_scroll">
                       <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
@@ -694,6 +726,8 @@ id="'myDateRange'">
                                   <th scope="col">Type</th>
                                   <th scope="col">Item</th>
                                   <th scope="col">Description</th>
+                                  <th scope="col">Tax Category</th>
+                                  <th scope="col">HSN/SAC</th>
                                   <th scope="col">Amount</th>
                                   <th scope="col">PO No</th>
                                   <!-- <th scope="col">PO Line</th> -->
@@ -733,10 +767,54 @@ id="'myDateRange'">
                                       <input type="text" class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;">  
                                   </td>
                                   <td>
-                                    <input type="text" class="form-control" formControlName="itemName" value={{itemName}} style="width: 100px;height: 25px;font-size: 10px;">  
+                                    <div *ngIf="displayitemName; then thenitemName; else elseitemName"></div>
+                                    <ng-template #thenitemName>
+                                        <input hidden type="text" formControlName="itemId">
+                                    <input type="text" class="form-control" formControlName="itemName" value={{itemName}} style="width: 100px;height: 25px;font-size: 10px;"> 
+                                    </ng-template>
+                                    <ng-template #elseitemName>
+                                    <!-- <input type="text" formControlName="segment"
+                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                    list="dynmicUserIds1" class="form-control"
+                                    (ngModelChange)="onOptioninvItemIdSelected($event,i)" style="width: 100px;height: 25px;font-size: 10px;">
+                                <datalist id="dynmicUserIds1">
+                                    <option *ngFor="let item of invItemList"
+                                        [ngValue]="item.itemId">{{item.segment}}
+                                    </option>
+                                </datalist> -->
+                                <input type="text" formControlName="segment"
+                                (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                list="dynmicUserIds1" class="form-control"
+                                (ngModelChange)="onOptioninvItemIdSelected($event,i)" style="width: 100px;height: 25px;font-size: 10px;"/>
+                            <datalist id="dynmicUserIds1">
+                                <option *ngFor="let item of invItemList"
+                                    [ngValue]="item.itemId">{{item.segment}}
+                                </option>
+                            </datalist>
+                            </ng-template>
+                                </td>
+                                <input hidden type="text" formControlName="invItemId">
+                                <td>
+                                    <div *ngIf="displaydescription; then thendescription; else elsedescription"></div>
+                                    <ng-template #thendescription>
+                                    <input type="text" class="form-control" formControlName="description" value={{description}} style="width: 100px;height: 25px;font-size: 10px;">  
+                                    </ng-template>
+                                    <ng-template #elsedescription>
+                                        <input type="text" class="form-control" formControlName="invDescription" value={{invDescription}} style="width: 100px;height: 25px;font-size: 10px;">  
+                                    </ng-template>  
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" formControlName="description" value={{description}} style="width: 100px;height: 25px;font-size: 10px;">  
+                                    <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)' -->
+                                    <select formControlName="taxCategoryName" id="taxCategoryName"
+                                                            class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  taxCategoryList">
+                                                                {{sc.taxCategoryName}}
+                                                            </option>
+                                                        </select>
+                                </td>
+                                <td>
+                                    <input disabled type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
                                 </td>
                                   <td>
                                       <!-- filed not available in json -->
@@ -789,7 +867,9 @@ id="'myDateRange'">
                                   </td> -->
                                   <td>
                                       <!-- filed not available in json -->
-                                      <input disabled class="form-control" formControlName="glDate" value={{glDate}} style="width: 80px;height: 25px;font-size: 10px;">  
+                                      <!-- <input disabled class="form-control" formControlName="glDate" value={{glDate}} style="width: 80px;height: 25px;font-size: 10px;"> -->
+                                      <input disabled type="text" formControlName="glDate" value={{glDate}} class="form-control"
+                                [ngModel]="glDate | date:'yyyy-MM-dd'" style="width: 80px;height: 25px;font-size: 10px;">     
                                   </td>
                                   <!-- <td>
                                       <input type="text" class="form-control" formControlName="segment1" value={{segment1}} style="width: 100px;height: 25px;font-size: 10px;">  
@@ -881,14 +961,14 @@ id="'myDateRange'">
                 <table  class="center">
                     <tr>
                         <td style="text-align: center;">
-                            <label style="font-size: small;color: black;text-align: center;">Distribution Line Wise</label>
+                            <label style="font-size: small;color: black;text-align: center;font-weight: bold;">Distribution Line Wise</label>
                         </td>
                     </tr>
                 </table>
             <table style="width: 100%;" class="center">
             <tr>
                 <td>
-                    <table>
+                    <!-- <table>
                         <tr>
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Line&nbsp;No&nbsp;:&nbsp;
@@ -915,7 +995,7 @@ id="'myDateRange'">
                                     <input disabled type="number" formControlName="totalDistAmt" class="form-control" style="width: 100px;text-align: left;">
                                 </td>
                         </tr>
-                    </table>
+                    </table> -->
                    </td>
             </tr>
                 <tr>

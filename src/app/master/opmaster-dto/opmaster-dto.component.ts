@@ -140,7 +140,7 @@ export class OPMasterDtoComponent implements OnInit {
 
 
 
-  deptName: string;
+  deptName: any;
   public poType = 'Standard Purchase Order'
   supplierSiteId: number;
   supplierCode: number;
@@ -248,6 +248,8 @@ export class OPMasterDtoComponent implements OnInit {
   totAmtDiss = true;
   displayButton = true;
   displayLine = true;
+  displayHSN = true;
+  displayinvDesc =true;
   // displayPoLine =true;
   displayTaxDetailData= true;
   DissRecoverableFlag = false;
@@ -259,6 +261,7 @@ displayNewButtonSave=true;
 displayNewButtonReset=true;
   disTaxDiss: Array<boolean> = [];
   taxCat: string;
+  taxCat1:string;
   sum = 0;
   segmentName1: string;
   poLineTax: number;
@@ -396,6 +399,7 @@ public TaxDetailData : any[];
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
     this.deptName = (sessionStorage.getItem('deptName'));
+   
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
@@ -1143,21 +1147,23 @@ this.displayNewButtonReset=false;
       if (res.code === 200) {
         alert('PO INSERTED SUCCESSFUILY');
         this.segment1 = sessionStorage.getItem('poNo');
-        this.displayNewButtonApprove =true;
-        this.displayNewButtonUpdate= true;
-        this.displayNewButtonSave=false;
-        this.displayNewButtonReset=false;
+        this.Search(this.segment1);
+        // this.displayNewButtonApprove =true;
+        // this.displayNewButtonUpdate= true;
+        // this.displayNewButtonSave=false;
+        // this.displayNewButtonReset=false;
 
-        this.displayButton = false;
-        this.displayNewButton = false;
-        this.displaySuppcode = false;
-        this.dispDivision = false;
+        // this.displayButton = false;
+        // this.displayNewButton = false;
+        // this.displaySuppcode = false;
+        // this.dispDivision = false;
       } 
       
         if (res.code === 400) {
           // alert('Code already present in the data base');
           alert(res.message);
-          this.poMasterDtoForm.reset();
+          // this.poMasterDtoForm.reset();
+          window.location.reload();
           // alert(res.message);
 
         }
@@ -1233,15 +1239,17 @@ this.displayNewButtonReset=false;
         this.patchResultList(i, this.taxCalforItem);
   }
   onOptioninvItemIdSelected(itemId, index) {
-   
+  //  alert('item function');
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
-    alert(selectedValue.itemId);
+    // alert(selectedValue.itemId);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     this.itemType = arrayControl[index].itemType
-    alert(this.itemType)
+    // alert(this.itemType)
     this.invItemId = selectedValue.itemId;
     console.log(this.invItemId, this.taxCat);
+    
+ 
     if(this.itemType === "GOODS"){
     this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
       .subscribe(
@@ -1291,7 +1299,8 @@ this.displayNewButtonReset=false;
       );
     }
     if(this.itemType === "EXPENCE"){
-      alert('in expence');
+    
+      // alert('in expence');
       this.service.expenceItemDetailsList(this.invItemId)
       .subscribe(
         data => {
@@ -1300,7 +1309,7 @@ this.displayNewButtonReset=false;
           var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           this.taxCategoryId = this.ItemDetailsList.taxCategoryId
             // alert('segment value is not null');
-            alert(this.ItemDetailsList.uom);
+            // alert(this.ItemDetailsList.uom);
             (patch.controls[index]).patchValue(
               {
                 diss1 : 0,
@@ -1376,6 +1385,7 @@ this.displayNewButtonReset=false;
 
           this.segmentNameList = data;
           if (this.segmentNameList.code === 200) {
+            (patch.controls[index]).patchValue({ poChargeAcc: this.segmentNameList.obj.codeCombinationId })
             if (this.segmentNameList.length == 0) {
               alert('Invalid Code Combination');
             } else {
@@ -1385,7 +1395,7 @@ this.displayNewButtonReset=false;
           } else if (this.segmentNameList.code === 400) {
             var arrayControl = this.poMasterDtoForm.get('poLines').value
             (patch.controls[index]).patchValue({ segmentName: ''})
-            alert(this.segmentNameList.message);
+            // alert(this.segmentNameList.message);
             
           }
         }
@@ -1406,7 +1416,7 @@ this.displayNewButtonReset=false;
 
   onKey(index) {
     console.log(index);
-    alert(index+ ' index')
+    // alert(index+ ' index')
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     console.log(arrayControl);
@@ -1460,10 +1470,10 @@ this.displayNewButtonReset=false;
 
   UpdatePOMast() {
     this.supplierCode = this.poMasterDtoForm.get('supplierCode').value
-alert(this.supplierCode);
+// alert(this.supplierCode);
     const formValue: IpostPO = this.transUpdateData(this.poMasterDtoForm.value);
     console.log(formValue);
-    alert(formValue.supplierCode);
+    // alert(formValue.supplierCode);
     formValue.supplierCode = this.supplierCode;
     formValue.ouId = this.ouId;
     formValue.currencyCode = 'INR';
@@ -1635,7 +1645,7 @@ alert(this.supplierCode);
     // alert(aa);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     const invItemId = arrayControl[this.poLineTax].invItemId
-    this.taxCat =arrayControl[this.poLineTax].taxCategoryId
+    this.taxCat1 =arrayControl[this.poLineTax].taxCategoryId
     console.log(this.taxCat);
     var arrayControltaxAmounts = this.lineDetailsArray.controls[aa].get('taxAmounts').value
     // alert(arrayControltaxAmounts[aa])
@@ -1651,7 +1661,7 @@ alert(this.supplierCode);
     let control = this.lineDetailsArray.controls[aa].get('taxAmounts') as FormArray;
     control.clear();
     // this.taxCatId
-    this.service.taxCalforItem(invItemId, this.taxCat, diss, baseAmount)
+    this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
@@ -1705,8 +1715,10 @@ alert(this.supplierCode);
   onOptioninvitemTypeSelected(itemType: any) {
     // alert(itemType);
     if (itemType === 'GOODS') {
-// alert(this.deptName)
-      this.service.invItemList(itemType, this.deptName)
+var deptName1 = this.poMasterDtoForm.get('dept').value;
+// alert(deptName1+" "+(sessionStorage.getItem('deptName')))
+// alert(this.deptName);
+      this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
         .subscribe(
           data => {
             this.invItemList = data;
@@ -1716,6 +1728,9 @@ alert(this.supplierCode);
         (document.getElementById("invDescription")as any).disabled= true;   
         (document.getElementById("hsnSacCode")as any).disabled= true;
     } if (itemType === 'EXPENCE') {
+      this.displayHSN=false;
+      this.displayinvDesc =false;
+      (document.getElementById("invDescription")as any).disabled= false;
       var deptName = 'NA';
       this.service.invItemList(itemType, deptName)
         .subscribe(
@@ -1724,8 +1739,9 @@ alert(this.supplierCode);
             console.log(this.invItemList);
           }
         );
-        (document.getElementById("invDescription")as any).disabled= false;
-        (document.getElementById("hsnSacCode")as any).disabled= false;
+        // (document.getElementById("invDescription")as any).disabled= false;
+        // (document.getElementById("hsnSacCode")as any).disabled= false;
+       
     }
   }
 

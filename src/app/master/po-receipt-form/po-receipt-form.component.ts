@@ -392,7 +392,7 @@ return true;
             this.lstcompolines = data.obj;
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
-            // this.displaySaveButton =true; 
+            this.displaySaveButton =true; 
             this.disabled = false;
               this.disabledLine=false;
               let control = this.poReceiptForm.get('poLines') as FormArray;
@@ -405,6 +405,8 @@ return true;
           }
           else{
           this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.disabledLine=true;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
           var length1=this.lstcompolines.poLines.length-1;

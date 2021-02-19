@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { DatePipe } from '@angular/common';
+import {ManualInvoiceObj} from './manual-invoice-obj';
+import { from } from 'rxjs';
 
 interface IpoInvoice {
   suppInvDate:Date;
@@ -52,6 +54,7 @@ interface IpoInvoice {
   invTransferStatus:string;
 lineNumber:number;
 lineTypeLookupCode:string;
+hsnSacCode:string;
 }
 
 @Component({
@@ -137,7 +140,11 @@ export class PoInvoiceComponent implements OnInit {
     suppInvDate:Date;
     termsDate:Date;
     termsId:number;
-    glDate:Date;
+    itemType: string;
+    taxCategoryId:number;
+    // glDate:Date;
+  //  glDate=this.pipe.transform(this.now, 'd-M-y h:mm:ss'); 
+  glDate= new Date();
     currency:'INR';
     segment1:string;
     name:string;
@@ -162,7 +169,8 @@ export class PoInvoiceComponent implements OnInit {
     lstInvLineDeatails :any=[];
     distLinesDeatails:any[];
     // lines Details start
-  
+    public ItemDetailsList: any;
+    invItemList: any[];
 
     lessThanValue:number;
     greaterThanValue:number;
@@ -189,7 +197,10 @@ lineTypeLookupCode:string;
     public paymentMethodList: Array<string> = [];
     public prepayTypeList: Array<string> = [];
     public poTypeList: Array<string> = [];
+    public distributionSetNameList:Array<string>[];
     public suppIdList: any
+    taxCat: string;
+    public taxCategoryList: any;
 
     displayOUName=false;
     displaypoType=false;
@@ -198,6 +209,9 @@ lineTypeLookupCode:string;
     displaysuppNo=false;
     displaysiteName=false;
     displaycurrency=false;
+    displayitemName=false;
+    displaydescription=false;
+    displaydistributionSet=false;
 
     userList1: any[] = [];
     userList2: any[] = [];
@@ -205,9 +219,12 @@ lineTypeLookupCode:string;
     public supplierCodeList: any[];
     public supplierCodeList1: any[];
     siteIdList: any;
+    invItemId: number;
+    billToLoc: string;
+    segmentName1: string;
     
     constructor (private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
-       this.poInvoiceForm = fb.group({
+      this.poInvoiceForm = fb.group({
         ouId:[''],
         suppNo:[''],
         suppId:[''],
@@ -232,6 +249,7 @@ lineTypeLookupCode:string;
         invLines:this.fb.array([this.invLineDetails()]),
         distribution:this.fb.array([this.distLineDetails()]),
     });
+    
   }
 
   distLineDetails(){
@@ -257,6 +275,7 @@ lineTypeLookupCode:string;
 
   invLineDetails(){
     return this.fb.group({
+      itemId:[],
       invoiceId:[],
       lineNumber:[],
       lineTypeLookupCode:[],
@@ -272,6 +291,11 @@ lineTypeLookupCode:string;
       itemName:[],
       description:[],
       glDate:[],
+      invDescription:[],
+      invItemId:[],
+      segment:[],
+      taxCategoryName:[],
+      hsnSacCode:[],
     })
   }
 
@@ -288,6 +312,7 @@ lineTypeLookupCode:string;
       segment1:[],
       name:[],  
       suppInvNo:[],
+      suppId:[],
       suppInvDate:[],
       suppNo:[],
       siteName:[],
@@ -313,6 +338,8 @@ lineTypeLookupCode:string;
       remitToBankAccountNo:[],
       debitMemoReason:[],
       remitToSuppSite:[],
+      suppSiteId:[],
+      supplierSiteId:[],
     })
   }
   
@@ -333,6 +360,8 @@ lineTypeLookupCode:string;
   get g() { return this.poInvoiceForm.controls; }
   
     ngOnInit(): void {
+
+      this.glDate = new Date();
 
       this.ouId = Number(sessionStorage.getItem('ouId'));
 
@@ -372,6 +401,15 @@ lineTypeLookupCode:string;
         );
         
 
+        this.transactionService.distributionSetNameList()
+        .subscribe(
+          data => {
+            this.distributionSetNameList = data;
+            console.log(this.distributionSetNameList);
+          }
+        );
+        
+
         this.service.supplierCodeList()
         .subscribe(
           data1 => {
@@ -380,31 +418,23 @@ lineTypeLookupCode:string;
             data1 = this.supplierCodeList;
           }
         );
-  //   var   segmentName1=  "COMPLETE [success:10, Error:0]"
-  // var temp = segmentName1.split(',');
-  //        var segment11 = temp[0];
-  //      var segment2 = temp[1];
-  //   var temp2 =segment11.split(':');
-  //       var segment4 = temp2[1];
-  //      alert(segment4)
-  //       var temp3 =segment2.split(':');
-  //       var segment6 = temp3[1];
-  //       var temp4 =segment6.split(']');
-  //       var segment7 = temp4[0];
-  //       alert(segment7);
+  
+        this.service.taxCategoryList()
+        .subscribe(
+          data1 => {
+            this.taxCategoryList = data1;
+            console.log(this.taxCategoryList);
+            data1 = this.taxCategoryList;
+          }
+        );
+
     }
   
-    // onRangeSelected(value: IDateRange): void {
-    //   this.firstFieldEmittedValue = value;
-    // }
-  
-    // onReset(event: Event): void {
-    //   this.dateRangePicker.reset(event);
-    // }
+    
 
 
     onOptionsSelectedsuppName (name: any){
-      alert(name);
+      // alert(name);
       this.service.supplierCodeList1()
       .subscribe(
         data => {
@@ -422,6 +452,7 @@ lineTypeLookupCode:string;
       // patch.controls[0].patchValue({
       //   currency:'IRN'
       // })
+      this.suppId = selectedValue.suppId;
       this.service.suppIdList(selectedValue.suppId, this.ouId)
       .subscribe(
         data => {
@@ -449,6 +480,9 @@ lineTypeLookupCode:string;
       this.displaysuppNo=true;
       this.displaysiteName=true;
       this.displaycurrency=true;
+      this.displayitemName=true;
+      this.displaydescription=true;
+      this.displaydistributionSet=true;
       const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
       this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
         if (res.code === 200) {
@@ -541,9 +575,9 @@ lineTypeLookupCode:string;
     var lineNumber=this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId=this.invLineDetailsArray().controls[k].get('invoiceId').value;
     this.lineDistributionArray().clear();  
-    alert(lineNumber+' '+invoiceId);
+    // alert(lineNumber+' '+invoiceId);
     this.invoiceId=this.lstInvLineDeatails.invoiceId;
-    alert(this.invoiceId);
+    // alert(this.invoiceId);
     this.transactionService.distLinesDeatailsfa(this.invoiceId,lineNumber)
     .subscribe(
       data => {
@@ -620,9 +654,19 @@ lineTypeLookupCode:string;
 
 
     apInvoiceSave(){
+      // let manInvObj=new ManualInvoiceObj();
+      let jsonData=this.poInvoiceForm.value.obj[0];
+      jsonData.ouId=this.ouId;
+      jsonData.suppId=this.suppId;
+      jsonData.supplierSiteId=this.poInvoiceForm.value.obj[0].suppSiteId;
+      let manInvObj=Object.assign(new ManualInvoiceObj(),jsonData);
+      manInvObj.setinvLines(this.poInvoiceForm.value.invLines);
+      manInvObj.setinvDisLines(this.poInvoiceForm.value.distribution);
+
+      // let newTodo = Object.assign(new ManualInvoiceObj(), jsonData); 
       // const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
-      
-      console.log(this.poInvoiceForm.value.obj[0]);
+      console.log(JSON.stringify(manInvObj));
+      // console.log(this.poInvoiceForm.value.obj[0].invoiceNum);
       var reqArr: any[];
       // reqArr = formValue;
       console.log(reqArr);
@@ -634,7 +678,7 @@ lineTypeLookupCode:string;
 //       // toDate:'2021-02-05',
 //        billToLocId:this.locId
 // });
-      this.transactionService.apInvSaveSubmit(this.poInvoiceForm.value).subscribe((res: any) => {
+      this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
         } else {
@@ -713,15 +757,63 @@ onSiteSelected(siteId: any) {
       data => {
         this.siteIdList = data;
         console.log(this.siteIdList);
-        // this.taxCat = this.siteIdList.taxCategoryName
-        // alert(this.taxCat);
-        // if (this.taxCat == null) {
-        //   alert("Tax not attached to site")
-        //   // this.displayNewButton = false;
-        //   const sitWithOutTax = 'y';
-        // }
       }
     );
 }
+
+
+onOptioninvItemIdSelected(itemId, index) {
+  // if(this.itemType === "EXPENCE"){
+    // alert('in expence');
+    this.service.expenceItemDetailsList(this.invItemId)
+    .subscribe(
+      data => {
+        this.ItemDetailsList = data;
+        console.log(this.ItemDetailsList);
+        var patch = this.poInvoiceForm.get('invLines') as FormArray;
+        this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+          // alert('segment value is not null');
+          alert(this.ItemDetailsList.uom);
+          (patch.controls[index]).patchValue(
+            {
+              diss1 : 0,
+              uom: this.ItemDetailsList.uom,
+              invDescription: this.ItemDetailsList.invDescription,
+              invCategory: this.ItemDetailsList.invCategory,
+              hsnSacCode: this.ItemDetailsList.hsnSacCode,
+              taxCategoryName: this.ItemDetailsList.taxCategoryName,
+              segmentName: this.ItemDetailsList.segmentName,
+              poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+              taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+              invItemId: this.invItemId,
+            }
+          );
+     
+
+      }
+    );
+  // }
+}
+
+getInvItemId($event) {
+  let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+  this.userList2 = [];
+
+  if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      this.userList2 = this.searchFromArray1(this.invItemList, userId);
+    }
+  }
+}
+
+searchFromArray1(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
 
 }

@@ -106,7 +106,7 @@
             <td>{{com.description}}</td>
             <td>{{com.startdate}}</td>
             <td>{{com.endDate}}</td>
-            <td><button (click)="UpDateEndDate(com.codeId)">Update</button></td>
+            <td><button  (click)="UpDateEndDate(com.codeId)" >Update</button></td>
             <!-- <td> 
                 <div class="container">
                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Deactive</button>
@@ -152,7 +152,7 @@
               <td><input type="date" class="form-control" [(ngModel)]='startdate' formControlName="startdate"></td>
               <td><input type="text" class="form-control" [ngModel]="status"  formControlName="status"></td>
               <td><input type="date" class="form-control" [(ngModel)]='endDate' formControlName="endDate"></td>
-              <button (click)="buttonClicked()">Click to Insert New Row</button>
+              <button (click)="buttonClicked()" class="btn-primary" style="height: 40px;">Click to Insert New Row</button>
           </tr>
         </table>
       </div>

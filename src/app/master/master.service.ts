@@ -735,6 +735,13 @@ public flexFieldSubmit(FlexFieldRecord)
   return this.http.post(url,FlexFieldRecord,options);
 }
 
+getTitle(applId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/FlexHeader/applWise/${applId}`);
+}
+getFlexField(applid,titles):Observable<any>{
+ return this.http.get(this.ServerUrl +`/FlexHeader/titleAndApp?applicationId=${applid}&title=${titles}`);
+}
+
 applList():Observable<any>{
   return this.http.get(this.ServerUrl +`/fndAppl`);
 }
@@ -830,6 +837,57 @@ UpdateJaiTaxTypeMasterById(JaiTaxTypeMasterRecord,taxTypeId) {
   return this.http.get(this.ServerUrl + '/JaiTaxRates');
  }
 
+
+taxTypeIdList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/taxType');
+}
+
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  priceListIdList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/pricelist');
+  }
+
+  
+  
+  itemIdList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/itemMst');
+  
+  }
+
+itemNameList(itemId): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/itemMst/${itemId}`);
+}
+
+
+priceDescList(priceListId): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/pricelist/${priceListId}`);
+}
+taxTypeNameList(taxTypeId): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/taxType/${taxTypeId}`);
+}
+
+locationNameList(locCode): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/locationMst/LocationCode/${locCode}`);
+}
+
+locationNameList1(locId): Observable<any> 
+{
+  return this.http.get(this.ServerUrl +`/locationMst/${locId}`);
+}
+
+regimeIdList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/jairegime');
+
+}
+
+
+
+
  public jaiTaxRatesMasterSubmit(JaiTaxRatesMasterRecord) {
   const options = {
     headers: this.headers
@@ -838,13 +896,18 @@ UpdateJaiTaxTypeMasterById(JaiTaxTypeMasterRecord,taxTypeId) {
   return this.http.post(url, JaiTaxRatesMasterRecord, options);
 }   
 
-UpdateJaiTaxRatesMasterById(JaiTaxRatesMasterRecord) {
-  const options = {
-    headers: this.headers
-  };
-  const url = (this.ServerUrl + '/JaiTaxRates/TaxRatesPut');
-  return this.http.put(url, JaiTaxRatesMasterRecord, options);
+
+getJaiTaxRateSearch(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/JaiTaxRates');
+
 }
+// UpdateJaiTaxRatesMasterById(JaiTaxRatesMasterRecord) {
+//   const options = {
+//     headers: this.headers
+//   };
+//   const url = (this.ServerUrl + '/JaiTaxRates/TaxRatesPut');
+//   return this.http.put(url, JaiTaxRatesMasterRecord, options);
+// }
   
  ////////////////////////Jai Tax Category Line //////////////////
    
@@ -874,26 +937,18 @@ regimNameList(regimeId): Observable<any>
 }
 
 
-locationNameList(locCode): Observable<any> 
-{
-  return this.http.get(this.ServerUrl +`/locationMst/LocationCode/${locCode}`);
-}
-
-locationNameList1(locId): Observable<any> 
-{
-  return this.http.get(this.ServerUrl +`/locationMst/${locId}`);
-}
-
-regimeIdList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/jairegime');
-
-}
 
 LedgerList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/SSLedger');
 }
 
-
+UpdateJaiTaxRatesMasterById(JaiTaxRatesMasterRecord,taxRateId) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + '/JaiTaxRates/TaxRatesPut');
+  return this.http.put(url, JaiTaxRatesMasterRecord, options);
+}
 
 public JaiTaxtypeMasterSubmit(JaiTaxtypeMasterRecord) {
   const options = {

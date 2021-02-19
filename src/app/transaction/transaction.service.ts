@@ -53,5 +53,8 @@ export class TransactionService {
     return this.http.post(url, poRecord, options);
   }
 
+  distributionSetNameList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/ApDistSetAll');
+  }
 
 }
