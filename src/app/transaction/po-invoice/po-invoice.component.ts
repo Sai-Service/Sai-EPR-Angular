@@ -167,11 +167,13 @@ export class PoInvoiceComponent implements OnInit {
     displayinvoiceLine:Array<boolean>=[];
     hideArray: Array<boolean> = [];
     lstInvLineDeatails :any=[];
+    lstInvLineDeatails1:any;
     distLinesDeatails:any[];
     // lines Details start
     public ItemDetailsList: any;
     invItemList: any[];
-
+    inventoryItemList:any[];
+    segment:string;
     lessThanValue:number;
     greaterThanValue:number;
 
@@ -212,6 +214,7 @@ lineTypeLookupCode:string;
     displayitemName=false;
     displaydescription=false;
     displaydistributionSet=false;
+    displaytaxCategoryName=false;
 
     userList1: any[] = [];
     userList2: any[] = [];
@@ -428,10 +431,23 @@ lineTypeLookupCode:string;
           }
         );
 
-    }
+        this.transactionService.inventoryItemList()
+        .subscribe(
+          data1 => {
+            this.inventoryItemList = data1;
+            console.log(this.inventoryItemList);
+            // data1 = this.inventoryItemList;
+          }
+        );
+ }
   
-    
 
+ onSegmentIdSelected(e){
+      alert('hi')
+      let select = this.inventoryItemList.find(d => d.segment === e);
+alert(select.itemId);
+this.invItemId=select.itemId;
+    }
 
     onOptionsSelectedsuppName (name: any){
       // alert(name);
@@ -448,10 +464,6 @@ lineTypeLookupCode:string;
       // var value = supp.substr(supp.indexOf('@') + 1, supp.length);
       let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
       this.currency='INR';
-      // var patch = this.poInvoiceForm.get('obj').value;
-      // patch.controls[0].patchValue({
-      //   currency:'IRN'
-      // })
       this.suppId = selectedValue.suppId;
       this.service.suppIdList(selectedValue.suppId, this.ouId)
       .subscribe(
@@ -483,6 +495,7 @@ lineTypeLookupCode:string;
       this.displayitemName=true;
       this.displaydescription=true;
       this.displaydistributionSet=true;
+      this.displaytaxCategoryName=true;
       const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
       this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
         if (res.code === 200) {
@@ -631,7 +644,37 @@ lineTypeLookupCode:string;
     )}
 
 
-   
+
+    onOptionTaxCatSelected(taxCategoryName,k) {
+      // const amount=this.lineDetailsArray().controls[k].get('amount').value;
+      var arrayControl=this.poInvoiceForm.get('invLines').value;
+     var amount= arrayControl[k].amount;
+      alert(amount);
+      let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
+      alert(select.taxCategoryId);
+      var disAm= 0;
+      this.transactionService.getTaxDetails(select.taxCategoryId,this.invItemId, disAm,amount)
+      .subscribe(
+        data => {
+          this.lstInvLineDeatails1 = data;
+          console.log(this.lstInvLineDeatails1);
+          let control = this.poInvoiceForm.get('invLines') as FormArray;
+          for(let i=1; i<=data.miscLines.length;i++){
+            this.poInvoiceForm.get('invLines').patchValue(data.miscLines[i]);
+          }
+          // data.miscLines.forEach(f => {
+          //     // var invLnGrp: FormGroup = this.invLineDetails();
+          //     // this.invLineDetailsArray().push(data.miscLines;
+          //   this.poInvoiceForm.get('invLines').patchValue(data.miscLines);
+          // }
+      // );
+    }
+  )}
+    
+    
+
+
+
 
     public onChange1(event) {
       this.greaterThanValue = event.target.value;

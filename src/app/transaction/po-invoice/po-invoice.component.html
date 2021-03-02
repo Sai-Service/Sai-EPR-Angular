@@ -178,14 +178,6 @@
                 <input disabled type="text" class="form-control" formControlName="siteName" value={{siteName}}  style="width: 40px;height: 25px;font-size: 10px;"> 
             </ng-template>
             <ng-template #elsesiteName>
-                <!-- <select formControlName="suppSiteId" id="suppSiteId" #myinput
-                data-live-search="true" (ngModelChange)='onSiteSelected($event)'
-                class="form-control"  style="width: 70px;height: 25px;font-size: 10px;">
-                <option>--Select--</option>
-                <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
-                    {{sc.siteName}}
-                </option>
-            </select> -->
             <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
             data-live-search="true" (ngModelChange)='onSiteSelected($event)'
             class="form-control" style="width: 70px;height: 25px;font-size: 10px;">
@@ -782,7 +774,7 @@ id="'myDateRange'">
                                         [ngValue]="item.itemId">{{item.segment}}
                                     </option>
                                 </datalist> -->
-                                <input type="text" formControlName="segment"
+                                <!-- <input type="text" formControlName="segment"
                                 (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                 list="dynmicUserIds1" class="form-control"
                                 (ngModelChange)="onOptioninvItemIdSelected($event,i)" style="width: 100px;height: 25px;font-size: 10px;"/>
@@ -790,7 +782,14 @@ id="'myDateRange'">
                                 <option *ngFor="let item of invItemList"
                                     [ngValue]="item.itemId">{{item.segment}}
                                 </option>
-                            </datalist>
+                            </datalist> -->
+
+                            <select formControlName="segment" id="segment" class="form-control" style="width: 150px;height: 25px;font-size: 10px;" (ngModelChange)='onSegmentIdSelected($event)'>
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let item of inventoryItemList" >
+                                                       {{item.segment}}
+                                                    </option>
+                              </select>
                             </ng-template>
                                 </td>
                                 <input hidden type="text" formControlName="invItemId">
@@ -804,14 +803,21 @@ id="'myDateRange'">
                                     </ng-template>  
                                 </td>
                                 <td>
+                                    <div *ngIf="displaytaxCategoryName; then thentaxCategoryName; else elsetaxCategoryName"></div>
+                                    <ng-template #thentaxCategoryName>
+                                        <input type="text" class="form-control" formControlName="taxCategoryName" value={{taxCategoryName}} style="width: 100px;height: 25px;font-size: 10px;">  
+                                    </ng-template>
+                                    <ng-template #elsetaxCategoryName>
                                     <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)' -->
                                     <select formControlName="taxCategoryName" id="taxCategoryName"
+                                    (ngModelChange)='onOptionTaxCatSelected($event,k)'
                                                             class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
                                                             <option *ngFor="let sc of  taxCategoryList">
-                                                                {{sc.taxCategoryName}}
+                                                                {{sc.taxCategoryName}} 
                                                             </option>
-                                                        </select>
+                                      </select>
+                                    </ng-template>
                                 </td>
                                 <td>
                                     <input disabled type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">

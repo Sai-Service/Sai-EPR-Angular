@@ -1,0 +1,379 @@
+import { asLiteral } from '@angular/compiler/src/render3/view/util';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { FormBuilder, FormGroup, Validators ,FormArray} from '@angular/forms';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { DateRangePickerComponent } from 'ngx-daterange';
+import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
+import { MasterService } from 'src/app/master/master.service';
+import { TransactionService } from 'src/app/transaction/transaction.service';
+import { DatePipe } from '@angular/common';
+import { from } from 'rxjs';
+import {PaymentObj} from './payment-obj';
+
+interface Ipayment{
+  suppNo:number;
+  invoiceNum:string;
+  ouId:number;
+  name:string;
+  payDate:Date;
+  totAmt:number;
+  totAmount: number ,
+  suppId: number,
+  supplierSiteId:number,
+  // ouId: number,
+  partyId: number,
+  bankAccountNo: string,
+  // suppNo:number;
+  docCategoryCode: string,
+ paymentMehtodId:number,
+paymentNarration: string,
+paymentDocName:string,
+invoiceId:number,
+amount:number; 
+}
+
+@Component({
+  selector: 'app-payments',
+  templateUrl: './payments.component.html',
+  styleUrls: ['./payments.component.css']
+})
+export class PaymentsComponent implements OnInit {
+  form: FormGroup = null;
+  paymentForm: FormGroup;
+  suppNo:number;
+  content: number;
+  invoiceNum:string;
+  ouId:number;
+  currency:'INR';
+  ouName: string;
+  name:string;
+  supplierSiteId:number;
+  suppId:number;
+  country : 'India';
+  payDate=new Date();
+  invoiceAmt:number;
+  // invoiceNum:string;
+  paymentAmt:number;
+  totAmt:number;
+  bankAccountId:number;
+  docCategoryCode:number;
+  invoiceId:number;
+  partyId:number;
+
+  public lstsearchpayminv:any;
+  public lstinvoiceDetls:any;
+  public supplierCodeList1: any[];
+  public supplierCodeList: any[];
+  public docCategoryCodeList:any[];
+  public suppIdList: any;
+  public suppIdList1:any;
+  siteIdList: any;
+  selectFlag:string;
+
+  displaytype=false;
+  displaysuppNo=false;
+  displayouId=false;
+  displaysiteAddress=false;
+  displaystatus=false;
+  TRUER=false; recFagDiss=true; 
+  public bankAccountNumList: any;
+  public paymentDocNameList:Array<string>=[];
+
+  constructor(private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
+    this.paymentForm = fb.group({
+      suppNo:[],
+      ouName: [],
+      paymentAmt:[],
+      totAmt:[],
+      obj1: this.fb.array([this.payHeaderLineDtl()]),
+      obj: this.fb.array([this.payInvoiceLineDtl()]),
+    })
+   }
+   payHeaderLineDtlArray() : FormArray{
+    return <FormArray>this.paymentForm.get('obj1')
+  }
+  payInvoiceLineDtlArray() : FormArray{
+    return <FormArray>this.paymentForm.get('obj')
+  }
+  
+  payInvoiceLineDtl(){
+    return this.fb.group({
+      invoiceNum:[],
+      invoiceAmt:[],
+      selectFlag:[],
+      invoiceId:[],
+    }) 
+  }
+
+   payHeaderLineDtl(){
+    return this.fb.group({
+      // invoiceNum:[],
+      ouId:[],
+      suppNo:[],
+      bankAccountNum:[],
+      currency:[],
+      paymentDocName:[],
+      type:[],
+      name:[],
+      ouName:[],
+      supplierSiteId:[],
+      suppId:[],
+      country:[],
+      status:[],
+      payDate:[],
+      bankAccountId:[],
+      docCategoryCode:[],
+      bankAccountNo:[],
+      partyId:[],
+    });
+   }
+
+   get g() { return this.paymentForm.controls; }
+
+  ngOnInit(): void {
+    // this.currency='INR';
+    this.ouName = (sessionStorage.getItem('ouName'));
+    this.ouId = Number(sessionStorage.getItem('ouId'));
+
+
+    this.service.supplierCodeList()
+    .subscribe(
+      data1 => {
+        this.supplierCodeList = data1;
+        console.log(this.supplierCodeList);
+        data1 = this.supplierCodeList;
+      }
+     
+    );
+
+    this.transactionService.bankAccountNumList(this.ouId)
+    .subscribe(
+      data => {
+        this.bankAccountNumList = data;
+        console.log(this.bankAccountNumList);
+      }
+    );
+    
+  }
+
+ 
+
+
+  payment(paymentForm){
+  }
+
+  transData(val){
+    return val;
+  }
+
+  paymentFind(suppNo:number){
+     alert(suppNo);
+     this.payHeaderLineDtlArray().clear();
+     this.displaytype=true;
+     this.displaysuppNo=true;
+     this.displayouId=true;
+     this.displaysiteAddress=true;
+     this.displaystatus=true;
+     this.transactionService.getsearchByPayment(suppNo).subscribe((res: any) => {
+      this.lstsearchpayminv=res.obj;
+      this.lstsearchpayminv.forEach(f => {
+        var payLnGrp: FormGroup = this.payHeaderLineDtl();
+        this.payHeaderLineDtlArray().push(payLnGrp);
+      });
+      this.paymentForm.get('obj1').patchValue(this.lstsearchpayminv);
+     }
+     )} 
+
+
+     paymentInvoiceFind(suppNo:number,ouId:number){
+      var suppNo1=this.paymentForm.get('obj1').value; 
+      //  suppNo=this.paymentForm.get('suppNo').value;
+      alert(suppNo1[0].suppNo);
+      this.payInvoiceLineDtlArray().clear();
+      this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
+       this.lstinvoiceDetls=res.obj;
+       var sum=0;
+       for (let i=0;i<this.lstinvoiceDetls.length;i++){
+        sum=sum+this.lstinvoiceDetls[i].invoiceAmt;
+       }
+      //  alert(sum);
+       this.totAmt=sum;
+       this.lstinvoiceDetls.forEach(f => {
+         var payInvGrp: FormGroup = this.payInvoiceLineDtl();
+         this.payInvoiceLineDtlArray().push(payInvGrp);
+       });
+       this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
+      }
+      )} 
+
+ changeAmount(){
+  var sum=0;
+  var totlCalControls=this.paymentForm.get('obj').value;
+  // this.totAmt=this.totAmt+totlCalControls[k].totAmt;
+  // alert(this.payInvoiceLineDtlArray().length);
+  for (let i=0;i< this.payInvoiceLineDtlArray().length;i++){
+   sum=sum+ Number(totlCalControls[i].invoiceAmt);
+  //  alert(totlCalControls[i].invoiceAmt);
+  }
+  // alert(sum);
+  this.totAmt=sum;
+ }
+
+
+    onOptionsSelected(bankAccountNo: string) {
+      alert(bankAccountNo);
+      var value=bankAccountNo.split('/');
+      alert(value[0]);
+      let selectedValue = this.bankAccountNumList.find(v => v.bankAccountNo == (value[0]));
+      // var bankId=this.paymentForm.get('obj1').value;
+      alert(selectedValue.bankAccountId);
+      this.transactionService.docCategoryCodeList(selectedValue.bankAccountId)
+      .subscribe(
+        data => {
+          this.docCategoryCodeList = data;
+          console.log(this.docCategoryCodeList);
+        }
+      );
+    }
+
+
+    onOptionsSelectedDocCat(docCategoryCode: string) {
+      // alert(bankAccountId);
+      this.transactionService.paymentDocNameList(docCategoryCode)
+      .subscribe(
+        data => {
+          this.paymentDocNameList = data;
+          console.log(this.paymentDocNameList);
+        }
+      );
+    }
+
+
+     onOptionsSelectedsuppName (name: any){
+      // alert(name);
+      // this.service.supplierCodeList1()
+      // .subscribe(
+      //   data => {
+      //     this.supplierCodeList1 = data;
+      //     console.log(this.supplierCodeList1);
+      //     this.suppNo=name;
+      //     console.log(this.supplierCodeList1);
+      //   }
+      // );
+      let selectedValue = this.supplierCodeList.find(v => v.name == name);
+      var dataobj1=this.paymentForm.get('obj1') as FormArray;
+      dataobj1.controls[0].patchValue(
+        {suppNo:selectedValue.suppNo,
+        suppId:selectedValue.suppId,
+        partyId:selectedValue.suppId});
+      alert(selectedValue);
+      this.currency='INR';
+      this.country='India';
+      this.suppId = selectedValue.suppId;
+      this.service.suppIdList(selectedValue.suppId, this.ouId)
+      .subscribe(
+        data => {
+          this.suppIdList = data;
+          if (this.suppIdList.length == 0) {
+            alert('Supplier site not attached to supplier');
+          } else {
+            console.log(this.suppIdList);
+          }
+        }
+      );
+      }
+
+      onAddressSelected(name: any){
+        // alert(name);
+        this.service.supplierCodeList1()
+        .subscribe(
+          data => {
+            this.supplierCodeList1 = data;
+            console.log(this.supplierCodeList1);
+            this.suppNo=name;
+            console.log(this.supplierCodeList1);
+           
+          }
+        );
+        let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
+        this.suppId = selectedValue.suppId;
+        this.service.suppIdList1(selectedValue.suppId, this.ouId)
+        .subscribe(
+          data => {
+  
+            this.suppIdList1 = data;
+            if (this.suppIdList1.length == 0) {
+              alert('Supplier site not attached to supplier');
+            } else {
+              console.log(this.suppIdList1);
+            }
+          }
+        );
+        }
+
+        onSiteSelected(siteId: any) {
+          // alert(siteId);
+          this.service.siteIdList(siteId)
+            .subscribe(
+              data => {
+                this.siteIdList = data;
+                console.log(this.siteIdList);
+              }
+            );
+        }  
+
+        
+        selectFlag1(e) {
+          if (e.target.checked=== true) {
+            alert('Hi');
+            this.selectFlag = 'Y'
+         } 
+         if (e.target.checked=== false) {
+           this.selectFlag='N'
+         }
+ }
+
+paymentSave(){
+  this.totAmt=0; 
+  const totlCalControls=this.paymentForm.get('obj').value;
+  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
+    this.totAmt=this.totAmt+totlCalControls[k].totAmt;
+  }
+  const formValue: Ipayment = this.paymentForm.value;
+  console.log(formValue.suppId);
+  var jsonData=this.paymentForm.value.obj1[0];
+  var invPayment:any[];
+  var arrayControle=this.paymentForm.get('obj').value;
+  for (let i=0;i<this.payInvoiceLineDtlArray().length;i++){
+   
+    if (arrayControle[i].selectFlag==true)
+   {
+    invPayment.push({
+      invoiceId:arrayControle[i].invoiceId,
+      amount:arrayControle[i].invoiceAmt,
+    })
+    
+  }
+  }
+  alert(invPayment);
+  jsonData.invPayment=invPayment;
+  // let paymentObject=Object.assign(new PaymentObj(),jsonData);
+  // paymentObject.setInvPayment(this.paymentForm.value.)
+console.log(jsonData);
+
+  this.transactionService.paymentSaveSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert(res.message);
+    } else {
+      if (res.code === 400) {
+        alert('Data already present in the data base');
+        // this.poReceiptForm.reset();
+      }
+    }
+  });
+}
+
+
+
+}

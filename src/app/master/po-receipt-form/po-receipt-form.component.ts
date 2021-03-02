@@ -79,6 +79,7 @@ export class PoReceiptFormComponent implements OnInit {
   frmDate1:Date;
   disabled = true;
   disabledLine =true;
+  disabledViewAccounting=true;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -111,10 +112,19 @@ export class PoReceiptFormComponent implements OnInit {
   poType:string;
   poStatus:string;
   receiptNo:number;
+  ledgerId:number;
+  runningTotalDr:number;
+
 
   selectAllFlag:string;
   selectFlag:string;
   rcvSupp1:number;
+  description:string;
+  periodName:string;
+  postedDate:Date;
+  jeCategory:string;
+  name1:string;
+  runningTotalCr:number;
   // poStatus:string;
   
 
@@ -137,6 +147,9 @@ export class PoReceiptFormComponent implements OnInit {
    divisionId:any[];
    loginName:string;
    poLineId:number;
+   viewAccounting1:any[];
+   viewAccounting2:any[];
+
   
   // PO wise Date Paratemeter//////
   frmDate : Date;
@@ -190,6 +203,13 @@ export class PoReceiptFormComponent implements OnInit {
       toDate:[''],
       frmDate1:[''],
       poDate:[''],
+      description:[''],
+      periodName:[''],
+      postedDate:[''],
+      jeCategory:[''],
+      name1:[''],
+      runningTotalDr:[''],
+      runningTotalCr:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -367,6 +387,7 @@ return true;
         // });
         this.disabled = false;
         this.disabledLine=false;
+        this.disabledViewAccounting=false;
           this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
         // }
@@ -669,6 +690,34 @@ this.locId=Number(sessionStorage.getItem('locId'));
     });
       }
 
+viewAccounting(receiptNo:any){
+  // alert(receiptNo);
+  this.service.viewAccounting1(receiptNo).subscribe((res: any) => {
+    if (res.code === 200) {
+      this.viewAccounting2=res.obj;
+      this.description=res.obj.description;
+      this.periodName=res.obj.periodName;
+      this.postedDate=res.obj.postedDate;
+      this.jeCategory=res.obj.jeCategory;
+      this.name1=res.obj.name;
+      this.ledgerId=res.obj.ledgerId;
+      this.runningTotalDr=res.obj.runningTotalDr;
+      this.runningTotalCr=res.obj.runningTotalCr;
+      console.log(this.description);
+      
+          this.viewAccounting1=res.obj.glLines;
+          console.log(this.viewAccounting1);
+          alert(res.message);
+        } else {
+          if (res.code === 400) {
+            alert('Data already present in the data base');
+          }
+        }
+      });
+  }
+
 
 
 }
+
+

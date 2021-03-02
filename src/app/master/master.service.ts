@@ -116,6 +116,16 @@ export class MasterService {
     });
   }
   
+  suppIdList1(suppId, ouId) {  
+    const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
+    .set('ouId', ouId)
+  
+    const REQUEST_URI = this.ServerUrl +'/supp/ouSites';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+     
+    });
+  }
   siteIdList(siteId): Observable<any> {
     return this.http.get(this.ServerUrl +`/supp/site/${siteId}`);
   }
@@ -1058,6 +1068,10 @@ public receiptDateWiseFind(content) {
 
 getsearchByRcvSupp(rcvSupp1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/rcvSupp1/${rcvSupp1}`);
+}
+
+viewAccounting1(receiptNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
 delearCodeList(): Observable<any> {

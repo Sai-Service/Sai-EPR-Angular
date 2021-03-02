@@ -28,6 +28,14 @@ export class TransactionService {
     return this.http.post(url, content, options);
   }
 
+  // public getsearchByPayment(content) {
+  //   const options = {
+  //     headers: this.headers
+  //   };
+  //   const url = this.ServerUrl + '/apInvPayment/paymentSupp';  
+  //   return this.http.post(url, content, options);
+  // }
+
   getApInvLineDetails(invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtls/${invoiceNum}`);
   }
@@ -56,5 +64,44 @@ export class TransactionService {
   distributionSetNameList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/ApDistSetAll');
   }
+
+  inventoryItemList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/itemMst');
+  }
+
+  getTaxDetails(taxCategoryId,invItemId, disAm,amount): Observable<any> {
+    return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
+  }
+
+//=======================================Payment Componanat==============================
+getsearchByPayment(suppNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp/${suppNo}`);
+}
+
+getsearchByInvDtls(suppNo,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}`);
+}
+
+
+bankAccountNumList(ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/ceBankAccounts/BankList/${ouId}`);
+}  
+
+docCategoryCodeList(bankAccountId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cePaymentDoc/PayDoc/${bankAccountId}`);
+} 
+
+
+paymentDocNameList(docCategoryCode): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cePaymentDoc/DocName/${docCategoryCode}`);
+} 
+
+public paymentSaveSubmit(poRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/apInvPayment/NewPost';  
+  return this.http.post(url, poRecord, options);
+}
 
 }
