@@ -404,6 +404,8 @@ console.log(jsonData);
     if (res.code === 200) {
       alert(res.message);
       alert(res.obj);
+      console.log(res.obj);
+      
       this.PaymentReturnArr =res.obj;
       console.log(this.PaymentReturnArr);
       
