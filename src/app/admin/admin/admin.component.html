@@ -71,8 +71,19 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PoInvoice']">PO Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/TdsInvoice']">TDS Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/Payment']">Payment</a></li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>  
+            <li><a class="dropdown-item" [routerLink]="['/admin/bank/bankBranch']">Bank Branch creation</a></li> 
+            <li><a class="dropdown-item" [routerLink]="['/admin/bank/BankAccUses']">Create Bank Account Use</a></li> -->
           </ul>
         </li>
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>  
+            <li><a class="dropdown-item" [routerLink]="['/admin/bank/bankBranch']">Bank Branch creation</a></li> 
+            <li><a class="dropdown-item" [routerLink]="['/admin/bank/BankAccUses']">Create Bank Account Use</a></li>
+          </ul>
+          </li>
+
       <!-- </ul> -->
     <!-- </li> -->
   </ul>

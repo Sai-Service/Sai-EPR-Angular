@@ -15,6 +15,10 @@ const routes: Routes = [
         path: 'transaction',
         loadChildren: () => import('../transaction/transaction.module').then(mod => mod.TransactionModule)
       },
+      {
+        path: 'bank',
+        loadChildren: () => import('../bank/bank.module').then(mod => mod.BankModule)
+      },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
 ];

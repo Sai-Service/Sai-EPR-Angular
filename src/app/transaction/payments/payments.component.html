@@ -59,10 +59,10 @@
                     <td>
             <div *ngIf="displaytype; then thentype; else elsetype"></div>
             <ng-template #thentype>
-                        <input type="text" class="form-control" formControlName="type" value={{type}} style="width: 100px;height: 25px;font-size: 10px;">  
+                        <input type="text" class="form-control" formControlName="paymentNarration" value={{paymentNarration}} style="width: 100px;height: 25px;font-size: 10px;">  
             </ng-template>
             <ng-template #elsetype>
-                <select formControlName="type" id="type" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                <select formControlName="paymentNarration" id="paymentNarration" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
                     <option>--Select--</option>
                     <option value="Quick">Quick</option>
                     <option value="Manual">Manual</option>
@@ -168,7 +168,12 @@
                         <input disabled  class="form-control" formControlName="currency" value={{currency}} style="width: 60px;height: 25px;font-size: 10px;">
                     </td>
                     <td>
-                        <input class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
+                        <select formControlName="paymentMethodId"  id="paymentMethodId" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                            <option>--Select--</option>
+                            <option *ngFor="let paymentDoc of  paymentIdListList" [ngValue]="paymentDoc.lookupValueId" >
+                                {{paymentDoc.lookupValue}}
+                            </option>
+                        </select>
                     </td>
                     <td>
                         <select formControlName="docCategoryCode" id="docCategoryCode" class="form-control"
@@ -207,18 +212,24 @@
                     <td>
                         <div *ngIf="displaystatus; then thenstatus; else elsestatus"></div>
                         <ng-template #thenstatus>
-                          <input type="text" class="form-control" formControlName="status" value={{status}} style="width: 100px;height: 25px;font-size: 10px;">  
+                          <input type="text" class="form-control" formControlName="statusLookupCode" value={{statusLookupCode}} style="width: 100px;height: 25px;font-size: 10px;">  
                         </ng-template>
                         <ng-template #elsestatus>
-                            <select formControlName="status"  id="status" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                            <select formControlName="statusLookupCode"  id="statusLookupCode" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
                                 <option>--Select--</option>
-                                <option value="Entry">Entry</option>
-                                <option value="Reconciled">Reconciled</option>
+                                <option *ngFor="let paymentDoc of  statusLookupCodeList" >
+                                    {{paymentDoc.lookupValue}}
+                                </option>
                             </select>
+                            <!-- <select formControlName="statusLookupCode"  id="statusLookupCode" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                                <option>--Select--</option>
+                                <option value="Negotiable">Negotiable</option>
+                                <option value="Reconciled">Reconciled</option>
+                            </select> -->
                         </ng-template>
                     </td>
                     <td>
-                        <input class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
+                        <input class="form-control" formControlName="paymentNarration"  style="width: 60px;height: 25px;font-size: 10px;">
                     </td>
                 </tr>
 </ng-container>
@@ -294,7 +305,8 @@
                                style="width: 50px;height: 20px;font-size: 10px;">
                         </td>
                         <td>
-                            <input disabled type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}} style="width: 100px;height: 25px;font-size: 10px;">  
+                            <!-- (change)="ChangeInvoiceNum()" -->
+                            <input disabled type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}}  style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <td>
                             <input type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} (change)="changeAmount()" style="width: 100px;height: 25px;font-size: 10px;">  
@@ -333,8 +345,12 @@
             <th scope="col">Payment Amount</th>
         </tr>
     </thead>
-    <tbody>
-        <tr></tr>
+    <tbody>  
+        <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
+           <td></td>
+           <td></td>
+            <td style="width: 107px;">{{com.amount}}</td>
+        </tr>
     </tbody>
   </table>
   

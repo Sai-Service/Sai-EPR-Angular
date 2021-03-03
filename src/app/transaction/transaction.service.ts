@@ -35,7 +35,14 @@ export class TransactionService {
   //   const url = this.ServerUrl + '/apInvPayment/paymentSupp';  
   //   return this.http.post(url, content, options);
   // }
-
+//////////////////poInvoice////////////////
+UpdateValidate(invoiceNum) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/apInv/invValidate/${invoiceNum}`);
+  return this.http.put(url, invoiceNum, options);
+}
   getApInvLineDetails(invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtls/${invoiceNum}`);
   }
@@ -48,7 +55,9 @@ export class TransactionService {
     return this.http.get(this.ServerUrl +'/locationMst');
   } 
 
-
+  DistributionDataList(distributionSet,amount): Observable<any> {
+    return this.http.get(this.ServerUrl +`/ApDistSetAll/distSetAmount?distributionSetName=${distributionSet}&distributionAmt=${amount}`);
+  }
   prepayTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   } 
@@ -86,7 +95,12 @@ getsearchByInvDtls(suppNo,ouId): Observable<any> {
 bankAccountNumList(ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/ceBankAccounts/BankList/${ouId}`);
 }  
-
+statusLookupCodeList(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayStatus');
+} 
+paymentIdListList(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
+} 
 docCategoryCodeList(bankAccountId): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/PayDoc/${bankAccountId}`);
 } 

@@ -39,6 +39,15 @@ export class MasterService {
   poTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/PoTypes');
   }
+  APiNVOICEtYPETypeList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/type/AP INVOICE TYPE');
+  }
+  APitemtYPEList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/type/AP Item TYPE');
+  }
+  invItemList1(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/itemMst');
+  }
   companyCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/CompMst');
   }

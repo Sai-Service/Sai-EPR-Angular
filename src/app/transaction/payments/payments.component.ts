@@ -31,6 +31,7 @@ paymentNarration: string,
 paymentDocName:string,
 invoiceId:number,
 amount:number; 
+statusLookupCode:string;
 }
 
 @Component({
@@ -60,9 +61,11 @@ export class PaymentsComponent implements OnInit {
   docCategoryCode:number;
   invoiceId:number;
   partyId:number;
-
+  totAmount:number;
+  statusLookupCode:string;
   public lstsearchpayminv:any;
   public lstinvoiceDetls:any;
+  // public invPayment:any[];
   public supplierCodeList1: any[];
   public supplierCodeList: any[];
   public docCategoryCodeList:any[];
@@ -70,7 +73,7 @@ export class PaymentsComponent implements OnInit {
   public suppIdList1:any;
   siteIdList: any;
   selectFlag:string;
-
+  paymentMethodId:string;
   displaytype=false;
   displaysuppNo=false;
   displayouId=false;
@@ -79,13 +82,16 @@ export class PaymentsComponent implements OnInit {
   TRUER=false; recFagDiss=true; 
   public bankAccountNumList: any;
   public paymentDocNameList:Array<string>=[];
+  public statusLookupCodeList:Array<string>=[];
+public paymentIdListList:Array<string>=[];
+public PaymentReturnArr:any[];
 
   constructor(private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
       suppNo:[],
       ouName: [],
       paymentAmt:[],
-      totAmt:[],
+      totAmt:[],  
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -111,21 +117,23 @@ export class PaymentsComponent implements OnInit {
       // invoiceNum:[],
       ouId:[],
       suppNo:[],
-      bankAccountNum:[],
+      // bankAccountNum:[],
       currency:[],
       paymentDocName:[],
-      type:[],
+      paymentNarration:[],
       name:[],
       ouName:[],
       supplierSiteId:[],
       suppId:[],
       country:[],
-      status:[],
+      paymentMethodId:[],
+      statusLookupCode:[],
       payDate:[],
-      bankAccountId:[],
+      // bankAccountId:[],
       docCategoryCode:[],
       bankAccountNo:[],
       partyId:[],
+      totAmount:[],
     });
    }
 
@@ -155,6 +163,20 @@ export class PaymentsComponent implements OnInit {
       }
     );
     
+    this.transactionService.statusLookupCodeList()
+    .subscribe(
+      data => {
+        this.statusLookupCodeList = data;
+        console.log(this.statusLookupCodeList);
+      }
+    );  
+    this.transactionService.paymentIdListList()
+    .subscribe(
+      data => {
+        this.paymentIdListList = data;
+        console.log(this.paymentIdListList);
+      }
+    );
   }
 
  
@@ -343,20 +365,36 @@ paymentSave(){
   const formValue: Ipayment = this.paymentForm.value;
   console.log(formValue.suppId);
   var jsonData=this.paymentForm.value.obj1[0];
-  var invPayment:any[];
+  
+  var value=jsonData.bankAccountNo.split('/');
+  jsonData.bankAccountNo= value[0];
+  jsonData.country ='India';
+  jsonData.currency='INR';
+  jsonData.ouId= this.ouId ;
+  // jsonData.bankAccountNum.delete;
+  // jsonData.bankAccountId.delete;
+  var invPayment:any=[];
+  this.totAmount = 0;
   var arrayControle=this.paymentForm.get('obj').value;
   for (let i=0;i<this.payInvoiceLineDtlArray().length;i++){
-   
+    alert(arrayControle[i].selectFlag);
     if (arrayControle[i].selectFlag==true)
    {
+     alert('yyyy '+arrayControle[i].invoiceAmt)
+    this.totAmount = this.totAmount + Number(arrayControle[i].invoiceAmt);
+    alert(this.totAmount);
+    var id = {"invoiceId": arrayControle[i].invoiceId}
+    var id2 = {"amount": arrayControle[i].invoiceAmt}
+    // invPayment.push(id)
+    // 
     invPayment.push({
       invoiceId:arrayControle[i].invoiceId,
       amount:arrayControle[i].invoiceAmt,
     })
-    
   }
   }
-  alert(invPayment);
+  jsonData.totAmount = this.totAmount;
+  alert(this.totAmount);
   jsonData.invPayment=invPayment;
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
   // paymentObject.setInvPayment(this.paymentForm.value.)
@@ -365,6 +403,10 @@ console.log(jsonData);
   this.transactionService.paymentSaveSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);
+      alert(res.obj);
+      this.PaymentReturnArr =res.obj;
+      console.log(this.PaymentReturnArr);
+      
     } else {
       if (res.code === 400) {
         alert('Data already present in the data base');
