@@ -76,6 +76,12 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/bank/BankAccUses']">Create Bank Account Use</a></li> -->
           </ul>
         </li>
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Move Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
+          </ul>
+        </li>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>  

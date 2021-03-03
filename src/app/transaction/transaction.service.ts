@@ -118,4 +118,43 @@ public paymentSaveSubmit(poRecord) {
   return this.http.post(url, poRecord, options);
 }
 
+
+//////////Move Order//////////////
+public moveOrderSubmit(MoveOrderRecord)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/mtrlIssue';
+  return this.http.post(url,MoveOrderRecord,options);
+}
+transType():Observable<any>{
+  return this.http.get(this.ServerUrl +'/mtlTrxTypes/IPO');
+}
+subInvCode():Observable<any>{
+  return this.http.get(this.ServerUrl +'/subInvMst')
+}
+issueByList(locId,deptId,divisionId):Observable<any>{
+return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
+}
+ItemIdList():Observable<any>{
+  return this.http.get(this.ServerUrl+'/itemMst/category');
+}
+getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+}
+getSearchByTrans(reqNo):Observable<any>{
+
+  return this.http.get(this.ServerUrl+`/mtrlIssue/reqNum/${reqNo}`)
+
+}
+getItemDetail(itemid):Observable<any>{
+  return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
+}
+
+
+// ============================stock Transfer Componanat============================
+
+
+
 }
