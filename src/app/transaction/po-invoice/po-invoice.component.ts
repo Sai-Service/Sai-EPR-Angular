@@ -57,6 +57,7 @@ lineTypeLookupCode:string;
 hsnSacCode:string;
 }
 
+
 @Component({
   selector: 'app-po-invoice',
   templateUrl: './po-invoice.component.html',
@@ -122,7 +123,8 @@ export class PoInvoiceComponent implements OnInit {
     maxDate: moment().add(1, 'year'),
     singleCalendar: true,
   }
-
+  invLineItemId:number;
+  invLineNo:number;
   form: FormGroup = null;
     poInvoiceForm: FormGroup;
     showModal: boolean;
@@ -172,11 +174,11 @@ export class PoInvoiceComponent implements OnInit {
     // lines Details start
     public ItemDetailsList: any;
     invItemList: any[];
-    inventoryItemList:any[];
-    segment:string;
+    invItemList1: any[];
+
     lessThanValue:number;
     greaterThanValue:number;
-
+    selectedLine = 0;
     invoiceId:number;
     ouId:number;
     description:string;
@@ -199,11 +201,14 @@ lineTypeLookupCode:string;
     public paymentMethodList: Array<string> = [];
     public prepayTypeList: Array<string> = [];
     public poTypeList: Array<string> = [];
+    public APitemtYPE: Array<string> = [];
     public distributionSetNameList:Array<string>[];
     public suppIdList: any
+    public distributionLineWise: any[];
     taxCat: string;
     public taxCategoryList: any;
-
+    public ValidateObj :any;
+    taxLines:number;
     displayOUName=false;
     displaypoType=false;
     displaysegment1=false;
@@ -214,7 +219,7 @@ lineTypeLookupCode:string;
     displayitemName=false;
     displaydescription=false;
     displaydistributionSet=false;
-    displaytaxCategoryName=false;
+    displayValidateButton =true;
 
     userList1: any[] = [];
     userList2: any[] = [];
@@ -251,9 +256,47 @@ lineTypeLookupCode:string;
         obj: this.fb.array([this.lineDetailsGroup()]),
         invLines:this.fb.array([this.invLineDetails()]),
         distribution:this.fb.array([this.distLineDetails()]),
+        taxLines: this.fb.array([this.TaxDetailsGroup()])
     });
     
   }
+  addRow(k){
+    // alert('k '+ k);
+    this.invLineDetailsArray().push(this.invLineDetails());
+  }
+  TaxDetailsGroup() {
+    return this.fb.group({
+      totTaxAmt: [],
+      lineNumber: [],
+      taxRateName: [],
+      taxTypeName: [],
+      taxPointBasis: [],
+      precedence1: [],
+      precedence2: [],
+      precedence3: [],
+      precedence4: [],
+      precedence5: [],
+      precedence6: [],
+      precedence7: [],
+      precedence8: [],
+      precedence9: [],
+      precedence10: [],
+      currencyCode: [],
+      totTaxPer: [],
+      recoverableFlag: [],
+      selfAssesedFlag: [],
+      inclusiveFlag: [],
+      invLineItemId: [],
+      invLineNo: [],
+    });
+  }
+
+
+  TaxDetailsArray(): FormArray {
+    // return this.lineDetailsArray.controls[].get('taxAmounts') as FormArray
+    return <FormArray>this.poInvoiceForm.get('taxLines')
+  }
+
 
   distLineDetails(){
     return this.fb.group({
@@ -393,13 +436,26 @@ lineTypeLookupCode:string;
             this.prepayTypeList = data;
             console.log(this.prepayTypeList);
           }
+        );  
+        this.service.invItemList1()
+        .subscribe(
+          data => {
+            this.invItemList1 = data;
+            console.log(this.invItemList1);
+          }
         );
-
-        this.service.poTypeList()
+        this.service.APiNVOICEtYPETypeList()
         .subscribe(
           data => {
             this.poTypeList = data;
             console.log(this.poTypeList);
+          }
+        );
+        this.service.APitemtYPEList()
+        .subscribe(
+          data => {
+            this.APitemtYPE = data;
+            console.log(this.APitemtYPE);
           }
         );
         
@@ -431,23 +487,10 @@ lineTypeLookupCode:string;
           }
         );
 
-        this.transactionService.inventoryItemList()
-        .subscribe(
-          data1 => {
-            this.inventoryItemList = data1;
-            console.log(this.inventoryItemList);
-            // data1 = this.inventoryItemList;
-          }
-        );
- }
-  
-
- onSegmentIdSelected(e){
-      alert('hi')
-      let select = this.inventoryItemList.find(d => d.segment === e);
-alert(select.itemId);
-this.invItemId=select.itemId;
     }
+  
+    
+
 
     onOptionsSelectedsuppName (name: any){
       // alert(name);
@@ -464,6 +507,10 @@ this.invItemId=select.itemId;
       // var value = supp.substr(supp.indexOf('@') + 1, supp.length);
       let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
       this.currency='INR';
+      // var patch = this.poInvoiceForm.get('obj').value;
+      // patch.controls[0].patchValue({
+      //   currency:'IRN'
+      // })
       this.suppId = selectedValue.suppId;
       this.service.suppIdList(selectedValue.suppId, this.ouId)
       .subscribe(
@@ -495,7 +542,6 @@ this.invItemId=select.itemId;
       this.displayitemName=true;
       this.displaydescription=true;
       this.displaydistributionSet=true;
-      this.displaytaxCategoryName=true;
       const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
       this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
         if (res.code === 200) {
@@ -641,40 +687,11 @@ this.invItemId=select.itemId;
   }
 
 
-    )}
+    )
+  }
 
 
-
-    onOptionTaxCatSelected(taxCategoryName,k) {
-      // const amount=this.lineDetailsArray().controls[k].get('amount').value;
-      var arrayControl=this.poInvoiceForm.get('invLines').value;
-     var amount= arrayControl[k].amount;
-      alert(amount);
-      let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
-      alert(select.taxCategoryId);
-      var disAm= 0;
-      this.transactionService.getTaxDetails(select.taxCategoryId,this.invItemId, disAm,amount)
-      .subscribe(
-        data => {
-          this.lstInvLineDeatails1 = data;
-          console.log(this.lstInvLineDeatails1);
-          let control = this.poInvoiceForm.get('invLines') as FormArray;
-          for(let i=1; i<=data.miscLines.length;i++){
-            this.poInvoiceForm.get('invLines').patchValue(data.miscLines[i]);
-          }
-          // data.miscLines.forEach(f => {
-          //     // var invLnGrp: FormGroup = this.invLineDetails();
-          //     // this.invLineDetailsArray().push(data.miscLines;
-          //   this.poInvoiceForm.get('invLines').patchValue(data.miscLines);
-          // }
-      // );
-    }
-  )}
-    
-    
-
-
-
+   
 
     public onChange1(event) {
       this.greaterThanValue = event.target.value;
@@ -705,6 +722,7 @@ this.invItemId=select.itemId;
       let manInvObj=Object.assign(new ManualInvoiceObj(),jsonData);
       manInvObj.setinvLines(this.poInvoiceForm.value.invLines);
       manInvObj.setinvDisLines(this.poInvoiceForm.value.distribution);
+      manInvObj.setTaxLines(this.poInvoiceForm.value.taxLines);
 
       // let newTodo = Object.assign(new ManualInvoiceObj(), jsonData); 
       // const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
@@ -746,7 +764,55 @@ move(val1,val2){
   val2.focus();
 }
 
-
+distribution(){
+  var arrayControl = this.poInvoiceForm.get('obj').value;
+  var distributionSet = arrayControl[0].distributionSet;
+  if(distributionSet == null){
+    alert('Kindly select distribution set')
+    return;
+  }
+  var arrayControl2 = this.poInvoiceForm.get('invLines').value;
+  var amount=0
+  for(let j=0; j<this.invLineDetailsArray().length; j++){
+     amount = amount + arrayControl2[j].amount;
+  }
+  if(amount == null){
+    alert('Kindly entered Amount');
+  }
+  if(distributionSet != null && amount != null ){
+    this.transactionService.DistributionDataList(distributionSet,amount)
+    .subscribe(
+      data => {
+        this.distributionLineWise = data;
+        console.log(this.distributionLineWise);
+        data.distribution.forEach(f => {
+          var distLineDet: FormGroup = this.distLineDetails();
+          this.lineDistributionArray().push(distLineDet); 
+        });
+        this.poInvoiceForm.get('distribution').patchValue(data.distribution);
+      }
+    );
+  }
+  if((distributionSet == null && amount == null )){
+    alert('Invoice amount and line wise amount are not same')
+  }
+ 
+}
+ShowAllDistribution(){
+  this.displayValidateButton =false;
+  var invoiceNum=this.lineDetailsArray().controls[0].get('invoiceNum').value;
+  if (invoiceNum == null){
+    alert('Kindly insert the invoice number');
+  }else{
+ this.lineDistributionArray().clear();
+  var data= this.lstInvLineDeatails.invDisLines;
+        data.forEach(f => {
+          var invLnGrp: FormGroup = this.distLineDetails();
+          this.lineDistributionArray().push(invLnGrp);
+        this.poInvoiceForm.get('distribution').patchValue(data);
+      });
+    }
+}
 onOptionsSelected(event: any,k) {
   // alert(event);
   var patch=this.poInvoiceForm.get('distribution') as FormArray;
@@ -858,5 +924,158 @@ searchFromArray1(arr, regex) {
   }
   return matches;
 };
+InventIdSelected(event){
+  let select = this.invItemList1.find(d => d.segment === event);
+  this.invItemId = select.itemId;
+}
+onOptionTaxCatSelected(taxCategoryName,k) {
+  // const amount=this.lineDetailsArray().controls[k].get('amount').value;
+  var arrayControl=this.poInvoiceForm.get('invLines').value;
+ 
+ var amount= arrayControl[k].amount;
+  alert(amount);
+  let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
+  alert(select.taxCategoryId);
+  var disAm= 0;
+  this.transactionService.getTaxDetails(select.taxCategoryId,this.invItemId, disAm,amount)
+  .subscribe(
+    data => {
+      this.lstInvLineDeatails1 = data;
+      console.log(this.lstInvLineDeatails1);
+      // alert(this.invLineDetailsArray().length);
+      let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
+      for(let i=0; i< data.miscLines.length; i++){
+        var invLnGrp: FormGroup = this.invLineDetails();
+          this.invLineDetailsArray().push(invLnGrp);
+      }
+      (controlinv.controls[0]).patchValue({ lineNumber: 1});
+      for(let j=1; j<this.invLineDetailsArray().length; j++){
+       
+        controlinv.controls[j].patchValue(data.miscLines[j-1]);
+        (controlinv.controls[j]).patchValue({ lineNumber: j+1});
+        // this.poInvoiceForm.get('invLines').patchValue(data.miscLines[j]);
+      }
+      alert(k);
+      var segment =(arrayControl[k].segment)   
+      let select = this.invItemList1.find(d => d.segment === segment);
+      alert(select.itemId);
+      let controlinv1 = this.poInvoiceForm.get('taxLines') as FormArray;
+      for(let i=0; i< data.taxLines.length; i++){
+        var invLnGrp: FormGroup = this.TaxDetailsGroup();
+          this.TaxDetailsArray().push(invLnGrp);
+      }
+      alert('data.taxLines.length '+data.taxLines.length);
+      for(let j=0; j<data.taxLines.length; j++){
+        controlinv1.controls[j].patchValue(data.taxLines[j]);
+        controlinv1.controls[j].patchValue({
+          invLineItemId:k+1,
+invLineNo:select.itemId
+        });
+      }
+})
+}
+Validate(){
+  var arrayControl=this.poInvoiceForm.get('obj').value;
+  var arrayControl1=this.poInvoiceForm.get('invLines').value;
+  var arrayCaontrolOfDistribution =this.poInvoiceForm.get('distribution').value;
+ var amount= arrayControl[0].invoiceAmt;
+ alert(amount);
+//  alert( this.invLineDetailsArray().length)
+ var totalOfInvLineAmout =0;
+ for(let i=0; i<this.invLineDetailsArray().length; i++){
+  totalOfInvLineAmout =totalOfInvLineAmout+arrayControl1[i].amount
+ }
+ alert('sum '+totalOfInvLineAmout);
+//  this.distribution();   amount
+alert(this.lineDistributionArray().length);
+var  totalOfDistributionAmout =0;
+ for(let j=0; j<this.lineDistributionArray().length; j++){
+  totalOfDistributionAmout =totalOfDistributionAmout+arrayCaontrolOfDistribution[j].amount
+ }
+ alert('totalOfDistributionAmout '+totalOfDistributionAmout);
+ 
+ if(amount == totalOfInvLineAmout && amount == totalOfDistributionAmout ){
+   alert('in validate')
+   var arrayControl=this.poInvoiceForm.get('obj').value;
+   var invoiceNum= arrayControl[0].invoiceNum;
+   alert(invoiceNum);
+   this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert('VALIDATE SUCCESSFUILY');
+      // window.location.reload();
+    } else {
+      if (res.code === 400) {
+        alert('ERROR OCCOURED IN PROCEESS');
+        // this.operatingUnitMasterForm.reset();
+        // window.location.reload();
+      }
+    }
+  });
+  //  this.displayValidateButton =false;
+ }
+}
+validateNum(index,j) {
+  // var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;  
+  // // this.poMasterDtoForm.get('poLines').value
+  // var value = arrayControl[index].totTaxAmt
+  // if (value.charAt(0) === '-') {
+  //   alert('Valid Number: ' + value);
+  // } else {
+  //   alert('Invalid Number: ' + value + ' ' + 'Kindly enter negetive value');   
+  //   // this.lineDetailsArray.controls[index].get('orderedQty').reset();
+  //   // this.poMasterDtoForm.controls['poLines'].controls[index].controls['taxAmounts'].controls[j].controls.totTaxPer.value
+  //   // this.TaxDetailsArray.controls[j].get('orderedQty').reset();
+  //   // arrayControl[index].totTaxAmt = 00;
+  //   // this.lineDetailsArray.controls[j].get('taxAmounts').controls
+  // }
+}
+addDiscount(i) {
+//   const formValue: IpostPO = this.poMasterDtoForm.value;
+//   formValue.polineNum = this.poLineTax;
+//   const aa = this.poLineTax;
+//   // alert(aa);
+//   var arrayControl = this.poMasterDtoForm.get('poLines').value
+//   const invItemId = arrayControl[this.poLineTax].invItemId
+//   this.taxCat1 =arrayControl[this.poLineTax].taxCategoryId
+//   console.log(this.taxCat);
+//   var arrayControltaxAmounts = this.lineDetailsArray.controls[aa].get('taxAmounts').value
+//   // alert(arrayControltaxAmounts[aa])
+//   var diss = arrayControltaxAmounts[0].totTaxAmt;
+//   // alert(arrayControltaxAmounts[aa].totTaxAmt);
+//   var arrayControl = this.poMasterDtoForm.get('poLines').value
+//   var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
+//   // alert(baseAmount);
+//   // alert(this.poLineTax);
 
+//   console.log(invItemId, this.taxCat, diss, baseAmount);
+
+//   let control = this.lineDetailsArray.controls[aa].get('taxAmounts') as FormArray;
+//   control.clear();
+//   // this.taxCatId
+//   this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
+//     .subscribe(
+//       (data: any[]) => {
+//         this.taxCalforItem = data;
+//         // this.patchResultList(this.poLineTax, this.taxCalforItem);
+//         var sum = 0;
+//         for (i = 0; i < this.taxCalforItem.length; i++) {
+
+//           if (this.taxCalforItem[i].totTaxPer != 0) {
+//             sum = sum + this.taxCalforItem[i].totTaxAmt
+//           }
+//         }
+//         const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
+//         var tolAmoutLine = sum + TotAmtLineWise1
+//         // alert(this.taxCalforItem[0].totTaxAmt);
+//         var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+//         (patch.controls[aa]).patchValue(
+//           {
+//             diss1 : this.taxCalforItem[0].totTaxAmt,
+//             taxAmtLineWise: sum,
+//             totAmtLineWise: tolAmoutLine,
+//           }
+//         );
+//         this.patchResultList(this.poLineTax, this.taxCalforItem);
+//       });
+}
 }
