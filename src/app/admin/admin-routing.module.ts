@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: 'bank',
         loadChildren: () => import('../bank/bank.module').then(mod => mod.BankModule)
+      },  
+      {
+        path: 'OrderManagement',
+        loadChildren: () => import('../order-management/order-management.module').then(mod => mod.OrderManagementModule)
       },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}

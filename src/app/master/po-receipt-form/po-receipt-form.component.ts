@@ -378,13 +378,6 @@ return true;
           for (var i=0;i<=length1;i++){
             control.push(poLines);
           };
-          
-        //   data.invLines.forEach(f => {
-        //     var invLnGrp: FormGroup = this.lineDetailsGroup();
-        //     this.lineDetailsArray.push(invLnGrp);
-        //   // });
-        //   this.poReceiptForm.get('invLines').patchValue(data.invLines);
-        // });
         this.disabled = false;
         this.disabledLine=false;
         this.disabledViewAccounting=false;
