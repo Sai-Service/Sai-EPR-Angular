@@ -1,0 +1,104 @@
+<table style="width: 100%;background-color: white;">
+    <tr>
+        <!-- class="PageHeader" -->
+        <td colspan="4" class="PageHeader" style="width: 100%;" >
+            &nbsp;&nbsp;Group&nbsp;Master
+        </td>
+    </tr>
+</table>
+<div class="center" style="width: 100%;">
+    <div class="form-bg">
+        <form [formGroup]="GroupMasterForm" (ngSubmit)="GroupMaster(GroupMasterForm.value)">
+            <table class="center">
+                <tr>
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        Division&nbsp;:
+                    </td>
+                    <td>
+                        <input  class="form-control" >
+                        <!-- [ngClass]="{ 'is-invalid': submitted && f.segment1.errors }" -->
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        Operating Unit&nbsp;:
+                    </td>
+                    <td>
+                        <input  class="form-control" >
+                    </td>
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        Location&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                </tr>
+                <tr>
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        Group&nbsp;Name&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        Group&nbsp;Department&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        Ticket&nbsp;No&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                    <td style="width: 12%" class="LabelFontStyle1">
+                        Emp&nbsp;Full&nbsp;Name&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                </tr>
+                <tr>
+                    <td style="width: 5%" class="LabelFontStyle1">
+                        Title&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                    <td style="width: 5%" class="LabelFontStyle1">
+                        First&nbsp;Name&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                    <td style="width: 5%" class="LabelFontStyle1">
+                        Middle&nbsp;Name&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                    <td style="width: 5%" class="LabelFontStyle1">
+                        Last&nbsp;Name&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>
+                </tr>
+                <tr>
+                    <td style="width: 5%" class="LabelFontStyle1">
+                        Status&nbsp;:
+                    </td>
+                    <td><input  class="form-control" ></td>  
+                </tr>
+            </table>
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register">New</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register">Search</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<br>
+<div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+        <tbody>
+            <tr class="GridHeader">
+                <th scope="col">Ticket No</th> 
+                <th scope="col">Employee Name</th> 
+                <th scope="col">Start Date</th> 
+                <th scope="col">End Date</th> 
+                <th scope="col">Select</th> 
+            </tr>
+        </tbody>
+    </table>
+</div>
