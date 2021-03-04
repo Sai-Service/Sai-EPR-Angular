@@ -57,7 +57,8 @@ UpdateValidate(invoiceNum) {
   } 
 
   DistributionDataList(distributionSet,amount): Observable<any> {
-    return this.http.get(this.ServerUrl +`/ApDistSetAll/distSetAmount?distributionSetName=${distributionSet}&distributionAmt=${amount}`);
+    // return this.http.get(this.ServerUrl +`/ApDistSetAll/distSetAmount?distributionSetName=${distributionSet}&distributionAmt=${amount}`);
+    return this.http.get(this.ServerUrl +`/apInv/get/apinvDisLinewise?invAmount=${amount}&distSetName=${distributionSet}`);
   }
   prepayTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');

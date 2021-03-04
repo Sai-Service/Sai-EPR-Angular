@@ -306,13 +306,13 @@
                         </td>
                         <td>
                             <!-- (change)="ChangeInvoiceNum()" -->
-                            <input disabled type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}}  style="width: 100px;height: 25px;font-size: 10px;">  
+                            <input disabled type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}} (change)="changeAmount()" style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <td>
                             <input type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} (change)="changeAmount()" style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <td>
-                            <input disabled type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 100px;height: 25px;font-size: 10px;">  
+                            <input disabled type="text" class="form-control" formControlName="UnpaidAmt" value={{UnpaidAmt}} style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <!-- <td>
                             <button class="btn-primary"><i class="fas fa-save"></i></button>
@@ -347,9 +347,11 @@
     </thead>
     <tbody>  
         <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
-           <td></td>
-           <td></td>
-            <td style="width: 107px;">{{com.amount}}</td>
+            <td style="width: 107px;">{{com.invoiceNum}}</td>
+            <td style="width: 107px;">{{com.invDate}}</td>
+            <td style="width: 107px;">{{com.invoiceAmt}}</td>
+            <td style="width: 107px;">{{com.glDate}}</td>
+            <td style="width: 107px;">{{com.payAmount}}</td>
         </tr>
     </tbody>
   </table>

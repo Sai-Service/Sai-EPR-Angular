@@ -109,6 +109,7 @@ public PaymentReturnArr:any[];
       invoiceAmt:[],
       selectFlag:[],
       invoiceId:[],
+      UnpaidAmt:[],
     }) 
   }
 
@@ -228,7 +229,7 @@ public PaymentReturnArr:any[];
        this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
       }
       )} 
-
+     
  changeAmount(){
   var sum=0;
   var totlCalControls=this.paymentForm.get('obj').value;
@@ -404,6 +405,8 @@ console.log(jsonData);
     if (res.code === 200) {
       alert(res.message);
       alert(res.obj);
+      console.log(res.obj);
+      
       this.PaymentReturnArr =res.obj;
       console.log(this.PaymentReturnArr);
       

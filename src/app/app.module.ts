@@ -8,7 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { MasterModule} from './master/master.module';
 import {TransactionModule } from './transaction/transaction.module';
-import { BankModule} from './bank/bank.module'
+import { BankModule} from './bank/bank.module';
+import { OrderManagementModule} from './order-management/order-management.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -53,6 +54,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     ChartsModule,
     TransactionModule,
     BankModule,
+    OrderManagementModule,
     // DaterangepickerModule
     // NgbModule.forRoot(),
   ],
