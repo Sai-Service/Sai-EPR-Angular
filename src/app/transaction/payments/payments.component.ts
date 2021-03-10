@@ -63,6 +63,7 @@ export class PaymentsComponent implements OnInit {
   partyId:number;
   totAmount:number;
   statusLookupCode:string;
+  INVNO:string;
   public lstsearchpayminv:any;
   public lstinvoiceDetls:any;
   // public invPayment:any[];
@@ -92,6 +93,7 @@ public PaymentReturnArr:any[];
       ouName: [],
       paymentAmt:[],
       totAmt:[],  
+      INVNO:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -130,6 +132,11 @@ public PaymentReturnArr:any[];
       paymentMethodId:[],
       statusLookupCode:[],
       payDate:[],
+      PayAmount:[],
+      DocNo :[],
+payAddress:[],
+docCategory:[],
+voucherNo:[],
       // bankAccountId:[],
       docCategoryCode:[],
       bankAccountNo:[],
@@ -180,7 +187,34 @@ public PaymentReturnArr:any[];
     );
   }
 
- 
+  SearchINVNO(INVNO){
+    alert(INVNO)
+    // alert(this.paymentForm.get('INVNO').value);
+    this.payInvoiceLineDtlArray().clear();
+    let control = this.paymentForm.get('obj') as FormArray;
+   var lenC = this.payInvoiceLineDtlArray().length;
+   alert (lenC);
+   console.log(this.lstinvoiceDetls);
+   
+   let select = this.lstinvoiceDetls.find(d => d.invoiceNum === INVNO);
+   console.log(select);
+   alert(select.length)
+   
+   var pyLine: FormGroup = this.payInvoiceLineDtl();
+    // for (let i = 0; i <= select.length - lenC; i++) {
+        control.push(pyLine);
+       this.totAmt=select.invoiceAmt;
+      // }
+    // this.paymentForm.get('obj').patchValue(select);
+    // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+    (control.controls[0]).patchValue(
+      {
+        // totAmt : 0,
+        invoiceNum:select.invoiceNum,
+        invoiceAmt:select.invoiceAmt,
+        UnpaidAmt:select.invoiceAmt,
+      });
+  }
 
 
   payment(paymentForm){
@@ -246,7 +280,9 @@ public PaymentReturnArr:any[];
 
     onOptionsSelected(bankAccountNo: string) {
       alert(bankAccountNo);
-      var value=bankAccountNo.split('/');
+      // if(bankAccountNo == undefined){
+        alert(bankAccountNo);
+        var value=bankAccountNo.split('/');
       alert(value[0]);
       let selectedValue = this.bankAccountNumList.find(v => v.bankAccountNo == (value[0]));
       // var bankId=this.paymentForm.get('obj1').value;
@@ -258,6 +294,8 @@ public PaymentReturnArr:any[];
           console.log(this.docCategoryCodeList);
         }
       );
+      // }
+      
     }
 
 

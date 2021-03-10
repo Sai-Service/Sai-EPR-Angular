@@ -25,6 +25,7 @@ import { JaiTaxRatesMasterComponent } from './jai-tax-rates-master/jai-tax-rates
 import { JaiTaxTypeComponent } from './jai-tax-type/jai-tax-type.component';
 import { PoReceiptFormComponent } from './po-receipt-form/po-receipt-form.component';
 import { FlexFieldComponent } from './flex-field/flex-field.component';
+import {PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
@@ -55,6 +56,7 @@ const routes: Routes = [
   {path:'JaiTaxType', component:JaiTaxTypeComponent},
  {path:'PoReceiptForm',component:PoReceiptFormComponent},
 {path:'FlexField',component:FlexFieldComponent},
+{path:'pricelistMaster', component:PricelistMasterComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
