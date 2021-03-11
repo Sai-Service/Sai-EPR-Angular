@@ -111,13 +111,14 @@ public PaymentReturnArr:any[];
       invoiceAmt:[],
       selectFlag:[],
       invoiceId:[],
-      UnpaidAmt:[],
+      unPaidAmt:[],
     }) 
   }
 
    payHeaderLineDtl(){
     return this.fb.group({
       // invoiceNum:[],
+      paymentTypeFlag:[],
       ouId:[],
       suppNo:[],
       // bankAccountNum:[],
@@ -133,9 +134,9 @@ public PaymentReturnArr:any[];
       statusLookupCode:[],
       payDate:[],
       PayAmount:[],
-      DocNo :[],
+      docNo :[],
 payAddress:[],
-docCategory:[],
+// docCategory:[],
 voucherNo:[],
       // bankAccountId:[],
       docCategoryCode:[],
@@ -212,7 +213,7 @@ voucherNo:[],
         // totAmt : 0,
         invoiceNum:select.invoiceNum,
         invoiceAmt:select.invoiceAmt,
-        UnpaidAmt:select.invoiceAmt,
+        unPaidAmt:select.invoiceAmt,
       });
   }
 
@@ -278,7 +279,7 @@ voucherNo:[],
  }
 
 
-    onOptionsSelected(bankAccountNo: string) {
+    onOptionsSelected(bankAccountNo: string, index) {
       alert(bankAccountNo);
       // if(bankAccountNo == undefined){
         alert(bankAccountNo);
@@ -286,7 +287,9 @@ voucherNo:[],
       alert(value[0]);
       let selectedValue = this.bankAccountNumList.find(v => v.bankAccountNo == (value[0]));
       // var bankId=this.paymentForm.get('obj1').value;
-      alert(selectedValue.bankAccountId);
+      var patch = this.paymentForm.get('obj1') as FormArray;
+      var address = (selectedValue.address1+" "+selectedValue.address2+" "+selectedValue.address3+" "+selectedValue.city+" "+selectedValue.pinCode+" "+selectedValue.state);
+      (patch.controls[index]).patchValue(  {payAddress : address});
       this.transactionService.docCategoryCodeList(selectedValue.bankAccountId)
       .subscribe(
         data => {

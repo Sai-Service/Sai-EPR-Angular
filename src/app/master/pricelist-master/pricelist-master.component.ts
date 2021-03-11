@@ -118,10 +118,10 @@ export class PricelistMasterComponent implements OnInit {
       return this.fb.group({
         priceListLineId:[''],
         itemId :['', [Validators.required]],    
-        itemCode:['', [Validators.required]],
+        itemName:['', [Validators.required]],
         itemDescription: ['', [Validators.required]],
         itemCategory: ['', [Validators.required]],
-        itemUom: ['', [Validators.required]],
+        uom: ['', [Validators.required]],
         itemBatchCode: ['', [Validators.required]],
         priceValue: ['', [Validators.required]],
         startDate: ['', [Validators.required]],

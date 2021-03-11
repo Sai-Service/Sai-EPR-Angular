@@ -854,16 +854,6 @@ distribution1(k){
             this.lineDistributionArray().push(distLineDet); 
           }
         }
-
-        
-        // for(let z=x, j=1; j<this.invLineDetailsArray().length; j++, z++){
-        //  controlinv.controls[z].patchValue(data.miscLines[j-1]);
-
-        // data.distribution.forEach(f => {
-        //   var distLineDet: FormGroup = this.distLineDetails();
-        //   this.lineDistributionArray().push(distLineDet); 
-        // }); 
-        // var x= this.lineDistributionArray().length
         var control= this.poInvoiceForm.get('distribution') as FormArray;
         if(len == 1){
           for(let i=0, z=len-1; i<data.distribution.length  ; i++, z++){
@@ -880,15 +870,6 @@ distribution1(k){
             // this.poInvoiceForm.get('distribution').patchValue(data.distribution);
            }
         }
-     
-    //  this.poInvoiceForm.get('distribution').patchValue(data.distribution);
-      // var  DisArrayLen = this.lineDistributionArray().length
-      //   alert(this.lineDistributionArray().length);
-      //   for(let i=0; i<this.lineDistributionArray().length ; i++){
-      //     (control.controls[i]).patchValue(
-      //       { invoiceLineNum : k+1, });
-      //       // this.poInvoiceForm.get('distribution').patchValue(data.distribution);
-      //   }
       }
     );
   }
@@ -1061,6 +1042,7 @@ searchFromArray1(arr, regex) {
 InventIdSelected(event, k){
   let select = this.invItemList1.find(d => d.segment === event);
   this.invItemId = select.itemId;
+  // this.invItemId=Number (sessionStorage.getItem('ouId'));
   let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
   (controlinv.controls[k]).patchValue({ itemId: select.itemId});
 }
@@ -1077,13 +1059,11 @@ onOptionTaxCatSelected(taxCategoryName,k) {
   let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
   (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId});
   var disAm= 0;
-  this.transactionService.getTaxDetails(select.taxCategoryId,this.invItemId, disAm,amount)
+  this.transactionService.getTaxDetails(select.taxCategoryId,sessionStorage.getItem('ouId'), disAm,amount)
   .subscribe(
     data => {
       this.lstInvLineDeatails1 = data;
       console.log(this.lstInvLineDeatails1);
-      // alert(this.invLineDetailsArray().length);
-      // let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
       for(let i=0; i< data.miscLines.length; i++){
         var invLnGrp: FormGroup = this.invLineDetails();
           this.invLineDetailsArray().push(invLnGrp);
@@ -1121,6 +1101,25 @@ onOptionTaxCatSelected(taxCategoryName,k) {
           invLineNo: k+1,
         });
       }
+      let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
+      for(let i=0; i< data.invDisLines.length-1; i++){
+        var invLnGrp: FormGroup = this.distLineDetails();
+          this.lineDistributionArray().push(invLnGrp);  
+      }
+      this.lineDistributionArray().patchValue(data.invDisLines);
+      // alert(k);
+      // // var x1=Number((this.lineDistributionArray().length)- 1);
+      // for(let z=0; z<this.lineDistributionArray().length ;  z++){
+      //   controlDist.controls[z].patchValue(data.invDisLines[z]);
+      //  let ln= z+1;
+      //   (controlDist.controls[z]).patchValue({ lineNumber: ln});
+      // }
+      for(let j=0; j<data.invDisLines.length; j++){
+      controlDist.controls[j].patchValue({
+        invLineItemId:select.itemId,
+        invLineNo: k+1,
+      });
+    }
 })
 }
 Validate(){
@@ -1198,7 +1197,7 @@ var taxCategoryId= arrayControl[index-1].taxCategoryId;
 alert('amount '+amount);
 var diss = arrayControlTax[0].totTaxAmt;
 var itemId =arrayControl[index-1].itemId;
-  this.service.taxCalforItem(itemId, taxCategoryId, diss, amount)
+  this.service.taxCalforItem(sessionStorage.getItem('ouId'), taxCategoryId, diss, amount)
     .subscribe(
       (data: any[]) => {
         this.taxCalforItem = data;

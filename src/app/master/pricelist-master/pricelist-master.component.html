@@ -21,7 +21,7 @@
                                         <!-- <option value="PRINCIPAL">PRINCIPAL</option>
                                         <option value="LOCAL">LOCAL</option> -->
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  PriceTypeList" [ngValue]="sc.cmnTypeId">
+                                        <option *ngFor="let sc of  PriceTypeList" [ngValue]="sc.code">
                                             {{sc.cmnTypeId}}-{{sc.code}}
                                             <!-- -{{sc.code}} -->
                                         </option>
@@ -30,7 +30,7 @@
                                     </ng-template>
 
                                     <ng-template #elseBlock11>
-                                    <input formControlName="priceListType" [(ngModel)]="priceListType" class="form-control">
+                                    <input formControlName="priceListType" class="form-control">
                                     <!-- <input formControlName="priceListType"> -->
                                     </ng-template>
                                 </td>
@@ -267,7 +267,7 @@
                                             <input type="text" hidden formControlName="priceListLineId">
                                                 <td>
                                                     <input hidden  type="text" formControlName="itemId" id="itemId" >
-                                                    <input   type="text" formControlName="segment" id="segment"  [(ngModel)]="segment" class="form-control" placeholder="Item Code "  >
+                                                    <input   type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName" class="form-control" placeholder="Item Code "  >
                                                     <!-- onfocusout="itemValidate($event)" -->
                                                 </td> 
                                                 <td>
@@ -277,7 +277,7 @@
                                                     <input   type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                                 </td>
                                                 <td>
-                                                    <input   type="text" formControlName="itemUom"  class="form-control" placeholder="Uom "  >
+                                                    <input   type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
                                                     <input   type="text" formControlName="itemBatchCode"  class="form-control" placeholder="Batch Code "  >

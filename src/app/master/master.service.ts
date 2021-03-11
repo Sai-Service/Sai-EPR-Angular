@@ -1169,8 +1169,8 @@ PriceListIdList(): Observable<any> {
       return this.http.put(url, OrderTypeMasterRecord, options);
     }
     getPriceListSearch(): Observable<any> {
-      return this.http.get(this.ServerUrl + '/pricelist');
-    
+      // return this.http.get(this.ServerUrl + '/pricelist');   
+      return this.http.get(this.ServerUrl + '/pricelist/prcListDto'); 
     }
 
 } 
