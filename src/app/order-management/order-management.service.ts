@@ -1,9 +1,26 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderManagementService {
+  httpclient: any;
+  headers: any;
 
-  constructor() { }
+  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
+  ServerUrl='http://localhost:8081'; 
+  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+
+
+  constructor(private http: HttpClient) { 
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+  }
+
+  getsearchByOrderNo(orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
+  }
+
 }
