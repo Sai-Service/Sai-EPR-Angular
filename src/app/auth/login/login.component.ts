@@ -74,9 +74,12 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('ouName',users.ouName); 
           sessionStorage.setItem('ouId',users.ouId); 
           sessionStorage.setItem('locId',users.locId); 
+          sessionStorage.setItem('locCode',users.locCode);
 console.log(users.ouId);
 console.log(users.locId);
 console.log(users.ouName);
+console.log(users.locCode);
+
        } //else if (res.code === 204) {
       //   console.log('Email and password does not match');
       //   alert('Email and password does not match');
