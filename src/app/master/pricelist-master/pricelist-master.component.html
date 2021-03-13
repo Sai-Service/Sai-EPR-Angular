@@ -240,7 +240,7 @@
 
                         <div class="center">
                             <!-- <br> -->
-                           <div class="center" formArrayName="itemLines">
+                           <div class="center" formArrayName="priceListDetailList">
       
                                 <div class="grid_scroll">
 
@@ -266,8 +266,17 @@
                                                 
                                             <input type="text" hidden formControlName="priceListLineId">
                                                 <td>
-                                                    <input hidden  type="text" formControlName="itemId" id="itemId" >
-                                                    <input   type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName" class="form-control" placeholder="Item Code "  >
+                                                    <!-- <input hidden  type="text" formControlName="itemId" id="itemId" >
+                                                    <input   type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName" class="form-control" placeholder="Item Code "  > -->
+                                                    <input type="text" formControlName="segment"
+                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                    list="dynmicUserIds1" class="form-control"
+                                                    (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
+                                                <datalist id="dynmicUserIds1">
+                                                    <option *ngFor="let item of invItemList"
+                                                        [ngValue]="item.itemId">{{item.segment}}
+                                                    </option>
+                                                </datalist>
                                                     <!-- onfocusout="itemValidate($event)" -->
                                                 </td> 
                                                 <td>
@@ -280,7 +289,7 @@
                                                     <input   type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
-                                                    <input   type="text" formControlName="itemBatchCode"  class="form-control" placeholder="Batch Code "  >
+                                                    <input   type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  >
                                                 </td>
                                                 <td>
                                                     <input   type="text" formControlName="priceValue"  class="form-control" placeholder="Price "  >

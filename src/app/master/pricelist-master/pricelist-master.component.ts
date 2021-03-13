@@ -45,7 +45,7 @@ export class PricelistMasterComponent implements OnInit {
   deptId : number;
   description : string; 
   
-  // itemId : number;  
+  itemId : number;  
   itemDescription : string ;
   priceDesc:string;
   segment :string;
@@ -63,7 +63,7 @@ export class PricelistMasterComponent implements OnInit {
   lstcomments: any[];
 
   public statusList: Array<string> = [];
-
+  invItemList: any;
   public PriceTypeList: Array<string> = [];
   public DepartmentList: Array<string> = [];
 
@@ -88,6 +88,9 @@ export class PricelistMasterComponent implements OnInit {
   displayButton = true;
   plsearch=false;
 
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
+
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
       this.priceListMasterForm = fb.group({
@@ -110,7 +113,7 @@ export class PricelistMasterComponent implements OnInit {
         searchBy:['', [Validators.required]],
         searchValue:['', [Validators.required]],
        
-        itemLines: this.fb.array([this.lineDetailsGroup()])
+        priceListDetailList: this.fb.array([this.lineDetailsGroup()])   
       });
     }
 
@@ -122,7 +125,7 @@ export class PricelistMasterComponent implements OnInit {
         itemDescription: ['', [Validators.required]],
         itemCategory: ['', [Validators.required]],
         uom: ['', [Validators.required]],
-        itemBatchCode: ['', [Validators.required]],
+        batchCode: ['', [Validators.required]],
         priceValue: ['', [Validators.required]],
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
@@ -133,7 +136,7 @@ export class PricelistMasterComponent implements OnInit {
     }
   
     get lineDetailsArray() {
-      return <FormArray>this.priceListMasterForm.get('itemLines')
+      return <FormArray>this.priceListMasterForm.get('priceListDetailList')
     }
    
 
@@ -143,6 +146,13 @@ export class PricelistMasterComponent implements OnInit {
   priceListMaster(priceListMasterForm:any) {  }
 
   ngOnInit(): void {
+     this.service.invItemList1()
+      .subscribe(
+        data => {
+          this.invItemList = data;
+          console.log(this.invItemList);
+        }
+      );
 
     this.service.PriceListIdList()
     .subscribe(
@@ -304,9 +314,9 @@ export class PricelistMasterComponent implements OnInit {
 
 
 
-  onPLTSelected (plTypeId : number) {
+  onPLTSelected (plTypeId : string) {
     // alert("price Type ID :" + plTypeId  + " PL type Name : " + plTypeName );
-   if( plTypeId===2) {
+   if( plTypeId=='LOCAL') {
      this.showOu=true;
     } else {
       this.showOu=false;
@@ -394,11 +404,11 @@ export class PricelistMasterComponent implements OnInit {
     if (select) {
       this.priceListMasterForm.patchValue(select);
       this.priceListType = select.priceListType+ "-" + select.priceListName;
-      var control = this.priceListMasterForm.get('itemLines') as FormArray;
-      var itemLines:FormGroup=this.lineDetailsGroup();
+      var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+      var priceListDetailList:FormGroup=this.lineDetailsGroup();
       alert("PL LENGTH: "+ select.priceListDetailList.length);
       for (let i=0; i<select.priceListDetailList.length;i++) {
-        control.push(itemLines);
+        control.push(priceListDetailList);
       }
       this.priceListHeaderId = select.priceListHeaderId;
       this.displayButton = false;
@@ -406,12 +416,12 @@ export class PricelistMasterComponent implements OnInit {
       this.showItemSearch=true;
       alert('priceListHeaderId='+priceListHeaderId+"  PL TYPE :" + this.priceListType);
       console.log("price list details : " + select.priceListDetailList);
-      let controlinv1 = this.priceListMasterForm.get('itemLines') as FormArray;
+      let controlinv1 = this.priceListMasterForm.get('priceListDetailList') as FormArray;
       for (let i=0; i<select.priceListDetailList.length;i++) {
         alert('Item '+select.priceListDetailList[i].itemId);
         alert('priceValue '+select.priceListDetailList[i].priceValue); 
         controlinv1.controls[i].patchValue(select.priceListDetailList[i]);
-      // this.priceListMasterForm.get('itemLines').patchValue(select.priceListDetailList);
+      // this.priceListMasterForm.get('priceListDetailList').patchValue(select.priceListDetailList);
       }
 
     }
@@ -429,15 +439,48 @@ export class PricelistMasterComponent implements OnInit {
 
    
   // ===============================================================================
-   
+
+  getInvItemId($event) {
+    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+    this.userList2 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList2 = this.searchFromArray1(this.invItemList, userId);
+      }
+    }
+  }
+  searchFromArray1(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+  onOptioninvItemIdSelected(itemId, index) {
+    //  alert('item function');
+      let selectedValue = this.invItemList.find(v => v.segment == itemId);
+      // alert(selectedValue.itemId);
+      console.log(selectedValue);
+      
+      var arrayControl = this.priceListMasterForm.get('priceListDetailList').value
+      var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+      // this.itemType = arrayControl[index].itemType
+      // alert(this.itemType)
+      this.itemId = selectedValue.itemId;
+      // console.log(this.invItemId, this.taxCat);
+      (patch.controls[index]).patchValue(
+        {
+          uom: selectedValue.uom,
+          itemDescription: selectedValue.description,
+          itemCategory: selectedValue.categoryId.attribute1,
+          itemId: selectedValue.itemId,
+          itemName:selectedValue.segment,
+        }
+      );
+  
+    }
 }
  
-
-
-
-
- 
-
-
-
-

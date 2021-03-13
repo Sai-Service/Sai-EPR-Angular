@@ -787,23 +787,18 @@ lookupValueDesc5: string;
           data.invLines.forEach(f => {
             var invLnGrp: FormGroup = this.invLineDetails();
             this.invLineDetailsArray().push(invLnGrp);
-          // });
-          // this.poInvoiceForm.get('invLines').patchValue(data);
           this.poInvoiceForm.get('invLines').patchValue(data.invLines);
-         
-          // this.poInvoiceForm.get('invLines').get('invoiceId').patchValue(data.invoiceId);
-          // var length1=this.lstInvLineDeatails.invLines.length-1;
-        }
-        
-        //  else {
-        //   if (res.code === 400) {
-        //     alert('Data already present in the data base');
-        //     // this.LocationMasterForm.reset();
-        //     window.location.reload();
-          // }
-        // }
-      // }
-    );
+        });
+        data.invDisLines.forEach(f => {
+          var invLnGrp: FormGroup = this.distLineDetails();
+          this.lineDistributionArray().push(invLnGrp);
+        this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
+      });
+    //   data.invDisLines.forEach(f => {
+    //     var invLnGrp: FormGroup = this.TaxDetailsGroup();
+    //     this.TaxDetailsArray().push(invLnGrp);
+    //   this.poInvoiceForm.get('taxLines').patchValue(data.invDisLines);
+    // });
   }
 
 
@@ -937,9 +932,17 @@ distribution1(k){
       }
     );
   }
-  // if((distributionSet == null && amount == null )){
-  //   alert('Invoice amount and line wise amount are not same')
-  // }
+  if((distributionSet == null && amount  != null )){  
+    this.lineDistributionArray().push(this.distLineDetails());
+    var len =  this.lineDistributionArray().length;
+    var patch = this.poInvoiceForm.get('distribution') as FormArray;
+    (patch.controls[len-1]).patchValue(
+      {
+        distLineNumber: len,
+        invoiceLineNum : k+1
+      }
+    );
+  }
  
 }
 
@@ -1461,8 +1464,6 @@ fnCancatination(index) {
           }
         }  
         if (this.segmentNameList.code === 400) {
-          // alert('in 400')
-          // var arrayControl = this.poInvoiceForm.get('poLines').value
           alert(data.message);
           (patch.controls[index]).patchValue({ distCodeCombSeg: ''})
           // alert(this.segmentNameList.message);

@@ -62,6 +62,7 @@ export class PaymentsComponent implements OnInit {
   invoiceId:number;
   partyId:number;
   totAmount:number;
+  unPaidAmt:number;
   statusLookupCode:string;
   INVNO:string;
   public lstsearchpayminv:any;
@@ -265,17 +266,28 @@ voucherNo:[],
       }
       )} 
      
- changeAmount(){
-  var sum=0;
+ changeAmount(i){
   var totlCalControls=this.paymentForm.get('obj').value;
-  // this.totAmt=this.totAmt+totlCalControls[k].totAmt;
-  // alert(this.payInvoiceLineDtlArray().length);
-  for (let i=0;i< this.payInvoiceLineDtlArray().length;i++){
-   sum=sum+ Number(totlCalControls[i].invoiceAmt);
-  //  alert(totlCalControls[i].invoiceAmt);
-  }
-  // alert(sum);
-  this.totAmt=sum;
+   alert('totlCalControls[i].invoiceAmt '+totlCalControls[i].invoiceAmt+" "+ i)
+  //  if(totlCalControls[i].invoiceAmt < totlCalControls[i].unPaidAmt){
+     alert('in if')
+    var sum=0;
+   
+    for (let i=0;i< this.payInvoiceLineDtlArray().length;i++){
+     sum=sum+ Number(totlCalControls[i].invoiceAmt);
+    //  alert(totlCalControls[i].invoiceAmt);
+    }
+    alert(totlCalControls[i].unPaidAmt);
+    this.totAmt=sum;
+    var unPaidAmt1=Number(totlCalControls[i].unPaidAmt) - Number(totlCalControls[i].invoiceAmt)
+    alert('unPaidAmt1 '+ unPaidAmt1)
+    var patch = this.paymentForm.get('obj') as FormArray;
+      (patch.controls[i]).patchValue(
+        {
+          unPaidAmt: unPaidAmt1,
+        }
+      );
+  //  } 
  }
 
 
