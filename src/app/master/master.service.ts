@@ -1172,7 +1172,24 @@ PriceListIdList(): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');   
       return this.http.get(this.ServerUrl + '/pricelist/prcListDto'); 
     }
+////////////////////////////OrderTypeMaster//////////////////
+UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/OrderTrnType`);
+  return this.http.put(url, OrderTypeMasterRecord, options);
+}
+getOrderTypeSearch(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/OrderTrnType');
 
+}
+InvSourceList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/InvoiceSource');
+}
+OrderCategoryList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/OrderCategory');
+}
 } 
 
 

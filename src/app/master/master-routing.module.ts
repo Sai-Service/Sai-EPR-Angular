@@ -27,6 +27,7 @@ import { PoReceiptFormComponent } from './po-receipt-form/po-receipt-form.compon
 import { FlexFieldComponent } from './flex-field/flex-field.component';
 import {PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
 import { OmGruopMasterComponent } from './om-gruop-master/om-gruop-master.component';
+import { OrderTypeMasterComponent } from './order-type-master/order-type-master.component';
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
@@ -59,6 +60,7 @@ const routes: Routes = [
 {path:'FlexField',component:FlexFieldComponent},
 {path:'pricelistMaster', component:PricelistMasterComponent},
 {path:'OMGRP',component:OmGruopMasterComponent},
+{path:'orderType', component:OrderTypeMasterComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

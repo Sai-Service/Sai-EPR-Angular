@@ -157,6 +157,7 @@ indexVal:number;
     distributionSet:number;
     matchAction:string;
     terms:string;
+    distCodeCombId:string;
     paymentMethod:string;
     payGroup:string;
     prepayType:string;
@@ -190,7 +191,18 @@ indexVal:number;
 
 lineNumber:number;
 lineTypeLookupCode:string;
-
+public segmentNameList: any;
+branch: any;
+segment11: string;
+segment2: number;
+segment3: number;
+segment4: number;
+segment5: number;
+lookupValueDesc4: string;
+lookupValueDesc1: string;
+lookupValueDesc2: string;
+lookupValueDesc3: string;
+lookupValueDesc5: string;
     // ouId:number;
   
     submitted = false;
@@ -199,6 +211,11 @@ lineTypeLookupCode:string;
     public lstsearchapinv:any;
     // nverValidedCnd:false;
     // ValidedCnd:true;
+    public locIdList1: Array<string> = [];
+    public BranchList: Array<string> = [];
+    public CostCenterList: Array<string> = [];
+    public NaturalAccountList: Array<string> = [];
+    public InterBrancList: Array<string> = [];
     public paymentMethodList: Array<string> = [];
     public prepayTypeList: Array<string> = [];
     public poTypeList: Array<string> = [];
@@ -223,6 +240,7 @@ lineTypeLookupCode:string;
     displaydescription=false;
     displaydistributionSet=false;
     displayValidateButton =true;
+    displayModal = true;
     selectedLine = 0;
     userList1: any[] = [];
     userList2: any[] = [];
@@ -257,6 +275,16 @@ lineTypeLookupCode:string;
         // termsId:[''],
         // glDate:[''],
         // currency:[''],
+        segment11: [],
+        segment2: [],
+        segment3: [],
+        segment4: [],
+        segment5: [],
+        lookupValueDesc4: [],
+      lookupValueDesc1: [],
+      lookupValueDesc2: [],
+      lookupValueDesc3: [],
+      lookupValueDesc5: [],
         obj: this.fb.array([this.lineDetailsGroup()]),
         invLines:this.fb.array([this.invLineDetails()]),
         distribution:this.fb.array([this.distLineDetails()]),
@@ -337,6 +365,7 @@ lineTypeLookupCode:string;
       baseAmount:[],
       poSegment:[],
       distCodeCombId:[],
+      distCodeCombSeg:[],
       poChargeAc:[],
       poChargeDesc:[],
       poChargeCode:[],
@@ -362,6 +391,7 @@ lineTypeLookupCode:string;
       poNumber:[],
       poLineId:[],
       matchType:[],
+      defaultDistCcid:[],
       defaultDisAcc:[],
       receiptNumber:[],
       qtyInvoiced:[],
@@ -380,12 +410,12 @@ lineTypeLookupCode:string;
   }
 
   invLineDetailsArray() : FormArray{
-    var patch = this.poInvoiceForm.get('invLines') as FormArray;
-    (patch.controls[0]).patchValue(
-      {
-        lineNumber: 1,
-      }
-    );
+    // var patch = this.poInvoiceForm.get('invLines') as FormArray;
+    // (patch.controls[0]).patchValue(
+    //   {
+    //     lineNumber: 1,
+    //   }
+    // );
     return <FormArray>this.poInvoiceForm.get('invLines')
   }
 
@@ -437,13 +467,12 @@ lineTypeLookupCode:string;
 
 
   lineDistributionArray(): FormArray{
-    // var len =  this.lineDistributionArray().length;
-    var patch = this.poInvoiceForm.get('distribution') as FormArray;
-      (patch.controls[0]).patchValue(
-        {
-          distLineNumber: 1,
-        }
-      );
+    // var patch = this.poInvoiceForm.get('distribution') as FormArray;
+    //   (patch.controls[0]).patchValue(
+    //     {
+    //       distLineNumber: 1,
+    //     }
+    //   );
     return <FormArray>this.poInvoiceForm.get('distribution')
   }
 
@@ -539,6 +568,40 @@ lineTypeLookupCode:string;
             this.taxCategoryList = data1;
             console.log(this.taxCategoryList);
             data1 = this.taxCategoryList;
+          }
+        );
+        this.service.BranchList()
+      .subscribe(
+        data => {
+          this.BranchList = data;
+          console.log(this.BranchList);
+        }
+      );
+    this.service.CostCenterList()
+      .subscribe(
+        data => {
+          this.CostCenterList = data;
+          console.log(this.CostCenterList);
+        }
+      );
+      this.service.locationCodeList()
+      .subscribe(
+        data => {
+          this.locIdList1 = data;
+          console.log(this.locIdList1);
+        }
+      );
+    this.service.NaturalAccountList()
+      .subscribe(
+        data => {
+          this.NaturalAccountList = data;
+          console.log(this.NaturalAccountList);
+        }
+      ); this.service.InterBrancList()
+        .subscribe(
+          data => {
+            this.InterBrancList = data;
+            console.log(this.InterBrancList);
           }
         );
 
@@ -771,6 +834,7 @@ lineTypeLookupCode:string;
 
 
     apInvoiceSave(){
+      this.displayValidateButton= false;
       // let manInvObj=new ManualInvoiceObj();
       let jsonData=this.poInvoiceForm.value.obj[0];
       jsonData.ouId=this.ouId;
@@ -1072,18 +1136,19 @@ onOptionTaxCatSelected(taxCategoryName,k) {
       alert(k);
       // alert(this.indexVal+ " indexVal")
       var x= k+1;
-      for(let z=x, j=1; j<this.invLineDetailsArray().length; j++, z++){
+     
+      alert(x+'"-------"'+this.invLineDetailsArray().length);
+      for(let z=x, j=1; z<this.invLineDetailsArray().length; j++, z++){
        controlinv.controls[z].patchValue(data.miscLines[j-1]);
        var ln= z+1;
         (controlinv.controls[z]).patchValue({ lineNumber: ln});
-        // this.poInvoiceForm.get('invLines').patchValue(data.miscLines[j]);
       }
     
       var segment =(arrayControl[k].segment)   
       let select = this.invItemList1.find(d => d.segment === segment);
       alert(select.itemId);
       let controlinv1 = this.poInvoiceForm.get('taxLines') as FormArray;
-      var LEN = controlinv1.length;
+      // var LEN = controlinv1.length;
       this.taxDetaileSendArr.push(data.taxLines)
       this.TaxDetailsArray().clear();
       for(let i=0; i< data.taxLines.length; i++){
@@ -1102,24 +1167,61 @@ onOptionTaxCatSelected(taxCategoryName,k) {
         });
       }
       let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
-      for(let i=0; i< data.invDisLines.length-1; i++){
+      var x1=Number((this.lineDistributionArray().length));
+      var len = this.lineDistributionArray().length
+      var totalLen = len + Number(data.invDisLines.length)
+      if(len == 1){
+        for(let i=len-1; i<data.invDisLines.length-1; i++){
+      // for(let i=0; i< data.invDisLines.length-1; i++){
         var invLnGrp: FormGroup = this.distLineDetails();
           this.lineDistributionArray().push(invLnGrp);  
+      }}else{
+        for(let i=len; i<totalLen; i++){
+          var invLnGrp: FormGroup = this.distLineDetails();
+          this.lineDistributionArray().push(invLnGrp);  
+        }
       }
-      this.lineDistributionArray().patchValue(data.invDisLines);
+      // if(len == 1){
+      //   for(let i=len-1; i<data.distribution.length-1; i++){
+      //     // for(let z=x, j=1; j<this.lineDistributionArray().length; j++, z++){
+      //       controlDist.controls[z].patchValue(data.invDisLines[j-1]);
+      //      }
+      //   }else{
+      //     for(let z=x, j=1; j<this.lineDistributionArray().length; j++, z++){
+      //       controlDist.controls[z].patchValue(data.invDisLines[j-1]);
+      //      }
+           if(len == 1){
+            for(let i=0, z=len-1; i<data.invDisLines.length  ; i++, z++){
+              controlDist.controls[z].patchValue(data.invDisLines[i]);
+              (controlDist.controls[z]).patchValue({ invoiceLineNum : k+1,distLineNumber:i+1});
+              // (control.controls[z]).patchValue({ invoiceLineNum : k+1});
+              // this.poInvoiceForm.get('distribution').patchValue(data.distribution);
+             }
+          }else{
+            
+            for(let i=0, z=len; i<data.invDisLines.length  ; i++, z++){
+              controlDist.controls[z].patchValue(data.invDisLines[i]);
+              (controlDist.controls[z]).patchValue({ invoiceLineNum : k+1, distLineNumber:z+1});
+              // (control.controls[z]).patchValue({ invoiceLineNum : k+1});
+              // this.poInvoiceForm.get('distribution').patchValue(data.distribution);
+             }
+          }
+        // }
+      
+      // this.lineDistributionArray().patchValue(data.invDisLines);
       // alert(k);
-      // // var x1=Number((this.lineDistributionArray().length)- 1);
-      // for(let z=0; z<this.lineDistributionArray().length ;  z++){
-      //   controlDist.controls[z].patchValue(data.invDisLines[z]);
-      //  let ln= z+1;
-      //   (controlDist.controls[z]).patchValue({ lineNumber: ln});
-      // }
-      for(let j=0; j<data.invDisLines.length; j++){
-      controlDist.controls[j].patchValue({
-        invLineItemId:select.itemId,
-        invLineNo: k+1,
-      });
-    }
+      
+    //   for(let j=0; j<data.invDisLines.length; j++){
+    //     console.log('in for loop');
+    //     alert('in for loop');
+    //     debugger;
+    //   controlDist.controls[j].patchValue({
+    //     invLineItemId:select.itemId,
+    //     invoiceLineNum: k+1,
+    //     // distLineNumber:x1,
+    //   });
+    //   // x1=x1+1;
+    // }
 })
 }
 Validate(){
@@ -1268,5 +1370,154 @@ patchResultList(i, taxCalforItem, invLineNo, invLineItemId) {
     }));
   });
   console.log(control);
+}
+openCodeComb1(i) {
+  // let segmentName1 = this.invLineDetailsArray().controls[i].get('segmentName').value;
+  var arrayControl = this.poInvoiceForm.get('distribution').value
+  let segmentName1 = arrayControl[i].distCodeCombSeg
+  alert('i '+i+" segmentName1 "+segmentName1)
+  if (segmentName1 === null) {
+    this.poInvoiceForm.get('segment11').reset();
+    this.poInvoiceForm.get('segment2').reset();
+    this.poInvoiceForm.get('segment3').reset();
+    this.poInvoiceForm.get('segment4').reset();
+    this.poInvoiceForm.get('segment5').reset();
+    // this.poMasterDtoForm.get('segment6').reset();
+    this.poInvoiceForm.get('lookupValueDesc1').reset();
+    this.poInvoiceForm.get('lookupValueDesc2').reset();
+    this.poInvoiceForm.get('lookupValueDesc3').reset();
+    this.poInvoiceForm.get('lookupValueDesc4').reset();
+    this.poInvoiceForm.get('lookupValueDesc5').reset();
+  }
+  if (segmentName1 != null) {
+    // this.service.segmentNameList(this.segmentName1)
+    // .subscribe(
+    //   data => {
+
+    //     this.segmentNameList = data;
+    //     if (this.segmentNameList.code === 200) {
+    //       if (this.segmentNameList.length == 0) {
+    //         alert('Invalid Code Combination');
+    //       } else {
+    //         console.log(this.segmentNameList);
+    //         this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
+    //       }
+    //     } else if (this.segmentNameList.code === 400) {
+    //       var arrayControl = this.poMasterDtoForm.get('poLines').value
+    //       var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+    //       (patch.controls[i]).patchValue({ segmentName: ''})
+    //       alert(this.segmentNameList.message);
+          
+    //     }
+    //   }
+    // );
+    var temp = segmentName1.split('.');
+    // alert(temp[0]);
+    this.segment11 = temp[0];
+    this.segment2 = temp[1];
+    this.segment3 = temp[2];
+    this.segment4 = temp[3];
+    this.segment5 = temp[4];
+    // this.segment6 = temp[5];
+  }
+  // alert(segmentName1);
+  this.displayModal = false;
+  this.showModal = true; // Show-Hide Modal Check
+  this.content = i; // Dynamic Data
+  let a = i + 1
+  this.title = "Distribution Line :" + a;    // Dynamic Data
+
+}
+fnCancatination(index) {
+  alert(index)
+  var arrayControl = this.poInvoiceForm.get('distribution').value
+  var patch = this.poInvoiceForm.get('distribution') as FormArray;
+  // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
+  arrayControl[index].segmentName = this.poInvoiceForm.get('segment11').value + '.'
+    + this.poInvoiceForm.get('segment2').value + '.'
+    + this.poInvoiceForm.get('segment3').value + '.'
+    + this.poInvoiceForm.get('segment4').value + '.'
+    + this.poInvoiceForm.get('segment5').value;
+  this.segmentName1 = arrayControl[index].segmentName
+  console.log(this.segmentName1);
+  (patch.controls[index]).patchValue({ distCodeCombSeg: this.segmentName1 })
+
+  this.service.segmentNameList(this.segmentName1)
+    .subscribe(
+      data => {
+       this.segmentNameList = data;
+        if (this.segmentNameList.code === 200) {
+          alert('in if 1'+ index)
+          alert(this.segmentNameList.obj.codeCombinationId); 
+          (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId });
+          if (this.segmentNameList.length == 0) {
+            alert('in if 2')
+            alert('Invalid Code Combination');
+          } else {
+            alert('in if 3')
+            console.log(this.segmentNameList);
+            (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId })
+            // this.distCodeCombId = Number(this.segmentNameList.codeCombinationId)
+          }
+        }  
+        if (this.segmentNameList.code === 400) {
+          // alert('in 400')
+          // var arrayControl = this.poInvoiceForm.get('poLines').value
+          alert(data.message);
+          (patch.controls[index]).patchValue({ distCodeCombSeg: ''})
+          // alert(this.segmentNameList.message);
+
+          
+        }
+      }
+    );
+  this.poInvoiceForm.get('segment11').reset();
+  this.poInvoiceForm.get('segment2').reset();
+  this.poInvoiceForm.get('segment3').reset();
+  this.poInvoiceForm.get('segment4').reset();
+  this.poInvoiceForm.get('segment5').reset();
+  this.poInvoiceForm.get('lookupValueDesc1').reset();
+  this.poInvoiceForm.get('lookupValueDesc2').reset();
+  this.poInvoiceForm.get('lookupValueDesc3').reset();
+  this.poInvoiceForm.get('lookupValueDesc4').reset();
+  this.poInvoiceForm.get('lookupValueDesc5').reset();
+}
+onOptionsSelectedBranch(segment: any, lType: string) {
+  // alert(segment);
+  // var InterBranch1=this.GlCodeCombinaionForm.get('segment1').value;
+  this.service.getInterBranch(segment, lType).subscribe(
+    data => {
+      this.branch = data;
+      console.log(this.branch);
+      // if(this.branch.code === 200){
+      if (this.branch != null) {
+        // this.poMasterDtoForm.patchValue(this.branch);
+        if (lType === 'SS_Interbranch') {
+          this.lookupValueDesc5 = this.branch.lookupValueDesc;
+        }
+        if (lType === 'NaturalAccount') {
+          this.lookupValueDesc4 = this.branch.lookupValueDesc;
+          //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+          //  this.accountType=this.branch.accountType;
+        }
+        if (lType === 'CostCentre') {
+          this.lookupValueDesc3 = this.branch.lookupValueDesc;
+        }
+        if (lType === 'SS_Location') {
+          this.lookupValueDesc2 = this.branch.lookupValueDesc;
+        }
+        if (lType === 'SS_Branch') {
+          this.lookupValueDesc1 = this.branch.lookupValueDesc;
+        }
+      }
+      // }else if(this.branch.code === 400){
+      //   alert(this.branch.message);
+
+      // }
+
+
+    }
+  );
+
 }
 }
