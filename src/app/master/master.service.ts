@@ -1117,7 +1117,79 @@ public poSaveSubmit(poRecord) {
   const url = this.ServerUrl + '/rcvShipment';  
   return this.http.post(url, poRecord, options);
 }
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+PriceTypeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/PriceListType');
+}
+
+PriceListIdList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/pricelist');
+  }
+
+    
+ 
+
+
+
+// getPriceListSearch(): Observable<any> {
+//   return this.http.get(this.ServerUrl +`/pricelist/prcline/${priceListHeaderId}`);
+//  }
+
+    public PriceListMasterSubmit(PriceListMasterRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/pricelist';  
+      return this.http.post(url, PriceListMasterRecord, options);
+    }   
+
+    UpdatePriceListById(PriceListMasterRecord,priceListHeaderId) {
+      const options = {
+        headers: this.headers
+      };
+      const url = (this.ServerUrl + `/pricelist/${priceListHeaderId}`);
+      return this.http.put(url, PriceListMasterRecord, options);
+    }
+
+
+    public OrderTypeMasterSubmit(OrderTypeMasterRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/OrderTrnType';  
+      return this.http.post(url, OrderTypeMasterRecord, options);
+    }   
+
+    UpdateOrderTypeMasterById(OrderTypeMasterRecord,transactionTypeId) {
+      const options = {
+        headers: this.headers
+      };
+      const url = (this.ServerUrl + `/OrderTrnType/${transactionTypeId}`);
+      return this.http.put(url, OrderTypeMasterRecord, options);
+    }
+    getPriceListSearch(): Observable<any> {
+      // return this.http.get(this.ServerUrl + '/pricelist');   
+      return this.http.get(this.ServerUrl + '/pricelist/prcListDto'); 
+    }
+////////////////////////////OrderTypeMaster//////////////////
+UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/OrderTrnType`);
+  return this.http.put(url, OrderTypeMasterRecord, options);
+}
+getOrderTypeSearch(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/OrderTrnType');
+
+}
+InvSourceList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/InvoiceSource');
+}
+OrderCategoryList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/OrderCategory');
+}
 } 
 
 

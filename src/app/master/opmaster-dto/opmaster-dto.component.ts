@@ -1256,7 +1256,7 @@ this.displayNewButtonReset=false;
         data => {
           this.ItemDetailsList = data;
           console.log(this.ItemDetailsList);
-          var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+          var patch = this.poMasterDtoForm.get('poLines') as FormArray; 
           console.log(patch.controls);
           console.log(patch.controls[index]);
           this.taxCategoryId = this.ItemDetailsList.taxCategoryId

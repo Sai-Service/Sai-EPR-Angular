@@ -42,7 +42,7 @@
                     <th scope="col">Payment Document</th>
                     <th scope="col">Document Number</th>
                     <th scope="col">Payment Address</th>
-                    <th scope="col">Document Category</th>
+                    <!-- <th scope="col">Document Category</th> -->
                     <th scope="col">Voucher Number</th>
                     <th scope="col">Status</th>
                     <th scope="col">Payment Narration</th>
@@ -59,10 +59,10 @@
                     <td>
             <div *ngIf="displaytype; then thentype; else elsetype"></div>
             <ng-template #thentype>
-                        <input type="text" class="form-control" formControlName="paymentNarration" value={{paymentNarration}} style="width: 100px;height: 25px;font-size: 10px;">  
+                        <input type="text" class="form-control" formControlName="paymentTypeFlag" value={{paymentTypeFlag}} style="width: 100px;height: 25px;font-size: 10px;">  
             </ng-template>
             <ng-template #elsetype>
-                <select formControlName="paymentNarration" id="paymentNarration" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                <select formControlName="paymentTypeFlag" id="paymentTypeFlag" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
                     <option>--Select--</option>
                     <option value="Quick">Quick</option>
                     <option value="Manual">Manual</option>
@@ -104,7 +104,7 @@
                         <ng-template #elsesuppNo>
                             <input disabled type="text" class="form-control" formControlName="suppNo" value={{suppNo}} style="width: 60px;height: 25px;font-size: 10px;">     
                         </ng-template>
-                        <input disabled type="text" class="form-control" formControlName="suppId" value={{suppId}} style="width: 60px;height: 25px;font-size: 10px;">     
+                        <input hidden type="text" class="form-control" formControlName="suppId" value={{suppId}} style="width: 60px;height: 25px;font-size: 10px;">     
                     </td>
                     <td>
                         <div *ngIf="displaysiteName; then thensiteName; else elsesiteName"></div>
@@ -150,13 +150,13 @@
                         style="width: 100px;height: 25px;font-size: 10px;">  
                     </td>
                     <td>
-                        <input type="text" class="form-control"  style="width: 100px;height: 25px;font-size: 10px;">  
+                        <input type="text" class="form-control" formControlName="PayAmount" style="width: 100px;height: 25px;font-size: 10px;">  
                     </td>
                     <td>
                         <!-- (ngModelChange)='onOptionsSelected($event)' -->
                         <!-- <input type="text" class="form-control" formControlName="bankAccountNum" value={{bankAccountNum}}  style="width: 100px;height: 25px;font-size: 10px;">   -->
                         <select formControlName="bankAccountNo" id="bankAccountNo" class="form-control"
-                        [ngModel]="bankAccountNo"   (ngModelChange)='onOptionsSelected($event)'
+                        [ngModel]="bankAccountNo"   (ngModelChange)='onOptionsSelected($event, i)'
                         style="width: 140px;height: 25px;font-size: 10px;">
                             <option>--Select--</option>
                             <option *ngFor="let sc of  bankAccountNumList">
@@ -198,16 +198,16 @@
                         <!-- <input class="form-control" formControlName="paymentDocName" value={{paymentDocName}} style="width: 60px;height: 25px;font-size: 10px;"> -->
                     </td>
                     <td>
-                        <input  class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
+                        <input  class="form-control" disabled formControlName="docNo" style="width: 60px;height: 25px;font-size: 10px;">
                     </td>
                     <td>
-                        <input class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
+                        <input class="form-control" formControlName="payAddress" style="width: 200px;height: 25px;font-size: 10px;">
                     </td>
+                    <!-- <td>
+                        <input class="form-control" formControlName="docCategory" style="width: 60px;height: 25px;font-size: 10px;">
+                    </td> -->
                     <td>
-                        <input class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
-                    </td>
-                    <td>
-                        <input class="form-control" style="width: 60px;height: 25px;font-size: 10px;">
+                        <input class="form-control" formControlName="voucherNo" style="width: 60px;height: 25px;font-size: 10px;">
                     </td>
                     <td>
                         <div *ngIf="displaystatus; then thenstatus; else elsestatus"></div>
@@ -263,8 +263,11 @@
                 <tr>
                     <td colspan="2" style="width: 15%"class="LabelFontStyle4" align="right">Invoice&nbsp;Number&nbsp;:&nbsp;</td>
                     <td>
-                        <input disabled type="text" class="form-control" formControlName="totAmt" [(ngModel)]="totAmt" value={{totAmt}} style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
+                        <input  type="text" class="form-control" formControlName="INVNO" [(ngModel)]="INVNO"  value={{INVNO}} style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
                     </td> 
+                    <!-- [disabled]="!INVNO" -->
+                    <button type="submit" (click)="SearchINVNO(INVNO)" class="btn btn-primary"><i
+                        class="fa fa-search"></i></button>
                 </tr>
               </table>
             </div>
@@ -312,7 +315,7 @@
                             <input type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} (change)="changeAmount()" style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <td>
-                            <input disabled type="text" class="form-control" formControlName="UnpaidAmt" value={{UnpaidAmt}} style="width: 100px;height: 25px;font-size: 10px;">  
+                            <input disabled type="text" class="form-control" formControlName="unPaidAmt" value={{unPaidAmt}} style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <!-- <td>
                             <button class="btn-primary"><i class="fas fa-save"></i></button>

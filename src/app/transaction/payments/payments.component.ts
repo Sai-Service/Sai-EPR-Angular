@@ -63,6 +63,7 @@ export class PaymentsComponent implements OnInit {
   partyId:number;
   totAmount:number;
   statusLookupCode:string;
+  INVNO:string;
   public lstsearchpayminv:any;
   public lstinvoiceDetls:any;
   // public invPayment:any[];
@@ -92,6 +93,7 @@ public PaymentReturnArr:any[];
       ouName: [],
       paymentAmt:[],
       totAmt:[],  
+      INVNO:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -109,13 +111,14 @@ public PaymentReturnArr:any[];
       invoiceAmt:[],
       selectFlag:[],
       invoiceId:[],
-      UnpaidAmt:[],
+      unPaidAmt:[],
     }) 
   }
 
    payHeaderLineDtl(){
     return this.fb.group({
       // invoiceNum:[],
+      paymentTypeFlag:[],
       ouId:[],
       suppNo:[],
       // bankAccountNum:[],
@@ -130,6 +133,11 @@ public PaymentReturnArr:any[];
       paymentMethodId:[],
       statusLookupCode:[],
       payDate:[],
+      PayAmount:[],
+      docNo :[],
+payAddress:[],
+// docCategory:[],
+voucherNo:[],
       // bankAccountId:[],
       docCategoryCode:[],
       bankAccountNo:[],
@@ -180,7 +188,34 @@ public PaymentReturnArr:any[];
     );
   }
 
- 
+  SearchINVNO(INVNO){
+    alert(INVNO)
+    // alert(this.paymentForm.get('INVNO').value);
+    this.payInvoiceLineDtlArray().clear();
+    let control = this.paymentForm.get('obj') as FormArray;
+   var lenC = this.payInvoiceLineDtlArray().length;
+   alert (lenC);
+   console.log(this.lstinvoiceDetls);
+   
+   let select = this.lstinvoiceDetls.find(d => d.invoiceNum === INVNO);
+   console.log(select);
+   alert(select.length)
+   
+   var pyLine: FormGroup = this.payInvoiceLineDtl();
+    // for (let i = 0; i <= select.length - lenC; i++) {
+        control.push(pyLine);
+       this.totAmt=select.invoiceAmt;
+      // }
+    // this.paymentForm.get('obj').patchValue(select);
+    // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+    (control.controls[0]).patchValue(
+      {
+        // totAmt : 0,
+        invoiceNum:select.invoiceNum,
+        invoiceAmt:select.invoiceAmt,
+        unPaidAmt:select.invoiceAmt,
+      });
+  }
 
 
   payment(paymentForm){
@@ -244,13 +279,17 @@ public PaymentReturnArr:any[];
  }
 
 
-    onOptionsSelected(bankAccountNo: string) {
+    onOptionsSelected(bankAccountNo: string, index) {
       alert(bankAccountNo);
-      var value=bankAccountNo.split('/');
+      // if(bankAccountNo == undefined){
+        alert(bankAccountNo);
+        var value=bankAccountNo.split('/');
       alert(value[0]);
       let selectedValue = this.bankAccountNumList.find(v => v.bankAccountNo == (value[0]));
       // var bankId=this.paymentForm.get('obj1').value;
-      alert(selectedValue.bankAccountId);
+      var patch = this.paymentForm.get('obj1') as FormArray;
+      var address = (selectedValue.address1+" "+selectedValue.address2+" "+selectedValue.address3+" "+selectedValue.city+" "+selectedValue.pinCode+" "+selectedValue.state);
+      (patch.controls[index]).patchValue(  {payAddress : address});
       this.transactionService.docCategoryCodeList(selectedValue.bankAccountId)
       .subscribe(
         data => {
@@ -258,6 +297,8 @@ public PaymentReturnArr:any[];
           console.log(this.docCategoryCodeList);
         }
       );
+      // }
+      
     }
 
 
