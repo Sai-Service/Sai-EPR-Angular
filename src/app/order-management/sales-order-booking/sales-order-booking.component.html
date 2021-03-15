@@ -192,19 +192,39 @@
                     &nbsp;&nbsp;&nbsp;Order&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
+                    <div *ngIf="displayorderedDate; then thenorderedDate; else elseorderedDate"></div>
+                <ng-template #thenorderedDate>
+                    <input disabled type="text" class="form-control" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}} 
+                    [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                    style="width: 170px;"> 
+                </ng-template>
+                <ng-template #elseorderedDate>
                     <input disabled type="text" class="form-control" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}} style="width: 170px;">
+                </ng-template>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order&nbsp;Type&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" class="form-control" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;">
+                    <div *ngIf="displaytransactionTypeName; then thentransactionTypeName; else elsetransactionTypeName"></div>
+                    <ng-template #thentransactionTypeName>
+                    <input  type="text" class="form-control" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsetransactionTypeName>
+                        <input disabled type="text" class="form-control" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;">
+                    </ng-template>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status&nbsp;:&nbsp;
                 </td>
                 <td>
+                    <div *ngIf="displayflowStatusCode; then thenflowStatusCode; else elseflowStatusCode"></div>
+                    <ng-template #thenflowStatusCode>
                     <input disabled type="text" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode' value={{flowStatusCode}} class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elseflowStatusCode>
+                        <input disabled type="text" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode' value={{flowStatusCode}} class="form-control" style="width: 170px;">
+                    </ng-template>
                 </td>
             </tr>
             <tr>
@@ -212,25 +232,49 @@
                     Payment&nbsp;Term&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;">
+                    <div *ngIf="displaypayTermDesc; then thenpayTermDesc; else elsepayTermDesc"></div>
+                    <ng-template #thenpayTermDesc>
+                    <input  type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsepayTermDesc>
+                        <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;">
+                    </ng-template>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Sales&nbsp;Person&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control" style="width: 170px;">
+                    <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
+                    <ng-template #thensalesRepName>
+                    <input type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsesalesRepName>
+                        <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control" style="width: 170px;">
+                    </ng-template>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     TL&nbsp;Name&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}  class="form-control" style="width: 170px;">
+                    <div *ngIf="displaytlName; then thentlName; else elsetlName"></div>
+                    <ng-template #thentlName>
+                    <input  type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}  class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsetlName>
+                        <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}  class="form-control" style="width: 170px;">
+                    </ng-template>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Remark&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}  class="form-control" style="width: 170px;">
+                    <div *ngIf="displayremarks; then thenremarks; else elseremarks"></div>
+                    <ng-template #thenremarks>
+                    <input  type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}  class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elseremarks>
+                        <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}  class="form-control" style="width: 170px;">
+                    </ng-template>
                 </td>
             </tr>
             <tr>
@@ -256,7 +300,13 @@
                     Allotment&nbsp;flag&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" class="form-control" style="width: 170px;">
+                    <div *ngIf="displayallotmentFlag; then thenallotmentFlag; else elseallotmentFlag"></div>
+                    <ng-template #thenallotmentFlag>
+                    <input  type="text" class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elseallotmentFlag>
+                        <input disabled type="text" class="form-control" style="width: 170px;">
+                    </ng-template>
                 </td>
             </tr>
             </table>
@@ -271,25 +321,49 @@
                                         &nbsp;&nbsp;&nbsp;Model&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="model" [(ngModel)]='model' value={{model}} class="form-control" style="width: 170px;">
+                                        <div *ngIf="displaymodel; then thenmodel; else elsemodel"></div>
+                    <ng-template #thenmodel>
+                        <input  type="text" formControlName="model" [(ngModel)]='model' value={{model}} class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsemodel>
+                           <input disabled type="text" formControlName="model" [(ngModel)]='model' value={{model}} class="form-control" style="width: 170px;">
+                    </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Varriant&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="variant" [(ngModel)]='variant' value={{variant}} class="form-control" style="width: 170px;">
+                                        <div *ngIf="displayvariant; then thenvariant; else elsevariant"></div>
+                    <ng-template #thenvariant>
+                        <input type="text" formControlName="variant" [(ngModel)]='variant' value={{variant}} class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsevariant>
+                        <input disabled type="text" formControlName="variant" [(ngModel)]='variant' value={{variant}} class="form-control" style="width: 170px;">
+                    </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Color&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;">
+                                        <div *ngIf="displaycolor; then thencolor; else elsecolor"></div>
+                    <ng-template #thencolor>
+                                        <input  type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;">
+                    </ng-template>
+                    <ng-template #elsecolor>
+                        <input disabled type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;">
+                    </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price&nbsp;:&nbsp;
                                     </td>
                                     <td>
+                                        <div *ngIf="displaycolor; then thencolor; else elsecolor"></div>
+                                        <ng-template #thencolor>
                                         <input disabled type="text" class="form-control" style="width: 150px;">
+                                        </ng-template>
+                                        <ng-template #elsecolor>
+                                            <input disabled type="text" class="form-control" style="width: 150px;">
+                                        </ng-template>
                                     </td>
                                 </tr>
                             </table>
@@ -328,25 +402,55 @@
                                         &nbsp;&nbsp;&nbsp;Finance&nbsp;Type&nbsp;:&nbsp;
                                     </td>
                                     <td>
+                                    <div *ngIf="displayfinanceType; then thenfinanceType; else elsefinanceType"></div>
+                                    <ng-template #thenfinanceType>
+                                        <select formControlName="financeType"  id="financeType" class="form-control" style="width: 170px;">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  financeTypeList">{{sc.codeDesc}}</option>
+                                            </select>
+                                    </ng-template>
+                                    <ng-template #elsefinanceType>
                                         <input disabled type="text" formControlName="financeType" [(ngModel)]='financeType' value={{financeType}} class="form-control" style="width: 170px;">
+                                    </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Financer&nbsp;:&nbsp;
                                     </td>
                                     <td>
+                                        <div *ngIf="displayfinancerName; then thenfinancerName; else elsefinancerName"></div>
+                                        <ng-template #thenfinancerName>
+                                            <select formControlName="financerName"  id="financerName" class="form-control" style="width: 170px;">
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}</option>
+                                                </select>
+                                        </ng-template>
+                                        <ng-template #elsefinancerName>
                                         <input disabled type="text" formControlName="financerName" [(ngModel)]='financerName' value={{financerName}} class="form-control" style="width: 170px;">
+                                        </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finance&nbsp;Amount&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="financeAmt" [(ngModel)]='financeAmt' value={{financeAmt}} class="form-control" style="width: 170px;">
+                                        <div *ngIf="displayfinanceAmt; then thenfinanceAmt; else elsefinanceAmt"></div>
+                                        <ng-template #thenfinanceAmt>
+                                            <input  type="text" formControlName="financeAmt" [(ngModel)]='financeAmt' value={{financeAmt}} class="form-control" style="width: 150px;">
+                                        </ng-template>
+                                        <ng-template #elsefinanceAmt>
+                                        <input disabled type="text" formControlName="financeAmt" [(ngModel)]='financeAmt' value={{financeAmt}} class="form-control" style="width: 150px;">
+                                        </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EMI&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}} class="form-control" style="width: 170px;">
+                                        <div *ngIf="displayemi; then thenemi; else elseemi"></div>
+                                        <ng-template #thenemi>
+                                            <input  type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}} class="form-control" style="width: 150px;">
+                                        </ng-template>
+                                        <ng-template #elseemi>
+                                        <input disabled type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}} class="form-control" style="width: 150px;">
+                                    </ng-template>
                                     </td>
                                 </tr> 
                                 <tr>
@@ -354,13 +458,25 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tenure&nbsp;:&nbsp;
                                     </td>
                                     <td>
+                                        <div *ngIf="displaytenure; then thentenure; else elsetenure"></div>
+                                        <ng-template #thentenure>
+                                            <input  type="text" formControlName="tenure" [(ngModel)]='tenure' value={{tenure}} class="form-control" style="width: 170px;">
+                                        </ng-template>
+                                        <ng-template #elsetenure>
                                         <input disabled type="text" formControlName="tenure" [(ngModel)]='tenure' value={{tenure}} class="form-control" style="width: 170px;">
+                                        </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Down&nbsp;Payment&nbsp;:&nbsp;
                                     </td>
                                     <td>
+                                        <div *ngIf="displaydownPayment; then thendownPayment; else elsedownPayment"></div>
+                                        <ng-template #thendownPayment>
+                                            <input  type="text" formControlName="downPayment" [(ngModel)]='downPayment' value={{downPayment}} class="form-control" style="width: 170px;">
+                                        </ng-template>
+                                        <ng-template #elsedownPayment>
                                         <input disabled type="text" formControlName="downPayment" [(ngModel)]='downPayment' value={{downPayment}} class="form-control" style="width: 170px;">
+                                    </ng-template>
                                     </td>
                                 </tr>
                             </table>
@@ -466,8 +582,20 @@
                                 <input disabled type="text"  formControlName="lineNumber"  class="form-control" style="height: 20px;width: 40px;">
                                </td>
                                <td>
-                                <input disabled type="text"  formControlName="segment"  class="form-control" style="height: 20px;width: 170px;">
-                               </td>
+                                <div *ngIf="displaysegment; then thensegment; else elsesegment"></div>
+                                <ng-template #thensegment>
+                                    <!-- (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)' -->
+                                    <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
+                                    <select  class="form-control"  formControlName="segment" [ngModel]="segment" style="height: 20px;width: 170px;"
+                                    (ngModelChange)='onOptionsSelectedDescription($event)' >
+                                        <option>--Select--</option>
+                                        <option *ngFor="let invId of ItemIdList">{{invId.SEGMENT}}</option>
+                                      </select>
+                                </ng-template>  
+                                <ng-template #elsesegment>
+                                    <input disabled type="text"  formControlName="segment"  class="form-control" style="height: 20px;width: 170px;">
+                                </ng-template>
+                            </td>
                                <td>
                                 <input disabled type="text"  formControlName="orderedItem"  class="form-control" style="height: 20px;width: 170px;">
                                </td>

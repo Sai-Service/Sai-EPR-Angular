@@ -11,6 +11,8 @@ import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { data } from 'jquery';
+import { DatePipe } from '@angular/common';
+
 
 interface ISalesBookingForm {
   divisionName:string,
@@ -67,7 +69,7 @@ export class SalesOrderBookingComponent implements OnInit {
   orderNumber:number;
   accountNo:number;
   custName:string;
-  orderedDate:Date;
+  orderedDate=new Date();
   transactionTypeName:string;
   flowStatusCode:string;
   payTermDesc:string;
@@ -98,13 +100,39 @@ export class SalesOrderBookingComponent implements OnInit {
   totAmt1:number;
   flowStatusCode1:string;
   lstgetOrderDetails:any;
+  invItemId:number;
+  DESCRIPTION:string;
   lstgetOrderLineDetails: any[];
+  public financeTypeList:any;
+  public financerNameList:any;
+  
 
   public orderLines:any[];
   hideArray: Array<boolean> = [];
   displayOrderLine: Array<boolean> = [];
-  
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService) {
+  public ItemIdList:Array<string>=[];
+
+  displayfinanceType=true;
+  displayfinancerName=true;
+  displayfinanceAmt=true;
+  displayemi=true;
+  displaytenure=true;
+  displaydownPayment=true;
+  displayorderedDate=true;
+  displaytransactionTypeName=true;
+  displayflowStatusCode=true;
+  displaypayTermDesc=true;
+  displaysalesRepName=true;
+  displaytlName=true;
+  displayremarks=true;
+  displayallotmentFlag=true;
+  displaymodel=true;
+  displayvariant=true;
+  displaycolor=true;
+  displaysegment=true;
+
+
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName:[''],
       ouName:[''],
@@ -169,6 +197,35 @@ export class SalesOrderBookingComponent implements OnInit {
     this.ouName = (sessionStorage.getItem('ouName'));
     this.locCode= (sessionStorage.getItem('locCode'));
     this.ticketNo=(sessionStorage.getItem('ticketNo'));
+
+
+
+
+    this.orderManagementService.getFinTypeSearch1()
+    .subscribe(
+      data => {
+        this.financeTypeList = data;
+        console.log(this.financeTypeList);
+      }
+    );
+
+    this.orderManagementService.getFinNameSearch()
+    .subscribe(
+      data => {
+        this.financerNameList = data;
+        console.log(this.financerNameList);
+      }
+    );
+
+
+    this.orderManagementService.ItemIdList()
+    .subscribe(
+      data =>{ 
+        this.ItemIdList = data;
+        console.log(this.ItemIdList);
+        });
+
+    
   }
 
   closeMast() {
@@ -178,6 +235,24 @@ export class SalesOrderBookingComponent implements OnInit {
   OrderFind(orderNumber){
     alert(orderNumber);
     this.orderlineDetailsArray().clear(); 
+    this.displayfinanceType=false;
+    this.displayfinancerName=false;
+    this.displayfinanceAmt=false;
+    this.displayemi=false;
+    this.displaytenure=false;
+    this.displaydownPayment=false;
+    this.displayorderedDate=false;
+    this.displaytransactionTypeName=false;
+    this.displayflowStatusCode=false
+    this.displaypayTermDesc=false
+    this.displaysalesRepName=false;
+    this.displaytlName=false;
+    this.displayremarks=false;
+    this.displayallotmentFlag=false;
+    this.displaymodel=false;
+    this.displayvariant=false
+    this.displaycolor=false;
+    this.displaysegment=false;
     this.orderManagementService.getsearchByOrderNo(orderNumber)
     .subscribe(
       data => {
@@ -215,4 +290,21 @@ export class SalesOrderBookingComponent implements OnInit {
     this.hideArray[index] = true;
   }
 
+
+
+  onOptionsSelectedDescription (orderedItem:string){
+    // alert(city);
+    this.orderManagementService.ItemIdList()
+    .subscribe(
+      data => {
+        this.ItemIdList = data;
+        // console.log(this.ItemIdList.DESCRIPTION);
+        // this.orderedItem=this.ItemIdList.DESCRIPTION;
+      }
+    );
+  }
+
+
+
+  
 }
