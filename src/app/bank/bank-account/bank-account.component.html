@@ -23,6 +23,7 @@
                                 {{sc.custName}}
                             </option>
                         </select>
+                        
                         <!-- <input formControlName="bkName" class="form-control" placeholder="Search by bank name"
                             (keydown.tab)="serchByBanhName(bkName)"> -->
                     </td>
@@ -66,12 +67,13 @@
                                         <td>
                                             <!-- <input disabled type="text" [(ngModel)]="custName" formControlName="custName"
                                             class="form-control" > -->
-                                            <select formControlName="custName" id="custName" class="form-control" [(ngModel)]="custName" (ngModelChange)="onBankNameSelected1($event)" >
+                                            <select formControlName="custName" (ngModelChange)="selectCustId($event)" id="custName" class="form-control" [(ngModel)]="custName" (ngModelChange)="onBankNameSelected1($event)" >
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of BankNameList" >
                                                     {{sc.custName}}
                                                 </option>
                                             </select>
+                                            <input type="text"  formControlName="customerId" [(ngModel)]="customerId">
                                         </td>
                                             <td style="width: 15%" class="LabelFontStyle"> Branch&nbsp;Name&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">

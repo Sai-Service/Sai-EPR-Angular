@@ -149,8 +149,12 @@ receiptMultiCurrFlag:string;
       }
     );
   }
+  selectCustId(bankName){
+    alert(bankName);
+    let select = this.BankNameList.find(d => d.custName === bankName);
+    this.customerId = select.customerId
+  }
   onBankNameSelectedHeder(BkName) {
-    alert(BkName);
     this.bankService.BankBranchList(BkName)
     .subscribe(
       data => {
