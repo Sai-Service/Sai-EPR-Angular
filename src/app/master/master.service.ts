@@ -109,7 +109,8 @@ export class MasterService {
   }
 
   taxCategoryList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
+    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase'); 
   }
   // suppIdList(suppId, ouId): Observable<any> {
   //   return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
@@ -664,6 +665,7 @@ TransactionNatureList(): Observable<any> {
 }
 purchaseLocationList(): Observable<any> {
   return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
+  // http://localhost:8081/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=11MU 
                                          
 }
 
@@ -1158,7 +1160,7 @@ PriceListIdList(): Observable<any> {
       const options = {
         headers: this.headers
       };
-      const url = (this.ServerUrl + `/pricelist/${priceListHeaderId}`);
+      const url = (this.ServerUrl + `/pricelist`);
       return this.http.put(url, PriceListMasterRecord, options);
     }
 

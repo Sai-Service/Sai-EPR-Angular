@@ -209,7 +209,7 @@
                                 </td>
 
                                 <td>
-                                    <button style="width: 10em;" type="button" class="btn btn-info"  id="register" >Search</button>
+                                    <button style="width: 10em;" type="button" class="btn btn-info"  id="register" (click)="findByCode(searchBy,searchValue)" >Search</button>
                                     <!-- <button type="button" class="btn btn-info"  id="register" (click)="searchMast()" >Search</button> -->
                                 </td>
                                 </ng-template>
@@ -262,7 +262,7 @@
                                                   </tr>
                                               </thead>
 
-                                            <tr *ngFor="let group of lineDetailsArray.controls; let i= index" [formGroupName]="i">
+                                            <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
                                                 
                                             <input type="text" hidden formControlName="priceListLineId">
                                                 <td>
@@ -280,13 +280,13 @@
                                                     <!-- onfocusout="itemValidate($event)" -->
                                                 </td> 
                                                 <td>
-                                                    <input   type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
+                                                    <input disabled  type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
                                                 </td>
                                                 <td>
-                                                    <input   type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                                    <input disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                                 </td>
                                                 <td>
-                                                    <input   type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
+                                                    <input disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
                                                     <input   type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  >

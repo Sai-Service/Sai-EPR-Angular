@@ -60,7 +60,7 @@ export class PricelistMasterComponent implements OnInit {
   showItemSearch=false;
   showPriceListLov =true;
   display=true;
-  lstcomments: any[];
+  lstcomments: any;
 
   public statusList: Array<string> = [];
   invItemList: any;
@@ -109,10 +109,8 @@ export class PricelistMasterComponent implements OnInit {
         priceDesc:[],
         priceListId:['', [Validators.required]],
         priceListName:['', [Validators.required]],
-
         searchBy:['', [Validators.required]],
         searchValue:['', [Validators.required]],
-       
         priceListDetailList: this.fb.array([this.lineDetailsGroup()])   
       });
     }
@@ -129,13 +127,11 @@ export class PricelistMasterComponent implements OnInit {
         priceValue: ['', [Validators.required]],
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
-
         segment: ['', [Validators.required]],
-
        });
     }
   
-    get lineDetailsArray() {
+   lineDetailsArray() :FormArray{
       return <FormArray>this.priceListMasterForm.get('priceListDetailList')
     }
    
@@ -330,7 +326,7 @@ export class PricelistMasterComponent implements OnInit {
 
   addRow() {
     // alert('addrow index '+index);
-    this.lineDetailsArray.push(this.lineDetailsGroup());
+    this.lineDetailsArray().push(this.lineDetailsGroup());
     
   }
 
@@ -339,7 +335,7 @@ export class PricelistMasterComponent implements OnInit {
 
     }
     else {
-      this.lineDetailsArray.removeAt(index);
+      this.lineDetailsArray().removeAt(index);
     }
   
   }
@@ -396,18 +392,25 @@ export class PricelistMasterComponent implements OnInit {
   // ============================================================
 
   Select(priceListHeaderId: number) {
+    this.priceListMasterForm.reset();
     this.display1= false;
     // alert ('priceListHeaderId='+priceListHeaderId);
     let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
     console.log(select.priceListDetailList[0]);
-    
+    alert(this.lineDetailsArray.length);
+ 
+    for(let i=0; i<this.lineDetailsArray.length; i++){ 
+      this.lineDetailsArray().removeAt(i);
+    }
+    this.lineDetailsArray().clear();
+    alert(this.lineDetailsArray.length);
     if (select) {
-      this.priceListMasterForm.patchValue(select);
       this.priceListType = select.priceListType+ "-" + select.priceListName;
       var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-      var priceListDetailList:FormGroup=this.lineDetailsGroup();
+      
       alert("PL LENGTH: "+ select.priceListDetailList.length);
       for (let i=0; i<select.priceListDetailList.length;i++) {
+        var priceListDetailList:FormGroup=this.lineDetailsGroup();
         control.push(priceListDetailList);
       }
       this.priceListHeaderId = select.priceListHeaderId;
@@ -416,16 +419,18 @@ export class PricelistMasterComponent implements OnInit {
       this.showItemSearch=true;
       alert('priceListHeaderId='+priceListHeaderId+"  PL TYPE :" + this.priceListType);
       console.log("price list details : " + select.priceListDetailList);
-      let controlinv1 = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-      for (let i=0; i<select.priceListDetailList.length;i++) {
-        alert('Item '+select.priceListDetailList[i].itemId);
-        alert('priceValue '+select.priceListDetailList[i].priceValue); 
-        controlinv1.controls[i].patchValue(select.priceListDetailList[i]);
+      // let controlinv1 = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+      // for (let i=0; i<select.priceListDetailList.length;i++) {
+      //   alert('Item '+select.priceListDetailList[i].itemId);
+      //   alert('priceValue '+select.priceListDetailList[i].priceValue); 
+      //   // controlinv1.controls[i].patchValue(select.priceListDetailList[i]);
+      // // this.priceListMasterForm.get('priceListDetailList').patchValue(select.priceListDetailList);
+      // }
       // this.priceListMasterForm.get('priceListDetailList').patchValue(select.priceListDetailList);
-      }
-
+      this.priceListMasterForm.patchValue(select);
     }
   }
+
 
   searchMast() {
     this.service.getPriceListSearch()
@@ -460,8 +465,10 @@ export class PricelistMasterComponent implements OnInit {
     return matches;
   };
   onOptioninvItemIdSelected(itemId, index) {
+ 
     //  alert('item function');
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
+      if( selectedValue != undefined){
       // alert(selectedValue.itemId);
       console.log(selectedValue);
       
@@ -482,5 +489,44 @@ export class PricelistMasterComponent implements OnInit {
       );
   
     }
+  }
+  findByCode(searchBy,searchValue){
+    alert(searchBy)
+    // var arrayControl = this.priceListMasterForm.get('priceListDetailList').value
+    var priceListHeaderId= this.priceListMasterForm.get('priceListHeaderId').value;
+    alert(priceListHeaderId);
+    let select1 = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
+    console.log('(select1.priceListDetailList) ' +select1.priceListDetailList);
+    console.log(select1.priceListDetailList.length);
+    var data : any=[] ;
+    if(searchBy== 'ITEM DESCRIPTION'){
+      for(let i=0; i<select1.priceListDetailList.length; i++){
+        if(select1.priceListDetailList[i].itemDescription.includes(searchValue)){
+          data.push(select1.priceListDetailList[i])
+        }
+      }
+    }
+    if(searchBy== 'ITEM CODE'){
+      for(let i=0; i<select1.priceListDetailList.length; i++){
+        if(select1.priceListDetailList[i].segment.includes(searchValue)){
+          data.push(select1.priceListDetailList[i])
+        }
+      }
+    }
+    console.log(data);
+    // let select = (select1.priceListDetailList).find(d => d.itemDescription.includes(searchValue));
+    // console.log(select);
+    for(let i=0; i<this.lineDetailsArray.length; i++){ 
+      this.lineDetailsArray().removeAt(i);
+    }
+    this.lineDetailsArray().clear();
+    alert(this.lineDetailsArray.length);
+    var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+    for (let i=0; i<data.length;i++) {
+      var priceListDetailList:FormGroup=this.lineDetailsGroup();
+      control.push(priceListDetailList);
+    }
+    this.priceListMasterForm.get('priceListDetailList').patchValue(data);
+  }
 }
  
