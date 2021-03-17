@@ -673,6 +673,8 @@ export class PoInvoiceComponent implements OnInit {
           this.lineDetailsArray().push(invLnGrp);
         });
         this.poInvoiceForm.get('obj').patchValue(this.lstsearchapinv);
+       
+
         this.displayValidateButton= false;
       }
       else {
@@ -783,8 +785,10 @@ export class PoInvoiceComponent implements OnInit {
     this.transactionService.getApInvLineDetails(invoiceNum)
       .subscribe(
         data => {
+          console.log(data);
           this.lstInvLineDeatails = data;
-          console.log(this.lstInvLineDeatails);
+          console.log(data.invoiceStatus);
+          
           // if (res.code === 200) {
           // this.lstsearchapinv=res.obj;
           data.invLines.forEach(f => {
@@ -812,6 +816,10 @@ export class PoInvoiceComponent implements OnInit {
           //     this.TaxDetailsArray().push(invLnGrp);
           //   this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           // });
+          if(data.invoiceStatus=='Validated'){
+            alert('in validated')
+            this.poInvoiceForm.disable();
+          }
         }
 
 
@@ -1262,7 +1270,7 @@ export class PoInvoiceComponent implements OnInit {
         })
   }
   Validate() {
-    this.poInvoiceForm.disable();
+    
         var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
@@ -1290,6 +1298,7 @@ export class PoInvoiceComponent implements OnInit {
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
           alert('VALIDATE SUCCESSFUILY');
+          this.poInvoiceForm.disable();
           // window.location.reload();
         } else {
           if (res.code === 400) {
