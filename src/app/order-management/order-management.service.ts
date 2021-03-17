@@ -23,4 +23,17 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
+
+  getFinTypeSearch1(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
+  }
+  getFinNameSearch(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
+  }
+
+  ItemIdList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/category`);
+  }
+
+
 }
