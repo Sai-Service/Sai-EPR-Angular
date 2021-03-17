@@ -52,6 +52,7 @@ interface ISalesBookingForm {
   taxAmt:number;
   totAmt1:number;
   flowStatusCode1:string;
+  category:string;
 }
 
 
@@ -101,7 +102,8 @@ export class SalesOrderBookingComponent implements OnInit {
   flowStatusCode1:string;
   lstgetOrderDetails:any;
   invItemId:number;
-  DESCRIPTION:string;
+  description:string;
+  category:string;
   lstgetOrderLineDetails: any[];
   public financeTypeList:any;
   public financerNameList:any;
@@ -111,6 +113,9 @@ export class SalesOrderBookingComponent implements OnInit {
   hideArray: Array<boolean> = [];
   displayOrderLine: Array<boolean> = [];
   public ItemIdList:Array<string>=[];
+  // public addonItemList:Array<string>=[];
+  public addonItemList:any[];
+  public addonDescList:any[];
 
   displayfinanceType=true;
   displayfinancerName=true;
@@ -130,6 +135,7 @@ export class SalesOrderBookingComponent implements OnInit {
   displayvariant=true;
   displaycolor=true;
   displaysegment=true;
+  displaycategory=true;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
@@ -178,6 +184,7 @@ export class SalesOrderBookingComponent implements OnInit {
       taxAmt:[''],
       totAmt:[''],
       flowStatusCode:[''],
+      category:[''],
     })
   }
 
@@ -218,12 +225,12 @@ export class SalesOrderBookingComponent implements OnInit {
     );
 
 
-    this.orderManagementService.ItemIdList()
-    .subscribe(
-      data =>{ 
-        this.ItemIdList = data;
-        console.log(this.ItemIdList);
-        });
+    // this.orderManagementService.ItemIdList()
+    // .subscribe(
+    //   data =>{ 
+    //     this.ItemIdList = data;
+    //     console.log(this.ItemIdList);
+    //     });
 
     
   }
@@ -253,6 +260,8 @@ export class SalesOrderBookingComponent implements OnInit {
     this.displayvariant=false
     this.displaycolor=false;
     this.displaysegment=false;
+    this.displaycategory=false;
+
     this.orderManagementService.getsearchByOrderNo(orderNumber)
     .subscribe(
       data => {
@@ -290,20 +299,34 @@ export class SalesOrderBookingComponent implements OnInit {
     this.hideArray[index] = true;
   }
 
-
-
-  onOptionsSelectedDescription (orderedItem:string){
-    // alert(city);
-    this.orderManagementService.ItemIdList()
+  onOptionsSelectedCategory(category:any){
+ alert(category);
+//  this.orderManagementService.addonItemList(category)
+this.orderManagementService.addonItemList(category)
     .subscribe(
       data => {
-        this.ItemIdList = data;
-        // console.log(this.ItemIdList.DESCRIPTION);
-        // this.orderedItem=this.ItemIdList.DESCRIPTION;
+        this.addonItemList = data;
+        this.orderedItem=data.description1;
+        console.log( data.description1);
+        console.log(this.orderedItem);
+        
       }
     );
   }
 
+  onOptionsSelectedDescription(segment:any){
+alert(segment);
+this.orderManagementService.addonDescList(segment)
+    .subscribe(
+      data => {
+        this.addonDescList = data;
+        console.log( data.description1);
+        this.orderedItem=data.description1;
+        console.log(this.orderedItem);
+        
+      }
+    );
+  }
 
 
   

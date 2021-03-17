@@ -34,6 +34,12 @@ export class OrderManagementService {
   ItemIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/category`);
   }
+  addonItemList(category): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${category}`);
+  }
 
+  addonDescList(segment): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
+  }
 
 }

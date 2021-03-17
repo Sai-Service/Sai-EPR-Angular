@@ -11,41 +11,56 @@
         <form [formGroup]="GroupMasterForm" (ngSubmit)="GroupMaster(GroupMasterForm.value)">
             <table class="center">
                 <tr>
-                    <td style="width: 10%" class="LabelFontStyle1">
+                    <td style="width: 10%" class="LabelFontStyle">
                         Division&nbsp;:
                     </td>
                     <td>
-                        <input  class="form-control" >
-                        <!-- [ngClass]="{ 'is-invalid': submitted && f.segment1.errors }" -->
+                        <input type="text" disabled formControlName="loginArray" class="form-control" [(ngModel)]="loginArray" placeholder="">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle1">
                         Operating Unit&nbsp;:
                     </td>
                     <td>
-                        <input  class="form-control" >
+                        <input type="text" disabled formControlName="ouName" class="form-control" [(ngModel)]="ouName" placeholder="">
                     </td>
                     <td style="width: 10%" class="LabelFontStyle1">
-                        Location&nbsp;:
+                        Location&nbsp;: 
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input type="text" disabled formControlName="locCode" class="form-control" [(ngModel)]="locCode" placeholder="">
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 10%" class="LabelFontStyle1">
                         Group&nbsp;Name&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input  formControlName="teamName" [(ngModel)]="teamName" value={{teamName}}  class="form-control">
+                    </td>
                     <td style="width: 10%" class="LabelFontStyle1">
                         Group&nbsp;Department&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input type="text" disabled formControlName="deptName" class="form-control" [(ngModel)]="deptName" placeholder="">
+                    </td>
                     <td style="width: 10%" class="LabelFontStyle1">
                         Ticket&nbsp;No&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
+                        <select formControlName="leadTicketNo" id="leadTicketNo" class="form-control" [ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  leadTicketNoList" [ngValue]="sc.ticketNo">
+                                {{sc.ticketNo}}
+                            </option>
+                        </select>
+                    </td>
                     <td style="width: 12%" class="LabelFontStyle1">
                         Emp&nbsp;Full&nbsp;Name&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input type="text" disabled formControlName="description" [ngModel]="description" class="form-control">
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 5%" class="LabelFontStyle1">
@@ -55,21 +70,29 @@
                     <td style="width: 5%" class="LabelFontStyle1">
                         First&nbsp;Name&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input type="text" disabled formControlName="fname" [ngModel]="fname" class="form-control">
+                    </td>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Middle&nbsp;Name&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input type="text" disabled formControlName="mname" [ngModel]="mname" class="form-control">
+                    </td>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Last&nbsp;Name&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>
+                    <td>
+                        <input type="text" disabled formControlName="lname" [ngModel]="lname" class="form-control">
+                    </td>
                 </tr>
                 <tr>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Status&nbsp;:
                     </td>
-                    <td><input  class="form-control" ></td>  
+                    <td>
+                        <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+                    </td>  
                 </tr>
             </table>
             <table class="center">
@@ -78,10 +101,15 @@
                         <button type="submit" class="btn btn-primary" id="register">New</button>
                     </td>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register">Search</button>
-                    </td>
-                    <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                    </td>
+                </tr>
+            </table>
+            <table class="center">
+                <tr>
+                    <td><input  formControlName="teamName"  [(ngModel)]="teamName" value={{teamName}}  class="form-control" ></td>  
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="searchGrpMaster(teamName)">Search</button>
                     </td>
                 </tr>
             </table>
@@ -91,13 +119,22 @@
 <br>
 <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
-        <tbody>
+        <thead>
             <tr class="GridHeader">
                 <th scope="col">Ticket No</th> 
                 <th scope="col">Employee Name</th> 
                 <th scope="col">Start Date</th> 
-                <th scope="col">End Date</th> 
+                <!-- <th scope="col">End Date</th>  -->
                 <th scope="col">Select</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                <td>{{com.ticketNo}}</td>
+                <td>{{com.description}}</td>
+                <td>{{com.startDate}}</td>
+                <td><button class="btn btn-primary" (click)="Select(com.teamId)">Select</button></td>
+                <!-- <td>{{com.startDate}}</td> -->
             </tr>
         </tbody>
     </table>

@@ -289,6 +289,16 @@ UpdateLocationMasterById(LocationMasterRecord,locId) {
   return this.http.put(url, LocationMasterRecord, options);
 }
 
+///////////////////////////////// Sales Order Gruop Master ////////
+
+getGruopSearch(teamName,ouId,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/teamMaster/Team?teamName=${teamName}&ouId=${ouId}&locId=${locId}`);
+}
+
+leadTicketNoList(locId,divisionId,deptId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
+}
+
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/itemCategory');

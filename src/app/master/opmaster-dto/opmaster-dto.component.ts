@@ -1239,13 +1239,10 @@ this.displayNewButtonReset=false;
         this.patchResultList(i, this.taxCalforItem);
   }
   onOptioninvItemIdSelected(itemId, index) {
-  //  alert('item function');
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
-    // alert(selectedValue.itemId);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     this.itemType = arrayControl[index].itemType
-    // alert(this.itemType)
     this.invItemId = selectedValue.itemId;
     console.log(this.invItemId, this.taxCat);
     
