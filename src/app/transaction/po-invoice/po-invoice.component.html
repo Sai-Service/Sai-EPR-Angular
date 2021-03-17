@@ -590,7 +590,7 @@
                                 <input formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;">
                             </td>
                             <td>
-                                <input type="date" formControlName="accountingDate"  class="form-control"  style="width: 140px;height: 25px;">
+                                <input type="text" disabled formControlName="accountingDate" [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control"  style="width: 140px;height: 25px;">
                             </td>
                             <td>
                                 <input formControlName="distCodeCombId"  class="form-control"  style="width: 160px;height: 25px;">

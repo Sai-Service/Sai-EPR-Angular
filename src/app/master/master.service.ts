@@ -1148,7 +1148,7 @@ PriceListIdList(): Observable<any> {
       const options = {
         headers: this.headers
       };
-      const url = (this.ServerUrl + `/pricelist/${priceListHeaderId}`);
+      const url = (this.ServerUrl + `/pricelist`);
       return this.http.put(url, PriceListMasterRecord, options);
     }
 
