@@ -355,7 +355,7 @@ export class PricelistMasterComponent implements OnInit {
   }
     newMast() {
 
-      alert ("Posting data  to PL mater......")
+      // alert ("Posting data  to PL mater......")
       // const formValue: IPriceList =this.priceListMasterForm.value;
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
@@ -364,7 +364,7 @@ export class PricelistMasterComponent implements OnInit {
           this.priceListMasterForm.reset();
         } else {
           if (res.code === 400) {
-            alert('Code already present in the data base');
+            alert('ERROR WHILE INSERTING');
             this.priceListMasterForm.reset();
           }
         }
@@ -373,7 +373,7 @@ export class PricelistMasterComponent implements OnInit {
 
 
     updateMast() {
-      alert ("Putting data  to PL mater......")
+      // alert ("Putting data  to PL mater......")
       // const formValue: IPriceList = this.priceListMasterForm.value;
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
@@ -397,18 +397,18 @@ export class PricelistMasterComponent implements OnInit {
     // alert ('priceListHeaderId='+priceListHeaderId);
     let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
     console.log(select.priceListDetailList[0]);
-    alert(this.lineDetailsArray.length);
+    // alert(this.lineDetailsArray.length);
  
     for(let i=0; i<this.lineDetailsArray.length; i++){ 
       this.lineDetailsArray().removeAt(i);
     }
     this.lineDetailsArray().clear();
-    alert(this.lineDetailsArray.length);
+    // alert(this.lineDetailsArray.length);
     if (select) {
       this.priceListType = select.priceListType+ "-" + select.priceListName;
       var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
       
-      alert("PL LENGTH: "+ select.priceListDetailList.length);
+      // alert("PL LENGTH: "+ select.priceListDetailList.length);
       for (let i=0; i<select.priceListDetailList.length;i++) {
         var priceListDetailList:FormGroup=this.lineDetailsGroup();
         control.push(priceListDetailList);
@@ -417,8 +417,8 @@ export class PricelistMasterComponent implements OnInit {
       this.displayButton = false;
       this.display = false;
       this.showItemSearch=true;
-      alert('priceListHeaderId='+priceListHeaderId+"  PL TYPE :" + this.priceListType);
-      console.log("price list details : " + select.priceListDetailList);
+      // alert('priceListHeaderId='+priceListHeaderId+"  PL TYPE :" + this.priceListType);
+      // console.log("price list details : " + select.priceListDetailList);
       // let controlinv1 = this.priceListMasterForm.get('priceListDetailList') as FormArray;
       // for (let i=0; i<select.priceListDetailList.length;i++) {
       //   alert('Item '+select.priceListDetailList[i].itemId);
@@ -491,10 +491,8 @@ export class PricelistMasterComponent implements OnInit {
     }
   }
   findByCode(searchBy,searchValue){
-    alert(searchBy)
     // var arrayControl = this.priceListMasterForm.get('priceListDetailList').value
     var priceListHeaderId= this.priceListMasterForm.get('priceListHeaderId').value;
-    alert(priceListHeaderId);
     let select1 = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
     console.log('(select1.priceListDetailList) ' +select1.priceListDetailList);
     console.log(select1.priceListDetailList.length);
@@ -520,7 +518,7 @@ export class PricelistMasterComponent implements OnInit {
       this.lineDetailsArray().removeAt(i);
     }
     this.lineDetailsArray().clear();
-    alert(this.lineDetailsArray.length);
+    // alert(this.lineDetailsArray.length);
     var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
     for (let i=0; i<data.length;i++) {
       var priceListDetailList:FormGroup=this.lineDetailsGroup();

@@ -399,7 +399,8 @@ public TaxDetailData : any[];
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
     this.deptName = (sessionStorage.getItem('deptName'));
-   
+   var locCODE= sessionStorage.getItem('locCode')
+   var temp =locCODE.split('.');
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
@@ -557,7 +558,7 @@ public TaxDetailData : any[];
           console.log(this.TransactionNatureList);
         }
       );
-    this.service.purchaseLocationList()
+    this.service.purchaseLocationList(temp[0])
       .subscribe(
         data => {
           this.purchaseLocationList = data;

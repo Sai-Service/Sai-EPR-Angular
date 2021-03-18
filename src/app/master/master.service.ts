@@ -653,9 +653,10 @@ UpdateHSNMasterById(HsnMasterRecord) {
 TransactionNatureList(): Observable<any> {
   return this.http.get(this.ServerUrl + '/cmnLookup/TranNature');
 }
-purchaseLocationList(): Observable<any> {
-  return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
-  // http://localhost:8081/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=11MU 
+purchaseLocationList(temp): Observable<any> {
+  // return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location'); 
+  return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}`); 
+  // http://localhost:8081/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}
                                          
 }
 

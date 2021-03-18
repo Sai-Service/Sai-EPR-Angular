@@ -759,9 +759,9 @@ export class PoInvoiceComponent implements OnInit {
     var lineNumber = this.invLineDetailsArray().controls[k].get('lineNumber').value;
     var invoiceId = this.invLineDetailsArray().controls[k].get('invoiceId').value;
     this.lineDistributionArray().clear();
-    alert(lineNumber + ' ' + invoiceId);
+    // alert(lineNumber + ' ' + invoiceId);
     this.invoiceId = this.lstInvLineDeatails.invoiceId;
-    alert(this.invoiceId);
+    // alert(this.invoiceId);
     this.transactionService.distLinesDeatailsfa(this.invoiceId, lineNumber)
       .subscribe(
         data => {
@@ -817,7 +817,6 @@ export class PoInvoiceComponent implements OnInit {
           //   this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           // });
           if(data.invoiceStatus=='Validated'){
-            alert('in validated')
             this.poInvoiceForm.disable();
           }
         }
@@ -1096,7 +1095,7 @@ export class PoInvoiceComponent implements OnInit {
           var patch = this.poInvoiceForm.get('invLines') as FormArray;
           this.taxCategoryId = this.ItemDetailsList.taxCategoryId
           // alert('segment value is not null');
-          alert(this.ItemDetailsList.uom);
+          // alert(this.ItemDetailsList.uom);
           (patch.controls[index]).patchValue(
             {
               diss1: 0,
@@ -1151,9 +1150,9 @@ export class PoInvoiceComponent implements OnInit {
     var arrayControl = this.poInvoiceForm.get('invLines').value;
 
     var amount = arrayControl[k].amount;
-    alert(amount);
+    // alert(amount);
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
-    alert(select.taxCategoryId);
+    // alert(select.taxCategoryId);
     // this.taxCategoryId=select.taxCategoryId;
     let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
     (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId });
@@ -1168,11 +1167,11 @@ export class PoInvoiceComponent implements OnInit {
             this.invLineDetailsArray().push(invLnGrp);
           }
           (controlinv.controls[0]).patchValue({ lineNumber: 1 });
-          alert(k);
+          // alert(k);
           // alert(this.indexVal+ " indexVal")
           var x = k + 1;
 
-          alert(x + '"-------"' + this.invLineDetailsArray().length);
+          // alert(x + '"-------"' + this.invLineDetailsArray().length);
           for (let z = x, j = 1; z < this.invLineDetailsArray().length; j++, z++) {
             controlinv.controls[z].patchValue(data.miscLines[j - 1]);
             var ln = z + 1;
@@ -1181,7 +1180,7 @@ export class PoInvoiceComponent implements OnInit {
 
           var segment = (arrayControl[k].segment)
           let select = this.invItemList1.find(d => d.segment === segment);
-          alert(select.itemId);
+          // alert(select.itemId);
           let controlinv1 = this.poInvoiceForm.get('taxLines') as FormArray;
           // var LEN = controlinv1.length;
           this.taxDetaileSendArr.push(data.taxLines)
@@ -1190,8 +1189,8 @@ export class PoInvoiceComponent implements OnInit {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
           }
-          alert('data.taxLines.length ' + data.taxLines.length);
-          alert(data.taxLines)
+          // alert('data.taxLines.length ' + data.taxLines.length);
+          // alert(data.taxLines)
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           for (let j = 0; j < data.taxLines.length; j++) {
             // controlinv1.controls[j].patchValue(data.taxLines[j]);
@@ -1207,11 +1206,11 @@ export class PoInvoiceComponent implements OnInit {
           var len = this.lineDistributionArray().length
           var totalLen = len + Number(data.invDisLines.length)
           if (len == 1) {
-            alert('in len 1')
+            // alert('in len 1')
             if (controlPatchDist[0].lineTypeLookupCode != null || controlPatchDist[0].distLineNumber != null) {
-              alert('in data not null')
+              // alert('in data not null')
               for (let i = len; i <= data.invDisLines.length; i++) {
-                alert('pushing line i '+ i)
+                // alert('pushing line i '+ i)
                 var invLnGrp: FormGroup = this.distLineDetails();
                 this.lineDistributionArray().push(invLnGrp);
               }
@@ -1270,31 +1269,25 @@ export class PoInvoiceComponent implements OnInit {
         })
   }
   Validate() {
-    
         var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount = arrayControl[0].invoiceAmt;
-    alert(amount);
-    //  alert( this.invLineDetailsArray().length)
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
     }
-    alert('sum ' + totalOfInvLineAmout);
-    //  this.distribution();   amount
-    alert(this.lineDistributionArray().length);
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       totalOfDistributionAmout = totalOfDistributionAmout +Number (arrayCaontrolOfDistribution[j].amount)
     }
-    alert('totalOfDistributionAmout ' + totalOfDistributionAmout);
+    // alert('totalOfDistributionAmout ' + totalOfDistributionAmout);
 
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
-      alert('in validate')
+      // alert('in validate')
       var arrayControl = this.poInvoiceForm.get('obj').value;
       var invoiceNum = arrayControl[0].invoiceNum;
-      alert(invoiceNum);
+      // alert(invoiceNum);
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
           alert('VALIDATE SUCCESSFUILY');
@@ -1309,7 +1302,10 @@ export class PoInvoiceComponent implements OnInit {
         }
       });
       //  this.displayValidateButton =false;
+    }else{
+      alert('Amount Missmach kindly check');
     }
+
   }
   validateNum(index, j) {
     // var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;  
@@ -1331,7 +1327,7 @@ export class PoInvoiceComponent implements OnInit {
     let controlinv = this.poInvoiceForm.get('taxLines') as FormArray;
     var invLineNo = controlinv1[i].invLineNo;
     var invLineItemId = controlinv1[i].invLineItemId;
-    alert("invLineItemId " + invLineItemId + " " + "invLineNo " + invLineNo);
+    // alert("invLineItemId " + invLineItemId + " " + "invLineNo " + invLineNo);
     // controlinv.controls[i].patchValue({
     //   invLineItemId: invLineItemId,
     //   invLineNo:invLineNo
@@ -1342,10 +1338,10 @@ export class PoInvoiceComponent implements OnInit {
     var distributionValue = this.poInvoiceForm.get('distribution').value;
     var arrayControlTax = this.poInvoiceForm.get('taxLines').value;
     var index = Number(arrayControlTax[i].invLineNo);
-    alert('index ' + index);
+    // alert('index ' + index);
     var amount = arrayControl[index - 1].amount;
     var taxCategoryId = arrayControl[index - 1].taxCategoryId;
-    alert('amount ' + amount);
+    // alert('amount ' + amount);
     var diss = arrayControlTax[0].totTaxAmt;
     var itemId = arrayControl[index - 1].itemId;
     this.service.taxCalforItem(sessionStorage.getItem('ouId'), taxCategoryId, diss, amount)
@@ -1364,7 +1360,7 @@ export class PoInvoiceComponent implements OnInit {
           }
           for (let i=0, j=0; i< this.lineDistributionArray().length; i++){
             if(invLineNo==distributionValue[i].invoiceLineNum && distributionValue[i].lineTypeLookupCode =='MISCELLANEOUS'){
-              alert('j '+j)
+              // alert('j '+j)
               patchDistributionAmt.controls[i].patchValue(
               {
                 amount : this.taxCalforItem[j].totTaxAmt,
@@ -1439,7 +1435,7 @@ export class PoInvoiceComponent implements OnInit {
     // let segmentName1 = this.invLineDetailsArray().controls[i].get('segmentName').value;
     var arrayControl = this.poInvoiceForm.get('distribution').value
     let segmentName1 = arrayControl[i].distCodeCombSeg
-    alert('i ' + i + " segmentName1 " + segmentName1)
+    // alert('i ' + i + " segmentName1 " + segmentName1)
     if (segmentName1 === null) {
       this.poInvoiceForm.get('segment11').reset();
       this.poInvoiceForm.get('segment2').reset();
@@ -1493,7 +1489,7 @@ export class PoInvoiceComponent implements OnInit {
 
   }
   fnCancatination(index) {
-    alert(index)
+    // alert(index)
     var arrayControl = this.poInvoiceForm.get('distribution').value
     var patch = this.poInvoiceForm.get('distribution') as FormArray;
     // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
@@ -1511,14 +1507,14 @@ export class PoInvoiceComponent implements OnInit {
         data => {
           this.segmentNameList = data;
           if (this.segmentNameList.code === 200) {
-            alert('in if 1' + index)
-            alert(this.segmentNameList.obj.codeCombinationId);
+            // alert('in if 1' + index)
+            // alert(this.segmentNameList.obj.codeCombinationId);
             (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId });
             if (this.segmentNameList.length == 0) {
-              alert('in if 2')
+              // alert('in if 2')
               alert('Invalid Code Combination');
             } else {
-              alert('in if 3')
+              // alert('in if 3')
               console.log(this.segmentNameList);
               (patch.controls[index]).patchValue({ distCodeCombId: this.segmentNameList.obj.codeCombinationId })
               // this.distCodeCombId = Number(this.segmentNameList.codeCombinationId)

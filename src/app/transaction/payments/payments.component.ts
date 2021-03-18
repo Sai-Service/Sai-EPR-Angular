@@ -86,7 +86,7 @@ export class PaymentsComponent implements OnInit {
   public paymentDocNameList:Array<string>=[];
   public statusLookupCodeList:Array<string>=[];
 public paymentIdListList:Array<string>=[];
-public PaymentReturnArr:any[];
+public PaymentReturnArr:any;
 
   constructor(private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
@@ -190,18 +190,13 @@ voucherNo:[],
   }
 
   SearchINVNO(INVNO){
-    alert(INVNO)
+    // alert(INVNO)
     // alert(this.paymentForm.get('INVNO').value);
     this.payInvoiceLineDtlArray().clear();
     let control = this.paymentForm.get('obj') as FormArray;
    var lenC = this.payInvoiceLineDtlArray().length;
-   alert (lenC);
    console.log(this.lstinvoiceDetls);
-   
    let select = this.lstinvoiceDetls.find(d => d.invoiceNum === INVNO);
-   console.log(select);
-   alert(select.length)
-   
    var pyLine: FormGroup = this.payInvoiceLineDtl();
     // for (let i = 0; i <= select.length - lenC; i++) {
         control.push(pyLine);
@@ -227,7 +222,6 @@ voucherNo:[],
   }
 
   paymentFind(suppNo:number){
-     alert(suppNo);
      this.payHeaderLineDtlArray().clear();
      this.displaytype=true;
      this.displaysuppNo=true;
@@ -247,8 +241,6 @@ voucherNo:[],
 
      paymentInvoiceFind(suppNo:number,ouId:number){
       var suppNo1=this.paymentForm.get('obj1').value; 
-      //  suppNo=this.paymentForm.get('suppNo').value;
-      alert(suppNo1[0].suppNo);
       this.payInvoiceLineDtlArray().clear();
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
        this.lstinvoiceDetls=res.obj;
@@ -268,19 +260,16 @@ voucherNo:[],
      
  changeAmount(i){
   var totlCalControls=this.paymentForm.get('obj').value;
-   alert('totlCalControls[i].invoiceAmt '+totlCalControls[i].invoiceAmt+" "+ i)
-  //  if(totlCalControls[i].invoiceAmt < totlCalControls[i].unPaidAmt){
-     alert('in if')
     var sum=0;
    
     for (let i=0;i< this.payInvoiceLineDtlArray().length;i++){
      sum=sum+ Number(totlCalControls[i].invoiceAmt);
     //  alert(totlCalControls[i].invoiceAmt);
     }
-    alert(totlCalControls[i].unPaidAmt);
+    // alert(totlCalControls[i].unPaidAmt);
     this.totAmt=sum;
     var unPaidAmt1=Number(totlCalControls[i].unPaidAmt) - Number(totlCalControls[i].invoiceAmt)
-    alert('unPaidAmt1 '+ unPaidAmt1)
+    // alert('unPaidAmt1 '+ unPaidAmt1)
     var patch = this.paymentForm.get('obj') as FormArray;
       (patch.controls[i]).patchValue(
         {
@@ -292,11 +281,11 @@ voucherNo:[],
 
 
     onOptionsSelected(bankAccountNo: string, index) {
-      alert(bankAccountNo);
+      // alert(bankAccountNo);
       // if(bankAccountNo == undefined){
-        alert(bankAccountNo);
+        // alert(bankAccountNo);
         var value=bankAccountNo.split('/');
-      alert(value[0]);
+      // alert(value[0]);
       let selectedValue = this.bankAccountNumList.find(v => v.bankAccountNo == (value[0]));
       // var bankId=this.paymentForm.get('obj1').value;
       var patch = this.paymentForm.get('obj1') as FormArray;
@@ -343,7 +332,7 @@ voucherNo:[],
         {suppNo:selectedValue.suppNo,
         suppId:selectedValue.suppId,
         partyId:selectedValue.suppId});
-      alert(selectedValue);
+      // alert(selectedValue);
       this.currency='INR';
       this.country='India';
       this.suppId = selectedValue.suppId;
@@ -402,7 +391,6 @@ voucherNo:[],
         
         selectFlag1(e) {
           if (e.target.checked=== true) {
-            alert('Hi');
             this.selectFlag = 'Y'
          } 
          if (e.target.checked=== false) {
@@ -430,13 +418,14 @@ paymentSave(){
   var invPayment:any=[];
   this.totAmount = 0;
   var arrayControle=this.paymentForm.get('obj').value;
+  var patch=this.paymentForm.get('obj1') as FormArray;
   for (let i=0;i<this.payInvoiceLineDtlArray().length;i++){
-    alert(arrayControle[i].selectFlag);
+    // alert(arrayControle[i].selectFlag);
     if (arrayControle[i].selectFlag==true)
    {
-     alert('yyyy '+arrayControle[i].invoiceAmt)
+    //  alert('yyyy '+arrayControle[i].invoiceAmt)
     this.totAmount = this.totAmount + Number(arrayControle[i].invoiceAmt);
-    alert(this.totAmount);
+    // alert(this.totAmount);
     var id = {"invoiceId": arrayControle[i].invoiceId}
     var id2 = {"amount": arrayControle[i].invoiceAmt}
     // invPayment.push(id)
@@ -448,7 +437,7 @@ paymentSave(){
   }
   }
   jsonData.totAmount = this.totAmount;
-  alert(this.totAmount);
+  // alert(this.totAmount);
   jsonData.invPayment=invPayment;
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
   // paymentObject.setInvPayment(this.paymentForm.value.)
@@ -456,13 +445,13 @@ console.log(jsonData);
 
   this.transactionService.paymentSaveSubmit(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
-      alert(res.message);
-      alert(res.obj);
+      // alert(res.message);
+      // alert(res.obj);
       console.log(res.obj);
       
       this.PaymentReturnArr =res.obj;
       console.log(this.PaymentReturnArr);
-      
+      patch.controls[0].patchValue({docNo: this.PaymentReturnArr.checkNumber})
     } else {
       if (res.code === 400) {
         alert('Data already present in the data base');
