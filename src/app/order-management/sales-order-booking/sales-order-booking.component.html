@@ -194,8 +194,8 @@
                 <td>
                     <div *ngIf="displayorderedDate; then thenorderedDate; else elseorderedDate"></div>
                 <ng-template #thenorderedDate>
-                    <input disabled type="text" class="form-control" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}} 
-                    [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                    <input disabled type="text" class="form-control" formControlName="orderedDate" value={{orderedDate}} 
+                    [ngModel]="orderedDate | date:'yyyy-MM-dd'"
                     style="width: 170px;"> 
                 </ng-template>
                 <ng-template #elseorderedDate>
@@ -559,6 +559,7 @@
                        <thead>
                             <tr class="GridHeader">
                                 <th scope="col" style="width: 40px;">Line No</th> 
+                                <th scope="col" style="width: 40px;">Category</th> 
                                 <th scope="col" style="width: 170px;">Item code</th> 
                                 <th scope="col" style="width: 170px;">Description</th> 
                                 <th scope="col" style="width: 70px;">Qty</th> 
@@ -582,22 +583,38 @@
                                 <input disabled type="text"  formControlName="lineNumber"  class="form-control" style="height: 20px;width: 40px;">
                                </td>
                                <td>
-                                <div *ngIf="displaysegment; then thensegment; else elsesegment"></div>
-                                <ng-template #thensegment>
-                                    <!-- (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)' -->
-                                    <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
-                                    <select  class="form-control"  formControlName="segment" [ngModel]="segment" style="height: 20px;width: 170px;"
-                                    (ngModelChange)='onOptionsSelectedDescription($event)' >
-                                        <option>--Select--</option>
-                                        <option *ngFor="let invId of ItemIdList">{{invId.SEGMENT}}</option>
+                                <div *ngIf="displaycategory; then thencategory; else elsecategory"></div>
+                                <ng-template #thencategory>
+                                    <select  class="form-control"  formControlName="category" [ngModel]="category" style="height: 20px;width: 120px;"
+                                    (ngModelChange)='onOptionsSelectedCategory($event)' >
+                                      <option value="RTO">RTO</option>
+                                      <option value="INS">INS</option>
                                       </select>
                                 </ng-template>  
-                                <ng-template #elsesegment>
+                                <ng-template #elsecategory>
                                     <input disabled type="text"  formControlName="segment"  class="form-control" style="height: 20px;width: 170px;">
+                                </ng-template>
+                               </td>
+                               <td>
+                                <!-- (keyup)="getInvItemId($event)" -->
+                                <div *ngIf="displaysegment; then thensegment; else elsesegment"></div>
+                                <ng-template #thensegment>
+                                      <input  type="text" formControlName="segment"
+                                      id="invItemIdFirstWay"
+                                      list="dynmicUserIds1" class="form-control" (ngModelChange)='onOptionsSelectedDescription($event)' style="height: 20px;width: 170px;"/>
+                                  <datalist id="dynmicUserIds1">
+                                      <option *ngFor="let item of addonItemList"
+                                          [ngValue]="item.itemId">{{item.segment}}
+                                      </option>
+                                  </datalist>
+                                  <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
+                                </ng-template>  
+                                <ng-template #elsesegment>
+                                    <input disabled type="text"  formControlName="segment"   class="form-control" style="height: 20px;width: 170px;">
                                 </ng-template>
                             </td>
                                <td>
-                                <input disabled type="text"  formControlName="orderedItem"  class="form-control" style="height: 20px;width: 170px;">
+                                <input disabled type="text"  formControlName="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
                                </td>
                                <td>
                                 <input disabled type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
