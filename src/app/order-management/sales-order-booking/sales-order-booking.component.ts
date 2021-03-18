@@ -53,6 +53,7 @@ interface ISalesBookingForm {
   totAmt1:number;
   flowStatusCode1:string;
   category:string;
+  hsnSacCode:string;
 }
 
 
@@ -104,6 +105,7 @@ export class SalesOrderBookingComponent implements OnInit {
   invItemId:number;
   description:string;
   category:string;
+  hsnSacCode:string;
   lstgetOrderLineDetails: any[];
   public financeTypeList:any;
   public financerNameList:any;
@@ -136,6 +138,8 @@ export class SalesOrderBookingComponent implements OnInit {
   displaycolor=true;
   displaysegment=true;
   displaycategory=true;
+  displaypricingQty=true;
+  displaytaxCategoryName=true;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
@@ -185,6 +189,7 @@ export class SalesOrderBookingComponent implements OnInit {
       totAmt:[''],
       flowStatusCode:[''],
       category:[''],
+      hsnSacCode:[''],
     })
   }
 
@@ -261,6 +266,8 @@ export class SalesOrderBookingComponent implements OnInit {
     this.displaycolor=false;
     this.displaysegment=false;
     this.displaycategory=false;
+    this.displaypricingQty=false;
+    this.displaytaxCategoryName=false;
 
     this.orderManagementService.getsearchByOrderNo(orderNumber)
     .subscribe(
@@ -306,7 +313,8 @@ this.orderManagementService.addonItemList(category)
     .subscribe(
       data => {
         this.addonItemList = data;
-        this.orderedItem=data.description1;
+        this.orderedItem=data.description;
+        // this.taxCategoryName=data.taxCategoryName;
         console.log( data.description1);
         console.log(this.orderedItem);
         
@@ -320,10 +328,12 @@ this.orderManagementService.addonDescList(segment)
     .subscribe(
       data => {
         this.addonDescList = data;
-        console.log( data.description1);
-        this.orderedItem=data.description1;
-        console.log(this.orderedItem);
-        
+        console.log(this.addonDescList[0].description);
+        this.orderedItem=this.addonDescList[0].description;
+        this.taxCategoryName=this.addonDescList[0].taxCategoryName;
+        this.hsnSacCode=this.addonDescList[0].hsnSacCode;
+        // alert(data.description1);
+        console.log(this.taxCategoryName);  
       }
     );
   }

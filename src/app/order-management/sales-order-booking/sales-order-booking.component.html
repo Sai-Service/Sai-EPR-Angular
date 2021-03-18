@@ -602,29 +602,40 @@
                                       <input  type="text" formControlName="segment"
                                       id="invItemIdFirstWay"
                                       list="dynmicUserIds1" class="form-control" (ngModelChange)='onOptionsSelectedDescription($event)' style="height: 20px;width: 170px;"/>
-                                  <datalist id="dynmicUserIds1">
+                                  <datalist id="dynmicUserIds1"  (ngModelChange)='onOptionsSelectedDescription($event)'>
                                       <option *ngFor="let item of addonItemList"
                                           [ngValue]="item.itemId">{{item.segment}}
                                       </option>
                                   </datalist>
-                                  <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
                                 </ng-template>  
                                 <ng-template #elsesegment>
                                     <input disabled type="text"  formControlName="segment"   class="form-control" style="height: 20px;width: 170px;">
                                 </ng-template>
                             </td>
                                <td>
-                                <input disabled type="text"  formControlName="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
+                                <input disabled type="text"  formControlName="orderedItem" value="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
                                </td>
                                <td>
+                                <div *ngIf="displaypricingQty; then thenpricingQty; else elsepricingQty"></div>
+                                <ng-template #thenpricingQty>
+                                    <input type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
+                                </ng-template>
+                                <ng-template #elsepricingQty>
                                 <input disabled type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
-                               </td>
+                                </ng-template>  
+                            </td>
                                <td>
                                 <input disabled type="text"  formControlName="unitSellingPrice"  class="form-control" style="height: 20px;width: 90px;">
                                </td>
                                <td>
-                                <input disabled type="text"  formControlName="taxCategoryName"  class="form-control" style="height: 20px;width: 170px;">
-                               </td>
+                                <div *ngIf="displaytaxCategoryName; then thentaxCategoryName; else elsetaxCategoryName"></div>
+                                <ng-template #thentaxCategoryName>
+                                <input  type="text"  formControlName="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control" style="height: 20px;width: 170px;">
+                                </ng-template>  
+                                <ng-template #elsetaxCategoryName>
+                                    <input disabled type="text"  formControlName="taxCategoryName"  class="form-control" style="height: 20px;width: 170px;">
+                                </ng-template>
+                            </td>
                                <td>
                                 <input disabled type="text"  formControlName="baseAmt"  class="form-control" style="height: 20px;width: 70px;">
                                </td>
@@ -635,7 +646,7 @@
                                 <input disabled type="text"  formControlName="totAmt"  class="form-control" style="height: 20px;width: 70px;">
                                </td>
                                <td>
-                                <input disabled type="text"    class="form-control" style="height: 20px;width: 70px;">
+                                <input disabled type="text"  formControlName="hsnSacCode" [(ngModel)]='hsnSacCode'  class="form-control" style="height: 20px;width: 70px;">
                                </td>
                                <td>
                                 <input disabled type="text"  formControlName="flowStatusCode"  class="form-control" style="height: 20px;width:120px;">
@@ -647,6 +658,128 @@
                                <td>
                                 <button type="submit" class="btn btn-primary" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>
                                </td>
+                               <td>
+                                <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 8rem;">
+Insurance Details
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">Insurance Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+     <table class="center">
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+                MI&nbsp;Premium&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" disabled  class="form-control">
+            </td>
+        </tr>
+     </table>
+    </div>
+    <div class="modal-footer">
+      <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+    </div>
+  </div>
+</div>
+</div>
+ </td>
+                        
+                        <!-- <tr> -->
+                            <td>
+                            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 8rem;">
+EW Details
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">EW Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+     <table class="center">
+         <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+                Interensted&nbsp;in&nbsp;EW&nbsp;:&nbsp;
+            </td>
+            <td>
+                <select class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+                EW&nbsp;Type&nbsp;:&nbsp;
+            </td>
+            <td>
+                <select class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+                EW&nbsp;Code&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input class="form-control">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+                EW&nbsp;Amount&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input class="form-control">
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+                Start&nbsp;Date&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+                End&nbsp;Date&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control">
+            </td>
+         </tr>
+         <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+                Booklet&nbsp;No&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control">
+            </td>
+         </tr>
+     </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary">Ok</button>
+    </div>
+  </div>
+</div>
+</div>
+                            </td>
                             </tr>
                         </ng-container>
                             </ng-container>
