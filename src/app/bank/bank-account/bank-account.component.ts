@@ -6,7 +6,7 @@ import{ BankService} from '../bank.service';
 
 interface IbankDetails{
   custName:string;
-branchNO:string;  
+branchId:string;  
 branchName:string;
   customerId:number;
   bankAccountName:string;
@@ -35,7 +35,7 @@ receiptMultiCurrFlag:string;
 export class BankAccountComponent implements OnInit {
   bankCreationForm: FormGroup;
   custName:string;
-branchNO:string;  
+branchId:string;  
 branchName:string;
   bankAccountName:string;
   status :string = 'Active';
@@ -67,7 +67,7 @@ receiptMultiCurrFlag:string;
   constructor(private fb: FormBuilder, private router: Router, private bankService: BankService) { 
      this.bankCreationForm = fb.group({
       custName:['',[Validators.required] ],
-      branchNO:['',[Validators.required] ], 
+      branchId:['',[Validators.required] ], 
       branchName:['',[Validators.required] ],
       customerId:[''],
       bkName:[''],
@@ -170,20 +170,25 @@ receiptMultiCurrFlag:string;
       data => {
         this.BankBranchList = data.obj;
         console.log(this.BankBranchList);
-      // this.branchNO = this.BankBranchList.name2;
+      // this.branchId = this.BankBranchList.name2;
       }
     );
   }
-  onBranchNoSelected(branchName){
+  onbranchIdSelected(branchName){
     let select = this.BankBranchList.find(d => d.name=== branchName);
     console.log(select);
     console.log(select.name2);
-    this.branchNO = select.name2;
+    this.branchId = select.name2;
   }
-  SelectBranchNO(branchNo){}
+  SelectbranchId(branchId){}
   bankCreation(bankCreationForm){}
+
+  tranceFun(val){
+    val.bankId={ "customerId": this.customerId}
+    return val
+  }
   BankCreation(){
-    const formValue: IbankDetails = (this.bankCreationForm.value);
+    const formValue: IbankDetails = this.tranceFun(this.bankCreationForm.value);
     this.bankService.bankCreationFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('BANK DETAILS INSERTED SUCCESSFUILY');

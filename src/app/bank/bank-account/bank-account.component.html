@@ -79,7 +79,7 @@
                                             <td style="border: none;color: black;">
                                                 <!-- <input type="text" formControlName="branchName"
                                                     class="form-control" placeholder="Enter branch name"> -->
-                                                    <select formControlName="branchName" id="branchName" [(ngModel)]="branchName" class="form-control" (ngModelChange)="onBranchNoSelected($event)" >
+                                                    <select formControlName="branchName" id="branchName" [(ngModel)]="branchName" class="form-control" (ngModelChange)="onbranchIdSelected($event)" >
                                                         <option>--Select--</option>
                                                         <option *ngFor="let sc of BankBranchList" >
                                                             {{sc.name}}
@@ -88,7 +88,7 @@
                                             </td>  
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Number&nbsp;:&nbsp; </td>
                                     <td>
-                                        <input formControlName="branchNO" [(ngModel)]="branchNO" class="form-control" placeholder="Search by branch number"
+                                        <input formControlName="branchId" [(ngModel)]="branchId" class="form-control" placeholder="Search by branch number"
                                             >
                                     </tr>
                                     <tr>     
@@ -276,7 +276,7 @@
                                 <tr *ngFor="let com of BankNameList" class="ItemStyle" style="text-decoration:none;text-align: center;">
                                      <td>{{com.custName}}</td>
                                      <td>{{com.branchName}}</td> 
-                                     <td>{{com.branchNo}}</td> 
+                                     <td>{{com.branchId}}</td> 
                                      <td>{{com.emailId}}</td>
                                      <td>{{com.address1}}</td>
                                      <td>{{com.address2}}</td>
@@ -288,7 +288,7 @@
                                      <td>{{com.contact2}}</td>
                                      <td>{{com.bankType}}</td>
                                      <td>{{com.startDate}}</td>
-                                     <td><button class="btn-primary" (click)="SelectBranchNO(com.branchNo)" data-dismiss="modal">Select</button></td>
+                                     <td><button class="btn-primary" (click)="SelectbranchId(com.branchId)" data-dismiss="modal">Select</button></td>
                                     </tr>
                             </tbody>
                         </table>

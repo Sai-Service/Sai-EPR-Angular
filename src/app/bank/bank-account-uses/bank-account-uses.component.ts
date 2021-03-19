@@ -86,7 +86,9 @@ lookupValueDesc4: string;
   branch: any;
   bankAccountNo:string;
 bkBranchName:string;
+bkName:string;
   public BranchSearch : any;
+  public BankBranchList:any[];
 public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
@@ -101,6 +103,7 @@ constructor(private fb: FormBuilder, private router: Router, private bankService
 bkBranchName: [''],
     bankAccountId: [''],
 ouId:  [''],
+bkName:[''],
     orgPartyId: [''],
     apUseEnableFlag: [''],
     arUseEnableFlag: [''],
@@ -254,7 +257,34 @@ Orgmaster(bankAccUsesForm: any) {
   }
   close(){this.router.navigate(['admin']); }
   refresh() { window.location.reload();}
-  BankAccUseSave(){}
+  TransData(val){
+    delete val.segment11
+    delete val.segment2
+    delete val.segment3
+    delete val.segment4
+    delete val.segment5
+    delete val.lookupValueDesc4
+    delete val.lookupValueDesc1
+    delete val.lookupValueDesc2
+    delete val.lookupValueDesc3
+    delete val.lookupValueDesc5
+
+    return val;
+  }
+  BankAccUseSave(){
+    const formValue: IbankBranchUse =this.TransData(this.bankAccUsesForm.value);
+    this.bankService.BankAccUseFun(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('BANK ACCOUNT USE DETAILS INSERTED SUCCESSFUILY');
+        window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert('Error occurred during data inserting');
+          window.location.reload();
+        }
+      }
+    });
+  }
   openCodeComb(i, apAssetCcid){
     alert('apAssetCcid '+apAssetCcid);
     
@@ -413,6 +443,23 @@ Orgmaster(bankAccUsesForm: any) {
      alert(selectedValue.custName+" "+selectedValue.customerId);
     //  this.bankId=selectedValue.customerId;
     //  this.custName =selectedValue.custName;
+  }
+  onBankNameSelected1(BkName) {
+    alert(BkName);
+    this.bankService.BankBranchList(BkName)
+    .subscribe(
+      data => {
+        this.BankBranchList = data.obj;
+        console.log(this.BankBranchList);
+      // this.branchId = this.BankBranchList.name2;
+      }
+    );
+  }
+  onbranchIdSelected(branchName){
+    let select = this.BankBranchList.find(d => d.name=== branchName);
+    console.log(select);
+    console.log(select.name2);
+    this.bankAccountNo = select.name2;
   }
   BreanchNameSearch(bkBranchName){
     this.bankService.BranchSearchFn(bkBranchName)

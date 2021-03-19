@@ -151,7 +151,7 @@ export class ItemMasterComponent implements OnInit {
   public warrantyStatusList:Array<string>[];
   public ewStatusList:Array<string>[];
   public ewPeriodList:Array<string>[];
-  public ewInsNameList:Array<string>[];
+  public ewInsNameList:any;
   public ewInsSiteList:Array<string>[];
   public itemTypeList:Array<string>[];
   public insNameList:Array<string>[];
@@ -561,10 +561,15 @@ export class ItemMasterComponent implements OnInit {
       );
   }
   onEwInsNameSelected(customerId: any) {
+    debugger;
     console.log(customerId);
-    this.SearchonEwInsName(customerId);
+    let select = this.ewInsNameList.find(d => d.custName == customerId);
+    console.log(select.customerId);
+    
+    this.SearchonEwInsName(select.customerId);
   }
-  SearchonEwInsName(customerId: number) {
+  SearchonEwInsName(customerId) {
+
     this.service.ewInsSiteList(customerId)
     .subscribe(
       data => {

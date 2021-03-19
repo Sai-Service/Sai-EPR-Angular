@@ -26,6 +26,15 @@ export class BankService {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
    }
+///////////////BANK ACCOUNT USES///////////////
+
+public BankAccUseFun(bankRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/ceBankAccUses/post';  
+  return this.http.post(url,bankRecord, options);
+}
 ////////////////////////NEW BANK Account CREATION/////////////////
    public bankCreationFun(bankRecord) {
     const options = {

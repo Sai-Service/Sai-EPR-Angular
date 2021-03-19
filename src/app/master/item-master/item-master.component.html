@@ -573,7 +573,7 @@
                             <td>
                                 <select formControlName="ewInsName" id="ewInsName" class="form-control" (ngModelChange)='onEwInsNameSelected($event)' >
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of ewInsNameList">
+                                    <option *ngFor="let sc of ewInsNameList">                                         
                                         {{sc.custName}}
                                     </option>
                                 </select>
