@@ -5,7 +5,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+<<<<<<< HEAD
+=======
 import { TransactionService } from 'src/app/transaction/transaction.service';
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
 
 
 interface ImoveOrder{
@@ -61,7 +64,7 @@ export class MoveOrderComponent implements OnInit {
  description:string;
  uom:string;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private transactionService :TransactionService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
    this.moveOrderForm=fb.group({
     requestNumber:['',[Validators.required]],
     transactionTypeId:['',[Validators.required]],
@@ -99,6 +102,9 @@ export class MoveOrderComponent implements OnInit {
       toSubInvCode:[],
       toLocatorId:[],
       description:[],
+      segment:[],
+      fromLocator:[],
+      toLocator:[],
     });
   }
   addnewtrxLinesList(){
@@ -118,22 +124,22 @@ export class MoveOrderComponent implements OnInit {
 
     this.addnewtrxLinesList();
 
-    this.transactionService.transType().subscribe(
+    this.service.transType().subscribe(
       data =>{ this.transType = data;
        } );
 
-    this.transactionService.subInvCode().subscribe(
+    this.service.subInvCode().subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInventoryId);
         // alert('subInventoryCode');
        });
 
-    this.transactionService.issueByList(this.locId,this.deptId,this.divisionId).subscribe
+    this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
 
-    this.transactionService.ItemIdList().subscribe(
+    this.service.ItemIdList().subscribe(
       data =>{ this.ItemIdList = data;
         console.log(this.invItemId);
         });
@@ -154,7 +160,7 @@ newmoveOrder()
   const formValue:ImoveOrder=this.moveOrderForm.value;
   var subCode=this.moveOrderForm.get('frmSubInvCode').value;
   formValue.frmSubInvCode = subCode.subInventoryCode;
-  this.transactionService.moveOrderSubmit(formValue).subscribe((res:any)=>{
+  this.service.moveOrderSubmit(formValue).subscribe((res:any)=>{
     var obj = res.obj;
         sessionStorage.setItem('requestNumber', obj);
     if(res.code===200)
@@ -207,12 +213,12 @@ newmoveOrder()
   // alert("FromSub"+frmSubCode);
   alert(select1);
   // alert(trxLnArr1.get +"item");
-  this.transactionService.getfrmSubLoc(this.locId,itemid,select1.subInventoryId).subscribe(
+  this.service.getfrmSubLoc(this.locId,itemid,select1.subInventoryId).subscribe(
     data =>{ this.getfrmSubLoc = data;
     });
     alert('Item'+itemid);
     var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-    this.transactionService.getItemDetail(itemid).subscribe
+    this.service.getItemDetail(itemid).subscribe
     (data => {this.getItemDetail = data;
       alert("this.getItemDetail.description" + this.getItemDetail.description);
       trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
@@ -228,10 +234,11 @@ newmoveOrder()
 
  search(reqNo)
  {
+  this.display=true;
     var reqNo=(this.moveOrderForm.get('reqNo').value);
     // alert(reqNo);
   //  this.moveOrderForm.reset();
-   this.transactionService.getSearchByTrans(reqNo).subscribe
+   this.service.getSearchByTrans(reqNo).subscribe
    (data =>
     {
       console.log(data);

@@ -57,7 +57,10 @@ const routes: Routes = [
   {path:'jaiTaxRatesMaster', component:JaiTaxRatesMasterComponent},
   {path:'JaiTaxType', component:JaiTaxTypeComponent},
  {path:'PoReceiptForm',component:PoReceiptFormComponent},
-{path:'FlexField',component:FlexFieldComponent},
+ {path:'FlexField',component:FlexFieldComponent},
+
+//    { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
+// {path:'FlexField',component:FlexFieldComponent},
 {path:'pricelistMaster', component:PricelistMasterComponent},
 {path:'OMGRP',component:OmGruopMasterComponent},
 {path:'orderType', component:OrderTypeMasterComponent},
@@ -67,5 +70,5 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
-}) 
+})
 export class MasterRoutingModule { }

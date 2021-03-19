@@ -31,8 +31,13 @@ interface IflexField {
 
 export class FlexFieldComponent implements OnInit {
   flexFieldForm: FormGroup;
+<<<<<<< HEAD
+  selectedIndex: number;
+  public isViewable: boolean;
+=======
   selectedIndex: number; 
   public isViewable: boolean; 
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
   applicationId: number;
   title: string;
   // descFlexConCode:string;
@@ -90,7 +95,11 @@ export class FlexFieldComponent implements OnInit {
 
  flexLn(flexCodeLnIndex: number): FormArray {
     return this.flexCodeLn().at(flexCodeLnIndex).get("flexLn") as FormArray
+<<<<<<< HEAD
+
+=======
    
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
   }
 
   newflexLn(): FormGroup {
@@ -136,6 +145,10 @@ export class FlexFieldComponent implements OnInit {
       else {
         if (res.code === 400) {
           alert("Code already present in data base");
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
           this.flexFieldForm.reset();
         }
       }
@@ -186,7 +199,11 @@ export class FlexFieldComponent implements OnInit {
       displayDiv(si){
         this.selectedIndex = si;
         this.isViewable= !this.isViewable;
+<<<<<<< HEAD
+
+=======
       
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
 
       }
       dispDetails(flexCodeLnIndex,descFlexConCode){
@@ -195,7 +212,11 @@ export class FlexFieldComponent implements OnInit {
           this.selectedIndex=flexCodeLnIndex;
           return;
         }
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
         if(this.selectedIndex===flexCodeLnIndex){
           document.getElementById("flexCode"+this.selectedIndex).style.display="none";
         }else{
@@ -203,6 +224,10 @@ export class FlexFieldComponent implements OnInit {
         document.getElementById("flexCode"+flexCodeLnIndex).style.display="block";
         this.selectedIndex=flexCodeLnIndex;
       }}
+<<<<<<< HEAD
+
+=======
       
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
 }
 

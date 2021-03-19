@@ -1,4 +1,36 @@
 .modal-body1 {
+    overflow-x: auto;
+  }
+
+  .modalfont
+  {text-align: center;
+    font-size: small;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+    margin-left: 40%;
+  }
+
+  .hiddenRow {
+    padding: 0 4px !important;
+    background-color: #eeeeee;
+    font-size: 13px;
+}
+.accordian-body span{
+	color:#a2a2a2 !important;
+}
+
+td{
+  padding: 0px;
+}
+
+th{
+  padding: 1px;
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+}
+
+.hiddenRow th {
+  background-color: #bebbd7;
+  padding: 1px;
   overflow-x: auto;
 }
 

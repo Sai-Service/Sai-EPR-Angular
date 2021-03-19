@@ -147,7 +147,7 @@ export class CustomerMasterComponent implements OnInit {
   loginArray:string;
   lstcomments2: any[];
 
- 
+
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -250,7 +250,7 @@ export class CustomerMasterComponent implements OnInit {
       );
 
 
-      
+
       this.service.statusList()
       .subscribe(
         data => {
@@ -533,7 +533,7 @@ if (person === 'Person'){
       );
   }
   Select(customerSiteId: number) {
-  
+
     this.displayNewButton1=false;
     alert(customerSiteId);
         this.lstcomments2 = this.lstcomments.customerSiteMasterList;
@@ -558,7 +558,7 @@ if (person === 'Person'){
           this.panNo = select.panNo
           this.tanNo = select.tanNo
           // ticketNo not in  json
-    
+
           // this.displayButton = false;
         }
       }
