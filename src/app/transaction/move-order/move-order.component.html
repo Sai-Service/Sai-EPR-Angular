@@ -1,0 +1,354 @@
+<div class="center">
+  <form [formGroup]="moveOrderForm" (ngSubmit)="MoveOrder(moveOrderForm.value)">
+  <table style="width: 100%;background-color: white;">
+      <tr>
+          <!-- class="PageHeader" -->
+          <td class="PageHeader">
+              &nbsp;&nbsp;Move Order&nbsp;
+          </td>
+
+
+      <table style="width: 100%; background-color: #a4d3e9;">
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">Move&nbsp;Order&nbsp;Number&nbsp;:</td>
+            <td>
+                <input type="text"  class="form-control" formControlName="reqNo" id="reqNo" name="reqNo" #reqNo>
+            </td>
+            <td colspan="8" style="text-align: left; width: 100%;">
+                <button type="submit" class="btn btn-primary" (click)="search(reqNo)"><i class="fa fa-search"></i></button>
+            </td>
+        </tr>
+    </table>
+    </tr>
+  </table>
+  <div class="center" style="width: 100%;">
+    <!-- <form [formGroup]="moveOrderForm" (ngSubmit)="MoveOrder(moveOrderForm.value)"> -->
+      <div *ngIf="displayButton; then thenBlock1; else elseBlock1">
+      </div>
+      <ng-template #thenBlock1>
+      <table class="center">
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            Move Order Number:
+          </td>
+          <td>
+            <input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Move Order Date:
+          </td>
+          <td>
+            <input type="date" class="form-control" formControlName="creationDate">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Manual IPO Number:
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="description" [disabled]="isDisabled" required>
+          </td>
+          <td>
+            <input type="hidden" formControlName="locId" [(ngModel)]="locId">
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            Type:
+          </td>
+          <td>
+            <select class="form-control" formControlName="transactionTypeId">
+              <option>--Select--</option>
+              <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
+            </select>
+          </td>
+
+
+          <td style="width: 15%" class="LabelFontStyle">
+            Repair Order Number:
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="repairNo">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Remark:
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="remarks">
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            Issue By:
+          </td>
+          <td>
+            <select type="text" class="form-control" formControlName="issueBy">
+              <option>--Select--</option>
+              <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+              </select>
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Issue To:
+          </td>
+          <td>
+            <input type="text" class="form-control">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Status:
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            From Subinventory:
+          </td>
+          <td>
+            <select class="form-control" formControlName="frmSubInvCode">
+              <option>--Select--</option>
+              <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
+            </select>
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            To Subinventory:
+          </td>
+          <td>
+            <select type="text" class="form-control" formControlName="toSubInvCode">
+              <option>--Select--</option>
+              <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
+            </select>
+
+          </td>
+        </tr>
+      </table>
+      <br>
+      <div formArrayName="trxLinesList">
+      <div class="grid_scroll">
+
+        <table class="center">
+          <tr>
+            <td>
+              <div class="grid_scroll">
+          <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
+          cellpadding="4" class="auto-style4" class="GridFont">
+            <thead>
+                <tr class="GridHeader">
+                        <th scope="col">Srl No.</th>
+                        <th scope="col">Item Code</th>
+                        <th scope="col">Item Description</th>
+                        <th scope="col">Subinventory</th>
+                        <th scope="col">Locator</th>
+                        <th scope="col">To Subinvenory</th>
+                        <th scope="col">To Locator</th>
+                        <th scope="col">UOM</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">Add</th>
+                        <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <input type="number" hidden formControlName="trxLineId">
+                </tr>
+              <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
+                <tr>
+                <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
+                 </td>
+                <td><select  class="form-control" style="height: 20px;" formControlName="invItemId" (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)'>
+                  <option>--Select--</option>
+                  <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
+                </select>
+                </td>
+                <td><input type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td>
+                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId">
+                  <option>--Select--</option>
+                  <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}</option>
+                </select>
+                </td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="toSubInvCode"></td>
+                <td><input type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="toLocatorId"></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity"></td>
+                <td><input type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
+                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()" ></button></td>
+                <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+              </tr>
+              </ng-container>
+              </tbody>
+          </table>
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+      </div>
+      </ng-template>
+      <ng-template #elseBlock1>
+        <table class="center">
+          <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+              Move Order Number:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              Move Order Date:
+            </td>
+            <td>
+              <input disabled type="date" class="form-control" formControlName="creationDate">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              Manual IPO Number:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="description" [disabled]="isDisabled" required>
+            </td>
+            <td>
+              <input type="hidden" formControlName="locId" [(ngModel)]="locId">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+              Type:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="transactionTypeId">
+            </td>
+
+
+            <td style="width: 15%" class="LabelFontStyle">
+              Repair Order Number:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="repairNo">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              Remark:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="remarks">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+              Issue By:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="issueBy">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              Issue To:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              Status:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+              From Subinventory:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="frmSubInvCode">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              To Subinventory:
+            </td>
+            <td>
+              <input disabled type="text" class="form-control" formControlName="toSubInvCode">
+
+
+            </td>
+          </tr>
+        </table>
+        <br>
+        <div formArrayName="trxLinesList">
+        <div class="grid_scroll">
+
+          <table class="center">
+            <tr>
+              <td>
+                <div class="grid_scroll">
+            <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
+            cellpadding="4" class="auto-style4" class="GridFont">
+              <thead>
+                  <tr class="GridHeader">
+                          <th scope="col">Srl No.</th>
+                          <th scope="col">Item Code</th>
+                          <th scope="col">Item Description</th>
+                          <th scope="col">Subinventory</th>
+                          <th scope="col">Locator</th>
+                          <th scope="col">To Subinvenory</th>
+                          <th scope="col">To Locator</th>
+                          <th scope="col">UOM</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Reason</th>
+                          <th scope="col">Add</th>
+                          <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <input type="number" hidden formControlName="trxLineId">
+                  </tr>
+                <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
+                  <td><input disabled type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
+                   </td>
+                  <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
+                   </td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="fromLocator"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId">
+                  </td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="toSubInvCode"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="toLocator"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()" ></button></td>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                </ng-container>
+                </tbody>
+            </table>
+          </div>
+          </td>
+          </tr>
+          </table>
+          </div>
+        </div>
+        </ng-template>
+        <table class="center">
+          <tr>
+            <div *ngIf="display; then thenBlock; else elseBlock">
+            </div>
+            <ng-template #thenBlock>
+              <td>
+                <button  type="submit" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+              </td>
+
+              </ng-template>
+              <ng-template #elseBlock>
+                <td>
+                  <button disabled type="submit" class="btn btn-primary" (click)="newmoveOrder()">Save</button>
+                </td>
+              </ng-template>
+              <td>
+                <button  type="submit" class="btn btn-primary" (click)="resetMoveOrder()">Reset</button>
+              </td>
+              <td>
+                <button  type="submit" class="btn btn-primary" (click)="closeMoveOrder()">Close</button>
+              </td>
+          </tr>
+        </table>
+    <!-- </form> -->
+  </div>
+</form>
+  </div>
+

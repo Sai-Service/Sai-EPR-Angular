@@ -1,0 +1,173 @@
+<div class="center">
+  <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)">
+  <table style="width: 100%;background-color: white;">
+    <tr>
+      <td class="PageHeader">
+        &nbsp;&nbsp;Inventory Transaction &nbsp;
+      </td>
+    </tr>
+  </table>
+  <table class="center">
+    <tr>
+      <td style="width: 15%" class="LabelFontStyle">
+        Transaction Type:
+      </td>
+      <td>
+        <select class="form-control">
+          <option>--Select--</option>
+        </select>
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Document Sequence:
+      </td>
+      <td>
+        <input type="text" class="form-control">
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Transaction Date:
+      </td>
+      <td>
+        <input type="date" class="form-control">
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 15%" class="LabelFontStyle">
+        Subinventory:
+      </td>
+      <td>
+        <select class="form-control" >
+          <option>--Select--</option>
+          <!-- <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
+          </select>
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Description:
+      </td>
+      <td>
+        <input type="text" class="form-control" >
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Reason:
+      </td>
+      <td>
+        <select class="form-control" >
+          <option>--Select--</option>
+          <!-- <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
+          </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 15%" class="LabelFontStyle">
+        Status:
+      </td>
+      <td>
+        <select class="form-control" >
+          <option>--Select--</option>
+          <!-- <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
+          </select>
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Total Item:
+      </td>
+      <td>
+        <input type="number" class="form-control">
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Total Value:
+      </td>
+      <td>
+        <input type="number" class="form-control">
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 15%" class="LabelFontStyle">
+       Account Code:
+      </td>
+      <td>
+        <input type="text" class="form-control">
+      </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Made By:
+       </td>
+       <td>
+         <input type="text" class="form-control">
+       </td>
+    </tr>
+  </table>
+  <br>
+  <div class="grid_scroll">
+
+    <table class="center">
+      <tr>
+        <td>
+          <div class="grid_scroll">
+      <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
+      cellpadding="4" class="auto-style4" class="GridFont">
+        <thead>
+            <tr class="GridHeader">
+                    <th scope="col">Srl No.</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Item Description</th>
+                    <th scope="col">UOM</th>
+                    <th scope="col">Average Rate</th>
+                    <th scope="col">Subinventory</th>
+                    <th scope="col">Locator</th>
+                    <th scope="col">System Quantity</th>
+                    <th scope="col">Physical Quantity</th>
+                    <th scope="col">Adjustment Quantity</th>
+                    <th scope="col">Add</th>
+                    <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <input type="number" hidden formControlName="trxLineId">
+            </tr>
+          <!-- <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex"> -->
+         <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" >
+             </td>
+             <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" >
+              <!-- <input type="text"  id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control">
+                  <datalist id="dynmicUserIds1">
+                    <option *ngFor="let item of ItemIdList"
+                                                                [ngValue]="item.itemId">{{item.segment}}
+                                                            </option>
+                                                        </datalist> -->
+             </td>
+            <td><select  class="form-control" style="height: 20px;" >
+              <option>--Select--</option>
+              <!-- <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option> -->
+              </select>
+            </td>
+            <td><input type="text" class="form-control" style="height: 20px;"></td>
+            <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
+            <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="AverageRate" ></td>
+            <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="subInventoryCode" >
+              <option>--Select--</option>
+              <!-- <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
+              </select>
+            </td>
+            <td><select class=" form-control" style="height: 20px; width: 110px;" formControlName="onHandId"  >
+            <option>--Select--</option>
+            <!-- <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}--{{locId.onHandQty}}</option> -->
+            </select>
+            <input hidden type="number" formControlName="locatorId">
+            </td>
+            <td><input type="text" class="form-control" style="height: 20px;width: 50px;" ></td>
+            <td><input type="text" class="form-control" style="height: 20px;width: 50px;" ></td>
+            <td><input type="text" class="form-control" style="height: 20px;width: 70px;"></td>
+            <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"></button></td>
+            <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;"></button></td>
+          </tr>
+          <!-- </ng-container> -->
+          </tbody>
+      </table>
+    </div>
+    </td>
+    </tr>
+    </table>
+    </div>
+
+  </form>
+  </div>

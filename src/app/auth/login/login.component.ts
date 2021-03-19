@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   // login() {
   //   this.loginService.login(this.username, this.password).subscribe((res: any) => {
   //     console.log('Res', res);
@@ -48,9 +48,9 @@ export class LoginComponent implements OnInit {
   //         console.log(users.divisionId.divisionName);
   //         sessionStorage.setItem('ticketNo',users.ticketNo);
   //         console.log(users.ticketNo);
-         
-          
-  //      } 
+
+
+  //      }
   //      else if (res.code === 400) {
   //       alert('Incorrect username or password');
   //     }
@@ -71,9 +71,10 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('dept',users.deptId);
           sessionStorage.setItem('deptName',users.deptName);
           sessionStorage.setItem('name',users.name);
-          sessionStorage.setItem('ouName',users.ouName); 
-          sessionStorage.setItem('ouId',users.ouId); 
-          sessionStorage.setItem('locId',users.locId); 
+          sessionStorage.setItem('ouName',users.ouName);
+          sessionStorage.setItem('ouId',users.ouId);
+          sessionStorage.setItem('locId',users.locId);
+          sessionStorage.setItem('divisionId',users.divisionId);
 console.log(users.ouId);
 console.log(users.locId);
 console.log(users.ouName);
