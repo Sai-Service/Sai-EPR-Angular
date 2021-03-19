@@ -280,6 +280,7 @@ placeholder="Select Item Category">
 </div>
 <br>
 <div class="container1">
+    <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
     <tbody>
         <tr class="GridHeader">
@@ -290,8 +291,8 @@ placeholder="Select Item Category">
             <th scope="col">Princple Item</th>
             <th scope="col">Status</th>
             <!-- <th scope="col">End Date</th> -->
-            <th scope="col">Last Updated Date</th>
-            <th scope="col">Last Update Login</th>
+            <!-- <th scope="col">Last Updated Date</th>
+            <th scope="col">Last Update Login</th> -->
             <th scope="col">Select One</th>
         </tr>
     </tbody>
@@ -302,9 +303,10 @@ placeholder="Select Item Category">
         <td>{{com.attribute1}}</td>
         <td>{{com.princpleItem}}</td>
         <td>{{com.status}}</td>
-        <td>{{com.lastUpdatedDate}}</td>
-        <td>{{com.lastUpdatedBy}}</td>
+        <!-- <td>{{com.lastUpdatedDate}}</td>
+        <td>{{com.lastUpdatedBy}}</td> -->
         <td><button class="btn btn-primary" (click)="Select(com.categoryId)">Select</button></td>
     </tr>
     </table>
+</div>
 </div>

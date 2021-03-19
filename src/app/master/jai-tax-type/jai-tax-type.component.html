@@ -20,26 +20,24 @@
                               
                                 <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Code&nbsp;:</td>
 
-                               <td> 
-                                   <select formControlName="regimeId" [(ngModel)]="regimeId" id="regimeId" class="form-control" (ngModelChange)='onOptionSelected($event)'>
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of regimeIdList" [ngvalue]="sc.regimeId" >
-                                      {{sc.regimeId}}
-                                    </option>
-                                   </select> 
-                               </td>
+                              <td> 
+                                   
+                                           <select formControlName="regimeCode" [(ngModel)]="regimeId" id="regimeId" class="form-control" (ngModelChange)='onOptionSelected($event)'>
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of regimeIdList" [ngValue]="sc.regimeId" >
+                                               {{sc.regimeId}}-{{sc.regimeCode}}
+                                            </option>
+                                           </select> 
 
-                           
-                              <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Name&nbsp;:</td>
-    
-                              <td>
-                                <input  type="text" formControlName="regimeName" [(ngModel)]="regimeName" class="form-control" placeholder="Regime Name"  disabled>
-                              </td>
-                            </tr>
+                                    <div *ngIf="regimCodeDisp; then thenBlockRegime"></div>
+                                    <ng-template #thenBlockRegime>       
+                                           <input hidden formControlName="regimeId" [(ngModel)]="regimeId" >
+                                    </ng-template>
+                                    
+                                   
+                                </td>
 
-                         <tr>
-                           
-                            <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Type&nbsp;Code&nbsp;:</td>
+                                <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Type&nbsp;Code&nbsp;:</td>
                             
                             <td>
                                <input  required  id="taxTypeCode" name ="taxTypeCode" type="text" 
@@ -48,6 +46,60 @@
                                                    [(ngModel)]='taxTypeCode' value={{taxTypeCode}} 
                                                    pattern=[A-Za-z0-9]{5} >
                             </td>
+                            <td style="width: 15%" class="LabelFontStyle">Status&nbsp;: </td>
+                                      
+                                <td>
+                                    <!-- <select formControlName="status" [(ngModel)]="status" id="status" class="form-control"
+                                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  statusList">
+                                            {{sc.codeDesc}}
+                                        </option>
+                                    </select> -->
+
+                                    <div *ngIf="display; then thenBlockStatus; else elseBlockStatus"></div>
+                                    <ng-template #thenBlockStatus>
+                                        <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+                                    </ng-template>
+
+                                    <ng-template #elseBlockStatus>
+                                        <select formControlName="status" id="status" class="form-control"
+                                            [ngModel]="status" (ngModelChange)='onOptionsSelectedStatus($event)'>
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  statusList">
+                                                {{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                    </ng-template>
+
+
+                                </td>
+                                <td>
+                                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                                    <ng-template #thenBlockInactive>  
+                                </ng-template>
+
+
+                                <ng-template #elseBlockInactive>
+                                        <td style="width: 18%" class="LabelFontStyle">
+                                            Inactive&nbsp;Date:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" formControlName="endDate" class="form-control"
+                                                   [ngModel]="endDate | date:'yyyy-MM-dd'">
+                                        </td>
+                               
+                                </ng-template>
+                                </td>
+                            </tr>
+
+                         <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Name&nbsp;:</td>
+    
+                            <td>
+                              <input  type="text" formControlName="regimeName" [(ngModel)]="regimeName" class="form-control" placeholder="Regime Name"  disabled>
+                            </td>
+                            
 
 
                            
@@ -67,18 +119,7 @@
                                     Tax&nbsp;Point&nbsp;Basis&nbsp;:
                                 </td>
         
-                                <!-- <td>
-                                   <input type="text" formControlName="taxPointBasis" class="form-control" 
-                                    placeholder="Tax Point Basis" 
-                                    [(ngModel)]='taxPointBasis' value={{taxPointBasis}}>
-        
-                                  <div *ngIf= "f.taxPointBasis.invalid && f.taxPointBasis.dirty|| f.taxPointBasis.touched"   style="color: red;"> 
-                                    <div *ngIf ="f.taxPointBasis.errors.required"> 
-                                         Tax Point Basis is Required  
-                                        </div>
-                                  </div>
-                                </td> -->
-
+                              
                                 <td> 
                                     <select formControlName="taxPointBasis" id="taxPointBasis" [(ngModel)]="taxPointBasis" class="form-control">
                                         <!-- <option value=""></option> -->
@@ -86,43 +127,41 @@
                                         <option value="DELIVERY">DELIVERY</option>
                                    </select>
                                 </td>
-
+                                
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Start&nbsp;Date&nbsp;:
+                                    </td>
+            
+                                    <td>
+                                        <input type="date" formControlName="startDate" class="form-control" placeholder="Choose"
+                                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                                    </td>
+                                    
                             </tr>
                             <tr>
 
-                                <td style="width: 15%" class="LabelFontStyle">
-                                    Status&nbsp;:
-                                </td>
-        
-                                <td>
-                                <select formControlName="status" [(ngModel)]="status" id="status" class="form-control"
-                                    [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  statusList">
-                                        {{sc.codeDesc}}
-                                    </option>
-                                </select>
-                            </td>
-                           
+                                
 
 
-                            <td style="width: 15%" class="LabelFontStyle">
+                                   
+
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                 Start&nbsp;Date&nbsp;:
                             </td>
     
                             <td>
                                 <input type="date" formControlName="startDate" class="form-control" placeholder="Choose"
                                     max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td>
+                            </td> -->
     
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                 End&nbsp;Date&nbsp;:
                             </td>
     
                             <td>
                                 <input disabled type="date" formControlName="endDate" class="form-control" placeholder="Choose"
                                     max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td>
+                            </td> -->
 
                            </tr>
 
@@ -131,106 +170,229 @@
                         </table>
                     
 
-                        <br>
+                        <!-- <br> -->
                         <table style="width: 100%; background-color: #FFE4B5;">
                             <tr>
                                 <td class="SubHeading2">Tax&nbsp;Type&nbsp;Details</td>
                             </tr>
-                        </table>
+                        </table>    
 
                         <table class="center">
                             <tr>
                                 <td  style="width: 15%" class="LabelFontStyle"> Recoverbale&nbsp;Tax&nbsp;: </td>
                                 <td>
-                                    <input type="checkbox" id="recoverableFlag" formControlName="recoverableFlag"   value="recoverableFlag" [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
+
+
+                                    <div *ngIf="recFlagDiss">   
+                                        <input  type="checkbox"  name="recoverableFlag" formControlName="recoverableFlag"  [(ngModel)]="recoverableFlag"  (change)="recoverableFlg1($event)">
+                                    </div> 
+                                    <div *ngIf="TRUER">
+                                        <input  type="checkbox"  name="recoverableFlag" [formControl]="recoverableFlag"  [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
+                                    </div>
+                                    <div *ngIf="FALSER">
+                                        <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
+                                    </div>
+
+                                    <!-- <input type="checkbox" formControlName="recoverableFlag" [(ngModel)]='recoverableFlag' (change)='recoverableFlg1($event)'> -->
+                                    
+                                    <!-- <div *ngIf="recFagDiss; then thenBlockrec; else elseBlockrec"></div>
+                                    <ng-template #thenBlockrec>
+                                        <input  type="checkbox"  id="recoverableFlag" [formControl]="recoverableFlag"   value="recoverableFlag" [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
+                                    </ng-template>
+                                    <ng-template #elseBlockrec>  
+                                        <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   value="recoverableFlag" [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
+                                    </ng-template> -->
                                 </td> 
 
-                                <td  style="width: 15%" class="LabelFontStyle">
-                                    Applicable&nbsp;for&nbsp;offset&nbsp;:
+                                <td  style="width: 15%" class="LabelFontStyle">Applicable&nbsp;for&nbsp;offset&nbsp;:</td>
+                                <td>
+                                        <!-- <input type="checkbox" formControlName="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)"> -->
+                                        <!-- <div *ngIf="offsetFlagFagDiss; then thenBlockoffsetFlag; else elseBlockoffsetFlag"></div>
+                                        <ng-template #thenBlockoffsetFlag>
+                                        <input  type="checkbox"  id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)">
+                                        </ng-template>
+                                        <ng-template #elseBlockoffsetFlag>  
+                                            <input  type="checkbox" checked   id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)">
+                                        </ng-template>     -->
+
+                                        <div *ngIf="offsetFlagFagDiss"> 
+                                          <input  type="checkbox"  name="offsetFlag" formControlName="offsetFlag"  [(ngModel)]="offsetFlag"   (change)="offsetFlg($event)">
+                                        </div> 
+                                        <div *ngIf="TRUEo">
+                                            <input  type="checkbox"  name="offsetFlag" [formControl]="offsetFlag"  [(ngModel)]="offsetFlag" (change)="offsetFlg($event)"> 
+                                            <!-- (change)="offsetFlag=$event.target.checked?'Y':'N'" -->
+
+                                        </div>
+                                        <div *ngIf="FALSEo">
+                                            <input  type="checkbox" checked   id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)">
+                                        </div>
                                 </td>
+
+                                <td  style="width: 15%" class="LabelFontStyle">Self&nbsp;Assessed/Reverse&nbsp;Change&nbsp;:</td>
+                                <td>
+                                    <!-- <input type="checkbox" formControlName="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)" > -->
+                                    <!-- <div *ngIf="selfAssesedFagDiss; then thenBlockselfAssesedFlag; else elseBlockselfAssesedFlag"></div>
+                                    <ng-template #thenBlockselfAssesedFlag>
+                                    <input  type="checkbox"  id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)">
+                                    </ng-template>
+                                    <ng-template #elseBlockselfAssesedFlag>  
+                                        <input  type="checkbox" checked   id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)">
+                                    </ng-template>         -->
+
+                                    <div *ngIf="selfAssesedFagDiss">   
+                                       <input  type="checkbox"  name="selfAssesedFlag" formControlName="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag"  (change)="selfAssesedFlg($event)">
+                                    </div> 
+                                    <div *ngIf="TRUEs">
+                                        <input  type="checkbox"  name="selfAssesedFlag" [formControl]="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)">
+                                        <!-- (change)="selfAssesedFlag=$event.target.checked?'Y':'N'" -->
+                                    </div>
+                                    <div *ngIf="FALSEs">
+                                        <input  type="checkbox" checked   id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)">
+                                    </div>
+
+                                </td>
+
+                                <td  style="width: 15%" class="LabelFontStyle"> Set&nbsp;Taxtype&nbsp;for&nbsp;Reporting&nbsp;Only&nbsp;:</td>
 
                                 <td>
-                                <input type="checkbox" formControlName="offsetFlag" [(ngModel)]='offsetFlag'(change)="offsetFlg($event)">
-                                </td>
+                                        <!-- <input type="checkbox" formControlName="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">     -->
+                                        <!-- <div *ngIf="reportingOnlyFlagDiss; then thenBlockreportingOnlyFlag; else elseBlockreportingOnlyFlag"></div>
+                                        <ng-template #thenBlockreportingOnlyFlag>
+                                        <input  type="checkbox"  id="reportingOnlyFlag" [formControl]="reportingOnlyFlag"   value="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">
+                                        </ng-template>
+                                        <ng-template #elseBlockreportingOnlyFlag>  
+                                            <input  type="checkbox" checked   id="reportingOnlyFlag" [formControl]="reportingOnlyFlag"   value="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">
+                                        </ng-template>       -->
 
-                                <td  style="width: 15%" class="LabelFontStyle">
-                                    Self&nbsp;Assessed/Reverse&nbsp;Change&nbsp;:
-                                </td>
-
-                                <td>
-                                <input type="checkbox" formControlName="selfAssesedFlag" [(ngModel)]='selfAssesedFlag' (change)="selfAssesedFlg($event)" >
-                                </td>
-
-                                <td  style="width: 15%" class="LabelFontStyle">
-                                    Set&nbsp;Taxtype&nbsp;for&nbsp;Reporting&nbsp;Only&nbsp;:
-                                </td>
-
-                                <td>
-                                <input type="checkbox" formControlName="reportingOnlyFlag" [(ngModel)]='reportingOnlyFlag'(change)="reportingOnlyFlg($event)">    
-                                </td>
+                                        <div *ngIf="reportingOnlyFlagDiss">  
+                                          <input  type="checkbox"  name="reportingOnlyFlag" formControlName="reportingOnlyFlag"  [(ngModel)]="reportingOnlyFlag"  (change)="reportingOnlyFlg($event)" >
+                                        </div> 
+                                        <div *ngIf="TRUErept">
+                                            <!-- (change)="reportingOnlyFlag=$event.target.checked?'Y':'N'" -->
+                                            <input  type="checkbox"  name="reportingOnlyFlag" [formControl]="reportingOnlyFlag"  [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">
+                                        </div>
+                                        <div *ngIf="FALSErept">
+                                            <input  type="checkbox" checked   id="reportingOnlyFlag" [formControl]="reportingOnlyFlag"   value="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">
+                                        </div>   
+                            </td>
 
                             </tr>
 
                             <tr>
-
-                                <td  style="width: 15%" class="LabelFontStyle">
-                                    Update&nbsp;Vendor&nbsp;on&nbsp;Transaction&nbsp;:
-                                </td>
-
+                                <td  style="width: 15%" class="LabelFontStyle"> Update&nbsp;Vendor&nbsp;on&nbsp;Transaction&nbsp;: </td>
                                 <td>
-                                <input type="checkbox" formControlName="updVendorOnTran" [(ngModel)]='updVendorOnTran'(change)="updVendorOnTranFlg($event)">    
-                                </td>
+                                    <!-- <input type="checkbox" formControlName="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">     -->
+                                    <!-- <div *ngIf="updVendorOnTranDiss; then thenBlockupdVendorOnTran; else elseBlockupdVendorOnTran"></div>
+                                    <ng-template #thenBlockupdVendorOnTran>
+                                    <input  type="checkbox"  id="updVendorOnTran" [formControl]="updVendorOnTran"   value="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">
+                                    </ng-template>
+                                    <ng-template #elseBlockupdVendorOnTran>  
+                                        <input  type="checkbox" checked   id="updVendorOnTran" [formControl]="updVendorOnTran"   value="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">
+                                    </ng-template>      -->
 
-                                <td  style="width: 15%" class="LabelFontStyle">
-                                    Allow&nbsp;Abetment&nbsp;:
-                                </td>
+                                    <div *ngIf="updVendorOnTranDiss">   
+                                       <input  type="checkbox"  name="updVendorOnTran" formControlName="updVendorOnTran"  [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)" >
+                                       <!-- (change)="updVendorOnTran=$event.target.checked?'Y':'N'" -->
+                                    </div> 
+                                    <div *ngIf="TRUEupd">
+                                        <input  type="checkbox"  name="updVendorOnTran" [formControl]="updVendorOnTran"  [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">
+                                    </div>
+                                    <div *ngIf="FALSEupd">
+                                        <input  type="checkbox" checked   id="updVendorOnTran" [formControl]="updVendorOnTran"   value="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">
+                                    </div>
 
-                                <td>
-                                <input type="checkbox" formControlName="allowAbatement" [(ngModel)]='allowAbatement'(change)="allowAbatementFlg($event)">    
-                                </td>
+                               </td>
+
+                                <td  style="width: 15%" class="LabelFontStyle"> Allow&nbsp;Abetment&nbsp;:</td>
+                               <td>
+                                        <!-- <input type="checkbox" formControlName="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">     -->
+                                        <!-- <div *ngIf="allowAbatementDiss; then thenBlockallowAbatement; else elseBlockallowAbatement"></div>
+                                        <ng-template #thenBlockallowAbatement>
+                                        <input  type="checkbox"  id="allowAbatement" [formControl]="allowAbatement"   value="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
+                                        </ng-template>
+                                        <ng-template #elseBlockallowAbatement>  
+                                            <input  type="checkbox" checked   id="allowAbatement" [formControl]="allowAbatement"   value="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
+                                        </ng-template>  -->
+
+                                        <div *ngIf="allowAbatementDiss"> 
+                                           <input  type="checkbox"  name="allowAbatement" formControlName="allowAbatement"  [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
+                                        </div> 
+                                        <div *ngIf="TRUEall">
+                                            <input  type="checkbox"  name="allowAbatement" [formControl]="allowAbatement"  [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
+                                            <!-- (change)="allowAbatement=$event.target.checked?'Y':'N'" -->
+                                        </div>
+                                        <div *ngIf="FALSEall">
+                                            <input  type="checkbox" checked   id="allowAbatement" [formControl]="allowAbatement"   value="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
+                                        </div>     
+                               </td>
                                 
-                            
-                                <td  style="width: 15%" class="LabelFontStyle">
-                                    Witholding&nbsp;Tax&nbsp;Applicable&nbsp;:
-                                </td>
-
+                                <td  style="width: 15%" class="LabelFontStyle">Witholding&nbsp;Tax&nbsp;Applicable&nbsp;: </td>
                                 <td>
-                                <!-- <input type="checkbox" id="wthldTrxApplicableFlag" name="wthldTrxApplicableFlag" value="wthldTrxApplicableFlag"> -->
-                                <input type="checkbox" formControlName="wthldTrxApplicableFlag" [(ngModel)]='wthldTrxApplicableFlag'(change)="wthldTrxApplicableFlg($event)">    
-                                </td>
+                                     <!-- <input type="checkbox" formControlName="wthldTrxApplicableFlag" [(ngModel)]='wthldTrxApplicableFlag'(change)="wthldTrxApplicableFlg($event)">     -->
+                                    <!-- <div *ngIf="wthldTrxApplicableFlagDiss; then thenwthldTrxApplicableFlag; else elseBlockwthldTrxApplicableFlag"></div>
+                                    <ng-template #thenwthldTrxApplicableFlag>
+                                    <input  type="checkbox"  id="wthldTrxApplicableFlag" [formControl]="wthldTrxApplicableFlag"   value="wthldTrxApplicableFlag" [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
+                                    </ng-template>
+                                    <ng-template #elseBlockwthldTrxApplicableFlag>  
+                                        <input  type="checkbox" checked   id="wthldTrxApplicableFlag" [formControl]="wthldTrxApplicableFlag"   value="wthldTrxApplicableFlag" [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
+                                    </ng-template>  -->
+
+                                    <div *ngIf="wthldTrxApplicableFlagDiss"> 
+                                       <input  type="checkbox"  name="wthldTrxApplicableFlag" formControlName="wthldTrxApplicableFlag"  [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
+                                    </div> 
+                                    <div *ngIf="TRUEwth">
+                                        <input  type="checkbox"  name="wthldTrxApplicableFlag" [formControl]="wthldTrxApplicableFlag"  [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
+                                        <!-- (change)="wthldTrxApplicableFlag=$event.target.checked?'Y':'N'" -->
+                                    </div>
+                                    <div *ngIf="FALSEwth">
+                                        <input  type="checkbox" checked   id="wthldTrxApplicableFlag" [formControl]="wthldTrxApplicableFlag"   value="wthldTrxApplicableFlag" [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
+                                    </div>
+
+                            </td>
 
                             </tr>
 
                         </table>
 
-                                <br>
+                                <!-- <br> -->
                                 <table style="width: 100%; background-color: #FFE4B5;">
                                     <tr>
-                                        <td class="SubHeading1">Accounting&nbsp;Details</td>
+                                        <td class="SubHeading2">Accounting&nbsp;Details</td>
                                     </tr>
                                 </table>
 
 
                                     <div class="center">
-                                        <br>
-                                       <div class="center" formArrayName="actLines">
+                                        <!-- <br> -->
+                                        <div class="center" formArrayName="actLines">
                   
                                             <div class="grid_scroll">
-                                                      <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+
+                                                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
                                                           cellspacing="0" cellpadding="4" rules="all" class="center">
                                                           <thead>
-                                                              <tr>
+                                                             <tr>
                                                                   <!-- <th scope="col">No.</th> -->
                                                                   <th scope="col">Ledger</th>
                                                                   <th scope="col">Operating Unit</th>
                                                                   <th scope="col">Inventory Organization</th>
-                                                                  <th scope="col">Location Name</th>
+                                                                  <!-- <th scope="col">Location Name</th> -->
+                                                                  <th scope="col">Interim Recovery</th>
+                                                                  <th scope="col">Recovery</th>
+                                                                  <th scope="col">Interim Liability</th>
+                                                                  <th scope="col">Liability</th>
+                                                                  <th scope="col">Expense</th>
+                                                                  <th scope="col">Rounding</th>
+                                                                  <th scope="col">Suspense</th>
+                                                                  <th scope="col">Advance</th>
+                                                                  <th scope="col">ISO Supense</th>
+
                                                                   <th scope="col">Add+</th>
                                                                   <th scope="col">Del-</th>
                                                               </tr>
                                                           </thead>
 
-                                                          <tr *ngFor="let group of lineDetailsArray.controls; let i= index" [formGroupName]="i">
+                                                        <tr *ngFor="let group of lineDetailsArray.controls; let i= index" [formGroupName]="i">
                                                    
                                                             <!-- <td >
                                                                 <input  type="text" formControlName="ledger"  class="form-control" [(ngModel)]="ledger" disabled>
@@ -239,335 +401,290 @@
                                                             <!-- LedgerList -->
 
                                                             <td >
-                                                                <select formControlName="ledgerId" id="ledgerId" class="form-control" >
+                                                                <select formControlName="ledgerId" id="ledgerId" class="form-control" (ngModelChange)='onLedgerSelected($event,i)' >
                                                                     <option>--Select--</option>
                                                                     <option *ngFor="let sc of  LedgerList" [ngValue]="sc.ledgerId">
                                                                         {{sc.name}}
                                                                     </option>
                                                                 </select>
-                                                            </td>
+                                                           </td>
 
                                                             <td >
-                                                                <select formControlName="ouId" id="ouId" class="form-control" >
+                                                                <div *ngIf="showOu; then thenBlockShowOu else  elseBlockShowOu"></div>
+                                                                <ng-template #thenBlockShowOu>      
+                                                                <select formControlName="ouId" id="ouId" class="form-control" enabled  (ngModelChange)='onOuIdSelected($event,i)' >
                                                                     <option>--Select--</option>
                                                                     <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                                         {{sc.ouName}}
                                                                     </option>
                                                                 </select>
-                                                            </td>
-
-                                                            <td>
-                                                                <select formControlName="locId" id="locId" class="form-control"  (ngModelChange)='onLocationSelected($event,i)'  >
+                                                            </ng-template>
+                                                                
+                                                                <ng-template #elseBlockShowOu>       
+                                                                    <select formControlName="ouId" id="ouId" class="form-control" disabled >
                                                                         <option>--Select--</option>
-                                                                        <option *ngFor="let sc of locIdList"  [ngValue]="sc.locCode">
-                                                                        {{sc.locCode}}
+                                                                        <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                                                            {{sc.ouName}}
                                                                         </option>
                                                                     </select>
+                                                                </ng-template>
+                
+                                                            </td>
+                
+                                                            <td>
+                                                                <div *ngIf="showOrg; then thenBlockShowOrg else  elseBlockShowOrg"></div>
+                                                                <ng-template #thenBlockShowOrg>   
+                                                                <select  enabled formControlName="locId" id="locId" class="form-control"  (ngModelChange)='onLocationSelected1($event,i)'  >
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                                                                        {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
+                                                                        </option>
+                                                                    </select>
+                                                                </ng-template>
+                
+                                                                <ng-template #elseBlockShowOrg>   
+                                                                    <select  disabled formControlName="locId" id="locId" class="form-control"  (ngModelChange)='onLocationSelected1($event,i)'  >
+                                                                            <option>--Select--</option>
+                                                                            <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                                                                            {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
+                                                                            </option>
+                                                                        </select>
+                                                                    </ng-template>
                                                                 </td>
-                                    
-                                                                <td >
+    
+                                                                <!-- <td >
                                                                <input  style="width: 400px;"    type="text" formControlName="locName"  class="form-control" placeholder="Location Name"  disabled>
-                                                               </td>
+                                                               </td> -->
 
                                                                <td>
-                                                                <button type="submit" class="btn btn-primary" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
-                                                                        class="fa fa-plus"></i></button>
+                                                                <input type="text"  formControlName="interimRecoveryCcid"
+                                                                [(ngModel)]="interimRecoveryCcid" value={{interimRecoveryCcid}} class="form-control"
+                                                                data-toggle="modal" data-target="#myModal"
+                                                                placeholder="Select Interim Recovery A/c" (click)="openCodeComb11('INTERIM RECOVERY',$event, i)" >
+                                                           
+
+                                                           
+                                                         </td>
+                                                            <td>
+                                                                <input type="text" value="recoveryCcid" formControlName="recoveryCcid"
+                                                                [(ngModel)]='recoveryCcid' value={{recoveryCcid}} class="form-control"
+                                                                data-toggle="modal" data-target="#myModal"
+                                                                placeholder="Select  Recovery A/c " (click)="openCodeComb11('RECOVERY',$event, i)">
                                                             </td>
                                                             <td>
+                                                                <input type="text" value="interimLiablilityCcid" formControlName="interimLiablilityCcid"
+                                                                [(ngModel)]='interimLiablilityCcid' value={{interimLiablilityCcid}} class="form-control"
+                                                                data-toggle="modal" data-target="#myModal"
+                                                                placeholder="Select Inerim Liability A/c " (click)="openCodeComb('Interim Liability',$event)">  
+                                                            </td> 
+
+                                                            <td>
+                                                                <input type="text" value="liablilityCcid" formControlName="liablilityCcid"
+                                                                [(ngModel)]='liablilityCcid' value={{liablilityCcid}} class="form-control"
+                                                                data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Liability',$event)"
+                                                                placeholder="Select Liability A/c ">
+                                                           </td>   
+
+                                                           <td>
+                                                            <input type="text" value="expenseCcid" formControlName="expenseCcid"
+                                                            [(ngModel)]='expenseCcid' value={{expenseCcid}} class="form-control"
+                                                            data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Expense Account',$event)"
+                                                            placeholder="Select Expense A/c">
+                                                           </td>
+
+                                                           <td>
+                                                            <input type="text" value="roundingCcid" formControlName="roundingCcid"
+                                                            [(ngModel)]='roundingCcid' value={{roundingCcid}} class="form-control"
+                                                            data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Rounding Account',$event)"
+                                                            placeholder="Select Rounding A/c ">
+                                                          </td>
+
+                                                          <td>
+                                                            <input type="text" value="suspenseCcid" formControlName="suspenseCcid"
+                                                            [(ngModel)]='suspenseCcid' value={{suspenseCcid}} class="form-control"
+                                                            data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Suspense Account',$event)"
+                                                            placeholder="Select Suspense A/c ">
+                                                            </td>
+                                                            <td>
+                                                            <input type="text" value="advRcptSuspenseCcid" formControlName="advRcptSuspenseCcid"
+                                                            [(ngModel)]='advRcptSuspenseCcid' value={{advRcptSuspenseCcid}} class="form-control"
+                                                            data-toggle="modal" data-target="#myModal"  (click)="openCodeComb('Advance Suspense',$event)"
+                                                            placeholder="Select Advanced Suspense A/c ">
+                                                            </td>
+                                                             <td>
+                                                                <input type="text" value="isoSuspenseCcid" formControlName="isoSuspenseCcid"
+                                                                [(ngModel)]='isoSuspenseCcid' value={{isoSuspenseCcid}} class="form-control"
+                                                                data-toggle="modal" data-target="#myModal" (click)="openCodeComb('ISO Suspense Account',$event)"
+                                                                placeholder="Select ISO Suspense  A/c">
+                                                             </td>
+
+                                                               <!-- ===============================Modal form Add/Remove Buttons =========================================================== -->
+                                                                <td>
+                                                                <button type="submit" class="btn btn-primary" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                                </td>
+
+                                                                <td>
                                                                 <button type="submit" class="btn btn-primary" (click)="RemoveRow(i)" style="width: min-content;"><i
                                                                         class="fa fa-trash"></i></button>
+                                                                </td>
+
+                                                    </tr>
+
+                                                    </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="myModal" [style.display]="showModal ? 'block' : 'none'" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        
+                                        <div style="width: 600px; margin-left:400px">
+                                            <div class="modal-content">
+                                
+                                                <!-- Modal Header -->
+                                                <div class="modal-header" >
+                                                    <!-- <h4 class="modal-title">Modal Heading</h4> -->
+                                                    <label style="color: royalblue;">
+                                                       {{ title }}</label>
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                </div>
+        
+                                                <div class="modal-body">
+                                                    <table>
+        
+                                                        <!-- Branch  1-->
+                                                        <tr>
+                                                            <td style="width: 15%; background-color: white;  " class="LabelFontStyle">Branch&nbsp;:&nbsp;</td>
+        
+                                                            <td>
+                                                                <select formControlName="a1"  [(ngModel)]="a1"
+                                                                    id="a1" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"SS_Branch")'>
+                                                                    <option>--Select--</option>
+                                                                        <option *ngFor="let sc of  BranchList" [ngValue]="sc.lookupValue" >
+                                                                            {{sc.lookupValue}} 
+                                                                        </option>
+                                                                </select>
                                                             </td>
-
-                                                          </tr>
-
-                                                     </table>
+        
+                                                            <td>
+                                                                <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1" class="form-control"  disabled>
+                                                            </td>
+                                                        </tr>
+        
+                                                        <!-- Location  2-->
+                                                        <tr>
+                                                            <td style="width: 15%; background-color: white;" class="LabelFontStyle">
+                                                                Location&nbsp;&nbsp;:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <select formControlName="a2" [(ngModel)]="a2"
+                                                                    id="a2" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"SS_Location")'>
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  locationCodeList" [ngValue]="sc.lookupValue">
+                                                                        {{sc.lookupValue}}
+                                                                    </option>
+                                                                </select>
+                                                           </td>
+        
+                                                           <td>
+                                                            <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" class="form-control"  disabled>
+                                                          </td>
+        
+                                                        </tr>
+                                                        <!-- cost Center  3-->
+                                                        <tr>
+                                                            <td style="width: 15%;background-color: white;" class="LabelFontStyle">
+                                                                Cost&nbsp;Center&nbsp;:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <select formControlName="a3" [(ngModel)]="a3"
+                                                                    id="a3" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event, "CostCentre")'>
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  CostCenterList" [ngValue]="sc.lookupValue" >
+                                                                        {{sc.lookupValue}}
+        
+                                                                    </option>
+                                                                </select>
+        
+                                                            </td>
+        
+                                                            <td>
+                                                                <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" class="form-control"  disabled>
+                                                            </td>
+                                                        </tr>
+        
+                                                        <!-- Natutal Account 4 -->
+                                                        <tr>
+                                                            <td style="width: 15%;background-color: white;" class="LabelFontStyle">
+                                                                Natural&nbsp;Account&nbsp;:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <select formControlName="a4" [(ngModel)]="a4"
+                                                                    id="a4" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"NaturalAccount")'>
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  NaturalAccountList" [ngValue]="sc.lookupValue">
+                                                                        {{sc.lookupValue}}
+        
+                                                                    </option>
+                                                                </select>
+        
+                                                            </td>
+        
+                                                            <td>
+                                                                <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4" class="form-control"  disabled>
+                                                            </td>
+                                                        </tr>
+        
+                                                        <!-- Inter Branch 5 -->
+        
+                                                        <tr>
+                                                            <td style="width: 15%;background-color: white;" class="LabelFontStyle">
+                                                                Inter&nbsp;Branch&nbsp;:&nbsp;
+                                                            </td>
+                                                            <td>
+                                                                <select formControlName="a5"  [(ngModel)]="a5"
+                                                                    id="a5" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"SS_Interbranch")'>
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  InterBrancList" [ngValue]="sc.lookupValue">
+                                                                        {{sc.lookupValue}}
+                                                                    </option>
+                                                                </select>
+        
+                                                            </td>
+        
+                                                            <td>
+                                                                <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" class="form-control"  disabled>
+                                                            </td>
+                                                        </tr>
+        
+                                                    </table>
+                                                </div>
+                                                <!-- Modal footer -->
+                                                
+                                                <div class="modal-footer">
+        
+                                                    <button type="button" class="btn btn-success"  data-dismiss="modal" 
+                                                        (click)="fndinterimRecoveryCcidGlCodeNew(content)" >Ok</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
 
-
                                 <br>
-                              <table style="width: 100%; background-color: #FFE4B5;">
+                              <!-- <table style="width: 100%; background-color: #FFE4B5;">
                                     <tr>
                                         <td class="SubHeading2">Account&nbsp;Details</td>
                                     </tr>
                                 </table>
 
-                                <table class="center">
-                                    <tr>
-                                    
-                                        <td style="width: 15%" class="LabelFontStyle">
-                                            Interim&nbsp;Recovery&nbsp;:
-                                        </td>
-                                          
-                                        <td>
-                                            <input type="text"  formControlName="interimRecoveryCcid"
-                                            [(ngModel)]="interimRecoveryCcid" value={{interimRecoveryCcid}} class="form-control"
-                                            data-toggle="modal" data-target="#myModal"
-                                            placeholder="Select Interim Recovery A/c" (click)="openCodeComb('INTERIM RECOVERY',$event)" >
-                                        </td>
-
-                                        <div id="myModal" [style.display]="showModal ? 'block' : 'none'" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                    
-                                            <div style="width: 600px; margin-left:400px">
-                                                <div class="modal-content">
-                                    
-                                                    <!-- Modal Header -->
-                                                    <div class="modal-header" >
-                                                        <!-- <h4 class="modal-title">Modal Heading</h4> -->
-                                                        <label style="color: royalblue;">
-                                                           {{ title }}</label>
-                                                        <button type="button" class="close"
-                                                            data-dismiss="modal">&times;</button>
-                                                    </div>
-            
-                                                    <div class="modal-body">
-                                                        <table>
-            
-                                                            <!-- Branch  1-->
-                                                            <tr>
-                                                                <td style="width: 15%; background-color: white;  " class="LabelFontStyle">Branch&nbsp;:&nbsp;</td>
-            
-                                                                <td>
-                                                                    <select formControlName="a1"  [(ngModel)]="a1"
-                                                                        id="a1" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"SS_Branch")'>
-                                                                        <option>--Select--</option>
-                                                                            <option *ngFor="let sc of  BranchList" [ngValue]="sc.lookupValue" >
-                                                                                {{sc.lookupValue}} 
-                                                                            </option>
-                                                                    </select>
-                                                                </td>
-            
-                                                                <td>
-                                                                    <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1" class="form-control"  disabled>
-                                                                </td>
-                                                            </tr>
-            
-                                                            <!-- Location  2-->
-                                                            <tr>
-                                                                <td style="width: 15%; background-color: white;" class="LabelFontStyle">
-                                                                    Location&nbsp;&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                    <select formControlName="a2" [(ngModel)]="a2"
-                                                                        id="a2" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"SS_Location")'>
-                                                                        <option>--Select--</option>
-                                                                        <option *ngFor="let sc of  locationCodeList" [ngValue]="sc.lookupValue">
-                                                                            {{sc.lookupValue}}
-                                                                        </option>
-                                                                    </select>
-                                                               </td>
-            
-                                                               <td>
-                                                                <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" class="form-control"  disabled>
-                                                              </td>
-            
-                                                            </tr>
-                                                            <!-- cost Center  3-->
-                                                            <tr>
-                                                                <td style="width: 15%;background-color: white;" class="LabelFontStyle">
-                                                                    Cost&nbsp;Center&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                    <select formControlName="a3" [(ngModel)]="a3"
-                                                                        id="a3" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event, "CostCentre")'>
-                                                                        <option>--Select--</option>
-                                                                        <option *ngFor="let sc of  CostCenterList" [ngValue]="sc.lookupValue" >
-                                                                            {{sc.lookupValue}}
-            
-                                                                        </option>
-                                                                    </select>
-            
-                                                                </td>
-            
-                                                                <td>
-                                                                    <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" class="form-control"  disabled>
-                                                                </td>
-                                                            </tr>
-            
-                                                            <!-- Natutal Account 4 -->
-                                                            <tr>
-                                                                <td style="width: 15%;background-color: white;" class="LabelFontStyle">
-                                                                    Natural&nbsp;Account&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                    <select formControlName="a4" [(ngModel)]="a4"
-                                                                        id="a4" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"NaturalAccount")'>
-                                                                        <option>--Select--</option>
-                                                                        <option *ngFor="let sc of  NaturalAccountList" [ngValue]="sc.lookupValue">
-                                                                            {{sc.lookupValue}}
-            
-                                                                        </option>
-                                                                    </select>
-            
-                                                                </td>
-            
-                                                                <td>
-                                                                    <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4" class="form-control"  disabled>
-                                                                </td>
-                                                            </tr>
-            
-                                                            <!-- Inter Branch 5 -->
-            
-                                                            <tr>
-                                                                <td style="width: 15%;background-color: white;" class="LabelFontStyle">
-                                                                    Inter&nbsp;Branch&nbsp;:&nbsp;
-                                                                </td>
-                                                                <td>
-                                                                    <select formControlName="a5"  [(ngModel)]="a5"
-                                                                        id="a5" class="form-control" style="width:200px" (ngModelChange)='onLookupSelected1($event,"SS_Interbranch")'>
-                                                                        <option>--Select--</option>
-                                                                        <option *ngFor="let sc of  InterBrancList" [ngValue]="sc.lookupValue">
-                                                                            {{sc.lookupValue}}
-                                                                        </option>
-                                                                    </select>
-            
-                                                                </td>
-            
-                                                                <td>
-                                                                    <input  type="text"  style="width: 200px; background-color: white; border: none;"   formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" class="form-control"  disabled>
-                                                                </td>
-                                                            </tr>
-            
-                                                        </table>
-                                                    </div>
-                                                    <!-- Modal footer -->
-                                                    
-                                                    <div class="modal-footer">
-            
-                                                        <button type="button" class="btn btn-success"  data-dismiss="modal" 
-                                                            (click)="fndinterimRecoveryCcidGlCodeNew(content)" >Ok</button>
-                                                           
-                                                    </div>
-            
-                                                </div>
-                                            </div>
-                                        <!-- </div> -->
-                                        </div>
-                                  
-            
-                                    <!-- <td><button class="button button7">...</button></td>  -->
-            
-                                            <!-- ------------------- -->
-
-                                  <!-- ============================ RECOVERY==================================== -->
-                                  <td style="width: 15%" class="LabelFontStyle">
-                                    Recovery&nbsp;:
-                                 </td>
-
-                                    <td>
-                                    <input type="text" value="recoveryCcid" formControlName="recoveryCcid"
-                                    [(ngModel)]='recoveryCcid' value={{recoveryCcid}} class="form-control"
-                                    data-toggle="modal" data-target="#myModal"
-                                    placeholder="Select  Recovery A/c " (click)="openCodeComb('RECOVERY',$event)">
                                 
-                                  </td>
-
-                                  <!-- <td><button class="button button7">...</button></td>  -->
-                                  
-                                 
-                               
-
-                                 <!-- ============================ LIABILITY ACCOUNTS==================================== -->
-                             
-
-                        
-                                 
-
-                                        <td style="width: 15%" class="LabelFontStyle">Interim&nbsp;Liability&nbsp;:</td>
-
-                                       <td>
-                                        <input type="text" value="interimLiablilityCcid" formControlName="interimLiablilityCcid"
-                                        [(ngModel)]='interimLiablilityCcid' value={{interimLiablilityCcid}} class="form-control"
-                                        data-toggle="modal" data-target="#myModal"
-                                        placeholder="Select Inerim Liability A/c " (click)="openCodeComb('Interim Liability',$event)">  
-                                       </td> 
-                                        
-                                        <!-- <td><button class="button button7">...</button></td>  -->
-                                     </tr>
-                                        <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Liability&nbsp;:</td>
-
-                                        <td>
-                                        <input type="text" value="liablilityCcid" formControlName="liablilityCcid"
-                                        [(ngModel)]='liablilityCcid' value={{liablilityCcid}} class="form-control"
-                                        data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Liability',$event)"
-                                        placeholder="Select Liability A/c ">
-                                     </td>                 
-                                        <!-- <td><button class="button button7">...</button></td>  -->
-                            
-                                            
-                                        <!-- <table class="center"> -->
-                                        
-                                                    <td style="width: 15%" class="LabelFontStyle">Expense&nbsp;Accounts:</td>
-                                                <td>
-                                                    <input type="text" value="expenseCcid" formControlName="expenseCcid"
-                                                    [(ngModel)]='expenseCcid' value={{expenseCcid}} class="form-control"
-                                                    data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Expense Account',$event)"
-                                                    placeholder="Select Expense A/c">
-                                                </td>
-
-                                            <!-- <td><button class="button button7">...</button></td>  -->
-                                            
-                       
-                  
-
-                                                <!-- ======================= OTHER accounts=============================== -->
-                                        
-                                                
-                                                    <td style="width: 15%" class="LabelFontStyle"> Rounding&nbsp;Accounts:</td>
-                                                <td>
-                                                    <input type="text" value="roundingCcid" formControlName="roundingCcid"
-                                                    [(ngModel)]='roundingCcid' value={{roundingCcid}} class="form-control"
-                                                    data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Rounding Account',$event)"
-                                                    placeholder="Select Rounding A/c ">
-                                                </td>
-                                                    </tr>
-
-                                                <!-- <td><button class="button button7">...</button></td>  -->
-                                                <tr>
-                                                <td style="width: 15%" class="LabelFontStyle">Suspense&nbsp;Accounts:</td>
-
-                                                <td>
-
-                                                    <input type="text" value="suspenseCcid" formControlName="suspenseCcid"
-                                                                    [(ngModel)]='suspenseCcid' value={{suspenseCcid}} class="form-control"
-                                                                    data-toggle="modal" data-target="#myModal" (click)="openCodeComb('Suspense Account',$event)"
-                                                                    placeholder="Select Suspense A/c ">
-                                                </td>
-                                                <!-- <td><button class="button button7">...</button></td>  -->
-                                                
-
-                        
-                 
-
-                   
-                                            <td style="width: 15%" class="LabelFontStyle">Advanced&nbsp;Suspense:</td>
-                                        <td>
-                                            <input type="text" value="advRcptSuspenseCcid" formControlName="advRcptSuspenseCcid"
-                                            [(ngModel)]='advRcptSuspenseCcid' value={{advRcptSuspenseCcid}} class="form-control"
-                                            data-toggle="modal" data-target="#myModal"  (click)="openCodeComb('Advance Suspense',$event)"
-                                            placeholder="Select Advanced Suspense A/c ">
-                                        </td>
-                                        <!-- <td><button class="button button7">...</button></td>  -->
-                                        <td style="width: 15%" class="LabelFontStyle">&nbsp;ISO&nbsp;Suspense&nbsp;Account:</td>
-                                        <td>
-                                            <input type="text" value="isoSuspenseCcid" formControlName="isoSuspenseCcid"
-                                            [(ngModel)]='isoSuspenseCcid' value={{isoSuspenseCcid}} class="form-control"
-                                            data-toggle="modal" data-target="#myModal" (click)="openCodeComb('ISO Suspense Account',$event)"
-                                            placeholder="Select ISO Suspense  A/c">
-                                        </td>
-                                        <!-- <td><button class="button button7">...</button></td>  -->
-                                        </tr>
-
-                                </table>
                                 
                                 <table style="width: 100%; background-color: #FFE4B5;">
                                     <tr>
                                         <td class="SubHeading2">&nbsp;</td>
                                     </tr>
-                                </table>
+                                </table> -->
 
 
                         <!-- ------------------------------------------------bUTTON START---------------------- -->
@@ -580,23 +697,23 @@
                         <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                         <ng-template #thenBlock1>
                             <td>
-                               <button type="submit" class="btn btn-info "  id="register" (click)="newMast()" >New</button>
+                               <button type="submit" class="btn btn-primary "  id="register" (click)="newMast()" >New</button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-info"  id="register" (click)="searchMast()" >Search</button>
+                                <button type="button" class="btn btn-primary"  id="register" (click)="searchMast()" >Search</button>
                             </td>
                             <!-- <td>
-                                <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                             </td> -->
 
                             <!-- <td>
-                                <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                             </td> -->
 
                             <!-- ====================Reset Dialog ======================== -->
 
                             <td>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Reset</button>
                             </td>
                             <!-- Modal -->
                                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -626,7 +743,7 @@
 
                                                 <!-- =====================Close Dialog Box====================== -->
                                                 <td>
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                                                 </td>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -661,18 +778,21 @@
                         <ng-template #elseBlock1>
 
                             <td>
-                                <button type="submit" class="btn btn-info" id="register"
+                                <button type="submit" class="btn btn-primary" id="register"
+                              (click)="updateMast()">Update</button>
+
+                                <button type="submit" class="btn btn-primary" id="register"
                                 [disabled]="!jaiTaxtypeMasterForm.valid" (click)="updateMast()">Update</button>
                             </td>
 
                             <td>
-                                <button type="button" class="btn btn-info" id="register"  (click)="searchMast()" >Search</button>
+                                <button type="button" class="btn btn-primary" id="register"  (click)="searchMast()" >Search</button>
                             </td>
                             <!-- <td>
-                                <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                             </td>
                             <td>
-                               <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button>
+                               <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                             </td> -->
 
 
@@ -680,7 +800,7 @@
  <!-- ====================Reset Dialog ======================== -->
 
  <td>
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Reset</button>
 </td>
 <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -710,7 +830,7 @@
 
                     <!-- =====================Close Dialog Box====================== -->
                     <td>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                     </td>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -830,7 +950,7 @@
     <td>{{com.taxPointBasis}}</td> 
     <td>{{com.startDate}}</td>
     <td>{{com.status}}</td>
-    <td><button class="btn btn-secondary" (click)="Select(com.taxTypeId)">Select</button></td>   
+    <td><button class="btn btn-primary" (click)="Select(com.taxTypeId)">Select</button></td>   
    </tr>
     </table>
 </div>

@@ -25,6 +25,10 @@ import { JaiTaxRatesMasterComponent } from './jai-tax-rates-master/jai-tax-rates
 import { JaiTaxTypeComponent } from './jai-tax-type/jai-tax-type.component';
 import { PoReceiptFormComponent } from './po-receipt-form/po-receipt-form.component';
 import { FlexFieldComponent } from './flex-field/flex-field.component';
+import {PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
+import { OmGruopMasterComponent } from './om-gruop-master/om-gruop-master.component';
+import { OrderTypeMasterComponent } from './order-type-master/order-type-master.component';
+// import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
 
@@ -54,8 +58,13 @@ const routes: Routes = [
   {path:'JaiTaxType', component:JaiTaxTypeComponent},
  {path:'PoReceiptForm',component:PoReceiptFormComponent},
  {path:'FlexField',component:FlexFieldComponent},
- 
-   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
+
+//    { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
+// {path:'FlexField',component:FlexFieldComponent},
+{path:'pricelistMaster', component:PricelistMasterComponent},
+{path:'OMGRP',component:OmGruopMasterComponent},
+{path:'orderType', component:OrderTypeMasterComponent},
+  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

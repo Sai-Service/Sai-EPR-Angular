@@ -22,7 +22,7 @@
 
 }
 
-.form-control {
+/* .form-control {
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-size: 12px;
     outline: medium none;
@@ -31,6 +31,16 @@
     width: 200px;
     height: 50%;
     border-color: gray;
+  } */
+  .form-control {
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-size: 11px;
+    outline: medium none;
+    /* padding: 3px; */
+    vertical-align: top;
+    /* width: 150px; */
+    height: 18%;
+   border-color: gray;
    /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
   }
 
@@ -85,4 +95,22 @@
     width: 100%;
     height: 200px;
     width: 100%;
+}
+/* button{
+    width: 5em;
+    background-image: linear-gradient(#cce2ee, #99cae5 60%, #83c9f1);
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 3rem;
+   
+    height: 22px;
+    font-size: 11px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 10px;   
+} */
+
+td{
+    padding: 0px;
 }

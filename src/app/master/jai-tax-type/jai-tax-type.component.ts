@@ -23,24 +23,24 @@ interface IJaiTaxtype{
   startDate:Date;
   endDate:Date;
   status:string;
-  rgCode : number
+  regimeCode:string;
 
   ouId: number;
   locId: number;
   locCode : string;
   locName  : string;
   ledgerId : number;
-  // interimRecoveryCcid: string;
-  // lookupValueDesc : string;
   lookupValueDesc1 : string;
   lookupValueDesc2 : string;
   lookupValueDesc3 : string;
   lookupValueDesc4 : string;
   lookupValueDesc5 : string;
-  // lookupValue : string;
-  // locDescreption : string;
+  // showOu : boolean[];
+  // showOrg: boolean[];
+  
  
 }
+
 
 @Component({
   selector: 'app-jai-tax-type',
@@ -48,7 +48,19 @@ interface IJaiTaxtype{
   styleUrls: ['./jai-tax-type.component.css']
 })
 export class JaiTaxTypeComponent implements OnInit {
+
   jaiTaxtypeMasterForm:FormGroup;
+
+
+    // PLANE =true;   
+    TRUER= false;  FALSER=false;
+    TRUEwth=false;  FALSEwth= false;
+    TRUEall=false; FALSEall= false;
+    TRUEupd=false; FALSEupd= false;
+    TRUErept=false;   FALSErept= false;
+    TRUEs =false; FALSEs= false;
+    TRUEo=false; FALSEo= false;
+
   public minDate = new Date();
   taxTypeId: number;
   regimeId: number;
@@ -62,7 +74,6 @@ export class JaiTaxTypeComponent implements OnInit {
   updVendorOnTran: string;
   allowAbatement: string;
   locCode: string;
-  // lookupValue: string;
   ledgerId:number;
   interimRecoveryCcid: string;
   recoveryCcid: string;
@@ -73,10 +84,13 @@ export class JaiTaxTypeComponent implements OnInit {
   suspenseCcid: string;
   advRcptSuspenseCcid: string;
   isoSuspenseCcid: string;
-
+  regimCodeDisp =true;
+  showOrg=false;
+  showOu=false;
   regimeName: string;
+  regimeCode:string;
   locName: string;
-  locDescreption : string;
+  // locDescreption : string;
 
   lookupValueDesc: string;
   lookupValueDesc1: string;
@@ -87,7 +101,7 @@ export class JaiTaxTypeComponent implements OnInit {
 
   lookupValueDesc6: any[];
   lookupValueDescB1: string;
-
+  checked:boolean;
   // public ledger = 'SS LEDGER';
 
   wthldTrxApplicableFlag: string;
@@ -97,9 +111,7 @@ export class JaiTaxTypeComponent implements OnInit {
   submitted = false;
   ouId: number;
   locId: number;
-  rgCode : number;
 
-// lookupType:string
 
   displayInactive = true;
   Status1: any;
@@ -109,18 +121,25 @@ export class JaiTaxTypeComponent implements OnInit {
 
   public regimNameList: any;
   public locationNameList: any;
+  public locationNameList1: any;
   public lookupNameList: any;
 
   public OUIdList: Array<string> = [];
   public LedgerList: Array<string> = [];
   
-  // public locIdList: Array<string> = [];
+  
 
   public status = "Active";
   inactiveDate: Date;
   display = true;
   displayButton = true;
-
+  recFlagDiss=true;
+  offsetFlagFagDiss = true;
+  selfAssesedFagDiss = true;
+  reportingOnlyFlagDiss = true;
+  updVendorOnTranDiss = true;
+  allowAbatementDiss = true ;
+  wthldTrxApplicableFlagDiss= true;
   
 
   a1: string;
@@ -128,7 +147,7 @@ export class JaiTaxTypeComponent implements OnInit {
   a3: string;
   a4: string;
   a5: string;
-
+  iValue:number;
 
   showModal: boolean;
   content: number;
@@ -150,8 +169,6 @@ export class JaiTaxTypeComponent implements OnInit {
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
     this.jaiTaxtypeMasterForm = fb.group({
-      // ouId: ['', [Validators.required]],
-      // locId: ['', [Validators.required]],
       status: ['', [Validators.required]],
       taxTypeCode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
       taxTypeName: ['', [Validators.required]],
@@ -160,44 +177,39 @@ export class JaiTaxTypeComponent implements OnInit {
       endDate: ['', [Validators.nullValidator]],
       taxTypeId: [''],
       regimeId: ['', [Validators.required]],
-      recoverableFlag: ['', [Validators.required]],
+      regimeCode:['',[Validators.nullValidator]],
+      recoverableFlag: ['', [Validators.nullValidator]],
       offsetFlag: ['', [Validators.required]],
-      selfAssesedFlag: ['', [Validators.required]],
-      reportingOnlyFlag: ['', [Validators.required]],
+      selfAssesedFlag: ['', [Validators.nullValidator]],
+      reportingOnlyFlag: ['', [Validators.nullValidator]],
       updVendorOnTran: ['', [Validators.required]],
       allowAbatement: ['', [Validators.required]],
       wthldTrxApplicableFlag: ['', [Validators.required]],
-      rgCode  :[''],
-      
+           
       a1: ['', [Validators.required]],
       a2: ['', [Validators.required]],
       a3: ['', [Validators.required]],
       a4: ['', [Validators.required]],
       a5: ['', [Validators.required]],
       
-      interimRecoveryCcid: ['', [Validators.required]],
-      recoveryCcid: ['', [Validators.required]],
-      interimLiablilityCcid: ['', [Validators.required]],
-      liablilityCcid: ['', [Validators.required]],
-      expenseCcid: ['', [Validators.required]],
-      roundingCcid: ['', [Validators.required]],
-      suspenseCcid: ['', [Validators.required]],
-      advRcptSuspenseCcid: ['', [Validators.required]],
-      isoSuspenseCcid: ['', [Validators.required]],
+      // interimRecoveryCcid: ['', [Validators.required]],
+      // recoveryCcid: ['', [Validators.required]],
+      // interimLiablilityCcid: ['', [Validators.required]],
+      // liablilityCcid: ['', [Validators.required]],
+      // expenseCcid: ['', [Validators.required]],
+      // roundingCcid: ['', [Validators.required]],
+      // suspenseCcid: ['', [Validators.required]],
+      // advRcptSuspenseCcid: ['', [Validators.required]],
+      // isoSuspenseCcid: ['', [Validators.required]],
       regimeName: [],
-      // locName: [],
-      // ledgerId: [],
-      // locCode: [],
-      // lookupValue: [],
-      // lookupValueDesc: [],
       lookupValueDesc1: [],
       lookupValueDesc2: [],
       lookupValueDesc3: [],
       lookupValueDesc4: [],
       lookupValueDesc5: [],
-      // lookupValueDescB1: [],
+    
 
-      locDescreption:[],
+      // locDescreption:[],
       actLines: this.fb.array([this.lineDetailsGroup()])
 
 
@@ -207,25 +219,31 @@ export class JaiTaxTypeComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
-      // ledger: [],
-      // opUnit: [],
-      // invOrg: [],
-      // locDesc: [],
       ledgerId:['', Validators.required],
       ouId: ['', [Validators.required]],
       locId: ['', [Validators.required]],
       locName: ['', [Validators.required]],
-      // locCode: [],
-
-    });
+      interimRecoveryCcid: ['', [Validators.required]],
+      recoveryCcid: ['', [Validators.required]],
+      interimLiablilityCcid: ['', [Validators.required]],
+      liablilityCcid: ['', [Validators.required]],
+      expenseCcid: ['', [Validators.required]],
+      roundingCcid: ['', [Validators.required]],
+      suspenseCcid: ['', [Validators.required]],
+      advRcptSuspenseCcid: ['', [Validators.required]],
+      isoSuspenseCcid: ['', [Validators.required]],
+     });
   }
 
   get lineDetailsArray() {
     return <FormArray>this.jaiTaxtypeMasterForm.get('actLines')
   }
 
-  addRow() {
+  addRow(index) {
+    alert('addrow index '+index);
     this.lineDetailsArray.push(this.lineDetailsGroup());
+    this.showOu=false;
+    this.showOrg=false;
   }
 
   RemoveRow(index) {
@@ -271,13 +289,13 @@ export class JaiTaxTypeComponent implements OnInit {
         }
       );
 
-    this.service.locationIdList()
-      .subscribe(
-        data => {
-          this.locIdList = data;
-          console.log(this.locIdList);
-        }
-      );
+    // this.service.locationIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.locIdList = data;
+    //       console.log(this.locIdList);
+    //     }
+    //   );
 
 
       this.service.LedgerList()
@@ -360,26 +378,35 @@ export class JaiTaxTypeComponent implements OnInit {
   }
 
   ///////////////////////Recoverable Tax CheckBox/////////////////////////
-  recoverableFlg1(e : any) {
-    // alert (e);
-    if (e.target.checked) {
-       this.recoverableFlag = 'Y'
-    }
-    else {
-      this.recoverableFlag='N'
-    }
+  recoverableFlg1(e) {
+    if (e.target.checked=== true) {
+      this.recoverableFlag = 'Y'
+   } 
+   if (e.target.checked=== false) {
+     this.recoverableFlag='N'
+   }
+    
+    alert ('Recoverable flag =' + this.recoverableFlag);
   }
 
   ///////////////////////Applicable for Offset  CheckBox/////////////////////////
   offsetFlg(e) {
-    if (e.target.checked) {
+    if (e.target.checked===true) {
       this.offsetFlag = 'Y'
+    }
+    if (e.target.checked===false)
+    {
+      this.offsetFlag ='N'
     }
   }
   ///////////////////////Self Assessed /Reverse Change  CheckBox/////////////////////////
   selfAssesedFlg(e) {
-    if (e.target.checked) {
+    if (e.target.checked===true) {
       this.selfAssesedFlag = 'Y'
+    }
+    if (e.target.checked===false) 
+    {
+      this.selfAssesedFlag ='N'
     }
   }
 
@@ -387,46 +414,134 @@ export class JaiTaxTypeComponent implements OnInit {
 
 
   reportingOnlyFlg(e) {
-    if (e.target.checked) {
+    if (e.target.checked===true) {
       this.reportingOnlyFlag = 'Y'
     }
+    if (e.target.checked===false){
+      this.reportingOnlyFlag = 'N'
+    }
+
   }
   ///////////////////////Update Vendor on Transaction CheckBox/////////////////////////
   updVendorOnTranFlg(e) {
-    if (e.target.checked) {
+    if (e.target.checked===true) {
       this.updVendorOnTran = 'Y'
+    }
+    if (e.target.checked===false){
+      this.updVendorOnTran = 'N'
     }
   }
   ///////////////////////Allow Abetment CheckBox/////////////////////////
   allowAbatementFlg(e) {
-    if (e.target.checked) {
+    if (e.target.checked===true) {
       this.allowAbatement = 'Y'
+    } 
+    if (e.target.checked===false){
+      this.allowAbatement = 'N'
     }
   }
   ///////////////////////Witholding Tax Applicable  CheckBox/////////////////////////
   wthldTrxApplicableFlg(e) {
-    if (e.target.checked) {
+    if (e.target.checked===true) {
       this.wthldTrxApplicableFlag = 'Y'
+    }
+    if (e.target.checked===false){
+      this.wthldTrxApplicableFlag = 'N'
     }
   }
 
   //////////////////////////////////////////////////////////////////////////////////////
 
-
   Select(taxTypeId: number) {
+    this.regimCodeDisp =false;
     let select = this.lstcomments.find(d => d.taxTypeId === taxTypeId);
-    if (select) {
-      this.jaiTaxtypeMasterForm.patchValue(select);
-      // this.regimeId = select[0].regimeId.regimeId;
-      this.regimeId=select.regimeId.regimeId;
-      alert('taxPointBasis='+this.taxPointBasis);
-      alert('recoverable flag='+this.recoverableFlag);
 
-      this.taxTypeId = select.taxTypeId;
-      this.displayButton = false;
-      this.display = false;
+    if (select) {
+
+      this.recFlagDiss =false;     
+      if(select.recoverableFlag === 'Y'){
+        this.TRUER= false; this.FALSER=true;
+      }if(select.recoverableFlag === 'N')
+      {
+        this.FALSER =false; this.TRUER= true;
+      }
+     
+      this.offsetFlagFagDiss =false;     
+      if(select.offsetFlag === 'Y'){
+        this.TRUEo=false;  this.FALSEo= true;
+      }if(select.offsetFlag === 'N'){
+        this.TRUEo=true;  this.FALSEo= false;
+      }
+         
+      this.selfAssesedFagDiss =false;     
+      if(select.selfAssesedFlag === 'Y'){
+        this.TRUEs=false;  this.FALSEs= true;
+      }if(select.selfAssesedFlag === 'N'){
+        this.TRUEs=true;  this.FALSEs= false;
+      }
+    
+      this.reportingOnlyFlagDiss =false;     
+      if(select.reportingOnlyFlag === 'Y'){
+        this.TRUErept=false;  this.FALSErept= true;
+      }if(select.reportingOnlyFlag === 'N'){
+        this.TRUErept=true;  this.FALSErept= false;
+      }
+
+      this.updVendorOnTranDiss =false;     
+      if(select.updVendorOnTran === 'Y'){
+        this.TRUEupd=false;  this.FALSEupd= true;
+      }if(select.updVendorOnTran === 'N'){
+        this.TRUEupd=true;  this.FALSEupd= false;
+      }
+
+      this.allowAbatementDiss =false;     
+      if(select.allowAbatement === 'Y'){
+        this.TRUEall=false;  this.FALSEall= true;
+      }if(select.allowAbatement === 'N'){
+        this.TRUEall=true;  this.FALSEall= false;
+      }
+                          
+      this.wthldTrxApplicableFlagDiss =false;     
+      if(select.wthldTrxApplicableFlag === 'Y'){
+        this.TRUEwth=false;  this.FALSEwth= true;
+      }if(select.wthldTrxApplicableFlag === 'N'){
+        this.TRUEwth=true;  this.FALSEwth= false;
+      }
+                          
+
+
+    //   if (select.recoverableFlag === 'N'){ this.recFagDiss= true;}
+    //     if (select.recoverableFlag === 'Y'){this.recFagDiss= false}
+    //       if (select.offsetFlag  === 'N'){this.offsetFlagFagDiss = true;}
+    //         if (select.offsetFlag === 'Y'){ this.offsetFlagFagDiss= false}
+    //  if (select.selfAssesedFlag  === 'N'){ this.selfAssesedFagDiss  = true;}
+    //            if (select.selfAssesedFlag === 'Y'){this.selfAssesedFagDiss = false}
+    //               if (select.reportingOnlyFlag === 'N'){ this.reportingOnlyFlagDiss= true;}
+    //                 if (select.reportingOnlyFlag === 'Y'){ this.reportingOnlyFlagDiss= false}
+    //                   if (select.updVendorOnTran === 'N'){ this.updVendorOnTranDiss= true;}
+    //                     if (select.updVendorOnTran === 'Y'){this.updVendorOnTranDiss= false}
+    //                       if (select.allowAbatement === 'N'){ this.allowAbatementDiss= true;}
+    //                         if (select.allowAbatement === 'Y'){this.allowAbatementDiss= false}
+    //                       if (select.wthldTrxApplicableFlag === 'N'){ this.wthldTrxApplicableFlagDiss= true;}
+    //                         if (select.wthldTrxApplicableFlag === 'Y'){this.wthldTrxApplicableFlagDiss= false}
+
+                    this.regimeId= select.regimeId.regimeId   ;
+                    this.regimeCode= select.regimeId.regimeCode ;
+                    // alert( this.regimeId);
+                    // alert( this.regimeCode);
+                    this.jaiTaxtypeMasterForm.patchValue(select);
+                    this.taxTypeId = select.taxTypeId;
+                    this.displayButton = false;
+                    this.display = false;
+                    // this.regimeId = select[0].regimeId.regimeIdfal
+                    // this.regimeId=select.regimeId.regimeCode;
+                    // alert('taxPointBasis='+this.taxPointBasis);
+                    // alert('recoverable flag='+select.recoverableFlag);
+                    // this.recoverableFlag = select.recoverableFlag;
     }
   }
+
+
  
   searchMast() {
     this.service.getJaiTaxTypeSearch()
@@ -461,11 +576,35 @@ transeData(val) {
   delete val.lookupValueDesc3;
   delete val.lookupValueDesc4;
   delete val.lookupValueDesc5;
+  delete val.regimeCode;
   return val;
 }
 
   newMast() {
     const formValue: IJaiTaxtype =this.transeData(this.jaiTaxtypeMasterForm.value);
+
+    if(this.jaiTaxtypeMasterForm.controls['recoverableFlag'].value === undefined || this.jaiTaxtypeMasterForm.controls['recoverableFlag'].value=== null){
+      formValue.recoverableFlag = 'N';
+    } 
+    if(this.jaiTaxtypeMasterForm.controls['offsetFlag'].value === undefined || this.jaiTaxtypeMasterForm.controls['offsetFlag'].value === null){
+      formValue.offsetFlag = 'N';
+    } 
+    if(this.jaiTaxtypeMasterForm.controls['selfAssesedFlag'].value === undefined || this.jaiTaxtypeMasterForm.controls['selfAssesedFlag'].value === null){
+      formValue.selfAssesedFlag = 'N';
+    } 
+    if(this.jaiTaxtypeMasterForm.controls['reportingOnlyFlag'].value === undefined || this.jaiTaxtypeMasterForm.controls['reportingOnlyFlag'].value === null){
+      formValue.reportingOnlyFlag = 'N';
+    } 
+    if(this.jaiTaxtypeMasterForm.controls['updVendorOnTran'].value === undefined || this.jaiTaxtypeMasterForm.controls['updVendorOnTran'].value === null){
+      formValue.updVendorOnTran = 'N';
+    } 
+    if(this.jaiTaxtypeMasterForm.controls['allowAbatement'].value === undefined ||  this.jaiTaxtypeMasterForm.controls['allowAbatement'].value === null){
+      formValue.allowAbatement = 'N';   
+    } 
+    if(this.jaiTaxtypeMasterForm.controls['wthldTrxApplicableFlag'].value === undefined || this.jaiTaxtypeMasterForm.controls['wthldTrxApplicableFlag'].value === null){
+      formValue.wthldTrxApplicableFlag = 'N';
+    } 
+
     this.service.jaiTaxTypeMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
@@ -480,7 +619,17 @@ transeData(val) {
   }
   
   updateMast() {
+    // alert(this.jaiTaxtypeMasterForm.controls['recoverableFlag'].value)
+    alert(this.recoverableFlag)
     const formValue: IJaiTaxtype = this.jaiTaxtypeMasterForm.value;
+formValue.recoverableFlag= this.recoverableFlag;
+formValue.offsetFlag = this.offsetFlag;
+formValue.reportingOnlyFlag=this.reportingOnlyFlag;
+formValue.updVendorOnTran =this.updVendorOnTran;
+formValue.selfAssesedFlag = this.selfAssesedFlag;
+formValue.allowAbatement =this.allowAbatement;
+formValue.wthldTrxApplicableFlag = this.wthldTrxApplicableFlag;
+    formValue.regimeId = this.regimeId;
     this.service.UpdateJaiTaxTypeMasterById(formValue, formValue.taxTypeId).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFUILY');
@@ -495,37 +644,48 @@ transeData(val) {
   };
 
   fndinterimRecoveryCcidGlCodeNew(content) {
-    // alert(content);
-
+    var i = this.iValue;
+    var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+    alert('a1 '+ this.jaiTaxtypeMasterForm.get('a1').value);
     let aa = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
       this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('a4').value + '.' +
       this.jaiTaxtypeMasterForm.get('a5').value;
+      alert('aa '+aa)
     if (content === 'INTERIM RECOVERY') {
-      this.jaiTaxtypeMasterForm.patchValue({ interimRecoveryCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ interimRecoveryCcid: aa })
+          (patch.controls[i]).patchValue({ interimRecoveryCcid: aa})
     }
     if (content === 'RECOVERY') {
-      this.jaiTaxtypeMasterForm.patchValue({ recoveryCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ recoveryCcid: aa })
+      (patch.controls[i]).patchValue({ recoveryCcid: aa})
     }
     if (content === 'Interim Liability') {
-      this.jaiTaxtypeMasterForm.patchValue({ interimLiablilityCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ interimLiablilityCcid: aa })
+      (patch.controls[i]).patchValue({ interimLiablilityCcid: aa})
     }
     if (content === 'Liability') {
-      this.jaiTaxtypeMasterForm.patchValue({ liablilityCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ liablilityCcid: aa })
+      (patch.controls[i]).patchValue({ liablilityCcid: aa})
     }
     if (content === 'Expense Account') {
-      this.jaiTaxtypeMasterForm.patchValue({ expenseCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ expenseCcid: aa })
+      (patch.controls[i]).patchValue({ expenseCcid: aa})
     }
     if (content === 'Rounding Account') {
-      this.jaiTaxtypeMasterForm.patchValue({ roundingCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ roundingCcid: aa })
+      (patch.controls[i]).patchValue({ roundingCcid: aa})
     }
     if (content === 'Suspense Account') {
-      this.jaiTaxtypeMasterForm.patchValue({ suspenseCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ suspenseCcid: aa })
+      (patch.controls[i]).patchValue({ suspenseCcid: aa})
     }
     if (content === 'Advance Suspense') {
-      this.jaiTaxtypeMasterForm.patchValue({ advRcptSuspenseCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ advRcptSuspenseCcid: aa })
+      (patch.controls[i]).patchValue({ advRcptSuspenseCcid: aa})
     }
     if (content === 'ISO Suspense Account') {
-      this.jaiTaxtypeMasterForm.patchValue({ isoSuspenseCcid: aa })
+      // this.jaiTaxtypeMasterForm.patchValue({ isoSuspenseCcid: aa })
+      (patch.controls[i]).patchValue({ isoSuspenseCcid: aa})
     }
 
     this.jaiTaxtypeMasterForm.get('a1').reset(); 
@@ -550,48 +710,7 @@ transeData(val) {
   //   this.interimRecoveryCcid = glcd1;
   // }
 
-  // fndRecoveryCcidGlCode(b1, b2, b3, b4, b5) {
-  //   const glcd1 = b1 + '.' + b2 + '.' + b3 + '.' + b4 + '.' + b5
-  //   this.recoveryCcid = glcd1;
-  // }
-
-  // fndinterimLiablilityCcidGlCode(c1, c2, c3, c4, c5) {
-  //   const glcd1 = c1 + '.' + c2 + '.' + c3 + '.' + c4 + '.' + c5
-  //   this.interimLiablilityCcid = glcd1;
-  // }
-
-  // fndliablilityCcidGlCode(d1, d2, d3, d4, d5) {
-  //   const glcd1 = d1 + '.' + d2 + '.' + d3 + '.' + d4 + '.' + d5
-  //   this.liablilityCcid = glcd1;
-  // }
-
-  // fndexpenseCcidGlCode(e1, e2, e3, e4, e5) {
-  //   const glcd1 = e1 + '.' + e2 + '.' + e3 + '.' + e4 + '.' + e5
-  //   this.expenseCcid = glcd1;
-  // }
-
-  // fndroundingCcidGlCode(f1, f2, f3, f4, f5) {
-  //   // alert(f1);
-  //   const glcd1 = f1 + '.' + f2 + '.' + f3 + '.' + f4 + '.' + f5
-  //   this.roundingCcid = glcd1;
-  // }
-  // fndsuspenseCcidGlCode(g1, g2, g3, g4, g5) {
-  //   const glcd1 = g1 + '.' + g2 + '.' + g3 + '.' + g4 + '.' + g5
-  //   this.suspenseCcid = glcd1;
-  // }
-  // fndadvRcptSuspenseCcidGlCode(h1, h2, h3, h4, h5) {
-  //   const glcd1 = h1 + '.' + h2 + '.' + h3 + '.' + h4 + '.' + h5
-  //   this.advRcptSuspenseCcid = glcd1;
-  // }
-  // fndisoSuspenseCcidGlCode(i1, i2, i3, i4, i5) {
-  //   const glcd1 = i1 + '.' + i2 + '.' + i3 + '.' + i4 + '.' + i5
-  //   this.isoSuspenseCcid = glcd1;
-  // }
-
-
- 
-
-  onOptionsSelected(event: any) {
+  onOptionsSelectedStatus(event: any) {
     this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
     // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
@@ -600,24 +719,71 @@ transeData(val) {
     }
     else if (this.Status1 === 'Active') {
       this.jaiTaxtypeMasterForm.get('endDate').reset();
+      this.displayInactive=true;
     }
   }
 
+  onOuIdSelected(ouId : any ,index){
+    // alert('ouId id =' +ouId);
+      if (ouId > 0) {
+        this.showOrg=true;
+          this.lineDetailsArray.controls[index].get('locId').reset();
+          this.lineDetailsArray.controls[index].get('locName').reset();
+          this.service.getLocationSearch1(ouId)
+          .subscribe(
+            data => {
+              this.locIdList = data;
+              console.log(this.locIdList);
+            }
+          );
+      }
+      else {
+        this.showOrg=false;
+      }
+      if(ouId==='--Select--'){
+        // alert('testing...')
+        this.lineDetailsArray.controls[index].get('locId').reset();
+      }
+    }
 
- 
+    onLedgerSelected(ledgerId : any ,index){
+      // alert('ledger id =' +ledgerId);
+        if (ledgerId > 0) {
+          this.showOu=true;
+        }
+        else {
+          this.showOu=false;
+          
+        }
+  
+        if(ledgerId==='--Select--'){
+          // alert('testing...')
+          this.lineDetailsArray.controls[index].get('ouId').reset();
+          this.lineDetailsArray.controls[index].get('locId').reset();
+          this.lineDetailsArray.controls[index].get('locName').reset();
+        }
+  
+      }
 
-  // Select(taxTypeId: number) {
-  //   let select = this.lstcomments.find(d => d.taxTypeId === taxTypeId);
-  //   if (select) {
-  //     this.jaiTaxtypeMasterForm.patchValue(select);
-  //     // this.regimeId = select.regimeId;
-  //     this.taxTypeId = select.taxTypeId;
-  //     this.displayButton = false;
-  //     this.display = false;
+
+  
+  // onOptionsSelected(event: any) {
+  //   this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
+  //   // alert(this.Status1);
+  //   if (this.Status1 === 'Inactive') {
+  //     this.displayInactive = false;
+  //     this.endDate = new Date();
+  //   }
+  //   else if (this.Status1 === 'Active') {
+  //     this.jaiTaxtypeMasterForm.get('endDate').reset();
   //   }
   // }
 
-  onOptionSelected(regimeId : any) {
+
+  
+
+   onOptionSelected(regimeId: any) {
+    //  alert("Regime ID :" + regimeId);
    
     this.service.regimNameList(regimeId)
       .subscribe(
@@ -653,6 +819,23 @@ transeData(val) {
       // this.addRow();
   }
 
+  onLocationSelected1(locId: any ,i) {
+    // alert('LOCATION ID='+locId);
+    this.service.locationNameList1(locId)
+      .subscribe(
+        data => {
+          this.locationNameList1 = data;
+          console.log(this.locationNameList1);
+          var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+          (patch.controls[i]).patchValue({ locName: this.locationNameList1.locName })
+        }
+      );
+    
+  }
+
+
+
+
 
   onLookupSelected1(mlookupValue: any, mlookupType: string) {
     // alert('LookupValue: '+mlookupValue+ ' Type : '+mlookupType);
@@ -680,8 +863,30 @@ transeData(val) {
   }
 
  
+  openCodeComb11(i,j,index) 
+  {
+    alert(index)
+    this.iValue = index;
+    if(j.target.value != ''){
+      alert('i= '+i + '  j= '+j.target.value);
+    var segment =j.target.value
+    var  temp = segment.split('.');
+    this.a1=temp[0];
+    // this.a2=temp[1];
+    this.a2='000';
+    this.a3=temp[2];
+    this.a4=temp[3];
+    this.a5=temp[4];
+    }
+  
+    this.showModal = true; // Show-Hide Modal Check
+    this.content = i; // Dynamic Data
+    this.title = i    // Dynamic Data
+
+  }
   openCodeComb(i,j) 
   {
+   
     if(j.target.value != ''){
       alert('i= '+i + '  j= '+j.target.value);
     var segment =j.target.value
@@ -698,7 +903,6 @@ transeData(val) {
     this.title = i    // Dynamic Data
 
   }
-
   openCodeComb1(i, interimRecoveryCcid) {
     alert('in openCodeComb1 ' + i + 'interimRecoveryCcid ' + interimRecoveryCcid);
     // alert(interimRecoveryCcid.length);

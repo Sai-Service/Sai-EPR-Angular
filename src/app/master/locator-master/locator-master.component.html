@@ -66,9 +66,10 @@
                                 *ngIf="!locatorMasterForm.get('segment1').valid && locatorMasterForm.get('segment1').touched">Please
                                 Enter Floor </span>    
                             </td>
+                           
                         </tr>
                         <tr>
-                        <td style="width: 18%" class="LabelFontStyle1">
+                            <td style="width: 18%" class="LabelFontStyle1">
                                 Rack&nbsp;:
                             </td>
                             <td>
@@ -104,8 +105,6 @@
                                 *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
                                 Enter Rack Number </span>    
                             </td>
-                        </tr>
-                        <tr>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Row&nbsp;:
                             </td>
@@ -142,6 +141,10 @@
                                 *ngIf="!locatorMasterForm.get('segment5').valid && locatorMasterForm.get('segment5').touched">Please
                                 Enter Row Number </span>    
                             </td>
+                        </tr>
+                        <tr>
+                           
+                           
                         </tr>
                         <tr>
                             <td style="width: 18%" class="LabelFontStyle1">
@@ -234,8 +237,6 @@
                                 *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
                                 Enter Rack Number </span>        
                             </td>
-                        </tr>
-                        <tr>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Row&nbsp;:
                             </td>
@@ -298,22 +299,21 @@
                                         Enter status </span>
                                 </div>        
                             </td> 
+                            <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                            <ng-template #thenBlockInactive>
+                            </ng-template>
+                            <ng-template #elseBlockInactive>
+                                    <td style="width: 18%" class="LabelFontStyle1">
+                                        Inactive&nbsp;Date&nbsp;:
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" formControlName="endDate" class="form-control"
+                                        [ngModel]="endDate | date:'yyyy-MM-dd'">        
+                                    </td>
+                            </ng-template>
                         </tr>
                     </ng-template>
-                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                    <ng-template #thenBlockInactive>
-                    </ng-template>
-                    <ng-template #elseBlockInactive>
-                        <tr>
-                            <td style="width: 18%" class="LabelFontStyle1">
-                                Inactive&nbsp;Date&nbsp;:
-                            </td>
-                            <td>
-                                <input disabled type="text" formControlName="endDate" class="form-control"
-                                [ngModel]="endDate | date:'yyyy-MM-dd'">        
-                            </td>
-                        </tr>
-                    </ng-template>
+                   
                 </table>
                 <table class="center">
                     <tr>
@@ -360,6 +360,7 @@
 </div>
 <br>
 <div class="container1">
+    <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
     <tbody>
         <tr class="GridHeader">
@@ -390,4 +391,5 @@
         <td><button (click)="Select(com.locatorId)">Select</button></td>
     </tr>
     </table>
+</div>
 </div>

@@ -13,22 +13,12 @@
                 <div *ngIf="display; then thenBlock; else elseBlock"></div>
                 <ng-template #thenBlock>
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle1">
+                        <td style="width: 18%" class="LabelFontStyle1">
                             Document&nbsp;Sequence&nbsp;No:
                         </td>
                         <td>
                             <input disabled formControlName="docSrlNo" [(ngModel)]="docSrlNo" value={{docSrlNo}} class="form-control"
                              placeholder="Enter document sequence no">
-                        <!-- <div *ngIf="submitted && f. docSrlNo.errors" class="invalid-feedback">
-                            <div *ngIf="f.docSrlNo.errors.required">Document sequence no must be a valid</div>
-                            <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
-                            <!-- <div *ngIf="f.docSrlNo.errors?.maxLength">Document sequence no must be a valid -->
-                            <!-- </div> -->
-                        <!-- </div> -->
-                        <!-- <span
-                            *ngIf="!DocSeriealMasterForm.get('docSrlNo').valid && DocSeriealMasterForm.get('docSrlNo').touched">Please
-                            Enter document sequence id </span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                           Division&nbsp;Name&nbsp;:
@@ -40,44 +30,36 @@
                                   {{sc.divisionName}}
                               </option>
                           </select>
-                          <!-- <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
-                              <div *ngIf="f.divisionId.errors.required">Division Name is required</div> -->
-                              <span
-                                  *ngIf="!DocSeriealMasterForm.get('divisionId').valid && DocSeriealMasterForm.get('divisionId').touched">Please
+                              <span  *ngIf="!DocSeriealMasterForm.get('divisionId').valid && DocSeriealMasterForm.get('divisionId').touched">Please
                                   Enter valid Division Name </span>
                       </td>
-
-                    </tr>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle1">
-                            Operating&nbsp;Unit&nbsp;:
-                        </td>
-                        <td>
-                            <select formControlName="docSrlOu" id="docSrlOu" class="form-control" (ngModelChange)='onOptionSelectedLocation($event)' >
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of ouIdList" [ngValue]="sc.id">
-                                    {{sc.name}}
-                                </option>
-                            </select>
-                                <span *ngIf="!DocSeriealMasterForm.get('docSrlOu').valid && DocSeriealMasterForm.get('docSrlOu').touched">Please
-                                    Enter valid Operating Unit </span>
-                        </td>
-                        <td style="width: 15%" class="LabelFontStyle1">
-                          Location&nbsp;Code&nbsp;:
-                      </td>
-                      <td>
-                          <select formControlName="docSrlLoc" id="docSrlLoc" class="form-control" ngModel='docSrlLoc'>
-                              <option>--Select--</option>
-                              <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
-                                  {{sc.locId}}-{{sc.locCode}}
-                              </option>
-                          </select>
-                          <!-- <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
-                              <div *ngIf="f.locId.errors.required">locId is required</div> -->
-                              <span  *ngIf="!DocSeriealMasterForm.get('docSrlLoc').valid && DocSeriealMasterForm.get('docSrlLoc').touched">Please
-                                  Enter Location code</span>
-                      </td>
-
+                      <td style="width: 15%" class="LabelFontStyle1">
+                        Operating&nbsp;Unit&nbsp;:
+                    </td>
+                    <td>
+                        <select formControlName="docSrlOu" id="docSrlOu" class="form-control" (ngModelChange)='onOptionSelectedLocation($event)' >
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of ouIdList" [ngValue]="sc.id">
+                                {{sc.name}}
+                            </option>
+                        </select>
+                            <span *ngIf="!DocSeriealMasterForm.get('docSrlOu').valid && DocSeriealMasterForm.get('docSrlOu').touched">Please
+                                Enter valid Operating Unit </span>
+                    </td>
+                      
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        Location&nbsp;Code&nbsp;:
+                    </td>
+                    <td>
+                        <select formControlName="docSrlLoc" id="docSrlLoc" class="form-control" ngModel='docSrlLoc'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
+                                {{sc.locId}}-{{sc.locCode}}
+                            </option>
+                        </select>
+                            <span  *ngIf="!DocSeriealMasterForm.get('docSrlLoc').valid && DocSeriealMasterForm.get('docSrlLoc').touched">Please
+                                Enter Location code</span>
+                    </td>
                     </tr>
                     <tr>
                       <td style="width: 15%" class="LabelFontStyle1">
@@ -109,15 +91,10 @@
                             <div *ngIf="f.financialYear.errors?.maxLength">Financial Year must be a valid
                             </div>
                         </div>
-                        <span
-                            *ngIf="!DocSeriealMasterForm.get('financialYear').valid && DocSeriealMasterForm.get('financialYear').touched">Please
+                        <span  *ngIf="!DocSeriealMasterForm.get('financialYear').valid && DocSeriealMasterForm.get('financialYear').touched">Please
                             Enter Financial Year </span>
+                            <input hidden formControlName="attribute1" [(ngModel)]="attribute1">
                         </td>
-                        <td>
-                          <input hidden formControlName="attribute1" [(ngModel)]="attribute1">
-                        </td>
-                    </tr>
-                    <tr>
                         <td style="width: 20%" class="LabelFontStyle1">
                             Document&nbsp;Type:
                         </td>
@@ -153,8 +130,6 @@
                           <ng-template #elseBlock1>
                             <input disabled formControlName="recvTypeId" class="form-control" [(ngModel)]="recvTypeId">
                           </ng-template>
-                        </td>
-                         <td>
                           <input hidden formControlName="tySrlNo" [(ngModel)]="tySrlNo">
                         </td>
                     </tr>
@@ -186,8 +161,6 @@
                         <span *ngIf="!DocSeriealMasterForm.get('startDate').valid && DocSeriealMasterForm.get('startDate').touched">Please
                             Enter start Date </span>
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Status&nbsp;:
                         </td>
@@ -200,7 +173,7 @@
                 </ng-template>
                 <ng-template #elseBlock>
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle1">
+                        <td style="width: 18%" class="LabelFontStyle1">
                             Document&nbsp;Sequence&nbsp;No:
                         </td>
                         <td>
@@ -219,9 +192,6 @@
                                   Enter valid Division Name </span>
                           </div>
                       </td>
-
-                    </tr>
-                    <tr>
                       <td style="width: 15%" class="LabelFontStyle1">
                         Operating&nbsp;Unit&nbsp;:
                     </td>
@@ -236,7 +206,6 @@
                  <span *ngIf="!DocSeriealMasterForm.get('docSrlLoc').valid && DocSeriealMasterForm.get('docSrlLoc').touched">Please
                                     Enter Location code</span>
                         </td>
-
                     </tr>
                     <tr>
                       <td style="width: 15%" class="LabelFontStyle1">
@@ -264,8 +233,6 @@
                             *ngIf="!DocSeriealMasterForm.get('financialYear').valid && DocSeriealMasterForm.get('financialYear').touched">Please
                             Enter Financial Year </span>
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 20%" class="LabelFontStyle1">
                             Document&nbsp;Type:
                         </td>
@@ -278,16 +245,15 @@
                             <div *ngIf="f.docSrlType.errors?.maxLength">Document Serieal type must be a valid
                             </div>
                         </div>
-                        <span
-                            *ngIf="!DocSeriealMasterForm.get('docSrlType').valid && DocSeriealMasterForm.get('docSrlType').touched">Please
+                        <span *ngIf="!DocSeriealMasterForm.get('docSrlType').valid && DocSeriealMasterForm.get('docSrlType').touched">Please
                             Enter Document  type </span>
                         </td>
                         <td style="width: 20%" class="LabelFontStyle1">
-                          Transaction&nbsp;Type&nbsp;:
-                      </td>
-                      <td>
-                          <input disabled formControlName="recvTypeId" class="form-control">
-                      </td>
+                            Transaction&nbsp;Type&nbsp;:
+                        </td>
+                        <td>
+                            <input disabled formControlName="recvTypeId" class="form-control">
+                        </td>
                     </tr>
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
@@ -304,8 +270,7 @@
                             <div *ngIf="f.docSrlPrefix.errors?.maxLength">Intial Value must be a valid
                             </div>
                         </div>
-                        <span
-                            *ngIf="!DocSeriealMasterForm.get('docSrlPrefix').valid && DocSeriealMasterForm.get('docSrlPrefix').touched">Please
+                        <span *ngIf="!DocSeriealMasterForm.get('docSrlPrefix').valid && DocSeriealMasterForm.get('docSrlPrefix').touched">Please
                             Enter Intial Value </span>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
@@ -317,8 +282,6 @@
         <span  *ngIf="!DocSeriealMasterForm.get('startDate').valid && DocSeriealMasterForm.get('startDate').touched">Please
             Enter start Date </span>
                         </td>
-                    </tr>
-                    <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Status&nbsp;:
                         </td>
@@ -351,7 +314,6 @@
                         </ng-template>
                     </tr>
                 </ng-template>
-
             </table>
             <table class="center">
                 <tr>
@@ -396,6 +358,7 @@
 </div>
 <br>
 <div class="container1">
+    <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
     <tbody>
         <tr class="GridHeader">
@@ -422,4 +385,5 @@
         <td><button class="btn btn-primary" (click)="Select(com.docSrlId)">Select</button></td>
     </tr>
     </table>
+</div>
 </div>

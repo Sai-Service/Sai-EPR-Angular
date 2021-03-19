@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/admin']);
         var users=res.obj;
         sessionStorage.setItem('divisionName',users.divisionName);
+        sessionStorage.setItem('divisionId',users.divisionId);
         console.log(users.divisionName);
         sessionStorage.setItem('ticketNo',users.ticketNo);
         console.log(users.ticketNo);
@@ -75,9 +76,14 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('ouId',users.ouId);
           sessionStorage.setItem('locId',users.locId);
           sessionStorage.setItem('divisionId',users.divisionId);
+          sessionStorage.setItem('locCode',users.locCode);
+          sessionStorage.setItem('deptId',users.deptId);
+
 console.log(users.ouId);
 console.log(users.locId);
 console.log(users.ouName);
+console.log(users.locCode);
+
        } //else if (res.code === 204) {
       //   console.log('Email and password does not match');
       //   alert('Email and password does not match');

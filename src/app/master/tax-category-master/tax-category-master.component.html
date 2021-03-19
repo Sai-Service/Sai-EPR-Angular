@@ -104,7 +104,7 @@
                             </table>
                         </div>
 
-                        <table class="autostyle1">
+                        <table class="center">
                             <tr>
                                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                                 <ng-template #thenBlock1>
@@ -156,9 +156,10 @@
 
 <br>
 <div class="container1">
-    <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all">
-        <tbody>
-            <tr class="auto-style5">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+       <thead>
+            <tr class="GridHeader">
                 <th scope="col">Tax Category Id</th>
                 <th scope="col">Tax Category Name</th>
                 <th scope="col">Tax Category Desc</th>
@@ -168,8 +169,9 @@
                 <th scope="col">Status</th>
                 <th scope="col">Select one</th>
             </tr>
-        </tbody>
-        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+        </thead>
+        <tbody>
+        <tr *ngFor="let com of lstcomments"  class="ItemStyle" style="text-decoration:none;">
             <td>{{com.taxCategoryId}}</td>
             <td>{{com.taxCategoryName}}</td>
             <td>{{com.taxCategoryDesc}}</td>
@@ -177,9 +179,11 @@
             <td>{{com.recordTypeCode }}</td>
             <td>{{com.startDate}}</td>
             <td>{{com.status}}</td>
-            <td><button (click)="Select(com.taxCategoryId)">Select</button></td>
+            <td><button class="btn btn-primary" (click)="Select(com.taxCategoryId)">Select</button></td>
         </tr>
+    </tbody>
     </table>
+</div>
 </div>
 <br>
 <br>

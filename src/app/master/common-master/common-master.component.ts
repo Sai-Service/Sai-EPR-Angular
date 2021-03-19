@@ -119,5 +119,14 @@ export class CommonMasterComponent implements OnInit {
     }
   );
 };
+
+commonMast() {
+  window.location.reload();
+}
+
+closeMast() {
+  this.router.navigate(['admin']);
+}
+
 }
 

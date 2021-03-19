@@ -85,9 +85,8 @@
                     <tr >
                        <td><button type="submit" class="btn btn-primary" id="register"
                             (click)="saveComnMast()">Save</button></td>
-                        <td><button type="submit" class="btn btn-primary" id="register"
-                           >Reset</button></td>
-                        <td><button type="submit" class="btn btn-primary" >close</button></td>
+                        <td><button type="submit" class="btn btn-primary" id="register" (click)="commonMast()">Reset</button></td>
+                        <td><button type="submit" class="btn btn-primary" (click)="closeMast()" >close</button></td>
                     </tr>
                 </table>
                 <br>
@@ -109,8 +108,8 @@
                         </tr>
                 </table>
                 <br>
-                <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;"> -->
-                    <table>
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                    <!-- <table> -->
                     <tbody>
                      <tr class="GridHeader">
                          <th scope="col">Code</th>
@@ -125,21 +124,21 @@
                     <tr>
                         <td> <input formControlName="code" [(ngModel)]='code' value={{code}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                            placeholder="Enter code"> </td>
+                            placeholder="Enter code" style="height: 22px;"> </td>
                      <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                        placeholder="Enter code Description "></td>
+                        placeholder="Enter code Description " style="height: 22px;"></td>
                      <td><input formControlName="codeDesc" [(ngModel)]='codeDesc' value={{codeDesc}} class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.cmnType.errors }"
-                        placeholder="Enter code Description "></td>
+                        placeholder="Enter code Description " style="height: 22px;"></td>
                      <td><input type="date" formControlName="startDate" class="form-control"
-                        placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
+                        placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;" ></td>
                      <td><input type="date" formControlName="startDate" class="form-control"
-                        placeholder="Enter End Date" min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
+                        placeholder="Enter End Date" min="{{minDate | date:'yyyy-MM-dd'}}" style="height: 22px;"></td>
                      <!-- <td></td> -->
                      <td>
                      <!-- Trigger the modal with a button -->
-                     <button type="button" data-toggle="modal" data-target="#myModal">
+                     <button  type="button" class="btn-primary" data-toggle="modal" data-target="#myModal" style="width: 3rem;">
                          ...
                        </button>
                      <!-- The Modal -->

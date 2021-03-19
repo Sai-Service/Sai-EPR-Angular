@@ -665,12 +665,13 @@
 </div>
 <br>
 <div class="container1">
+    <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
     <tbody>
         <tr class="GridHeader">
             <th scope="col">Company Id</th>
             <th scope="col">Company Code</th>
-            <th scope="col">Company Name</th>
+            <th scope="col"  style="width: 250px;">Company Name</th>
             <th scope="col">Address1</th>
             <th scope="col">Address2</th>
             <th scope="col">Address3</th>
@@ -697,8 +698,9 @@
             <td>{{com.webSite}}</td>
             <td>{{com.emailId}}</td>
             <td>{{com.country}}</td>
-            <td><button class="btn btn-secondary" (click)="Select(com.compId)">Select</button></td>
+            <td><button class="btn btn-secondary" (click)="Select(com.compId)" style="width: 4rem;">Select</button></td>
         </tr>
     </tbody>
     </table>
+</div>
 </div>

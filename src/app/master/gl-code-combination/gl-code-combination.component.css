@@ -5,3 +5,10 @@
     text-align: justify;
     margin: 4px 2px;
   }
+
+
+  .grid_scroll{
+    overflow: auto;
+     height: 200px; 
+    width: 100%;
+    }

@@ -489,7 +489,7 @@
                 <tr class="GridHeader">
                 <th scope="col" style="width: 100px;">OU Id</th>
                 <th scope="col"style="width: 160px;">Operating Unit Code</th>
-                <th scope="col" style="width: 160px;">Operating Unit Name</th>
+                <th scope="col" style="width: 250px;">Operating Unit Name</th>
                 <th scope="col" style="width: 160px;">Division Name</th>
                 <th scope="col" style="width: 160px;">Company Name</th>
                 <th scope="col" style="width: 160px;">Main Branch Address</th>
@@ -504,11 +504,11 @@
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
                 <td style="width: 107px;">{{com.ouId}}</td>
                 <td style="width: 180px;">{{com.ouName}}</td>
-                <td style="width: 180px;">{{com.ouDesc}}</td>
+                <td style="width: 450px;">{{com.ouDesc}}</td>
                 <td style="width: 190px;">{{com.divisionId.divisionName}}</td>
                 <td style="width: 180px;">{{com.compId.compName}}</td>
                 <td style="width: 170px;">{{com.mainBrAdd}}</td>
-                <td style="width: 170px;">{{com.city}}</td>
+                <td style="width: 170px;">{{com.compId.city}}</td>
                 <td style="width: 170px;">{{com.mState}}</td>
                 <!-- <td>{{com.endDate}}</td> -->
                 <td style="width: 140px;"><button class="btn btn-secondary" (click)="Select(com.ouId)" >Select</button></td>

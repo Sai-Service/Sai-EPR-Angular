@@ -1,14 +1,23 @@
 // import { Component, OnInit } from '@angular/core';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+<<<<<<< HEAD
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+=======
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { data } from 'jquery';
+import { MasterService } from 'src/app/master/master.service';
+import { TransactionService } from 'src/app/transaction/transaction.service';
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
 
 
 interface IStockTransfer{
   ShipmentNo:String;
+<<<<<<< HEAD
   status:string;
   issueTo:string;
   transferOrgId:number;
@@ -26,6 +35,9 @@ interface IStockTransfer{
   transDate:Date;
   onHandId:number;
   primaryQty:number;
+=======
+
+>>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
 }
 
 @Component({
