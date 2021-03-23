@@ -8,9 +8,17 @@ import { NgxDateRangeModule } from 'ngx-daterange';
 import { MoveOrderComponent } from './move-order/move-order.component';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
 import { MiscellaneousTransactionComponent } from './miscellaneous-transaction/miscellaneous-transaction.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 @NgModule({
-  declarations: [PoInvoiceComponent, MoveOrderComponent, StockTransferComponent, MiscellaneousTransactionComponent],
+  declarations: [
+    PoInvoiceComponent,
+     MoveOrderComponent, 
+     StockTransferComponent, 
+     MiscellaneousTransactionComponent,
+    PaymentsComponent,
+    PoInvoiceComponent,
+  ],
   imports: [
     CommonModule,
     TransactionRoutingModule, ReactiveFormsModule,NgxDateRangeModule,

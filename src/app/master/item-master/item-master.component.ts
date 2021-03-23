@@ -127,8 +127,33 @@ export class ItemMasterComponent implements OnInit {
   keyNo:number;
   batteryMake:string;
   batteryNo:string;
+  displayPoCharge=true;
+  displayCosting=true;
+  displayInactive = true;
+  dealerCode:Number;
+  Status1: any;
+  startDate:Date;
+  endDate:Date;
+  segment11: string;
+  segment2: number;
+  segment3: number;
+  segment4: number;
+  segment5: number;
+  branch: any;
+  lookupValueDesc4: string;
+  lookupValueDesc1: string;
+  lookupValueDesc2: string;
+  lookupValueDesc3: string;
+  lookupValueDesc5: string;
+  displayModal = true;
+  showModal: boolean;
+  content: number;
+  segmentName:string;
 
+  public minDate = new Date();
   lstcomments: any[];
+  public dealerCodeList :Array<string>=[];
+  public statusList: Array<string> = [];
   public YesNoList: Array<string> = [];
   public categoryIdList: Array<string> = [];
   public uomList: Array<string> = [];
@@ -216,7 +241,21 @@ export class ItemMasterComponent implements OnInit {
       cngCylinderNo:[''],
       keyNo:[''],
       batteryMake:[''],
-      batteryNo:['']
+      batteryNo:[''],
+
+      dealerCode:[],
+      startDate:[],
+      segmentName:[],
+      segment11: [],
+      segment2: [],
+      segment3: [],
+      segment4: [],
+      segment5: [],
+      lookupValueDesc4: [],
+      lookupValueDesc1: [],
+      lookupValueDesc2: [],
+      lookupValueDesc3: [],
+      lookupValueDesc5: [],
     })
    }
 
@@ -228,6 +267,13 @@ export class ItemMasterComponent implements OnInit {
    get f() { return this.itemMasterForm.controls; }
 
   ngOnInit(): void {
+    this.service.statusList()
+      .subscribe(
+        data => {
+          this.statusList = data;
+          console.log(this.statusList);
+        }
+      );
 
     this.service.YesNoList()
       .subscribe(
@@ -450,6 +496,7 @@ export class ItemMasterComponent implements OnInit {
       }
     );
     
+    ;
     this.service.twoToneList()
     .subscribe(
       data => {
@@ -498,9 +545,11 @@ export class ItemMasterComponent implements OnInit {
   purchasableEvent(e) {
     if (e.target.checked) {
     this.purchasable='Y'
+    this.displayPoCharge=false;
     }
     else{
       this.purchasable = 'N';
+      this.displayPoCharge=true;
     }
   }
   twoToneEvent(e) {
@@ -530,9 +579,11 @@ export class ItemMasterComponent implements OnInit {
   costingEvent(e) {
     if (e.target.checked) {
     this.costing='Y'
+    this.displayCosting=false;
     }
     else{
       this.costing = 'N';
+      this.displayCosting=true;
     }
   }
   internalOrderEvent(e) {
@@ -596,7 +647,106 @@ export class ItemMasterComponent implements OnInit {
   closeItemMast(){ window.location.reload();}
   searchItemMast(){}
   updateItemMast(){}
- 
+  onOptionsSelected(event: any) {
+    this.Status1 = this.itemMasterForm.get('status').value;
+    // alert(this.Status1);
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = false;
+      this.endDate = new Date();
+    }
+    else if (this.Status1 === 'Active') {
+      this.itemMasterForm.get('endDate').reset();
+    }
+  }
+  openCodeComb() {
+    let segmentName1 = this.itemMasterForm.get('segmentName').value;
+    if (segmentName1 === null) {
+      this.itemMasterForm.get('segment11').reset();
+      this.itemMasterForm.get('segment2').reset();
+      this.itemMasterForm.get('segment3').reset();
+      this.itemMasterForm.get('segment4').reset();
+      this.itemMasterForm.get('lookupValueDesc1').reset();
+      this.itemMasterForm.get('lookupValueDesc2').reset();
+      this.itemMasterForm.get('lookupValueDesc3').reset();
+      this.itemMasterForm.get('lookupValueDesc4').reset();
+      this.itemMasterForm.get('lookupValueDesc5').reset();
+    }
+    if (segmentName1 != null) {
+      // this.service.segmentNameList(this.segmentName1)
+      // .subscribe(
+      //   data => {
 
+      //     this.segmentNameList = data;
+      //     if (this.segmentNameList.code === 200) {
+      //       if (this.segmentNameList.length == 0) {
+      //         alert('Invalid Code Combination');
+      //       } else {
+      //         console.log(this.segmentNameList);
+      //         this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
+      //       }
+      //     } else if (this.segmentNameList.code === 400) {
+      //       var arrayControl = this.itemMasterForm.get('poLines').value
+      //       var patch = this.itemMasterForm.get('poLines') as FormArray;
+      //       (patch.controls[i]).patchValue({ segmentName: ''})
+      //       alert(this.segmentNameList.message);
+            
+      //     }
+      //   }
+      // );
+      var temp = segmentName1.split('.');
+      // alert(temp[0]);
+      this.segment11 = temp[0];
+      this.segment2 = temp[1];
+      this.segment3 = temp[2];
+      this.segment4 = temp[3];
+      this.segment5 = temp[4];
+      // this.segment6 = temp[5];
+    }
+    // alert(segmentName1);
+    this.displayModal = false;
+    this.showModal = true; // Show-Hide Modal Check
+    // this.content = i; // Dynamic Data
+    // let a = i + 1
+    // this.title = "PoLine :" + a;    // Dynamic Data
+
+  }
+  onOptionsSelectedBranch(segment: any, lType: string) {
+    // alert(segment);
+    // var InterBranch1=this.GlCodeCombinaionForm.get('segment1').value;
+    this.service.getInterBranch(segment, lType).subscribe(
+      data => {
+        this.branch = data;
+        console.log(this.branch);
+        // if(this.branch.code === 200){
+        if (this.branch != null) {
+          // this.itemMasterForm.patchValue(this.branch);
+          if (lType === 'SS_Interbranch') {
+            this.lookupValueDesc5 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'NaturalAccount') {
+            this.lookupValueDesc4 = this.branch.lookupValueDesc;
+            //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+            //  this.accountType=this.branch.accountType;
+          }
+          if (lType === 'CostCentre') {
+            this.lookupValueDesc3 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'SS_Location') {
+            this.lookupValueDesc2 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'SS_Branch') {
+            this.lookupValueDesc1 = this.branch.lookupValueDesc;
+          }
+        }
+        // }else if(this.branch.code === 400){
+        //   alert(this.branch.message);
+
+        // }
+
+
+      }
+    );
+
+  }
 
 }

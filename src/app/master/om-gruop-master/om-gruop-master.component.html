@@ -1,14 +1,23 @@
+<form [formGroup]="GroupMasterForm" (ngSubmit)="GroupMaster(GroupMasterForm.value)">
 <table style="width: 100%;background-color: white;">
     <tr>
         <!-- class="PageHeader" -->
         <td colspan="4" class="PageHeader" style="width: 100%;" >
-            &nbsp;&nbsp;Group&nbsp;Master
+            &nbsp;&nbsp;Team&nbsp;Master
         </td>
+        <table style="width: 100%; background-color: #FFE4B5;">
+            <tr>
+                <td><input  formControlName="teamName1"  [(ngModel)]="teamName1" value={{teamName1}}  class="form-control" ></td>  
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="searchGrpMaster(teamName1)">Search</button>
+                </td>
+            </tr>
+        </table>
     </tr>
 </table>
 <div class="center" style="width: 100%;">
     <div class="form-bg">
-        <form [formGroup]="GroupMasterForm" (ngSubmit)="GroupMaster(GroupMasterForm.value)">
+        
             <table class="center">
                 <tr>
                     <td style="width: 10%" class="LabelFontStyle">
@@ -29,26 +38,28 @@
                     <td>
                         <input type="text" disabled formControlName="locCode" class="form-control" [(ngModel)]="locCode" placeholder="">
                     </td>
-                </tr>
-                <tr>
                     <td style="width: 10%" class="LabelFontStyle1">
-                        Group&nbsp;Name&nbsp;:
-                    </td>
-                    <td>
-                        <input  formControlName="teamName" [(ngModel)]="teamName" value={{teamName}}  class="form-control">
-                    </td>
-                    <td style="width: 10%" class="LabelFontStyle1">
-                        Group&nbsp;Department&nbsp;:
+                        Department&nbsp;:
                     </td>
                     <td>
                         <input type="text" disabled formControlName="deptName" class="form-control" [(ngModel)]="deptName" placeholder="">
                     </td>
+                </tr>
+                <tr>
                     <td style="width: 10%" class="LabelFontStyle1">
-                        Ticket&nbsp;No&nbsp;:
+                        TL&nbsp;Name&nbsp;:
+                    </td>
+                    <td>
+                        <input  formControlName="teamName" [(ngModel)]="teamName" value={{teamName}}  class="form-control">
+                    </td>
+                    
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        <!-- Ticket&nbsp;No&nbsp;: -->
+                        TL&nbsp;No&nbsp;:
                     </td>
                     <td>
                         <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
-                        <select formControlName="leadTicketNo" id="leadTicketNo" class="form-control" [ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
+                        <select formControlName="leadTicketNo"  class="form-control"[ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
                             <option>--Select--</option>
                             <option *ngFor="let sc of  leadTicketNoList" [ngValue]="sc.ticketNo">
                                 {{sc.ticketNo}}
@@ -56,13 +67,14 @@
                         </select>
                     </td>
                     <td style="width: 12%" class="LabelFontStyle1">
-                        Emp&nbsp;Full&nbsp;Name&nbsp;:
+                        <!-- Emp&nbsp;Full&nbsp;Name&nbsp;: -->
+                        TL&nbsp;Name&nbsp;:
                     </td>
                     <td>
-                        <input type="text" disabled formControlName="description" [ngModel]="description" class="form-control">
+                        <input type="text" disabled formControlName="description" value="description" [(ngModel)]='description'  class="form-control">
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Title&nbsp;:
                     </td>
@@ -85,46 +97,109 @@
                     <td>
                         <input type="text" disabled formControlName="lname" [ngModel]="lname" class="form-control">
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Status&nbsp;:
                     </td>
-                    <td>
+                    <!-- <td>
                         <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                    </td>  
+                    </td>   -->
+                    <td> <select formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option> 
+                        </select></td>
+                    <td style="width: 5%" class="LabelFontStyle1">
+                        Start&nbsp;Date&nbsp;:
+                    </td>
+                    <td>
+                        <input type="date" formControlName="startDate" class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td>
+                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                        <ng-template #thenBlockInactive>
+                        </ng-template>
+                        <ng-template #elseBlockInactive>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Inactive&nbsp;Date:&nbsp;
+                            </td> 
+                            <td>
+                                <input disabled type="text" formControlName="endDate" class="form-control"
+                                [ngModel]="endDate | date:'yyyy-MM-dd'">    
+                            </td>
+                        </ng-template>
                 </tr>
             </table>
+            <br>
+            <table style="width: 100%;background-color: white;">
+                <tr>
+                    <!-- class="PageHeader" -->
+                    <td colspan="4" class="PageHeader" style="width: 100%;" >
+                        &nbsp;&nbsp;Team&nbsp;Master&nbsp;Details
+                    </td>
+                   
+                </tr>
+            </table>
+            <div class="center" formArrayName="teamDetails">
+                <button type="submit" class="btn btn-primary"
+                (click)="addRow()" (keydown.shift.arrowdown)="addRow()" 
+                style="width: min-content;">Add Row</button>
+                <div class="grid_scroll">
+                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                        cellspacing="0" cellpadding="4" rules="all" >
+                        <thead >
+                            <tr>
+                                <th scope="col">Sr No</th>
+                                <th scope="col">Team Member</th> 
+                                <th scope="col">Employee Name</th> 
+                                <th scope="col">Start Date</th> 
+                                <th scope="col">End Date</th>
+                            </tr>
+                        </thead>
+                        <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"
+                            [formGroupName]="i" class="auto-style5">
+                          <tr>
+                              <td>
+                                <input style="width: 2rem;" type="text"  formControlName="lineNO"
+                                class="form-control" >
+                              </td>
+                                <td> <input type="text"  formControlName="ticketNo"
+                                   class="form-control" ></td>
+                                    <td> <input type="text"  formControlName="description"
+                                         class="form-control" ></td>
+                                        <td> <input type="date"  formControlName="startDate"
+                                            class="form-control" ></td>
+                                            <td> <input type="date"  formControlName="endDate"
+                                                 class="form-control" ></td>
+                            </tr>
+                            </ng-container>
+                    </table>
+                </div>
+            </div>
+            
             <table class="center">
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register">New</button>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="newMast()">New</button>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                     </td>
                 </tr>
             </table>
-            <table class="center">
-                <tr>
-                    <td><input  formControlName="teamName"  [(ngModel)]="teamName" value={{teamName}}  class="form-control" ></td>  
-                    <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="searchGrpMaster(teamName)">Search</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
     </div>
 </div>
+</form>
 <br>
-<div class="grid_scroll">
+<!-- <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
         <thead>
             <tr class="GridHeader">
                 <th scope="col">Ticket No</th> 
                 <th scope="col">Employee Name</th> 
                 <th scope="col">Start Date</th> 
-                <!-- <th scope="col">End Date</th>  -->
                 <th scope="col">Select</th> 
             </tr>
         </thead>
@@ -134,8 +209,8 @@
                 <td>{{com.description}}</td>
                 <td>{{com.startDate}}</td>
                 <td><button class="btn btn-primary" (click)="Select(com.teamId)">Select</button></td>
-                <!-- <td>{{com.startDate}}</td> -->
+                
             </tr>
         </tbody>
     </table>
-</div>
+</div> -->

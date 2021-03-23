@@ -15,29 +15,6 @@
        </td>
     </tr>
     </table>
-<<<<<<< HEAD
-    <table style="width: 100%;background-color: white;">
-        <tr>
-            <td class="PageHeader1">
-                <button data-toggle="modal" data-target="#myModel" style="margin-right: 90%;">Find</button>
-            </td>
-            <td><date-range-picker [instanceId]="'secondDateRange'" [options]="secondFieldOptions"
-                [controlName]="'secondDateRange'" #dateRangePicker>
-              <div class="form-group">
-                  <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="date-range-icon">
-                      <i class="material-icons">event</i>
-                    </span>
-                  </div>
-                  <input id="secondDateRange" class="form-control" type="text" name="dateRange"
-                      [value]="dateRangePicker.range" placeholder="From - To" formControlName="secondDateRange" />
-                </div>
-              </div>
-            </date-range-picker></td>
-        </tr>
-    </table >
-=======
     <!-- <table style="width: 100%;background-color: white;">
     <tr>
         <td class="PageHeader1">
@@ -61,7 +38,6 @@
     </table> -->
     <div class="center" style="width: 100%;">
     <div class="form-bg">
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
     <div class="center" style="width: 100%;">
     <form [formGroup]="poInvoiceForm" (ngSubmit)="poInvoice(poInvoiceForm.value)">
     <div id="Panel1" class="auto-style103">
@@ -177,185 +153,6 @@
                 </ng-template>
                 <ng-template #elsename>
 
-<<<<<<< HEAD
-                        <table>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Operating&nbsp;Unit&nbsp;:&nbsp;
-                                </td>
-                                <td>
-                                    <select formControlName="ouId"  id="ouId" class="form-control">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                            {{sc.ouName}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="submitted && g. ouId.errors" class="invalid-feedback">
-                                        <div *ngIf="g.ouId.errors.required">OU Id is required</div>
-                                        <span
-                                            *ngIf="!poInvoiceForm.get('ouId').valid && poInvoiceForm.get('ouId').touched">Please
-                                            Enter valid Operating Unit </span>
-                                    </div>
-                                </td>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Type&nbsp;&nbsp;:&nbsp;
-                                </td>
-                                <td>
-                                    <select   class="form-control">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  TypeList" [ngValue]="sc.ouId">
-                                            {{sc.ouName}}
-                                        </option>
-                                        </select>
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle1">
-                                            PO&nbsp;Number&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" placeholder="">
-                                            <!-- <select   class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  TypeList" [ngValue]="sc.ouId">
-                                                    {{sc.ouName}}
-                                                </option>
-                                                </select> -->
-                                        </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Trading&nbsp;Partner&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                   <td style="width: 15%" class="LabelFontStyle1">
-                                    Supplier&nbsp;Number&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Supplier&nbsp;Site&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Invoice&nbsp;Date&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="date" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Invoice&nbsp;Number&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Invoice&nbsp;Amount&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Tax&nbsp;Amount&nbsp;:&nbsp;
-                                </td>
-                                 <td><input disabled type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    GL&nbsp;Date&nbsp;:&nbsp;
-                                </td>
-                                 <td><input disabled type="date" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Payment&nbsp;Currency&nbsp;:&nbsp;
-                                </td>
-                                 <td><input disabled type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Payment&nbsp;Rate&nbsp;Date&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Distribution&nbsp;Set&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Match&nbsp;Action&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Terms&nbsp;Date&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="date" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Terms&nbsp;&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Payment&nbsp;Method&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Pay&nbsp;Group&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Prepayment&nbsp;Type&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Settlement&nbsp;Date&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="date" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Taxation&nbsp;Country&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Related&nbsp;Invoice&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Supplier&nbsp;Tax&nbsp;Invoice&nbsp;Number&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Remit-To&nbsp;Supplier&nbsp;Name&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-
-                            <td style="width: 15%" class="LabelFontStyle1">
-                                Remit-To&nbsp;Supplier&nbsp;Site&nbsp;:&nbsp;
-                            </td>
-                             <td><input type="text" class="form-control" placeholder=""></td>
-                             <td style="width: 15%" class="LabelFontStyle1">
-                                Remit-To&nbsp;Bank&nbsp;Account&nbsp;Name&nbsp;:&nbsp;
-                            </td>
-                             <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
-                                    Remit-To&nbsp;Bank&nbsp;Account&nbsp;Number&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Debit&nbsp;Memo&nbsp;Reason&nbsp;:&nbsp;
-                                </td>
-                                 <td><input type="text" class="form-control" placeholder=""></td>
-                            </tr>
-                            <!-- <tr><td>
-                                <input type="text" ngxDaterangepickerMd [(ngModel)]="selected" class="form-control"/>
-                            </td></tr> -->
-
-                        </table>
-                        <!-- <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end' (change)="getDater($event)">jjj</ejs-daterangepicker> -->
-                    </div>
-
-    <!-- <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade modal-lg" tabindex="-1" role="dialog"
-    aria-hidden="true"  > -->
-    <div class="modal fade" id="myModel" role="dialog" aria-hidden="true">
-=======
                 <select formControlName="name" id="name" class="form-control" 
                 (ngModelChange)='onOptionsSelectedsuppName($event,i)'
                 style="width: 160px;height: 25px;font-size: 10px;">
@@ -548,7 +345,6 @@
     </div>
     <!-- ------- Start Modal Here ---------- -->
     <div class="modal fade" id="myModel" role="dialog" aria-hidden="true" style="width: 100%;margin-left: 0;">
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -571,17 +367,10 @@
                             <td></td>
                         </tr>
                         <tr>
-<<<<<<< HEAD
-                            <td  class="LabelFontStyle">&nbsp;Supplier&nbsp;Number&nbsp;:</td>
-                            <td><input type="number" class="form-control"> </td>
-
-
-=======
                             <td  class="LabelFontStyle">&nbsp;Supplier&nbsp;No&nbsp;:</td>
                             <td>
                                 <input type="number" formControlName="suppNo" value={{suppNo}} class="form-control"> 
                             </td>
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
                             <td  class="LabelFontStyle">&nbsp;Supplier&nbsp;Site&nbsp;:</td>
                             <td><input type="number" formControlName="suppId" value={{suppId}} class="form-control"> </td>
                         </tr>
@@ -612,14 +401,6 @@
                             <!-- <td  class="LabelFontStyle">&nbsp;Amount&nbsp;:</td> -->
                             <!-- <td><input type="number" formControlName="invoiceAmt" value={{invoiceAmt}} class="form-control"> </td> -->
                             <td  class="LabelFontStyle">&nbsp;Amount&nbsp;:</td>
-<<<<<<< HEAD
-                            <td><input type="number" class="form-control"> </td>
-
-                            <td  class="LabelFontStyle">&nbsp;Dates&nbsp;:</td>
-                            <td><input type="date" class="form-control"> </td>
-                        </tr>
-
-=======
                             <!-- <td><input type="number" class="form-control"> </td> -->
                             <td>
                                <table>
@@ -655,7 +436,6 @@
                             <!-- <td><input type="date" formControlName="invoiceDate" value={{invoiceDate}} class="form-control"> </td> -->
                         </tr>   
                          
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
                         <th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;Status&nbsp;</th>
                         <tr style="border-top: solid 1px gray; width: 100%;">
                             <td  class="LabelFontStyle">&nbsp;Status&nbsp;:</td>
@@ -688,7 +468,7 @@
                                             {{sc.lookupValue}}
                                     </option> -->
                                 </select> </td>
-                        </tr>
+                        </tr>    
                         <th colspan="4" style="text-align: left;">&nbsp;Voucher&nbsp;Audit&nbsp;</th>
                         <tr style="border-top: solid 1px gray; width: 100%;">
                             <td  class="LabelFontStyle">&nbsp;Category&nbsp;:</td>
@@ -704,7 +484,7 @@
                                     <!-- <option *ngFor="let sc of  BranchList">
                                             {{sc.lookupValue}}
                                     </option> -->
-                                </select> </td>
+                                </select> </td>  
                         </tr>
                         <tr>
                             <td  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
@@ -712,38 +492,23 @@
                             <td  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
                             <td><input type="text" formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td>
                         </tr>
-                        <tr style="border-bottom: solid 1px gray;">
+                        <tr style="border-bottom: solid 1px gray;">   
                             <td  class="LabelFontStyle">&nbsp;Numbers&nbsp;:</td>
-<<<<<<< HEAD
-                            <td><input type="number" class="form-control"> </td>
-
-                            <td  class="LabelFontStyle">&nbsp;Reason&nbsp;:</td>
-                            <td><input type="text" class="form-control"> </td>
-=======
                             <td><input type="number" formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td>  
     
                             <td  class="LabelFontStyle">&nbsp;Reason&nbsp;:</td>
                             <td><input type="text" formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td> 
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
                         </tr>
-
+                       
                         <!-- <tr> -->
-<<<<<<< HEAD
-                            <!-- <date-range-picker
-  [minDate]={{minDate }}
-
-  id="'myDateRange'">
-</date-range-picker> -->
-=======
                             <!-- <date-range-picker 
     [minDate]={{minDate }} 
     
     id="'myDateRange'">
     </date-range-picker> -->
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2
                         <!-- </tr> -->
                     </table>
-
+                   
                 </div>
                 <!-- </div> -->
                 <div class="modal-footer">
@@ -1647,13 +1412,5 @@
     </div>
     </div>
     </div>
-<<<<<<< HEAD
-</form>
-</div>
-</div>
-</div>
-</div>
-=======
     <!-- {{this.poInvoiceForm.value|json}}  -->
     
->>>>>>> 4544f11850e34d9b2b6ec5ffde13104bdbb3b9f2

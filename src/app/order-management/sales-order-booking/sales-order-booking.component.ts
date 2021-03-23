@@ -119,6 +119,9 @@ export class SalesOrderBookingComponent implements OnInit {
   public addonItemList:any[];
   public addonDescList:any[];
 
+  displayInsDetails = true;
+  displayEWDetails=true;
+
   displayfinanceType=true;
   displayfinancerName=true;
   displayfinanceAmt=true;
@@ -308,7 +311,15 @@ export class SalesOrderBookingComponent implements OnInit {
 
   onOptionsSelectedCategory(category:any){
  alert(category);
-//  this.orderManagementService.addonItemList(category)
+ if (category === 'EW') {
+  alert('in if')
+  this.displayEWDetails = false;
+}
+else if (category === 'INS') {
+  alert('in if')
+    this.displayInsDetails=false;
+    // this.SalesOrderBookingForm.get('category').reset();
+  }
 this.orderManagementService.addonItemList(category)
     .subscribe(
       data => {
@@ -335,9 +346,11 @@ this.orderManagementService.addonDescList(segment)
         // alert(data.description1);
         console.log(this.taxCategoryName);  
       }
+     
+    
     );
+    
   }
-
 
   
 }

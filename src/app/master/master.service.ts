@@ -112,6 +112,10 @@ export class MasterService {
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
   }
+  taxCategoryListPoInvoice(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
+  }
   // suppIdList(suppId, ouId): Observable<any> {
   //   return this.http.get(this.ServerUrl +`/supp/sites/${suppId}`);
   // }
@@ -299,6 +303,14 @@ getGruopSearch(teamName,ouId,locId): Observable<any> {
 leadTicketNoList(locId,divisionId,deptId): Observable<any> {
   return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
 }
+public GroupMasterSubmit(LocationMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  // const url = this.ServerUrl + '/locationMst/postLoc';  
+  const url = this.ServerUrl + '/teamMaster/post';   
+  return this.http.post(url, LocationMasterRecord, options);
+}
 
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
@@ -345,7 +357,7 @@ categoryIdList(): Observable<any> {
 }
 
 uomList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/UOM');
 }
 
 costingList(): Observable<any> {
@@ -365,7 +377,8 @@ costCenterList(): Observable<any> {
 }
 
 hsnSacCodeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
+  // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');  
+  return this.http.get(this.ServerUrl +'/hsnSacMst');
 }
 
 internalOrderList(): Observable<any> {
@@ -813,12 +826,7 @@ public flexFieldSubmit(FlexFieldRecord)
   return this.http.post(url,FlexFieldRecord,options);
 }
 
-getTitle(applId):Observable<any>{
-  return this.http.get(this.ServerUrl +`/FlexHeader/applWise/${applId}`);
-}
-getFlexField(applid,titles):Observable<any>{
- return this.http.get(this.ServerUrl +`/FlexHeader/titleAndApp?applicationId=${applid}&title=${titles}`);
-}
+
 
 applList():Observable<any>{
   return this.http.get(this.ServerUrl +`/fndAppl`);
@@ -830,6 +838,7 @@ getTitle(applId):Observable<any>{
 getFlexField(applid,titles):Observable<any>{
  return this.http.get(this.ServerUrl +`/FlexHeader/titleAndApp?applicationId=${applid}&title=${titles}`);
 }
+
 //////////////////Jai Regime Master////////////////
 regimeTypeLisFunt(): Observable<any> {
   return this.http.get(this.ServerUrl + '/cmnLookup/JaiRegimeType');
@@ -876,7 +885,10 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   return this.http.put(url, taxAccountMasterRecord, options);
 }
 //////////////////////Tax Category Master //////////////////////
+actDetails(taxTypeCode): Observable<any> {
+  return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
 
+ }
 getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
  }
