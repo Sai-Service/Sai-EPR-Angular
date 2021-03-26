@@ -77,6 +77,7 @@ export class ItemMasterComponent implements OnInit {
   submitted = false;
   description:string;
   categoryId:number;
+  itemTypeForCat:string;
   uom:string;
   costing:string;
   stockable:string;
@@ -149,7 +150,8 @@ export class ItemMasterComponent implements OnInit {
   showModal: boolean;
   content: number;
   segmentName:string;
-
+  ssVehical= false;
+  ssSpares = false;
   public minDate = new Date();
   lstcomments: any[];
   public dealerCodeList :Array<string>=[];
@@ -185,6 +187,7 @@ export class ItemMasterComponent implements OnInit {
   public twoToneList:Array<string>[];
   public holdList:Array<string>[];
   public holdReasonList:Array<string>[];
+ 
 
   
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -192,6 +195,7 @@ export class ItemMasterComponent implements OnInit {
       segment:['', [Validators.required]],
       description:['', [Validators.required]],
       categoryId:['', [Validators.required]],
+      itemTypeForCat:[],
       uom:['', [Validators.required]],
       costing:['', [Validators.required]],
       stockable:['', [Validators.required]],
@@ -282,13 +286,7 @@ export class ItemMasterComponent implements OnInit {
           console.log(this.YesNoList);
         }
       )
-    this.service.categoryIdList()
-    .subscribe(
-      data => {
-        this.categoryIdList = data;
-        console.log(this.categoryIdList);
-      }
-    );
+    
  
 
     this.service.uomList()
@@ -526,6 +524,18 @@ export class ItemMasterComponent implements OnInit {
   itemMaster(itemMaster: any) {
   }
   
+  onOptionsSelectedItemType(category:any){
+    alert(category);
+    this.service.categoryIdList(category)
+    .subscribe(
+      data => {
+        this.categoryIdList = data;
+        console.log(this.categoryIdList);
+      }
+    );
+    if(category=='ss_vehicle'){    this.ssVehical=true; this.ssSpares=false;}
+    if(category=='ss_spares'){     this.ssVehical=false; this.ssSpares=true;}
+   }
   UomEvent(e) {
     if (e.target.checked) {
     this.stockable='Y'

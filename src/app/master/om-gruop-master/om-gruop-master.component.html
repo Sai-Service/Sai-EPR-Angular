@@ -45,9 +45,21 @@
                         <input type="text" disabled formControlName="deptName" class="form-control" [(ngModel)]="deptName" placeholder="">
                     </td>
                 </tr>
-                <tr>
+                <tr><td style="width: 10%" class="LabelFontStyle1">
+                    Team&nbsp;Role&nbsp;:
+                </td>
+                <td>
+                    <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
+                    <select formControlName="teamRole"  class="form-control" (ngModelChange)='onOptionsSelectedteamRole($event)'>
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  teamRoleList" >
+                            {{sc.code}}
+                        </option>
+                    </select>
+                </td>
+
                     <td style="width: 10%" class="LabelFontStyle1">
-                        TL&nbsp;Name&nbsp;:
+                        Team&nbsp;Name&nbsp;:
                     </td>
                     <td>
                         <input  formControlName="teamName" [(ngModel)]="teamName" value={{teamName}}  class="form-control">
@@ -143,14 +155,17 @@
                 </tr>
             </table>
             <div class="center" formArrayName="teamDetails">
-                <button type="submit" class="btn btn-primary"
+                <div class="center">
+                    <button type="submit" class="btn btn-primary"
                 (click)="addRow()" (keydown.shift.arrowdown)="addRow()" 
-                style="width: min-content;">Add Row</button>
+                style="width: fit-content;  text-align: center;">Add Row</button>
+                </div>
                 <div class="grid_scroll">
-                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
-                        cellspacing="0" cellpadding="4" rules="all" >
+                    <table  class="center" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:fit-content;border-collapse:collapse;">
+                    <!-- <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                        cellspacing="0" cellpadding="4" rules="all" > -->
                         <thead >
-                            <tr>
+                            <tr class="GridHeader">
                                 <th scope="col">Sr No</th>
                                 <th scope="col">Team Member</th> 
                                 <th scope="col">Employee Name</th> 
@@ -162,16 +177,24 @@
                             [formGroupName]="i" class="auto-style5">
                           <tr>
                               <td>
-                                <input style="width: 2rem;" type="text"  formControlName="lineNO"
+                                <input style="width: 2rem; height: 22px;" type="text"  formControlName="lineNO"
                                 class="form-control" >
                               </td>
-                                <td> <input type="text"  formControlName="ticketNo"
-                                   class="form-control" ></td>
-                                    <td> <input type="text"  formControlName="description"
+                                <td>
+                                     <!-- <input type="text"  formControlName="ticketNo" class="form-control" > -->
+                                     <select formControlName="leadTicketNo" id="leadTicketNo" class="form-control" style="height: 22px"
+                                     (ngModelChange)='onOptionsSelectedmemberTicketNo($event, i)'>
+                                         <option>--Select--</option>
+                                         <option *ngFor="let sc of  memberTicketNoList">
+                                             {{sc.leadTicketNo}}
+                                         </option> 
+                                     </select>
+                                    </td>
+                                    <td> <input type="text"  style=" height: 22px" formControlName="description"
                                          class="form-control" ></td>
-                                        <td> <input type="date"  formControlName="startDate"
+                                        <td> <input type="date" style=" height: 22px" formControlName="startDate"
                                             class="form-control" ></td>
-                                            <td> <input type="date"  formControlName="endDate"
+                                            <td> <input type="date" style=" height: 22px" formControlName="endDate"
                                                  class="form-control" ></td>
                             </tr>
                             </ng-container>

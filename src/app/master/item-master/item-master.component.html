@@ -1,4 +1,5 @@
-<div class="container" style="width: fit-content;">
+<div>
+    <!-- class="container" style="width: fit-content;" -->
     <form [formGroup]="itemMasterForm" (ngSubmit)="itemMaster(itemMasterForm.value)">
         <table style="width: 100%;background-color: white;">
             <tr>
@@ -100,19 +101,24 @@
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Type&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select formControlName="categoryId" id="categoryId" class="form-control">
+                                    <select  class="form-control"  formControlName="itemTypeForCat" (ngModelChange)='onOptionsSelectedItemType($event)'  >
+                                      <option value="ss_spares">ss_spares</option>
+                                       <option value="ss_vehicle">ss_vehicle</option>
+                                     <!-- <option value="EW">EW</option> -->
+                                      </select>
+                                    <!-- <select formControlName="categoryId" id="categoryId" class="form-control">
                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  categoryIdList">
+                                        <option *ngFor="let sc of  SSitemTypeList">
                                             {{sc.categoryIdList}}
                                         </option>
-                                    </select>
+                                    </select> -->
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
                                 <td>
                                     <select formControlName="categoryId" id="categoryId" class="form-control">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  categoryIdList">
-                                            {{sc.categoryIdList}}
+                                            {{sc.attribute1}}
                                         </option>
                                     </select>
                                     <div *ngIf="submitted && f. categoryId.errors" class="invalid-feedback">
@@ -321,13 +327,20 @@
                 <!-- <ul class="nav nav-tabs"> -->
                     <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
                     <li class="nav-item"><a href="#firsttab" data-toggle="tab">Inventory</a></li>
-                    <li class="nav-item"><a href="#secondtab" data-toggle="tab">Vehicle Additional Details</a></li>
-                    <li class="nav-item"><a href="#thirdtab" data-toggle="tab">Catelog Details</a></li>
-                    <li class="nav-item"><a href="#fourthtab" data-toggle="tab">Vehicle Sale linking</a></li>
+                    <div *ngIf="ssVehical">
+                    <li class="nav-item"><a href="#secondtab" data-toggle="tab">Vehicle Additional Details&nbsp;&nbsp;</a></li>
+                    </div>
+                    <div *ngIf="ssVehical">
+                    <li class="nav-item"><a href="#thirdtab" data-toggle="tab">&nbsp;Catelog Details</a></li>
+                </div>
+                <div *ngIf="ssSpares">
+                    <li class="nav-item"><a href="#fourthtab" data-toggle="tab">Spares / Accessories</a></li>
+                </div>
                 </ul>
                 </div>
                 
         <!-- </div> -->
+        <div class="grid_scroll">
             <div class="tab-content">
                 <div class="tab-pane active" id="firsttab" style="width: 102%;margin-left: 0%;">
                     <div class="center" style="width: 100%;">
@@ -343,7 +356,7 @@
                                 <div id="Panel1" class="auto-style103">
                                     <div class="center">
                                         <div class="container1">
-                                            <table style="width: fit-content;" class="center">
+                                            <table style="width: 100%" class="center">
                                                 <tr>
                                                     <td style="width: 15%" class="LabelFontStyle">Stockable&nbsp;:&nbsp;
                                                     </td>
@@ -382,13 +395,21 @@
                                                                     center </div>
                                                                 <div *ngIf="f.costCenter.errors?.maxLength">Enter cost
                                                                     center
-                                                                </div>,
+                                                                </div>
                                                             </div>
                                                             <span
                                                                 *ngIf="!itemMasterForm.get('costCenter').valid && itemMasterForm.get('costCenter').touched">Please
                                                                 Enter cost center </span>
                                                         </td>
                                                     </ng-template>
+                                                    <td style="width: 15%" class="LabelFontStyle">
+                                                        Internal&nbsp;Order&nbsp;:&nbsp;</td>
+                                                    <td>
+                                                        <input type="checkbox" formControlName="internalOrder" [(ngModel)]='internalOrder'  (change)="internalOrderEvent($event)">
+                                                        <!-- <span
+                                                            *ngIf="!itemMasterForm.get('internalOrder').valid && itemMasterForm.get('internalOrder').touched">Please
+                                                            Enter internal Order </span> -->
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 15%" class="LabelFontStyle">
@@ -429,16 +450,6 @@
                                                         </ng-template>
                                                     </td>
 
-                                                    <td style="width: 15%" class="LabelFontStyle">
-                                                        Internal&nbsp;Order&nbsp;:&nbsp;</td>
-                                                    <td>
-                                                        <input type="checkbox" formControlName="internalOrder"
-                                                            [(ngModel)]='internalOrder'
-                                                            (change)="internalOrderEvent($event)">
-                                                        <span
-                                                            *ngIf="!itemMasterForm.get('internalOrder').valid && itemMasterForm.get('internalOrder').touched">Please
-                                                            Enter internal Order </span>
-                                                    </td>
                                                 </tr>
 
                                             </table>
@@ -457,7 +468,7 @@
                     <div class="center">
                         <div class="form-bg">
                             <div class="center">
-                                <table style="width: 100%;background-color: white;">
+                                <table style="width: 125%;background-color: white;">
                                     <tr>
                                         <td class="PageHeader1">
                                             &nbsp;Vehicle&nbsp;Additional &nbsp;Details&nbsp;
@@ -1078,33 +1089,24 @@
                                 <table style="width: 100%;background-color: white;">
                                     <tr>
                                         <td class="PageHeader1">
-                                            &nbsp;Vehicle&nbsp;Sale&nbsp;linking&nbsp;
+                                            &nbsp;Spares&nbsp;Accessories&nbsp;
                                         </td>
                                     </tr>
                                 </table>
                                 <div id="Panel1" class="auto-style105">
                                     <div class="center">
                                         <table style="width: fit-content;" class="center">
-                                            <tr>
-
-
+                                            <tr>   
+                                                <td style="width: 15%" class="LabelFontStyle1">
+                                                    Margin&nbsp;Cateogry&nbsp;:&nbsp;</td>
+                                                <td><input type="text" name="" id="" class="form-control"></td>
+                                                <td style="width: 15%" class="LabelFontStyle1">
+                                                    Material&nbsp;type&nbsp;:&nbsp;</td>
+                                                <td><input type="text" name="" id="" class="form-control"></td>
+                                                <td style="width: 15%" class="LabelFontStyle1">
+                                                    Lot&nbsp;Size&nbsp;:&nbsp;</td>
+                                                <td><input type="text" name="" id="" class="form-control"></td>
                                             </tr>
-                                            <tr>
-
-
-
-                                            </tr>
-                                            <tr>
-
-
-
-                                            </tr>
-                                            <tr>
-
-
-
-                                            </tr>
-
                                         </table>
 
                                     </div>
@@ -1115,6 +1117,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         
         <table class="center">
             <tr>

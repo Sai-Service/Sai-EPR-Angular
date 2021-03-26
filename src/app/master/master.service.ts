@@ -22,6 +22,12 @@ export class MasterService {
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   }
+  memberTicketNo(locCode, deptId,divisionId,designation): Observable<any> {
+    return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=120&deptId=${deptId}&divisionId=${divisionId}&designation=${designation}`);
+  }
+  teamRoleListFN(deptName): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/TeamRole/${deptName}`);
+  }
   OUIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/opUnit');
   }
@@ -300,8 +306,9 @@ getGruopSearch(teamName,ouId,locId): Observable<any> {
   return this.http.get(this.ServerUrl + `/teamMaster/Team?teamName=${teamName}&ouId=${ouId}&locId=${locId}`);
 }
 
-leadTicketNoList(locId,divisionId,deptId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
+leadTicketNoList(locId,deptId): Observable<any> {  
+  // return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
+  return this.http.get(this.ServerUrl + `/empMst/teamList?locId=120&deptId=${deptId}`);
 }
 public GroupMasterSubmit(LocationMasterRecord) {
   const options = {
@@ -311,6 +318,7 @@ public GroupMasterSubmit(LocationMasterRecord) {
   const url = this.ServerUrl + '/teamMaster/post';   
   return this.http.post(url, LocationMasterRecord, options);
 }
+
 
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
@@ -352,8 +360,8 @@ UpdateLocatorMasterById(LocatorMasterRecord,locatorId) {
 
 //////////////////////// Item Master/////////////////
 
-categoryIdList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+categoryIdList(category): Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemCategory/type/${category}`);
 }
 
 uomList(): Observable<any> {

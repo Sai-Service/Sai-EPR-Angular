@@ -42,4 +42,11 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
 
+  public OrderBook(BookRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/orderHeader/HeaderPayment';  
+    return this.http.post(url, BookRecord, options);
+  }
 }

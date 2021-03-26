@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
 import { FormArray } from '@angular/forms';
+import { data } from 'jquery';
 
 interface IGroupMaster {
   teamName:string;
@@ -40,6 +41,7 @@ export class OmGruopMasterComponent implements OnInit {
   name:string;
   description:string;
   teamName1:string;
+  teamRole:string;
   // status:string;
   lstcomments: any[];
   public minDate = new Date();
@@ -50,6 +52,8 @@ export class OmGruopMasterComponent implements OnInit {
   Status1: any; 
   endDate:Date;
   public statusList: Array<string> = [];
+  public memberTicketNoList :any;
+  public teamRoleList : Array<string>=[];
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
   this.GroupMasterForm = fb.group({
     teamName1:[],
@@ -63,6 +67,7 @@ export class OmGruopMasterComponent implements OnInit {
     status:[],
     startDate:[],
     endDate:[],
+    teamRole:[],
     teamDetails: this.fb.array([this.lineDetailsGroup()]),
     // teamName:[],
   })
@@ -70,7 +75,7 @@ export class OmGruopMasterComponent implements OnInit {
 lineDetailsGroup() {
   return this.fb.group({
     lineNO:[''],
-    ticketNo: [''],
+    leadTicketNo: [''],
     description:[''],
     startDate:[''],
     endDate:['',]
@@ -96,7 +101,14 @@ get f() { return this.GroupMasterForm.controls; }
     this.deptName=(sessionStorage.getItem('deptName'));
     this.deptId=(sessionStorage.getItem('deptId'));
     this.divisionId=(sessionStorage.getItem('divisionId'));
-
+    
+    this.service.teamRoleListFN(this.deptName)
+    .subscribe(
+      data => {
+        this.teamRoleList = data;
+        console.log(this.teamRoleList);
+      }
+    );
     this.service.statusList()
     .subscribe(
       data => {
@@ -106,30 +118,31 @@ get f() { return this.GroupMasterForm.controls; }
     );
 
 
-    // this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
-    // .subscribe(
-    //   data => {
-    //     this.leadTicketNoList = data;
-    //     console.log(this.leadTicketNoList);
-    //     console.log(this.leadTicketNoList[0].name);
-    //   }
-    // );
-  }
-
-  onOptionsSelectedDescription (leadTicketNo: any){
-    alert(leadTicketNo)
-    this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
+    this.service.leadTicketNoList(this.locId,this.deptId)
     .subscribe(
       data => {
         this.leadTicketNoList = data;
-        console.log(this.leadTicketNoList);   
         console.log(this.leadTicketNoList);
-        this.description=this.leadTicketNoList[0].name;
-        alert(data.name);
-        console.log(this.description); 
-
+        console.log(this.leadTicketNoList[0].name);
       }
     );
+  }
+  onOptionsSelectedmemberTicketNo(event, i){
+    let select = this.memberTicketNoList.find(d => d.leadTicketNo === event);
+    alert(select.description); 
+    var patch = this.GroupMasterForm.get('teamDetails') as FormArray;
+    (patch.controls[i]).patchValue( { description: select.description, });
+  }
+  onOptionsSelectedteamRole(event){
+    alert(event);
+    this.service.memberTicketNo(this.locId, this.deptId, this.divisionId,event).subscribe(data=>{
+      this.memberTicketNoList = data;
+    })
+  }
+  onOptionsSelectedDescription (event){
+    let select = this.leadTicketNoList.find(d => d.ticketNo === event);
+    alert(select.name); 
+    this.GroupMasterForm.patchValue({ description: select.name,})
   }
 
   addRow(){
