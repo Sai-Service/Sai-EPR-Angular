@@ -15,9 +15,6 @@ interface IGroupMaster {
   locId:number;
   ouId:number;
   description:string;
-  fname:string;
-  mname:string;
-  lname:string;
   status:string;
 }
 
@@ -40,9 +37,6 @@ export class OmGruopMasterComponent implements OnInit {
   divisionId:string;
   leadTicketNo:string;
   name:string;
-  fname:string;
-  mname:string;
-  lname:string;
   description:string;
   // status:string;
   lstcomments: any[];
@@ -59,9 +53,6 @@ export class OmGruopMasterComponent implements OnInit {
     deptName:[],
     leadTicketNo:[],
     description:[],
-    fname:[],
-    mname:[],
-    lname:[],
     status:[],
     // teamName:[],
   })
@@ -81,32 +72,33 @@ get f() { return this.GroupMasterForm.controls; }
 
 
 
+    // this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
+    // .subscribe(
+    //   data => {
+    //     this.leadTicketNoList = data;
+    //     console.log(this.leadTicketNoList);
+    //     console.log(this.leadTicketNoList[0].name);
+    //   }
+    // );
+  }
+
+  onOptionsSelectedDescription (leadTicketNo: any){
+    alert(leadTicketNo)
     this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
     .subscribe(
       data => {
         this.leadTicketNoList = data;
+        console.log(this.leadTicketNoList);   
         console.log(this.leadTicketNoList);
-        console.log(this.leadTicketNoList[0].name);
+        this.description=this.leadTicketNoList[0].name;
+        // alert(data.description1);
+        console.log(this.description);  
       }
     );
   }
 
-  onOptionsSelectedDescription (leadTicketNo: any){
-    // alert(leadTicketNo);
-    this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
-    .subscribe(
-      data => {
-        this.leadTicketNoList = data;
-        console.log(this.leadTicketNoList);
-        console.log(this.leadTicketNoList.name);
-        this.description=this.leadTicketNoList.name;
-        this.fname=this.leadTicketNoList.fname;
-        this.mname=this.leadTicketNoList.mname;
-        this.lname=this.leadTicketNoList.lname;
-        // alert(this.leadTicketNoList.name);
-      }
-    );
-  }
+
+   
 
 
   GroupMaster(GroupMasterForm: any) {
@@ -142,5 +134,27 @@ get f() { return this.GroupMasterForm.controls; }
   //     // this.ouId = select.ouId.divisionId.ouId;
   //   }
   // }
-  
+  transData(val) {
+    return val;
+  }
+
+  newMast() {
+    const formValue: IGroupMaster = this.transData(this.GroupMasterForm.value);
+    this.service.GroupMasterSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        window.location.reload();
+        // this.LocationMasterForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.LocationMasterForm.reset();
+          window.location.reload();
+        }
+      }
+    });
+  }
+
+
+
 }

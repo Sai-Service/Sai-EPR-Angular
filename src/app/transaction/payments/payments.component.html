@@ -259,19 +259,30 @@
         <!-- Modal body -->
         <div class="modal-body">
             <div style="padding-bottom: 10px;">
-            <table class="center" style="width: 30%;">
+            <!-- <table class="center" style="width: 30%;">
                 <tr>
                     <td colspan="2" style="width: 15%"class="LabelFontStyle4" align="right">Invoice&nbsp;Number&nbsp;:&nbsp;</td>
                     <td>
                         <input  type="text" class="form-control" formControlName="INVNO" [(ngModel)]="INVNO"  value={{INVNO}} style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
                     </td> 
-                    <!-- [disabled]="!INVNO" -->
+                     [disabled]="!INVNO" 
                     <button type="submit" (click)="SearchINVNO(INVNO)" class="btn btn-primary"><i
                         class="fa fa-search"></i></button>
                 </tr>
-              </table>
+              </table> -->
             </div>
             <table  style="width:30%;" class="center">
+                <tr>
+                    <td colspan="2" style="width: 15%"class="LabelFontStyle4" align="right">Invoice&nbsp;Number&nbsp;:&nbsp;</td>
+                    <td>
+                        <input  type="text" class="form-control" formControlName="INVNO" [(ngModel)]="INVNO"  value={{INVNO}} style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
+                    </td> &nbsp;&nbsp;
+                    <!-- [disabled]="!INVNO" -->
+                 <td>
+                    <button type="submit" (click)="SearchINVNO(INVNO)" class="btn btn-primary"><i
+                        class="fa fa-search"></i></button>
+                 </td>
+                </tr>
                 <!-- <tr>
             <td  colspan="2" class="LabelFontStyle4" style="width: 100%;">
                 Payment&nbsp;Amount&nbsp;:&nbsp;</td>
@@ -286,6 +297,7 @@
                     </td>
                 </tr>
             </table>
+            <br>
             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:30%;border-collapse:collapse;">
                 <thead>
                     <tr class="GridHeader">
@@ -312,10 +324,10 @@
                             <input disabled type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}} (change)="changeAmount()" style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
                         <td>
-                            <input type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} (change)="changeAmount(k)" style="width: 100px;height: 25px;font-size: 10px;">  
+                            <input type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} (change)="changeAmount(k)" style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
                         </td>
                         <td>
-                            <input disabled type="text" class="form-control" formControlName="unPaidAmt" value={{unPaidAmt}} style="width: 100px;height: 25px;font-size: 10px;">  
+                            <input disabled type="text" class="form-control" formControlName="unPaidAmt" value={{unPaidAmt}} style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
                         </td>
                         <!-- <td>
                             <button class="btn-primary"><i class="fas fa-save"></i></button>
@@ -350,11 +362,11 @@
     </thead>
     <tbody>  
         <tr *ngFor="let com of PaymentReturnArr" class="ItemStyle" style="text-decoration:none;">
-            <td style="width: 107px;">{{com.invoiceNum}}</td>
-            <td style="width: 107px;">{{com.invDate}}</td>
-            <td style="width: 107px;">{{com.invoiceAmt}}</td>
-            <td style="width: 107px;">{{com.glDate}}</td>
-            <td style="width: 107px;">{{com.payAmount}}</td>
+            <td style="width: 107px;text-align: center;">{{com.invoiceNum}}</td>
+            <td style="width: 107px;text-align: center;">{{com.invDate}}</td>
+            <td style="width: 80px;text-align: right;">{{com.invoiceAmt}}</td>
+            <td style="width: 107px;text-align: center;">{{com.glDate  | date:'yyyy-MM-dd'}}</td>
+            <td style="width: 80px;text-align: right;">{{com.payAmount }}</td>
         </tr>
     </tbody>
   </table>

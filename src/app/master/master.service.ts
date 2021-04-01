@@ -276,6 +276,10 @@ public LocationMasterSubmit(LocationMasterRecord) {
   const url = this.ServerUrl + '/locationMst';   
   return this.http.post(url, LocationMasterRecord, options);
 }
+
+
+
+
 getLocationSearch1(ouId): Observable<any> {
   return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
 }
@@ -299,6 +303,17 @@ getGruopSearch(teamName,ouId,locId): Observable<any> {
 leadTicketNoList(locId,divisionId,deptId): Observable<any> {
   return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
 }
+
+
+public GroupMasterSubmit(LocationMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  // const url = this.ServerUrl + '/locationMst/postLoc';  
+  const url = this.ServerUrl + '/teamMaster/post';   
+  return this.http.post(url, LocationMasterRecord, options);
+}
+
 
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {

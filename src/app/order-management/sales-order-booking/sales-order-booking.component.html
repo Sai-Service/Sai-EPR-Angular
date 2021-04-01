@@ -1,4 +1,10 @@
 <form [formGroup]="SalesOrderBookingForm" (ngSubmit)="SalesOrderBooking(SalesOrderBookingForm.value)">
+    <input type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId'  style="width: 40px;">
+    <input  class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
+    <input type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
+    <input  class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
+ <input  class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
+ <input  class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
 <table style="width: 100%;background-color: white;">
     <tr>
         <td colspan="4" class="PageHeader" style="width: 100%;">
@@ -54,7 +60,6 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 8rem;color: white;">
     Additional&nbsp;Details
   </button>
-  
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -107,6 +112,7 @@
                     </legend>
                     <table class="center" style="width: 100%;">
                     <tr>
+                        
                         <td>
                             <table style="width: 100%;" class="center">
                                 <tr>
@@ -181,7 +187,9 @@
                 <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Details</legend>
              <table class="center" style="width: 100%;">
-            <tr>
+                <!-- <input formControlName="emplId" class="form-control"
+                [(ngModel)]='emplId' style="width: 25px;"> -->
+                <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     Order&nbsp;No&nbsp;:&nbsp;
                 </td>
@@ -307,6 +315,14 @@
                     <ng-template #elseallotmentFlag>
                         <input disabled type="text" class="form-control" style="width: 170px;">
                     </ng-template>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;&nbsp;&nbsp;&nbsp; Price List&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName' value={{priceListName}} class="form-control" style="width: 170px;text-align: right;">
                 </td>
             </tr>
             </table>
@@ -551,6 +567,8 @@
                         </div>
                       </div>
                 </fieldset>
+                <div *ngIf="displayorderLineDetailsPart; then thenorderLineDetailsPart; else elseorderLineDetailsPart"></div>
+                  <ng-template #thenorderLineDetailsPart>
                 <div class="grid_scroll">
                 <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Line Details</legend>
@@ -586,13 +604,14 @@
                                 <div *ngIf="displaycategory; then thencategory; else elsecategory"></div>
                                 <ng-template #thencategory>
                                     <select  class="form-control"  formControlName="category" [ngModel]="category" style="height: 20px;width: 120px;"
-                                    (ngModelChange)='onOptionsSelectedCategory($event)' >
+                                    (ngModelChange)='onOptionsSelectedCategory($event)'  >
                                       <option value="RTO">RTO</option>
                                       <option value="INS">INS</option>
+                                      <option value="EW">EW</option>
                                       </select>
                                 </ng-template>  
                                 <ng-template #elsecategory>
-                                    <input disabled type="text"  formControlName="segment"  class="form-control" style="height: 20px;width: 170px;">
+                                    <input disabled type="text"   class="form-control" style="height: 20px;width: 170px;">
                                 </ng-template>
                                </td>
                                <td>
@@ -613,8 +632,14 @@
                                 </ng-template>
                             </td>
                                <td>
+                                <div *ngIf="displayorderedItem; then thenorderedItem; else elseorderedItem"></div>
+                                <ng-template #thenorderedItem>
+                                    <input disabled type="text"  formControlName="orderedItem" value="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
+                                </ng-template>
+                                <ng-template #elseorderedItem>
                                 <input disabled type="text"  formControlName="orderedItem" value="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
-                               </td>
+                                </ng-template>   
+                            </td>
                                <td>
                                 <div *ngIf="displaypricingQty; then thenpricingQty; else elsepricingQty"></div>
                                 <ng-template #thenpricingQty>
@@ -652,12 +677,16 @@
                                 <input disabled type="text"  formControlName="flowStatusCode"  class="form-control" style="height: 20px;width:120px;">
                                </td>
                                <td>
-                                <button type="submit" class="btn btn-primary" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" 
+                                <button type="submit" class="btn btn-primary" (click)="addRow()" 
                                   style="width: min-content;"><i class="fa fa-plus"></i></button>
                                </td>
                                <td>
                                 <button type="submit" class="btn btn-primary" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>
                                </td>
+                               <div *ngIf="displayInsDetails; then thenBlockInsDetails; else elseBlockInsDetails"></div>
+                            <ng-template #thenBlockInsDetails>
+                            </ng-template>
+                            <ng-template #elseBlockInsDetails>
                                <td>
                                 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 8rem;">
@@ -694,8 +723,12 @@ Insurance Details
 </div>
 </div>
  </td>
+</ng-template>                   
                         
-                        <!-- <tr> -->
+<div *ngIf="displayEWDetails; then thenBlockEWDetails; else elseBlockEWDetails"></div>
+                            <ng-template #thenBlockEWDetails>
+                            </ng-template>
+                            <ng-template #elseBlockEWDetails>
                             <td>
                             <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 8rem;">
@@ -780,6 +813,7 @@ EW Details
 </div>
 </div>
                             </td>
+  </ng-template>
                             </tr>
                         </ng-container>
                             </ng-container>
@@ -788,10 +822,110 @@ EW Details
                     </table>   
                           
                 </fieldset>
-            </div>     
+            </div>  
+                  </ng-template>
+                  <ng-template #elseorderLineDetailsPart>
+                  </ng-template>   
+                  <table class="center">
+                      <tr>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register"  (click)="refresh()">Clear</button>
+                        </td>
+                        <td>
+                            <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                        </td>
+                        <td>
+                          <!-- ************* Payment Receipt Grid Start ******************************** -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" (click)="paymentReceipt(orderNumber)">
+    Payment Receipt
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="grid_scroll">
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                    <tbody>
+                         <tr class="GridHeader">
+                            <th style="width:6rem" scope="col">SR No</th>
+                            <th style="width:6rem" scope="col">Receipt No</th>
+                            <th style="width:6rem" scope="col">Receipt Date</th>
+                            <th style="width:10rem" scope="col">Payment Type</th>
+                            <th style="width:15rem" scope="col">Order No</th>
+                            <th style="width:10rem" scope="col">Cust No</th>
+                            <th style="width:10rem" scope="col">Payment Amt</th>
+                            <th style="width:10rem" scope="col">Receipt Method</th>
+                            <!-- <th style="width:10rem" scope="col">Payment For</th> -->
+                        <th style="width:6rem" scope="col">Select</th>
+                         </tr>
+                         <tr *ngFor="let com of lstcommentsbyorderNo" class="ItemStyle" style="text-decoration:none;">
+                            <td>{{com.srlNo}}</td>
+                            <td>{{com.receiptNumber}}</td>
+                            <td>{{com.receiptDate}}</td>
+                            <td>{{com.payType}}</td>  
+                            <td>{{com.orderNumber}}</td>
+                            <td>{{com.custAccountNo}}</td>
+                            <td>{{com.paymentAmt}}</td>
+                            <td> {{com.receiptMethodId}}-{{com.receiptMethodName}}</td>
+                         </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"  (click)=" OrderBooked()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary"   (click)="receiptPayment()" >Payment</button>  
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary"   (click)=" OrderBooked()" >Booked</button>  
+                        </td>
+
+                      </tr>
+                  </table>
         </div>
     </div>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

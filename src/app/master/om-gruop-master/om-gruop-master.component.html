@@ -48,7 +48,7 @@
                     </td>
                     <td>
                         <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
-                        <select formControlName="leadTicketNo" id="leadTicketNo" class="form-control" [ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
+                        <select formControlName="leadTicketNo"  class="form-control"[ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
                             <option>--Select--</option>
                             <option *ngFor="let sc of  leadTicketNoList" [ngValue]="sc.ticketNo">
                                 {{sc.ticketNo}}
@@ -59,10 +59,10 @@
                         Emp&nbsp;Full&nbsp;Name&nbsp;:
                     </td>
                     <td>
-                        <input type="text" disabled formControlName="description" [ngModel]="description" class="form-control">
+                        <input type="text" disabled formControlName="description" value="description" [(ngModel)]='description'  class="form-control">
                     </td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Title&nbsp;:
                     </td>
@@ -85,7 +85,7 @@
                     <td>
                         <input type="text" disabled formControlName="lname" [ngModel]="lname" class="form-control">
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td style="width: 5%" class="LabelFontStyle1">
                         Status&nbsp;:
@@ -98,7 +98,7 @@
             <table class="center">
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register">New</button>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="newMast()">New</button>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>

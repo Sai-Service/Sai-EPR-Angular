@@ -1,11 +1,8 @@
-// import { Component, OnInit } from '@angular/core';
 import { asLiteral } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-//import {moment} from 'moment';
-
 import { DateRangePickerComponent } from 'ngx-daterange';
 import { IDateRange, IDateRangePickerOptions } from 'ngx-daterange';
 import { MasterService } from 'src/app/master/master.service';

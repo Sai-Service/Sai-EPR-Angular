@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDateRangeModule } from 'ngx-daterange';
 import { OrderManagementRoutingModule } from './order-management-routing.module';
 import { SalesOrderBookingComponent } from './sales-order-booking/sales-order-booking.component';
+import { PaymentReceiptComponent } from './payment-receipt/payment-receipt.component';
 
 
 @NgModule({
-  declarations: [SalesOrderBookingComponent],
+  declarations: [SalesOrderBookingComponent, PaymentReceiptComponent],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

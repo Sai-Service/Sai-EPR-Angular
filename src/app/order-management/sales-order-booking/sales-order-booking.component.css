@@ -4,8 +4,8 @@ td{
 
 legend {
     display: block;
-    padding-inline-start: 2px;
-    padding-inline-end: 2px;
+    padding-inline-start: 1px;
+    padding-inline-end: 1px;
     border-width: initial;
     border-style: none;
     border-color: initial;
@@ -17,8 +17,8 @@ legend {
 
 fieldset {
     display: block;
-    margin-inline-start: 2px;
-    margin-inline-end: 2px;
+    margin-inline-start: 1px;
+    margin-inline-end: 1px;
     padding-block-start: 0.35em;
     padding-inline-start: 0.75em;
     padding-inline-end: 0.75em;
@@ -44,7 +44,7 @@ fieldset {
 .RFS {
     margin: 1px auto;
     border: 1px solid #608cb0;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     -moz-border-radius-bottomleft: 7px;
     -moz-border-radius-bottomright: 7px;
     -moz-border-radius-topleft: 5px;

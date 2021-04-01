@@ -12,6 +12,8 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
+import { Location } from "@angular/common";
+
 
 
 interface ISalesBookingForm {
@@ -19,6 +21,7 @@ interface ISalesBookingForm {
   ouName:string,
   locCode:string,
   ticketNo:string,
+  emplId:number;
   orderNumber:number,
   accountNo:number,
   custName:string,
@@ -54,6 +57,12 @@ interface ISalesBookingForm {
   flowStatusCode1:string;
   category:string;
   hsnSacCode:string;
+  priceListName:string;
+  billLocName:string;
+  shipLocName:string;
+  ouId:number;
+  customerId:string;
+  // locName:string;
 }
 
 
@@ -95,6 +104,7 @@ export class SalesOrderBookingComponent implements OnInit {
   orderedItem:string;
   lineNumber:number;
   pricingQty:number;
+  priceListName:string;
   unitSellingPrice:number;
   taxCategoryName:string;
   baseAmt:number;
@@ -106,6 +116,12 @@ export class SalesOrderBookingComponent implements OnInit {
   description:string;
   category:string;
   hsnSacCode:string;
+  emplId:number;
+  billLocName:string;
+  shipLocName:string;
+  ouId:number;
+  customerId:string;
+  // locCode:string;
   lstgetOrderLineDetails: any[];
   public financeTypeList:any;
   public financerNameList:any;
@@ -118,6 +134,9 @@ export class SalesOrderBookingComponent implements OnInit {
   // public addonItemList:Array<string>=[];
   public addonItemList:any[];
   public addonDescList:any[];
+
+  displayInsDetails = true;
+  displayEWDetails=true;
 
   displayfinanceType=true;
   displayfinancerName=true;
@@ -140,9 +159,12 @@ export class SalesOrderBookingComponent implements OnInit {
   displaycategory=true;
   displaypricingQty=true;
   displaytaxCategoryName=true;
+  displayorderedItem=true;
 
+  displayorderLineDetailsPart=true;
+  lstcommentsbyorderNo: any[];
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
+  constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName:[''],
       ouName:[''],
@@ -171,6 +193,12 @@ export class SalesOrderBookingComponent implements OnInit {
   emi:[''],
   tenure:[''],
   downPayment:[''],
+  emplId:[''],
+  priceListName:[''],
+  billLocName:[''],
+  shipLocName:[''],
+  ouId:[''],
+  customerId:[''],
   oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
    
@@ -198,7 +226,7 @@ export class SalesOrderBookingComponent implements OnInit {
     return <FormArray>this.SalesOrderBookingForm.get('oeOrderLinesAllList')
   }
 
-   get f() { return this.SalesOrderBookingForm.controls; }
+  //  get f() { return this.SalesOrderBookingForm.controls; }
 
    SalesOrderBooking(SalesOrderBookingForm: any) {
 
@@ -209,9 +237,11 @@ export class SalesOrderBookingComponent implements OnInit {
     this.ouName = (sessionStorage.getItem('ouName'));
     this.locCode= (sessionStorage.getItem('locCode'));
     this.ticketNo=(sessionStorage.getItem('ticketNo'));
+    this.emplId=Number(sessionStorage.getItem('emplId'));
+    this.ouId=Number(sessionStorage.getItem('ouId'));
 
-
-
+    console.log(this.emplId);
+    
 
     this.orderManagementService.getFinTypeSearch1()
     .subscribe(
@@ -246,6 +276,7 @@ export class SalesOrderBookingComponent implements OnInit {
 
   OrderFind(orderNumber){
     alert(orderNumber);
+    this.emplId=Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear(); 
     this.displayfinanceType=false;
     this.displayfinancerName=false;
@@ -268,62 +299,84 @@ export class SalesOrderBookingComponent implements OnInit {
     this.displaycategory=false;
     this.displaypricingQty=false;
     this.displaytaxCategoryName=false;
+    this.displayorderedItem=false;
 
     this.orderManagementService.getsearchByOrderNo(orderNumber)
     .subscribe(
       data => {
         this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
-        // this.totAmt1=data.obj.oeOrderLinesAllList.totAmt;
-        // this.flowStatusCode1=data.obj.oeOrderLinesAllList.flowStatusCode;
         let control=this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        if (data.obj.flowStatusCode==='ENTERED'){
+          this.displayorderLineDetailsPart=false;
+          data.obj.emplId = this.emplId;
+          data.obj.locCode=this.locCode;
+          data.obj.ouId=this.ouId;
+          console.log(data.obj.locCode);
+          
+        }
+        else{
+          this.displayorderLineDetailsPart=true; 
+        }
+        if (this.lstgetOrderLineDetails.length===0){
+    this.displaycategory=true;
+    this.displaypricingQty=true;
+    this.displaytaxCategoryName=true;
+    this.displayorderedItem=true;
+    this.displaysegment=true;
+          this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
+        }
+        else{
         for (let i=0;i<=this.lstgetOrderLineDetails.length-1;i++){
           var oeOrderLinesAllList1: FormGroup=this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
         }
-        // this.SalesOrderBookingForm.get('oeOrderLinesAllList').patchValue(this.lstgetOrderLineDetails);
+       
+      }
         this.SalesOrderBookingForm.patchValue(data.obj);
       }
     )
+    // this.SalesOrderBookingForm.patchValue({emplId:this.emplId})
+    // alert(sessionStorage.getItem('emplId'));
+    // this.emplId=Number(sessionStorage.getItem('emplId'));
+    // this.emplId=Number(sessionStorage.getItem('emplId'))
+    // this.SalesOrderBookingForm.patchValue({'emplId':Number(sessionStorage.getItem('emplId'))});
+    // debugger;
+    this.SalesOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
+    // alert(Number(sessionStorage.getItem('emplId')));
+    // this.SalesOrderBookingForm.get('emplId').patchValue(Number(sessionStorage.getItem('emplId')));
+    
+    // setValue(Number(sessionStorage.getItem('emplId')));
+    // this.SalesOrderBookingForm.get('emplId').patchValue('emplId');
   }
 
-  addRow(index) {
-    var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value  
-    var itemId = arrayControl[index].itemId;
-
-    if (itemId != null) {
-      this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
-    } else { ('Kindly Insert the line-Details first'); }
-    var index = index + 1
-
-    var aa = index + 1;
-    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    (patch.controls[index]).patchValue(
-      {
-        lineNumber: aa,
-      }
-    );
-    this.displayOrderLine.push(true);
-    this.hideArray[index] = true;
+  addRow() {
+    this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
   }
 
+  RemoveRow(index){
+    this.orderlineDetailsArray().removeAt(index);
+  }
+
+  
   onOptionsSelectedCategory(category:any){
- alert(category);
-//  this.orderManagementService.addonItemList(category)
+ if (category === 'EW') {
+  this.displayEWDetails = false;
+}
+else if (category === 'INS') {
+    this.displayInsDetails=false;
+  }
+
 this.orderManagementService.addonItemList(category)
     .subscribe(
       data => {
         this.addonItemList = data;
-        this.orderedItem=data.description;
-        // this.taxCategoryName=data.taxCategoryName;
-        console.log( data.description1);
-        console.log(this.orderedItem);
-        
+        // this.orderedItem=data.description;
       }
     );
   }
 
   onOptionsSelectedDescription(segment:any){
-alert(segment);
+// alert(segment);
 this.orderManagementService.addonDescList(segment)
     .subscribe(
       data => {
@@ -335,9 +388,57 @@ this.orderManagementService.addonDescList(segment)
         // alert(data.description1);
         console.log(this.taxCategoryName);  
       }
+     
+    
     );
+    
+  }
+
+  refresh() {
+    window.location.reload();
+  }
+  close() {
+    this.router.navigate(['admin']);
+  }  
+
+  transData(val) {
+    // delete val.categoryId;
+    return val;
   }
 
 
-  
+  OrderBooked(){
+    // this.flowStatusCode='BOOKED';
+    const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
+    formValue.flowStatusCode= 'BOOKED';
+    this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        // this.SalesOrderBookingForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.SalesOrderBookingForm.reset();
+        }
+      }
+    });
+  }
+
+
+  receiptPayment(){
+    this.router.navigate(['/paymentReceipt']);
+  }
+
+  paymentReceipt(orderNumber){
+   alert(this.orderNumber) ;
+   this.orderManagementService.getOmReceiptSearchByOrdNo(orderNumber)
+   .subscribe(
+   data => {
+     this.lstcommentsbyorderNo = data.obj.oePayList;
+     console.log(this.lstcommentsbyorderNo);
+    }
+   );
+  }
 }
+
+
