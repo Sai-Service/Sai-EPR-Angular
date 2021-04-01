@@ -50,7 +50,7 @@ export class OmGruopMasterComponent implements OnInit {
   public status ="Active";
   displayInactive = true;
   Status1: any; 
-  endDate:Date;
+  teamEndDate:Date;
   public statusList: Array<string> = [];
   public memberTicketNoList :any;
   public teamRoleList : Array<string>=[];
@@ -58,6 +58,7 @@ export class OmGruopMasterComponent implements OnInit {
   this.GroupMasterForm = fb.group({
     teamName1:[],
     teamName:[],
+  teamDesc:[],
     loginArray:[],
     ouName:[],
     locCode:[],
@@ -65,9 +66,9 @@ export class OmGruopMasterComponent implements OnInit {
     leadTicketNo:[],
     description:[],
     status:[],
-    startDate:[],
-    endDate:[],
-    teamRole:[],
+    teamStartDate:[],
+    teamEndDate:[],
+    // teamRole:[],
     teamDetails: this.fb.array([this.lineDetailsGroup()]),
     // teamName:[],
   })
@@ -75,8 +76,8 @@ export class OmGruopMasterComponent implements OnInit {
 lineDetailsGroup() {
   return this.fb.group({
     lineNO:[''],
-    leadTicketNo: [''],
-    description:[''],
+    ticketNo: [''],
+    memberName:[''],
     startDate:[''],
     endDate:['',]
   });
@@ -117,7 +118,9 @@ get f() { return this.GroupMasterForm.controls; }
       }
     );
 
-
+    this.service.memberTicketNo(this.locId, this.deptId, this.divisionId).subscribe(data=>{
+      this.memberTicketNoList = data;
+    })
     this.service.leadTicketNoList(this.locId,this.deptId)
     .subscribe(
       data => {
@@ -128,16 +131,16 @@ get f() { return this.GroupMasterForm.controls; }
     );
   }
   onOptionsSelectedmemberTicketNo(event, i){
-    let select = this.memberTicketNoList.find(d => d.leadTicketNo === event);
+    let select = this.memberTicketNoList.find(d => d.ticketNo === event);
     alert(select.description); 
     var patch = this.GroupMasterForm.get('teamDetails') as FormArray;
-    (patch.controls[i]).patchValue( { description: select.description, });
+    (patch.controls[i]).patchValue( { memberName: select.empName, });
   }
   onOptionsSelectedteamRole(event){
     alert(event);
-    this.service.memberTicketNo(this.locId, this.deptId, this.divisionId,event).subscribe(data=>{
-      this.memberTicketNoList = data;
-    })
+    // this.service.memberTicketNo(this.locId, this.deptId, this.divisionId,event).subscribe(data=>{
+    //   this.memberTicketNoList = data;
+    // })
   }
   onOptionsSelectedDescription (event){
     let select = this.leadTicketNoList.find(d => d.ticketNo === event);
@@ -175,8 +178,21 @@ get f() { return this.GroupMasterForm.controls; }
         data => {
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
+          var len = this.lineDetailsArray.length;
+          for (let i = 0; i < data.length - len; i++) {
+            var trxlist: FormGroup = this.lineDetailsGroup();
+            this.lineDetailsArray.push(trxlist);
+          }
+  
+          this.GroupMasterForm.patchValue(this.lstcomments[0]);
+          this.GroupMasterForm.get('teamDetails').patchValue(this.lstcomments);
+        var patch = this.GroupMasterForm.get('teamDetails') as FormArray;
+        for (let i = 0; i < this.lineDetailsArray.length; i++) {
+          patch.controls[i].patchValue({
+            lineNO: i + 1
+          })
         }
-      );
+        });
   };
 
   // Select(teamId: number) {
@@ -198,7 +214,9 @@ get f() { return this.GroupMasterForm.controls; }
 
   newMast() {
     const formValue: IGroupMaster = this.transData(this.GroupMasterForm.value);
+
     let variants = <FormArray>this.lineDetailsArray;
+    alert(this.lineDetailsArray.length);
     var teamName =this.GroupMasterForm.get('teamName').value;
     var loginArray =this.GroupMasterForm.get('loginArray').value;
     var ouName =this.GroupMasterForm.get('ouName').value;
@@ -207,27 +225,37 @@ get f() { return this.GroupMasterForm.controls; }
     var leadTicketNo =this.GroupMasterForm.get('leadTicketNo').value;
     var description =this.GroupMasterForm.get('description').value;
     var status =this.GroupMasterForm.get('status').value;
+    var teamStartDate=this.GroupMasterForm.get('teamStartDate').value;
+    var teamEndDate=this.GroupMasterForm.get('teamEndDate').value;
+    
     for (let i = 0; i < this.lineDetailsArray.length; i++) {
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.addControl('teamName', new FormControl(teamName, Validators.required));
       variantFormGroup.addControl('loginArray', new FormControl(loginArray, Validators.required));
       variantFormGroup.addControl('ouName', new FormControl(ouName, Validators.required));
       variantFormGroup.addControl('locCode', new FormControl(locCode, Validators.required));
+      variantFormGroup.addControl('locId', new FormControl(Number(sessionStorage.getItem('locId')), Validators.required));
+      variantFormGroup.addControl('ouId', new FormControl(Number(sessionStorage.getItem('ouId')), Validators.required));
+      variantFormGroup.addControl('dept', new FormControl((sessionStorage.getItem('deptId')), Validators.required));
       variantFormGroup.addControl('deptName', new FormControl(deptName, Validators.required));
       variantFormGroup.addControl('leadTicketNo', new FormControl(leadTicketNo, Validators.required));
       variantFormGroup.addControl('description', new FormControl(description, Validators.required));
       variantFormGroup.addControl('status', new FormControl(status, Validators.required));
+      variantFormGroup.addControl('teamStartDate', new FormControl(teamStartDate, Validators.required));
+      variantFormGroup.addControl('teamEndDate', new FormControl(teamEndDate, Validators.required));
+      console.log(variantFormGroup);
+      
     }
     this.service.GroupMasterSubmit(variants.value).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        window.location.reload();
+        // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
           // this.LocationMasterForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });
@@ -238,10 +266,10 @@ get f() { return this.GroupMasterForm.controls; }
     // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
-      this.endDate = new Date();
+      this.teamEndDate = new Date();
     }
     else if (this.Status1 === 'Active') {
-      this.GroupMasterForm.get('endDate').reset();
+      this.GroupMasterForm.get('teamEndDate').reset();
     }
   }
 

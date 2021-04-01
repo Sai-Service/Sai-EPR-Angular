@@ -22,8 +22,8 @@ export class MasterService {
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   }
-  memberTicketNo(locCode, deptId,divisionId,designation): Observable<any> {
-    return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=120&deptId=${deptId}&divisionId=${divisionId}&designation=${designation}`);
+  memberTicketNo(locCode, deptId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
   }
   teamRoleListFN(deptName): Observable<any> {
     return this.http.get(this.ServerUrl +`/cmnLookup/TeamRole/${deptName}`);
@@ -60,6 +60,9 @@ export class MasterService {
   }
   YesNoList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/YesNo');
+  }
+  SSitemTypeListFn(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/itemCategory/type');
   }
   subTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/SubCtg');
@@ -308,7 +311,7 @@ getGruopSearch(teamName,ouId,locId): Observable<any> {
 
 leadTicketNoList(locId,deptId): Observable<any> {  
   // return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
-  return this.http.get(this.ServerUrl + `/empMst/teamList?locId=120&deptId=${deptId}`);
+  return this.http.get(this.ServerUrl + `/empMst/teamList?locId=${locId}&deptId=${deptId}`);
 }
 public GroupMasterSubmit(LocationMasterRecord) {
   const options = {
@@ -360,6 +363,13 @@ UpdateLocatorMasterById(LocatorMasterRecord,locatorId) {
 
 //////////////////////// Item Master/////////////////
 
+public VehItemSubmit(VehItemRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/itemMst/withInfo1';
+  return this.http.post(url, VehItemRecord, options);
+}
 categoryIdList(category): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemCategory/type/${category}`);
 }
@@ -483,7 +493,8 @@ holdReasonList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/HoldReason');
 }
 getItemCodePach(segment): Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst/${segment}`);
+  // return this.http.get(this.ServerUrl +`/itemMst/${segment}`);
+  return this.http.get(this.ServerUrl +`/itemMst/bySegment/${segment}`);
 }
 
 ////////////////////////////////Supplier Master///////////////////////////

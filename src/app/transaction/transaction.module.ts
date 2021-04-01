@@ -9,6 +9,7 @@ import { MoveOrderComponent } from './move-order/move-order.component';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
 import { MiscellaneousTransactionComponent } from './miscellaneous-transaction/miscellaneous-transaction.component';
 import { PaymentsComponent } from './payments/payments.component';
+import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PaymentsComponent } from './payments/payments.component';
      MiscellaneousTransactionComponent,
     PaymentsComponent,
     PoInvoiceComponent,
+    ARInvoiceComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,478 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+    <tr>
+        <td class="PageHeader">
+            &nbsp;&nbsp;AR&nbsp;Invoice
+        </td>
+    </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <form [formGroup]="arInvoiceForm" (ngSubmit)="arInvoice(arInvoiceForm.value)">
+                  
+ <table class="center" style="width: 100;" style="border-bottom: solid 1px blue;width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
+ <tr>
+     <td>
+         <table class="center" style="width: 100%;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="text" class="form-control">
+                    <!-- <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                    placeholder="Enter PO number" (keydown.tab)="poFind(segment1)"> -->
+                </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Order&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="text" class="form-control">
+                        <!-- <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                        placeholder="Enter PO number" (keydown.tab)="poFind(segment1)"> -->
+                    </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="text" class="form-control">
+                            <!-- <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                            placeholder="Enter PO number" (keydown.tab)="poFind(segment1)"> -->
+</td>
+<td style="width: 15%" class="LabelFontStyle">
+    &nbsp;Order&nbsp;Date&nbsp;:&nbsp;
+</td>
+<td>
+    <input type="text" class="form-control">
+    <!-- <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
+    class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+    placeholder="Enter PO number" (keydown.tab)="poFind(segment1)"> -->
+    </td>
+</tr>
+</table>
+
+     </td></tr></table>
+     <div class="classic-tabs">
+        <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
+        <div><li class="nav-item"><a href="#firsttab" data-toggle="tab">AR Invoice&nbsp;&nbsp;</a></li></div>
+        <div> <li class="nav-item"><a href="#secondtab" data-toggle="tab">&nbsp;&nbsp;AR Invoice Line&nbsp;&nbsp;</a></li></div>
+        <div> <li class="nav-item"><a href="#thirdtab" data-toggle="tab">&nbsp;&nbsp;Distribution&nbsp;&nbsp;</a></li></div>
+    <div> <li class="nav-item"><a href="#fourthtab" data-toggle="tab">&nbsp;&nbsp;AR Payment&nbsp;&nbsp;</a></li> </div>
+    </ul>
+    </div>
+
+    <!-- <div class="grid_scroll"> -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="firsttab" style="width: 102%;margin-left: 0%;">
+                <div class="center" style="width: 100%;">
+                    <div class="form-bg">
+     <table class="center">
+            <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL"
+                    style="font-size: 10px;color: black;">&nbsp;
+                </legend>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Source:</td>
+                <td>
+                    <input type="text" class="form-control">
+                    <!-- <select 
+                    formControlName="poType" name="poType" id="poType" class="form-control"
+                                            [(ngModel)]="poType">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  poTypeList" [ngValue]="sc.codeDesc"
+                                                [selected]="sc.cmnId===60">
+                                                {{sc.codeDesc}}
+                                            </option>
+                    </select> -->
+                </td>   
+                <td style="width: 15%" class="LabelFontStyle">Source:</td>
+                <td>
+                    <input type="text"  class="form-control">
+                </td>   
+                <td style="width: 15%" class="LabelFontStyle">Invoice Number:</td>
+                <td>
+                    <input disabled type="text"  class="form-control">
+                </td> 
+                <td style="width: 15%" class="LabelFontStyle">Line:</td>
+                <td>
+                    <input disabled type="text"  class="form-control">
+                </td> 
+                </tr>
+                <tr> 
+                    <td style="width: 15%" class="LabelFontStyle">Type:</td>
+                    <td>
+                        <input type="text"  class="form-control">
+                    </td> 
+                    <td style="width: 15%" class="LabelFontStyle"> OM Reference:</td>
+                <td>
+                    <input type="text"  class="form-control">
+                </td> 
+                <td style="width: 15%" class="LabelFontStyle">Invoice Date:</td>
+                <td>
+                    <input disabled type="date"  class="form-control">
+                </td> 
+                <td style="width: 15%" class="LabelFontStyle">Tax:</td>
+                <td>
+                    <input disabled type="text"  class="form-control">
+                </td> 
+                </tr> 
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">DMS IRN:</td>
+                    <td>
+                        <input type="text"  class="form-control">
+                    </td> 
+                    <td style="width: 15%" class="LabelFontStyle">DMS Invoice No:</td>
+                    <td>
+                        <input type="text"  class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">GL Date:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Charges:</td>
+                    <td>
+                        <input type="text" disabled  class="form-control">
+                    </td>
+                </tr>  
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">DMS Order No:</td>
+                    <td>
+                        <input type="text"  class="form-control">
+                    </td> 
+                    <td style="width: 15%" class="LabelFontStyle">Currency:</td>
+                    <td>
+                        <input type="text"  disabled class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">IRN No.:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Freight:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                </tr>
+                <tr> 
+                    <td style="width: 15%" class="LabelFontStyle">Vehicle no:</td>
+                    <td>
+                        <input type="text" class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Insurance:</td>
+                    <td>
+                        <input type="text" class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Total:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">QR Code:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle"></td>
+                    <td>
+                        <input hidden type="text" class="form-control">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Act Date:</td>
+                    <td>
+                        <input type="date" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Ack No:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Status:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    
+                </tr>
+            </fieldset>
+               
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                            style="font-size: 10px;color: black;">Ship To&nbsp;
+                        </legend>
+                        <tr>
+                    <td style="width: 15%"  class="LabelFontStyle">Name:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Customer ID:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Address:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Contact:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                </tr>
+                    </fieldset>
+               
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                            style="font-size: 10px;color: black;">Bill To&nbsp;
+                        </legend>
+                        <tr>
+                    <td style="width: 15%"  class="LabelFontStyle">Name:</td>
+                    <td>
+                        <input type="text"  class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Customer ID:</td>
+                    <td>
+                        <input type="text"  class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Address:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Contact:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                </tr>
+                    </fieldset>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                            style="font-size: 10px;color: black;">Sold To & Paying Customer&nbsp;
+                        </legend>
+                        <tr>
+                            <td style="width: 15%"  class="LabelFontStyle">Sold to cust Name:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                    <td style="width: 15%"  class="LabelFontStyle">Sold Customer ID:</td>
+                    <td>
+                        <input type="text" disabled class="form-control">
+                    </td>
+                            <td style="width: 15%"  class="LabelFontStyle">Paying Cust Name:</td>
+                            <td>
+                                <input type="text"  class="form-control">
+                            </td>
+                            <td style="width: 15%"  class="LabelFontStyle">Paying Customer ID:</td>
+                            <td>
+                                <input type="text"  class="form-control">
+                            </td>
+                        </tr>
+                        </fieldset>
+
+                        <!-- <fieldset class="RFS">
+                            <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                style="font-size: 10px;color: black;">Paying Customer&nbsp;
+                            </legend>
+                            <tr>
+                                <td style="width: 15%"  class="LabelFontStyle">Name:</td>
+                                <td>
+                                    <input type="text"  class="form-control">
+                                </td>
+                                <td style="width: 15%"  class="LabelFontStyle">Customer ID:</td>
+                                <td>
+                                    <input type="text"  class="form-control">
+                                </td>
+                            </tr>
+                            </fieldset> -->
+
+                            <fieldset class="RFS">
+                                <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                    style="font-size: 10px;color: black;">&nbsp;
+                                </legend>
+                                <tr>  
+                                    <td style="width: 15%"  class="LabelFontStyle">Payment Term:</td>
+                                    <td>
+                                        <input type="text"  class="form-control">
+                                    </td>
+                                    <td style="width: 15%"  class="LabelFontStyle">Due Date:</td>
+                                    <td>
+                                        <input type="text"  class="form-control">
+                                    </td>
+                                    <td style="width: 15%"  class="LabelFontStyle">Sales person name:</td>
+                                    <td>
+                                        <input type="text"  class="form-control">
+                                    </td>
+                                    <td style="width: 15%"  class="LabelFontStyle">SR Reference No: </td>
+                                    <td>
+                                        <input type="text"  class="form-control">
+                                    </td>
+                                </tr>
+                                </fieldset>
+                </table>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="secondtab">
+    <div class="center">
+        <div class="form-bg">
+            <div class="center">
+                <table style="width: 100%;background-color: white;">
+                    <tr>
+                        <td class="PageHeader1">
+                            &nbsp;&nbsp;Line&nbsp;Details
+                        </td>
+                    </tr> 
+                </table>
+                <div class="center">
+                    <!-- <div class="center" formArrayName="poLines"> -->
+                        <div class="grid_scroll">
+                            <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                                cellspacing="0" cellpadding="4" rules="all" class="center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Item Type</th>
+                                        <th scope="col">Inventory Item</th>
+                                        <th scope="col">Inventory Category</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">uom</th>
+                                        <th scope="col">Tax Category</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+
+                                        <th scope="col">Base Amount</th>
+                                        <th scope="col">Tax Amount</th>
+                                        <th scope="col">Total Amont</th>
+                                        <th scope="col">HSN/ SAC code</th>
+                                        <th scope="col">PO Charge Account</th>
+                                        <th scope="col">Add Row</th>
+                                        <th scope="col">Delete Row</th>
+                                    </tr>
+                                </thead>
+                                <!-- <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"
+                                    [formGroupName]="i" class="auto-style5"> -->
+                                    <tr>
+                                    </tr>
+                            </table></div>
+                        </div>
+               <table style="width: 100%;background-color: white;">
+                        <tr>
+                            <td class="PageHeader1">
+                                &nbsp;&nbsp;Tax&nbsp;Details&nbsp;of&nbsp;PO&nbsp;Line&nbsp;
+                                <!-- No-{{i+1}} -->
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- <br> -->
+                    <div class="center" formArrayName="taxAmounts">
+                        <div class="grid_scroll">
+                            <table class="auto-style4" cellspacing="0" cellpadding="4" rules="all"
+                                class="center" style="border: solid 1px Gray">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">SL. NO.</th>
+                                        <th scope="col">Tax Rate Name
+                                        </th>
+                                        <th scope="col">Tax Type</th>
+                                        <th scope="col">Tax Point Basis
+                                        </th>
+                                        <th scope="col">
+                                            <table style="text-align: center; width: 100%;">
+                                                <tr style="border-bottom: solid 1px Gray;">
+                                                    <td colspan="10" style="text-align: center;">
+                                                        Precedence</td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        1</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        2</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        3</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        4</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        5</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        6</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        7</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        8</td>
+                                                    <td
+                                                        style="width: 2rem; border-right: solid 1px Gray;">
+                                                        9</td>
+                                                    <td style="width: 2rem;">
+                                                        10</td>
+                                                </tr>
+                                            </table>
+                                        </th>
+                                        <th scope="col">Currency</th>
+                                        <th scope="col">Tax Rate</th>
+                                        <th scope="col">Tax Amount</th>
+                                        <th scope="col">Recoverable
+                                            <!-- Amount -->
+                                        </th>
+                                        <th scope="col">Inclusive</th>
+                                        <th scope="col">Self
+                                            Assesed/Reverse
+                                            Charge
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <!-- <ng-container
+                                    *ngFor="let taxDet of TaxDetailsArray(i).controls; let j= index"
+                                    [formGroupName]="j"> -->
+                                    <tr>
+
+                                        </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div></div></div></div>
+                <div class="tab-pane" id="thirdtab">
+                    <div class="center">
+                        <div class="form-bg">
+                            <div class="center">
+                
+                                </div></div></div></div>
+
+                                <div class="tab-pane" id="fourthtab">
+                                    <div class="center">
+                                        <div class="form-bg">
+                                            <div class="center">
+                                
+                                                </div></div></div></div>
+</div>
+<!-- </div> -->
+                <table class="center">
+                    <tr>
+                        <td> <button type="button" class="btn btn-primary"  style="width: 8rem;">Save</button></td>
+                        <td> <button type="button" class="btn btn-primary"  style="width: 8rem;">Complete</button></td>
+                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
+                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td>
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="clearFormArray()"
+                            style="width: 8rem;">Reset</button>
+                            </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                        </td>
+                       
+                        </tr>
+                </table>
+        </form>
+    </div>
+</div>
+</div>
+</div>

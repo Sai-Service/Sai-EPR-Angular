@@ -45,19 +45,23 @@
                         <input type="text" disabled formControlName="deptName" class="form-control" [(ngModel)]="deptName" placeholder="">
                     </td>
                 </tr>
-                <tr><td style="width: 10%" class="LabelFontStyle1">
+                <tr>
+                    <!-- <td style="width: 10%" class="LabelFontStyle1">
                     Team&nbsp;Role&nbsp;:
                 </td>
                 <td>
-                    <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
                     <select formControlName="teamRole"  class="form-control" (ngModelChange)='onOptionsSelectedteamRole($event)'>
                         <option>--Select--</option>
                         <option *ngFor="let sc of  teamRoleList" >
                             {{sc.code}}
                         </option>
                     </select>
+                </td>   -->
+                <td style="width: 10%" class="LabelFontStyle1">
+                    Team&nbsp;Description&nbsp;:
                 </td>
 
+                <td><input type="text" formControlName="teamDesc" class="form-control"></td>
                     <td style="width: 10%" class="LabelFontStyle1">
                         Team&nbsp;Name&nbsp;:
                     </td>
@@ -71,7 +75,7 @@
                     </td>
                     <td>
                         <!-- (ngModelChange)='onOptionsSelectedDescription($event)' -->
-                        <select formControlName="leadTicketNo"  class="form-control"[ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
+                        <select formControlName="leadTicketNo"  class="form-control" [ngModel]="leadTicketNo" (ngModelChange)='onOptionsSelectedDescription($event)'>
                             <option>--Select--</option>
                             <option *ngFor="let sc of  leadTicketNoList" [ngValue]="sc.ticketNo">
                                 {{sc.ticketNo}}
@@ -128,7 +132,7 @@
                         Start&nbsp;Date&nbsp;:
                     </td>
                     <td>
-                        <input type="date" formControlName="startDate" class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}">
+                        <input type="date" formControlName="teamStartDate" class="form-control" min="{{minDate | date:'yyyy-MM-dd'}}">
                     </td>
                     <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                         <ng-template #thenBlockInactive>
@@ -138,8 +142,8 @@
                                 Inactive&nbsp;Date:&nbsp;
                             </td> 
                             <td>
-                                <input disabled type="text" formControlName="endDate" class="form-control"
-                                [ngModel]="endDate | date:'yyyy-MM-dd'">    
+                                <input disabled type="text" formControlName="teamEndDate" class="form-control"
+                                [ngModel]="teamEndDate | date:'yyyy-MM-dd'">    
                             </td>
                         </ng-template>
                 </tr>
@@ -182,18 +186,18 @@
                               </td>
                                 <td>
                                      <!-- <input type="text"  formControlName="ticketNo" class="form-control" > -->
-                                     <select formControlName="leadTicketNo" id="leadTicketNo" class="form-control" style="height: 22px"
+                                     <select formControlName="ticketNo" id="ticketNo" class="form-control" style="height: 22px"
                                      (ngModelChange)='onOptionsSelectedmemberTicketNo($event, i)'>
                                          <option>--Select--</option>
                                          <option *ngFor="let sc of  memberTicketNoList">
-                                             {{sc.leadTicketNo}}
+                                             {{sc.ticketNo}}
                                          </option> 
                                      </select>
                                     </td>
-                                    <td> <input type="text"  style=" height: 22px" formControlName="description"
+                                    <td> <input type="text" disabled  style=" height: 22px" formControlName="memberName"
                                          class="form-control" ></td>
                                         <td> <input type="date" style=" height: 22px" formControlName="startDate"
-                                            class="form-control" ></td>
+                                            class="form-control"  min="{{minDate | date:'yyyy-MM-dd'}}" ></td>
                                             <td> <input type="date" style=" height: 22px" formControlName="endDate"
                                                  class="form-control" ></td>
                             </tr>

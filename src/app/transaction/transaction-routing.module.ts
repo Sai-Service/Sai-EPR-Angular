@@ -6,6 +6,7 @@ import { PoInvoiceComponent } from './po-invoice/po-invoice.component';
 import { StockTransferComponent } from './stock-transfer/stock-transfer.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { TdsInvoiceComponent } from './tds-invoice/tds-invoice.component';
+import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path:'miscTransaction',component:MiscellaneousTransactionComponent},
   {path:'TdsInvoice',component:TdsInvoiceComponent},
   {path:'Payment',component:PaymentsComponent},
+  {path:'ARInvoice', component:ARInvoiceComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

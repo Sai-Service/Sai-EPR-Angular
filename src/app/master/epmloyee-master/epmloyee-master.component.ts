@@ -27,6 +27,7 @@ interface IEmployeeMaster {
   loginAccess:string;
   roleId:number;
   startDate:Date;
+  teamRole:string;
 }
 @Component({
   selector: 'app-epmloyee-master',
@@ -57,6 +58,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   loginAccess:string;
   roleId:number;
   startDate:Date;
+  teamRole:string;
   public status = "Active";
   displayInactive = true;
   Status1: any;
@@ -67,7 +69,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   displayRolePass: boolean;
   divisionName:string;
   locCode:string;
-  
+  deptName:string;
   public minDate = new Date();
   public maxDate = new Date();
   public statusList: Array<string> = [];
@@ -76,6 +78,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   public locIdList: Array<string> = [];
   public titleList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
+  public teamRoleList : Array<string>=[];
   status1:any;
 
 
@@ -105,12 +108,15 @@ export class EpmloyeeMasterComponent implements OnInit {
       startDate:[],
       divisionName:[],
       locCode:[],
+      teamRole:[],
     });
+
   }
 
   get f() { return this.employeeMasterForm.controls; }
 
   ngOnInit(): void {
+    this.deptName=(sessionStorage.getItem('deptName'));
     this.service.statusList()
       .subscribe(
         data => {
@@ -153,6 +159,13 @@ export class EpmloyeeMasterComponent implements OnInit {
           console.log(this.DivisionIDList);
         }
       );
+      this.service.teamRoleListFN(this.deptName)
+    .subscribe(
+      data => {
+        this.teamRoleList = data;
+        console.log(this.teamRoleList);
+      }
+    );
   }
   employeeMaster(employeeMasterForm: any) {
 

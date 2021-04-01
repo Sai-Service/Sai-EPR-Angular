@@ -130,7 +130,8 @@ export class ItemCategortComponent implements OnInit {
 
 
   transData(val) {
-    delete val.categoryId;
+    delete val.categoryId;  
+
     return val;
   }
 
