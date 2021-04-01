@@ -50,6 +50,13 @@
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/OMGRP']">Group Master</a> </li>
               </ul>
             </li>
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>  
+                <li><a class="dropdown-item" [routerLink]="['/admin/bank/bankBranch']">Bank Branch creation</a></li> 
+                <li><a class="dropdown-item" [routerLink]="['/admin/bank/BankAccUses']">Create Bank Account Use</a></li>
+              </ul>  
+              </li> 
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Tax Master</a>
               <ul class="dropdown-menu">
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiRegimeMaster']">Jai-Regime Master</a> </li>
@@ -76,7 +83,8 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/PoReceiptForm']">PO Receipt</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PoInvoice']">PO Invoice</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/TdsInvoice']">TDS Invoice</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/TdsInvoice']">TDS Invoice</a></li> 
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/Payment']">Payment</a></li>
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>  
             <li><a class="dropdown-item" [routerLink]="['/admin/bank/bankBranch']">Bank Branch creation</a></li> 
@@ -89,13 +97,13 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
           </ul>
         </li>
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>
+        <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>  
             <li><a class="dropdown-item" [routerLink]="['/admin/bank/bankBranch']">Bank Branch creation</a></li> 
             <li><a class="dropdown-item" [routerLink]="['/admin/bank/BankAccUses']">Create Bank Account Use</a></li>
           </ul>  
-          </li>   
+          </li>    -->
           <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Order Management</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/salesOrderBooking']">Sales Order Booking</a></li>

@@ -1,10 +1,15 @@
 <form [formGroup]="SalesOrderBookingForm" (ngSubmit)="SalesOrderBooking(SalesOrderBookingForm.value)">
+<<<<<<< HEAD
     <input type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId'  style="width: 40px;">
     <input  class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
     <input type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
     <input  class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
  <input  class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
  <input  class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+=======
+    <input formControlName="emplId" class="form-control"
+    [(ngModel)]='emplId' style="width: 25px;">
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
 <table style="width: 100%;background-color: white;">
     <tr>
         <td colspan="4" class="PageHeader" style="width: 100%;">
@@ -835,6 +840,7 @@ EW Details
                             <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                         </td>
                         <td>
+<<<<<<< HEAD
                           <!-- ************* Payment Receipt Grid Start ******************************** -->
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" (click)="paymentReceipt(orderNumber)">
@@ -897,6 +903,10 @@ EW Details
                             <button type="submit" class="btn btn-primary"   (click)=" OrderBooked()" >Booked</button>  
                         </td>
 
+=======
+                            <button type="submit" class="btn btn-primary"   (click)=" OrderBooked()" >Booked</button>  
+                        </td>
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
                       </tr>
                   </table>
         </div>

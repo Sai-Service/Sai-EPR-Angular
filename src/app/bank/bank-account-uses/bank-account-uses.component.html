@@ -59,7 +59,7 @@
                                         <tr style="align-items: center;">
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Name&nbsp;:&nbsp; </td>
                                             <td>
-                                                <select formControlName="bkName" id="bkName" class="form-control" (ngModelChange)="onBankNameSelected($event)" >
+                                                <select formControlName="bkName" id="bkName" class="form-control" (ngModelChange)="onBankNameSelected1($event)" >
                                                     <option>--Select--</option>
                                                     <option *ngFor="let sc of BankNameList" >
                                                         {{sc.custName}}
@@ -69,10 +69,20 @@
                                                     (keydown.tab)="serchByBanhName(bkName)"> -->
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Name&nbsp;:&nbsp; </td>
-                                            <td>
+                                            <!-- <td>
                                                 <input formControlName="bkBranchName" [(ngModel)]="bkBranchName" class="form-control" placeholder="Search by branch name"
                                                    >
-                                            </td> 
+                                            </td>  -->
+                                            <td style="border: none;color: black;">
+                                                <!-- <input type="text" formControlName="branchName"
+                                                    class="form-control" placeholder="Enter branch name"> -->
+                                                    <select formControlName="bkBranchName" id="bkBranchName" [(ngModel)]="bkBranchName" class="form-control" (ngModelChange)="onbranchIdSelected($event)" >
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of BankBranchList" >
+                                                            {{sc.name}}
+                                                        </option>
+                                                    </select>
+                                            </td>
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Account&nbsp;:&nbsp; </td>
                                             <td>
                                                 <input formControlName="bankAccountNo" [(ngModel)]="bankAccountNo" class="form-control" placeholder="Search by branch number"

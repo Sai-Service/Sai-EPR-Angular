@@ -117,11 +117,14 @@ export class SalesOrderBookingComponent implements OnInit {
   category:string;
   hsnSacCode:string;
   emplId:number;
+<<<<<<< HEAD
   billLocName:string;
   shipLocName:string;
   ouId:number;
   customerId:string;
   // locCode:string;
+=======
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
   lstgetOrderLineDetails: any[];
   public financeTypeList:any;
   public financerNameList:any;
@@ -160,6 +163,11 @@ export class SalesOrderBookingComponent implements OnInit {
   displaypricingQty=true;
   displaytaxCategoryName=true;
   displayorderedItem=true;
+<<<<<<< HEAD
+=======
+
+  displayorderLineDetailsPart=true;
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
 
   displayorderLineDetailsPart=true;
   lstcommentsbyorderNo: any[];
@@ -194,11 +202,14 @@ export class SalesOrderBookingComponent implements OnInit {
   tenure:[''],
   downPayment:[''],
   emplId:[''],
+<<<<<<< HEAD
   priceListName:[''],
   billLocName:[''],
   shipLocName:[''],
   ouId:[''],
   customerId:[''],
+=======
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
   oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
    
@@ -238,7 +249,10 @@ export class SalesOrderBookingComponent implements OnInit {
     this.locCode= (sessionStorage.getItem('locCode'));
     this.ticketNo=(sessionStorage.getItem('ticketNo'));
     this.emplId=Number(sessionStorage.getItem('emplId'));
+<<<<<<< HEAD
     this.ouId=Number(sessionStorage.getItem('ouId'));
+=======
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
 
     console.log(this.emplId);
     
@@ -300,7 +314,11 @@ export class SalesOrderBookingComponent implements OnInit {
     this.displaypricingQty=false;
     this.displaytaxCategoryName=false;
     this.displayorderedItem=false;
+<<<<<<< HEAD
 
+=======
+    this.SalesOrderBookingForm.patchValue({'emplId':Number(sessionStorage.getItem('emplId'))});
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
     this.orderManagementService.getsearchByOrderNo(orderNumber)
     .subscribe(
       data => {
@@ -309,10 +327,13 @@ export class SalesOrderBookingComponent implements OnInit {
         if (data.obj.flowStatusCode==='ENTERED'){
           this.displayorderLineDetailsPart=false;
           data.obj.emplId = this.emplId;
+<<<<<<< HEAD
           data.obj.locCode=this.locCode;
           data.obj.ouId=this.ouId;
           console.log(data.obj.locCode);
           
+=======
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
         }
         else{
           this.displayorderLineDetailsPart=true; 
@@ -332,7 +353,12 @@ export class SalesOrderBookingComponent implements OnInit {
         }
        
       }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
         this.SalesOrderBookingForm.patchValue(data.obj);
+        alert(sessionStorage.getItem('emplId'));
       }
     )
     // this.SalesOrderBookingForm.patchValue({emplId:this.emplId})
@@ -400,6 +426,7 @@ this.orderManagementService.addonDescList(segment)
   close() {
     this.router.navigate(['admin']);
   }  
+<<<<<<< HEAD
 
   transData(val) {
     // delete val.categoryId;
@@ -439,6 +466,33 @@ this.orderManagementService.addonDescList(segment)
     }
    );
   }
+=======
+
+  transData(val) {
+    // delete val.categoryId;
+    return val;
+  }
+
+
+  OrderBooked(){
+    this.flowStatusCode='BOOKED'
+    this.emplId=Number(sessionStorage.getItem('emplId'));
+    const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
+    console.log(this.emplId);
+    this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        // this.SalesOrderBookingForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.SalesOrderBookingForm.reset();
+        }
+      }
+    });
+  }
+
+>>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
 }
 
 

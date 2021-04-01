@@ -1,404 +1,172 @@
-/* Style the tab */
-.nav-tabs {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+.LabelFontStyle2{
+text-align: left;
+}
+.LabelFontStyle{
+text-align: right;
+}
+.PageHeader1 {
+  font-size:medium;
+  font-weight: bold;
+  margin: 0;
+  height: 10px;
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  vertical-align: middle;
+  text-align: center;
+  padding: 2px;
+  color: white;
+  /* background-color:#570906;   */
+  /* background-color:#ac3911; */
+  /* background-color:#e95420; */
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  /* #40758b; */
+}
+.classic-tabs{
+  width: 100%;
   }
   
-  /* Style the buttons that are used to open the tab content */
-  .nav-tabs a {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
+  
+  .active{
+  /* color: red; */
+  font-weight:bool;
+  /* background-color: #2b28e6; */
+  color: rgb(6, 10, 66);
   }
   
-  /* Change background color of buttons on hover */
-  .tab a:hover {
-    background-color: #ddd;
+  .active .a {
+  text-decoration: underline;
   }
   
-  /* Create an active/current tablink class */
-  .tab button.active {
-    background-color: #ccc;
+  .nav-item{
+  padding: 0px;
   }
   
-  /* Style the tab content */
-  /* .tab-pane {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-  } */
-
-
-
-/*//////////////////////////////////////// Item Master CSS */
-
-form {
-  padding: 10px;
- }
- 
-.auto-style103{
-  /* border-color: #000066;
-   border-style: ridge;
-   width: auto;
-   height: auto;
-   box-shadow: 2px 10px 15px #ececec inset;
-   padding: 10px;
-   background-color: #ececec; */
-   margin: 1px auto;
-   border: 1px solid #608cb0;
-   padding-bottom: 10px;
-   -moz-border-radius-bottomleft: 7px;
-   -moz-border-radius-bottomright: 7px;
-   -moz-border-radius-topleft: 5px;
-   -moz-border-radius-topright: 7px;
-   -webkit-border-radius: 7px;
-   border-radius: 3px;
-   box-shadow: 2px 10px 15px #ECECEC inset;
-   min-height: 30px;
-   background-color: #fefeff;
-   }
-
-   .PageHeader {
-    font-size: x-large;
+  ul li{
+  padding: 0px;
+  }
+      
+  i{
+  height: 7px;
+  background-color: white;
+  }
+      
+  .grid_scroll{
+    overflow: auto;
+    /* width: 800px; */
+    width: 100%;
+    /* height: 100%; */
+    /* width: 100%; */
+  }
+  
+  button{
+    width: 5em;
+    background-image: linear-gradient(#cce2ee, #99cae5 60%, #83c9f1);
+    color: black;
     font-weight: bold;
-    margin: 0;
+    cursor: pointer;
+    border-radius: 3rem;
     height: 22px;
-    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-size: 11px;
     vertical-align: middle;
     text-align: center;
-    /* padding-top: 5px;
-    padding-bottom: 5px; */
-    padding: 5px;
-    /* background-color: rgb(177, 42, 42); */
-    color: white;
-    background-color:#608cb0;
-    
-} 
-
-
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.btn-primary{
-  width: 10em;
-  border-color: black;
-  box-shadow: 5px 5px 8px rgb(13, 13, 19);
-}
-
-.btn-danger{
-  width: 10em;
-  border-color: black;
-  box-shadow: 5px 5px 8px rgb(13, 13, 19);
-}
-
-.btn-primary:hover{
-  box-shadow: 5px 5px 8px rgb(60, 60, 224);  
-  background-color: blue;
-}
-
-
-
-.LabelFontStyle {
-  /* background-color: #FAFAFA; */
-  font-family: Verdana,Sans-serif, Arial, Helvetica;
-  font-weight: normal;
-  color: Black;
-  font-size: small;
-  text-align: right;
+    line-height: 10px;   
+  }
+  
+  
+  .btn-primary{
+  width: 5em;
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3rem;
+  border-color: #2c3e50;
+  height: 22px;
+  font-size: 11px;
   vertical-align: middle;
-  padding-top: 0px;
-  /* padding-right: 4px; */
-  padding-bottom: 0px;
-  border-color: Gray;
-  height: 25px;
-  /* font-weight: bold; */
-}
-.LabelFontStyle1 {
-  /* background-color: #FAFAFA; */
-  font-family: Verdana,Sans-serif, Arial, Helvetica;
-  font-weight: normal;
-  color: Black;
-  font-size: small;
-  text-align: right;
-  vertical-align: middle;
-  padding-top: 0px;
-  /* padding-right: 4px; */
-  padding-bottom: 0px;
-  border-color: Gray;
-  height: 25px;
-  /* font-weight: bold; */
+  text-align: center;
+  line-height: 10px; /* Tamaño de linea */
+  width: 5rem;
+  }
+
+
+legend {
+    display: block;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    width: fit-content;
 }
 
-
-.form-control {
-  font-family: Verdana,Sans-serif, Arial, Helvetica;
-  font-size: small;
-  outline: medium none;
-  padding: 3px;
-  vertical-align: top;
-  width: 198px;
-  height: 25%;
- border-color: black;
- /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
+.td{
+  padding: 0px;
 }
-
-
-label{
-  font-family: Verdana,Sans-serif, Arial, Helvetica;
-  font-size: small;
-  outline: medium none;
-  padding: 3px;
-  vertical-align: top;
-  width: 198px;
- /* border-color: black; */
- /* box-shadow: 5px 5px 8px rgb(13, 13, 19);  */
- font-weight: bold;
-}
-
-.vertical-center{
-  display: block;
-  margin: auto;
-}
-
-
-
-body {
-font: 0.7em/1.5em "Calibri Trebuchet MS" ,Verdana,sans-serif;
-background: white;
-}
-
-
-th {
-display: table-cell;
-vertical-align: inherit;
-font-weight: bold;
-text-align: -internal-center;
-}
-
-
-
-
-.GridHeader {
-border-top-width: 1px;
-border-style: solid;
-border-top-color: rgb(217,0,25);
-border-left: none;
-border-right: none;
-height: 25px;
-padding: 0px 10px 0px 10px;
-font-family: Verdana,Sans-serif, Arial, Helvetica;
-font-size: 11px;
-/* font-weight: bold; */
-text-align: center;
-color: #1F2436;
-background-color: #fff;
-border-bottom: 2px solid rgb(158, 155, 155);
-font-weight: bolder;
-}
-
-.ItemStyle{
-border-left: none;
-border-right: none;
-height: 25px;
-padding: 0px 10px 0px 10px;
-font-family: Verdana,Sans-serif, Arial, Helvetica;
-font-size: 11px;
-/* font-weight: bold; */
-text-align: center;
-color: #1F2436;
-background-color: #fff;
-border-bottom: 2px solid rgb(158, 155, 155);   
-}
-
-
-.modal-header{
-text-align: center;
-}
-
-
-label{
-font-family: Verdana, Geneva, Tahoma, sans-serif;
-color: black;
-}
-
-
-
-.LabelFontStyle:before {
-  content:"*";color:red;
-}
-
-td{
-  padding: 6px;
-}
-
-span{
-  font-size: xx-small;
-  color:black;
-  position: absolute;
-}
-
-
-
-
-
-/* Set height of body and the document to 100% to enable "full page tabs" */
-body, html {
-height: 100%;
-margin: 0;
-font-family: Arial;
-}
-
-/* Style tab links */
-.tablink {
-background-color: #555;
-color: white;
-float: left;
-border: none;
-outline: none;
-cursor: pointer;
-padding: 14px 16px;
-font-size: 17px;
-width: 25%;
-}
-
-.tablink:hover {
-background-color: #777;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-color: white;
-display: none;
-padding: 100px 20px;
-height: 100%;
-}
-
-.auto-style115{
-font-style: normal;
-font-family: Verdana,Sans-serif, Arial, Helvetica;
-vertical-align: middle;
-padding-top: 2px;
-padding-left: 0px;
-padding-bottom: 4px;
-padding-right: 0px;
-border: none;
-height: 22px;
-font-size: medium;
-font-weight: bold;
-color: white;
-background: #659ac4;
-border-bottom: #6099c7 1px solid;
-border-radius: 3px 3px 0 0;
-}
-
-/* legend {
-  background-color: gray;
-  color: white;
-  padding: 5px 10px;
-}
-fieldset {
-  background-color: #eeeeee;
+/* fieldset  tr td {
+  width: 15%;
+  background-color: cadetblue;
 } */
 
 
-
-.nav-tabs a{
-  float: left;
-  color: black;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  /* font-size: 18px;  */
-  font-size: small;
-  line-height: 25px;
-  border-radius: 4px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-
-
-.nav-tabs a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.nav-tabs a.active {
-  /* background-color: dodgerblue; */
-  color: white;
-  background-color: #076dc0;;
-}
-
-
-.nav-tabs{
-  margin: 1px auto;
-   border: 1px solid #608cb0;
-   padding-bottom: 10px;
-   -moz-border-radius-bottomleft: 7px;
-   -moz-border-radius-bottomright: 7px;
-   -moz-border-radius-topleft: 5px;
-   -moz-border-radius-topright: 7px;
-   -webkit-border-radius: 7px;
-   border-radius: 3px;
-   box-shadow: 2px 10px 15px #ECECEC inset;
-   min-height: 30px;
-   background-color: #fefeff;
-}
-
-/* Spares & Accessories master css strat here  */
-
-.auto-style104{
-  /* border-color: #000066;
-   border-style: ridge;
-   width: auto;
-   height: auto;
-   box-shadow: 2px 10px 15px #ececec inset;
-   padding: 10px;
-   background-color: #ececec; */
-   margin: 1px auto;
-   border: 1px solid #9400D3;
-   padding-bottom: 10px;
-   -moz-border-radius-bottomleft: 7px;
-   -moz-border-radius-bottomright: 7px;
-   -moz-border-radius-topleft: 5px;
-   -moz-border-radius-topright: 7px;
-   -webkit-border-radius: 7px;
-   border-radius: 3px;
-   box-shadow: 2px 10px 15px #dea0f8 inset;
-   min-height: 30px;
-   background-color: #f6f2f8;
-   }
-
-   .btn-secondary{
-     background: #9400D3;
-     width: 10em;
-   }
-
-
-   .auto-style105{
+.RFS {
     margin: 1px auto;
-   border: 1px solid #8B0000;
-   padding-bottom: 10px;
-   -moz-border-radius-bottomleft: 7px;
-   -moz-border-radius-bottomright: 7px;
-   -moz-border-radius-topleft: 5px;
-   -moz-border-radius-topright: 7px;
-   -webkit-border-radius: 7px;
-   border-radius: 3px;
-   box-shadow: 2px 10px 15px #f5adad inset;
-   min-height: 30px;
-   background-color: #f7efef; 
-   }
+    border: 1px solid #608cb0;
+    /* padding-bottom: 10px; */
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 3px;
+    /* box-shadow: 2px 10px 15px #ececec inset; */
+    min-height: 30px;
+    /* background-color: #fefeff; */
+    /* width: 100%; */
+}
+td{
+  padding: 0px;
+}
 
 
-   .btn-success{
-    background: #8B0000;
-    width: 10em; 
-   }
+
+
+
+fieldset {
+  display: block;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: threedface;
+  border-image: initial;
+}
+
+.RFS legend {
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  color: #000 !important;
+  
+  padding: 2px 5px;
+  background: #fefeff;
+  border-radius: 3px;
+  border: #608cb0 solid 1px;
+}
+
+
+
+/* .grid_scroll{
+  overflow: auto;
+   height: 200px; 
+  width: 100%;
+  } */
+
+  input[type="text"]:disabled {
+      background: rgb(208,208,208);
+      color: black;
+    }

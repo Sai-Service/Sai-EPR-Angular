@@ -31,8 +31,8 @@ interface IflexField {
 
 export class FlexFieldComponent implements OnInit {
   flexFieldForm: FormGroup;
-  selectedIndex: number; 
-  public isViewable: boolean; 
+  selectedIndex: number;
+  public isViewable: boolean;
   applicationId: number;
   title: string;
   // descFlexConCode:string;
@@ -90,7 +90,6 @@ export class FlexFieldComponent implements OnInit {
 
  flexLn(flexCodeLnIndex: number): FormArray {
     return this.flexCodeLn().at(flexCodeLnIndex).get("flexLn") as FormArray
-   
   }
 
   newflexLn(): FormGroup {
@@ -186,7 +185,6 @@ export class FlexFieldComponent implements OnInit {
       displayDiv(si){
         this.selectedIndex = si;
         this.isViewable= !this.isViewable;
-      
 
       }
       dispDetails(flexCodeLnIndex,descFlexConCode){
@@ -195,7 +193,6 @@ export class FlexFieldComponent implements OnInit {
           this.selectedIndex=flexCodeLnIndex;
           return;
         }
-        
         if(this.selectedIndex===flexCodeLnIndex){
           document.getElementById("flexCode"+this.selectedIndex).style.display="none";
         }else{
@@ -203,6 +200,5 @@ export class FlexFieldComponent implements OnInit {
         document.getElementById("flexCode"+flexCodeLnIndex).style.display="block";
         this.selectedIndex=flexCodeLnIndex;
       }}
-      
 }
 

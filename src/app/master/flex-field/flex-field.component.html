@@ -44,6 +44,9 @@
     <br>
 
     <div formArrayName="flexCodeLn">
+            <table class="table table-bordered" style="border-collapse:collapse;">
+                    <thead>
+                        <tr>
             <table  class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
             <!-- class="table table-bordered" style="border-collapse:collapse;" -->
                     <thead>
@@ -61,6 +64,10 @@
                             <div *ngIf="display; then thenBlock; else elseBlock"></div>
                             <ng-template #thenBlock>
                         <tr colspan="6" data-toggle="collapse" data-target="#flexCode{{flexCodeLnIndex}}" class="accordion-toggle">
+                                <td><input type="text" class="form-control" formControlName="descFlexConCode" id="descFlexConCode" (click)="dispDetails(flexCodeLnIndex,descFlexConCode)" ></td>
+                                <td><input type="text" class="form-control" formControlName="flexCodeDesc" ></td>
+                                <td><input type="date" class="form-control" formControlName="startDate" ></td>
+                                <td><input disabled type="date" class="form-control" formControlName="endDate" ></td>
                                 <td><input type="text" class="form-control" formControlName="descFlexConCode" id="descFlexConCode" (click)="dispDetails(flexCodeLnIndex,descFlexConCode)" style="height: 22px;" ></td>
                                 <td><input type="text" class="form-control" formControlName="flexCodeDesc" style="height: 22px;" ></td>
                                 <td><input type="date" class="form-control" formControlName="startDate" style="height: 22px;" ></td>
@@ -147,6 +154,9 @@
                     </ng-container>
 
                     </table>
+                    </tr>
+                    </thead>
+            </table>
             </div>
 
     <table class="center">

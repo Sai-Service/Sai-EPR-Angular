@@ -314,6 +314,17 @@
                             Enter password</span>
                         </td>
                     </tr>
+                    <td style="width: 10%" class="LabelFontStyle1">
+                        Team&nbsp;Role&nbsp;:
+                    </td>
+                    <td>
+                        <select formControlName="teamRole"  class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  teamRoleList" >
+                                {{sc.code}}
+                            </option>
+                        </select>
+                    </td> 
                     </ng-template>
                 <ng-template #elseBlock>
                     <tr>
