@@ -328,14 +328,14 @@ public GroupMasterSubmit(LocationMasterRecord) {
 
 
 
-public GroupMasterSubmit(LocationMasterRecord) {
-  const options = {
-    headers: this.headers
-  };
-  // const url = this.ServerUrl + '/locationMst/postLoc';  
-  const url = this.ServerUrl + '/teamMaster/post';   
-  return this.http.post(url, LocationMasterRecord, options);
-}
+// public GroupMasterSubmit(LocationMasterRecord) {
+//   const options = {
+//     headers: this.headers
+//   };
+//   // const url = this.ServerUrl + '/locationMst/postLoc';  
+//   const url = this.ServerUrl + '/teamMaster/post';   
+//   return this.http.post(url, LocationMasterRecord, options);
+// }
 
 
 ////////////////// Item Category Master /////////////////////////////////////////////////////////

@@ -27,6 +27,7 @@ interface IPaymentRcpt {
        receiptMethodName:string;
     customerId:number;
       customerName:string;
+      methodType:string;
   }
 
 
@@ -54,8 +55,8 @@ export class PaymentReceiptComponent implements OnInit  {
     bankName : string;
     bankBranch : string;
     paymentAmt : number;
-    
-    payType : string; 
+    methodType:string;
+    // payType : string; 
     rmStatus :string
     paymentMethod : string;
     receiptNumber:number;
@@ -138,7 +139,8 @@ export class PaymentReceiptComponent implements OnInit  {
       cancelReason:[],
       cancelDate:[],
       receiptNumber:[],
-      payType:[],
+      // payType:[],
+      methodType:[],
       bankName :[],
       bankBranch :[],
       checkNo :[],
@@ -334,7 +336,7 @@ export class PaymentReceiptComponent implements OnInit  {
     delete val.searchBy;
     delete val.division;
     delete val.divisionId;
-    delete val.locId;
+    // delete val.locId;
     delete val.ouId;
     // delete val.paymentCollection;
     delete val.cancelReason;
@@ -354,7 +356,7 @@ export class PaymentReceiptComponent implements OnInit  {
   }
 
   newMast() {
-    alert ("Posting data  to PL mater......")
+    // alert ("Posting data  to PL mater......")
     // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
     const formValue: IPaymentRcpt =this.transeData(this.paymentReceiptForm.value);
     // debugger;

@@ -42,11 +42,8 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
 
-<<<<<<< HEAD
   
 
-=======
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
   public OrderBook(BookRecord) {
     const options = {
       headers: this.headers
@@ -54,7 +51,6 @@ export class OrderManagementService {
     const url = this.ServerUrl + '/orderHeader/HeaderPayment';  
     return this.http.post(url, BookRecord, options);
   }
-<<<<<<< HEAD
 
 
   // ////////////////************Order Payment Receipt **************//////////////////
@@ -114,6 +110,4 @@ export class OrderManagementService {
 
 
 
-=======
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
 }

@@ -118,19 +118,6 @@ get f() { return this.GroupMasterForm.controls; }
       }
     );
 
-<<<<<<< HEAD
-
-
-
-    // this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
-    // .subscribe(
-    //   data => {
-    //     this.leadTicketNoList = data;
-    //     console.log(this.leadTicketNoList);
-    //     console.log(this.leadTicketNoList[0].name);
-    //   }
-    // );
-=======
     this.service.memberTicketNo(this.locId, this.deptId, this.divisionId).subscribe(data=>{
       this.memberTicketNoList = data;
     })
@@ -142,7 +129,6 @@ get f() { return this.GroupMasterForm.controls; }
         console.log(this.leadTicketNoList[0].name);
       }
     );
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
   }
   onOptionsSelectedmemberTicketNo(event, i){
     let select = this.memberTicketNoList.find(d => d.ticketNo === event);
@@ -162,19 +148,6 @@ get f() { return this.GroupMasterForm.controls; }
     this.GroupMasterForm.patchValue({ description: select.name,})
   }
 
-<<<<<<< HEAD
-  onOptionsSelectedDescription (leadTicketNo: any){
-    alert(leadTicketNo)
-    this.service.leadTicketNoList(this.locId,this.divisionId,this.deptId)
-    .subscribe(
-      data => {
-        this.leadTicketNoList = data;
-        console.log(this.leadTicketNoList);   
-        console.log(this.leadTicketNoList);
-        this.description=this.leadTicketNoList[0].name;
-        // alert(data.description1);
-        console.log(this.description);  
-=======
   addRow(){
     this.lineDetailsArray.push(this.lineDetailsGroup());
     var patch = this.GroupMasterForm.get('teamDetails') as FormArray;
@@ -182,14 +155,10 @@ get f() { return this.GroupMasterForm.controls; }
     (patch.controls[i]).patchValue(
       {
         lineNO: i+1,
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
       }
     );
     }
   }
-   
-
-
    
 
 
@@ -245,12 +214,6 @@ get f() { return this.GroupMasterForm.controls; }
 
   newMast() {
     const formValue: IGroupMaster = this.transData(this.GroupMasterForm.value);
-<<<<<<< HEAD
-    this.service.GroupMasterSubmit(formValue).subscribe((res: any) => {
-      if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
-        window.location.reload();
-=======
 
     let variants = <FormArray>this.lineDetailsArray;
     alert(this.lineDetailsArray.length);
@@ -287,25 +250,17 @@ get f() { return this.GroupMasterForm.controls; }
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
         // window.location.reload();
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
         // this.LocationMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
           // this.LocationMasterForm.reset();
-<<<<<<< HEAD
-          window.location.reload();
-=======
           // window.location.reload();
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
         }
       }
     });
   }
 
-<<<<<<< HEAD
-
-=======
   onOptionsSelected(event: any) {
     this.Status1 = this.GroupMasterForm.get('status').value;
     // alert(this.Status1);
@@ -317,6 +272,5 @@ get f() { return this.GroupMasterForm.controls; }
       this.GroupMasterForm.get('teamEndDate').reset();
     }
   }
->>>>>>> 16fe2ae73245d25736e48240b3aca7a8626fc93e
 
 }
