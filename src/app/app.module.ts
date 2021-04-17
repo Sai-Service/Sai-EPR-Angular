@@ -10,6 +10,7 @@ import { MasterModule} from './master/master.module';
 import {TransactionModule } from './transaction/transaction.module';
 import { BankModule} from './bank/bank.module';
 import { OrderManagementModule} from './order-management/order-management.module';
+import { ServiceModule } from './service/service.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -57,6 +58,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     TransactionModule,
     BankModule,
     OrderManagementModule,
+    ServiceModule
     // DaterangepickerModule
     // NgbModule.forRoot(),
   ],

@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'OrderManagement',
         loadChildren: () => import('../order-management/order-management.module').then(mod => mod.OrderManagementModule)
+      },  
+      {
+        path: 'service',
+        loadChildren: () => import('../service/service.module').then(mod => mod.ServiceModule)
       },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
