@@ -91,8 +91,8 @@ export class MasterService {
   emplIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/empMst');
   }
-  DesignationList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/cmnLookup/Designation');
+  DesignationList(Department): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Designation/${Department}`);
   }
   recvTypeIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
@@ -121,6 +121,12 @@ export class MasterService {
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
   }
+
+  taxCategoryListForSALES(): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
+    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
+  }
+
   taxCategoryListPoInvoice(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
@@ -368,6 +374,15 @@ public LocatorMasterSubmit(LocatorMasterRecord) {
   const url = this.ServerUrl + '/lctrmst/locatormaster';
   return this.http.post(url, LocatorMasterRecord, options);
 }
+
+UpdateItemMasterById(itemMasterRecord,) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/itemMst/withInfo1`);
+  return this.http.put(url, itemMasterRecord, options);
+}
+
 UpdateLocatorMasterById(LocatorMasterRecord,locatorId) {
   const options = {
     headers: this.headers
@@ -441,6 +456,20 @@ mainModelList(): Observable<any> {
 colorCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulColour');
 }
+
+transactionTypeNameList(deptId,locId,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&locId=${locId}&ouId=${ouId}`);
+}
+
+payTermDescList(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/PayTerms`);
+}
+
+
+salesRepNameList(ouId,locId,dept): Observable<any> {
+  return this.http.get(this.ServerUrl +`/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`);
+}
+
 
 variantCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -1301,6 +1330,97 @@ InvSourceList(): Observable<any> {
 OrderCategoryList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/OrderCategory');
 }
+
+
+// //////////////////   Miscell Transaction //////////////////////////
+
+getSearchBycompNo(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/compileadj/${compNo}`);
+}
+
+getSearchByNo(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/compileNo/${compNo}`);
 }
 
 
+
+getsearchByCompId(compileId,itemId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/cycleline?compileId=${compileId}&invItemId=${itemId}`);
+}
+
+
+approve(appmiscRecord):Observable<any>
+{
+  const options ={
+    headers:this.headers
+  }
+  const url =this.ServerUrl+'/stockadj/stkapprove';
+  return this.http.post(url,appmiscRecord,options);
+}
+
+
+miscellaneousSubmit(miscRecord):Observable<any>
+{
+  const options ={
+    headers:this.headers
+   }
+   const url=this.ServerUrl+'/stockadj';
+   return this.http.post(url,miscRecord,options);
+}
+
+
+
+miscellaneousUpdate(comId,cyclelinerecord){
+  const options={
+    headers:this.headers
+  };
+  const url=(this.ServerUrl+`/cycleline`);
+  return this.http.put(url,cyclelinerecord,options);
+}
+
+
+LocatorNameList(LocName,LocId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}`)
+}
+
+
+getCostDetail(locId,ItemId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
+}
+
+
+// getsearchByCompId(compileId,itemId):Observable<any>
+// {
+//   return this.http.get(this.ServerUrl+`/cycleline?compileId=${compileId}&invItemId=${itemId}`);
+// }
+
+
+// getCostDetail(locId,ItemId):Observable<any>
+// {
+//   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
+// }
+
+
+ReasonList():Observable<any>
+{
+  return this.http.get(this.ServerUrl+'/mtlTransReasons');
+}
+
+
+
+TypeList():Observable<any>
+{
+  return  this.http.get(this.ServerUrl+'/cmnLookup/type/StockAdjType');
+}
+
+
+TransactionType():Observable<any>
+{
+  return this.http.get(this.ServerUrl +'/mtlTrxTypes/9');
+}
+}

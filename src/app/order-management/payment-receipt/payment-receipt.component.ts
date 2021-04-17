@@ -11,6 +11,8 @@ import { from } from 'rxjs';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { MasterService } from 'src/app/master/master.service';
 import { Location } from "@angular/common";
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
 
 interface IPaymentRcpt {
     deptId : number;
@@ -26,8 +28,10 @@ interface IPaymentRcpt {
     orderNumber:number;
        receiptMethodName:string;
     customerId:number;
-      customerName:string;
-      methodType:string;
+    custName:string;
+      // customerName:string;
+      // methodType:string;
+      payType:string;
   }
 
 
@@ -58,12 +62,14 @@ export class PaymentReceiptComponent implements OnInit  {
     methodType:string;
     // payType : string; 
     rmStatus :string
-    paymentMethod : string;
+    payType:string;
+    // paymentMethod : string;
     receiptNumber:number;
        receiptMethodName:string;
     receiptMethodId : number;
      orderNumber:number;
      emplId:number;
+     custName:string;
     // paymentCollection: string;
 
     
@@ -110,7 +116,7 @@ export class PaymentReceiptComponent implements OnInit  {
     showOrg=false;
     showReason=false;
     showBankDetails=false;
-
+    private sub: any;
     
    
 
@@ -121,7 +127,7 @@ export class PaymentReceiptComponent implements OnInit  {
 
     paymentReceipt(paymentReceiptForm:any) {  }
 
-    constructor(private fb: FormBuilder, private location: Location,private service: MasterService,private router: Router,private orderManagementService:OrderManagementService)  
+    constructor(private fb: FormBuilder, private location: Location,private service: MasterService,private router: Router,private orderManagementService:OrderManagementService,private router1: ActivatedRoute)  
     { 
 
     this.paymentReceiptForm = fb.group({ 
@@ -139,8 +145,8 @@ export class PaymentReceiptComponent implements OnInit  {
       cancelReason:[],
       cancelDate:[],
       receiptNumber:[],
-      // payType:[],
-      methodType:[],
+      payType:[],
+      // methodType:[],
       bankName :[],
       bankBranch :[],
       checkNo :[],
@@ -158,7 +164,8 @@ export class PaymentReceiptComponent implements OnInit  {
       orderNumber:[''],
       receiptMethodName:[''],
       customerId:[''],
-      customerName:['']
+      // customerName:['']
+      custName:[''],
     });
 
 
@@ -208,14 +215,7 @@ export class PaymentReceiptComponent implements OnInit  {
     );
 
 
-    // this.service.statusList()
-    // .subscribe(
-    //   data => {
-    //     this.statusList = data;
-    //     console.log(this.statusList);
-    //   }
-    // );
-    
+        
     this.service.DepartmentList()
     .subscribe(
       data => {
@@ -234,6 +234,25 @@ export class PaymentReceiptComponent implements OnInit  {
       }
     );
 
+
+
+    this.sub = this.router1.params.subscribe(params => {
+      this.orderNumber = params['orderNumber'];
+      alert(this.orderNumber);
+      this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
+      .subscribe(
+      data => {
+        this.lstcomments = data.obj.oePayList;
+        this.custName=data.obj.custName;
+        this.customerId=data.obj.customerId;
+        // this.lstcomments = data.obj;
+        // this.lstcomments = data;
+        console.log(this.lstcomments);
+       }
+       
+      );
+      // this.paymentReceiptForm.patchValue( this.lstcomments );
+      });
 
    
   }

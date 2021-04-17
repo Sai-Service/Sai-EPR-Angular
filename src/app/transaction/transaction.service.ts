@@ -155,7 +155,38 @@ getItemDetail(itemid):Observable<any>{
 }
 
 
-// ============================stock Transfer Componanat============================
+////////////AR Invoice ///////////////
+searchByInvoiceNoAR(trxNumber1):Observable<any>{
+  return this.http.get(this.ServerUrl +`/arInv/invDtls/${trxNumber1}`)
+}
+
+DistributionCal(amount,taxableAmt, custTrxTypeId ):Observable<any>{
+  return this.http.get(this.ServerUrl +`/arInv/invLnDis?custTrxTypeId=${custTrxTypeId}&invAmount=${amount}&taxableAmt=${taxableAmt}`)
+}
+
+sourceListFn():Observable<any>{
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/RcvSource`)
+}
+classListFN():Observable<any>{
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/RcvClass`)
+}
+paymentTermListFn():Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupTypeWise/PaymentTerms`)
+}
+invTypeListFN():Observable<any>{
+  return this.http.get(this.ServerUrl +`/rcvType/status`)
+}
+invItemList():Observable<any>{
+  return this.http.get(this.ServerUrl +`/itemMst`)
+}
+
+public ARInvoiceSubmit(Record) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/arInv';  
+  return this.http.post(url, Record, options);
+}
 
 
 

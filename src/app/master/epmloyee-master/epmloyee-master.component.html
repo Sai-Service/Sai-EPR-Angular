@@ -161,7 +161,7 @@
                             Department&nbsp;&nbsp;:
                         </td>
                         <td>
-                            <select formControlName="deptId" id="deptId" class="form-control">
+                            <select formControlName="deptId" id="deptId" class="form-control" (ngModelChange)='onOptionsDEPTSelected($event)'>
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
                                   {{sc.cmnTypeId}}-{{sc.code}}
@@ -182,7 +182,7 @@
                             <select formControlName="designation" id="designation" class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  DesignationList" [ngValue]="sc.code"  >
-                                    {{sc.code}}
+                                    {{sc.code}}   
                                 </option>
                             </select>
                             <!-- <div *ngIf="submitted && f.designation.errors" class="invalid-feedback">
@@ -240,7 +240,7 @@
                             Contact&nbsp;No.&nbsp;1:
                         </td> 
                         <td>
-                            <input type="number" formControlName="contact1" value={{contact1}}  [(ngModel)]='contact1' class="form-control"
+                            <input  formControlName="contact1" value={{contact1}}  [(ngModel)]='contact1' class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.contact1.errors }"
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f. contact1.errors" class="invalid-feedback">
@@ -256,7 +256,7 @@
                             Contact&nbsp;No.&nbsp;2:
                         </td> 
                         <td>
-                            <input type="number" formControlName="contact2" value={{contact2}} class="form-control"
+                            <input formControlName="contact2" value={{contact2}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.contact2.errors }"
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f. contact2.errors" class="invalid-feedback">
@@ -527,14 +527,15 @@
                             Contact&nbsp;No.&nbsp;1:
                         </td>
                         <td>
-                            <input formControlName="contact1" value={{contact1}} class="form-control"
+                            <input  formControlName="contact1" value={{contact1}} class="form-control" 
                             [ngClass]="{ 'is-invalid': submitted && f.contact1.errors }"
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f. contact1.errors" class="invalid-feedback">
-                            <div *ngIf="f. contact1.errors.required">Contact no is required</div>
-                            <div *ngIf="f.contact1.errors?.maxLength">Contact no must be a valid for 10 digit</div>
-                            <div *ngIf="f.contact1.errors?.pattern">Contact no must be a valid and 10 charecter</div>
-                        </div>
+                            <!-- <div *ngIf="submitted && f. mobile1.errors" class="invalid-feedback"> -->
+                                <div *ngIf="f.contact1.errors.required">mobile must be 10 digit</div>
+                                <div *ngIf="f.contact1.errors?.maxLength">mobile must be 10 digit
+                                </div>
+                            </div>
                         <span
                             *ngIf="!employeeMasterForm.get('contact1').valid && employeeMasterForm.get('contact1').touched">Please
                             Enter Contact Number of 10 digit</span>
@@ -543,14 +544,16 @@
                             Contact&nbsp;No.&nbsp;2:
                         </td>
                         <td>
-                            <input formControlName="contact2" value={{contact2}} class="form-control"
+                            <input  formControlName="contact2" value={{contact2}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.contact2.errors }"
                             placeholder="Please enter contact no">
                         <div *ngIf="submitted && f. contact2.errors" class="invalid-feedback">
-                            <div *ngIf="f. contact2.errors.required">Contact no is required</div>
-                            <div *ngIf="f.contact2.errors?.maxLength">Contact no must be a valid for 10 digit
+                            <!-- <div *ngIf="f. contact2.errors.required">Contact no is required</div> -->
+                            <!-- <div *ngIf="f.contact2.errors?.maxLength">Contact no must be a valid for 10 digit
                             </div>
                             <div *ngIf="f.contact2.errors?.pattern">Contact no must be a valid and 10 charecter
+                            </div> -->
+                            <div *ngIf="f.contact2.errors?.maxLength">mobile must be 10 digit
                             </div>
                         </div>
                         <span

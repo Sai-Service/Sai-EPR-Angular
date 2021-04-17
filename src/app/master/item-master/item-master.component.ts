@@ -8,13 +8,20 @@ import { Validators,FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IItemMaster{
   segment:string;
   oemWarrentyEndDate:Date;
   description:string;
+  loyaltyCardDate:Date;
   categoryId:number;
   uom:string;
+  tyreMake:string;
+  materialType:string;
+  tyreNo:string;
+  bookletNo:string;
+  toolkit:string;
   fuelType:string;
   costing:string;
   stockable:string;
@@ -32,17 +39,18 @@ interface IItemMaster{
   variantCode:string;
   chassisNo:string;
   engineNo:string;
-  date:Date;
+  vehicleDelvDate:Date;
   manYaer:string;
-  octraiBillDate:Date;
-  octraiType:string;
+  // octraiBillDate:Date;
+  // octraiType:string;
   warrantyStatus:string;
   ewStatus:string;
-  ewdate:Date;
+  ewStartDate:Date;
+  ewEndDate:Date; 
   ewPeriod:number;
   ewBookletNo:string;
   smartCardNumber:number;
-  ewInsName:string;
+  ewInsurerId:string;
   ewInsurerSite:string;
   itemType:string;
   insurerCompId:string;
@@ -52,15 +60,15 @@ interface IItemMaster{
   twoTone:string;
   hold:string;
   holdReason:string;
-  escortLocation:string;
-  escortReceipt:string;
-  escortReceiptDt:Date;
-  escortAmount:number;
-  bwhLocation:string;
-  bwhDebitMemo:number;
-  bwhDebitMemoDt:Date;
-  bwhEscortNo:number;
-  cngKitNo:number;
+  // escortLocation:string;
+  // escortReceipt:string;
+  // escortReceiptDt:Date;
+  // escortAmount:number;
+  // bwhLocation:string;
+  // bwhDebitMemo:number;
+  // bwhDebitMemoDt:Date;
+  // bwhEscortNo:number;
+  cngKitNumber:number;
   cngCylinderNo:number;
   keyNo:number;
   batteryMake:string;
@@ -71,7 +79,9 @@ fastTagNo:string;
 smartCardIssueDate:Date;
 tempRegNo:string;
 tempRegDate:Date;
-poChargeAcc:number;
+poChargeAccount:number;
+vin:string;
+isTaxable:string;
 }
 
 @Component({
@@ -80,7 +90,7 @@ poChargeAcc:number;
   styleUrls: ['./item-master.component.css']
 })
 export class ItemMasterComponent implements OnInit {
-
+  
   itemMasterForm: FormGroup;
   segment:string;
   submitted = false;
@@ -90,13 +100,16 @@ export class ItemMasterComponent implements OnInit {
   uom:string;
   costing:string;
   stockable:string;
+  loyaltyCardDate:Date;
   purchasable:string;
   costCenter:number;
+  materialType:string;
   hsnSacCode:string;
   internalOrder:string;
-  marginCategory:string;
+  marginCategory:string='null';
   assetItem:string;
   lotSize:number;
+  toolkit:string;
   status:string;
   type:string;
   mainModel:string;
@@ -104,17 +117,18 @@ export class ItemMasterComponent implements OnInit {
   variantCode:string;
   chassisNo:string;
   engineNo:string;
-  date:Date;
+  vehicleDelvDate:Date;
   manYaer:string;
-  octraiBillDate:Date;
-  octraiType:string;
+  // octraiBillDate:Date;
+  // octraiType:string;
   warrantyStatus:string;
   ewStatus:string;
-  ewdate:Date;
+  ewStartDate:Date;
+  ewEndDate:Date;
   ewPeriod:number;
   ewBookletNo:string;
   smartCardNumber:number;
-  ewInsName:string;
+  ewInsurerId:string;
   ewInsurerSite:string;
   itemType:string;
   insurerCompId:string;
@@ -124,24 +138,30 @@ export class ItemMasterComponent implements OnInit {
   twoTone:string;
   hold:string;
   holdReason:string;
-  escortLocation:string;
-  escortReceipt:string;
-  escortReceiptDt:Date;
-  escortAmount:number;
-  bwhLocation:string;
-  bwhDebitMemo:number;
-  bwhDebitMemoDt:Date;
-  bwhEscortNo:number;
-  cngKitNo:number;
+  isTaxable:string;
+  disItemCode=true;
+  // escortLocation:string;
+  // escortReceipt:string;
+  // escortReceiptDt:Date;
+  // escortAmount:number;
+  // bwhLocation:string;
+  // bwhDebitMemo:number;
+  // bwhDebitMemoDt:Date;
+  // bwhEscortNo:number;
+  cngKitNumber:number;
   cngCylinderNo:number;
+  tyreMake:string;
+  bookletNo:string;
   keyNo:number;
+  tyreNo:string;
   batteryMake:string;
   batteryNo:string;
   displayPoCharge=true;
   displayCosting=true;
   displayInactive = true;
+  inventory= true;
   dealerCode:Number;
-  poChargeAcc:number;
+  poChargeAccount:number;
   Status1: any;
   startDate:Date;
   endDate:Date;
@@ -163,7 +183,8 @@ export class ItemMasterComponent implements OnInit {
   segment1:string;
   ssVehical= false;
   ssSpares = false;
-  public minDate = new Date();
+  vin :string;
+  public minDate = new Date() ;
   lstcomments: any[];
   public dealerCodeList :Array<string>=[];
   public statusList: Array<string> = [];
@@ -190,6 +211,7 @@ export class ItemMasterComponent implements OnInit {
   public ewStatusList:Array<string>[];
   public ewPeriodList:Array<string>[];
   public ewInsNameList:any;
+  VariantSearch:Array<string>[]; ColourSearch:Array<string>[];
   public ewInsurerSiteList:Array<string>[];
   public itemTypeList:Array<string>[];
   public insNameList:Array<string>[];
@@ -205,12 +227,15 @@ export class ItemMasterComponent implements OnInit {
   public locIdList: Array<string> = [];
   public segmentNameList: any;
  public SSitemTypeList:any;
+ public maxDate = new Date();
+ displayHold=true;
  stockableShow=true;
  costingShow=true;
  internalOrderShow =true;
  assetItemShow =true;
  purchasableShow=true;
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+ 
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService:OrderManagementService) {
     this.itemMasterForm = fb.group({
       segment:['', [Validators.required]],
       description:['', [Validators.required]],
@@ -220,12 +245,14 @@ export class ItemMasterComponent implements OnInit {
       costing:['', [Validators.required]],
       stockable:['', [Validators.required]],
       segment1:[],
+      tyreMake:[],
+      materialType:[],
       oemWarrentyEndDate:[],
       purchasable:['', [Validators.required]],
       costCenter:['', [Validators.required]],
       hsnSacCode:['', [Validators.required]],
       internalOrder:['', [Validators.required]],
-      marginCategory:['', [Validators.required]],
+      marginCategory:[],
       assetItem:['', [Validators.required]],
       lotSize:['', [Validators.required]],
       status:['', [Validators.required]],
@@ -235,17 +262,20 @@ export class ItemMasterComponent implements OnInit {
       variantCode:['', [Validators.required]],
       chassisNo:['', [Validators.required]],
       engineNo:['', [Validators.required]],
-      date:['', [Validators.required]],
-      manYaer:[''],
-      octraiBillDate:[''],
-      octraiType:[''],
+      vehicleDelvDate:['', [Validators.required]],
+      // manYear:[''],
+      loyaltyCardDate:[],
+      // octraiBillDate:[''],
+      // octraiType:[''],
       warrantyStatus:[''],
       ewStatus:[''],
-      ewdate:[''],
+      ewStartDate:[''],
+      ewEndDate:[],
+      toolkit:[],
       ewPeriod:[''],
       ewBookletNo:[''],
       smartCardNumber:[''],
-      ewInsName:[''],
+      ewInsurerId:[''],
       ewInsurerSite:[''],
       itemType:[''],
       insurerCompId:[''],
@@ -255,16 +285,19 @@ export class ItemMasterComponent implements OnInit {
       rips:[''],
       twoTone:[''],
       hold:[''],
+      tyreNo:[],
+      bookletNo:[],
       holdReason:[''],
-      escortLocation:[''],
-      escortReceipt:[''],
-      escortReceiptDt:[''],
-      escortAmount:[''],
-      bwhLocation:[''],
-      bwhDebitMemo:[''],
-      bwhDebitMemoDt:[''],
-      bwhEscortNo:[''],
-      cngKitNo:[''],
+      isTaxable:[],
+      // escortLocation:[''],
+      // escortReceipt:[''],
+      // escortReceiptDt:[''],
+      // escortAmount:[''],
+      // bwhLocation:[''],
+      // bwhDebitMemo:[''],
+      // bwhDebitMemoDt:[''],
+      // bwhEscortNo:[''],
+      cngKitNumber:[''],
       cngCylinderNo:[''],
       keyNo:[''],
       batteryMake:[''],
@@ -275,7 +308,8 @@ fastTagNo:[],
 smartCardIssueDate:[],
 tempRegNo:[],
 tempRegDate:[],
-poChargeAcc:[],
+poChargeAccount:[],
+monthYrManf:[],
       dealerCode:[],
       startDate:[],
       segmentName:[],
@@ -289,6 +323,7 @@ poChargeAcc:[],
       lookupValueDesc2: [],
       lookupValueDesc3: [],
       lookupValueDesc5: [],
+      vin :[],
     })
    }
 
@@ -355,13 +390,13 @@ poChargeAcc:[],
           console.log(this.SSitemTypeList);
         }
       );
-    this.service.YesNoList()
-      .subscribe(
-        data => {
-          this.YesNoList = data;
-          console.log(this.YesNoList);
-        }
-      )
+    // this.service.YesNoList()
+    //   .subscribe(
+    //     data => {
+    //       this.YesNoList = data;
+    //       console.log(this.YesNoList);
+    //     }
+    //   )
     
  
 
@@ -374,30 +409,30 @@ poChargeAcc:[],
     );
     
 
-    this.service.costingList()
-    .subscribe(
-      data => {
-        this.costingList = data;
-        console.log(this.costingList);
-      }
-    );
+    // this.service.costingList()
+    // .subscribe(
+    //   data => {
+    //     this.costingList = data;
+    //     console.log(this.costingList);
+    //   }
+    // );
 
 
-    this.service.stockableList()
-    .subscribe(
-      data => {
-        this.stockableList = data;
-        console.log(this.stockableList);
-      }
-    );
+    // this.service.stockableList()
+    // .subscribe(
+    //   data => {
+    //     this.stockableList = data;
+    //     console.log(this.stockableList);
+    //   }
+    // );
     
-    this.service.purchasableList()
-    .subscribe(
-      data => {
-        this.purchasableList = data;
-        console.log(this.purchasableList);
-      }
-    );
+    // this.service.purchasableList()
+    // .subscribe(
+    //   data => {
+    //     this.purchasableList = data;
+    //     console.log(this.purchasableList);
+    //   }
+    // );
 
     this.service.costCenterList()
     .subscribe(
@@ -415,13 +450,13 @@ poChargeAcc:[],
       }
     );
 
-    this.service.internalOrderList()
-    .subscribe(
-      data => {
-        this.internalOrderList = data;
-        console.log(this.internalOrderList);
-      }
-    );
+    // this.service.internalOrderList()
+    // .subscribe(
+    //   data => {
+    //     this.internalOrderList = data;
+    //     console.log(this.internalOrderList);
+    //   }
+    // );
     
     this.service.marginCategoryList()
     .subscribe(
@@ -431,29 +466,29 @@ poChargeAcc:[],
       }
     );
 
-    this.service.assetItemList()
-    .subscribe(
-      data => {
-        this.assetItemList = data;
-        console.log(this.assetItemList);
-      }
-    );
+    // this.service.assetItemList()
+    // .subscribe(
+    //   data => {
+    //     this.assetItemList = data;
+    //     console.log(this.assetItemList);
+    //   }
+    // );
     
-    this.service.itemStatusList()
-    .subscribe(
-      data => {
-        this.itemStatusList = data;
-        console.log(this.itemStatusList);
-      }
-    );
+    // this.service.itemStatusList()
+    // .subscribe(
+    //   data => {
+    //     this.itemStatusList = data;
+    //     console.log(this.itemStatusList);
+    //   }
+    // );
 
-   this.service.typeList()
-    .subscribe(
-      data => {
-        this.typeList = data;
-        console.log(this.typeList);
-      }
-    );
+  //  this.service.typeList()
+  //   .subscribe(
+  //     data => {
+  //       this.typeList = data;
+  //       console.log(this.typeList);
+  //     }
+  //   );
     
    this.service.mainModelList()
     .subscribe(
@@ -479,53 +514,53 @@ poChargeAcc:[],
       }
     );
     
-    this.service.manYaerList()
-    .subscribe(
-      data => {
-        this.manYaerList = data;
-        console.log(this.manYaerList);
-      }
-    );
+    // this.service.manYaerList()
+    // .subscribe(
+    //   data => {
+    //     this.manYaerList = data;
+    //     console.log(this.manYaerList);
+    //   }
+    // );
 
-    this.service.octraiBillDateList()
-    .subscribe(
-      data => {
-        this.octraiBillDateList = data;
-        console.log(this.octraiBillDateList);
-      }
-    );
+    // this.service.octraiBillDateList()
+    // .subscribe(
+    //   data => {
+    //     this.octraiBillDateList = data;
+    //     console.log(this.octraiBillDateList);
+    //   }
+    // );
     
-    this.service.octraiTypeList()
-    .subscribe(
-      data => {
-        this.octraiTypeList = data;
-        console.log(this.octraiTypeList);
-      }
-    );
+    // this.service.octraiTypeList()
+    // .subscribe(
+    //   data => {
+    //     this.octraiTypeList = data;
+    //     console.log(this.octraiTypeList);
+    //   }
+    // );
     
-    this.service.warrantyStatusList()
-    .subscribe(
-      data => {
-        this.warrantyStatusList = data;
-        console.log(this.warrantyStatusList);
-      }
-    );  
+    // this.service.warrantyStatusList()
+    // .subscribe(
+    //   data => {
+    //     this.warrantyStatusList = data;
+    //     console.log(this.warrantyStatusList);
+    //   }
+    // );  
     
-    this.service.ewStatusList()
-    .subscribe(
-      data => {
-        this.ewStatusList = data;
-        console.log(this.ewStatusList);
-      }
-    );  
+    // this.service.ewStatusList()
+    // .subscribe(
+    //   data => {
+    //     this.ewStatusList = data;
+    //     console.log(this.ewStatusList);
+    //   }
+    // );  
 
-    this.service.ewPeriodList()
-    .subscribe(
-      data => {
-        this.ewPeriodList = data;
-        console.log(this.ewPeriodList);
-      }
-    );
+    // this.service.ewPeriodList()
+    // .subscribe(
+    //   data => {
+    //     this.ewPeriodList = data;
+    //     console.log(this.ewPeriodList);
+    //   }
+    // );
     
 
     this.service.ewInsNameList()
@@ -562,30 +597,30 @@ poChargeAcc:[],
     //   }
     // );
 
-    this.service.ripsList()
-    .subscribe(
-      data => {
-        this.ripsList = data;
-        console.log(this.ripsList);
-      }
-    );
+    // this.service.ripsList()
+    // .subscribe(
+    //   data => {
+    //     this.ripsList = data;
+    //     console.log(this.ripsList);
+    //   }
+    // );
     
-    ;
-    this.service.twoToneList()
-    .subscribe(
-      data => {
-        this.twoToneList = data;
-        console.log(this.twoToneList);
-      }
-    );
+    // ;
+    // this.service.twoToneList()
+    // .subscribe(
+    //   data => {
+    //     this.twoToneList = data;
+    //     console.log(this.twoToneList);
+    //   }
+    // );
 
-    this.service.holdList()
-    .subscribe(
-      data => {
-        this.holdList = data;
-        console.log(this.holdList);
-      }
-    );
+    // this.service.holdList()
+    // .subscribe(
+    //   data => {
+    //     this.holdList = data;
+    //     console.log(this.holdList);
+    //   }
+    // );
 
     this.service.holdReasonList()
     .subscribe(
@@ -596,12 +631,38 @@ poChargeAcc:[],
     );
  
   }
+  onOptionsSelectedVariant(mainModel){
+    this.orderManagementService.VariantSearchFn(mainModel)
+    .subscribe(
+      data => {
+        this.VariantSearch = data;
+        console.log(this.VariantSearch);  
+      }
+    );
+  }
+
+  onOptionsSelectedColor(variant){
+    alert(variant)
+    this.orderManagementService.ColourSearchFn(variant)
+    .subscribe(
+      data => {
+        this.ColourSearch = data;
+        console.log(this.ColourSearch);
+      }
+    );
+  }
+
 
   itemMaster(itemMaster: any) {
   }
   
   onOptionsSelectedItemType(category:any){
     alert(category);
+    if(category == 'SS_VEHICLE'){
+      this.disItemCode = false;
+    }else{
+      this.disItemCode = true;
+    }
     let select = this.SSitemTypeList.find(d => d.itemType === category);
     alert(select.assetItem);
     if(select.stockable=='Y'){ this.stockableShow=false; this.stockable='Y'}
@@ -622,8 +683,8 @@ poChargeAcc:[],
         console.log(this.categoryIdList);
       }
     );
-    if(category=='ss_vehicle'){    this.ssVehical=true; this.ssSpares=false;}
-    if(category=='ss_spares'){     this.ssVehical=false; this.ssSpares=true;}
+    if(category=='SS_VEHICLE'){    this.ssVehical=true; this.ssSpares=false;}
+    if(category=='SS_SPARES'){     this.ssVehical=false; this.ssSpares=true;}
    }
   UomEvent(e) {
     if (e.target.checked) {
@@ -653,26 +714,28 @@ poChargeAcc:[],
   }
   twoToneEvent(e) {
     if (e.target.checked) {
-    this.purchasable='Y'
+    this.twoTone='Y'
     }
     else{
-      this.purchasable = 'N';
+      this.twoTone = 'N';
     }
   }
   ripsEvent(e) {
     if (e.target.checked) {
-    this.purchasable='Y'
+    this.rips='Y'
     }
     else{
-      this.purchasable = 'N';
+      this.rips = 'N';
     }
   }
   holdEvent(e) {
     if (e.target.checked) {
-    this.purchasable='Y'
+    this.hold='Y'
+    this.displayHold= false;
     }
     else{
-      this.purchasable = 'N';
+      this.hold = 'N';
+      this.displayHold= true;
     }
   }
   costingEvent(e) {
@@ -693,6 +756,22 @@ poChargeAcc:[],
       this.internalOrder = 'N';
     }
   }
+  isTaxableEvent(e) {
+    if (e.target.checked) {
+    this.isTaxable='Y'
+    }
+    else{
+      this.isTaxable = 'N';
+    }
+  }
+  interiorsEvent(e) {
+    if (e.target.checked) {
+    this.interiors='Y'
+    }
+    else{
+      this.interiors = 'N';
+    }
+  }
   assetItemEvent(e) {
     if (e.target.checked) {
     this.assetItem='Y'
@@ -707,7 +786,12 @@ poChargeAcc:[],
         data => {
           this.lstcomments = data;
       this.itemMasterForm.patchValue(this.lstcomments);
-      
+      if(data.itemTypeForCat=='ss_vehicle'){
+        this.ssVehical=true;
+      }
+      if(data.itemTypeForCat=='ss_spares'){
+        this.ssSpares=true;
+      }
         }
       );
   }
@@ -735,7 +819,7 @@ poChargeAcc:[],
   // }
   // Search
   onInsurerNameSelected(customerId: number) {
-    alert('in '+ customerId)
+    // alert('in '+ customerId)
     this.service.insSiteList(customerId)
      .subscribe(
       data => {
@@ -745,8 +829,19 @@ poChargeAcc:[],
     );
   }
   transData(val) {
-    delete val.marginCategory;
-    delete val.lotSize;
+    // delete val.marginCategory;
+    // delete val.lotSize;
+    delete val.segment11;
+    delete val.segment2;
+    delete val.segment3;
+    delete val.segment4;
+    delete val.segment5;
+    delete val.lookupValueDesc4;
+    delete val.lookupValueDesc1;
+    delete val.lookupValueDesc2;
+    delete val.lookupValueDesc3;
+    delete val.lookupValueDesc5;
+   
     return val;
   }
   newItemMast(){
@@ -756,7 +851,8 @@ poChargeAcc:[],
     formValue.costing= this.costing;
     formValue.internalOrder= this.internalOrder;
     formValue.assetItem= this.assetItem;
-    formValue.purchasable= this.purchasable;
+    formValue.purchasable= this.purchasable; 
+    formValue.isTaxable= this.isTaxable;
     // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -773,7 +869,21 @@ poChargeAcc:[],
   resetItemMast(){this.router.navigate(['admin']);}
   closeItemMast(){ window.location.reload();}
   searchItemMast(){}
-  updateItemMast(){}
+  updateItemMast(){
+    const formValue: IItemMaster = this.itemMasterForm.value;
+    this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD UPDATED SUCCESSFUILY');
+        // window.location.reload();
+      } else {
+        if (res.code === 400) {
+          alert('ERROR OCCOURED IN PROCEESS');
+          // this.CompanyMasterForm.reset();
+          // window.location.reload();
+        }
+      }
+    });
+  }
   onOptionsSelected(event: any) {
     this.Status1 = this.itemMasterForm.get('status').value;
     // alert(this.Status1);
@@ -803,28 +913,8 @@ poChargeAcc:[],
     // console.log(this.segmentName1);
     alert(segmentName)
    this.itemMasterForm.patchValue({ segmentName: segmentName })
-
-    this.service.segmentNameList(segmentName)
-      .subscribe(
-        data => {
-
-          this.segmentNameList = data;
-          if (this.segmentNameList.code === 200) {
-            this.itemMasterForm.patchValue({ poChargeAcc: this.segmentNameList.obj.codeCombinationId })
-            if (this.segmentNameList.length == 0) {
-              alert('Invalid Code Combination');
-            } else {
-              console.log(this.segmentNameList);
-              this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
-            }
-          } else if (this.segmentNameList.code === 400) {
-            // var arrayControl = this.itemMasterForm.get('poLines').value
-            this.itemMasterForm.patchValue({ segmentName: ''})
-            alert(this.segmentNameList.message);
-            
-          }
-        }
-      );
+   this.itemMasterForm.patchValue({ poChargeAccount:this.itemMasterForm.get('segment4').value })
+    
     this.itemMasterForm.get('segment11').reset();
     this.itemMasterForm.get('segment2').reset();
     this.itemMasterForm.get('segment3').reset();
@@ -928,5 +1018,8 @@ poChargeAcc:[],
     );
 
   }
-
+  onKey(event: any) {
+    const aaa ='MV'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
+    this.itemMasterForm.patchValue({segment:aaa})
+  }
 }
