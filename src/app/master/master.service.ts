@@ -100,7 +100,7 @@ export class MasterService {
 
   invItemList(itemType,deptName) {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
-    .set('Dept', deptName)
+    .set('dept', deptName)
 
     const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
