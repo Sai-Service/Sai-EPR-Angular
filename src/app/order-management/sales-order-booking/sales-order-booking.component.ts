@@ -314,6 +314,15 @@ export class SalesOrderBookingComponent implements OnInit {
 
     console.log(this.emplId);
     
+    this.service.taxCategoryListForSALES()
+    .subscribe(
+      data1 => {
+        this.taxCategoryList = data1;
+        console.log(this.taxCategoryList);
+        data1 = this.taxCategoryList;
+      }
+    );
+
 
     this.orderManagementService.getFinTypeSearch1()
     .subscribe(
@@ -472,6 +481,7 @@ export class SalesOrderBookingComponent implements OnInit {
   addRow() {
 // if (this.segment===null){
   // this.SalesOrderBookingForm.controls.orderlineDetailsArray[i].displaysegment=false;
+  this.displaycategory=true;
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     this.displaysegment=true;
 // }
@@ -493,56 +503,30 @@ export class SalesOrderBookingComponent implements OnInit {
     this.orderlineDetailsArray().removeAt(index);
   }
 
-  onOptionTaxCatSelected(taxCategoryName, k) {
-    this.indexVal = k;
+  onOptionTaxCatSelected(taxCategoryName, i) {
+    alert(i);
+    this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
 
-    var amount = arrayControl[k].amount;
+    var amount = arrayControl[i].unitSellingPrice;
+    alert(amount);
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
-    let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId });
+    let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
+    (controlinv.controls[i]).patchValue({ taxCategoryId: select.taxCategoryId });
     var disAm = 0;
     this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
       .subscribe(
         data => {
           this.lstInvLineDeatails1 = data;
           console.log(this.lstInvLineDeatails1);
-          for (let i = 0; i < data.miscLines.length; i++) {
-            var invLnGrp: FormGroup = this.orderlineDetailsGroup();
-            this.orderlineDetailsArray().push(invLnGrp);
-          }
-          (controlinv.controls[0]).patchValue({ lineNumber: 1 });
-          var x = k + 1;
-
-          for (let z = x, j = 1; z < this.orderlineDetailsArray().length; j++, z++) {
-            controlinv.controls[z].patchValue(data.miscLines[j - 1]);
-            var ln = z + 1;
-            (controlinv.controls[z]).patchValue({ lineNumber: ln });
-          }
-
-          var segment = (arrayControl[k].segment)
-          let select = this.invItemList1.find(d => d.segment === segment);
-          // alert(select.itemId);
-          let controlinv1 = this.SalesOrderBookingForm.get('taxLines') as FormArray;
-          // var LEN = controlinv1.length;
-          this.taxDetaileSendArr.push(data.taxLines)
+          let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
           this.TaxDetailsArray().clear();
           for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
           }
-          // alert('data.taxLines.length ' + data.taxLines.length);
-          // alert(data.taxLines)
-          this.SalesOrderBookingForm.get('taxLines').patchValue(data.taxLines);
-          for (let j = 0; j < data.taxLines.length; j++) {
-            // controlinv1.controls[j].patchValue(data.taxLines[j]);
-
-            controlinv1.controls[j].patchValue({
-              invLineItemId: select.itemId,
-              invLineNo: k + 1,
-            });
-          }
-          
+         
+          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data.taxLines);
          
         }
          

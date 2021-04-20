@@ -734,16 +734,16 @@
                                                              <input type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
                                                          </ng-template>
                                                          <ng-template #elsepricingQty>
-                                                         <input disabled type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
+                                                         <input  type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
                                                          </ng-template>  
                                                      </td>
                                                         <td>
-                                                         <input disabled type="text"  formControlName="unitSellingPrice"  class="form-control" style="height: 20px;width: 90px;">
+                                                         <input  type="text"  formControlName="unitSellingPrice"  class="form-control" style="height: 20px;width: 90px;">
                                                         </td>
                                                         <td>
                                                          <div *ngIf="displaytaxCategoryName; then thentaxCategoryName; else elsetaxCategoryName"></div>
                                                          <ng-template #thentaxCategoryName>
-                                                            <select formControlName="taxCategoryName" id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected($event,k)'
+                                                            <select formControlName="taxCategoryName" id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected($event,i)'
                                                             class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                                             <option>--Select--</option>
                                                             <option *ngFor="let sc of  taxCategoryList" >
