@@ -1,306 +1,1022 @@
 <div class="center">
-    <table style="width: 100%;background-color: white;">
-        <tr>
-            <td class="PageHeader" style="width: 100%;">
-                &nbsp;&nbsp;JOBCARD&nbsp;OPENING
-            </td>
-        </tr>
-    </table>
-    <div class="center" style="width: 100%;">
-        <div class="form-bg">
-            <div class="center" style="width: 100%;">
-                <form [formGroup]="jobcardForm" (ngSubmit)="jobcard(jobcardForm.value)">
+    <form [formGroup]="jobcardForm" (ngSubmit)="jobcard(jobcardForm.value)">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader" style="width: 100%;">
+                    &nbsp;&nbsp;JOBCARD&nbsp;OPENING
+                </td>
+
+                <table style="width: 100%; background-color: #FFE4B5;">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Number&nbsp;:</td>
+                        <td>
+                            <input type="text" formControlName="jobCardNum" [(ngModel)]="jobCardNum"
+                                class="form-control" #myinput>
+                        </td>
+                        <td colspan="8" style="text-align: left; width: 100%;">
+                            <button type="submit" [disabled]="!jobCardNum" (click)="Search(jobCardNum)"
+                                class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+                        </td>
+                    </tr>
+                </table>
+            </tr>
+        </table>
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                    <!-- <form [formGroup]="jobcardForm" (ngSubmit)="jobcard(jobcardForm.value)"> -->
                     <div id="Panel1" class="auto-style103">
                         <table class="center">
+                            <section class="mx-2 pb-3">
+                                <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md"
+                                            role="tab" aria-controls="home-md" aria-selected="true">Job Card Opening</a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md"
+                                            role="tab" aria-controls="profile-md" aria-selected="false">Labor Details
+                                        </a>
+                                    </li>
+                                    <li class="nav-item waves-effect waves-light">
+                                        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md"
+                                            role="tab" aria-controls="contact-md" aria-selected="false">Part Details</a>
+                                    </li>
+                                </ul>
+                                <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
+                                    <div class="tab-pane fade show active" id="home-md" role="tabpanel"
+                                        aria-labelledby="home-tab-md">
+                                        <div class="center" style="width: 100%;">
+                                            <div class="form-bg">
+                                                <div class="center">
+                                                    <div id="Panel1" class="auto-style103">
+                                                        <div class="center">
+                                                            <div class="container1">
+                                                                <table style="width: 100%" class="center">
+                                                                    <fieldset class="RFS">
+                                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                            style="font-size: 10px;color: black;">
+                                                                            <b>Job&nbsp;Card&nbsp;Details&nbsp;</b>
+                                                                        </legend>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Job&nbsp;Card&nbsp;No&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control"
+                                                                                    formControlName="jobCardNum"
+                                                                                    placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Job&nbsp;Card&nbsp;Date&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    [(ngModel)]="jobDate"
+                                                                                    formControlName="jobDate">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Job&nbsp;Card&nbsp;Status&nbsp;:</td>
+                                                                            <td>
+                                                                                <select formControlName="jobStatus"
+                                                                                    name="jobStatus" id="jobStatus"
+                                                                                    class="form-control"
+                                                                                    [(ngModel)]="jobStatus">
+                                                                                    <option disabled>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  jobCarStatusList"
+                                                                                        [selected]="sc.cmnId===261">
+                                                                                        {{sc.code}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Material&nbsp;Issue&nbsp;Status&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control" placeholder="" formControlName="matStatus"> -->
+                                                                                <select formControlName="matStatus"
+                                                                                    id="matStatus" class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  matStatusList">
+                                                                                        {{sc.code}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </fieldset>
+                                                                    <fieldset class="RFS">
+                                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                            style="font-size: 10px;color: black;">
+                                                                            <b>Vehicle&nbsp;Details&nbsp;</b>
+                                                                        </legend>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Registration&nbsp;No&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text"
+                                                                                    formControlName="RegNo"
+                                                                                    [(ngModel)]="RegNo"
+                                                                                    (change)="serchByRegNo(RegNo)"
+                                                                                    (keyup)="getUserIdsFirstWay($event)"
+                                                                                    id="userIdFirstWay"
+                                                                                    list="dynmicUserIds"
+                                                                                    class="form-control" />
+                                                                                <datalist id="dynmicUserIds">
+                                                                                    <option
+                                                                                        *ngFor="let item of RegNoList1"
+                                                                                        [ngValue]="item.regNo">
+                                                                                        {{item.regNo}}</option>
+                                                                                </datalist>
+                                                                                <!-- <select  formControlName="RegNo" id="RegNo"  (ngModelChange)="serchByRegNo($event)"
+                                                                            class="form-control">
+                                                                            <option>--Select--</option>
+                                                                            <option *ngFor="let sc of  RegNoList1" >
+                                                                                {{sc.srvAdvisorName}}
+                                                                            </option>
+                                                                        </select> -->
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Vehicle&nbsp;ID&nbsp;(VIN)&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="vin">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="lastRunKms">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Division&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" hidden
+                                                                                    class="form-control" placeholder=""
+                                                                                    [(ngModel)]="divisionId"
+                                                                                    formControlName="divisionId">
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    [(ngModel)]="divisionName"
+                                                                                    formControlName="divisionName">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Service&nbsp;Type&nbsp;:</td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control" placeholder="" formControlName="srTypeId"> -->
+                                                                                <select formControlName="srTypeId"
+                                                                                    id="srTypeId"
+                                                                                    (ngModelChange)="onOptionsSelectedsrTypeId($event)"
+                                                                                    class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  srTypeIdList"
+                                                                                        [ngValue]="sc.srTypeId">
+                                                                                        {{sc.srTypeName}}-{{sc.description}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Sub&nbsp;Service&nbsp;Type&nbsp;:</td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control" placeholder=""> -->
+                                                                                <select formControlName="subTypeId"
+                                                                                    id="subTypeId" class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  SubSrTypeIdList"
+                                                                                        [ngValue]="sc.subTypeId">
+                                                                                        {{sc.subTypeName}}-{{sc.description}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Service&nbsp;Advisor&nbsp;:</td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control" placeholder="" formControlName="srvAdvisor"> -->
+                                                                                <select formControlName="srvAdvisor"
+                                                                                    id="srvAdvisor"
+                                                                                    (ngModelChange)='onOptionsrvAdvisorSelected($event)'
+                                                                                    class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  srvAdvisorList"
+                                                                                        [ngValue]="sc.srvAdvisor">
+                                                                                        {{sc.srvAdvisorName}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">Group&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control" placeholder="" formControlName="groupId">
+                                                                            <input type="text" class="form-control" placeholder="" formControlName="groupName"> -->
+                                                                                <select formControlName="groupId"
+                                                                                    id="groupId" class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  groupIdList"
+                                                                                        [ngValue]="sc.srvAdvisor">
+                                                                                        {{sc.srvAdvisorName}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Bay&nbsp;Code&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="bayTyId">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">&nbsp;</td>
+                                                                            <td>
+                                                                                <input type="text" hidden
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Technician&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="techId"> -->
+                                                                                    <select formControlName="techId"
+                                                                                    id="techId"
+                                                                                    class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  TechnicianList"
+                                                                                        [ngValue]="sc.techId">
+                                                                                        {{sc.description}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Technical&nbsp;Adivsor&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Vehicle&nbsp;Model&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="mainModel">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Vehicle&nbsp;Sale&nbsp;Date&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="regDate">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Chassis&nbsp;No&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="chassisNo">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Engine&nbsp;No&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="engineNo">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Vehicle&nbsp;Variant&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="variantCode">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Color&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="colorCode">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Dealer&nbsp;Name&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="dealerName">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Dealer&nbsp;Site&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="dealerSite">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Customers&nbsp;Demanded&nbsp;Job&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Recommendation&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button data-toggle="modal"
+                                                                                    class="btn btn-primary"
+                                                                                    data-target="#exampleModalScrollable"
+                                                                                    style="width: fit-content;">Additional
+                                                                                    Details</button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </fieldset>
+                                                                    <fieldset class="RFS">
+                                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                            style="font-size: 10px;color: black;">
+                                                                            <b>Customer&nbsp;Details&nbsp;</b>
+                                                                        </legend>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Customer&nbsp;Account&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="accountNo">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Customer&nbsp;Type&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="custType">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Name&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="custName">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                DMS&nbsp;customer&nbsp;ID&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="dmsCustId">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Bill&nbsp;To&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="billToAddress">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Email&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="emailId">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Contact&nbsp;No&nbsp;1:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="contact1">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Contact&nbsp;No&nbsp;2:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="contact2">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Ship&nbsp;To&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    formControlName="shipToAddress">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </fieldset>
+                                                                    <fieldset class="RFS">
+                                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                            style="font-size: 10px;color: black;">
+                                                                            <b> Billing&nbsp;Customer&nbsp;</b>
+                                                                        </legend>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Customer&nbsp;Account&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" 
+                                                                                    class="form-control" placeholder="" (keydown.tab)="accountNoSearchfn()" >
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Customer&nbsp;Type&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Name&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">GSTIN&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Address&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                    style="width: 20rem">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Email&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Contact&nbsp;No&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Valid&nbsp;Till&nbsp;Date&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder="">
+                                                                            </td>
+                                                                        </tr>
+
+
+                                                                    </fieldset>
+                                                                    <fieldset class="RFS">
+                                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                            style="font-size: 10px;color: black;">
+                                                                            <b>Pickup&nbsp;</b>
+                                                                        </legend>
+
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Free&nbsp;Pickup&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="freePickup">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Pick&nbsp;up&nbsp;Type&nbsp;:</td>
+                                                                            <td>
+                                                                                <!-- <input type="text" class="form-control" placeholder=""  formControlName="pickupType"> -->
+                                                                                <select formControlName="pickupType"
+                                                                                    id="pickupType"
+                                                                                    class="form-control">
+                                                                                    <option>--Select--</option>
+                                                                                    <option
+                                                                                        *ngFor="let sc of  pickupTypeList">
+                                                                                        {{sc.pickUpType}}
+                                                                                    </option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Pickup&nbsp;Date&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="pickupDate">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Pickup&nbsp;Location&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="pickupLoc">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">Diver&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="driverName">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Pickup&nbsp;Remark&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="pickupRemark">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </fieldset>
+                                                                    <fieldset class="RFS">
+                                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                            style="font-size: 10px;color: black;">
+                                                                            <b> Estimated&nbsp;</b>
+                                                                        </legend>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <button type="butt on"
+                                                                                    class="btn btn-primary"
+                                                                                    style="width: 8rem;">Estimated
+                                                                                    Labor</button>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button type="butt on"
+                                                                                    class="btn btn-primary"
+                                                                                    style="width: 8rem;">Estimated
+                                                                                    Material</button>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle">
+                                                                                Total&nbsp;:</td>
+                                                                            <td>
+                                                                                <input type="text" disabled
+                                                                                    class="form-control" placeholder="">
+                                                                            </td>
+                                                                            <td style="width: 15%"
+                                                                                class="LabelFontStyle1">
+                                                                                Promise&nbsp;Date&nbsp;&&nbsp;Time&nbsp;:
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    placeholder=""
+                                                                                    formControlName="promiseDate">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </fieldset>
+
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="profile-md" role="tabpanel"
+                                        aria-labelledby="profile-tab-md">
+                                        <div class="center">
+                                            <div class="form-bg">
+                                                <div class="center">
+                                                    <table style="width: 100%;background-color: white;">
+                                                        <tr>
+                                                            <td class="PageHeader1">
+                                                                &nbsp;&nbsp;Labor&nbsp;Details&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div class="center">
+                                                        <div class="center" formArrayName="jobCardLabLines">
+                                                            <div class="grid_scroll">
+                                                                <table class="GridFont" cellspacing="0" cellpadding="4"
+                                                                    border="0"
+                                                                    style="width:100%;border-collapse:collapse;">
+                                                                    <thead>
+                                                                        <tr class="GridHeader">
+                                                                            <th scope="col">Billable Type</th>
+                                                                            <th scope="col">Labor Item</th>
+                                                                            <th scope="col">Description</th>
+                                                                            <th scope="col">Quantity</th>
+                                                                            <th scope="col">Price</th>
+                                                                            <th scope="col">Base Amount</th>
+                                                                            <th scope="col">Tax Category</th>
+                                                                            <th scope="col">Split Ratio</th>
+                                                                            <th scope="col">Customer</th>
+                                                                            <th scope="col">Insurance</th>
+                                                                            <th scope="col">Dealer</th>
+                                                                            <th scope="col">OEM</th>
+                                                                            <th scope="col">Labor Amount</th>
+                                                                            <th scope="col">FRM Hrs</th>
+                                                                            <th scope="col">Technician</th>
+                                                                            <th scope="col">Split</th>
+                                                                            <th scope="col">Add more Tech</th>
+                                                                            <th scope="col">Contractor code</th>
+                                                                            <th scope="col">Contractor %</th>
+                                                                            <th scope="col">Add Row</th>
+                                                                            <th scope="col">Delete Row</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <ng-container
+                                                                        *ngFor="let group of lineDetailsArray.controls; let i= index"
+                                                                        [formGroupName]="i" class="auto-style5">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <!-- <input type="number" formControlName="billableTyId"  class="form-control"  style="height: 25px;"> -->
+                                                                                    <select
+                                                                                        formControlName="billableTyId"
+                                                                                        id="billableTyId"
+                                                                                        class="form-control">
+                                                                                        <option>--Select--</option>
+                                                                                        <option
+                                                                                            *ngFor="let sc of  billableTyIdList"
+                                                                                            [ngValue]="sc.billableTyId">
+                                                                                            {{sc.billableTyName}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <!-- <input type="number" formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
+                                                                                    <select formControlName="itemId"
+                                                                                        id="itemId"
+                                                                                        class="form-control">
+                                                                                        <option>--Select--</option>
+                                                                                        <option
+                                                                                            *ngFor="let sc of  LaborItemList"
+                                                                                            [ngValue]="sc.itemId">
+                                                                                            {{sc.segment}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="text"
+                                                                                        formControlName="description"
+                                                                                        class="form-control"
+                                                                                        style="height: 25px;">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number"
+                                                                                        formControlName="qty"
+                                                                                        class="form-control"
+                                                                                        style="height: 25px;">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        formControlName="unitPrice"
+                                                                                        style="height: 25px;">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number"
+                                                                                        formControlName="basicAmt"
+                                                                                        class="form-control"
+                                                                                        style="height: 25px;">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <select
+                                                                                        formControlName="taxCategoryName"
+                                                                                        id="taxCategoryName"
+                                                                                        (ngModelChange)='onOptionTaxCatSelected(i, $event)'
+                                                                                        class="form-control">
+                                                                                        <option>--Select--</option>
+                                                                                        <option
+                                                                                            *ngFor="let sc of  taxCategoryList">
+                                                                                            {{sc.taxCategoryName}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <!-- <input type="number"  formControlName="splitRatio" class="form-control"  style="width: 160px;height: 25px;"> -->
+                                                                                    <select formControlName="splitRatio"
+                                                                                        id="splitRatio"
+                                                                                        (ngModelChange)='onOptionsplitRatioSelect(i, $event)'
+                                                                                        class="form-control">
+                                                                                        <option>--Select--</option>
+                                                                                        <option
+                                                                                            *ngFor="let sc of  splitRatioList"
+                                                                                            [ngValue]="sc.splitCateId">
+                                                                                            {{sc.billingNature}}
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        style="width: 160px;height: 25px;">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        style="width: 160px;height: 25px;">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </ng-container>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="contact-md" role="tabpanel"
+                                        aria-labelledby="contact-tab-md">
+                                        <div class="center">
+                                            <div class="form-bg">
+                                                <!-- <div class="center"> -->
+                                                <div class="grid_scroll">
+                                                    <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                                        style="width:100%;border-collapse:collapse;">
+                                                        <thead>
+                                                            <tr class="GridHeader">
+                                                                <th scope="col">No.</th>
+                                                                <th scope="col">Billable Type</th>
+                                                                <th scope="col">Part No</th>
+                                                                <th scope="col">Quantity</th>
+                                                                <th scope="col">MRP</th>
+                                                                <th scope="col">Basic Amount</th>
+                                                                <th scope="col">Split Ratio</th>
+                                                                <th scope="col">CUST</th>
+                                                                <th scope="col">INS</th>
+                                                                <th scope="col">DLR</th>
+                                                                <th scope="col">ORM</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container class="center"
+                                                                formArrayName="jobCardMatLines">
+                                                                <ng-container
+                                                                    *ngFor="let group of lineDistributionArray().controls; let k= index"
+                                                                    [formGroupName]="k" class="auto-style5">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                formControlName="billableTyId"
+                                                                                class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                formControlName="itemId"
+                                                                                class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" formControlName="qty"
+                                                                                class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                formControlName="unitPrice"
+                                                                                class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                formControlName="basicAmt"
+                                                                                class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control"
+                                                                                style="width: 160px;height: 25px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- </div> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
                             <!-- formControlName="divisionName" -->
-                            <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">&nbsp;
-                                </legend>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;No&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Date&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Status&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Material&nbsp;Issue&nbsp;Status&nbsp;:
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                            </fieldset>
-                            <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">
-                                    <b>Vehicle&nbsp;Details&nbsp;</b>
-                                </legend>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Registration&nbsp;No&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;ID&nbsp;(VIN)&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Type&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Sub&nbsp;Service&nbsp;Type&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Advisor&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Group&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Bay&nbsp;Code&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;</td>
-                                    <td>
-                                        <input type="text" hidden class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Technician&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Technical&nbsp;Adivsor&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Customers&nbsp;Demanded&nbsp;Job&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Recommendation&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Model&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Sale&nbsp;Date&nbsp;:
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;No&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Variant&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Color&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Site&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                            </fieldset>
-                            <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">
-                                    <b>Customer&nbsp;Details&nbsp;</b>
-                                </legend>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;ID&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Type&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Name&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;customer&nbsp;ID&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Bill&nbsp;To&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Email&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;No&nbsp;1:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;No&nbsp;2:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Ship&nbsp;To&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                            </fieldset>
-                            <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">
-                                  <b>  Billing&nbsp;Customer&nbsp;</b>
-                                </legend>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;ID&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Type&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Name&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Address&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Email&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Contact&nbsp;No&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">GSTIN&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;Till&nbsp;Date&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                              
-                                
-                            </fieldset>
 
-                            <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">
-                                    <b>Pickup&nbsp;</b>
-                                </legend>
+                        </table>
+                        <table class="center">
+                            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel"
+                                                style="text-align: center; margin-left: 40%; font-size: medium; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                                Additional Details</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
 
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Free&nbsp;Pickup&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Pick&nbsp;up&nbsp;Type&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Pickup&nbsp;Date&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Pickup&nbsp;Location&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Diver&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Pickup&nbsp;Remark&nbsp;:</td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="">
-                                    </td>
-                                </tr>
-                            </fieldset>
-                            <fieldset class="RFS">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">
-                                   <b> Estimated&nbsp;</b>
-                                </legend>
-                            <tr>
-                                <td>
-                                    <button type="butt on" class="btn btn-primary"
-                                    style="width: 8rem;">Estimated Labor</button>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" placeholder="">
-                                </td>
-                                <td>
-                                    <button type="butt on" class="btn btn-primary"
-                                    style="width: 8rem;">Estimated Material</button>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" placeholder="">
-                                </td>
-                                <td style="width: 15%" class="LabelFontStyle">
-                                    Total&nbsp;:</td>
-                                <td>
-                                    <input type="text" class="form-control" placeholder="">
-                                </td>
-                                <td style="width: 15%" class="LabelFontStyle">
-                                    Promise&nbsp;Date&nbsp;&&nbsp;Time&nbsp;:</td>
-                                <td>
-                                    <input type="text" class="form-control" placeholder="">
-                                </td>
-                            </tr>
-                            </fieldset>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="grid_scroll1">
+                                                <table class="center" style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            Vehicle&nbsp;Insurance&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="" formControlName="insStatus">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="Insurance Company name"
+                                                                formControlName="insurerCompId">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="Site" formControlName="insurerSiteId">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" class="form-control" disabled
+                                                                placeholder="Expiry Date" formControlName="insuDate">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            OEM&nbsp;Warranty&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="" formControlName="oemWarrStatus">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" class="form-control" disabled
+                                                                placeholder="Expiry Date"
+                                                                formControlName="oemExpiryDate">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            Extended&nbsp;Warranty&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="" formControlName="ewStatus">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="EW Number">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" class="form-control" disabled
+                                                                placeholder="Expiry Date" formControlName="ewStartDate">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            MCP &nbsp;&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="MCP Number">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" class="form-control" disabled
+                                                                placeholder="Expiry Date">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            CNG &nbsp;&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="Cylinder No "
+                                                                formControlName="cngCylinderNo">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="Kit No" formControlName="cngKitNumber">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" class="form-control" disabled
+                                                                placeholder="Expiry Date">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            Govt&nbsp;Vehicle&nbsp;(Y/N)&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                            VIP&nbsp;:</td>
+                                                        <td>
+                                                            <input type="text" class="form-control" disabled
+                                                                placeholder="">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="modal-footer">
+                                                    <!--  -->
+                                                    <table>
+                                                        <tr>
+
+                                                            <td style="margin-right: 20%;"><button type="button"
+                                                                    class="btn btn-primary" data-dismiss="modal"
+                                                                    class="close">Ok</button></td>
+                                                            <!-- (click)="Submit()" -->
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </table>
                         <table class="center">
                             <tr>
@@ -323,10 +1039,10 @@
                             </tr>
                         </table>
                     </div>
-                </form>
+                    <!-- </form> -->
+                </div>
             </div>
         </div>
-    </div>
 
-
+    </form>
 </div>

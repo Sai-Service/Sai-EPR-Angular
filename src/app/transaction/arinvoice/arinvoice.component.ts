@@ -5,6 +5,7 @@ import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { TransactionService } from '../transaction.service';
+
 interface IArInvoice {
   taxableAmount: number;
   taxAmount:number;
@@ -401,6 +402,7 @@ console.log(this.sourceList);
             this.TaxDetailsArray().push(invLnGrp);
             this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
           }
+          this.arInvoiceForm.patchValue(data);
         }
       );
   };

@@ -842,6 +842,7 @@
                                     <!-- <th scope="col">Class</th> -->
                                     <th scope="col">GL Account</th>
                                     <!-- <th scope="col">Asset Book</th> -->
+                                    <th scope="col">GL Account Id</th>
                                     <th scope="col">GL Date</th>
                                     <th scope="col">%</th>
                                     <th scope="col">Distribution Amount</th>
@@ -867,9 +868,10 @@
                                         <input type="text" disabled formControlName="accountingDate" [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control"  style="width: 140px;height: 25px;">
                                     </td> -->
                                     <td>
-                                        <input formControlName="codeCombinationId"  class="form-control"  style="width: 160px;height: 25px;">
+                                        
                                         <input formControlName="concatenatedSegment"  (click)="openCodeComb(k)" data-toggle="modal" data-target="#myModel" class="form-control"  style="width: 160px;height: 25px;">
                                     </td>
+                                    <td> <input  formControlName="codeCombinationId"  class="form-control"  style="width: 160px;height: 25px;"></td>
                                     <td>
                                         <input  formControlName="glDate" [(ngModel)]="glDate" disabled  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                     </td>
