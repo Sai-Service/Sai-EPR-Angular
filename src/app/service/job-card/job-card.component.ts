@@ -4,8 +4,63 @@ import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from '../service.service';
 
-interface IpostPO {
-  jobCardNum: number;
+interface IjobCard {
+  jobCardNum: string ;
+  matStatus: string;
+  RegNo: string;
+  srTypeId: number;
+  srvAdvisor: string;
+  groupId: number;
+  pickupLoc: string;
+  freePickup: string;
+  pickupType: string;
+  pickupRemark:string;
+  driverName: string;
+  chassisNo: string;
+  billToAddress: string;
+  engineNo: string;
+  shipToAddress:string;
+  emailId: string;
+  contact1: string;
+  contact2: string;
+  custType: string;
+  accountNo: number;
+  custName: string;
+  variantCode: string;
+  colorCode: string;
+  mainModel: string;
+  dealerName: string;
+  dealerSite: string;
+  dmsCustId: number;
+  ewStartDate: Date;
+  ewStatus: string;
+  insStatus: string;
+  insurerCompId:number;
+  insurerSiteId: number;
+  insuDate:Date
+  oemWarrStatus: string;
+  oemExpiryDate: Date;
+  cngKitNumber:  string;
+  cngCylinderNo:  string;
+  divisionName : string;
+  divisionId: number;
+  jobStatus:string;
+  jobCardDate: Date;
+  vin: string;
+  groupName: string;
+  subTypeId: number;
+  bayTyId:number;
+  techId:number;
+  regDate: Date;
+  pickupDate:Date;
+  promiseDate:Date;
+  lastRunKms:string;
+  itemId:number;
+  ouId:number;
+  deptId:number;
+  locId:number;
+  customerId:number;
+  customerSiteId:number;
 }
 
 @Component({
@@ -17,12 +72,12 @@ export class JobCardComponent implements OnInit {
   jobcardForm: FormGroup;
   RegNo: string;
   jobStatus:string;
-  jobCardNum: string;
+  jobCardNum: string='0';
   divisionName :string;
   divisionId:number;
-  jobDate=new Date();
+  jobCardDate=new Date();
   lstcomments: any[];
-  RegNoList: any[];
+  RegNoList: any;
   RegNoList1:any[];
   userList1: any[] = [];
   userList2: any[] = [];
@@ -40,7 +95,7 @@ export class JobCardComponent implements OnInit {
  public splitRatioList:any[];
  public srvAdvisorList:any[];
  public taxCategoryList: any;
-  
+  public LaborPriceList :any;
   @ViewChild("myinput") myInputField: ElementRef;
   ngAfterViewInit() {
   this.myInputField.nativeElement.focus();
@@ -88,7 +143,7 @@ export class JobCardComponent implements OnInit {
       divisionName : [],
       divisionId: [],
       jobStatus: [],
-      jobDate: [],
+      jobCardDate: [],
       vin: [],
       groupName: [],
       subTypeId: [],
@@ -98,6 +153,13 @@ export class JobCardComponent implements OnInit {
       pickupDate: [],
       promiseDate: [],
       lastRunKms:[],
+      itemId:[],
+      ouId:[],
+      deptId:[],
+      locId:[],
+      customerId:[],
+      customerSiteId:[],
+
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
     })
@@ -209,7 +271,7 @@ export class JobCardComponent implements OnInit {
       this.serviceService.LaborItemListFN()
       .subscribe(
         data1 => {
-          this.LaborItemList = data1[0];
+          this.LaborItemList = data1;
           console.log(this.LaborItemList.itemId);
         }
       );  
@@ -227,6 +289,19 @@ export class JobCardComponent implements OnInit {
           console.log(this.TechnicianList);
         }
       ); 
+  }
+  serchByitemId(event, i){
+    let select = this.LaborItemList.find(d => d.itemId === event);
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+(patch.controls[i]).patchValue({ description: select.description})
+this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segment)
+.subscribe(
+  data1 => {
+    this.LaborPriceList = data1;
+    console.log(this.LaborPriceList);
+    (patch.controls[i]).patchValue({ unitPrice: data1})
+  }
+);
   }
   getUserIdsFirstWay($event) {
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
@@ -252,15 +327,53 @@ export class JobCardComponent implements OnInit {
   jobcard(jobcardForm) {
 
   }
-  onOptionsplitRatioSelect(i, splitRatio){
-    let select = this.splitRatioList.find(d => d.splitRatio === splitRatio);
-    alert(select.splitRatio);
-   this.jobcardForm.patchValue({})
+  onKey(index) {
+    console.log(index);
+    // alert(index+ ' index')
+    var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
+    alert(arrayControl[index].unitPrice);
+    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise})
   }
-  onOptionsrvAdvisorSelected(srvAdvisor){
-    let select = this.srvAdvisorList.find(d => d.srvAdvisor === srvAdvisor);
-    alert(select.srvAdvisor);
-   this.jobcardForm.patchValue(select)
+  onOptionsplitRatioSelect(i, splitCateId){
+    let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
+    alert(select.splitCateId);
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    // (patch.controls[i]).patchValue({ description: select.billingNature})
+  }
+  // onOptionsrvAdvisorSelected(srvAdvisor){
+  //   let select = this.srvAdvisorList.find(d => d.srvAdvisor === srvAdvisor);
+  //   alert(select.srvAdvisor);
+  //  this.jobcardForm.patchValue(select)
+  // }
+  addRow(index) {
+    var arrayControl = this.jobcardForm.get('jobCardLabLines').value
+    
+    var invItemId = arrayControl[index].itemId;
+
+    if (invItemId != null) {
+      this.lineDetailsArray.push(this.lineDetailsGroup());
+      // arrayControl[index].itemType.focus();
+    //  alert
+    } else { ('Kindly Insert the line-Details first'); }
+    var index = index + 1
+
+    var aa = index + 1;
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    (patch.controls[index]).patchValue(
+      {
+        // polineNum: aa,
+      }
+    );
+  }
+  RemoveRow(index) {
+    if (index === 0) {
+
+    } else {
+      this.lineDetailsArray.removeAt(index);
+    }
+    this.lineDetailsArray.removeAt(index);
   }
   serchByRegNo(RegNo) {
     alert(RegNo);
@@ -270,6 +383,15 @@ export class JobCardComponent implements OnInit {
           this.RegNoList = data;
           console.log(this.RegNoList);
           this.jobcardForm.patchValue(this.RegNoList);
+          this.jobcardForm.patchValue({
+            itemId:this.RegNoList.regId,
+            customerSiteId:this.RegNoList.customerSiteId,
+            ouId:  Number(sessionStorage.getItem('ouId') ),
+            customerId:this.RegNoList.customerId,
+            deptId:(sessionStorage.getItem('deptId')),
+            locId: (sessionStorage.getItem('locId')),
+            status:'Opened',  
+          })
         }
       );
   }
@@ -292,7 +414,6 @@ export class JobCardComponent implements OnInit {
         }
       );
   }
-  saveArInvoice() { }
   onOptionTaxCatSelected(i, taxCategoryName) { }
   //   onOptionTaxCatSelected(i, taxCategoryName) {
   //   var arrayControl = this.arInvoiceForm.get('invLines').value;
@@ -360,4 +481,38 @@ export class JobCardComponent implements OnInit {
     //   }
     // );
   }
+  transData(val) {
+    delete val.lineDetailsArray;
+    return val;
+  }
+  saveLine(){
+    const formValue: IjobCard = this.transData(this.jobcardForm.value);
+    this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+        }
+      }
+    });
+  }
+  saveArInvoice() {
+    const formValue: IjobCard = this.transData(this.jobcardForm.value);
+    this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+        this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
+        // window.location.reload();
+        // this.LocationMasterForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.LocationMasterForm.reset();
+          // window.location.reload();
+        }
+      }
+    });
+  }
+  
 }

@@ -75,8 +75,8 @@
                                                                             <td>
                                                                                 <input type="text" disabled
                                                                                     class="form-control" placeholder=""
-                                                                                    [(ngModel)]="jobDate"
-                                                                                    formControlName="jobDate">
+                                                                                    [(ngModel)]="jobCardDate"
+                                                                                    formControlName="jobCardDate">
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -142,7 +142,14 @@
                                                                                 {{sc.srvAdvisorName}}
                                                                             </option>
                                                                         </select> -->
-                                                                            </td>
+                                                                        <input type="text" hidden  formControlName="itemId">
+                                                                    <input type="text" hidden formControlName="customerSiteId"> 
+                                                                    <input type="text" hidden  formControlName="ouId">
+                                                                    <input type="text" hidden formControlName="deptId">   
+                                                                    <input type="text" hidden formControlName="locId">   
+                                                                    <input type="text" hidden formControlName="customerId">       
+                                                                </td>
+
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
                                                                                 Vehicle&nbsp;ID&nbsp;(VIN)&nbsp;:</td>
@@ -210,10 +217,10 @@
                                                                                 class="LabelFontStyle1">
                                                                                 Service&nbsp;Advisor&nbsp;:</td>
                                                                             <td>
+                                                                                <!-- (ngModelChange)='onOptionsrvAdvisorSelected($event)' -->
                                                                                 <!-- <input type="text" class="form-control" placeholder="" formControlName="srvAdvisor"> -->
                                                                                 <select formControlName="srvAdvisor"
                                                                                     id="srvAdvisor"
-                                                                                    (ngModelChange)='onOptionsrvAdvisorSelected($event)'
                                                                                     class="form-control">
                                                                                     <option>--Select--</option>
                                                                                     <option
@@ -234,8 +241,8 @@
                                                                                     <option>--Select--</option>
                                                                                     <option
                                                                                         *ngFor="let sc of  groupIdList"
-                                                                                        [ngValue]="sc.srvAdvisor">
-                                                                                        {{sc.srvAdvisorName}}
+                                                                                        [ngValue]="sc.teamId">
+                                                                                        {{sc.teamName}}-{{sc.teamDesc}}
                                                                                     </option>
                                                                                 </select>
                                                                             </td>
@@ -268,7 +275,7 @@
                                                                                     <option>--Select--</option>
                                                                                     <option
                                                                                         *ngFor="let sc of  TechnicianList"
-                                                                                        [ngValue]="sc.techId">
+                                                                                        [ngValue]="sc.teamId">
                                                                                         {{sc.description}}
                                                                                     </option>
                                                                                 </select>
@@ -515,7 +522,7 @@
                                                                                 class="LabelFontStyle1">
                                                                                 Valid&nbsp;Till&nbsp;Date&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="date" class="form-control"
                                                                                     placeholder="">
                                                                             </td>
                                                                         </tr>
@@ -625,7 +632,7 @@
                                                                                 Promise&nbsp;Date&nbsp;&&nbsp;Time&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="date" class="form-control"
                                                                                     placeholder=""
                                                                                     formControlName="promiseDate">
                                                                             </td>
@@ -671,9 +678,9 @@
                                                                             <th scope="col">Tax Category</th>
                                                                             <th scope="col">Split Ratio</th>
                                                                             <th scope="col">Customer</th>
-                                                                            <th scope="col">Insurance</th>
-                                                                            <th scope="col">Dealer</th>
-                                                                            <th scope="col">OEM</th>
+                                                                            <th scope="col">Insualer</th>
+                                                                            <th scope="col">OErance</th>
+                                                                            <th scope="col">DeM</th>
                                                                             <th scope="col">Labor Amount</th>
                                                                             <th scope="col">FRM Hrs</th>
                                                                             <th scope="col">Technician</th>
@@ -707,7 +714,7 @@
                                                                                 <td>
                                                                                     <!-- <input type="number" formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
                                                                                     <select formControlName="itemId"
-                                                                                        id="itemId"
+                                                                                        id="itemId" (ngModelChange)="serchByitemId($event, i)"
                                                                                         class="form-control">
                                                                                         <option>--Select--</option>
                                                                                         <option
@@ -725,18 +732,18 @@
                                                                                 </td>
                                                                                 <td>
                                                                                     <input type="number"
-                                                                                        formControlName="qty"
+                                                                                        formControlName="qty" (change)="onKey(i)"
                                                                                         class="form-control"
                                                                                         style="height: 25px;">
                                                                                 </td>
                                                                                 <td>
                                                                                     <input type="number"
-                                                                                        class="form-control"
-                                                                                        formControlName="unitPrice"
+                                                                                        class="form-control" disabled
+                                                                                        formControlName="unitPrice" (change)="onKey(i)"
                                                                                         style="height: 25px;">
                                                                                 </td>
                                                                                 <td>
-                                                                                    <input type="number"
+                                                                                    <input type="number" disabled
                                                                                         formControlName="basicAmt"
                                                                                         class="form-control"
                                                                                         style="height: 25px;">
@@ -778,7 +785,29 @@
                                                                                         class="form-control"
                                                                                         style="width: 160px;height: 25px;">
                                                                                 </td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td><input type="text"></td>
+                                                                                <td>
+                                                                                    <button type="submit" class="btn btn-primary"
+                                                                                        (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" 
+                                                                                        style="width: min-content;"><i
+                                                                                            class="fa fa-plus"></i></button>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="submit" class="btn btn-primary"
+                                                                                        (click)="RemoveRow(i)" style="width: min-content;"><i
+                                                                                            class="fa fa-trash"></i></button>
+                                                                                </td>
                                                                             </tr>
+                                                                            <td> <button type="butt on" class="btn btn-primary" (click)="saveLine()"
+                                                                                style="width: 8rem;">Save Line</button></td>
                                                                         </tbody>
                                                                     </ng-container>
                                                                 </table>
@@ -1022,7 +1051,7 @@
                             <tr>
                                 <td> <button type="butt on" class="btn btn-primary" (click)="saveArInvoice()"
                                         style="width: 8rem;">Save</button></td>
-                                <td> <button type="butt on" class="btn btn-primary" (click)="saveArInvoice()"
+                                <td> <button type="butt on" class="btn btn-primary" 
                                         style="width: 8rem;">Update</button></td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="clearFormArray()"

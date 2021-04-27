@@ -216,7 +216,7 @@ export class OPMasterDtoComponent implements OnInit {
   public seriesList: Array<any> = [];
   public delearCodeList: Array<string> = [];
   public taxCategoryList: any;
-
+  public dispbut= true;
   lineNumber: number;
   taxRateName: string;
   taxTypeName: string;
@@ -744,13 +744,6 @@ public TaxDetailData : any[];
   }
   
   addRow(index) {
-    // alert(val1);
-    // < any > this.lineDetailsArray.controls[index].itemType.nativeElement.focus();
-    // alert(index);
-    // totxt= this.lineDetailsArray.controls[index];
-    // totxt.get('itemType').focus();
-    // get('itemType').value.focus();
-    // val1.focus();
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     
     var invItemId = arrayControl[index].invItemId;
@@ -886,10 +879,10 @@ this.displayNewButtonReset=false;
                 });
                 // this.taxDetails('Search',i, 'taxCategoryId');
               }
-
               // this.lineDetailsArray.removeAt(this.lstcomments1.poLines.length - 1);
             }
             if (status === "APPROVED") {
+              // alert('in approve')
 
               this.displayNewButtonApprove =false;
               this.displayNewButtonUpdate= false;
@@ -898,6 +891,7 @@ this.displayNewButtonReset=false;
 
               this.displayOnStatus=false;
               this.displayButton = false;
+              this.dispbut=false;
               this.displayLine = false;
               this.displayNewButton = false;
               this.approvedArray =this.lstcomments1.poLines;

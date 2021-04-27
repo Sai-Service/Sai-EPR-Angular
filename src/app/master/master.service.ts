@@ -649,6 +649,7 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
 
  getEmpSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/empMst');
+  // return this.http.get(this.ServerUrl + '/empMst/EmpAllList');
 }
 public EmployeeMasterSubmit(EmpMasterRecord) {
   const options = {

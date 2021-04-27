@@ -506,10 +506,48 @@
                                                 <td style="width: 15%" class="LabelFontStyle">
                                                     Item&nbsp;Taxable&nbsp;:&nbsp;</td>
                                                 <td>
-                                                    <input disabled type="checkbox" [formControl]="isTaxable" 
-                                                            [(ngModel)]='isTaxable' (change)="isTaxableEvent($event)">
+                                                    <!-- <input disabled type="checkbox" [formControl]="isTaxable" 
+                                                            [(ngModel)]='isTaxable' (change)="isTaxableEvent($event)"> -->
+                                                            <div *ngIf="isTaxableShow; then thenBlockisTaxable; else elseBlockStatus"></div>
+                                                    <ng-template #thenBlockStatus>
+                                                        <input disabled type="checkbox" [formControl]="isTaxable" 
+                                                        [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
+                                                        </ng-template>
+                                                        <ng-template #elseBlockStatus>
+                                                            <input disabled type="checkbox" [formControl]="isTaxable" checked
+                                                            [(ngModel)]='isTaxable' (change)="internalOrderEvent($event)">
+                                                        </ng-template>
+                                                </td>
                                             </tr>
-
+                                            <div
+                                            *ngIf="displayisTaxable; then thenBlockisTaxable; else elseBlockisTaxable">
+                                        </div>
+                                        <ng-template #thenBlockisTaxable>
+                                            </ng-template>
+                                            <ng-template #elseBlockisTaxable>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
+                                                <td>
+                                                    <select formControlName="taxCategorySale" id="taxCategorySale"
+                                                    class="form-control">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  taxCategoryListS" [ngValue]="sc.taxCategoryId">
+                                                        {{sc.taxCategoryName}}
+                                                    </option>
+                                                </select>
+                                                </td>
+                                                <td>
+                                                    <select formControlName="taxCategoryPur" id="taxCategoryPur"
+                                                    class="form-control">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  taxCategoryListP" [ngValue]="sc.taxCategoryId">
+                                                        {{sc.taxCategoryName}}
+                                                    </option>
+                                                </select>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
                                         </table>
                                     </div>
                                 </div>
@@ -564,7 +602,7 @@
                                             
                                             <td style="width: 15%;  " class="LabelFontStyle1">
                                                 Variant&nbsp;Code&nbsp;:&nbsp;</td>
-                                                <td><select formControlName="variantCode" [(ngModel)]="variantCode" id="variantCode" class="form-control" style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)">
+                                                <td><select formControlName="variantCode" [(ngModel)]="variantCode" id="variantCode" class="form-control" style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)" (keyup)="onKey($event)" uppercase  style="text-transform: uppercase;">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let mm of VariantSearch">
                                                         {{mm.variant}}
@@ -588,7 +626,7 @@
                                             </td> -->
                                             <td style="width: 15;  " class="LabelFontStyle1">
                                                 Color&nbsp;Code&nbsp;:&nbsp;</td>
-                                                <select formControlName="colorCode" [(ngModel)]="colorCode" id="colorCode"class="form-control"   style="width: 170px;">
+                                                <select formControlName="colorCode" (keyup)="onKey($event)" [(ngModel)]="colorCode" id="colorCode"class="form-control"   style="width: 170px;" uppercase  style="text-transform: uppercase;">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let cc of ColourSearch">
                                                         {{cc.colorCode}}
@@ -638,7 +676,7 @@
                                                 Chassis&nbsp;No&nbsp;:&nbsp;</td>
                                             <td>
                                                 <input formControlName="chassisNo" (keyup)="onKey($event)" value={{chassisNo}} [(ngModel)]="chassisNo"
-                                                    class="form-control"
+                                                    class="form-control" uppercase  style="text-transform: uppercase;"
                                                     [ngClass]="{ 'is-invalid': submitted && f.chassisNo.errors }"
                                                     placeholder="Enter Item code">
                                                 <div *ngIf="submitted && f. chassisNo.errors"

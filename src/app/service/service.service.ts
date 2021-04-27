@@ -60,4 +60,22 @@ splitRatioListFN() : Observable<any> {
 TechnicianListFN(locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/techDtls/${locId}`);
 } 
+priceListFN(locId,segment) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`);
+} 
+public jobcardHeaderSubmit(Record) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/jobCard/jobHeader';
+  return this.http.post(url, Record, options);
+}
+
+public lineWISESubmit(Record) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/jobCard/labInsert`;
+  return this.http.post(url, Record, options);
+}
 }

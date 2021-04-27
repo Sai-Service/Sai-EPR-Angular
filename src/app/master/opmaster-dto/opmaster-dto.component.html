@@ -175,7 +175,7 @@
                                         <input type="text" disabled formControlName="authorizationStatus"
                                             [(ngModel)]='authorizationStatus' class="form-control" placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Approve&nbsp;Date:
+                                    <td style="width: 15%" class="LabelFontStyle">Approval&nbsp;Date:
                                     </td>
                                     <td> <input disabled formControlName="approveDate" class="form-control">
                                     </td>
@@ -199,9 +199,19 @@
                                     <td>
                                         <!-- <button data-toggle="modal" class="btn btn-primary"
                                         data-target="#exampleModalScrollable"><i class="fa fa-plus"></i></button> -->
+                                        <div
+                                            *ngIf="dispbut; then thenBlockdispbut; else elseBlockdispbut">
+                                        </div>
+                                        <ng-template #thenBlockdispbut>
                                         <button data-toggle="modal" class="btn btn-primary"
                                             data-target="#exampleModalScrollable" style="width: fit-content;">Additional
                                             Details</button>
+                                            </ng-template>
+                                            <ng-template #elseBlockdispbut>
+                                            <button  class="btn btn-primary" 
+                                            style="width: fit-content;">Additional
+                                            Details</button>
+                                            </ng-template>
                                         <!-- <button class="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModalScrollable" style="width: 8rem;">
                                             Additional Information

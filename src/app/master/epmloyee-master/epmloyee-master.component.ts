@@ -40,11 +40,11 @@ export class EpmloyeeMasterComponent implements OnInit {
   emplId: number;
   ticketNo: string;
   divisionId: number;
-  title: string;
-  fname: string
-  mname: string
-  lname: string
-  name: string
+  title: string= '';
+  fname: string= '';
+  mname: string= '';
+  lname: string= '';
+  name: string= '';
   locId: number;
   deptId: string;
   designation: string;
@@ -100,7 +100,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       emailId: ['', [Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       contact1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
       contact2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*'), ]],
-      loginPass: [''],
+      loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
       status: ['', [Validators.required]],
       endDate:[''],
       loginAccess:[''],
@@ -145,7 +145,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       //     console.log(this.DesignationList);
       //   }
       // );
-      this.service.locationIdList()
+      // this.service.locationIdList()
+      this.service.getLocationId(sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.locIdList = data;
@@ -190,11 +191,11 @@ export class EpmloyeeMasterComponent implements OnInit {
     const formValue: IEmployeeMaster = this.transData(this.employeeMasterForm.value);
     this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');    
+        alert('RECORD INSERTED SUCCESSFULLY');    
         this.employeeMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert('Error while data insertion');
           this.employeeMasterForm.reset();
         }
       }
@@ -248,6 +249,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       this.locCode=select.locId.locCode;
       this.locId = select.locId.locId;
       this.displayButton = false;
+      this.deptId= select.deptId+'-'+select.deptName;
       this.display = false;
     }
   }
@@ -262,7 +264,7 @@ export class EpmloyeeMasterComponent implements OnInit {
     }
   }
   onKey(event: any) {
-    const aaa = this.title + ' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+    const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
     this.name = aaa;
   }
 

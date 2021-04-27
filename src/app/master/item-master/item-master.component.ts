@@ -82,6 +82,8 @@ tempRegDate:Date;
 poChargeAccount:number;
 vin:string;
 isTaxable:string;
+taxCategoryPur:number;
+taxCategorySale:number;
 }
 
 @Component({
@@ -113,9 +115,9 @@ export class ItemMasterComponent implements OnInit {
   status:string;
   type:string;
   mainModel:string;
-  colorCode:string;
-  variantCode:string;
-  chassisNo:string;
+  colorCode:string= '';
+  variantCode:string= '';
+  chassisNo:string= '';
   engineNo:string;
   vehicleDelvDate:Date;
   manYaer:string;
@@ -140,6 +142,7 @@ export class ItemMasterComponent implements OnInit {
   holdReason:string;
   isTaxable:string;
   disItemCode=true;
+  displayisTaxable=true;
   // escortLocation:string;
   // escortReceipt:string;
   // escortReceiptDt:Date;
@@ -225,6 +228,8 @@ export class ItemMasterComponent implements OnInit {
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
   public locIdList: Array<string> = [];
+  public taxCategoryListS: Array<string> = [];
+  public taxCategoryListP: Array<string> = [];
   public segmentNameList: any;
  public SSitemTypeList:any;
  public maxDate = new Date();
@@ -234,6 +239,7 @@ export class ItemMasterComponent implements OnInit {
  internalOrderShow =true;
  assetItemShow =true;
  purchasableShow=true;
+ isTaxableShow=true;
  
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService:OrderManagementService) {
     this.itemMasterForm = fb.group({
@@ -324,6 +330,8 @@ monthYrManf:[],
       lookupValueDesc3: [],
       lookupValueDesc5: [],
       vin :[],
+      taxCategoryPur:[],
+taxCategorySale:[],
     })
    }
 
@@ -388,6 +396,22 @@ monthYrManf:[],
         data => {
           this.SSitemTypeList = data;
           console.log(this.SSitemTypeList);
+        }
+      );
+      this.service.taxCategoryListForSALES()
+      .subscribe(
+        data1 => {
+          this.taxCategoryListS = data1;
+          console.log(this.taxCategoryListS);
+          data1 = this.taxCategoryListS;
+        }
+      );
+      this.service.taxCategoryList()
+      .subscribe(
+        data1 => {
+          this.taxCategoryListP = data1;
+          console.log(this.taxCategoryListP);
+          data1 = this.taxCategoryListP;
         }
       );
     // this.service.YesNoList()
@@ -642,12 +666,13 @@ monthYrManf:[],
   }
 
   onOptionsSelectedColor(variant){
-    alert(variant)
+    // alert(variant)
     this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
         this.ColourSearch = data;
         console.log(this.ColourSearch);
+        this.onKey(0);
       }
     );
   }
@@ -657,14 +682,14 @@ monthYrManf:[],
   }
   
   onOptionsSelectedItemType(category:any){
-    alert(category);
+    // alert(category);
     if(category == 'SS_VEHICLE'){
       this.disItemCode = false;
     }else{
       this.disItemCode = true;
     }
     let select = this.SSitemTypeList.find(d => d.itemType === category);
-    alert(select.assetItem);
+    // alert(select.assetItem);
     if(select.stockable=='Y'){ this.stockableShow=false; this.stockable='Y'}
     if(select.stockable=='N'){this.stockableShow=true; this.stockable='N' }
     if(select.costing=='Y'){this.costingShow = false; this.displayCosting=false; this.costing='Y' }
@@ -675,6 +700,8 @@ monthYrManf:[],
     if(select.assetItem=='N'){this.assetItemShow = true; this.assetItem='N'}  
     if(select.purchable=='Y'){this.purchasableShow = false; this.displayPoCharge=false; this.purchasable='Y' }
     if(select.purchable=='N'){this.purchasableShow = true; this.purchasable='N'}  
+    if(select.isTaxable=='Y'){this.isTaxableShow = false; this.displayisTaxable=false; this.isTaxable='Y' }
+    if(select.isTaxable=='N'){this.isTaxableShow = true; this.isTaxable='N'}  
     
     this.service.categoryIdList(category)
     .subscribe(
@@ -846,7 +873,7 @@ monthYrManf:[],
   }
   newItemMast(){
     const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
-    alert(this.stockable)
+    // alert(this.stockable)
     formValue.stockable= this.stockable;
     formValue.costing= this.costing;
     formValue.internalOrder= this.internalOrder;
@@ -856,24 +883,24 @@ monthYrManf:[],
     // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.itemMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert('ERROR OCCOURED IN PROCEESS');
           // this.itemMasterForm.reset();
         }
       }
     });
   }
-  resetItemMast(){this.router.navigate(['admin']);}
-  closeItemMast(){ window.location.reload();}
+  resetItemMast() { window.location.reload();}
+  closeItemMast(){this.router.navigate(['admin']);}
   searchItemMast(){}
   updateItemMast(){
     const formValue: IItemMaster = this.itemMasterForm.value;
     this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFUlLY');
         // window.location.reload();
       } else {
         if (res.code === 400) {
@@ -899,7 +926,7 @@ monthYrManf:[],
     // var arrayControl = this.itemMasterForm.get('poLines').value
     // var patch = this.itemMasterForm.get('poLines') as FormArray;
     // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
-    alert(this.itemMasterForm.get('segment11').value)
+    // alert(this.itemMasterForm.get('segment11').value)
     var segmentName = this.itemMasterForm.get('segment11').value + '.'
       + this.itemMasterForm.get('segment2').value + '.'
       + this.itemMasterForm.get('segment3').value + '.'
@@ -911,7 +938,7 @@ monthYrManf:[],
     //  + this.itemMasterForm.get('segment9').value  ;
     // this.segmentName1 = segmentName
     // console.log(this.segmentName1);
-    alert(segmentName)
+    // alert(segmentName)
    this.itemMasterForm.patchValue({ segmentName: segmentName })
    this.itemMasterForm.patchValue({ poChargeAccount:this.itemMasterForm.get('segment4').value })
     
