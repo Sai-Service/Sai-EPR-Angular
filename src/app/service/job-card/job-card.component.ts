@@ -61,6 +61,7 @@ interface IjobCard {
   locId:number;
   customerId:number;
   customerSiteId:number;
+  taxCategoryId:number;
 }
 
 @Component({
@@ -173,7 +174,7 @@ export class JobCardComponent implements OnInit {
       description: [],
       unitPrice: [],
       basicAmt: [],
-      taxCategoryName: [],
+      taxCategoryId: [],
       splitRatio:[],
     });
   }

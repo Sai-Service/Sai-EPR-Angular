@@ -244,10 +244,10 @@ export class EpmloyeeMasterComponent implements OnInit {
     let select = this.lstcomments.find(d => d.emplId === emplId);
     if (select) {
       this.employeeMasterForm.patchValue(select);
-      this.divisionId = select.divisionId.divisionId;
-      this.divisionName=select.divisionId.divisionName;
-      this.locCode=select.locId.locCode;
-      this.locId = select.locId.locId;
+      // this.divisionId = select.divisionId.divisionId;
+      // this.divisionName=select.divisionId.divisionName;
+      // this.locCode=select.locId.locCode;
+      // this.locId = select.locId.locId;
       this.displayButton = false;
       this.deptId= select.deptId+'-'+select.deptName;
       this.display = false;

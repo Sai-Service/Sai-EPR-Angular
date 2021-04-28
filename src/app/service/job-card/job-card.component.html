@@ -750,13 +750,13 @@
                                                                                 </td>
                                                                                 <td>
                                                                                     <select
-                                                                                        formControlName="taxCategoryName"
-                                                                                        id="taxCategoryName"
+                                                                                        formControlName="taxCategoryId"
+                                                                                        id="taxCategoryId"
                                                                                         (ngModelChange)='onOptionTaxCatSelected(i, $event)'
                                                                                         class="form-control">
                                                                                         <option>--Select--</option>
-                                                                                        <option
-                                                                                            *ngFor="let sc of  taxCategoryList">
+                                                                                        <option                                               
+                                                                                            *ngFor="let sc of  taxCategoryList" [ngValue]="sc.taxCategoryId">
                                                                                             {{sc.taxCategoryName}}
                                                                                         </option>
                                                                                     </select>
