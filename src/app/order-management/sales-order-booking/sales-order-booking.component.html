@@ -685,12 +685,19 @@
                                                         <td>
                                                          <div *ngIf="displaycategory; then thencategory; else elsecategory"></div>
                                                          <ng-template #thencategory>
-                                                             <select  class="form-control"  formControlName="category" [ngModel]="category" style="height: 20px;width: 120px;"
+                                                            <select formControlName="category" id="category"  (ngModelChange)='onOptionsSelectedCategory($event)'
+                                                            class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  categoryList">
+                                                                {{sc.type}}
+                                                            </option>
+                                                        </select>
+                                                             <!-- <select  class="form-control"  formControlName="category" [ngModel]="category" style="height: 20px;width: 120px;"
                                                              (ngModelChange)='onOptionsSelectedCategory($event)'  >
                                                                <option value="RTO">RTO</option>
                                                                <option value="INS">INS</option>
                                                                <option value="EW">EW</option>
-                                                               </select>
+                                                               </select> -->
                                                          </ng-template>  
                                                          <ng-template #elsecategory>
                                                              <input disabled type="text"   formControlName="invType" value="invType"    class="form-control" style="height: 20px;width: 170px;">
@@ -1156,7 +1163,9 @@
                         <td>
                             <button type="submit" class="btn btn-primary"   (click)=" OrderBooked()" >Save</button>  
                         </td>
-
+                        <td>
+                            <button type="submit" class="btn btn-primary"   (click)="AccOrderLineSave()" >Acc line Save</button>  
+                        </td>
                       </tr>
                   </table>
         </div>

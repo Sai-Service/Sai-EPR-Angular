@@ -79,7 +79,10 @@ export class PoReceiptFormComponent implements OnInit {
   frmDate1:Date;
   disabled = true;
   disabledLine =true;
+  displaylocatorDesc=false;
   disabledViewAccounting=true;
+  disabledPoInvoice=true;
+  displayrecDate=false;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -114,7 +117,8 @@ export class PoReceiptFormComponent implements OnInit {
   receiptNo:number;
   ledgerId:number;
   runningTotalDr:number;
-
+  receiptDate:Date;
+  
 
   selectAllFlag:string;
   selectFlag:string;
@@ -126,6 +130,7 @@ export class PoReceiptFormComponent implements OnInit {
   name1:string;
   runningTotalCr:number;
   // poStatus:string;
+  // displayrecDate:true;
   
 
   // loginArray: any[];
@@ -166,6 +171,7 @@ export class PoReceiptFormComponent implements OnInit {
   poDate:Date;
 
   displaySaveButton =false;
+  ponoFind=false;
   TRUER=false; recFagDiss=true; 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -210,6 +216,7 @@ export class PoReceiptFormComponent implements OnInit {
       name1:[''],
       runningTotalDr:[''],
       runningTotalCr:[''],
+      ledgerId:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -349,6 +356,7 @@ return true;
           }
           if(data.code ===200){
             this.lstSupLineDetails=data.obj;
+            this.disabledPoInvoice=false;
           this.poReceiptForm.patchValue(this.lstSupLineDetails);
         }
       }
@@ -378,11 +386,17 @@ return true;
           for (var i=0;i<=length1;i++){
             control.push(poLines);
           };
+          // this.locatorDesc=this.lstcompolines.rcvLines.locatorDesc;
         this.disabled = false;
         this.disabledLine=false;
         this.disabledViewAccounting=false;
+        this.disabledPoInvoice=false;
+        this.displaylocatorDesc=true;
           this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc; 
+this.recDate=this.lstcompolines.receiptDate;
+// alert(this.recDate);
         // }
       }
       
@@ -406,16 +420,20 @@ return true;
             this.lstcompolines = data.obj;
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
-            this.displaySaveButton =true; 
+            this.displaySaveButton =true;
+            this.ponoFind=true;
+            this.disabledPoInvoice=true; 
             this.disabled = false;
-              this.disabledLine=false;
-              let control = this.poReceiptForm.get('poLines') as FormArray;
+            this.disabledLine=false;
+            let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
           var length1=this.lstcompolines.poLines.length-1;
           this.lineDetailsArray.removeAt(length1);
           control.push(poLines);
           this.displaySaveButton =false;
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.poLines[0].locatorDesc; 
+          this.recDate=this.lstcompolines.receiptDate;
           }
           else{
           this.lstcompolines = data.obj;
@@ -427,6 +445,7 @@ return true;
           this.lineDetailsArray.removeAt(length1);
           control.push(poLines);
           this.displaySaveButton =true;
+          this.ponoFind=true;
           this.poReceiptForm.patchValue(this.lstcompolines);
         }
         }
@@ -457,8 +476,13 @@ return true;
           this.lineDetailsArray.removeAt(length1);
           this.disabled = false;
           this.disabledLine=false;
+          // this.displayrecDate=false;
+          // this.receiptDate=this.recDate;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
+
         }
       }
       );
@@ -487,6 +511,8 @@ return true;
           this.disabledLine=false;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -709,7 +735,11 @@ viewAccounting(receiptNo:any){
       });
   }
 
-
+  poInvoiceCreation(segment1:any){
+    alert(this.segment1);
+    this.service.poinvCre(segment1).subscribe((res: any) => {
+    })
+  }
 
 }
 

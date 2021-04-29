@@ -188,6 +188,7 @@ export class SalesOrderBookingComponent implements OnInit {
   lstcommentsbyorderNo: any[];
   taxDetaileSendArr: any = [];
   invItemList1: any[];
+  categoryList:any[];
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -323,6 +324,16 @@ export class SalesOrderBookingComponent implements OnInit {
       }
     );
 
+
+    this.orderManagementService.categoryList()
+    .subscribe(
+      data1 => {
+        this.categoryList = data1;
+        console.log(this.categoryList);
+        data1 = this.categoryList;
+      }
+    );
+    
 
     this.orderManagementService.getFinTypeSearch1()
     .subscribe(
@@ -540,12 +551,13 @@ export class SalesOrderBookingComponent implements OnInit {
 
 
   onOptionsSelectedCategory(category:any){
- if (category === 'EW') {
+ if (category === 'SS_ADDON_EW') {
   this.displayEWDetails = false;
 }
-else if (category === 'INS') {
+else if (category === 'SS_ADDON_INS') {
     this.displayInsDetails=false;
   }
+  
 
 this.orderManagementService.addonItemList(category)
     .subscribe(
@@ -605,6 +617,8 @@ this.orderManagementService.addonDescList(segment)
     formValue.flowStatusCode= 'BOOKED';
     this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+        this.orderNumber=res.obj;
+        console.log(this.orderNumber);
         alert('RECORD INSERTED SUCCESSFUILY');
         // this.SalesOrderBookingForm.reset();
       } else {
@@ -617,7 +631,23 @@ this.orderManagementService.addonDescList(segment)
   }
 
 
-
+  AccOrderLineSave(){
+    const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
+    // formValue.flowStatusCode= 'BOOKED';
+    this.orderManagementService.AccLineSave(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.orderNumber=res.obj;
+        console.log(this.orderNumber);
+        alert('RECORD INSERTED SUCCESSFUILY');
+        // this.SalesOrderBookingForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.SalesOrderBookingForm.reset();
+        }
+      }
+    });
+  }
 
   paymentReceipt(orderNumber){
    alert(this.orderNumber) ;

@@ -1225,6 +1225,16 @@ viewAccounting1(receiptNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
+
+
+public poinvCre(segment1) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/apInv/inserDtls/${segment1}`;
+  return this.http.post(url, segment1, options);
+}
+
 delearCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/DealerMst');
 }
