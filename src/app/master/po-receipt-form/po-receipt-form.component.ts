@@ -118,6 +118,7 @@ export class PoReceiptFormComponent implements OnInit {
   ledgerId:number;
   runningTotalDr:number;
   receiptDate:Date;
+  shipmentNo:string;
   
 
   selectAllFlag:string;
@@ -217,6 +218,7 @@ export class PoReceiptFormComponent implements OnInit {
       runningTotalDr:[''],
       runningTotalCr:[''],
       ledgerId:[''],
+      shipmentNo:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -246,6 +248,7 @@ export class PoReceiptFormComponent implements OnInit {
       invItemId:[''],
       billToLoc:[''],
       categoryId:[''],
+      
       segment11:['',[Validators.required,Validators.minLength(2),Validators.maxLength(2)]],
       segment2:['',[Validators.required,Validators.minLength(2),Validators.maxLength(2)]],
       segment3:['',[Validators.required,Validators.minLength(2),Validators.maxLength(2)]],
@@ -741,6 +744,38 @@ viewAccounting(receiptNo:any){
     })
   }
 
+
+  shipmentNoFind(shipmentNo:any){
+    this.displaySaveButton =false;
+    alert(shipmentNo);
+    console.log(this.poReceiptForm.value);
+    this.service.getsearchByshipmentNo(shipmentNo)
+      .subscribe(
+        data => {
+          this.lstcompolines = data;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.rcvLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          for (var i=0;i<=length1;i++){
+            control.push(poLines);
+          };
+          // this.locatorDesc=this.lstcompolines.rcvLines.locatorDesc;
+        this.disabled = false;
+        this.disabledLine=false;
+        this.disabledViewAccounting=false;
+        this.disabledPoInvoice=false;
+        this.displaylocatorDesc=true;
+          this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc; 
+this.recDate=this.lstcompolines.receiptDate;
+// alert(this.recDate);
+        // }
+      }
+      
+      );
+  }
 }
 
 

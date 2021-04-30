@@ -1225,6 +1225,9 @@ viewAccounting1(receiptNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
+getsearchByshipmentNo(shipmentNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
+}
 
 
 public poinvCre(segment1) {

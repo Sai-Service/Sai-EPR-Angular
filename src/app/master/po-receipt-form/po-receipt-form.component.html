@@ -115,12 +115,7 @@
                     &nbsp;Receipt&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <!-- (keydown.tab)="ReceiptDateWiseFind()" -->
-                    <!-- <input type="text" formControlName="frmDate1"
-                        [(ngModel)]='frmDate1' value={{frmDate1}}    data-toggle="modal" 
-                        (keydown.tab)="frmDate1=$event.target.value===''?data-target='': data-target='#exampleModalScrollable'"
-                        class="form-control" style="width: 130px;" > -->
-                        <!-- data-target="#exampleModalScrollable"   -->
+                    
                         <input type="date" formControlName="frmDate1"
                         [(ngModel)]='frmDate1' value={{frmDate1}}    data-toggle="modal" 
                         class="form-control" style="width: 130px;"  [ngModel]="frmDate1 | date:'yyyy-MM-dd'" >
@@ -402,10 +397,39 @@
                         </tr>
                     </table>
                 </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    &nbsp;Shipment&nbsp;No&nbsp;:&nbsp;
+                </td> 
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                    
+                                <input type="text" formControlName="shipmentNo"  [(ngModel)]='shipmentNo' value={{shipmentNo}} class="form-control" style="width: 130px;"  >
+                                <!-- (keydown.tab)="ReceiptDateWiseFind()"   data-target="#exampleModalScrollable" -->
+                        </td>
+                        <td>
+                            <table>
+                                <tr>  
+                                    <td>
+                                        <button type="button" class="btn btn-primary" 
+                                        [disabled]="!shipmentNo"
+                                         (click)="shipmentNoFind(shipmentNo)" style="width: 2rem;">
+                                            <i class="fa fa-search"></i>
+                                          </button>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
          </table>
      </td>
- </tr>
+    
+     </tr>
 </table>
                     <table class="center" style="width: 100%;">
                         <tr>
