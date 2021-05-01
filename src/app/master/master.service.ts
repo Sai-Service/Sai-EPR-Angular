@@ -85,6 +85,9 @@ export class MasterService {
   DepartmentList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
+  empIdListFn(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/empMst/All');
+  }
   DepartmentListById(dept): Observable<any> {
     return this.http.get(this.ServerUrl +`/divMst/${dept}`);
   }
@@ -650,6 +653,9 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
  getEmpSearch(): Observable<any> {
   // return this.http.get(this.ServerUrl + '/empMst');
   return this.http.get(this.ServerUrl + '/empMst/All ');
+}
+getEmpIdDetails(ticketNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/empMst/EmpTicket/${ticketNo}`);
 }
 public EmployeeMasterSubmit(EmpMasterRecord) {
   const options = {

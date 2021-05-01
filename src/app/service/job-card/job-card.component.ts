@@ -71,11 +71,13 @@ interface IjobCard {
 })
 export class JobCardComponent implements OnInit {
   jobcardForm: FormGroup;
+  regNo:string;
   RegNo: string;
   jobStatus:string;
   jobCardNum: string='0';
   divisionName :string;
   divisionId:number;
+  description:string;
   jobCardDate=new Date();
   lstcomments: any[];
   RegNoList: any;
@@ -83,7 +85,14 @@ export class JobCardComponent implements OnInit {
   userList1: any[] = [];
   userList2: any[] = [];
   lastkeydown1: number = 0;
+  splitFlag:string;
+  displaySplit=true;
+  displayModal=true;
   subscription: any;
+  showModal: boolean;
+  content: number;
+  title: string;
+
  public jobCarStatusList: Array<string> = [];
  public pickupTypeList:Array<string> = [];
  public srTypeIdList:Array<string> = []; 
@@ -91,22 +100,23 @@ export class JobCardComponent implements OnInit {
  public matStatusList:Array<string> = [];
  public groupIdList:Array<string> = [];
  public  billableTyIdList:Array<string> = [];
- public  TechnicianList:Array<string> = [];
+ public  TechnicianList:any[];
  public LaborItemList:any;
  public splitRatioList:any[];
  public srvAdvisorList:any[];
  public taxCategoryList: any;
   public LaborPriceList :any;
+  public splitArr;
   @ViewChild("myinput") myInputField: ElementRef;
   ngAfterViewInit() {
   this.myInputField.nativeElement.focus();
   }
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private serviceService: ServiceService) {
     this.jobcardForm = fb.group({
-
       jobCardNum: [],
       matStatus: [],
-      RegNo: [],
+      regNo: [],
+      RegNo:[],
       srTypeId: [],
       srvAdvisor: [],
       groupId: [],
@@ -163,11 +173,12 @@ export class JobCardComponent implements OnInit {
 
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
+      splitAmounts: this.fb.array([this.splitDetailsGroup()])
     })
   }
   lineDetailsGroup() {
     return this.fb.group({
-      // poLineId: [];
+      lineId:[],
       billableTyId: [],
       itemId: [],
       qty: [],
@@ -176,27 +187,96 @@ export class JobCardComponent implements OnInit {
       basicAmt: [],
       taxCategoryId: [],
       splitRatio:[],
+      custPer:[],
+      insPer:[],
+      dealerPer:[], 
+      oemPer:[],
+      laborAmt:[],
+      techName:[],
+      splitFlag:[],
+      splitAmtArr: [],
     });
   }
+  splitDetailsGroup() {
+    return this.fb.group({
+      type:[],
+      techId: [],
+      // tech2: [],
+      // tech3: [],
+      // tech4: [],
+      // tech5: [],
+      // tech6: [],
+      // tech7: [],
+      // tech8: [],
+      techAmt:[],
+      techPer:[],
+// tech2Per:[],
+// tech2Amt:[],
+// tech3Per:[],
+// tech3Amt:[],
+// tech4Per:[],
+// tech4Amt:[],
+// tech5Per:[],
+// tech5Amt:[],
+// tech6Per:[],
+// tech6Amt:[],
+// tech7Per:[],
+// tech7Amt:[],
+// tech8Per:[],
+// tech8Amt:[],
+      // contr1:[],
+      // contr2:[],
+      // contr3:[],
+      // contr4:[],
+      // contr1Per:[],
+      // contr2Per:[],
+      // contr3Per:[],
+      // contr4Per:[],
+      // contr1Amt:[],
+      // contr2Amt:[],
+      // contr3Amt:[],
+      // contr4Amt:[],
+    });
+  }
+// splitDetailsArray(i: number): FormArray {
+//     return this.lineDetailsArray.controls[i].get('splitAmounts') as FormArray
+//   }
 
+  splitDetailsArray(): FormArray {
+    return <FormArray>this.jobcardForm.get('splitAmounts')
+  }
   get lineDetailsArray() {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     (patch.controls[0]).patchValue(
       {
-        polineNum: 1,
+        lineId: 1,
       }
     );
     return <FormArray>this.jobcardForm.get('jobCardLabLines')
   }
+  addTechRow(index) {
+    this.splitDetailsArray().push(this.splitDetailsGroup());
+    }
+    RemoveTechRow(index) {
+      this.splitDetailsArray().removeAt(index);
+    }
   distLineDetails() {
     return this.fb.group({
       // invDistributionId: [],
+      lineNum:[],
       billableTyId: [],
       itemId: [],
+      segment:[],
+      description:[],
       qty: [],
       unitPrice: [],
       basicAmt: [],
-
+      splitRatio:[],
+      custPer:[],
+      insPer:[],
+      dealerPer:[], 
+      oemPer:[],
+      taxCategoryId:[],
     })
   }
   lineDistributionArray(): FormArray {
@@ -291,6 +371,46 @@ export class JobCardComponent implements OnInit {
         }
       ); 
   }
+  splitFlagFlagFn(e) {
+    if (e.target.checked=== true) {
+      alert('in true');
+      this.splitFlag = 'Y'
+      this.displaySplit=false;
+   } 
+   if (e.target.checked=== false) {
+    alert('in false');
+     this.splitFlag='N'
+     this.displaySplit=true;;
+   }
+  }
+  MatImptWip(jobCardNum){
+    alert(jobCardNum);
+    var len = this.lineDistributionArray().length;
+    this.serviceService.MatImptWipFn(jobCardNum,sessionStorage.getItem('locId') )
+      .subscribe(
+        data1 => {
+          console.log(data1);
+          
+          for(let i=0; i<data1.length-len; i++){
+            alert('in for')
+            var invLnGrp: FormGroup = this.distLineDetails();
+            this.lineDistributionArray().push(invLnGrp);
+          }
+          // data1.forEach(f => {
+          //   var invLnGrp: FormGroup = this.distLineDetails();
+          //   this.lineDistributionArray().push(invLnGrp);
+          // });
+          this.jobcardForm.get('jobCardMatLines').patchValue(data1);
+          var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
+          for(let i=1; i<= data1.length; i++){
+            // this.jobcardForm.get('jobCardMatLines').patchValue({lineNum: i+1}) 
+            patch.controls[i].patchValue({lineNum: i+1}) 
+          }
+          // this.jobCarStatusList = data1;
+          // console.log(this.jobCarStatusList);  lineNum
+        }
+      ); 
+  }
   serchByitemId(event, i){
     let select = this.LaborItemList.find(d => d.itemId === event);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -328,6 +448,12 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
   jobcard(jobcardForm) {
 
   }
+  technician(techId){
+    let select = this.TechnicianList.find(d => d.teamId === techId);
+    alert(select.description);
+    var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+    (patch.controls[0]).patchValue({ techName: select.description})
+  }
   onKey(index) {
     console.log(index);
     // alert(index+ ' index')
@@ -335,13 +461,19 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
     alert(arrayControl[index].unitPrice);
-    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise})
+    (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise, laborAmt:baseAmtLineWise})
   }
   onOptionsplitRatioSelect(i, splitCateId){
     let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
     alert(select.splitCateId);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-    // (patch.controls[i]).patchValue({ description: select.billingNature})
+    (patch.controls[i]).patchValue( select)
+  }
+  onOptionsplitRatioSelect1(i, splitCateId){
+    let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
+    alert(select.splitCateId);
+    var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
+    (patch.controls[i]).patchValue( select)
   }
   // onOptionsrvAdvisorSelected(srvAdvisor){
   //   let select = this.srvAdvisorList.find(d => d.srvAdvisor === srvAdvisor);
@@ -355,6 +487,13 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
 
     if (invItemId != null) {
       this.lineDetailsArray.push(this.lineDetailsGroup());
+      var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+      var no = this.lineDetailsArray.length;
+      (patch.controls[no-1]).patchValue(
+        {
+          lineId: no ,
+        }
+      );
       // arrayControl[index].itemType.focus();
     //  alert
     } else { ('Kindly Insert the line-Details first'); }
@@ -368,6 +507,7 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
       }
     );
   }
+ 
   RemoveRow(index) {
     if (index === 0) {
 
@@ -412,6 +552,24 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
           this.lstcomments = data;
           console.log(this.lstcomments);
           this.jobcardForm.patchValue(this.lstcomments);
+          // data.jobCardMatLines.forEach(f => {
+          //   var payInvGrp: FormGroup = this.distLineDetails();
+          //   this.lineDistributionArray().push(payInvGrp);
+          // });
+          var len = this.lineDistributionArray().length;
+          alert('len '+ len)
+          for(let i=0; i<data.jobCardMatLines.length - len ; i++){
+            var payInvGrp: FormGroup = this.distLineDetails();
+            this.lineDistributionArray().push(payInvGrp); 
+          }
+          this.jobcardForm.get('jobCardMatLines').patchValue(data.jobCardMatLines);
+          var len1 = this.lineDetailsArray.length;
+          alert('len1 '+ len1)
+          for(let i=0; i<data.jobCardLabLines.length - len1 ; i++){
+            var payInvGrp: FormGroup = this.lineDetailsGroup();
+            this.lineDetailsArray.push(payInvGrp); 
+          }
+          this.jobcardForm.get('jobCardLabLines').patchValue(data.jobCardLabLines);
         }
       );
   }
@@ -498,6 +656,18 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
       }
     });
   }
+  saveMaterial(){
+    const formValue: IjobCard = this.transData(this.jobcardForm.value);
+    this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+        }
+      }
+    });
+  }
   saveArInvoice() {
     const formValue: IjobCard = this.transData(this.jobcardForm.value);
     this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
@@ -515,5 +685,44 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
       }
     });
   }
-  
+  openCodeComb(i){
+    this.displayModal=false;
+    this.showModal = true; // Show-Hide Modal Check
+    this.content = i; // Dynamic Data
+    let a = i + 1
+    this.title =  a; 
+  }
+  fnCancatination(content){
+    var jobCardLabLinesControl = this.jobcardForm.get('jobCardLabLines').value;
+    var lineTotAmt = jobCardLabLinesControl[content].basicAmt;
+    var splitControl = this.jobcardForm.get('splitAmounts').value;
+    var techTotAmt= 0; 
+    for(let i= 0; i<this.splitDetailsArray().length; i++ ){
+      techTotAmt= techTotAmt + splitControl[i].techAmt;
+    }
+   if(techTotAmt ==lineTotAmt ){
+    this.splitArr = this.lineDetailsArray.value[0];
+    console.log(this.splitDetailsArray());
+    this.splitArr.splitArrObj=this.splitDetailsArray().value[0];
+    console.log(this.splitArr);
+    // this.lineDetailsArray.controls[0].splitAmtArr =this.splitArr;
+    let variantFormGroup = <FormGroup>this.lineDetailsArray.controls[content];
+    console.log(this.splitDetailsArray().length);
+    variantFormGroup.addControl('splitArr', new FormControl(this.splitDetailsArray().value))
+  console.log(this.lineDetailsArray);
+    
+    // this.lineDetailsArray.push(this.splitDetailsGroup());
+    // splitDetailsArray
+  }else{
+    alert("Distribution amount mismatch")
+  }
+   }
+   clearlabLineFormArray(){
+     this.splitDetailsArray().clear();
+     this.lineDetailsArray.clear();
+
+   }
+   clearMatLineFormArray(){
+     this.lineDetailsArray.clear();
+   }
 }

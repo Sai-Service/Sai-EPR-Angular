@@ -79,9 +79,14 @@ export class EpmloyeeMasterComponent implements OnInit {
   public titleList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
   public teamRoleList : Array<string>=[];
+  public empIdList:Array<string>=[];
   status1:any;
+  empId:string;
+  userList1: any[] = [];
+  // userList2: any[] = [];
 
-
+  lastkeydown1: number = 0;
+  subscription: any;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.employeeMasterForm = fb.group({
       emplId: [],
@@ -109,6 +114,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       divisionName:[],
       locCode:[],
       teamRole:[],
+      empId:[],
     });
 
   }
@@ -138,13 +144,13 @@ export class EpmloyeeMasterComponent implements OnInit {
           console.log(this.DepartmentList);
         }
       );  
-      // this.service.DesignationList()
-      // .subscribe(
-      //   data => {
-      //     this.DesignationList = data;
-      //     console.log(this.DesignationList);
-      //   }
-      // );
+      this.service.empIdListFn()
+      .subscribe(
+        data => {
+          this.empIdList = data;
+          console.log(this.empIdList);
+        }
+      );
       // this.service.locationIdList()
       this.service.getLocationId(sessionStorage.getItem('ouId'))
       .subscribe(
@@ -203,9 +209,12 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
 
   updateMast() {
-    let select = this.lstcomments.find(d => d.divisionId.divisionName === this.divisionName);
-    this.divisionId =select.divisionId.divisionId;
-    this.locId=select.locId.locId;
+    alert(this.divisionName);
+    let select = this.lstcomments.find(d => d.divisionName === this.divisionName);
+   console.log(select);
+   
+    this.divisionId =select.divisionId;
+    this.locId=select.locId;
     const formValue: IEmployeeMaster = this.employeeMasterForm.value;
     formValue.divisionId=this.divisionId;
     formValue.locId=this.locId;
@@ -239,7 +248,16 @@ export class EpmloyeeMasterComponent implements OnInit {
         }
       );
   };
-
+  SearchByEmpId(empId){
+    alert(empId);
+    this.service.getEmpIdDetails(empId)
+    .subscribe(
+      data => {
+        this.lstcomments = data;
+        console.log(this.lstcomments);
+      }
+    );
+  }
   Select(emplId: number) {
     let select = this.lstcomments.find(d => d.emplId === emplId);
     if (select) {
@@ -248,8 +266,10 @@ export class EpmloyeeMasterComponent implements OnInit {
       // this.divisionName=select.divisionId.divisionName;
       // this.locCode=select.locId.locCode;
       // this.locId = select.locId.locId;
+      // this.deptId= select.deptId+'-'
       this.displayButton = false;
       this.deptId= select.deptId+'-'+select.deptName;
+      alert(this.deptId);
       this.display = false;
     }
   }
@@ -291,4 +311,24 @@ export class EpmloyeeMasterComponent implements OnInit {
   //   this.lstcomments=status;
   //  });
   //  }
+  getUserIdsFirstWay($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList1 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList1 = this.searchFromArray(this.empIdList, userId);
+      }
+    }
+  }
+
+  searchFromArray(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
 }
