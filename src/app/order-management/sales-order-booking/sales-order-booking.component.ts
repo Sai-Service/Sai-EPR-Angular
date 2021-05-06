@@ -69,6 +69,21 @@ interface ISalesBookingForm {
   invType:string;
 }
 
+interface AccOrderLinesPost1 {
+  lineNumber:number;
+ orderNumber:number;
+ segment:string;
+ pricingQty:number;
+ taxCategoryId:number;
+ orgId:number;
+ adhocDiscount:number;
+ adhocConsu:number;
+ additionalDisc:number;
+ adhocExchBonus:number;
+ adhocFinanceOffer:number;
+ adhocISL:number;
+ itemType:string;
+}
 
 @Component({
   selector: 'app-sales-order-booking',
@@ -132,7 +147,14 @@ export class SalesOrderBookingComponent implements OnInit {
   panNo:string;
   invType:string;
   taxAmounts:number;
+  taxCategoryId:number;
   // locCode:string;
+  adhocDiscount:number;
+  adhocConsu:number;
+   additionalDisc:number;
+   adhocExchBonus:number;
+   adhocFinanceOffer:number;
+   adhocISL:number;
   lstgetOrderLineDetails: any[];
   lstgetOrderTaxDetails:any[];
   public financeTypeList:any;
@@ -274,20 +296,40 @@ export class SalesOrderBookingComponent implements OnInit {
 
   orderlineDetailsGroup() {
     return this.fb.group({
-      lineNumber:[''],
-      segment:[''],
+      // lineNumber:[''],
+      // segment:[''],
       orderedItem:[''],
-      pricingQty:[''],
+      // pricingQty:[''],
       unitSellingPrice:[''],
       taxCategoryName:[''],
-      baseAmt:[''],
-      taxAmt:[''],
-      totAmt:[''],
-      flowStatusCode:[''],
-      category:[''],
-      hsnSacCode:[''],
-      invType:[''],
+      // baseAmt:[''],
+      // taxAmt:[''],
+      // totAmt:[''],
+      // flowStatusCode:[''],
+      // // category:[''],
+      // itemType:[''],
+      // hsnSacCode:[''],
+      // invType:[''],
+      // taxCategoryId:[''],
       displaysegment:false,
+      lineNumber:[''],
+   orderNumber:[''],
+   segment:[''],
+   pricingQty:[''],
+   taxCategoryId:[''],
+   orgId:[''],
+   adhocDiscount:[''],
+   adhocConsu:[''],
+   additionalDisc:[''],
+   adhocExchBonus:[''],
+   adhocFinanceOffer:[''],
+   adhocISL:[''],
+   itemType:[''] ,
+   hsnSacCode:[''],
+   taxAmt:[''],
+   baseAmt:[''],
+   flowStatusCode:[''],
+   totAmt:['']
     })
   }
 
@@ -514,8 +556,13 @@ export class SalesOrderBookingComponent implements OnInit {
     this.orderlineDetailsArray().removeAt(index);
   }
 
-  onOptionTaxCatSelected(taxCategoryName, i) {
+  onOptionTaxCatSelected(taxCategory, i) {
     alert(i);
+    var taxCategoryName=taxCategory.taxCategoryName;
+var taxCategoryId=taxCategory.taxCategoryId;
+// var orderNumber=this.orderNumber;
+// var orgId= Number(this.ouId=Number(sessionStorage.getItem('ouId')));
+// alert(orgId);
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
 
@@ -632,9 +679,27 @@ this.orderManagementService.addonDescList(segment)
 
 
   AccOrderLineSave(){
-    const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
+    const formValue: AccOrderLinesPost1 = this.transData(this.SalesOrderBookingForm.value);
+    // formValue.orderNumber=this.orderNumber;
     // formValue.flowStatusCode= 'BOOKED';
-    this.orderManagementService.AccLineSave(formValue).subscribe((res: any) => {
+    console.log(formValue); 
+   var accLines= this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+   var req:any[];
+  //  for (let i = 0; i < ; i++){
+  //   var orderLnGrp: FormGroup = this.orderlineDetailsGroup();
+  //   this.orderlineDetailsArray().push(orderLnGrp);
+  //  }
+  //  if (status===null){
+  //   const formvalue : AccOrderLinesPost1=accLines[0];
+  //   req.push(formvalue)
+  //  }
+    // for line array
+    // if status ===null
+    // const formvalue : AccOrderLinesPost1=accLines[i];
+    // req.push(formvalue)
+    console.log(accLines);
+    this.ouId=Number(sessionStorage.getItem('ouId'));
+    this.orderManagementService.AccLineSave(accLines).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber=res.obj;
         console.log(this.orderNumber);
@@ -648,7 +713,6 @@ this.orderManagementService.addonDescList(segment)
       }
     });
   }
-
   paymentReceipt(orderNumber){
    alert(this.orderNumber) ;
    this.orderManagementService.getOmReceiptSearchByOrdNo(orderNumber)

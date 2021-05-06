@@ -20,65 +20,91 @@
              <input hidden type="text" disabled formControlName="ouName" class="form-control"  [(ngModel)]='ouName'>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;Po/Shipment&nbsp;No&nbsp;:&nbsp;
+                    &nbsp;Po&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <!-- <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
-                    placeholder="Enter PO number" (keydown.tab)="poFind(segment1)"> -->
                     <table>
                         <tr>
-                            <div *ngIf="ponoFind; then thenponoFind else  elseBlockponoFind"></div>
-                            <ng-template #thenponoFind> 
-                                <td>
-                                    <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
-                                        class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
-                                        placeholder="Enter PO number" (keydown.tab)="poFind(segment1)">
-                                </td>
-                            </ng-template>
-                            <ng-template #elseBlockponoFind>
-                                <td>
-                                    <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
-                                    class="form-control" placeholder="Enter PO number" >
-                                </td>
-                                <td> 
-                                    <!-- <button type="submit" class="btn btn-primary" id="register" [disabled]="!segment1"
-                                        (click)="poFind(segment1)" style="width: 2rem;">
+                            <td>
+                                <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
+                                   class="form-control"
+                                   [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                                   placeholder="Enter PO number"> 
+                               </td>  
+                                   <td>
+                                       <!-- <button type="button" class="btn btn-primary" [disabled]="!segment1"  (click)="poFind(segment1)" style="width: 2rem;"><i class="fa fa-search"></i></button> -->
+                                  
+                                       <button type="button" class="btn btn-primary" data-toggle="modal" [disabled]="!segment1" (click)="poAllFind(segment1)" data-target="#exampleModal20" style="width: 2rem;">
                                         <i class="fa fa-search"></i>
-                                    </button> -->
-                                    <!-- Button trigger modal -->
-       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 2rem;">
-           <i class="fa fa-search"></i>
-         </button>
-         
-         <!-- Modal -->
-         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-           <div class="modal-dialog" role="document">
-             <div class="modal-content">
-               <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                   <span aria-hidden="true">&times;</span>
-                 </button>
-               </div>
-               <div class="modal-body">
-                 ...
-               </div>
-               <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                 <button type="button" class="btn btn-primary">Save changes</button>
-               </div>
-             </div>
-           </div>
-         </div>
-                                </td> 
-                            </ng-template>
-                       
+                                      </button> 
+
+                                      <div class="modal fade" id="exampleModal20" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <label class="modal-title" id="exampleModalLabel" style="font-size: 12px;">PO-<input disabled formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control" style="width: 150px;border: hidden;color: black;">-Receipt</label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                              <!-- <h2 ></h2> -->
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                                    <thead>
+                                                        <tr class="GridHeader">
+                                                            <th scope="col" style="width: 100px;">Receipt No</th>
+                                                            <th scope="col" style="width: 100px;">Receipt Date</th>
+                                                            <th scope="col" style="width: 100px;">Taxable Amount</th>
+                                                            <th scope="col" style="width: 100px;">Tax Amount</th>
+                                                            <th scope="col" style="width: 100px;">Total Amount</th>
+                                                            <th scope="col" style="width: 100px;">Select</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let com of poAllRecFind" class="ItemStyle" style="text-decoration:none;">
+                                                            <td style="width: 107px;">{{com.receiptNo}}</td>
+                                                            <td style="width: 107px;">{{com.receiptDate}}</td>
+                                                            <td style="width: 107px;">{{com.taxableAmt}}</td>
+                                                            <td style="width: 107px;">{{com.taxAmt}}</td>
+                                                            <td style="width: 107px;">{{com.totAmt}}</td>
+                                                            <td style="width: 140px;"><button class="btn btn-secondary" (click)="ReceiptFind(com.receiptNo)"data-dismiss="modal" >Select</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <!-- <td style="width: 15%" class="LabelFontStyle">
+                                                            &nbsp;Generate&nbsp;New&nbsp;Receipt&nbsp;:&nbsp;
+                                                        </td> -->
+                                                        <!-- <td>
+                                                            <input hidden disabled type="text" formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control" style="height: 20px;width: 150px;text-align: left;">
+                                                         </td> -->
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" [disabled]="!segment1"  (click)="poFind(segment1)" style="width: 10rem;" data-dismiss="modal">Generate New Receipt</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                             
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>  
                         </tr>
                     </table>
-                </td>
+                </td>      
+                
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;Receipt&nbsp;No&nbsp;:&nbsp;
                 </td>
@@ -494,15 +520,15 @@
                                             Receipt&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
+                                            <!-- <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
                                               <ng-template #thenrecDate>
                                                 <input disabled formControlName="recDate" 
                                                 value={{recDate}} class="form-control"  >
                                               </ng-template>
-                                              <ng-template #elserecDate>
+                                              <ng-template #elserecDate> -->
                                                 <input disabled formControlName="recDate"  value={{recDate}} [(ngModel)]="recDate"
                                                 class="form-control">
-                                              </ng-template>  
+                                              <!-- </ng-template>   -->
                                               <!-- value={{recDate}} [(ngModel)]="recDate" -->
                                         </td> 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -671,8 +697,9 @@
                         </tr>
                     </table>
                     <div class="grid_scroll">
-                        <table class="center">
+                        <table class="center" >
                             <tr>
+                                 <td>
                                 <div class="form-check">
                                     <input type="checkbox" id="selectAllFlag"
                                                                     [formControl]="selectAllFlag"
@@ -680,9 +707,11 @@
                                                                     [(ngModel)]="selectAllFlag"
                                                                     (change)="selectAll($event)">
                                     <label class="form-check-label" style="color: black;font-size: small;">
-                                        Select&nbsp;All&nbsp;Receipt&nbsp;Lines&nbsp;
+                                        Select&nbsp;All&nbsp;Receipt&nbsp;Lines&nbsp;:&nbsp;
                                     </label>
+                                    <input disabled formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control" style="width: 150px;border: hidden;color: black;">
                                 </div>
+                               </td>
                             </tr>
                             <tr>
                                 <td>
@@ -791,7 +820,7 @@
                                                                                 Floor&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number" formControlName="segment11"  value={{segment11}} [(ngModel)]='segment11' class="form-control"
+                                                                                <input type="text" formControlName="segment11"  value={{segment11}} [(ngModel)]='segment11' class="form-control"
                                                                                 [ngClass]="{ 'is-invalid': submitted && f.segment11.errors }"
                                                                                 placeholder="Floor" style="width: 52px;" >
                                                                                 <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
@@ -817,7 +846,7 @@
                                                                                 Rack&nbsp;Number&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
+                                                                                <input  formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
                                                                                 [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
                                                                                 placeholder="Rack No" style="width: 52px;">
                                                                             </td>
@@ -837,7 +866,7 @@
                                                                                 Row&nbsp;Number&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
+                                                                                <input  formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
                                                                                 [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
                                                                                 placeholder="Row No" style="width: 52px;">
                                                                             </td>

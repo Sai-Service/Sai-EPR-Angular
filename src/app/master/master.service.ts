@@ -1238,6 +1238,12 @@ public poinvCre(segment1) {
   return this.http.post(url, segment1, options);
 }
 
+
+poAllRecFind(segment1): Observable<any> {
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}`);
+}
+
+
 delearCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/DealerMst');
 }
