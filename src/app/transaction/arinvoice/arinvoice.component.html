@@ -240,7 +240,7 @@
                     <input hidden type="text" formControlName="billToSiteId">
                     <td style="width: 15%"  class="LabelFontStyle">&nbsp;Customer&nbsp;Account&nbsp;:</td>
             <td>
-                <input type="text" formControlName="shipToCustNo"  disabled class="form-control">
+                <input type="text" style="width: 5rem;" formControlName="shipToCustNo"  disabled class="form-control">
             </td>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
             <td>
@@ -265,7 +265,7 @@
                 <tr>
                     <td style="width: 15%"  class="LabelFontStyle">&nbsp;Customer&nbsp;Account&nbsp;:</td>
             <td>
-                <input type="number" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control">
+                <input type="number" style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control">
             </td>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
             <td>

@@ -63,6 +63,9 @@ TechnicianListFN(locId) : Observable<any> {
 priceListFN(locId,segment) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`);
 } 
+MatImptWipFn(jobCardNum,locId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/partLines?jobNum=${jobCardNum}&locId=${locId}`);
+} 
 public jobcardHeaderSubmit(Record) {
   const options = {
     headers: this.headers
@@ -76,6 +79,13 @@ public lineWISESubmit(Record) {
     headers: this.headers
   };
   const url = this.ServerUrl + `/jobCard/labInsert`;
+  return this.http.post(url, Record, options);
+}
+saveMaterialSubmit(Record) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/jobCard/matInsert`;
   return this.http.post(url, Record, options);
 }
 }
