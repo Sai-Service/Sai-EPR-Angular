@@ -69,6 +69,21 @@ interface ISalesBookingForm {
   invType:string;
 }
 
+interface AccOrderLinesPost1 {
+  lineNumber:number;
+ orderNumber:number;
+ segment:string;
+ pricingQty:number;
+ taxCategoryId:number;
+ orgId:number;
+ adhocDiscount:number;
+ adhocConsu:number;
+ additionalDisc:number;
+ adhocExchBonus:number;
+ adhocFinanceOffer:number;
+ adhocISL:number;
+ itemType:string;
+}
 
 @Component({
   selector: 'app-sales-order-booking',
@@ -132,7 +147,14 @@ export class SalesOrderBookingComponent implements OnInit {
   panNo:string;
   invType:string;
   taxAmounts:number;
+  taxCategoryId:number;
   // locCode:string;
+  adhocDiscount:number;
+  adhocConsu:number;
+   additionalDisc:number;
+   adhocExchBonus:number;
+   adhocFinanceOffer:number;
+   adhocISL:number;
   lstgetOrderLineDetails: any[];
   lstgetOrderTaxDetails:any[];
   public financeTypeList:any;
@@ -188,6 +210,7 @@ export class SalesOrderBookingComponent implements OnInit {
   lstcommentsbyorderNo: any[];
   taxDetaileSendArr: any = [];
   invItemList1: any[];
+  categoryList:any[];
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -273,20 +296,40 @@ export class SalesOrderBookingComponent implements OnInit {
 
   orderlineDetailsGroup() {
     return this.fb.group({
-      lineNumber:[''],
-      segment:[''],
+      // lineNumber:[''],
+      // segment:[''],
       orderedItem:[''],
-      pricingQty:[''],
+      // pricingQty:[''],
       unitSellingPrice:[''],
       taxCategoryName:[''],
-      baseAmt:[''],
-      taxAmt:[''],
-      totAmt:[''],
-      flowStatusCode:[''],
-      category:[''],
-      hsnSacCode:[''],
-      invType:[''],
+      // baseAmt:[''],
+      // taxAmt:[''],
+      // totAmt:[''],
+      // flowStatusCode:[''],
+      // // category:[''],
+      // itemType:[''],
+      // hsnSacCode:[''],
+      // invType:[''],
+      // taxCategoryId:[''],
       displaysegment:false,
+      lineNumber:[''],
+   orderNumber:[''],
+   segment:[''],
+   pricingQty:[''],
+   taxCategoryId:[''],
+   orgId:[''],
+   adhocDiscount:[''],
+   adhocConsu:[''],
+   additionalDisc:[''],
+   adhocExchBonus:[''],
+   adhocFinanceOffer:[''],
+   adhocISL:[''],
+   itemType:[''] ,
+   hsnSacCode:[''],
+   taxAmt:[''],
+   baseAmt:[''],
+   flowStatusCode:[''],
+   totAmt:['']
     })
   }
 
@@ -323,6 +366,16 @@ export class SalesOrderBookingComponent implements OnInit {
       }
     );
 
+
+    this.orderManagementService.categoryList()
+    .subscribe(
+      data1 => {
+        this.categoryList = data1;
+        console.log(this.categoryList);
+        data1 = this.categoryList;
+      }
+    );
+    
 
     this.orderManagementService.getFinTypeSearch1()
     .subscribe(
@@ -503,8 +556,13 @@ export class SalesOrderBookingComponent implements OnInit {
     this.orderlineDetailsArray().removeAt(index);
   }
 
-  onOptionTaxCatSelected(taxCategoryName, i) {
+  onOptionTaxCatSelected(taxCategory, i) {
     alert(i);
+    var taxCategoryName=taxCategory.taxCategoryName;
+var taxCategoryId=taxCategory.taxCategoryId;
+// var orderNumber=this.orderNumber;
+// var orgId= Number(this.ouId=Number(sessionStorage.getItem('ouId')));
+// alert(orgId);
     this.indexVal = i;
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
 
@@ -540,12 +598,13 @@ export class SalesOrderBookingComponent implements OnInit {
 
 
   onOptionsSelectedCategory(category:any){
- if (category === 'EW') {
+ if (category === 'SS_ADDON_EW') {
   this.displayEWDetails = false;
 }
-else if (category === 'INS') {
+else if (category === 'SS_ADDON_INS') {
     this.displayInsDetails=false;
   }
+  
 
 this.orderManagementService.addonItemList(category)
     .subscribe(
@@ -605,6 +664,8 @@ this.orderManagementService.addonDescList(segment)
     formValue.flowStatusCode= 'BOOKED';
     this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+        this.orderNumber=res.obj;
+        console.log(this.orderNumber);
         alert('RECORD INSERTED SUCCESSFUILY');
         // this.SalesOrderBookingForm.reset();
       } else {
@@ -617,8 +678,41 @@ this.orderManagementService.addonDescList(segment)
   }
 
 
-
-
+  AccOrderLineSave(){
+    const formValue: AccOrderLinesPost1 = this.transData(this.SalesOrderBookingForm.value);
+    // formValue.orderNumber=this.orderNumber;
+    // formValue.flowStatusCode= 'BOOKED';
+    console.log(formValue); 
+   var accLines= this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+   var req:any[];
+  //  for (let i = 0; i < ; i++){
+  //   var orderLnGrp: FormGroup = this.orderlineDetailsGroup();
+  //   this.orderlineDetailsArray().push(orderLnGrp);
+  //  }
+  //  if (status===null){
+  //   const formvalue : AccOrderLinesPost1=accLines[0];
+  //   req.push(formvalue)
+  //  }
+    // for line array
+    // if status ===null
+    // const formvalue : AccOrderLinesPost1=accLines[i];
+    // req.push(formvalue)
+    console.log(accLines);
+    this.ouId=Number(sessionStorage.getItem('ouId'));
+    this.orderManagementService.AccLineSave(accLines).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.orderNumber=res.obj;
+        console.log(this.orderNumber);
+        alert('RECORD INSERTED SUCCESSFUILY');
+        // this.SalesOrderBookingForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.SalesOrderBookingForm.reset();
+        }
+      }
+    });
+  }
   paymentReceipt(orderNumber){
    alert(this.orderNumber) ;
    this.orderManagementService.getOmReceiptSearchByOrdNo(orderNumber)

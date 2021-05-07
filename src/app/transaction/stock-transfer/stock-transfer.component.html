@@ -29,11 +29,18 @@
      <table class="center">
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
-            Shipment Number:
+            Stock Tansfer Number:
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
+            <input hidden formControlName="transactionTypeId">
           </td>
+          <td style="width: 15%" class="LabelFontStyle">
+              Date:
+            </td>
+            <td>
+              <input  type="date" class="form-control" formControlName="transDate" >
+            </td>
           <td style="width: 15%" class="LabelFontStyle">
             To Organization:
           </td>
@@ -45,18 +52,17 @@
                   </option>
               </select>
           </td>
-          <td style="width: 15%" class="LabelFontStyle">
-            Shipment Date:
-          </td>
-          <td>
-            <input type="date" class="form-control" formControlName="transDate" >
-          </td>
-
-          <td>
+                    <td>
             <input type="hidden" formControlName="locId" [(ngModel)]="locId">
           </td>
         </tr>
         <tr>
+          <td style="width: 15%" class="LabelFontStyle">SubInventory</td>
+            <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="subInventoryCode" >
+                <option>--Select--</option>
+                <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
+                </select>
+              </td>
           <td style="width: 15%" class="LabelFontStyle">
             Eway Bill Number:
           </td>
@@ -67,14 +73,9 @@
             Eway Bill Date:
           </td>
           <td>
-            <input type="date" class="form-control" formControlName="ewayBillDate">
-          </td>
-          <td style="width: 15%" class="LabelFontStyle">
-            Remark:
-          </td>
-          <td>
-            <input type="text" class="form-control" formControlName="remarks">
-          </td>
+              <input type="date" class="form-control" formControlName="ewayBillDate">
+            </td>
+          
         </tr>
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
@@ -102,7 +103,16 @@
             <input type="text" class="form-control" formControlName="status" [(ngModel)]="status">
           </td>
         </tr>
+<tr>
+   
+      <td style="width: 15%" class="LabelFontStyle">
+        Remark:
+      </td>
 
+      <td>
+          <input type="text" class="form-control" formControlName="remarks">
+        </td>
+</tr>
       </table>
     </ng-template>
       <br>
@@ -121,23 +131,24 @@
                         <th scope="col">Item Code</th>
                         <th scope="col">Item Description</th>
                         <th scope="col">UOM</th>
-                        <th scope="col">Subinventory</th>
+                        <!-- <th scope="col">Subinventory</th> -->
                         <th scope="col">Price</th>
                         <th scope="col">Locator</th>
+                        <th scope="col">Available Quantity</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Reason</th>
+                        <!-- <th scope="col">Reason</th> -->
                         <th scope="col">Add</th>
                         <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <input type="number" hidden formControlName="trxLineId">
+                  <!-- <input type="number" hidden formControlName="trxLineId"> -->
                 </tr>
               <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"> </div>
                 <ng-template #thenBlock1>
-                <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" >
+                <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber" >
                  </td>
                 <td><select  class="form-control" style="height: 20px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'>
                   <option>--Select--</option>
@@ -146,39 +157,36 @@
                 </td>
                 <td><input type="text" class="form-control" style="height: 20px;"formControlName="description"></td>
                 <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
-                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="subInventoryCode" (ngModelChange)='onOptionSelect($event,trxLineIndex)'>
-                  <option>--Select--</option>
-                  <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
-                  </select>
-                </td>
+                
                 <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="transCost"></td>
-                <td><select class=" form-control" style="height: 20px; width: 110px;" formControlName="onHandId" (ngModelChange)='onSelectLocaorId($event,trxLineIndex)' >
+                <td><select class=" form-control" style="height: 20px; width: 110px;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
                 <option>--Select--</option>
-                <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
+                <input hidden formControlName="onHandQty">
+                <input hidden formControlName="onHandId">
                 <input hidden type="number" formControlName="locatorId">
+                <input hidden  type="text" formControlName="resveQty">
                 </td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" ></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" #qty></td>
                 <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()"></button></td>
                 <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
               </tr>
               </ng-template>
               <ng-template #elseBlock1>
-                <tr>  <td><input  disabled formControlName="LinNo" type="text" class="form-control"  style="height: 20px;width: 50px;" >
+                <tr>  <td><input  disabled formControlName="lineNumber" type="text" class="form-control"  style="height: 20px;width: 50px;" >
                 </td>
                <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
                </td>
                <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
-               <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="subInventoryCode" >
-               </td>
-               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="transCost"></td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost"></td>
                <td><input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
                    <input hidden type="number" formControlName="locatorId">
                </td>
-               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty"></td>
-               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" ></td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="avlqty"></td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="primaryQty" ></td>
                <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()"></button></td>
                <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
              </tr>
@@ -208,7 +216,7 @@
               To Organization:
             </td>
             <td>
-               <input disabled type="number" id="transferOrgId" class="form-control" formControlName="transferOrgId">
+               <input disabled type="text" id="transReference" class="form-control" formControlName="transReference">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
               Shipment Date:
@@ -226,7 +234,7 @@
               Eway Bill Number:
             </td>
             <td>
-              <input disabled type="text" class="form-control" formControlName="ewayBill">
+              <input disabled type="text" class="form-control" formControlName="ewayBill" style="text-align: right;">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
               Eway Bill Date:
@@ -344,12 +352,119 @@
                   </td>
                 </ng-template>
 
-
+                <td>
+                    <!-- <button type="submit" class="btn btn-primary"    >Payment</button>   -->
+               <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>
+                </td>
+                <td>
+                    <button  type="submit" class="btn btn-primary" (click)="searchAll()">Search</button>
+                  </td>
           </tr>
         </table>
     <!-- </form> -->
+    <br>
+
+ 
+<!-- card code  -->
+<!-- Card -->
+<div class="card chart-card">
+
+  <!-- Card content -->
+  <div class="card-body pb-0">
+
+    <!-- Title -->
+    <h4 class="card-title font-weight-bold" style="background-color: #FFE4B5;width: 100%;">Pending Data</h4>
+   
+  </div>
+
+  <!-- Classic tabs -->
+  <div class="classic-tabs">
+
+    <!-- Nav tabs -->
+    <ul class="nav tabs-white nav-fill" role="tablist">
+      <li class="nav-item ml-0">
+         <a class="nav-link waves-light active" data-toggle="tab" href="#panel1001" role="tab">Receiving at other Location</a>
+                
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" data-toggle="tab" href="#panel1002" role="tab">Receiving at this Location</a>
+      </li>
+    </ul>
+
+    <div class="tab-content rounded-bottom">
+      <!--Panel 1-->
+      <div class="tab-pane fade in show active" id="panel1001" role="tabpanel">
+          <div class="Container1">
+              <div class="grid_scroll">
+              <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <tbody>
+                      <tr class="GridHeader">
+                        <th scope="col">StockAdjustment Number</th>
+                        <th scope="col">From Location</th>
+                        <th scope="col">To Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">remark</th>
+                        <th scope="col">View</th>
+                      </tr>
+                      </tbody>
+                      <tr *ngFor="let com of pendingrec" style="background-color:#E3EAEB;">
+                        <td>{{com.shipmentNumber}}</td>
+                        <td>{{com.fromLoc}}</td>
+                        <td>{{com.toLoc}}</td>
+                        <td>{{com.creationDate}}</td>
+                        <td>{{com.remark}}</td>
+                        <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button>
+                      </tr>
+              </table>
+              </div>
+            </div>
+            
+      </div>
+      <!--/.Panel 1-->
+      <!--Panel 2-->
+      <div class="tab-pane fade" id="panel1002" role="tabpanel">
+          <div class="Container1">
+              <div class="grid_scroll">
+              <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <tbody>
+                      <tr class="GridHeader">
+                        <th scope="col">StockAdjustment Number</th>
+                        <th scope="col">From Location</th>
+                        <th scope="col">To Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">remark</th>
+                        <th scope="col">View</th>
+                      </tr>
+                      </tbody>
+                      <tr *ngFor="let com of pendingatother" style="background-color:#E3EAEB;">
+                        <td>{{com.shipmentNumber}}</td>
+                        <td>{{com.fromLoc}}</td>
+                        <td>{{com.toLoc}}</td>
+                        <td>{{com.creationDate}}</td>
+                        <td>{{com.remark}}</td>
+                        <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button>
+                      </tr>
+              </table>
+              </div>
+            </div>
+      </div>
+      <!--/.Panel 2-->
+      <!--Panel 3-->
+      <div class="tab-pane fade" id="panel1003" role="tabpanel">
+        <img class="img-fluid z-depth-1 rounded mb-3" alt="sample image" src="https://mdbootstrap.com/img/Photos/Others/intro1.jpg">
+        <p align="justify" class="font-small text-muted mx-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima at ipsum sit amet.</p>
+      </div>
+      <!--/.Panel 3-->
+    </div>
+
+  </div>
+  <!-- Classic tabs -->
+
+</div>
+<!-- Card -->
 
 </form>
+
   </div>
 
 
