@@ -269,8 +269,9 @@ export class EpmloyeeMasterComponent implements OnInit {
       // this.deptId= select.deptId+'-'
       this.displayButton = false;
       this.deptId= select.deptId+'-'+select.deptName;
-      alert(this.deptId);
-      this.display = false;
+      this.deptName = select.deptName;
+      // alert(this.deptId);
+      this.employeeMasterForm.patchValue({title:select.title});
     }
   }
   AccessChange(e) {
