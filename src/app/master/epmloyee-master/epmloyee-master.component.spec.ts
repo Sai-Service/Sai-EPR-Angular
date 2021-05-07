@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EpmloyeeMasterComponent } from './epmloyee-master.component';
 
 describe('EpmloyeeMasterComponent', () => {
-  let component: EpmloyeeMasterComponent;
+   let component: EpmloyeeMasterComponent;
   let fixture: ComponentFixture<EpmloyeeMasterComponent>;
 
   beforeEach(async(() => {

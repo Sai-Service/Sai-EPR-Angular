@@ -127,18 +127,18 @@
                             Full&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <input formControlName="name" [(ngModel)]='name' value={{name}}  (keyup)="onKey($event)"  class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                            <input formControlName="fullName" [(ngModel)]='fullName' value={{fullName}}  (keyup)="onKey($event)"  class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }"
                             placeholder="Enter full name" uppercase  style="text-transform: uppercase;">
-                        <div *ngIf="submitted && f. name.errors" class="invalid-feedback">
-                            <div *ngIf="f.name.errors.required">Full Name must be a valid</div>
+                        <div *ngIf="submitted && f. fullName.errors" class="invalid-feedback">
+                            <div *ngIf="f.fullName.errors.required">Full Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.name.errors?.maxLength">Full  Name must be a valid 
+                            <div *ngIf="f.fullName.errors?.maxLength">Full  Name must be a valid 
                             </div>
                         </div>
                         <span
-                            *ngIf="!employeeMasterForm.get('name').valid && employeeMasterForm.get('name').touched">Please
+                            *ngIf="!employeeMasterForm.get('fullName').valid && employeeMasterForm.get('fullName').touched">Please
                             Enter Full  Name </span>
                         </td>
                         <td style="width: 12%" class="LabelFontStyle1">

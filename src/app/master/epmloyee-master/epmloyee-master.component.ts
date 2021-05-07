@@ -12,7 +12,7 @@ interface IEmployeeMaster {
   fname: string
   mname: string
   lname: string
-  name: string
+  fullName: string
   locId: number;
   deptId: string;
   designation: string;
@@ -44,7 +44,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   fname: string= '';
   mname: string= '';
   lname: string= '';
-  name: string= '';
+  fullName: string= '';
   locId: number;
   deptId: string;
   designation: string;
@@ -91,7 +91,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       mname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
-      name: ['', [Validators.required,Validators.maxLength(100)]],
+      fullName: ['', [Validators.required,Validators.maxLength(100)]],
       locId: ['', [Validators.required]],
       deptId: ['', [Validators.required]],
       designation: [''],
@@ -265,7 +265,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
   onKey(event: any) {
     const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
-    this.name = aaa;
+    this.fullName = aaa;
   }
 
   onOptionsDEPTSelected(event){   

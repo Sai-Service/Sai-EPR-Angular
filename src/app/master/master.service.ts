@@ -83,6 +83,7 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/TitleList');
   }
   DepartmentList(): Observable<any> {
+
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
   DepartmentListById(dept): Observable<any> {
@@ -175,7 +176,8 @@ classCodeTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
 getTaxCat(ouId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
+ // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
+ return this.http.get(this.ServerUrl + `/taxCtgHeader/${ouId}`);
 }
 BranchList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Branch');
