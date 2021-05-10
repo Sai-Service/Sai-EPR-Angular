@@ -118,7 +118,7 @@ export class OPMasterDtoComponent implements OnInit {
   showModal: boolean;
   content: number;
   title: string;
-
+  mainType:string;
   userList1: any[] = [];
   userList2: any[] = [];
 
@@ -238,7 +238,7 @@ export class OPMasterDtoComponent implements OnInit {
   displayNewButton = true;
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
-  displaysupplierSiteId = true;
+  displaysupplierSiteId=true;
   displayModal = true;
   displayContexValue = true;
   displayDept = true;
@@ -248,16 +248,19 @@ export class OPMasterDtoComponent implements OnInit {
   displayButton = true;
   displayLine = true;
   displayHSN = true;
-  displayinvDesc = true;
+  displayinvDesc =true;
+  displayBillShipList=true;
+  displayBillShipList1=true;
   // displayPoLine =true;
   displayTaxDetailData = true;
   DissRecoverableFlag = false;
   DissinclusiveFlag = false;
   DissselfAssesedFlag = false;
-  displayNewButtonApprove = false;
-  displayNewButtonUpdate = false;
-  displayNewButtonSave = true;
-  displayNewButtonReset = true;
+  displayNewButtonApprove =false;
+displayNewButtonUpdate=false;
+displayNewButtonSave=true;
+displayNewButtonReset=true;
+displaygetInvItemId=true;
   disTaxDiss: Array<boolean> = [];
   taxCat: string;
   taxCat1: string;
@@ -275,7 +278,7 @@ export class OPMasterDtoComponent implements OnInit {
   lstcomments: any[];
   taxList: any[];
   lstcomments1: any;
-  invItemList= new Array();
+  invItemList: any[];
   siteIdList: any;
   supplierCodeSelected: any;
   public OUIdList: Array<string> = [];
@@ -311,7 +314,7 @@ export class OPMasterDtoComponent implements OnInit {
   public today = new Date();
   public priorDate = new Date().setDate(this.today.getDate() - 30)
   public data1: any[];
-  public selectedInvItem = new Array();
+  public selectedInvItem =new Array(); 
 
   @ViewChild("myinput") myInputField: ElementRef;
   ngAfterViewInit() {
@@ -356,14 +359,14 @@ export class OPMasterDtoComponent implements OnInit {
       recoverableFlag: [],
       selfAssesedFlag: [],
       inclusiveFlag: [],
-      description: ['', [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z 0-9]*')]],
+      description: ['',[Validators.minLength(3),Validators.maxLength(20),Validators.pattern('[a-zA-Z 0-9]*')]],
       totTaxAmt: [],
       ouName: [],
       name: [],
       contextValue: [],
       divisionName: [],
       address: [],
-      mobileNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
+      mobileNo:['', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       kilometer: [],
       transferToNewCarACNo: [],
       paymentToBank: [],
@@ -1233,54 +1236,60 @@ export class OPMasterDtoComponent implements OnInit {
     this.patchResultList(i, this.taxCalforItem);
   }
   onOptioninvItemIdSelected(itemId, index) {
+    // alert(itemId);
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
+    // debugger;
+    // alert(selectedValue);
+    console.log(selectedValue);
+    
     this.selectedInvItem.push(selectedValue);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     this.itemType = arrayControl[index].itemType
     this.invItemId = selectedValue.itemId;
+    // alert(this.invItemId);
     console.log(this.invItemId, this.taxCat);
-
-
-    if (this.itemType === "GOODS") {
-      this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
-        .subscribe(
-          data => {
-            this.ItemDetailsList = data.obj;
-            console.log(this.ItemDetailsList);
-            var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-            console.log(patch.controls);
-            console.log(patch.controls[index]);
-            this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-            if (this.ItemDetailsList.segmentName === null) {
+    if(this.itemType === "GOODS"){
+    // this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
+    //   .subscribe(
+    //     data => {
+      this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.ItemDetailsList = res.obj;
+          console.log(this.ItemDetailsList);
+          var patch = this.poMasterDtoForm.get('poLines') as FormArray; 
+          console.log(patch.controls);
+          console.log(patch.controls[index]);
+          this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+          if (this.ItemDetailsList.segmentName === null ) {
+            (patch.controls[index]).patchValue(
+              {
+                diss1 : 0,
+                invDescription: this.ItemDetailsList.invDescription,
+                invCategory: this.ItemDetailsList.invCategory,
+                uom: this.ItemDetailsList.uom,
+                hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                segmentName: this.segmentName1,
+                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                invItemId: this.invItemId,
+                
+              }
+              
+            );
+          }
+          else {
+            // alert ('vehicle item is there');
+            const invCategory = this.ItemDetailsList.invCategory.substr(0,3);
+            // alert(invCategory);
+            if (invCategory==='MCH'){
+              // alert('under if condition');
               (patch.controls[index]).patchValue(
                 {
-                  diss1: 0,
-                  invDescription: this.ItemDetailsList.invDescription,
-                  invCategory: this.ItemDetailsList.invCategory,
+                  diss1 : 0,
                   uom: this.ItemDetailsList.uom,
-                  hsnSacCode: this.ItemDetailsList.hsnSacCode,
-                  taxCategoryName: this.ItemDetailsList.taxCategoryName,
-                  segmentName: this.segmentName1,
-                  poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
-                  taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
-                  invItemId: this.invItemId,
-
-                }
-
-              );
-              //   for (let i=0; i<this.selectedInvItem.length; i++){
-              //     if(this.selectedInvItem[i].value===)
-              //   this.invItemList.slice
-              // }
-
-            }
-            else {
-              // alert('segment value is not null');
-              (patch.controls[index]).patchValue(
-                {
-                  diss1: 0,
-                  uom: this.ItemDetailsList.uom,
+                  orderedQty:1,
                   invDescription: this.ItemDetailsList.invDescription,
                   invCategory: this.ItemDetailsList.invCategory,
                   hsnSacCode: this.ItemDetailsList.hsnSacCode,
@@ -1291,21 +1300,37 @@ export class OPMasterDtoComponent implements OnInit {
                   invItemId: this.invItemId,
                 }
               );
-              // alert(this.ItemDetailsList.invCategory);
-              const invCategory = this.ItemDetailsList.invCategory.substr(0, 3);
-              alert(invCategory);
-              // if(invCategory==='MCH'){
-              //   (patch.controls[index]).patchValue(
-              //     {
-              //        uom: 'INR',
-              //       orderedQty:1,
-              //     }
-              //   );
-              // }
             }
-
+            else{
+            // alert('segment value is not null');
+            (patch.controls[index]).patchValue(
+              {
+                diss1 : 0,
+                uom: this.ItemDetailsList.uom,
+                invDescription: this.ItemDetailsList.invDescription,
+                invCategory: this.ItemDetailsList.invCategory,
+                hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                segmentName: this.ItemDetailsList.segmentName,
+                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                invItemId: this.invItemId,
+              }
+            );
           }
-        );
+            // // alert(this.ItemDetailsList.invCategory);
+            // const invCategory = this.ItemDetailsList.invCategory.substr(0,3);
+            // alert(invCategory);
+          }
+
+      }
+      else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+      });
+     
     }
     if (this.itemType === "EXPENCE") {
 
@@ -1721,13 +1746,29 @@ export class OPMasterDtoComponent implements OnInit {
     }
   }
   // checked
-  onOptioninvitemTypeSelected(itemType: any) {
-    alert(itemType);
-    if (itemType === 'GOODS') {
-
-      var deptName1 = this.poMasterDtoForm.get('dept').value;
-      // alert(deptName1+" "+(sessionStorage.getItem('deptName')))
-      // alert(this.deptName);
+  onOptioninvitemTypeSelected(e: any) {
+    alert(e.target.value);
+   var itemType=e.target.value;
+    // alert(itemType);
+    // alert(this.poMasterDtoForm.get('supplierCode').value);
+    if (this.poMasterDtoForm.get('supplierCode').value === null){
+      alert('Please Select Supplier Code');
+      this.displaygetInvItemId=false;
+    }
+    else{
+      // alert(itemType);
+      // alert('else'+e.target.value);
+    if (itemType === 'GOODS' ) { 
+      this.displaygetInvItemId=true;
+      // let scode=this.poMasterDtoForm.get('supplierCode');
+      // scode.focus();
+      // ( < any > this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
+      this.displaysupplierSiteId=false;
+      this.displayBillShipList=false;
+      this.displayBillShipList1=false
+var deptName1 = this.poMasterDtoForm.get('dept').value;
+// alert(deptName1+" "+(sessionStorage.getItem('deptName')))
+// alert(this.deptName);
       this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
         .subscribe(
           data => {
@@ -1735,19 +1776,20 @@ export class OPMasterDtoComponent implements OnInit {
             console.log(this.invItemList);
           }
         );
-      // (document.getElementById("invDescription")as any).disabled= true;   
-      // (document.getElementById("hsnSacCode")as any).disabled= true;
-      // this.displaysupplierSiteId=false;
-      alert('check 1');
-      var ids = new Set(this.selectedInvItem.map(({ invItemId }) => invItemId));
-      alert('check 2');
-      this.invItemList = this.invItemList.filter(({ invItemId }) => !ids.has(invItemId));
-      console.log(this.invItemList);
+        // (document.getElementById("invDescription")as any).disabled= true;   
+        // (document.getElementById("hsnSacCode")as any).disabled= true;
+        // this.displaysupplierSiteId=false;
+//         alert('check 1');
+//     var ids= new Set(this.selectedInvItem.map(({ itemId }) => itemId));
+//     alert('check 2');
+//     this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
+// console.log(this.invItemList);
     }
-    if (itemType === 'EXPENCE') {
-      this.displayHSN = false;
-      this.displayinvDesc = false;
-      (document.getElementById("invDescription") as any).disabled = false;
+     if (itemType === 'EXPENCE') {
+      this.displaygetInvItemId=true;
+      this.displayHSN=false;
+      this.displayinvDesc =false;
+      (document.getElementById("invDescription")as any).disabled= false;
       var deptName = 'NA';
       this.service.invItemList(itemType, deptName)
         .subscribe(
@@ -1761,6 +1803,7 @@ export class OPMasterDtoComponent implements OnInit {
 
     }
 
+  }
   }
 
   onOptioninvItemIdSelected1($event) {

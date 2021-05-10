@@ -768,8 +768,9 @@
                                              </ng-template>
                                         </td>
                                                     <td> <input type="text"
-                                                            formControlName="qtyReceived" (change)="calculation(i)"
-                                                            class="form-control" style="height: 20px;width: 50px;">
+                                                            formControlName="qtyReceived"  (change)="calculation(i,qty)" #qty
+                                                            class="form-control" style="height: 20px;width: 50px;" >
+                                                            <!-- [(ngModel)]='qtyReceived' value="qtyReceived"  -->
                                                     </td>
                                                     <td> <input disabled type="text"
                                                             formControlName="itemType"
