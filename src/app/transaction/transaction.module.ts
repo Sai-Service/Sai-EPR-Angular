@@ -11,6 +11,10 @@ import { MiscellaneousTransactionComponent } from './miscellaneous-transaction/m
 import { PaymentsComponent } from './payments/payments.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 
+  import { from } from 'rxjs';
+import { StockTakingComponent } from './stock-taking/stock-taking.component';
+
+
 @NgModule({
   declarations: [
     PoInvoiceComponent,
@@ -20,6 +24,8 @@ import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
     PaymentsComponent,
     PoInvoiceComponent,
     ARInvoiceComponent,
+    StockTakingComponent,
+   
   ],
   imports: [
     CommonModule,
