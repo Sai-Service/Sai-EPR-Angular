@@ -689,9 +689,28 @@
                             {{sc.ticketNo}}</option>
                     </datalist>
                     </td>
-                    <td colspan="8" style="text-align: left; width: 100%;">
+                    <!-- colspan="8" -->
+                    <td  style="text-align: left; width: 100%;">
                         <button type="submit" [disabled]="!empId" (click)="SearchByEmpId(empId)" class="btn btn-primary"><i
                                 class="fa fa-search"></i></button>
+            
+                    </td>
+                
+                
+                    <td style="width: 15%" class="LabelFontStyle">Search&nbsp;By&nbsp;Name&nbsp;:</td>
+                    <td>
+                     <input type="text" formControlName="fullName1" class="form-control" [(ngModel)]="fullName1">  
+                    <!-- <select formControlName="fullName" id="fullName" class="form-control" (ngModelChange)='onOptionsFullNameSelected($event)'> 
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  fullNameList" >
+                            {{sc.fullName}}
+                        </option>
+                    </select> -->
+                    </td>
+                    <td colspan="8" style="text-align: left; width: 100%;">
+                        <button type="submit" [disabled]="!fullName1" (click)="SearchByFullName(fullName1)" class="btn btn-primary"><i
+                                class="fa fa-search"></i></button>
+                        
             
                     </td>
                 </tr>
