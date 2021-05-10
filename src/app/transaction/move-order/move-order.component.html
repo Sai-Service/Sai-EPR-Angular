@@ -4,13 +4,14 @@
       <tr>
           <!-- class="PageHeader" -->
           <td class="PageHeader">
-              &nbsp;&nbsp;Move Order&nbsp;
+              &nbsp;&nbsp;Workshop&nbsp;Issue
+              &nbsp;
           </td>
 
 
       <table style="width: 100%; background-color: #a4d3e9;">
         <tr>
-            <td style="width: 15%" class="LabelFontStyle">Move&nbsp;Order&nbsp;Number&nbsp;:</td>
+            <td style="width: 15%" class="LabelFontStyle">Workshop&nbsp;Issue&nbsp;Number&nbsp;:</td>
             <td>
                 <input type="text"  class="form-control" formControlName="reqNo" id="reqNo" name="reqNo" #reqNo>
             </td>
@@ -29,52 +30,88 @@
       <table class="center">
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
-            Move Order Number:
+           Work Shop Issue No:
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber">
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-            Move Order Date:
+            Issue Date:
           </td>
           <td>
-            <input type="date" class="form-control" formControlName="creationDate">
-          </td>
+              <input  disabled type="text" class="form-control" formControlName="creationDate"  [(ngModel)]="creationDate" >
+            </td>
           <td style="width: 15%" class="LabelFontStyle">
+              Issue Type:
+            </td>
+            <td>
+              <select class="form-control" formControlName="transactionTypeId">
+                <option>--Select--</option>
+                <option *ngFor="let tt of transType"[ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
+              </select>
+            </td>
+        </tr>
+        <tr>
+           <td style="width: 15%" class="LabelFontStyle">
             Manual IPO Number:
           </td>
           <td>
             <input type="text" class="form-control" formControlName="description" [disabled]="isDisabled" required>
           </td>
-          <td>
+          <td style="width: 15%" class="LabelFontStyle">
+              JobCard Number:
+            </td>
+            <td>
+              <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
+              <select type="text" class="form-control" formControlName="repairNo">
+                  <option>--Select--</option>
+                  <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}</option>
+                </select>
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">
+              Billable Type:
+            </td>
+            <td>
+                <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
+                <select type="text" class="form-control" formControlName="Billable">
+                    <option>--Select--</option>
+                    <option *ngFor="let bill of Billabletype">{{bill.billableTyName}}</option>
+                  </select>
+              </td>
+          </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    From Subinventory:
+                  </td>
+                  <td>
+                    <select class="form-control" formControlName="frmSubInvCode">
+                      <option>--Select--</option>
+                      <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
+                    </select>
+                  </td>
+                  <td style="width: 15%" class="LabelFontStyle">
+                    To Subinventory:
+                  </td>
+                  <td>
+                    <select type="text" class="form-control" formControlName="toSubInvCode">
+                      <option>--Select--</option>
+                      <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
+                    </select>
+        
+                  </td>
+                     <!-- <td> -->
             <input type="hidden" formControlName="locId" [(ngModel)]="locId">
-          </td>
+          <!-- </td> -->
+          <td style="width: 15%" class="LabelFontStyle">
+              Remark:
+            </td> 
+            <td>
+              <input type="text" class="form-control" formControlName="remarks">
+            </td>
         </tr>
-        <tr>
-          <td style="width: 15%" class="LabelFontStyle">
-            Type:
-          </td>
-          <td>
-            <select class="form-control" formControlName="transactionTypeId">
-              <option>--Select--</option>
-              <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
-            </select>
-          </td>
-
-
-          <td style="width: 15%" class="LabelFontStyle">
-            Repair Order Number:
-          </td>
-          <td>
-            <input type="text" class="form-control" formControlName="repairNo">
-          </td>
-          <td style="width: 15%" class="LabelFontStyle">
-            Remark:
-          </td>
-          <td>
-            <input type="text" class="form-control" formControlName="remarks">
-          </td>
-        </tr>
+       
+       
+       
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
             Issue By:
@@ -97,27 +134,10 @@
           <td>
             <input type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
           </td>
+
         </tr>
         <tr>
-          <td style="width: 15%" class="LabelFontStyle">
-            From Subinventory:
-          </td>
-          <td>
-            <select class="form-control" formControlName="frmSubInvCode">
-              <option>--Select--</option>
-              <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
-            </select>
-          </td>
-          <td style="width: 15%" class="LabelFontStyle">
-            To Subinventory:
-          </td>
-          <td>
-            <select type="text" class="form-control" formControlName="toSubInvCode">
-              <option>--Select--</option>
-              <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
-            </select>
-
-          </td>
+         
         </tr>
       </table>
       <br>
@@ -135,10 +155,10 @@
                         <th scope="col">Srl No.</th>
                         <th scope="col">Item Code</th>
                         <th scope="col">Item Description</th>
-                        <th scope="col">Subinventory</th>
+                        <!-- <th scope="col">Subinventory</th> -->
                         <th scope="col">Locator</th>
-                        <th scope="col">To Subinvenory</th>
-                        <th scope="col">To Locator</th>
+                        <!-- <th scope="col">To Subinvenory</th> -->
+                        <th scope="col">Available Quantity</th>
                         <th scope="col">UOM</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Reason</th>
@@ -148,30 +168,34 @@
               </thead>
               <tbody>
                 <tr>
-                  <input type="number" hidden formControlName="trxLineId">
+                  <!-- <input type="number" hidden formControlName="trxLineId"> -->
                 </tr>
               <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                 <tr>
+                    <!-- <input type="hidden" formControlName="locId" [(ngModel)]="locId"> -->
                 <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
                  </td>
                 <td><select  class="form-control" style="height: 20px;" formControlName="invItemId" (ngModelChange)='onOptionSelectedSubInv($event,trxLineIndex)'>
                   <option>--Select--</option>
-                  <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
+                  <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}--{{invId.DESCRIPTION}}</option>
                 </select>
                 </td>
                 <td><input type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td>
-                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId">
+                <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td> -->
+                <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,trxLineIndex)'>
                   <option>--Select--</option>
-                  <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}</option>
+                  <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId" >{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                  <input hidden formControlName="frmLocatorId">
                 </select>
                 </td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="toSubInvCode"></td>
-                <td><input type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="toLocatorId"></td>
+                <input hidden formControlName="onHandQty">
+                <input hidden formControlName="id">
+                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
+                <input hidden  type="text"  formControlName="resveQty">
                 <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity"></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty ></td>
                 <td><input type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
-                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()" ></button></td>
+                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
                 <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
               </tr>
               </ng-container>
@@ -188,55 +212,96 @@
         <table class="center">
           <tr>
             <td style="width: 15%" class="LabelFontStyle">
-              Move Order Number:
+             Work Shop Issue No:
             </td>
             <td>
               <input disabled type="text" class="form-control" formControlName="requestNumber" [(ngModel)]="requestNumber">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
-              Move Order Date:
+              Issue Date:
             </td>
             <td>
-              <input disabled type="date" class="form-control" formControlName="creationDate">
-            </td>
+                <input  disabled type="text" class="form-control" formControlName="creationDate"  [(ngModel)]="creationDate" >
+              </td>
             <td style="width: 15%" class="LabelFontStyle">
+                Issue Type:
+              </td>
+              <td>
+                <input disabled type="text" class="form-control" formControlName="transactionTypeId" [(ngModel)]="transactionTypeName">
+                  <!-- <option>--Select--</option>
+                  <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
+                </select> -->
+              </td>
+          </tr>
+          <tr>
+             <td style="width: 15%" class="LabelFontStyle">
               Manual IPO Number:
             </td>
             <td>
               <input disabled type="text" class="form-control" formControlName="description" [disabled]="isDisabled" required>
             </td>
-            <td>
+            <td style="width: 15%" class="LabelFontStyle">
+                JobCard Number:
+              </td>
+              <td>
+                 <input disabled type="text" class="form-control" formControlName="repairNo"> 
+                <!-- <select type="text" class="form-control" formControlName="repairNo">
+                    <option>--Select--</option>
+                    <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}</option>
+                  </select> -->
+              </td>
+              <td style="width: 15%" class="LabelFontStyle">
+                Billable Type:
+              </td>
+              <td>
+                  <input disabled type="text" class="form-control" formControlName="Billable">
+                      <!-- <option>--Select--</option>
+                      <option *ngFor="let bill of Billabletype">{{bill.billableTyName}}</option>
+                    </select> -->
+                </td>
+            </tr>
+              <tr>
+                  <td style="width: 15%" class="LabelFontStyle">
+                      From Subinventory:
+                    </td>
+                    <td>
+                      <input disabled type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="subInventoryCode">
+                        <!-- <option>--Select--</option>
+                        <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
+                      </select> -->
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                      To Subinventory:
+                    </td>
+                    <td>
+                      <input disabled type="text" class="form-control" formControlName="toSubInvCode">
+                        <!-- <option>--Select--</option>
+                        <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
+                      </select> -->
+          
+                    </td>
+                       <!-- <td> -->
               <input type="hidden" formControlName="locId" [(ngModel)]="locId">
-            </td>
+            <!-- </td> -->
+            <td style="width: 15%" class="LabelFontStyle">
+                Remark:
+              </td> 
+              <td>
+                <input disabled type="text" class="form-control" formControlName="remarks">
+              </td>
           </tr>
-          <tr>
-            <td style="width: 15%" class="LabelFontStyle">
-              Type:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="transactionTypeId">
-            </td>
-
-
-            <td style="width: 15%" class="LabelFontStyle">
-              Repair Order Number:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="repairNo">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              Remark:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="remarks">
-            </td>
-          </tr>
+         
+         
+         
           <tr>
             <td style="width: 15%" class="LabelFontStyle">
               Issue By:
             </td>
             <td>
               <input disabled type="text" class="form-control" formControlName="issueBy">
+                <!-- <option>--Select--</option>
+                <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                </select> -->
             </td>
             <td style="width: 15%" class="LabelFontStyle">
               Issue To:
@@ -250,22 +315,10 @@
             <td>
               <input disabled type="text" class="form-control" formControlName="headerStatus" [(ngModel)]="headerStatus">
             </td>
+  
           </tr>
           <tr>
-            <td style="width: 15%" class="LabelFontStyle">
-              From Subinventory:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="frmSubInvCode">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              To Subinventory:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="toSubInvCode">
-
-
-            </td>
+           
           </tr>
         </table>
         <br>
@@ -279,18 +332,18 @@
             cellpadding="4" class="auto-style4" class="GridFont">
               <thead>
                   <tr class="GridHeader">
-                          <th scope="col">Srl No.</th>
-                          <th scope="col">Item Code</th>
-                          <th scope="col">Item Description</th>
-                          <th scope="col">Subinventory</th>
-                          <th scope="col">Locator</th>
-                          <th scope="col">To Subinvenory</th>
-                          <th scope="col">To Locator</th>
-                          <th scope="col">UOM</th>
-                          <th scope="col">Quantity</th>
-                          <th scope="col">Reason</th>
-                          <th scope="col">Add</th>
-                          <th scope="col">Delete</th>
+                    <th scope="col">Srl No.</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Item Description</th>
+                    <!-- <th scope="col">Subinventory</th> -->
+                    <th scope="col">Locator</th>
+                    <!-- <th scope="col">To Subinvenory</th> -->
+                    <th scope="col">Available Quantity</th>
+                    <th scope="col">UOM</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Reason</th>
+                    <th scope="col">Add</th>
+                    <th scope="col">Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -298,21 +351,20 @@
                     <input type="number" hidden formControlName="trxLineId">
                   </tr>
                 <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
-                  <td><input disabled type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
+                  <tr><td><input disabled type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
                    </td>
                   <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
                    </td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="fromLocator"></td>
-                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId">
+                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocator">
                   </td>
-                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="toSubInvCode"></td>
-                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="toLocator"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity"></td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
                   <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()" ></button></td>
                   <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                </tr>
                 </ng-container>
                 </tbody>
             </table>
@@ -348,6 +400,47 @@
         </table>
     <!-- </form> -->
   </div>
+  <br>
+
+  <table style="width: 100%; background-color: #a4d3e9;">
+    <tr>
+        <td style="width: 15%" class="LabelFontStyle">Job&nbsp;Card&nbsp;Number&nbsp;:</td>
+        <td>
+            <input type="text"  class="form-control" formControlName="JobNo" id="JobNo" name="JobNo" #JobNo>
+        </td>
+        <td colspan="8" style="text-align: left; width: 100%;">
+            <button type="submit" class="btn btn-primary" (click)='searchByJobNo(JobNo)' ><i class="fa fa-search"></i></button>
+        </td>
+    </tr>
+</table>
+<br>
+<div class="Container1">
+  <div class="grid_scroll">
+  <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+      <tbody>
+          <tr class="GridHeader">
+            <th scope="col">workshopIssue No.</th>
+            <th scope="col">Item Code</th>
+            <th scope="col">Item Description</th>
+            <th scope="col">Locator</th>
+            <th scope="col">UOM</th>
+            <th scope="col">Quantity</th>
+            <!-- <th scope="col">Reason</th> -->
+            <th>Date</th>
+          </tr>
+          </tbody>
+          <tr *ngFor="let com of lstcomment1" style="background-color:#E3EAEB;">
+            <td>{{com.requestNumber}}</td>
+            <td>{{com.segment}}</td>
+            <td>{{com.description}}</td>
+            <td>{{com.segmentName}}</td>
+            <td>{{com.uom}}</td>
+            <td style="text-align: right;">{{com.quantity}}</td>
+            <td>{{com.creationDate}}</td>
+          </tr>
+  </table>
+  </div>
+</div>
 </form>
   </div>
 

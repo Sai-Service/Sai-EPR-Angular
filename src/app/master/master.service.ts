@@ -862,8 +862,36 @@ public moveOrderSubmit(MoveOrderRecord)
   const url=this.ServerUrl+'/mtrlIssue';
   return this.http.post(url,MoveOrderRecord,options);
 }
+public reservePost(reserverecord)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+`/reserveQty/insResrv`;
+  return this.http.post(url,reserverecord,options);
+}
+WorkShopIssue(locId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
+}
+BillableType():Observable<any>{
+  return this.http.get(this.ServerUrl+`/billableTy`);
+}
+searchall(locId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/mmtTrx/PendingRecMyloc/${locId}`);
+}
+searchallatother(locId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/mmtTrx/PendingRecOthLoc/${locId}`);
+}
+getreserqty(locId,itemID):Observable<any>{
+  return this.http.get(this.ServerUrl+`/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}`)
+}
 transType():Observable<any>{
   return this.http.get(this.ServerUrl +'/mtlTrxTypes/IPO');
+}
+getsearchByJob(jobno):Observable<any>{
+ return this.http.get(this.ServerUrl+`/mtrlIssue/repair?repairNo=${jobno}`)
 }
 subInvCode():Observable<any>{
   return this.http.get(this.ServerUrl +'/subInvMst')
@@ -885,6 +913,7 @@ getSearchByTrans(reqNo):Observable<any>{
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
+
 //////////////////FlexField////////////////
 
 public flexFieldSubmit(FlexFieldRecord)
@@ -1231,6 +1260,25 @@ viewAccounting1(receiptNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
+getsearchByshipmentNo(shipmentNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
+}
+
+
+public poinvCre(segment1) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/apInv/inserDtls/${segment1}`;
+  return this.http.post(url, segment1, options);
+}
+
+
+poAllRecFind(segment1): Observable<any> {
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}`);
+}
+
+
 delearCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/DealerMst');
 }
@@ -1341,34 +1389,38 @@ OrderCategoryList(): Observable<any> {
 
 // //////////////////   Miscell Transaction //////////////////////////
 
-getSearchBycompNo(compNo):Observable<any>
+TransactionType():Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/stockadj/compileadj/${compNo}`);
+  return this.http.get(this.ServerUrl +'/mtlTrxTypes/9');
 }
-
-getSearchByNo(compNo):Observable<any>
+ReasonList():Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/stockadj/compileNo/${compNo}`);
+  return this.http.get(this.ServerUrl+'/mtlTransReasons');
 }
-
-
-
-getsearchByCompId(compileId,itemId):Observable<any>
+TypeList():Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/cycleline?compileId=${compileId}&invItemId=${itemId}`);
+  return  this.http.get(this.ServerUrl+'/cmnLookup/type/StockAdjType');
 }
-
-
-approve(appmiscRecord):Observable<any>
+ItemIdList1(locationId,subInv):Observable<any>
 {
-  const options ={
-    headers:this.headers
+  return this.http.get(this.ServerUrl+`/itemMst/OnHandItemLst?locId= ${locationId}&subInvCode=${subInv}`)
+}
+getItemDetail11(locId,itemId,subInvCode):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/OnHandItemDtls?locId=${locId}&subInvCode=${subInvCode}&itemId=${itemId}`)
   }
-  const url =this.ServerUrl+'/stockadj/stkapprove';
-  return this.http.post(url,appmiscRecord,options);
+LocatorNameList(LocName,LocId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}`)
 }
-
-
+getCostDetail(locId,ItemId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
+}
+getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
+}
 miscellaneousSubmit(miscRecord):Observable<any>
 {
   const options ={
@@ -1377,57 +1429,43 @@ miscellaneousSubmit(miscRecord):Observable<any>
    const url=this.ServerUrl+'/stockadj';
    return this.http.post(url,miscRecord,options);
 }
-
-
-
+miscSubmit(miscelRecord):Observable<any>
+{
+  const options={
+    headers:this.headers
+  }
+  const url =this.ServerUrl+'/stockadj/misc';
+  return this.http.post(url,miscelRecord,options);
+}
+approve(appmiscRecord):Observable<any>
+{
+  const options ={
+    headers:this.headers
+  }
+  const url =this.ServerUrl+'/stockadj/stkapprove';
+  return this.http.post(url,appmiscRecord,options);
+}
+getSearchByNo(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/compileNo/${compNo}`);
+}
+getSearchViewBycompNo(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/compileall/${compNo}`)
+}
+getSearchBycompNo(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/compileadj/${compNo}`);
+}
+getsearchByCompId(compileId,itemId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/cycleline?compileId=${compileId}&invItemId=${itemId}`);
+}
 miscellaneousUpdate(comId,cyclelinerecord){
   const options={
     headers:this.headers
   };
   const url=(this.ServerUrl+`/cycleline`);
   return this.http.put(url,cyclelinerecord,options);
-}
-
-
-LocatorNameList(LocName,LocId):Observable<any>
-{
-  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}`)
-}
-
-
-getCostDetail(locId,ItemId):Observable<any>
-{
-  return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
-}
-
-
-// getsearchByCompId(compileId,itemId):Observable<any>
-// {
-//   return this.http.get(this.ServerUrl+`/cycleline?compileId=${compileId}&invItemId=${itemId}`);
-// }
-
-
-// getCostDetail(locId,ItemId):Observable<any>
-// {
-//   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
-// }
-
-
-ReasonList():Observable<any>
-{
-  return this.http.get(this.ServerUrl+'/mtlTransReasons');
-}
-
-
-
-TypeList():Observable<any>
-{
-  return  this.http.get(this.ServerUrl+'/cmnLookup/type/StockAdjType');
-}
-
-
-TransactionType():Observable<any>
-{
-  return this.http.get(this.ServerUrl +'/mtlTrxTypes/9');
 }
 }

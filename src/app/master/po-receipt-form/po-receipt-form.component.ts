@@ -45,9 +45,9 @@ interface IpoReceipt{
 interface Ilocator {
   segment11:string;
   segment2:string;
-  segment3:string;
+  segment3:number;
   segment4:string;
-  segment5:string;
+  segment5:number;
 }
 
 interface IPODateWise{
@@ -69,6 +69,7 @@ export class PoReceiptFormComponent implements OnInit {
   supplier:string;
   item:string;
   segment1:string;
+  shipmentNumber:string;
   ouId:number;
   totalAmt:number;
   name:string;
@@ -77,6 +78,7 @@ export class PoReceiptFormComponent implements OnInit {
   baseAmount:number;
   taxAmt:number;
   frmDate1:Date;
+  shipmentNo:string;
   disabled = true;
   disabledLine =true;
   disabledViewAccounting=true;
@@ -103,9 +105,9 @@ export class PoReceiptFormComponent implements OnInit {
   polineNum:number;
   // segment1:string;
   segment2:string;
-  segment3:string;
+  segment3:number;
   segment4:string;
-  segment5:string;
+  segment5:number;
   segment11:string;
   locatorDesc:string;
   locatorId:number;
@@ -131,6 +133,7 @@ export class PoReceiptFormComponent implements OnInit {
   // loginArray: any[];
   loginArray:string;
   public cityList: Array<string>[];
+  public poAllRecFind:any[];
   lstcompolines: any;
   public poLines:any[];
    public lstlocationwise:any[];
@@ -149,7 +152,7 @@ export class PoReceiptFormComponent implements OnInit {
    poLineId:number;
    viewAccounting1:any[];
    viewAccounting2:any[];
-
+   displayrecDate=false;
   
   // PO wise Date Paratemeter//////
   frmDate : Date;
@@ -175,6 +178,7 @@ export class PoReceiptFormComponent implements OnInit {
       supplier:[''],
       item:[''],
       segment1:[''],
+      shipmentNumber:[],
       ouId:[''],
       totalAmt:[''],
       divisionName:[''],
@@ -210,6 +214,7 @@ export class PoReceiptFormComponent implements OnInit {
       name1:[''],
       runningTotalDr:[''],
       runningTotalCr:[''],
+      shipmentNo:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -224,6 +229,7 @@ export class PoReceiptFormComponent implements OnInit {
       ctgDescription:[],
       itemDesc:[],
       subInvDesc:[],
+      subInventoryId:[],
       locatorDesc:['',[Validators.required]],
       uom:[],
       unitPrice:[],
@@ -350,6 +356,8 @@ return true;
           if(data.code ===200){
             this.lstSupLineDetails=data.obj;
           this.poReceiptForm.patchValue(this.lstSupLineDetails);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -383,6 +391,9 @@ return true;
         this.disabledViewAccounting=false;
           this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
+
         // }
       }
       
@@ -428,6 +439,7 @@ return true;
           control.push(poLines);
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
+
         }
         }
       }
@@ -435,6 +447,51 @@ return true;
     }
 
 
+    shipmentNoFind(shipmentNumber:String) {
+      // alert(segment1);
+      console.log(this.poReceiptForm.value);
+      this.service.getsearchByshipmentNo(shipmentNumber)
+        .subscribe(
+          data => {
+            if (data.code===400){
+              alert(data.message);
+              // alert(data.obj);
+            }
+            if(data.code ===200){
+              this.lstcompolines = data.obj;
+            if(this.lstcompolines.poStatus==='Receipt Generated'){
+              console.log(this.poStatus);
+              this.displaySaveButton =true; 
+              this.disabled = false;
+                this.disabledLine=false;
+                let control = this.poReceiptForm.get('poLines') as FormArray;
+            var poLines:FormGroup=this.lineDetailsGroup();
+            var length1=this.lstcompolines.poLines.length-1;
+            this.lineDetailsArray.removeAt(length1);
+            control.push(poLines);
+            this.displaySaveButton =false;
+            this.poReceiptForm.patchValue(this.lstcompolines);
+            }
+            else{
+            this.lstcompolines = data.obj;
+            this.disabled = true;
+            this.disabledLine=true;
+            let control = this.poReceiptForm.get('poLines') as FormArray;
+            var poLines:FormGroup=this.lineDetailsGroup();
+            var length1=this.lstcompolines.poLines.length-1;
+            this.lineDetailsArray.removeAt(length1);
+            control.push(poLines);
+            this.displaySaveButton =true;
+            this.poReceiptForm.patchValue(this.lstcompolines);
+            this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+            this.recDate=this.lstcompolines.receiptDate;
+  
+          }
+          }
+        }
+        );
+      }
+  
 
 
   poFind1(segment1) {
@@ -459,6 +516,8 @@ return true;
           this.disabledLine=false;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.poLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -487,6 +546,8 @@ return true;
           this.disabledLine=false;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -557,6 +618,8 @@ this.xyzdis=true;
 var jsonString = JSON.stringify(reqArr);
     this.service.receiptDateWiseFind(reqArr[0]).subscribe((res: any) => {
       this.lstReceiptDateWiseData=res;
+      this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
     });
   }
 
@@ -684,7 +747,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
       }
 
 viewAccounting(receiptNo:any){
-  // alert(receiptNo);
+  alert(receiptNo);
   this.service.viewAccounting1(receiptNo).subscribe((res: any) => {
     if (res.code === 200) {
       this.viewAccounting2=res.obj;
@@ -709,7 +772,29 @@ viewAccounting(receiptNo:any){
       });
   }
 
+  poInvoiceCreation(segment1:any){
+    alert(this.segment1);
+    this.service.poinvCre(segment1).subscribe((res: any) => {
+    })
+  }
 
+
+  poAllFind(segment1 : any){
+    alert(this.segment1);
+    // this.poNumber=this.poNumber;
+    this.service.poAllRecFind(segment1).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.poAllRecFind=res.obj;
+        console.log(this.poAllRecFind);
+            alert(res.message);
+          } else {
+            if (res.code === 400) {
+              alert('Data already present in the data base');
+            }
+          }
+        });
+
+  }  
 
 }
 
