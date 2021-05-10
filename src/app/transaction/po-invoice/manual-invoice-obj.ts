@@ -1,5 +1,4 @@
-export class ManualInvoiceObj {
-    
+export class ManualInvoiceObj {  
   invoiceId: number;
   invoiceNum: string;
   suppId: number;

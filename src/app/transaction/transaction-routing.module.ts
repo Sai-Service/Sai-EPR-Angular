@@ -8,6 +8,9 @@ import { PaymentsComponent } from './payments/payments.component';
 import { TdsInvoiceComponent } from './tds-invoice/tds-invoice.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
+import { combineLatest } from 'rxjs';
+import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
+import { PaymentARComponent } from './payment-ar/payment-ar.component';
 
 
 const routes: Routes = [
@@ -19,6 +22,8 @@ const routes: Routes = [
   {path:'Payment',component:PaymentsComponent},
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'StockTaking',component:StockTakingComponent},
+  {path:'AvgCostUpadte',component:AvgCostUpdateComponent},
+  {path:'PaymentAR',component:PaymentARComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

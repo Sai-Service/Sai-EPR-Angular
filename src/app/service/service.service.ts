@@ -39,6 +39,12 @@ getSubSrTypeIdList(srTypeId): Observable<any> {
 matStatusListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/matStatus`);
 } 
+matDisPerListFN(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/matDisPercentage`);
+} 
+labDisPerListFN(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/labDisPercentage`);
+} 
 srvAdvisorListtFN(locId,deptId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisor?locId=${locId}&deptId=${deptId}`);
 } 
@@ -57,6 +63,10 @@ LaborItemListFN() : Observable<any> {
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
 } 
+disCategoryListFn() : Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/srvDisType`);
+} 
+
 TechnicianListFN(locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/techDtls/${locId}`);
 } 
@@ -73,12 +83,32 @@ public jobcardHeaderSubmit(Record) {
   const url = this.ServerUrl + '/jobCard/jobHeader';
   return this.http.post(url, Record, options);
 }
-
+public ReopenMaterialIssue(jobcardNo, matStatus){
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/jobCard/matStatus?jobNum=${jobcardNo}&matStatus=${matStatus}`;
+  return this.http.put(url, options);
+}
+public jobCardStatusReadyInvoice(jobcardNo, status){
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/jobCard/jobStatus?jobNum=${jobcardNo}&status=${status}`;
+  return this.http.put(url, options);
+}
 public lineWISESubmit(Record) {
   const options = {
     headers: this.headers
   };
   const url = this.ServerUrl + `/jobCard/labInsert`;
+  return this.http.post(url, Record, options);
+}
+public BillingCal(Record) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/jobCard/jobBilling';
   return this.http.post(url, Record, options);
 }
 saveMaterialSubmit(Record) {
