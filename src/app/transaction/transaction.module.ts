@@ -13,6 +13,10 @@ import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
 import { PaymentARComponent } from './payment-ar/payment-ar.component';
 
+  import { from } from 'rxjs';
+import { StockTakingComponent } from './stock-taking/stock-taking.component';
+
+
 @NgModule({
   declarations: [
     PoInvoiceComponent,
@@ -22,6 +26,8 @@ import { PaymentARComponent } from './payment-ar/payment-ar.component';
     PaymentsComponent,
     PoInvoiceComponent,
     ARInvoiceComponent,
+    StockTakingComponent,
+   
     AvgCostUpdateComponent,
     PaymentARComponent,
   ],

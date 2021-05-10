@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CompanyMasterComponent } from './company-master/company-master.component';
 import { DivisionMasterComponent } from './division-master/division-master.component';
@@ -28,6 +28,7 @@ import { FlexFieldComponent } from './flex-field/flex-field.component';
 import {PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
 import { OmGruopMasterComponent } from './om-gruop-master/om-gruop-master.component';
 import { OrderTypeMasterComponent } from './order-type-master/order-type-master.component';
+import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
 import { SaiEwSchemeComponent } from './sai-ew-scheme/sai-ew-scheme.component';
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
@@ -59,6 +60,7 @@ const routes: Routes = [
   {path:'JaiTaxType', component:JaiTaxTypeComponent},
  {path:'PoReceiptForm',component:PoReceiptFormComponent},
  {path:'FlexField',component:FlexFieldComponent},
+ {path:'Subinventory',component:SubinventoryMasterComponent},
 
 //    { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 // {path:'FlexField',component:FlexFieldComponent},

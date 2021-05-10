@@ -913,6 +913,28 @@ getSearchByTrans(reqNo):Observable<any>{
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
+/////////Subinventory/////////////
+public saveSubinventory(subInvRecord)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/subInvMst';
+  return this.http.post(url,subInvRecord,options);
+}
+
+public getSubInvSearch():Observable<any>
+{
+  return this.http.get(this.ServerUrl+'/subInvMst');
+}
+
+UpdateSubInventory(SubinvRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl +'/subInvMst');
+  return this.http.put(url, SubinvRecord, options);
+}
 
 //////////////////FlexField////////////////
 
