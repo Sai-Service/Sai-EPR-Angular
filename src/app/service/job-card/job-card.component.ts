@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@ang
 import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from '../service.service';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IjobCard {
   jobCardNum: string ;
@@ -74,25 +75,47 @@ export class JobCardComponent implements OnInit {
   regNo:string;
   RegNo: string;
   jobStatus:string;
-  jobCardNum: string='0';
+  // jobCardNum: string='0';
+  jobCardNum: string; 
   divisionName :string;
   divisionId:number;
   description:string;
   jobCardDate=new Date();
-  lstcomments: any[];
+  lstcomments: any;
   RegNoList: any;
   RegNoList1:any[];
   userList1: any[] = [];
   userList2: any[] = [];
   lastkeydown1: number = 0;
+  itemTypeLab:string= 'Labor';
+  itemTypeMat:string= 'Parts';
   splitFlag:string;
   displaySplit=true;
   displayModal=true;
+  displayLabDiscount=true;
+  displayMatDiscount=true;
+  displayMatDiscount1=true;
   subscription: any;
   showModal: boolean;
   content: number;
   title: string;
-
+  dmsJcNo:string;
+dmsJCDate:Date;
+owner:string;
+validTillDt:Date;
+bCustAcct:string;
+bCustType:string;
+bName:string;
+bGstNo:string;
+bAdd:string;
+bEmail:string;
+bContNo:string;
+bgstType:string;
+bcustomerId:string; 
+matDisPer:string;   
+labDisPer:string
+public labDisPerList: Array<string> = [];
+public matDisPerList: Array<string> = [];
  public jobCarStatusList: Array<string> = [];
  public pickupTypeList:Array<string> = [];
  public srTypeIdList:Array<string> = []; 
@@ -100,20 +123,28 @@ export class JobCardComponent implements OnInit {
  public matStatusList:Array<string> = [];
  public groupIdList:Array<string> = [];
  public  billableTyIdList:Array<string> = [];
+ public disCategoryList:Array<string> = [];
+ public jcTypeList= [
+  {model : "Service"},
+  {model : "BS"},
+];
  public  TechnicianList:any[];
  public LaborItemList:any;
  public splitRatioList:any[];
  public srvAdvisorList:any[];
  public taxCategoryList: any;
   public LaborPriceList :any;
+  public accountNoSearch:any;
   public splitArr;
   @ViewChild("myinput") myInputField: ElementRef;
   ngAfterViewInit() {
   this.myInputField.nativeElement.focus();
   }
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private serviceService: ServiceService) {
+  constructor(private fb: FormBuilder, private router: Router, private orderManagementService:OrderManagementService, private service: MasterService, private serviceService: ServiceService) {
     this.jobcardForm = fb.group({
       jobCardNum: [],
+      jcType:[],
+      jobCardId:[],
       matStatus: [],
       regNo: [],
       RegNo:[],
@@ -170,8 +201,57 @@ export class JobCardComponent implements OnInit {
       locId:[],
       customerId:[],
       customerSiteId:[],
+      dmsJcNo:[],
+      dmsJCDate:[],
+      validTillDt:[],
+      owner:[],
+     matDisPer:[],
+      bCustAcct:[],
+bCustType:[],
+bName:[],
+bGstNo:[],
+bAdd:[],
+bEmail:[],
+bContNo:[],
+bgstType:[],
+bcustomerId:[],
+remark:[],
+estLabor:[],
+estMaterial:[],
+estTotal:[],
 
-      jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
+labBasicAmt:[],
+matBasicAmt:[],
+actualBasicAmt:[],
+
+rountOffLab:[],
+rountOffMat:[],
+rountOffTotl:[],
+variReason :[],
+
+DisTypeLab:[],
+DisTypeMat:[],
+itemTypeLab:[],
+itemTypeMat:[],
+labDiscount:[],
+matDiscout:[],
+labTaxableAmt:[],
+matTaxableAmt:[],
+labTotTaxAmt:[],
+matTotTaxAmt:[],
+labTotAmt:[],
+matTotAmt:[],
+totDis:[],
+totTaxAmt:[],
+invTotAmt:[],
+deductibles:[],
+salvage:[],
+disCategory:[],
+disAuthBy:[],
+balanceAmt:[],
+advAmt:[],
+labDisPer:[],
+      jobCardLabLines: this.fb.array([this.lineDetailsGroup()]), 
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
     })
@@ -282,7 +362,8 @@ export class JobCardComponent implements OnInit {
   lineDistributionArray(): FormArray {
     return <FormArray>this.jobcardForm.get('jobCardMatLines')
   }
-  ngOnInit(): void {  
+  ngOnInit(): void { 
+    this.owner=  sessionStorage.getItem('name')
     this.divisionName=sessionStorage.getItem('divisionName'); 
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.service.taxCategoryListForSALES()
@@ -321,6 +402,21 @@ export class JobCardComponent implements OnInit {
           console.log(this.matStatusList);
         }
       ); 
+      
+      this.serviceService.matDisPerListFN()
+      .subscribe(
+        data1 => {
+          this.matDisPerList = data1;
+          console.log(this.matDisPerList);
+        }
+      );  
+      this.serviceService.labDisPerListFN()
+      .subscribe(
+        data1 => {
+          this.labDisPerList = data1;
+          console.log(this.labDisPerList);
+        }
+      );
       this.serviceService.srvAdvisorListtFN((sessionStorage.getItem('locId')),(sessionStorage.getItem('deptId'))) 
       .subscribe(
         data1 => {
@@ -363,6 +459,13 @@ export class JobCardComponent implements OnInit {
           console.log(this.splitRatioList);
         }
       );  
+ this.serviceService.disCategoryListFn()
+      .subscribe(
+        data1 => {
+          this.disCategoryList = data1;
+          console.log(this.disCategoryList);
+        }
+      ); 
       this.serviceService.TechnicianListFN((sessionStorage.getItem('locId')))
       .subscribe(
         data1 => {
@@ -420,7 +523,7 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
   data1 => {
     this.LaborPriceList = data1;
     console.log(this.LaborPriceList);
-    (patch.controls[i]).patchValue({ unitPrice: data1})
+    (patch.controls[i]).patchValue({ unitPrice: data1.price})
   }
 );
   }
@@ -545,6 +648,23 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
       }
     );
   }
+  totalActualLabMat(){
+    var sum = 0;
+    var arrayControl = this.jobcardForm.get('jobCardLabLines').value   // jobCardLabLines jobCardMatLines  lineDetailsArray lineDistributionArray
+for(let i=0; i<this.lineDetailsArray.length; i++){
+sum= sum + arrayControl[i].basicAmt;
+}
+var sumMat = 0;
+    var arrayControl = this.jobcardForm.get('jobCardMatLines').value   
+for(let i=0; i<this.lineDistributionArray().length; i++){
+sumMat= sumMat + arrayControl[i].basicAmt;
+}
+    this.jobcardForm.patchValue({
+      labBasicAmt:sum,
+      matBasicAmt:sumMat,
+      actualBasicAmt:sum+sumMat,
+    })
+  }
   Search(jonCardNo) {
     this.serviceService.getJonCardNoSearch(jonCardNo)
       .subscribe(
@@ -552,6 +672,17 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
           this.lstcomments = data;
           console.log(this.lstcomments);
           this.jobcardForm.patchValue(this.lstcomments);
+          this.jobcardForm.patchValue({
+            bCustAcct: this.lstcomments.billToCust.accountNo,
+bCustType: this.lstcomments.billToCust.custType,
+bName: this.lstcomments.billToCust.custName,
+bGstNo: this.lstcomments.billToCust.gstNo,
+bAdd: this.lstcomments.billToCust.billToAddress,
+bEmail: this.lstcomments.billToCust.emailId,
+bContNo: this.lstcomments.billToCust.contactNo,
+bcustomerId: this.lstcomments.billToCust.customerId,
+bgstType: this.lstcomments.billToCust.gstType,
+          })
           // data.jobCardMatLines.forEach(f => {
           //   var payInvGrp: FormGroup = this.distLineDetails();
           //   this.lineDistributionArray().push(payInvGrp);
@@ -569,9 +700,17 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
             var payInvGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(payInvGrp); 
           }
+          var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+          (patch.controls[0]).patchValue(
+            {
+              lineId: 1,
+            }
+          );
           this.jobcardForm.get('jobCardLabLines').patchValue(data.jobCardLabLines);
+          
         }
       );
+      // this.totalActualLabMat();
   }
   onOptionTaxCatSelected(i, taxCategoryName) { }
   //   onOptionTaxCatSelected(i, taxCategoryName) {
@@ -620,32 +759,49 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
   closeMast() {
     this.router.navigate(['admin']);
   }
-  accountNoSearchfn(){
-    // this.orderManagementService.accountNoSearchFn(accountNo,this.ouId)
-    // .subscribe(
-    //   data => {
-    //     this.accountNoSearch = data;      
-    //     console.log(this.accountNoSearch);
-    //     this.arInvoiceForm.patchValue({
-    //       billToCustName: this.accountNoSearch.custName,
-    //       billToCustAdd: this.accountNoSearch.billToAddress,
-    //       shipToCustNo: this.accountNoSearch.accountNo,
-    //       shipToCustName:this.accountNoSearch.custName,
-    //       shipToCustAdd:this.accountNoSearch.shipToAddress,
-    //       shipToCustId :this.accountNoSearch.customerId,
-    //       shipToSiteId  :this.accountNoSearch.shipToLocId,
-    //       billToSiteId:this.accountNoSearch.billToLocId,   
-    //       billToCustId :this.accountNoSearch.customerId,
-    //     });
-    //   }
-    // );
+  tranceFun(val){
+    val.billToCust={ 
+    "customerId": this.bcustomerId,
+    "accountNo": this.bCustAcct,
+    "custName": this.bName,
+    "custType": this.bCustType,
+    "billToAddress": this.bAdd,
+    // "shipToAddress": "Phugewadi Near Nshikphata null Pune-411022",
+    // "billToLocId": null,
+    // "shipToLocId": null,
+    // "panNo": "AAACI7904G",
+    "gstNo": this.bGstNo,
+    // "tanNo": null,
+    "emailId":this.bEmail,
+  }
+    return val
+  }
+  accountNoSearchfn1(accountNo){
+    this.orderManagementService.accountNoSearchFn1(accountNo,sessionStorage.getItem('ouId'))
+    .subscribe(
+      data => {
+        this.accountNoSearch = data;      
+        console.log(this.accountNoSearch);
+        this.jobcardForm.patchValue({
+          bCustAcct:this.accountNoSearch.accountNo,
+bCustType:this.accountNoSearch.custType,
+bName:this.accountNoSearch.custName,
+bGstNo:this.accountNoSearch.gstNo,
+bAdd:this.accountNoSearch.billToAddress,
+bEmail:this.accountNoSearch.emailId,
+bContNo:this.accountNoSearch.contactNo,
+bgstType:this.accountNoSearch.gstType,
+bcustomerId:this.accountNoSearch.customerId,
+        });
+      }
+    );
   }
   transData(val) {
     delete val.lineDetailsArray;
     return val;
   }
   saveLine(){
-    const formValue: IjobCard = this.transData(this.jobcardForm.value);
+    const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
@@ -657,7 +813,7 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
     });
   }
   saveMaterial(){
-    const formValue: IjobCard = this.transData(this.jobcardForm.value);
+    const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
@@ -669,11 +825,11 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
     });
   }
   saveArInvoice() {
-    const formValue: IjobCard = this.transData(this.jobcardForm.value);
+    const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
+        this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum, jobCardId:res.jobCardId})
         // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
@@ -725,4 +881,83 @@ this.serviceService.priceListFN((sessionStorage.getItem('locId')), select.segmen
    clearMatLineFormArray(){
      this.lineDetailsArray.clear();
    }
+   
+   onOptionsDisTypeMatSelected(event) {
+    alert(event);
+    if (event === 'Percentage') {
+      this.displayMatDiscount = false;
+      this.displayMatDiscount1=false;
+    //   this.endDate = new Date();
+    }
+    else if (event === 'Amount') {
+      this.displayMatDiscount = true;
+      this.displayMatDiscount1= true;
+    //   this.LocationMasterForm.get('endDate').reset();
+    }
+  }
+  onOptionsDisTypeLabSelected(event) {
+    alert(event);
+    if (event === 'Percentage') {
+      this.displayLabDiscount = false;
+    }
+    else if (event === 'Amount') {
+      this.displayLabDiscount = true;
+    }
+  }
+  ReopenMaterialIssue(){
+var matStatus= this.jobcardForm.get('matStatus').value;
+var jobcardNo = this.jobcardForm.get('jobCardNum').value;
+alert(matStatus+' '+jobcardNo);
+if(matStatus == 'Compeleted'){
+  this.serviceService.ReopenMaterialIssue(jobcardNo, matStatus).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert('RECORD INSERTED SUCCESSFUILY');
+      // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
+    } else {
+      if (res.code === 400) {
+        alert('Data already present in the data base');
+      }
+    }
+  });
+}else{
+  alert("Material status not completed")
+}
+}
+BillingCal(){
+  const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+  this.serviceService.BillingCal(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+        }
+      }
+    });
+  // }else{
+  //   alert("Material status not completed")
+  // }
+  }
+jobCardStatusClose(){
+  // var matStatus= this.jobcardForm.get('matStatus').value;
+  var status ='Ready for Invoice';
+  var jobcardNo = this.jobcardForm.get('jobCardNum').value;
+  // alert(matStatus+' '+jobcardNo);
+  // if(matStatus == 'Compeleted'){
+
+    this.serviceService.jobCardStatusReadyInvoice(jobcardNo, status).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.jobcardForm.patchValue({jobStatus: 'Ready for Invoice'})
+        // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+        }
+      }
+    });
+  // }else{
+  //   alert("Material status not completed")
+  // }
+  }
 }

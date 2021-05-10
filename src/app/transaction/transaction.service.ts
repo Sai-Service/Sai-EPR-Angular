@@ -188,6 +188,28 @@ public ARInvoiceSubmit(Record) {
   return this.http.post(url, Record, options);
 }
 
+ 
 
+///////////////////////////AVERAGE COST UPDATE//////////////////////////
+
+avgCurrentCost(mitemId,mLocId): Observable<any> {
+  // alert("Master Service :"+ mitemId+" ,"+mLocId);
+  return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${mLocId}&itemId=${mitemId}`);
+}
+
+public AvgCostUpdateSubmit(AvgCostUpdateRecord) {
+  alert('in service')
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/averageCost';
+  return this.http.post(url, AvgCostUpdateRecord, options);
+}
+
+// getAvgHistoryList
+getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
+  alert("Master Service :"+ mLocId+","+mitemId+" ,"+frmDate+","+toDate);
+  return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
+  }
 
 }

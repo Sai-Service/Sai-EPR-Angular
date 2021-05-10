@@ -10,6 +10,12 @@ import { StockTransferComponent } from './stock-transfer/stock-transfer.componen
 import { MiscellaneousTransactionComponent } from './miscellaneous-transaction/miscellaneous-transaction.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
+import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
+import { PaymentARComponent } from './payment-ar/payment-ar.component';
+
+  import { from } from 'rxjs';
+import { StockTakingComponent } from './stock-taking/stock-taking.component';
+
 
 @NgModule({
   declarations: [
@@ -20,6 +26,10 @@ import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
     PaymentsComponent,
     PoInvoiceComponent,
     ARInvoiceComponent,
+    StockTakingComponent,
+   
+    AvgCostUpdateComponent,
+    PaymentARComponent,
   ],
   imports: [
     CommonModule,
