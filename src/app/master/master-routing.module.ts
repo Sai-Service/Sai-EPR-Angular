@@ -28,6 +28,7 @@ import { FlexFieldComponent } from './flex-field/flex-field.component';
 import {PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
 import { OmGruopMasterComponent } from './om-gruop-master/om-gruop-master.component';
 import { OrderTypeMasterComponent } from './order-type-master/order-type-master.component';
+import { SaiEwSchemeComponent } from './sai-ew-scheme/sai-ew-scheme.component';
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
@@ -64,7 +65,8 @@ const routes: Routes = [
 {path:'pricelistMaster', component:PricelistMasterComponent},
 {path:'OMGRP',component:OmGruopMasterComponent},
 {path:'orderType', component:OrderTypeMasterComponent},
-  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
+{path:'SaiEwScheme',component:SaiEwSchemeComponent},
+{ path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({
