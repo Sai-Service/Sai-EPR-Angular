@@ -1,7 +1,5 @@
-
-
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder,Validators, FormArray  } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
@@ -103,7 +101,7 @@ interface IpostPO {
   recoverableFlag: string;
   selfAssesedFlag: string;
   inclusiveFlag: string;
-  taxCategoryId:number;
+  taxCategoryId: number;
 }
 
 
@@ -204,7 +202,7 @@ export class OPMasterDtoComponent implements OnInit {
   segment3: number;
   segment4: number;
   segment5: number;
-  diss1 : number =0;
+  diss1: number = 0;
   // segment6: number;
   // segment7: number;
   // segment8: number;
@@ -216,7 +214,7 @@ export class OPMasterDtoComponent implements OnInit {
   public seriesList: Array<any> = [];
   public delearCodeList: Array<string> = [];
   public taxCategoryList: any;
-  public dispbut= true;
+  public dispbut = true;
   lineNumber: number;
   taxRateName: string;
   taxTypeName: string;
@@ -236,10 +234,11 @@ export class OPMasterDtoComponent implements OnInit {
   taxCatId: number;
   selfAssesedFlag: string;
   inclusiveFlag: string;
-  displayOnStatus=true;
+  displayOnStatus = true;
   displayNewButton = true;
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
+  displaysupplierSiteId = true;
   displayModal = true;
   displayContexValue = true;
   displayDept = true;
@@ -249,19 +248,19 @@ export class OPMasterDtoComponent implements OnInit {
   displayButton = true;
   displayLine = true;
   displayHSN = true;
-  displayinvDesc =true;
+  displayinvDesc = true;
   // displayPoLine =true;
-  displayTaxDetailData= true;
+  displayTaxDetailData = true;
   DissRecoverableFlag = false;
   DissinclusiveFlag = false;
   DissselfAssesedFlag = false;
-  displayNewButtonApprove =false;
-displayNewButtonUpdate=false;
-displayNewButtonSave=true;
-displayNewButtonReset=true;
+  displayNewButtonApprove = false;
+  displayNewButtonUpdate = false;
+  displayNewButtonSave = true;
+  displayNewButtonReset = true;
   disTaxDiss: Array<boolean> = [];
   taxCat: string;
-  taxCat1:string;
+  taxCat1: string;
   sum = 0;
   segmentName1: string;
   poLineTax: number;
@@ -276,7 +275,7 @@ displayNewButtonReset=true;
   lstcomments: any[];
   taxList: any[];
   lstcomments1: any;
-  invItemList: any;
+  invItemList= new Array();
   siteIdList: any;
   supplierCodeSelected: any;
   public OUIdList: Array<string> = [];
@@ -284,7 +283,7 @@ displayNewButtonReset=true;
   DepartmentListById: any;
   public supplierCodeList: any[];
   // public suppIdList: Array<string> = [];
-  public approvedArray : any [];
+  public approvedArray: any[];
   public suppIdList: any
   public BillShipList: Array<string> = [];
   public BillShipList1: Array<string> = [];
@@ -305,17 +304,18 @@ displayNewButtonReset=true;
   public taxCalforItem: any[];
   public ItemDetailsList: any;
   public segmentNameList: any;
-public TaxDetailData : any[];
+  public TaxDetailData: any[];
   hideArray: Array<boolean> = [];
   displayPoLine: Array<boolean> = [];
   public maxDate = new Date();
   public today = new Date();
   public priorDate = new Date().setDate(this.today.getDate() - 30)
   public data1: any[];
+  public selectedInvItem = new Array();
 
-@ViewChild("myinput") myInputField: ElementRef;
+  @ViewChild("myinput") myInputField: ElementRef;
   ngAfterViewInit() {
-  this.myInputField.nativeElement.focus();
+    this.myInputField.nativeElement.focus();
   }
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -356,15 +356,14 @@ public TaxDetailData : any[];
       recoverableFlag: [],
       selfAssesedFlag: [],
       inclusiveFlag: [],
-      description: [''],
-
+      description: ['', [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z 0-9]*')]],
       totTaxAmt: [],
       ouName: [],
       name: [],
       contextValue: [],
       divisionName: [],
       address: [],
-      mobileNo:['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      mobileNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
       kilometer: [],
       transferToNewCarACNo: [],
       paymentToBank: [],
@@ -394,13 +393,13 @@ public TaxDetailData : any[];
   ngOnInit(): void {
     this.currentOp = 'insert';
     this.hideArray[0] = true;
-    
+
     console.log(sessionStorage.getItem('emplId'));
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
     this.deptName = (sessionStorage.getItem('deptName'));
-   var locCODE= sessionStorage.getItem('locCode')
-   var temp =locCODE.split('.');
+    var locCODE = sessionStorage.getItem('locCode')
+    var temp = locCODE.split('.');
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
@@ -657,7 +656,7 @@ public TaxDetailData : any[];
       uom: [],
       hsnSacCode: [],
       taxCategoryName: [],
-  diss1:[],
+      diss1: [],
 
       itemType: [],
       unitPrice: [],
@@ -742,16 +741,16 @@ public TaxDetailData : any[];
       polineNum: aa,
     }])
   }
-  
+
   addRow(index) {
     var arrayControl = this.poMasterDtoForm.get('poLines').value
-    
+
     var invItemId = arrayControl[index].invItemId;
 
     if (invItemId != null) {
       this.lineDetailsArray.push(this.lineDetailsGroup());
       // arrayControl[index].itemType.focus();
-    //  alert
+      //  alert
     } else { ('Kindly Insert the line-Details first'); }
     var index = index + 1
 
@@ -790,10 +789,10 @@ public TaxDetailData : any[];
         data => {
           console.log(data);
           if (data.code === 400) {
-            this.displayNewButtonApprove =false;
-this.displayNewButtonUpdate= false;
-this.displayNewButtonSave=false;
-this.displayNewButtonReset=false;
+            this.displayNewButtonApprove = false;
+            this.displayNewButtonUpdate = false;
+            this.displayNewButtonSave = false;
+            this.displayNewButtonReset = false;
             alert(data.message);
             window.location.reload();
           } if (data.code === 200) {
@@ -803,21 +802,21 @@ this.displayNewButtonReset=false;
             this.lstcomments1 = data.obj;
             const status = this.lstcomments1.authorizationStatus;
             if (status === 'Inprogress') {
-              this.displayNewButtonApprove =true;
-              this.displayNewButtonUpdate= true;
-              this.displayNewButtonSave=false;
-              this.displayNewButtonReset=false;
+              this.displayNewButtonApprove = true;
+              this.displayNewButtonUpdate = true;
+              this.displayNewButtonSave = false;
+              this.displayNewButtonReset = false;
 
-              this.displayOnStatus=true;
+              this.displayOnStatus = true;
               this.displayButton = false;
               this.displayNewButton = false;
               this.displayTaxDetailForm = true;
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
-             
-              
-            // for (let i = 0; i <= this.lstcomments1.poLines.length -1; i++) {
+
+
+              // for (let i = 0; i <= this.lstcomments1.poLines.length -1; i++) {
               // this.poMasterDtoForm.patchValue(this.lstcomments1);
-            for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
+              for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
                 this.displayPoLine[i] = false;
@@ -825,17 +824,17 @@ this.displayNewButtonReset=false;
                 control.push(poLine);
               }
               // alert('PO LINE LENGTH '+ this.lstcomments1.poLines.length)
-            
+
               var len = this.lstcomments1.poLines.length - 1
               this.lineDetailsArray.removeAt(len);
-              for(var j=0; j<this.lstcomments1.poLines.length; j++){
+              for (var j = 0; j < this.lstcomments1.poLines.length; j++) {
                 //var aa =j+1;
                 // alert('aa '+j);
                 console.log(control);
-                
+
                 (control.controls[j]).patchValue(
                   {
-                    diss1 :this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
+                    diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
                   })
               }
               this.poMasterDtoForm.patchValue(this.lstcomments1);
@@ -884,19 +883,19 @@ this.displayNewButtonReset=false;
             if (status === "APPROVED") {
               // alert('in approve')
 
-              this.displayNewButtonApprove =false;
-              this.displayNewButtonUpdate= false;
-              this.displayNewButtonSave=false;
-              this.displayNewButtonReset=false;
+              this.displayNewButtonApprove = false;
+              this.displayNewButtonUpdate = false;
+              this.displayNewButtonSave = false;
+              this.displayNewButtonReset = false;
 
-              this.displayOnStatus=false;
+              this.displayOnStatus = false;
               this.displayButton = false;
-              this.dispbut=false;
+              this.dispbut = false;
               this.displayLine = false;
               this.displayNewButton = false;
-              this.approvedArray =this.lstcomments1.poLines;
+              this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
-              
+
               // let control = this.poMasterDtoForm.get('poLines') as FormArray;
               // for (let i = 0; i < data.poLines.length - 1; i++) {
               //   var poLine: FormGroup = this.lineDetailsGroup();
@@ -1110,10 +1109,10 @@ this.displayNewButtonReset=false;
     return val;
   }
   newPOMast() {
- this.displayNewButtonApprove =true;
-this.displayNewButtonUpdate= true;
-this.displayNewButtonSave=false;
-this.displayNewButtonReset=false;
+    this.displayNewButtonApprove = true;
+    this.displayNewButtonUpdate = true;
+    this.displayNewButtonSave = false;
+    this.displayNewButtonReset = false;
     this.authorizationStatus = 'Inprogress';
     const formValue: IpostPO = this.transData(this.poMasterDtoForm.value);
     formValue.authorizationStatus = 'Inprogress';
@@ -1152,17 +1151,17 @@ this.displayNewButtonReset=false;
         // this.displayNewButton = false;
         // this.displaySuppcode = false;
         // this.dispDivision = false;
-      } 
-      
-        if (res.code === 400) {
-          // alert('Code already present in the data base');
-          alert(res.message);
-          // this.poMasterDtoForm.reset();
-          window.location.reload();
-          // alert(res.message);
+      }
 
-        }
-      
+      if (res.code === 400) {
+        // alert('Code already present in the data base');
+        alert(res.message);
+        // this.poMasterDtoForm.reset();
+        window.location.reload();
+        // alert(res.message);
+
+      }
+
     });
   }
   // saveButton(){
@@ -1231,95 +1230,113 @@ this.displayNewButtonReset=false;
           });
         });
 
-        this.patchResultList(i, this.taxCalforItem);
+    this.patchResultList(i, this.taxCalforItem);
   }
   onOptioninvItemIdSelected(itemId, index) {
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
+    this.selectedInvItem.push(selectedValue);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     this.itemType = arrayControl[index].itemType
     this.invItemId = selectedValue.itemId;
     console.log(this.invItemId, this.taxCat);
-    
- 
-    if(this.itemType === "GOODS"){
-    this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
-      .subscribe(
-        data => {
-          this.ItemDetailsList = data;
-          console.log(this.ItemDetailsList);
-          var patch = this.poMasterDtoForm.get('poLines') as FormArray; 
-          console.log(patch.controls);
-          console.log(patch.controls[index]);
-          this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-          if (this.ItemDetailsList.segmentName === null) {
-            (patch.controls[index]).patchValue(
-              {
-                diss1 : 0,
-                invDescription: this.ItemDetailsList.invDescription,
-                invCategory: this.ItemDetailsList.invCategory,
-                uom: this.ItemDetailsList.uom,
-                hsnSacCode: this.ItemDetailsList.hsnSacCode,
-                taxCategoryName: this.ItemDetailsList.taxCategoryName,
-                segmentName: this.segmentName1,
-                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
-                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
-                invItemId: this.invItemId,
-              }
-            );
+
+
+    if (this.itemType === "GOODS") {
+      this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
+        .subscribe(
+          data => {
+            this.ItemDetailsList = data.obj;
+            console.log(this.ItemDetailsList);
+            var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+            console.log(patch.controls);
+            console.log(patch.controls[index]);
+            this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+            if (this.ItemDetailsList.segmentName === null) {
+              (patch.controls[index]).patchValue(
+                {
+                  diss1: 0,
+                  invDescription: this.ItemDetailsList.invDescription,
+                  invCategory: this.ItemDetailsList.invCategory,
+                  uom: this.ItemDetailsList.uom,
+                  hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                  taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                  segmentName: this.segmentName1,
+                  poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                  taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                  invItemId: this.invItemId,
+
+                }
+
+              );
+              //   for (let i=0; i<this.selectedInvItem.length; i++){
+              //     if(this.selectedInvItem[i].value===)
+              //   this.invItemList.slice
+              // }
+
+            }
+            else {
+              // alert('segment value is not null');
+              (patch.controls[index]).patchValue(
+                {
+                  diss1: 0,
+                  uom: this.ItemDetailsList.uom,
+                  invDescription: this.ItemDetailsList.invDescription,
+                  invCategory: this.ItemDetailsList.invCategory,
+                  hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                  taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                  segmentName: this.ItemDetailsList.segmentName,
+                  poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                  taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                  invItemId: this.invItemId,
+                }
+              );
+              // alert(this.ItemDetailsList.invCategory);
+              const invCategory = this.ItemDetailsList.invCategory.substr(0, 3);
+              alert(invCategory);
+              // if(invCategory==='MCH'){
+              //   (patch.controls[index]).patchValue(
+              //     {
+              //        uom: 'INR',
+              //       orderedQty:1,
+              //     }
+              //   );
+              // }
+            }
 
           }
-          else {
-            // alert('segment value is not null');
-            (patch.controls[index]).patchValue(
-              {
-                diss1 : 0,
-                uom: this.ItemDetailsList.uom,
-                invDescription: this.ItemDetailsList.invDescription,
-                invCategory: this.ItemDetailsList.invCategory,
-                hsnSacCode: this.ItemDetailsList.hsnSacCode,
-                taxCategoryName: this.ItemDetailsList.taxCategoryName,
-                segmentName: this.ItemDetailsList.segmentName,
-                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
-                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
-                invItemId: this.invItemId,
-              }
-            );
-          }
-
-        }
-      );
+        );
     }
-    if(this.itemType === "EXPENCE"){
-    
+    if (this.itemType === "EXPENCE") {
+
       // alert('in expence');
       this.service.expenceItemDetailsList(this.invItemId)
-      .subscribe(
-        data => {
-          this.ItemDetailsList = data;
-          console.log(this.ItemDetailsList);
-          var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-          this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-            // alert('segment value is not null');
-            // alert(this.ItemDetailsList.uom);
-            (patch.controls[index]).patchValue(
-              {
-                diss1 : 0,
-                uom: this.ItemDetailsList.uom,
-                invDescription: this.ItemDetailsList.invDescription,
-                invCategory: this.ItemDetailsList.invCategory,
-                hsnSacCode: this.ItemDetailsList.hsnSacCode,
-                taxCategoryName: this.ItemDetailsList.taxCategoryName,
-                segmentName: this.ItemDetailsList.segmentName,
-                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
-                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
-                invItemId: this.invItemId,
-              }
-            );
-       
+        .subscribe(
+          data => {
+            this.ItemDetailsList = data;
+            console.log(this.ItemDetailsList);
+            var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+            this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+              // alert('segment value is not null');
+              // alert(this.ItemDetailsList.uom);
+              (patch.controls[index]).patchValue(
+                {
+                  diss1: 0,
+                  uom: this.ItemDetailsList.uom,
+                  invDescription: this.ItemDetailsList.invDescription,
+                  invCategory: this.ItemDetailsList.invCategory,
+                  hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                  taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                  segmentName: this.ItemDetailsList.segmentName,
+                  poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                  taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                  invItemId: this.invItemId,
+                }
+              );
 
-        }
-      );
+
+          }
+        );
     }
   }
   onContextValueSelected(contextValue: any) {
@@ -1354,7 +1371,7 @@ this.displayNewButtonReset=false;
   fnCancatination(index) {
     // alert(index);
 
-  
+
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
@@ -1386,9 +1403,9 @@ this.displayNewButtonReset=false;
             }
           } else if (this.segmentNameList.code === 400) {
             var arrayControl = this.poMasterDtoForm.get('poLines').value
-            (patch.controls[index]).patchValue({ segmentName: ''})
+              (patch.controls[index]).patchValue({ segmentName: '' })
             // alert(this.segmentNameList.message);
-            
+
           }
         }
       );
@@ -1445,9 +1462,9 @@ this.displayNewButtonReset=false;
           });
           this.patchResultList(index, this.taxCalforItem);
         });
-        console.log(this.poMasterDtoForm.value);
-        
-       
+    console.log(this.poMasterDtoForm.value);
+
+
     // alert('for '+this.taxCalforItem.length);
 
 
@@ -1462,7 +1479,7 @@ this.displayNewButtonReset=false;
 
   UpdatePOMast() {
     this.supplierCode = this.poMasterDtoForm.get('supplierCode').value
-// alert(this.supplierCode);
+    // alert(this.supplierCode);
     const formValue: IpostPO = this.transUpdateData(this.poMasterDtoForm.value);
     console.log(formValue);
     // alert(formValue.supplierCode);
@@ -1489,10 +1506,10 @@ this.displayNewButtonReset=false;
         alert('PO UPDATED SUCCESSFUILY');
         // this.authorizationStatus = 'APPROVED';
         this.displayNewButton = false;
-        this.displayNewButtonApprove =true;
-        this.displayNewButtonUpdate= false;
-        this.displayNewButtonSave=false;
-        this.displayNewButtonReset=false;
+        this.displayNewButtonApprove = true;
+        this.displayNewButtonUpdate = false;
+        this.displayNewButtonSave = false;
+        this.displayNewButtonReset = false;
         // window.location.reload();
       } else {
         if (res.code === 400) {
@@ -1503,10 +1520,10 @@ this.displayNewButtonReset=false;
     });
   }
   Approve() {
-    this.displayNewButtonApprove =false;
-    this.displayNewButtonUpdate= false;
-    this.displayNewButtonSave=false;
-    this.displayNewButtonReset=false;
+    this.displayNewButtonApprove = false;
+    this.displayNewButtonUpdate = false;
+    this.displayNewButtonSave = false;
+    this.displayNewButtonReset = false;
     const formValue: IpostPO = this.transUData(this.poMasterDtoForm.value);
     formValue.ouId = this.ouId;
     formValue.dept = Number(this.dept);
@@ -1514,10 +1531,10 @@ this.displayNewButtonReset=false;
     this.service.ApprovePo(formValue, formValue.segment1).subscribe((res: any) => {
       if (res.code === 200) {
         alert('PO APPROVED SUCCESSFUILY');
-        this.displayNewButtonApprove =false;
-        this.displayNewButtonUpdate= false;
-        this.displayNewButtonSave=false;
-        this.displayNewButtonReset=false;
+        this.displayNewButtonApprove = false;
+        this.displayNewButtonUpdate = false;
+        this.displayNewButtonSave = false;
+        this.displayNewButtonReset = false;
         this.authorizationStatus = 'APPROVED';
         this.approveDate = new Date();
         this.displayNewButton = false;
@@ -1613,8 +1630,8 @@ this.displayNewButtonReset=false;
       var taxCategoryId = taxCategoryId;
       this.taxCatId = taxCategoryId;
       // var diss = 0;
-    var arrayControl = this.poMasterDtoForm.get('poLines').value
-     var diss = arrayControl[i].diss1;
+      var arrayControl = this.poMasterDtoForm.get('poLines').value
+      var diss = arrayControl[i].diss1;
       var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
       this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmount)
         .subscribe(
@@ -1637,7 +1654,7 @@ this.displayNewButtonReset=false;
     // alert(aa);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     const invItemId = arrayControl[this.poLineTax].invItemId
-    this.taxCat1 =arrayControl[this.poLineTax].taxCategoryId
+    this.taxCat1 = arrayControl[this.poLineTax].taxCategoryId
     console.log(this.taxCat);
     var arrayControltaxAmounts = this.lineDetailsArray.controls[aa].get('taxAmounts').value
     // alert(arrayControltaxAmounts[aa])
@@ -1671,7 +1688,7 @@ this.displayNewButtonReset=false;
           var patch = this.poMasterDtoForm.get('poLines') as FormArray;
           (patch.controls[aa]).patchValue(
             {
-              diss1 : this.taxCalforItem[0].totTaxAmt,
+              diss1: this.taxCalforItem[0].totTaxAmt,
               taxAmtLineWise: sum,
               totAmtLineWise: tolAmoutLine,
             }
@@ -1705,11 +1722,12 @@ this.displayNewButtonReset=false;
   }
   // checked
   onOptioninvitemTypeSelected(itemType: any) {
-    // alert(itemType);
+    alert(itemType);
     if (itemType === 'GOODS') {
-var deptName1 = this.poMasterDtoForm.get('dept').value;
-// alert(deptName1+" "+(sessionStorage.getItem('deptName')))
-// alert(this.deptName);
+
+      var deptName1 = this.poMasterDtoForm.get('dept').value;
+      // alert(deptName1+" "+(sessionStorage.getItem('deptName')))
+      // alert(this.deptName);
       this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
         .subscribe(
           data => {
@@ -1717,12 +1735,19 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
             console.log(this.invItemList);
           }
         );
-        (document.getElementById("invDescription")as any).disabled= true;   
-        (document.getElementById("hsnSacCode")as any).disabled= true;
-    } if (itemType === 'EXPENCE') {
-      this.displayHSN=false;
-      this.displayinvDesc =false;
-      (document.getElementById("invDescription")as any).disabled= false;
+      // (document.getElementById("invDescription")as any).disabled= true;   
+      // (document.getElementById("hsnSacCode")as any).disabled= true;
+      // this.displaysupplierSiteId=false;
+      alert('check 1');
+      var ids = new Set(this.selectedInvItem.map(({ invItemId }) => invItemId));
+      alert('check 2');
+      this.invItemList = this.invItemList.filter(({ invItemId }) => !ids.has(invItemId));
+      console.log(this.invItemList);
+    }
+    if (itemType === 'EXPENCE') {
+      this.displayHSN = false;
+      this.displayinvDesc = false;
+      (document.getElementById("invDescription") as any).disabled = false;
       var deptName = 'NA';
       this.service.invItemList(itemType, deptName)
         .subscribe(
@@ -1731,10 +1756,11 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
             console.log(this.invItemList);
           }
         );
-        // (document.getElementById("invDescription")as any).disabled= false;
-        // (document.getElementById("hsnSacCode")as any).disabled= false;
-       
+      // (document.getElementById("invDescription")as any).disabled= false;
+      // (document.getElementById("hsnSacCode")as any).disabled= false;
+
     }
+
   }
 
   onOptioninvItemIdSelected1($event) {
@@ -1887,7 +1913,7 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
       //       var patch = this.poMasterDtoForm.get('poLines') as FormArray;
       //       (patch.controls[i]).patchValue({ segmentName: ''})
       //       alert(this.segmentNameList.message);
-            
+
       //     }
       //   }
       // );
@@ -2051,14 +2077,14 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
   //     event.target.disabled = false;
   //    }, 30000);
   // }
-  validateNum(index,j) {
-    var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;  
+  validateNum(index, j) {
+    var arrayControl = this.lineDetailsArray.controls[index].get('taxAmounts').value;
     // this.poMasterDtoForm.get('poLines').value
     var value = arrayControl[index].totTaxAmt
     if (value.charAt(0) === '-') {
       alert('Valid Number: ' + value);
     } else {
-      alert('Invalid Number: ' + value + ' ' + 'Kindly enter negetive value');   
+      alert('Invalid Number: ' + value + ' ' + 'Kindly enter negetive value');
       // this.lineDetailsArray.controls[index].get('orderedQty').reset();
       // this.poMasterDtoForm.controls['poLines'].controls[index].controls['taxAmounts'].controls[j].controls.totTaxPer.value
       // this.TaxDetailsArray.controls[j].get('orderedQty').reset();
@@ -2079,7 +2105,7 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
     let select = this.approvedArray.find(d => d.polineNum === polineNum);
     this.TaxDetailData = select.taxAmounts;
     console.log(this.TaxDetailData);
-    this.displayTaxDetailData= false;
+    this.displayTaxDetailData = false;
   }
 
 }

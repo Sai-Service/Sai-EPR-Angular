@@ -101,7 +101,7 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
 
-  invItemList(itemType,deptName) {
+  invItemList(itemType,deptName) : Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
 
@@ -789,7 +789,7 @@ UpdatePoDetails(ApprovePoRecord) {
   return this.http.put(url, ApprovePoRecord, options);
 }
 
-ItemDetailsList(invItemId, taxCat, billTo) {
+ItemDetailsList(invItemId, taxCat, billTo):Observable<any> {
   const REQUEST_PARAMS = new HttpParams().set('itemId', invItemId)
   .set('taxCategoryName', taxCat)
   .set('locId', billTo)
