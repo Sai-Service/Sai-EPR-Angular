@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
@@ -104,6 +104,12 @@ interface IpostPO {
   taxCategoryId: number;
 }
 
+const originFormControlNameNgOnChanges = FormControlName.prototype.ngOnChanges;
+FormControlName.prototype.ngOnChanges = function () {
+  const result = originFormControlNameNgOnChanges.apply(this, arguments);
+  this.control.nativeElement = this.valueAccessor._elementRef.nativeElement;
+  return result;
+};
 
 @Component({
   selector: 'app-opmaster-dto',
@@ -112,13 +118,14 @@ interface IpostPO {
 })
 export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
+  supSelCnt: number;
   selectedLine = 0;
   clicked = false;
   public currentOp: string;
   showModal: boolean;
   content: number;
   title: string;
-  mainType:string;
+  mainType: string;
   userList1: any[] = [];
   userList2: any[] = [];
 
@@ -238,7 +245,7 @@ export class OPMasterDtoComponent implements OnInit {
   displayNewButton = true;
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
-  displaysupplierSiteId=true;
+  displaysupplierSiteId = true;
   displayModal = true;
   displayContexValue = true;
   displayDept = true;
@@ -248,19 +255,19 @@ export class OPMasterDtoComponent implements OnInit {
   displayButton = true;
   displayLine = true;
   displayHSN = true;
-  displayinvDesc =true;
-  displayBillShipList=true;
-  displayBillShipList1=true;
+  displayinvDesc = true;
+  displayBillShipList = true;
+  displayBillShipList1 = true;
   // displayPoLine =true;
   displayTaxDetailData = true;
   DissRecoverableFlag = false;
   DissinclusiveFlag = false;
   DissselfAssesedFlag = false;
-  displayNewButtonApprove =false;
-displayNewButtonUpdate=false;
-displayNewButtonSave=true;
-displayNewButtonReset=true;
-displaygetInvItemId=true;
+  displayNewButtonApprove = false;
+  displayNewButtonUpdate = false;
+  displayNewButtonSave = true;
+  displayNewButtonReset = true;
+  displaygetInvItemId = true;
   disTaxDiss: Array<boolean> = [];
   taxCat: string;
   taxCat1: string;
@@ -278,7 +285,7 @@ displaygetInvItemId=true;
   lstcomments: any[];
   taxList: any[];
   lstcomments1: any;
-  invItemList: any[];
+  invItemList = new Array();
   siteIdList: any;
   supplierCodeSelected: any;
   public OUIdList: Array<string> = [];
@@ -314,15 +321,16 @@ displaygetInvItemId=true;
   public today = new Date();
   public priorDate = new Date().setDate(this.today.getDate() - 30)
   public data1: any[];
-  public selectedInvItem =new Array(); 
+  public selectedInvItem = new Array();
 
   @ViewChild("myinput") myInputField: ElementRef;
+  @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
-    this.poMasterDtoForm = fb.group({
+    this.poMasterDtoForm = this.fb.group({
 
       poHeaderId: [],
       ouId: ['', [Validators.required]],
@@ -332,7 +340,7 @@ displaygetInvItemId=true;
       supplierSiteId: [],
       // segmentName: [],
       // polineNum:[],
-      supplierCode: [],
+      supplierCode: ['', [Validators.required]],
       supplierName: [],
       billToLoc: [],
       shipToLoc: [],
@@ -359,14 +367,14 @@ displaygetInvItemId=true;
       recoverableFlag: [],
       selfAssesedFlag: [],
       inclusiveFlag: [],
-      description: ['',[Validators.minLength(3),Validators.maxLength(20),Validators.pattern('[a-zA-Z 0-9]*')]],
+      description: ['', [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z 0-9]*')]],
       totTaxAmt: [],
       ouName: [],
       name: [],
       contextValue: [],
       divisionName: [],
       address: [],
-      mobileNo:['', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
+      mobileNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
       kilometer: [],
       transferToNewCarACNo: [],
       paymentToBank: [],
@@ -585,7 +593,19 @@ displaygetInvItemId=true;
           console.log(this.delearCodeList);
         }
       );
-    // this.onChanges();
+
+
+    // // this.onChanges();
+    // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+    // if (patch.length >= 1) {
+    //   for (let val of patch.controls) {
+    //     val.get('itemType').valueChanges.subscribe(data => {
+    //       alert("inside forof blur");
+    //       console.log("itemType " + patch.controls.indexOf(val) + ': ', val.get('itemType').value)
+    //       this.onOptioninvitemTypeSelected(val.get('itemType').value, patch.controls.indexOf(val));
+    //     })
+    //   }
+    // }
   }
   //   onChanges(): void {
   //     this.poMasterDtoForm.valueChanges.subscribe(val => {
@@ -652,7 +672,7 @@ displaygetInvItemId=true;
     return this.fb.group({
       poLineId: [],
       polineNum: [],
-      segment: [],
+      segment: ['', [Validators.required]],
       invItemId: [],
       invDescription: [],
       invCategory: [],
@@ -768,6 +788,8 @@ displaygetInvItemId=true;
     this.displayPoLine.push(true);
     this.hideArray[index] = true;
     // val1+index.focus();
+
+
   }
   RemoveRow(index) {
     if (index === 0) {
@@ -1171,6 +1193,7 @@ displaygetInvItemId=true;
   //   this.displayNewButtonSave=true;
   // }
   onSupplierCodeSelected(supp: string) {
+
     // this.displayNewButtonSave=true;
     //let value = $event.target.value.split("-")[1].trim();
     var value = supp.substr(supp.indexOf('@') + 1, supp.length);
@@ -1241,7 +1264,7 @@ displaygetInvItemId=true;
     // debugger;
     // alert(selectedValue);
     console.log(selectedValue);
-    
+
     this.selectedInvItem.push(selectedValue);
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
@@ -1249,22 +1272,19 @@ displaygetInvItemId=true;
     this.invItemId = selectedValue.itemId;
     // alert(this.invItemId);
     console.log(this.invItemId, this.taxCat);
-    if(this.itemType === "GOODS"){
-    // this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc)
-    //   .subscribe(
-    //     data => {
+    if (this.itemType === "GOODS") {
+
       this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc).subscribe((res: any) => {
         if (res.code === 200) {
           this.ItemDetailsList = res.obj;
-          console.log(this.ItemDetailsList);
-          var patch = this.poMasterDtoForm.get('poLines') as FormArray; 
-          console.log(patch.controls);
-          console.log(patch.controls[index]);
+
+          var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+
           this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-          if (this.ItemDetailsList.segmentName === null ) {
+          if (this.ItemDetailsList.segmentName === null) {
             (patch.controls[index]).patchValue(
               {
-                diss1 : 0,
+                diss1: 0,
                 invDescription: this.ItemDetailsList.invDescription,
                 invCategory: this.ItemDetailsList.invCategory,
                 uom: this.ItemDetailsList.uom,
@@ -1274,22 +1294,21 @@ displaygetInvItemId=true;
                 poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
                 taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                 invItemId: this.invItemId,
-                
+
               }
-              
+
             );
           }
           else {
-            // alert ('vehicle item is there');
-            const invCategory = this.ItemDetailsList.invCategory.substr(0,3);
-            // alert(invCategory);
-            if (invCategory==='MCH'){
-              // alert('under if condition');
+
+            const invCategory = this.ItemDetailsList.invCategory.substr(0, 3);
+            if (invCategory === 'MCH') {
+              
               (patch.controls[index]).patchValue(
                 {
-                  diss1 : 0,
+                  diss1: 0,
                   uom: this.ItemDetailsList.uom,
-                  orderedQty:1,
+                  orderedQty: 1,
                   invDescription: this.ItemDetailsList.invDescription,
                   invCategory: this.ItemDetailsList.invCategory,
                   hsnSacCode: this.ItemDetailsList.hsnSacCode,
@@ -1301,36 +1320,32 @@ displaygetInvItemId=true;
                 }
               );
             }
-            else{
-            // alert('segment value is not null');
-            (patch.controls[index]).patchValue(
-              {
-                diss1 : 0,
-                uom: this.ItemDetailsList.uom,
-                invDescription: this.ItemDetailsList.invDescription,
-                invCategory: this.ItemDetailsList.invCategory,
-                hsnSacCode: this.ItemDetailsList.hsnSacCode,
-                taxCategoryName: this.ItemDetailsList.taxCategoryName,
-                segmentName: this.ItemDetailsList.segmentName,
-                poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
-                taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
-                invItemId: this.invItemId,
-              }
-            );
+            else {
+              // alert('segment value is not null');
+              (patch.controls[index]).patchValue(
+                {
+                  diss1: 0,
+                  uom: this.ItemDetailsList.uom,
+                  invDescription: this.ItemDetailsList.invDescription,
+                  invCategory: this.ItemDetailsList.invCategory,
+                  hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                  taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                  segmentName: this.ItemDetailsList.segmentName,
+                  poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                  taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                  invItemId: this.invItemId,
+                }
+              );
+            }
           }
-            // // alert(this.ItemDetailsList.invCategory);
-            // const invCategory = this.ItemDetailsList.invCategory.substr(0,3);
-            // alert(invCategory);
-          }
-
-      }
-      else {
-        if (res.code === 400) {
-          alert(res.message);
         }
-      }
+        else {
+          if (res.code === 400) {
+            alert(res.message);
+          }
+        }
       });
-     
+
     }
     if (this.itemType === "EXPENCE") {
 
@@ -1342,8 +1357,7 @@ displaygetInvItemId=true;
             console.log(this.ItemDetailsList);
             var patch = this.poMasterDtoForm.get('poLines') as FormArray;
             this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-              // alert('segment value is not null');
-              // alert(this.ItemDetailsList.uom);
+           
               (patch.controls[index]).patchValue(
                 {
                   diss1: 0,
@@ -1745,65 +1759,70 @@ displaygetInvItemId=true;
 
     }
   }
+
   // checked
-  onOptioninvitemTypeSelected(e: any) {
-    alert(e.target.value);
-   var itemType=e.target.value;
-    // alert(itemType);
-    // alert(this.poMasterDtoForm.get('supplierCode').value);
-    if (this.poMasterDtoForm.get('supplierCode').value === null){
-      alert('Please Select Supplier Code');
-      this.displaygetInvItemId=false;
+  onOptioninvitemTypeSelected(e: any, lineNum) {
+    alert('---' + e.target.value);
+    var itemType = e.target.value;
+    if (this.poMasterDtoForm.get('supplierCode').value === '') {
+      alert('Please Select Supplier Code First !');
+      this.lineDetailsArray.controls[lineNum].get('segment').disable();
+      this.lineDetailsArray.controls[lineNum].get('itemType').setValue('--Select--');
+      (<any>this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
     }
-    else{
-      // alert(itemType);
-      // alert('else'+e.target.value);
-    if (itemType === 'GOODS' ) { 
-      this.displaygetInvItemId=true;
-      // let scode=this.poMasterDtoForm.get('supplierCode');
-      // scode.focus();
-      // ( < any > this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
-      this.displaysupplierSiteId=false;
-      this.displayBillShipList=false;
-      this.displayBillShipList1=false
-var deptName1 = this.poMasterDtoForm.get('dept').value;
-// alert(deptName1+" "+(sessionStorage.getItem('deptName')))
-// alert(this.deptName);
-      this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
-        .subscribe(
-          data => {
-            this.invItemList = data;
-            console.log(this.invItemList);
-          }
-        );
-        // (document.getElementById("invDescription")as any).disabled= true;   
-        // (document.getElementById("hsnSacCode")as any).disabled= true;
+    else {
+      if (itemType === 'GOODS') {
+        this.lineDetailsArray.controls[lineNum].get('segment').enable();
+        this.displaygetInvItemId = true;
+        // this.displaysupplierSiteId = false;
+        //this.displayBillShipList = false;
+        //this.displayBillShipList1 = false
+        var deptName1 = this.poMasterDtoForm.get('dept').value;
+        // alert(deptName1+" "+(sessionStorage.getItem('deptName')))
+        // alert(this.deptName);
+        if (this.invItemList.length <= 0) {
+
+
+          this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
+            .subscribe(
+              data => {
+                this.invItemList = data;
+                console.log(this.invItemList);
+              }
+            );
+        }
+        this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
+        this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
+        this.poMasterDtoForm.get('supplierSiteId').disable();
+        this.poMasterDtoForm.get('shipToLoc').disable();
+        this.poMasterDtoForm.get('billToLoc').disable();
+
         // this.displaysupplierSiteId=false;
-//         alert('check 1');
-//     var ids= new Set(this.selectedInvItem.map(({ itemId }) => itemId));
-//     alert('check 2');
-//     this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
-// console.log(this.invItemList);
-    }
-     if (itemType === 'EXPENCE') {
-      this.displaygetInvItemId=true;
-      this.displayHSN=false;
-      this.displayinvDesc =false;
-      (document.getElementById("invDescription")as any).disabled= false;
-      var deptName = 'NA';
-      this.service.invItemList(itemType, deptName)
-        .subscribe(
-          data => {
-            this.invItemList = data;
-            console.log(this.invItemList);
-          }
-        );
-      // (document.getElementById("invDescription")as any).disabled= false;
-      // (document.getElementById("hsnSacCode")as any).disabled= false;
+        alert('check 1');
+        var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
+        alert('check 2' + ids);
+        this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
+        console.log(this.invItemList);
+      }
+      if (itemType === 'EXPENCE') {
+        this.displaygetInvItemId = true;
+        this.displayHSN = false;
+        this.displayinvDesc = false;
+        (document.getElementById("invDescription") as any).disabled = false;
+        var deptName = 'NA';
+        this.service.invItemList(itemType, deptName)
+          .subscribe(
+            data => {
+              this.invItemList = data;
+              console.log(this.invItemList);
+            }
+          );
+        // (document.getElementById("invDescription")as any).disabled= false;
+        // (document.getElementById("hsnSacCode")as any).disabled= false;
+
+      }
 
     }
-
-  }
   }
 
   onOptioninvItemIdSelected1($event) {
@@ -1854,8 +1873,8 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
         this.poMasterDtoForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Error while insertion');
-          this.poMasterDtoForm.reset();
+          alert('Error while insertion -- ' + res.obj);
+          // this.poMasterDtoForm.reset();
         }
       }
     });
@@ -1953,7 +1972,7 @@ var deptName1 = this.poMasterDtoForm.get('dept').value;
       //       }
       //     } else if (this.segmentNameList.code === 400) {
       //       var arrayControl = this.poMasterDtoForm.get('poLines').value
-      //       var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+      //      F
       //       (patch.controls[i]).patchValue({ segmentName: ''})
       //       alert(this.segmentNameList.message);
 
