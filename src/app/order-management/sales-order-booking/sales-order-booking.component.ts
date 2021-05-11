@@ -559,7 +559,7 @@ export class SalesOrderBookingComponent implements OnInit {
   onOptionTaxCatSelected(taxCategory, i) {
     alert(i);
     var taxCategoryName=taxCategory.taxCategoryName;
-var taxCategoryId=taxCategory.taxCategoryId;
+var taxCategoryId=taxCategoryId;
 // var orderNumber=this.orderNumber;
 // var orgId= Number(this.ouId=Number(sessionStorage.getItem('ouId')));
 // alert(orgId);
@@ -570,21 +570,23 @@ var taxCategoryId=taxCategory.taxCategoryId;
     alert(amount);
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-    (controlinv.controls[i]).patchValue({ taxCategoryId: select.taxCategoryId });
+    var taxCategoryId=this.taxCategoryList[0].taxCategoryId;
+    alert(taxCategoryId);
+    // (controlinv.controls[i]).patchValue({ taxCategoryId: select.taxCategoryId });
     var disAm = 0;
-    this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
+    this.transactionService.getTaxDetails(taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
       .subscribe(
         data => {
           this.lstInvLineDeatails1 = data;
           console.log(this.lstInvLineDeatails1);
           let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
           this.TaxDetailsArray().clear();
-          for (let i = 0; i < data.taxLines.length; i++) {
+          for (let i = 0; i < data.taxAmounts.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
           }
          
-          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data.taxLines);
+          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data.taxAmounts);
          
         }
          
@@ -684,7 +686,7 @@ this.orderManagementService.addonDescList(segment)
     // formValue.flowStatusCode= 'BOOKED';
     console.log(formValue); 
    var accLines= this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
-   var req:any[];
+   var req= new Array();
   //  for (let i = 0; i < ; i++){
   //   var orderLnGrp: FormGroup = this.orderlineDetailsGroup();
   //   this.orderlineDetailsArray().push(orderLnGrp);
@@ -696,10 +698,10 @@ this.orderManagementService.addonDescList(segment)
     // for line array
     // if status ===null
     // const formvalue : AccOrderLinesPost1=accLines[i];
-    // req.push(formvalue)
+    req.push(formValue);
     console.log(accLines);
     this.ouId=Number(sessionStorage.getItem('ouId'));
-    this.orderManagementService.AccLineSave(accLines).subscribe((res: any) => {
+    this.orderManagementService.AccLineSave(req).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber=res.obj;
         console.log(this.orderNumber);

@@ -849,7 +849,7 @@ export class OPMasterDtoComponent implements OnInit {
                 control.push(poLine);
               }
               // alert('PO LINE LENGTH '+ this.lstcomments1.poLines.length)
-
+              
               var len = this.lstcomments1.poLines.length - 1
               this.lineDetailsArray.removeAt(len);
               for (var j = 0; j < this.lstcomments1.poLines.length; j++) {
@@ -860,8 +860,13 @@ export class OPMasterDtoComponent implements OnInit {
                 (control.controls[j]).patchValue(
                   {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
-                  })
+                  });
+
+                  (control.controls[j]).patchValue({ taxCategoryName:this.lstcomments1.poLines[j].taxCategoryName })
+                  taxCategoryName:this.lstcomments1.poLines[j].taxCategoryName,
+                  console.log(this.lstcomments1.poLines[j].taxCategoryName);
               }
+              
               this.poMasterDtoForm.patchValue(this.lstcomments1);
 
               // alert('displayPoLine.length ' + this.displayPoLine.length);
@@ -1182,7 +1187,7 @@ export class OPMasterDtoComponent implements OnInit {
         // alert('Code already present in the data base');
         alert(res.message);
         // this.poMasterDtoForm.reset();
-        window.location.reload();
+        // window.location.reload();
         // alert(res.message);
 
       }
@@ -1791,11 +1796,11 @@ export class OPMasterDtoComponent implements OnInit {
               }
             );
         }
-        this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
-        this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
-        this.poMasterDtoForm.get('supplierSiteId').disable();
-        this.poMasterDtoForm.get('shipToLoc').disable();
-        this.poMasterDtoForm.get('billToLoc').disable();
+        // this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
+        // this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
+        // this.poMasterDtoForm.get('supplierSiteId').disable();
+        // this.poMasterDtoForm.get('shipToLoc').disable();
+        // this.poMasterDtoForm.get('billToLoc').disable();
 
         // this.displaysupplierSiteId=false;
         alert('check 1');
