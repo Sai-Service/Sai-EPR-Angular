@@ -581,12 +581,12 @@ var taxCategoryId=taxCategoryId;
           console.log(this.lstInvLineDeatails1);
           let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
           this.TaxDetailsArray().clear();
-          for (let i = 0; i < data.taxAmounts.length; i++) {
+          for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
           }
          
-          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data.taxAmounts);
+          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data.taxLines);
          
         }
          
@@ -686,19 +686,16 @@ this.orderManagementService.addonDescList(segment)
     // formValue.flowStatusCode= 'BOOKED';
     console.log(formValue); 
    var accLines= this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+   var taxAmounts=this.SalesOrderBookingForm.get('taxAmounts').value;
+  //  var taxAmounts='ETaxAmounts'
+  //  accLines.push(taxAmounts);
+   accLines['taxAmounts']=taxAmounts;
    var req= new Array();
-  //  for (let i = 0; i < ; i++){
-  //   var orderLnGrp: FormGroup = this.orderlineDetailsGroup();
-  //   this.orderlineDetailsArray().push(orderLnGrp);
-  //  }
-  //  if (status===null){
-  //   const formvalue : AccOrderLinesPost1=accLines[0];
-  //   req.push(formvalue)
-  //  }
-    // for line array
-    // if status ===null
-    // const formvalue : AccOrderLinesPost1=accLines[i];
-    req.push(formValue);
+
+
+   
+  
+    req.push(accLines);
     console.log(accLines);
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.orderManagementService.AccLineSave(req).subscribe((res: any) => {
