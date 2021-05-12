@@ -691,17 +691,10 @@ this.orderManagementService.addonDescList(segment)
   //  accLines.push(taxAmounts);
    accLines['taxAmounts']=taxAmounts;
    var req= new Array();
-  //  for (let i = 0; i < ; i++){
-  //   var orderLnGrp: FormGroup = this.orderlineDetailsGroup();
-  //   this.orderlineDetailsArray().push(orderLnGrp);
-  //  }
-  //  if (status===null){
-  //   const formvalue : AccOrderLinesPost1=accLines[0];
-  //   req.push(formvalue)
-  //  }
-    // for line array
-    // if status ===null
-    // const formvalue : AccOrderLinesPost1=accLines[i];
+
+
+   
+  
     req.push(accLines);
     console.log(accLines);
     this.ouId=Number(sessionStorage.getItem('ouId'));
