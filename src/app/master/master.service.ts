@@ -1456,6 +1456,10 @@ TypeList():Observable<any>
 {
   return  this.http.get(this.ServerUrl+'/cmnLookup/type/StockAdjType');
 }
+
+
+
+
 ItemIdList1(locationId,subInv):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/OnHandItemLst?locId= ${locationId}&subInvCode=${subInv}`)

@@ -42,6 +42,12 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${category}`);
   }
 
+  //http://localhost:8081/itemMst/ByCatType?itemCatType=SS_SPARES&divId=1
+  getItemByCatType(itemCatType, divId):Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
+  }
+
+  
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
