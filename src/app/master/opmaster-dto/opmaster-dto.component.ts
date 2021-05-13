@@ -837,10 +837,6 @@ export class OPMasterDtoComponent implements OnInit {
               this.displayNewButton = false;
               this.displayTaxDetailForm = true;
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
-
-
-              // for (let i = 0; i <= this.lstcomments1.poLines.length -1; i++) {
-              // this.poMasterDtoForm.patchValue(this.lstcomments1);
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray

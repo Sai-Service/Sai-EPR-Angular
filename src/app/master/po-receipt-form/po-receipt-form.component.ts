@@ -372,12 +372,6 @@ return true;
     this.service.getsearchByReceiptNo(segment1)
       .subscribe(
         data => {
-          // if (data.code===400){
-          //   alert(data.message);
-          //   // alert(data.obj);
-          // }
-          // if(data.code ===200){
-          // this.lstcompolines = data.obj;
           this.lstcompolines = data;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
