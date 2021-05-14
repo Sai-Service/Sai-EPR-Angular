@@ -157,7 +157,7 @@ export class PoReceiptFormComponent implements OnInit {
   // PO wise Date Paratemeter//////
   frmDate : Date;
   toDate:Date;
-
+ 
 
   xyzdis=false;
 
@@ -252,7 +252,7 @@ export class PoReceiptFormComponent implements OnInit {
       segment5:['',[Validators.required,Validators.minLength(2),Validators.maxLength(2)]],
       polineNum:[''],
       locatorId:[''],
-      selectFlag:[''],
+      selectFlag:[],
     });
   }
   get lineDetailsArray() {
@@ -294,6 +294,56 @@ this.selectedAll = totalSelected === this.names.length;
 
 return true;
 }
+
+
+// selectAll(e)
+// {
+//   var patch = this.poReceiptForm.get('poLines') as FormArray;
+//   var invLineArr = this.poReceiptForm.get('poLines').value;
+//  alert("e.target.checked :"  +e.target.checked);
+//   if ( e.target.checked === true) {this.selectAllFlag=true; 
+//   //  alert("select All flag :"+this.selectAllflag);
+ 
+
+// //  if(this.selectAllFlag===true) 
+// //   {
+//   this.recFagDiss=false;
+
+//     // for (let i = 0; i < this.lineDetailsArray.length ; i++) 
+//     //   {
+//     //     alert('in patch')
+//     //     patch.controls[i].patchValue({selectFlag:true});
+//     //   }
+//     }
+//   else { this.selectAllFlag=false; }
+//     //     if (invLineArr[i].selectFlag===true) 
+        
+//     //      { 
+           
+//     //        patch.controls[i].patchValue({applyrcptFlag:''})
+//     //       //  alert("inner loop");
+//     //        this.applyReceiptFlag(e,i);
+//     //      }
+
+//     //       patch.controls[i].patchValue({applyrcptFlag:true})
+//     //       this.applyReceiptFlag(e,i);
+//     //   }
+//   // }
+//   // else
+//   // {
+//   //   // alert("select All flag false :"+this.selectAllflag);
+
+//   //   for (let i = 0; i < this.lstcompolines.length ; i++) 
+//   //     {
+//   //       patch.controls[i].patchValue({applyrcptFlag:''})
+//   //       // this.applyReceiptFlag(e,i);
+//   //     }
+//   // }
+
+// }
+
+
+
 
    get f() { return this.poReceiptForm.controls; }
 
@@ -377,9 +427,13 @@ return true;
           var poLines:FormGroup=this.lineDetailsGroup();
           var length1=this.lstcompolines.rcvLines.length-1;
           this.lineDetailsArray.removeAt(length1);
-          for (var i=0;i<=length1;i++){
+          // for (var i=0;i<=length1;i++){
+          //   control.push(poLines);
+          // }
+var len=this.lineDetailsArray.length;
+          for ( var i=0;i<this.lstcompolines.rcvLines.length-len;i++){
             control.push(poLines);
-          };
+          }
         this.disabled = false;
         this.disabledLine=false;
         this.disabledViewAccounting=false;
