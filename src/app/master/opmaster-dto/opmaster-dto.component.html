@@ -81,9 +81,9 @@
                                     <td>
                                         <input type="text" formControlName="supplierCode"
                                             (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
-                                            list="dynmicUserIds" class="form-control"
-                                            (ngModelChange)="onSupplierCodeSelected($event)" />
-                                        <datalist id="dynmicUserIds">
+                                            list="dynmicUserIds" class="form-control"  placeholder="Supplier details"
+                                            (ngModelChange)="onSupplierCodeSelected($event)"/>
+                                        <datalist id="dynmicUserIds"  >
                                             <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
                                                 {{item.name}}@{{item.suppNo}}</option>
                                         </datalist>
@@ -884,7 +884,9 @@
                                                         class="form-control"></td> -->
                                                     <td> <select formControlName="itemType" class="form-control"
                                                             style="width: 5rem;" 
-                                                            (change)='onOptioninvitemTypeSelected($event)'>
+                                                            
+                                                            (change)='onOptioninvitemTypeSelected($event,i)'>
+                                                            <option value="">--Select--</option>
                                                             <option value="GOODS">GOODS</option>
                                                             <option value="EXPENCE">EXPENSE</option>
                                                         </select>
@@ -954,7 +956,7 @@
                                                             </option>
                                                         </select>
                                                     </td>
-                                                    <td> <input type="text"  formControlName="orderedQty"
+                                                    <td> <input type="number"  formControlName="orderedQty"
                                                             style="width: 4rem;" class="form-control" >
                                                         </td>
                                                     <!-- <td> <input type="number" formControlName="orderedQty"
@@ -1075,7 +1077,7 @@
                                                             style="width: 4rem;" class="form-control" >
                                                        
                                                     </td>
-                                                    <input  formControlName="diss1" value={{diss1}}>
+                                                    <!-- <input  formControlName="diss1" value={{diss1}}> -->
                                                     <td> <input disabled type="number" formControlName="unitPrice"
                                                             style="width: 4rem;" class="form-control" (change)="onKey(i)"></td>
 
@@ -1095,7 +1097,7 @@
                                                         <ng-template #elseBlockHSN>
                                                             <input  type="text" formControlName="hsnSacCode" id="hsnSacCode"
                                                             style="width: 4rem;" class="form-control">
-                                                        </ng-template>></td>
+                                                        </ng-template></td>
 
                                                     <input hidden formControlName="poChargeAcc">
                                                     <td>

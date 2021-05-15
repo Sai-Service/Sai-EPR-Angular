@@ -382,3 +382,13 @@ button{
       margin-left: 30%;
       }
       
+      .form-control:focus {
+        background-color :#FFE4B5;
+      }
+
+      .datalist
+{
+  max-width: 600px;
+  font: 12px Arial, Helvetica, sans-serif;
+  background-color :palegreen;
+}
