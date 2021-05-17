@@ -212,3 +212,9 @@ table tbody .GridHeader th {
 position: sticky; top: 0; 
 position: relative; 
 }
+
+
+
+input[type=number]{
+  text-align: right;
+}

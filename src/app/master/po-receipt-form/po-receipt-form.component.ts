@@ -372,12 +372,6 @@ return true;
     this.service.getsearchByReceiptNo(segment1)
       .subscribe(
         data => {
-          // if (data.code===400){
-          //   alert(data.message);
-          //   // alert(data.obj);
-          // }
-          // if(data.code ===200){
-          // this.lstcompolines = data.obj;
           this.lstcompolines = data;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
@@ -427,6 +421,7 @@ return true;
           control.push(poLines);
           this.displaySaveButton =false;
           this.poReceiptForm.patchValue(this.lstcompolines);
+          
           }
           else{
           this.lstcompolines = data.obj;
@@ -661,7 +656,8 @@ var jsonString = JSON.stringify(reqArr);
     }
   }
 
-  calculation(i){
+  calculation(i,qty){
+    // alert(this.lstcompolines.poLines[i].qtyReceived);
     var patch = this.poReceiptForm.get('poLines') as FormArray;
     let quantity=this.lineDetailsArray.controls[i].get('qtyReceived').value;
     // alert(quantity); 
@@ -675,6 +671,31 @@ var taxAmt =baseAmt*taxPer/100;
     taxAmount : taxAmt,
     totAmount: baseAmt +taxAmt,
    });
+  //  alert("Validate");
+   var trxLnArr=this.poReceiptForm.get('poLines').value;
+   var trxLnArr1=this.poReceiptForm.get('poLines') as FormArray
+   let toBeIssuequantity=this.lstcompolines.poLines[i].qtyReceived;
+  // var receivedqty=this.poReceiptForm.get('poLines').value.qtyReceived;
+  //  let qty=trxLnArr[i].qtyReceived;  
+  // alert(quantity+'receivedqty');
+  // alert(toBeIssuequantity +' qty');
+   if(toBeIssuequantity<quantity)
+   {
+     alert("You can not enter more than available quantity");
+     trxLnArr1.controls[i].patchValue({qtyReceived:''});
+     qty.focus();
+    // this.displaySaveButton =false;   
+   }
+   if(quantity<=0)
+   {
+     alert("Please enter quantity more than zero");
+     trxLnArr1.controls[i].patchValue({qtyReceived:''});
+     qty.focus();
+    //  this.displaySaveButton =false;
+   }
+// else{
+//   this.displaySaveButton =true;
+// }
   }
 
   Select(suppSiteId: number) {
@@ -693,6 +714,32 @@ refresh()
       //   const aaa = this.segment1 + '.' + this.segment2 + '.' + this.segment3 + '.' + this.segment4 + '.' + this.segment5;
       //   this.segmentName = aaa;
       // }
+
+
+
+
+//       validate(i:number,qty1)
+// {alert("Validate");
+//   var trxLnArr=this.poReceiptForm.get('poLines').value;
+//   var trxLnArr1=this.poReceiptForm.get('poLines') as FormArray
+//   let avalqty=trxLnArr[i].qtyReceived;
+//   let qty=trxLnArr[i].qtyReceived;  
+//  alert(avalqty+'avalqty');
+//  alert(trxLnArr[i].primaryQty +' qty');
+//   if(qty>avalqty)
+//   {
+//     alert("You can not enter more than available quantity");
+//     trxLnArr1.controls[i].patchValue({primaryQty:''});
+//     qty1.focus();
+//   }
+//   if(qty<=0)
+//   {
+//     alert("Please enter quantity more than zero");
+//     trxLnArr1.controls[i].patchValue({primaryQty:''});
+//     qty1.focus();
+//   }
+  
+// }
 
 
       poSave(){
