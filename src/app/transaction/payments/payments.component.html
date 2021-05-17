@@ -302,7 +302,8 @@
                 <thead>
                     <tr class="GridHeader">
                         <th scope="col">Select</th>
-                        <th scope="col">Invoice NUmber</th>
+                        <th scope="col">Invoice Number</th>
+                        <!-- <th scope="col">Invoice Amount</th> -->
                         <th scope="col">Payment Amount</th>
                         <!-- <th scope="col">Discount Amount</th> -->
                         <th scope="col">Unpaid Amount</th>
@@ -323,9 +324,14 @@
                             <!-- (change)="ChangeInvoiceNum()" -->
                             <input disabled type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}} (change)="changeAmount()" style="width: 100px;height: 25px;font-size: 10px;">  
                         </td>
+                        <!-- <td>
+                            {{group.invoiceAmt}} -->
+                            <!-- <input type="text" disabled class="form-control" formControlName="invoiceAmt1" value={{invoiceAmt1}} (change)="changeAmount(k)" style="width: 100px;height: 25px;font-size: 10px;text-align: right;">   -->
+                        <!-- </td> -->
                         <td>
                             <input type="text" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} (change)="changeAmount(k)" style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
                         </td>
+                       
                         <td>
                             <input disabled type="text" class="form-control" formControlName="unPaidAmt" value={{unPaidAmt}} style="width: 100px;height: 25px;font-size: 10px;text-align: right;">  
                         </td>

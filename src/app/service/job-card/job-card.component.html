@@ -30,6 +30,7 @@
                         <table class="center">
                             <section class="mx-2 pb-3">
                                 <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
+
                                     <li class="nav-item waves-effect waves-light">
                                         <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md"
                                             role="tab" aria-controls="home-md" aria-selected="true">Job Card Opening</a>
@@ -74,7 +75,7 @@
                                                                                     [(ngModel)]="jobCardNum"
                                                                                     formControlName="jobCardNum"
                                                                                     placeholder="">
-                                                                                    <input type="text" hidden formControlName="jobCardId">
+                                                                                    <input type="text" disabled formControlName="jobCardId">
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -183,11 +184,11 @@
                                                                                     formControlName="itemId">
                                                                                 <input type="text" hidden
                                                                                     formControlName="customerSiteId">
-                                                                                <input type="text" hidden
+                                                                                <input type="number" hidden
                                                                                     formControlName="ouId">
-                                                                                <input type="text" hidden
+                                                                                <input type="number" hidden
                                                                                     formControlName="deptId">
-                                                                                <input type="text" hidden
+                                                                                <input type="number" hidden
                                                                                     formControlName="locId">
                                                                                 <input type="text" hidden
                                                                                     formControlName="customerId">
@@ -205,7 +206,7 @@
                                                                                 class="LabelFontStyle1">
                                                                                 OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="number" class="form-control"
                                                                                     placeholder=""
                                                                                     formControlName="lastRunKms">
                                                                             </td>
@@ -237,7 +238,8 @@
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle1">
                                                                                 Service&nbsp;Type&nbsp;:</td>
-                                                                            <td>
+                                                                            <td> 
+                                                                        
                                                                                 <!-- <input type="text" class="form-control" placeholder="" formControlName="srTypeId"> -->
                                                                                 <select formControlName="srTypeId"
                                                                                     id="srTypeId"
@@ -473,7 +475,7 @@
                                                                                             class="LabelFontStyle">
                                                                                             DMS&nbsp;customer&nbsp;ID&nbsp;:</td>
                                                                                         <td>
-                                                                                            <input type="text" disabled
+                                                                                            <input type="number" disabled
                                                                                                 class="form-control" placeholder=""
                                                                                                 formControlName="dmsCustId">
                                                                                         </td>
@@ -804,7 +806,7 @@
                                                                     <tbody>
                                                                         <tr>
                                                                             <td><input type="text"
-                                                                                    formControlName="lineId"
+                                                                                    formControlName="lineNum"
                                                                                     class="form-control"
                                                                                     style="width:2rem"> </td>
                                                                             <td>
@@ -1318,7 +1320,7 @@
                                                                         <td>Actual</td>
                                                                         <td><input type="text" formControlName="labBasicAmt" disabled></td>
                                                                         <td><input type="text" formControlName="matBasicAmt" disabled></td>
-                                                                        <td><input type="text" formControlName="actualBasicAmt" disabled></td>
+                                                                        <td><input type="text" formControlName="actualBasicAmt" ></td>
                                                                     </tr>
                                                                     <tr class="ItemStyle" style="text-decoration:none;">
                                                                         <td>Rount off</td>  
@@ -1372,12 +1374,20 @@
                                                             <tbody>
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
                                                                     <td></td>
-                                                                    <td> <select class="form-control" formControlName="DisTypeLab" (ngModelChange)='onOptionsDisTypeLabSelected($event)'>
+                                                                    <td> 
+                                                                        <select formControlName="DisTypeLab" id="DisTypeLab" class="form-control" (ngModelChange)='onOptionsDisTypeLabSelected($event)' >
+                                                                            <option>--Select--</option>
+                                                                            <option *ngFor="let sc of  DisTypeMatList">  
+                                                                                {{sc.model}}  
+                                                                            </option>
+                                                                        </select>
+                                                                        <!-- <select class="form-control" formControlName="DisTypeLab" (ngModelChange)='onOptionsDisTypeLabSelected($event)'>
                                                                             <option value="Percentage">Percentage</option>
                                                                             <option value="Amount">Amount</option>
-                                                                        </select></td>
+                                                                        </select> -->
+                                                                    </td>
                                                                     <td> 
-                                                                        <input type="text" class="form-control"  hidden formControlName="itemTypeLab" [(ngModel)]="itemTypeLab">   
+                                                                        <input type="text" class="form-control"  disabled formControlName="itemTypeLab" [(ngModel)]="itemTypeLab">   
                                                                         <!-- <select class="form-control"  formControlName="itemTypeLab">
                                                                             <option value="Parts">Labor</option>
                                                                         </select> -->
@@ -1388,7 +1398,7 @@
                                                                             <td><input type="text" formControlName="labDisPer" disabled></td>
                                                                         </ng-template>
                                                                         <ng-template #LabDiscoutelseBlock>
-                                                                            <td><select formControlName="labDisPer" id="labDisPer" class="form-control" >
+                                                                            <td><select formControlName="labDisPer" id="labDisPer" class="form-control" (ngModelChange)="labDisPerCal($event)">
                                                                                 <option>--Select--</option>
                                                                                 <option *ngFor="let sc of  labDisPerList">
                                                                                     {{sc.code}}  
@@ -1403,13 +1413,22 @@
                                                                 </tr>
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
                                                                     <td></td>
-                                                                    <td> <select class="form-control" formControlName="DisTypeMat" (ngModelChange)='onOptionsDisTypeMatSelected($event)'>
+                                                                    <td>
+                                                                         <!-- <select class="form-control" formControlName="DisTypeMat" (ngModelChange)='onOptionsDisTypeMatSelected($event)'>
                                                                             <option value="Percentage">Percentage
                                                                             </option>
                                                                             <option value="Amount">Amount</option>
-                                                                        </select></td>
+                                                                        </select> -->
+                                                                        <select formControlName="DisTypeMat" id="DisTypeMat" class="form-control">
+                                                                            <option>--Select--</option>
+                                                                            <option
+                                                                                *ngFor="let sc of  DisTypeMatList">
+                                                                                {{sc.model}}
+                                                                            </option>
+                                                                        </select>
+                                                                    </td>
                                                                     <td> 
-                                                                        <input type="text" class="form-control" hidden formControlName="itemTypeMat" [(ngModel)]="itemTypeMat">
+                                                                        <input type="text" class="form-control" disabled formControlName="itemTypeMat" [(ngModel)]="itemTypeMat">
                                                                         <!-- <select class="form-control" formControlName="itemTypeMat">
                                                                             <option value="Labor">Parts</option>
                                                                         </select> -->
@@ -1420,7 +1439,7 @@
                                                                                 <td><input type="text" formControlName="matDisPer" disabled></td>
                                                                             </ng-template>
                                                                             <ng-template #matDiscoutelseBlock>
-                                                                                <td><select formControlName="matDisPer" id="matDisPer" class="form-control">
+                                                                                <td><select formControlName="matDisPer" id="matDisPer" class="form-control" (ngModelChange)="matDisPerCal($event)">
                                                                                     <option>--Select--</option>
                                                                                     <option *ngFor="let sc of  matDisPerList">
                                                                                         {{sc.code}}  
@@ -1569,7 +1588,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title" id="myModalLabel"
-                                                style="text-align: center; margin-left: 40%; font-size: medium; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                                style="text-align: center; font-size: medium; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
                                                 Additional Details</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>

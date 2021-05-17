@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptorInterceptor} from './http-error-interceptor.interceptor';
+// import * as Rollbar from 'rollbar';
 // import { DaterangepickerModule } from 'angular-2-daterangepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 // import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
@@ -63,8 +65,14 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     // NgbModule.forRoot(),
   ],
   providers: [
-    {provide : LocationStrategy , useClass: HashLocationStrategy}
+    {provide : LocationStrategy , useClass: HashLocationStrategy},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorInterceptor,
+      multi: true
+    }
   ],
+ 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

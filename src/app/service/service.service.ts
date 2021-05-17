@@ -109,7 +109,7 @@ public BillingCal(Record) {
     headers: this.headers
   };
   const url = this.ServerUrl + '/jobCard/jobBilling';
-  return this.http.post(url, Record, options);
+  return this.http.put(url, Record, options);
 }
 saveMaterialSubmit(Record) {
   const options = {

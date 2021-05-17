@@ -817,7 +817,32 @@ taxCalforItem(itemId,taxCatId,diss,baseAmount) {
 
   });
 }
+taxCalforItem1( ouId, locId, baseAmount, taxCategoryId, diss ){
+  const REQUEST_PARAMS = new HttpParams().set('ouId', ouId)
+  .set('locId', locId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCategoryId)
+  .set('disAmt1', diss)
 
+  const REQUEST_URI = this.ServerUrl +'/arInv/arTaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+distributionApi1(custTrxTypeId, ouId, locId,basicAmt,extendedAmount){
+  const REQUEST_PARAMS = new HttpParams().set('custTrxTypeId', custTrxTypeId)
+  .set('ouId',ouId)
+  .set('locId', locId)
+  .set('invAmount', basicAmt)
+  .set('taxableAmt', extendedAmount)
+
+  const REQUEST_URI = this.ServerUrl +'/arInv/invLnDis';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
 // addDiscount(totTaxAmt,taxTypeName)
 public addDiscountM(poMasterRecord) {
   const options = {

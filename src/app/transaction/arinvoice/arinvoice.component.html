@@ -382,11 +382,10 @@
                                             <th scope="col">Inventory Category</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">uom</th>
-                                            <th scope="col">Tax Category</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Price</th>
-    
                                             <th scope="col">Base Amount</th>
+                                            <th scope="col">Tax Category</th>
                                             <th scope="col">Tax Amount</th>
                                             <th scope="col">Total Amont</th>
                                             <th scope="col">HSN/ SAC code</th>
@@ -404,7 +403,8 @@
                                                 <button type="submit" class="btn btn-primary" (click)="distribution1(i)">Distribution</button> 
                                             </td>
         <input type="text" hidden formControlName="taxCategoryId">
-                                                <td><input type="number" style="width: 2rem;" (click)="taxDetails('insert', i, taxCategoryId)" class="form-control" formControlName="lineNum"></td>
+        <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
+                                                <td><input type="number" style="width: 2rem;" class="form-control" formControlName="lineNum"></td>
                                                 <td>
                                                     <!-- <select formControlName="invItemId" id="invItemId"
                                                         (ngModelChange)='onOptioninvItemIdSelected(i)'
@@ -432,7 +432,7 @@
                                                 <td>
                                                     <!-- <div *ngIf="displayinvDesc; then thenBlockinvDesc; else elseBlockinvDesc"></div>
                 <ng-template #thenBlockinvDesc> -->
-                                                    <input type="text" disabled formControlName="description"
+                                                    <input type="text"  formControlName="description"
                                                         class="form-control" id="description">
                 <!-- </ng-template>
                 <ng-template #elseBlockinvDesc>
@@ -443,21 +443,7 @@
                                                     </td>
                                                 <td> <input disabled type="text" formControlName="uom"
                                                         style="width: 3rem;" class="form-control"></td>
-                                                <td>
-                                                    <!-- <input type="text" formControlName="taxCategoryName"
-                                                        class="form-control"> -->
-                                                    <!-- (ngModelChange)='onOptioninvItemIdSelected(i)'
-                                                         [value]="sc.itemId" -->
-        
-                                                    <select formControlName="taxCategoryName" id="taxCategoryName"
-                                                        (ngModelChange)='onOptionTaxCatSelected(i, $event)'
-                                                        class="form-control">
-                                                        <option>--Select--</option>
-                                                        <option *ngFor="let sc of  taxCategoryList">
-                                                            {{sc.taxCategoryName}}
-                                                        </option>
-                                                    </select>
-                                                </td>
+                                               
                                                 <td> <input type="number"  formControlName="orderedQty"
                                                         style="width: 4rem;" class="form-control" ></td>
                                                 <!-- <td> <input type="number" formControlName="orderedQty"
@@ -476,12 +462,27 @@
                                                     <input hidden formControlName="diss1" value={{diss1}}>
                                                
                                                 <td> <input type="number" formControlName="unitSellingPrice"
-                                                        style="width: 4rem;" class="form-control"
+                                                        style="width: 4rem;" class="form-control" 
                                                         (change)="onKey(i)"></td>
         
                                                 <td> <input disabled type="number" formControlName="basicAmt"
                                                         (keyup)="onKey(i)" style="width: 4rem;"
                                                         class="form-control"></td>
+                                                        <td>
+                                                            <!-- <input type="text" formControlName="taxCategoryName"
+                                                                class="form-control"> -->
+                                                            <!-- (ngModelChange)='onOptioninvItemIdSelected(i)'
+                                                                 [value]="sc.itemId" -->
+                
+                                                            <select formControlName="taxCategoryName" id="taxCategoryName"
+                                                                (ngModelChange)='onOptionTaxCatSelected(i, $event)'
+                                                                class="form-control">
+                                                                <option>--Select--</option>
+                                                                <option *ngFor="let sc of  taxCategoryList">
+                                                                    {{sc.taxCategoryName}}
+                                                                </option>
+                                                            </select>
+                                                        </td>
                                                 <td> <input disabled type="number" formControlName="taxRecoverable"
                                                         style="width: 4rem;" class="form-control"></td>  
                                                         <!-- //taxRecoverable -->
@@ -841,7 +842,7 @@
                                     <th scope="col">Detail Line</th> -->
                                     <!-- <th scope="col">Class</th> -->
                                     <th scope="col">GL Account</th>
-                                    <!-- <th scope="col">Asset Book</th> -->
+                                    <th scope="col">Class</th>
                                     <th scope="col">GL Account Id</th>
                                     <th scope="col">GL Date</th>
                                     <th scope="col">%</th>
@@ -870,6 +871,10 @@
                                     <td>
                                         
                                         <input formControlName="concatenatedSegment"  (click)="openCodeComb(k)" data-toggle="modal" data-target="#myModel" class="form-control"  style="width: 160px;height: 25px;">
+                                    </td>
+                                    <td>
+                                        
+                                        <input formControlName="class"  class="form-control"  style="width: 160px;height: 25px;">
                                     </td>
                                     <td> <input  formControlName="codeCombinationId"  class="form-control"  style="width: 160px;height: 25px;"></td>
                                     <td>

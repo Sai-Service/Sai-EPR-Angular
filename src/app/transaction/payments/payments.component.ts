@@ -87,7 +87,7 @@ export class PaymentsComponent implements OnInit {
   public statusLookupCodeList:Array<string>=[];
 public paymentIdListList:Array<string>=[];
 public PaymentReturnArr:any;
-
+// public invAmtArr : any [];
   constructor(private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
       suppNo:[],
@@ -245,16 +245,20 @@ voucherNo:[],
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
        this.lstinvoiceDetls=res.obj;
        var sum=0;
+
        for (let i=0;i<this.lstinvoiceDetls.length;i++){
         sum=sum+this.lstinvoiceDetls[i].invoiceAmt;
+        // this.invAmtArr.push(this.lstinvoiceDetls[i].invoiceAmt);
        }
       //  alert(sum);
        this.totAmt=sum;
        this.lstinvoiceDetls.forEach(f => {
          var payInvGrp: FormGroup = this.payInvoiceLineDtl();
          this.payInvoiceLineDtlArray().push(payInvGrp);
+         
        });
        this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
+
       }
       )} 
      
