@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; 
+import{ HTTP_INTERCEPTORS}from '@angular/common/http'; 
 import { HttpErrorInterceptorInterceptor} from './http-error-interceptor.interceptor';
+// import { CanDeactivateGuard } from './can-deactivate-guard.service';
 // import * as Rollbar from 'rollbar';
 // import { DaterangepickerModule } from 'angular-2-daterangepicker';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +32,7 @@ import { from } from 'rxjs';
 import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
+import { DeActivateGuard } from './de-activate.guard';
 
 
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
@@ -72,7 +75,8 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptorInterceptor,
       multi: true
-    }
+    },
+    DeActivateGuard
   ],
  
   bootstrap: [AppComponent]

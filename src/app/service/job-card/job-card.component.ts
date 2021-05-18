@@ -1,9 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from '../service.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { observable, Observable } from 'rxjs';
+// import { of } from 'rxjs/observable/of';
+// import 'rxjs/add/observable/of';
 
 interface IjobCard {
   jobCardNum: string;
@@ -70,11 +73,15 @@ interface IjobCard {
   templateUrl: './job-card.component.html',
   styleUrls: ['./job-card.component.css']
 })
+
+
+
 export class JobCardComponent implements OnInit {
   jobcardForm: FormGroup;
   regNo: string;
   RegNo: string;
   jobStatus: string;
+  jobCardNum1:string;
   // jobCardNum: string='0';
   jobCardNum: string;
   divisionName: string;
@@ -86,6 +93,7 @@ export class JobCardComponent implements OnInit {
   RegNoList1: any[];
   userList1: any[] = [];
   userList2: any[] = [];
+  deductibles:number=0;
   lastkeydown1: number = 0;
   itemTypeLab: string = 'Labor';
   itemTypeMat: string = 'Parts';
@@ -114,6 +122,8 @@ export class JobCardComponent implements OnInit {
   bcustomerId: string;
   matDisPer: string;
   labDisPer: string
+  displaylabMatTab=true;
+  displaybilling=true;
   public labDisPerList: Array<string> = [];
   public matDisPerList: Array<string> = [];
   public jobCarStatusList: Array<string> = [];
@@ -145,9 +155,12 @@ export class JobCardComponent implements OnInit {
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
+  unSaved: boolean = true;  
+  // @ViewChild('jobcardForm') public createJobcardForm: NgForm;
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private service: MasterService, private serviceService: ServiceService) {
     this.jobcardForm = fb.group({
       jobCardNum: [],
+      jobCardNum1:[],
       jcType: [],
       jobCardId: [],
       matStatus: [],
@@ -234,8 +247,8 @@ export class JobCardComponent implements OnInit {
       rountOffTotl: [],
       variReason: [],
 
-      DisTypeLab: [],
-      DisTypeMat: [],
+      disTypeLab: [],
+      disTypeMat: [],
       itemTypeLab: [],
       itemTypeMat: [],
       labDiscount: [],
@@ -260,7 +273,10 @@ export class JobCardComponent implements OnInit {
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
     })
+ 
+ 
   }
+  
   lineDetailsGroup() {
     return this.fb.group({
       lineId: [],
@@ -333,11 +349,11 @@ export class JobCardComponent implements OnInit {
   }
   get lineDetailsArray() {
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-    (patch.controls[0]).patchValue(
-      {
-        lineNum: 1,
-      }
-    );
+    // (patch.controls[0]).patchValue(
+    //   {
+    //     lineNum: 1,
+    //   }
+    // );
     return <FormArray>this.jobcardForm.get('jobCardLabLines')
   }
   addTechRow(index) {
@@ -363,12 +379,15 @@ export class JobCardComponent implements OnInit {
       dealerPer: [],
       oemPer: [],
       taxCategoryId: [],
+      taxAmt:[],
+totAmt:[],
     })
   }
   lineDistributionArray(): FormArray {
     return <FormArray>this.jobcardForm.get('jobCardMatLines')
   }
   ngOnInit(): void {
+    
     this.owner = sessionStorage.getItem('name')
     this.divisionName = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -482,18 +501,26 @@ export class JobCardComponent implements OnInit {
   }
   splitFlagFlagFn(e) {
     if (e.target.checked === true) {
-      alert('in true');
+      // alert('in true');
       this.splitFlag = 'Y'
       this.displaySplit = false;
     }
     if (e.target.checked === false) {
-      alert('in false');
+      // alert('in false');
       this.splitFlag = 'N'
       this.displaySplit = true;;
     }
   }
+
+//   canDeactivate(): Observable<boolean> | boolean {
+// if (this.unSaved) {
+//       const result = window.confirm('There are unsaved changes! Are you sure?');
+//        return Observable.of(result);
+//     }
+//     return true;
+// }   
   MatImptWip(jobCardNum) {
-    alert(jobCardNum);
+    // alert(jobCardNum);
     var len = this.lineDistributionArray().length;
     this.serviceService.MatImptWipFn(jobCardNum, sessionStorage.getItem('locId'))
       .subscribe(
@@ -501,7 +528,7 @@ export class JobCardComponent implements OnInit {
           console.log(data1);
 
           for (let i = 0; i < data1.length - len; i++) {
-            alert('in for')
+            // alert('in for')
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
           }
@@ -529,7 +556,10 @@ export class JobCardComponent implements OnInit {
         data1 => {
           this.LaborPriceList = data1;
           console.log(this.LaborPriceList);
-          (patch.controls[i]).patchValue({ unitPrice: data1.price })
+          (patch.controls[i]).patchValue({ 
+            unitPrice: data1.price,
+            taxCategoryId:data1.taxCategoryId
+          })
         }
       );
   }
@@ -559,7 +589,7 @@ export class JobCardComponent implements OnInit {
   }
   technician(techId) {
     let select = this.TechnicianList.find(d => d.teamId === techId);
-    alert(select.description);
+    // alert(select.description);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     (patch.controls[0]).patchValue({ techName: select.description })
   }
@@ -569,26 +599,27 @@ export class JobCardComponent implements OnInit {
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     var baseAmtLineWise = arrayControl[index].unitPrice * arrayControl[index].qty;
-    alert(arrayControl[index].unitPrice);
+    // alert(arrayControl[index].unitPrice);
     (patch.controls[index]).patchValue({ basicAmt: baseAmtLineWise, laborAmt: baseAmtLineWise })
   }
   onOptionsplitRatioSelect(i, splitCateId) {
     let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
-    alert(select.splitCateId);
+    // alert(select.splitCateId);
     var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
     (patch.controls[i]).patchValue(select)
   }
   onOptionsplitRatioSelect1(i, splitCateId) {
     let select = this.splitRatioList.find(d => d.splitCateId === splitCateId);
-    alert(select.splitCateId);
+    // alert(select.splitCateId);
     var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
     (patch.controls[i]).patchValue(select)
   }
-  // onOptionsrvAdvisorSelected(srvAdvisor){
-  //   let select = this.srvAdvisorList.find(d => d.srvAdvisor === srvAdvisor);
-  //   alert(select.srvAdvisor);
+  onOptionsrvAdvisorSelected(srvAdvisor){
+    let select = this.srvAdvisorList.find(d => d.srvAdvisor === srvAdvisor);
+    // alert(select.groupId);
   //  this.jobcardForm.patchValue(select)
-  // }
+  this.jobcardForm.patchValue({ groupId:select.groupId })
+  }
   addRow(index) {
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
 
@@ -626,7 +657,7 @@ export class JobCardComponent implements OnInit {
     this.lineDetailsArray.removeAt(index);
   }
   serchByRegNo(RegNo) {
-    alert(RegNo);
+    // alert(RegNo);
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
@@ -646,7 +677,7 @@ export class JobCardComponent implements OnInit {
       );
   }
   onOptionsSelectedsrTypeId(srTypeId) {
-    alert(srTypeId)
+    // alert(srTypeId)
     this.serviceService.getSubSrTypeIdList(srTypeId)
       .subscribe(
         data => {
@@ -678,6 +709,7 @@ export class JobCardComponent implements OnInit {
         data => {
           this.lstcomments = data;
           console.log(this.lstcomments);
+          // alert(this.lstcomments.jobCardNum);
          
           // this.jobcardForm.patchValue({
           //   // bCustAcct: this.lstcomments.billToCust.accountNo,
@@ -690,16 +722,29 @@ export class JobCardComponent implements OnInit {
           //   bcustomerId: this.lstcomments.billToCust.customerId,
           //   bgstType: this.lstcomments.billToCust.gstType,
           // })
+          if(this.lstcomments.jobCardNum!=undefined){
+            this.displaylabMatTab=false;
+          }  
+         if(this.lstcomments.jobStatus =='Invoiced'&& this.lstcomments.matStatus == 'Compeleted'){
+           this.jobcardForm.disable();
+           this.jobcardForm.get('jobCardLabLines').disable();
+           this.jobcardForm.get('jobCardMatLines').disable();
+           this.displaybilling=false;
+         }
+          if(this.lstcomments.matStatus == 'Compeleted' && this.lstcomments.jobStatus == 'Ready for Invoice'){
+
+            this.displaybilling=false;
+          }
           var len = this.lineDistributionArray().length;
-          alert('len ' + len)
-          alert('anita' + data.jobCardMatLines.length)
+          // alert('len ' + len)
+          // alert('anita' + data.jobCardMatLines.length)
           for (let i = 0; i < data.jobCardMatLines.length - len; i++) {
             var payInvGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(payInvGrp);
           }
           // this.jobcardForm.get('jobCardMatLines').patchValue(data.jobCardMatLines);
           var len1 = this.lineDetailsArray.length;
-          alert('len1 ' + len1)
+          // alert('len1 ' + len1)
           for (let i = 0; i < data.jobCardLabLines.length - len1; i++) {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(payInvGrp);
@@ -809,6 +854,17 @@ export class JobCardComponent implements OnInit {
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
+      this.lineDetailsArray.clear();
+      alert(this.lineDetailsArray.length+ " length")
+var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+console.log(res.obj.jobCardLinesList);
+for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
+  var invLnGrp: FormGroup = this.lineDetailsGroup();
+            this.lineDetailsArray.push(invLnGrp);
+}
+this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);
+      // patch.patchValue(res.obj.jobCardLinesList);
+        // obj.jobCardLinesList
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
@@ -820,7 +876,14 @@ export class JobCardComponent implements OnInit {
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFUILY');   //
+        this.lineDistributionArray().clear();
+console.log(res.obj.jobCardLinesList);
+for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
+  var invLnGrp: FormGroup = this.distLineDetails();
+            this.lineDistributionArray().push(invLnGrp);
+}
+this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
@@ -830,10 +893,14 @@ export class JobCardComponent implements OnInit {
   }
   saveArInvoice() {
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+    formValue.dmsCustId= Number(this.jobcardForm.get('dmsCustId').value);
     this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
-        this.jobcardForm.patchValue({ jobCardNum: res.obj.jobCardNum, jobCardId: res.jobCardId })
+        this.jobcardForm.patchValue({ jobCardNum: res.obj.jobCardNum, jobCardId: res.obj.jobCardId })
+        if(res.obj.jobCardNum!=undefined){
+          this.displaylabMatTab=false;
+        }
         // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
@@ -887,7 +954,7 @@ export class JobCardComponent implements OnInit {
   }
 
   onOptionsDisTypeMatSelected(event) {
-    alert(event);
+    // alert(event);
     if (event === 'Percentage') {
       this.displayMatDiscount = false;
       this.displayMatDiscount1 = false;
@@ -900,18 +967,21 @@ export class JobCardComponent implements OnInit {
     }
   }
   onOptionsDisTypeLabSelected(event) {
-    alert(event);
+    // alert(event);
     if (event === 'Percentage') {
       this.displayLabDiscount = false;
     }
     else if (event === 'Amount') {
       this.displayLabDiscount = true;
     }
+    var labBasicAmt =Number(this.jobcardForm.get('labBasicAmt').value);
+    var matBasicAmt =Number(this.jobcardForm.get('matBasicAmt').value)
+    this.jobcardForm.patchValue({actualBasicAmt:labBasicAmt+matBasicAmt })
   }
   ReopenMaterialIssue() {
     var matStatus = this.jobcardForm.get('matStatus').value;
     var jobcardNo = this.jobcardForm.get('jobCardNum').value;
-    alert(matStatus + ' ' + jobcardNo);
+    // alert(matStatus + ' ' + jobcardNo);
     if (matStatus == 'Compeleted') {
       this.serviceService.ReopenMaterialIssue(jobcardNo, matStatus).subscribe((res: any) => {
         if (res.code === 200) {
@@ -926,6 +996,17 @@ export class JobCardComponent implements OnInit {
     } else {
       alert("Material status not completed")
     }
+  }
+  GenerateInvoice(jobCardNum){
+    this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+        }
+      }
+    });
   }
   BillingCal() {
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
@@ -953,6 +1034,7 @@ export class JobCardComponent implements OnInit {
       if (res.code === 200) {
         alert(res.message);
         this.jobcardForm.patchValue({ jobStatus: 'Ready for Invoice' })
+        this.displaybilling=false;
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
         if (res.code === 400) {
@@ -968,20 +1050,37 @@ export class JobCardComponent implements OnInit {
     // alert(event);
     var labBasicAmt= (this.jobcardForm.get('labBasicAmt').value)
     var perValueLab= (labBasicAmt* event)/100;
+    var labTotTaxAmt =(labBasicAmt*18)/100
+    var aaa = labBasicAmt-perValueLab;
     // alert(perValueLab);
     this.jobcardForm.patchValue({
       labDiscount: perValueLab,
       labTaxableAmt:labBasicAmt-perValueLab,
+      labTotTaxAmt:labTotTaxAmt,
+      labTotAmt:labTotTaxAmt+aaa,
     })
   }
   matDisPerCal(event){
     // alert(event);
     var matBasicAmt= (this.jobcardForm.get('matBasicAmt').value)
     var perValueLab= (matBasicAmt* event)/100;
+    var matTotTaxAmt= this.jobcardForm.get('matTotTaxAmt').value
+    var labDis =Number(this.jobcardForm.get('labDiscount').value);
+    var labTaxAmt = Number(this.jobcardForm.get('labTotTaxAmt').value);
+    var labTotAt = Number(this.jobcardForm.get('labTotAmt').value);
+
     // alert(perValueLab);
+    var temp = (matTotTaxAmt*event)/100;
     this.jobcardForm.patchValue({
-      matDiscount: perValueLab,
+      matDiscout: perValueLab,
       matTaxableAmt:matBasicAmt-perValueLab,
+      matTotTaxAmt:matTotTaxAmt-temp,
+      matTotAmt:(matTotTaxAmt-temp)+(matBasicAmt-perValueLab),
+      totDis:perValueLab+labDis,
+      totTaxAmt:(matTotTaxAmt-temp)+labTaxAmt,
+      invTotAmt:((matTotTaxAmt-temp)+(matBasicAmt-perValueLab))+labTotAt,
+      
     })
   }
+  
 }
