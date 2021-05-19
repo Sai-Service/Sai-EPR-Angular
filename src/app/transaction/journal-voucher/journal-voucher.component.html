@@ -1,0 +1,382 @@
+<div class="center">
+       <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader" style="width: 100%;">
+                    &nbsp;&nbsp;Journal&nbsp;Voucher
+                </td>
+            </tr>
+        </table>
+        <form [formGroup]="JournalVoucherForm" (ngSubmit)="JournalVoucher(JournalVoucherForm.value)">
+       <div class="center" style="width: 100%;">
+        <div class="form-bg">
+                <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
+       <div class="center">
+        <div class="container1">
+            <table style="width: 100%" class="center">
+                <tr>
+                    <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <fieldset class="RFS">
+                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                        style="font-size: 10px;color: black;">
+                                        <!-- <b> Reversal&nbsp;Detail&nbsp;</b> -->
+                                    </legend>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Branch&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="OUName" [(ngModel)]='OUName'>
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Period&nbsp;:
+                                            </td>
+                                            <td >
+                                                <select class="form-control"  formControlName="periodName" >
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let fy of FinancialYear" [ngValue]="fy.actualYr">{{fy.financialYear}}</option>
+                                                </select>
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Journal&nbsp;Date&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="Date" class="form-control" >
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Journal&nbsp;Type&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <select class="form-control" >
+                                                            <option>--Select--</option>
+                                                        </select>
+                                                    </td>
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                            Document&nbsp;Number&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" >
+                                                    </td>
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                           Status&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" >
+                                                    </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+                    </td>
+                    <td>
+                            <fieldset class="RFS">
+                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                    style="font-size: 10px;color: black;">
+                                    <b> Reversal&nbsp;Detail&nbsp;</b>
+                                </legend>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Reversal&nbsp;Period&nbsp;:
+                                            </td>
+                                            <td >
+                                                <select class="form-control"  formControlName="periodName" >
+                                                    <option>--Select--</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Reversal&nbsp;Date&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="Date" class="form-control" >
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                        <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <fieldset class="RFS">
+                                                    <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" -->
+                                                    <!-- style="font-size: 10px;color: black;"> -->
+                                                    <!-- <b> Reversal&nbsp;Detail&nbsp;</b> -->
+                                                <!-- </legend> -->
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 15%"class="LabelFontStyle">
+                                                            JV&nbsp;Headers&nbsp;:
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control"   style="width:40rem;">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td style="width: 15%"class="LabelFontStyle">
+                                                                JV&nbsp;Narration&nbsp;:
+                                                            </td>
+                                                            <td >
+                                                                <input type="text" class="form-control"   style="width:40rem;">
+                                                            </td>
+                                                        </tr>
+                                                </table>
+                                            </fieldset>
+                                        </td>
+                                    </tr>
+                                </table>
+                                </td>
+                </tr>
+              
+            </table>
+        </div>
+       </div>
+       </div>
+       </div>
+       </div>
+              <br>
+       <div formArrayName="glLines">
+            <div class="grid_scroll">
+  
+                <table class="center">
+                  <tr>
+                    <td>
+                      <div class="grid_scroll">
+                  <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
+                  cellpadding="4" class="auto-style4" class="GridFont">
+                    <thead>
+                        <tr class="GridHeader">
+                                <th scope="col">Srl No.</th>
+                                <th scope="col">Account Code</th>
+                                <th scope="col">Dr</th>
+                                <th scope="col">Cr</th>
+                                <th scope="col">Line Narration</th>
+                                <th scope="col">Add</th>
+                                <th scope="col">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                            <ng-container *ngFor="let glLines of glLines().controls; let glLineIndex=index" [formGroupName]="glLineIndex">
+                          <tr>
+                                <td>
+                                        <input type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber">
+                                </td>
+                                <td>
+                                        <input   data-toggle="modal" data-target="#myModal1" formControlName="segmentName" value={{segmentName}}  (click)="openCodeCombination(glLineIndex)"
+                                         class="form-control" style="height: 20px;width: 250px;">
+                                </td>
+                                <input hidden formControlName="codeCombinationId">
+                                <td>
+                                        <input type="text" class="form-control"  style="height: 20px;width: 100px;"formControlName="enteredDr">
+                                </td>
+                                <td>
+                                        <input type="text" class="form-control"  style="height: 20px;width: 100px;"formControlName="enteredCr">
+                                </td>
+                                <td>
+                                        <input type="text" class="form-control"  style="height: 20px;width: 250px;"formControlName="description">
+                                </td>
+                                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewglLines()"></button></td>
+              <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removeglLines(glLineIndex)"></button></td>
+                          </tr>
+                            </ng-container>
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td colspan="2">
+                                  Total:
+                              </td>
+                              <td>
+                                  <input type="text"  style="height: 20px;width: 100px;"formControlName="runningTotalDr">
+                              </td>
+                              <td>
+                                    <input type="text"  style="height: 20px;width: 100px;"formControlName="runningTotalCr">
+                              </td>
+                          </tr>
+                      </tfoot>
+                     </table>
+                      </div>
+                      </td>
+                  </tr>
+                </table>
+            
+
+        </div>
+    </div>
+                     
+        <br>
+        <table class="center">
+                <tr>
+                   <td>
+                    <button type="submit" class="btn btn-primary">Close</button>
+                  </td>
+                  <td>
+                    <button type="submit" class="btn btn-primary"  >Save</button>
+                  </td>
+                  <td>
+                      <button  type="submit" class="btn btn-primary" >Post</button>
+                  </td>
+                  <td>
+                        <button  type="submit" class="btn btn-primary" >Copy</button>
+                  </td>
+                  <td>
+                        <button  type="submit" class="btn btn-primary" >Reverse</button>
+                  </td>
+                  <td>
+                        <button  type="submit" class="btn btn-primary" >Reset</button>
+                  </td>
+                 </tr>
+              </table>
+              <div id="myModal1" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
+              aria-hidden="true" style="width: 500px; margin-left:350px">
+      
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel"
+                              style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                              Account Code Combination+ {{ title }}
+                              </h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      </div>
+                      <div class="modal-body text-center pagination-centered">
+                          <table>
+                              <tr>
+                                  <td style="width: 15%" class="LabelFontStyle">
+                                      Branch&nbsp;:
+                                  </td>
+                                  <td>
+                                      <select formControlName="segment11" id="segment11" [(ngModel)]="segment11"
+                                          class="form-control" (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
+                                          <option>--Select--</option>
+                                          <option *ngFor="let sc of  BranchList" [ngValue]="sc.lookupValue">
+                                              {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          </option>
+                                      </select>
+                                  </td>
+                                  <td>
+                                      <input type="text" style="width: 150px; background-color: white; border: none;"
+                                          formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"
+                                          class="form-control" disabled>
+                                      <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"  style="border:none;"> -->
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 15%" class="LabelFontStyle">
+                                      &nbsp;Location&nbsp;:
+                                  </td>
+                                  <td>
+                                      <select formControlName="segment2" id="segment2" [(ngModel)]="segment2"
+                                          class="form-control"
+                                          (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
+                                          <option>--Select--</option>
+                                          <option *ngFor="let sc of  locIdList" [ngValue]="sc.lookupValue>
+                                              {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          </option>
+                                      </select>
+                                  </td>
+                                  <td>
+                                      <input type="text" style="width: 150px; background-color: white; border: none;"
+                                          formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2"
+                                          class="form-control" disabled>
+                                      <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" style="border:none;"> -->
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 15%" class="LabelFontStyle">
+                                      Cost&nbsp;Center&nbsp;:
+                                  </td>
+                                  <td>
+                                      <select formControlName="segment3" id="segment3" class="form-control"
+                                          [(ngModel)]="segment3"
+                                          (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                          <option>--Select--</option>
+                                          <option *ngFor="let sc of  CostCenterList" [ngValue]="sc.lookupValue>
+                                              {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          </option>
+                                      </select>
+                                  </td>
+                                  <td>
+                                      <input type="text" style="width: 150px; background-color: white; border: none;"
+                                          formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
+                                          class="form-control" disabled>
+                                      <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 15%" class="LabelFontStyle">
+                                      Natural&nbsp;Account&nbsp;:
+                                  </td>
+                                  <td>
+                                      <!-- <select formControlName="segment4" id="segment4" class="form-control"
+                                          [(ngModel)]="segment4"
+                                          (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
+                                          <option>--Select--</option>
+                                          <option *ngFor="let sc of  NaturalAccountList">
+                                              {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          </option>
+                                      </select> -->
+                                       <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
+                                       <datalist id="dynmicUserIds1">
+                                            <option>--Select--</option>
+                                          <option *ngFor="let sc of  NaturalAccountList" >
+                                              {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          </option>
+                                       </datalist>
+                                  </td>
+                                  <td>
+                                      <input type="text" style="width: 150px; background-color: white; border: none;"
+                                          formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4"
+                                          class="form-control" disabled>
+                                      <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4"  [(ngModel)]="lookupValueDesc4"  style="border:none;"> -->
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 15%" class="LabelFontStyle">
+                                      Inter&nbsp;Branch&nbsp;:
+      
+                                  </td>
+                                  <td>
+                                      <select formControlName="segment5" id="segment5" class="form-control"
+                                          [(ngModel)]="segment5"
+                                          (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
+                                          <option>--Select--</option>
+                                          <option *ngFor="let sc of  InterBrancList" [ngValue]="sc.lookupValue>
+                                              {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          </option>
+                                      </select>
+                                  </td>
+                                  <td>
+                                      <input type="text" style="width: 150px; background-color: white; border: none;"
+                                          formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5"
+                                          class="form-control" disabled>
+                                      <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
+                                  </td>
+                              </tr>
+      
+                          </table>
+                          <div class="modal-footer">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >&times;</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
+                            [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
+                                (click)="fnCancatination(content)">OK</button>
+      
+                        </div>
+      
+                      </div>
+      
+                  </div>
+              </div>
+          </div>
+        </form>
+       </div>
