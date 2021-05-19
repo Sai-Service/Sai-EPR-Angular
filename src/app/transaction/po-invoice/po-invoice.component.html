@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
     <tr>
         <td class="PageHeader">
-            &nbsp;&nbsp;Invoice&nbsp;Workbench
+            &nbsp;&nbsp;Payable&nbsp;Invoice
         </td>
        <td>
         <table class="center" style="width: 10rem; background-color: #FFE4B5;">
@@ -519,7 +519,18 @@
         </div>
     
     </div>
-    
+    <table style="width: 100%; background-color: #FFE4B5;">
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
+            <td>
+                <input type="text" formControlName="segment1" disabled class="form-control" >
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Number&nbsp;:</td>
+            <td>
+                <input type="text" formControlName="invoiceNum" disabled class="form-control">
+            </td>
+        </tr>
+    </table>
     <!-- ------- End Modal Here ---------- -->
     <div class="auto-style103" >
      <div class="classic-tabs">
@@ -557,7 +568,7 @@
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
-                            <th scope="col">Line No.</th>
+                            <th scope="col">No.</th>
                             <th scope="col">Type</th>
                             <th scope="col">Amount</th>
                             <th scope="col">GL Date</th>
@@ -565,13 +576,20 @@
                             <!-- <th scope="col">Asset Book</th> -->
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
-                            <th scope="col">PO No</th>
+                            <!-- <th scope="col">PO No</th> -->
                             <!-- <th scope="col">PO line Number</th> -->
                             <!-- <th scope="col">Receipt No</th> -->
                             <th scope="col">Status</th>
                             <th scope="col">Accounting</th>
                             <th scope="col">Account Description</th>
+                            <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"></div>
+                            <ng-template #thendisDeleteButton>
                             <th scope="col">Delete</th>
+                            </ng-template>
+                            <ng-template #elsedisDeleteButton>
+
+                            </ng-template>
+                      
                         </tr>
                     </thead>
                     <tbody>
@@ -593,8 +611,15 @@
                                 <input type="text" disabled formControlName="accountingDate" [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control"  style="width: 140px;height: 25px;">
                             </td>
                             <td>
-                                <input formControlName="distCodeCombId"  class="form-control"  style="width: 160px;height: 25px;">
+                                <div *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode"></div>
+                                <ng-template #thendispAccountCode>
+                                <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;">
                                 <input formControlName="distCodeCombSeg"  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
+                           </ng-template>
+                           <ng-template #elsedispAccountCode>
+                            <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;">
+                            <input formControlName="distCodeCombSeg" disabled  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
+                           </ng-template>
                             </td>
                             <td>
                                 <input formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
@@ -602,24 +627,34 @@
                             <td>
                                 <input formControlName="description"  class="form-control"  style="width: 160px;height: 25px;">
                             </td>
-                            <td>
+                            <!-- <td>
                                 <input formControlName="poSegment"  class="form-control"  style="width: 120px;height: 25px;">
-                            </td>
+                            </td> -->
                             <!-- <td>
                                 <input   class="form-control"  style="width: 120px;height: 25px;">
                             </td> -->
-                            <td>
-                               <select formControlName="invTransferStatus" class="form-control"  style="width: 100px;height: 25px;"
-                               (ngModelChange)='onOptionsSelected($event,k)'>
-                                <option value="--Select--">--Select--</option>
-                                    <option value="Never Validated">Never Validated</option>
-                                    <option value="Validated">Validated</option>
-                                    <option value="Etc">Etc</option>
-                               </select>
-                            </td>
-                            <td>
-                                <input disabled formControlName="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
-                            </td>
+                   
+                                <div *ngIf="dispStatus; then thendispStatus; else elsedispStatus"></div>
+                                        <ng-template #thendispStatus>
+                               <td><select formControlName="invTransferStatus" class="form-control"  style="width: 100px;height: 25px;"
+                                (ngModelChange)='onOptionsSelected($event,k)'>
+                                 <option value="--Select--">--Select--</option>
+                                     <option value="Never Validated">Never Validated</option>
+                                     <option value="Validated">Validated</option>
+                                     <option value="Etc">Etc</option>
+                                </select></td>
+                                <td>
+                                    <input disabled formControlName="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
+                                </td>
+                                        </ng-template>
+                                        <ng-template #elsedispStatus>
+                                            <td><input type="text" disabled formControlName="invTransferStatus" [(ngModel)]="invTransferStatus"  class="form-control"  style="width: 100px;height: 25px;"></td>
+                                       
+                                        <td>
+                                            <input type="text" disabled formControlName="poChargeDesc" [(ngModel)]="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
+                                        </td>
+                                    </ng-template>
+ 
                             <!-- <td *ngIf="nverValidedCnd">
                                 <input formControlName="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
                             </td>
@@ -630,9 +665,15 @@
                                 <input formControlName="poChargeAc"  class="form-control"  style="width: 100px;height: 25px;">
                             </td>
                             <td>
+                                <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"></div>
+                                <ng-template #thendisDeleteButton>
                             <button type="submit" class="btn btn-primary"
                                                             (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
                                                                 class="fa fa-trash"></i></button>
+                                </ng-template>
+                                <ng-template #elsedisDeleteButton>
+                                    </ng-template>
+
                                                             </td>
                         </tr>
                     </ng-container>
@@ -660,7 +701,7 @@
                                       <th scope="col">Location</th>
                                       <th scope="col">HSN/SAC</th>
                                       
-                                      <th scope="col">PO No</th>
+                                      <!-- <th scope="col">PO No</th> -->
                                       <!-- <th scope="col">PO Line</th> -->
                                       <!-- <th scope="col">PO&nbsp;Shipment</th> -->
                                       <th scope="col">Match Basis</th>
@@ -780,10 +821,9 @@
                                         <input disabled type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>
                                      
-                                      <td>
-                                          <!-- filed not available in json -->
+                                      <!-- <td>
                                           <input type="text" class="form-control" formControlName="poNumber" value={{poNumber}} style="width: 100px;height: 25px;font-size: 10px;">  
-                                      </td>
+                                      </td> -->
                                       <!-- </td>
                                       <td>
                                          
@@ -1199,7 +1239,7 @@
                 </ng-template>
             </td>
             <td>
-                <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  (click)="ShowAllDistribution()">Show All Distribution</button>  
+                <button type="submit" style="width: fit-content;" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  (click)="ShowAllDistribution()">Show&nbsp;All&nbsp;Distribution</button>  
             </td>
         </tr>
         </table>

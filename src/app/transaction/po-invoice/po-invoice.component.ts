@@ -145,7 +145,13 @@ export class PoInvoiceComponent implements OnInit {
   taxCategoryId: number;
   // glDate:Date;
   //  glDate=this.pipe.transform(this.now, 'd-M-y h:mm:ss'); 
-  glDate = new Date();
+  // glDate = new Date();
+  // public glDate =this.datepipe.transform(this.glDate1, 'yyyy-MM-dd');
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  glDate = this.pipe.transform(this.now, 'short');
+
+
   currency: 'INR';
   segment1: string;
   name: string;
@@ -186,8 +192,11 @@ export class PoInvoiceComponent implements OnInit {
   totalDistAmt: number;
   totalDistBaseAmt: number;
   distLineNumber: number;
-  invTransferStatus: string;
-
+  invTransferStatus: string="Never Validated";
+  poChargeDesc:string= 'Unprocessed';
+  dispStatus=true;
+  disDeleteButton=true;
+  dispAccountCode=true;
   lineNumber: number;
   lineTypeLookupCode: string;
   public segmentNameList: any;
@@ -252,7 +261,7 @@ export class PoInvoiceComponent implements OnInit {
   segmentName1: string;
   taxDetaileSendArr: any = [];
 
-  constructor(private fb: FormBuilder, private transactionService: TransactionService, private service: MasterService, private router: Router) {
+  constructor(private fb: FormBuilder, private transactionService: TransactionService, private service: MasterService, private router: Router,) {
     this.poInvoiceForm = fb.group({
       ouId: [''],
       suppNo: [''],
@@ -284,6 +293,7 @@ export class PoInvoiceComponent implements OnInit {
       lookupValueDesc2: [],
       lookupValueDesc3: [],
       lookupValueDesc5: [],
+      segment1:[],
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
@@ -483,8 +493,7 @@ export class PoInvoiceComponent implements OnInit {
   get g() { return this.poInvoiceForm.controls; }
 
   ngOnInit(): void {
-    this.glDate = new Date();
-
+    // this.glDate = new Date();
     this.ouId = Number(sessionStorage.getItem('ouId'));
 
     this.service.getLocationSearch1(this.ouId)
@@ -607,7 +616,9 @@ export class PoInvoiceComponent implements OnInit {
   }
 
 
-
+  // myFunction(){
+  //   this.datepipe.transform(this.glDate, 'dd/MM/yyyy')
+  //  }
 
   onOptionsSelectedsuppName(name: any, i) {
     // alert(name);
@@ -783,9 +794,14 @@ export class PoInvoiceComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this.poInvoiceForm.patchValue({invoiceNum:data.invoiceNum,
+            segment1: data.invLines[0].poNumber,
+           })
           this.lstInvLineDeatails = data;
           console.log(data.invoiceStatus);
+          alert(data.source)
           
+
           // if (res.code === 200) {
           // this.lstsearchapinv=res.obj;
           data.invLines.forEach(f => {
@@ -815,6 +831,24 @@ export class PoInvoiceComponent implements OnInit {
           // });
           if(data.invoiceStatus=='Validated'){
             this.poInvoiceForm.disable();
+          }
+          if(data.source == 'MANUAL'){
+            this.dispStatus=true;
+            this.disDeleteButton=true;
+            this.dispAccountCode=true;
+            // alert(this.lineDistributionArray().length);
+            this.poInvoiceForm.get('distribution').enable();
+            this.poInvoiceForm.get('invLines').enable();
+            this.poInvoiceForm.get('taxLines').enable();
+          }else{
+            this.dispStatus=false;
+            this.disDeleteButton=false;
+            this.dispAccountCode =false;
+            // var patch = this.poInvoiceForm.get('distribution') as FormArray;
+            // patch.controls[0].patchValue({poChargeDesc:'Unprocessed'})
+            this.poInvoiceForm.get('distribution').disable();
+            this.poInvoiceForm.get('invLines').disable();
+            this.poInvoiceForm.get('taxLines').disable();
           }
         }
 
