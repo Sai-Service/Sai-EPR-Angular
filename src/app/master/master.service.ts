@@ -878,6 +878,12 @@ getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
 }
+///////////OnHand////////////
+searchByItem(itemid,locId:number):Observable<any>
+{
+  alert('--' + itemid +'--'+ locId);
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocitem?locId=${locId}&itemId=${itemid}`)
+}
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {

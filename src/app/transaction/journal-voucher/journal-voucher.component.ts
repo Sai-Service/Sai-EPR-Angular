@@ -1,5 +1,5 @@
 import { PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -9,7 +9,7 @@ import { MasterService } from 'src/app/master/master.service';
 interface IJournalVoucher{
   segmentName:string;
   codeCombinationId:number;
-  lineNumber:number;
+  // lineNumber:number;
   enteredDr:number;
   enteredCr:number;
   Branchname:string;
@@ -18,6 +18,7 @@ interface IJournalVoucher{
   runningTotalDr:number
   runningTotalCr:number;
   description:string;
+  jeLineNum:number;
 } 
 @Component({
   selector: 'app-journal-voucher',
@@ -61,7 +62,7 @@ export class JournalVoucherComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
   
-  lineNumber:number;
+  jeLineNum:number;
   enteredDr:number;
   enteredCr:number;
   description:string;
@@ -86,6 +87,8 @@ export class JournalVoucherComponent implements OnInit {
       OUName:[],
      
       glLines:this.fb.array([]),
+      runningTotalDr:[],
+      runningTotalCr:[],
     })
    }
 
@@ -94,26 +97,40 @@ export class JournalVoucherComponent implements OnInit {
    }
    newglLines():FormGroup{
      return this.fb.group({
-      lineNumber:[],
+      jeLineNum:[],
       segmentName:[],
       codeCombinationId:[],
       enteredDr:[],
       enteredCr:[],
-      runningTotalDr:[],
-      runningTotalCr:[],
       description:[],
+     
      })
    }
 
    addnewglLines(){
      this.glLines().push(this.newglLines());
-   }
+     var len=this.glLines().length;
+     var patch=this.JournalVoucherForm.get('glLines') as FormArray
+     (patch.controls[len - 1]).patchValue(
+      {
+        jeLineNum: len,
+      }
+    );
+  
+     }
 
   ngOnInit(): void {
 
     this.OUName=(sessionStorage.getItem('ouName'));
 
     this.addnewglLines();
+    var patch=this.JournalVoucherForm.get('glLines') as FormArray
+     (patch.controls[0]).patchValue(
+      {
+        jeLineNum: 1,
+      }
+    );
+  
     this.service.FinancialYear()
     .subscribe(
       data => {this.FinancialYear = data;
@@ -191,10 +208,14 @@ var segment = temp1[0];}
 
     fnCancatination(i)
     {
+      var natacc1 =this.JournalVoucherForm.get('segment4').value.split('--');
+      alert(natacc1[0]);
+      var natacc=natacc1[0];
       this.segmentName=this.JournalVoucherForm.get('segment11').value+'.'+
                        this.JournalVoucherForm.get('segment2').value+'.'+
                        this.JournalVoucherForm.get('segment3').value+'.'+
-                       this.JournalVoucherForm.get('segment4').value+'.'+
+                      //  this.JournalVoucherForm.get('segment4').value+'.'+
+                      natacc+'.'+
                        this.JournalVoucherForm.get('segment5').value;
 
       // alert(this.segmentName);
@@ -291,5 +312,33 @@ var segment = temp1[0];}
     removeglLines(glLineIndex){
       this.glLines().removeAt(glLineIndex);
       
+    }
+    creditTotalCal()
+    {
+
+      var arrayControl=this.JournalVoucherForm.get('glLines').value
+      // this.JournalVoucherForm.get('runningTotalCr').value
+      // alert(totalcr);
+      this.runningTotalCr=0
+          
+      for(var i=0;i<arrayControl.length;i++)
+      {
+        // alert(arrayControl[i].enteredCr);
+        this.runningTotalCr=this.runningTotalCr+Number(arrayControl[i].enteredCr);
+      }
+      this.JournalVoucherForm.patchValue({'runningTotalCr':this.runningTotalCr});
+
+    }
+    debitTotalCal()
+    {
+      var arrayControl=this.JournalVoucherForm.get('glLines').value
+     this.runningTotalDr=0;
+      
+      for(var i=0;i<arrayControl.length;i++)
+      {
+       this.runningTotalDr=this.runningTotalDr+Number(arrayControl[i].enteredDr);
+      }
+      this.JournalVoucherForm.patchValue({'runningTotalDr':this.runningTotalDr});
+
     }
 }

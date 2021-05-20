@@ -12,6 +12,7 @@ import { combineLatest } from 'rxjs';
 import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
 import { PaymentARComponent } from './payment-ar/payment-ar.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,8 @@ const routes: Routes = [
   {path:'AvgCostUpadte',component:AvgCostUpdateComponent},
   {path:'PaymentAR',component:PaymentARComponent},
   {path:'OnHandDetails',component:OnHandDetailsComponent},
+
+  {path:'JournalVoucher',component:JournalVoucherComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

@@ -1,1 +1,66 @@
-<p>on-hand-details works!</p>
+<div class="centre">
+   
+          <table style="width: 100%;background-color: white;">
+                  <tr>
+                    <td class="PageHeader">
+                      &nbsp;&nbsp; Item OnHand Details  &nbsp;
+                    </td>
+                  </tr>
+          </table>
+          <form [formGroup]="onhandDetailsForm" (ngSubmit)="OnHandDetails(onhandDetailsForm.value)">
+          <table class="centre">
+              <tr>
+                  <td style="width: 15%" class="LabelFontStyle">
+                      Item Name:
+                  </td>
+                  <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 150px;"  />
+                    <datalist id="dynmicUserIds1">
+                      <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                        </option>
+                       </datalist>
+                  </td>
+                  <td colspan="8" style="text-align: left; width: 100%;">
+                    <button type="submit" class="btn btn-primary" (click)="searchByItem(segment)" ><i class="fa fa-search"></i></button>
+                </td>
+  
+                                <!-- <input  type="number" formControlName="invItemId"> -->
+  
+              </tr>
+          </table>
+          <br>
+          <div id="ouTable">
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+               <thead>
+                   <tr class="GridHeader">
+  
+                                      <th scope="col">Item Description</th>
+                                      <th scope="col">SubInventory</th>
+                                      <th scope="col">Locator</th>
+                                      <th scope="col">Quantity</th>
+  
+                              </tr>
+                      </thead>
+  
+                          <tr *ngFor="let com of Itemdata" class="ItemStyle" style="text-decoration:none;">
+                          <td>{{com.description}}</td>
+                          <td>{{com.subInventoryCode}}</td>
+                          <td>{{com.segmentName}}</td>
+                          <td style="text-align: right;">{{com.onHandQty}}</td>
+                        </tr>
+  
+  
+  
+          </table>
+          </div>
+          <br>
+          <table class="center">
+              <tr>
+                  <td>
+                           <button type="submit" class="btn btn-primary" >Close</button>
+  
+                  </td>
+              </tr>
+          </table>
+        </form>
+  </div>
+  
