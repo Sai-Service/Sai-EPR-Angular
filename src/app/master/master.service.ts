@@ -757,6 +757,18 @@ getsearchByPOHeder(poNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/poHdr/poNum/${poNo}`);
 }
 
+
+
+
+cancelledPO(poNo) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/poHdr/poCancel/${poNo}`);
+  return this.http.put(url, poNo, options);
+}
+
+
 public poSubmit(poMasterRecord) {
   const options = {
     headers: this.headers
@@ -818,6 +830,21 @@ taxCalforItem(itemId,taxCatId,diss,baseAmount) {
   });
 }
 
+taxCalforItem1( ouId, locId, baseAmount, taxCategoryId, diss ){
+  const REQUEST_PARAMS = new HttpParams().set('ouId', ouId)
+  .set('locId', locId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCategoryId)
+  .set('disAmt1', diss)
+
+  const REQUEST_URI = this.ServerUrl +'/arInv/arTaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
+
 // addDiscount(totTaxAmt,taxTypeName)
 public addDiscountM(poMasterRecord) {
   const options = {
@@ -835,10 +862,26 @@ public addDiscount(totTaxAmt: number, taxTypeName: string) {
     headers: this.headers
   };
   // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
-  const url = 'http://localhost:8081/taxDetails';
+  const url = 'http://saihorizon.com:8080/taxDetails';
+  // const url = 'http://localhost:8081/taxDetails';
   console.log(body);
   return this.httpclient.post(url, body, options);
 }
+
+distributionApi1(custTrxTypeId, ouId, locId,basicAmt,extendedAmount){
+  const REQUEST_PARAMS = new HttpParams().set('custTrxTypeId', custTrxTypeId)
+  .set('ouId',ouId)
+  .set('locId', locId)
+  .set('invAmount', basicAmt)
+  .set('taxableAmt', extendedAmount)
+
+  const REQUEST_URI = this.ServerUrl +'/arInv/invLnDis';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
 ////////////Stock Transfer////////
 public stockTransferSubmit(stockTransferRecord)
 {

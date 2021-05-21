@@ -68,6 +68,7 @@ const routes: Routes = [
 {path:'OMGRP',component:OmGruopMasterComponent},
 {path:'orderType', component:OrderTypeMasterComponent},
 {path:'SaiEwScheme',component:SaiEwSchemeComponent},
+{path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
 { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

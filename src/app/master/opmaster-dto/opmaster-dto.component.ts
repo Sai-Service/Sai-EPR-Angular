@@ -264,8 +264,10 @@ export class OPMasterDtoComponent implements OnInit {
   DissinclusiveFlag = false;
   DissselfAssesedFlag = false;
   displayNewButtonApprove = false;
+  displaygoReceiptForm=true;
   displayNewButtonUpdate = false;
   displayNewButtonSave = true;
+  displayNewButtonpoCancel=true;
   displayNewButtonReset = true;
   displaygetInvItemId = true;
   disTaxDiss: Array<boolean> = [];
@@ -347,10 +349,11 @@ export class OPMasterDtoComponent implements OnInit {
       currencyCode: [],
       authorizationStatus: [],
       totalAmt: [],
-      suppInvNo: ['', [Validators.nullValidator, Validators.minLength(3), Validators.maxLength(30)]],
+      suppInvNo:  ['',[Validators.minLength(3)]],
+      // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
       iRNNo: [],
-      approveDate: ['', [Validators.nullValidator]],
+      approveDate: ['', [Validators.nullValidator,Validators.maxLength(30)]],
       TransactionNature: [],
       dept: [],
       baseAmount: [],
@@ -826,8 +829,8 @@ export class OPMasterDtoComponent implements OnInit {
               this.displayNewButtonApprove = true;
               this.displayNewButtonUpdate = true;
               this.displayNewButtonSave = false;
+              this.displayNewButtonpoCancel=false;
               this.displayNewButtonReset = false;
-
               this.displayOnStatus = true;
               this.displayButton = false;
               this.displayNewButton = false;
@@ -853,7 +856,7 @@ export class OPMasterDtoComponent implements OnInit {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
                   });
 
-                alert('***taxCat****' + this.lineDetailsArray.controls[j].get('taxCategoryName').value)
+                // alert('***taxCat****' + this.lineDetailsArray.controls[j].get('taxCategoryName').value)
               }
               //this.taxCategoryList = this.lstcomments1.poLines[j].taxCategoryName;
               for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
@@ -897,12 +900,13 @@ export class OPMasterDtoComponent implements OnInit {
               this.displayNewButtonUpdate = false;
               this.displayNewButtonSave = false;
               this.displayNewButtonReset = false;
-
+              this.displayNewButtonpoCancel=false;
               this.displayOnStatus = false;
               this.displayButton = false;
               this.dispbut = false;
               this.displayLine = false;
               this.displayNewButton = false;
+              this.displaygoReceiptForm=false;
               this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
 
@@ -965,6 +969,29 @@ export class OPMasterDtoComponent implements OnInit {
         }
       );
   }
+
+  goReceiptForm(segment1){
+    this.router.navigate(['/PoReceiptForm',segment1]);
+    alert(segment1);
+  }
+
+  poCancel(segment1:any){
+    // alert(segment1)
+    this.service.cancelledPO(segment1).subscribe((res: any) => {
+    // this.service.cancelledPO(segment1)
+        // data => {
+          if (res.code === 200) {
+            // alert('Hi....')
+            alert(res.message);
+            console.log(res.message);
+            window.location.reload();
+          }
+          else{res.code === 400}
+          window.location.reload();
+        // }
+    })
+  }
+
   transData(val) {
     delete val.id;
     delete val.poNo;
@@ -1277,7 +1304,6 @@ export class OPMasterDtoComponent implements OnInit {
 
                 const invCategory = this.ItemDetailsList.invCategory.substr(0, 3);
                 if (invCategory === 'MCH') {
-
                   (patch.controls[index]).patchValue(
                     {
                       diss1: 0,
@@ -1546,7 +1572,9 @@ export class OPMasterDtoComponent implements OnInit {
         this.authorizationStatus = 'APPROVED';
         this.approveDate = new Date();
         this.displayNewButton = false;
-        window.location.reload();
+        // window.location.reload();
+        this.segment1 = sessionStorage.getItem('poNo');
+        this.Search(this.segment1);
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
@@ -1719,7 +1747,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   // checked
   onOptioninvitemTypeSelected(e: any, lineNum) {
-    alert('---' + e.target.value);
+    // alert('---' + e.target.value);
     var itemType = e.target.value;
     if (this.poMasterDtoForm.get('supplierCode').value === '') {
       alert('Please Select Supplier Code First !');
@@ -1731,9 +1759,9 @@ export class OPMasterDtoComponent implements OnInit {
       if (itemType === 'GOODS') {
         this.lineDetailsArray.controls[lineNum].get('segment').enable();
         this.displaygetInvItemId = true;
-        // this.displaysupplierSiteId = false;
-        //this.displayBillShipList = false;
-        //this.displayBillShipList1 = false
+        this.displaysupplierSiteId = false;
+        this.displayBillShipList = false;
+        this.displayBillShipList1 = false
         var deptName1 = this.poMasterDtoForm.get('dept').value;
 
         if (this.invItemList.length <= 0) {

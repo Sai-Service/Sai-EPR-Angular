@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
 import { ThemeService } from 'ng2-charts';
 import { MasterService } from '../master.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from "@angular/common";
 
 interface IpoReceipt{
   ouName:string;
@@ -40,6 +42,7 @@ interface IpoReceipt{
   locatorId:number;
   poType:string;
   poStatus:string;
+  locatorDesc:any[];
 }
 
 interface Ilocator {
@@ -66,6 +69,7 @@ export class PoReceiptFormComponent implements OnInit {
   ouName:string;
   poNumber:string;
   submitted = false;
+  private sub: any;
   supplier:string;
   item:string;
   segment1:string;
@@ -82,6 +86,7 @@ export class PoReceiptFormComponent implements OnInit {
   disabled = true;
   disabledLine =true;
   disabledViewAccounting=true;
+  DisplayqtyReceived=true;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -109,13 +114,14 @@ export class PoReceiptFormComponent implements OnInit {
   segment4:string;
   segment5:number;
   segment11:string;
-  locatorDesc:string;
+  locatorDesc:any[];
   locatorId:number;
   poType:string;
   poStatus:string;
   receiptNo:number;
   ledgerId:number;
   runningTotalDr:number;
+  ctgDescription:string;
 
 
   selectAllFlag:string;
@@ -171,7 +177,7 @@ export class PoReceiptFormComponent implements OnInit {
   displaySaveButton =false;
   TRUER=false; recFagDiss=true; 
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private router1: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName : [''],
       poNumber:['', Validators.required],
@@ -384,6 +390,71 @@ return true;
     );
 
 
+
+    this.sub = this.router1.params.subscribe(params => {
+      this.segment1 = params['segment1'];
+      // alert(this.segment1);
+      console.log(this.poReceiptForm.value);
+    this.service.getsearchByPOlines(this.segment1)
+      .subscribe(
+        data => {
+          if (data.code===400){
+            alert(data.message);
+            // alert(data.obj);
+          }
+          if(data.code ===200){
+            this.lstcompolines = data.obj;
+          if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
+            console.log(this.poStatus);
+            this.displaySaveButton =true; 
+            this.disabled = false;
+              this.disabledLine=false;
+              let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =false;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          
+          }
+          else{
+            const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
+          // alert(invCategory);
+          if(this.ctgDescription==='MCH'){
+          this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.disabledLine=true;
+          this.DisplayqtyReceived=true;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          qtyReceived: 1;
+        }
+        else{
+          this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.DisplayqtyReceived=false;
+          this.disabledLine=true;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+
+        }
+        }
+      }
+    }
+      );
+      });
+
     
   }
 
@@ -478,8 +549,26 @@ var len=this.lineDetailsArray.length;
           
           }
           else{
+            const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
+          // alert(invCategory);
+          if(this.ctgDescription==='MCH'){
           this.lstcompolines = data.obj;
           this.disabled = true;
+          this.disabledLine=true;
+          this.DisplayqtyReceived=true;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          qtyReceived: 1;
+        }
+        else{
+          this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.DisplayqtyReceived=false;
           this.disabledLine=true;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
@@ -488,10 +577,11 @@ var len=this.lineDetailsArray.length;
           control.push(poLines);
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
-
+          // this.locatorDesc.push(this.lstcompolines.rcvLines[0].locatorDesc);
         }
         }
       }
+    }
       );
     }
 
@@ -674,7 +764,8 @@ var jsonString = JSON.stringify(reqArr);
 
   close(){
     // this.router.navigate(['login']);
-    this.router.navigate(['admin']);
+    // this.router.navigate(['admin']);
+    this.location.back();
   }
 
   okLocator(i){
@@ -805,7 +896,7 @@ refresh()
         for (var i=0;i<totlCalControls.length;i++)   {
           this.baseAmount=this.baseAmount+totlCalControls[i].baseAmount;
           this.taxAmt=this.taxAmt+totlCalControls[i].taxAmount;
-
+          
         }
         this.totalAmt=this.baseAmount+this.taxAmt;
         // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
