@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +27,23 @@ export class LoginService {
     const url = 'http://localhost:8081/loginpage';
     // const url='http://saihorizon.com:8080/ErpReplica/loginpage'
     console.log(body);
-    return this.httpclient.post(url, body, options);
-
+    return this.httpclient.post(url, body, options)
+    // .pipe(
+    //   retry(1),
+    //   catchError(this.handleError)
+    // );
   }
-
+  // handleError(error) {
+  //   let errorMessage = '';
+  //   if (error.error instanceof ErrorEvent) {
+  //     // client-side error
+  //     errorMessage = `Error: ${error.error.message}`;
+  //   } else {
+  //     // server-side error
+  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  //   }
+  //   window.alert(errorMessage);
+  //   return throwError(errorMessage);
+  // }
   
 }

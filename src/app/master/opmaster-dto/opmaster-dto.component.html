@@ -6,13 +6,13 @@
                     &nbsp;&nbsp;Purchase&nbsp;Order
                 </td>
                 <table style="width: 100%; background-color: #FFE4B5;">
-                    <tr>
+                    <tr>Search
                         <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
                         <td>
                             <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control" #myinput>
                         </td>
                         <td colspan="8" style="text-align: left; width: 100%;">
-                            <button type="submit" [disabled]="!poNo" (click)="Search(poNo)" class="btn btn-primary"><i
+                            <button type="submit" [disabled]="!poNo" (click)="(poNo)" class="btn btn-primary"><i
                                     class="fa fa-search"></i></button>
 
                         </td>

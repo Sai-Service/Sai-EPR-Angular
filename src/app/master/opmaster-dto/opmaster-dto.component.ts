@@ -104,12 +104,12 @@ interface IpostPO {
   taxCategoryId: number;
 }
 
-const originFormControlNameNgOnChanges = FormControlName.prototype.ngOnChanges;
-FormControlName.prototype.ngOnChanges = function () {
-  const result = originFormControlNameNgOnChanges.apply(this, arguments);
-  this.control.nativeElement = this.valueAccessor._elementRef.nativeElement;
-  return result;
-};
+// const originFormControlNameNgOnChanges = FormControlName.prototype.ngOnChanges;
+// FormControlName.prototype.ngOnChanges = function () {
+//   const result = originFormControlNameNgOnChanges.apply(this, arguments);
+//   this.control.nativeElement = this.valueAccessor._elementRef.nativeElement;
+//   return result;
+// };
 
 @Component({
   selector: 'app-opmaster-dto',

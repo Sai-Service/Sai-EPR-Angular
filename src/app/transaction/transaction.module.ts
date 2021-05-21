@@ -15,6 +15,9 @@ import { PaymentARComponent } from './payment-ar/payment-ar.component';
 
   import { from } from 'rxjs';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
+
 
 
 @NgModule({
@@ -27,9 +30,11 @@ import { StockTakingComponent } from './stock-taking/stock-taking.component';
     PoInvoiceComponent,
     ARInvoiceComponent,
     StockTakingComponent,
-   
+   JournalVoucherComponent,
     AvgCostUpdateComponent,
     PaymentARComponent,
+    
+    OnHandDetailsComponent,
   ],
   imports: [
     CommonModule,

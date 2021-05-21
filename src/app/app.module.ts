@@ -1,5 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'; 
+import{ HTTP_INTERCEPTORS}from '@angular/common/http'; 
+import { HttpErrorInterceptorInterceptor} from './http-error-interceptor.interceptor';
+// import { CanDeactivateGuard } from './can-deactivate-guard.service';
+// import * as Rollbar from 'rollbar';
 // import { DaterangepickerModule } from 'angular-2-daterangepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +22,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 // import { ToastrModule } from 'ngx-toastr';
-import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
@@ -28,6 +32,8 @@ import { from } from 'rxjs';
 import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
+import { DeActivateGuard } from './de-activate.guard';
+
 
 
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
@@ -38,6 +44,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     PageNotFouundComponent,
     DashboardComponent,
     PoReceiptFormComponent,
+
 
 
     // FlexFieldComponent,
@@ -65,8 +72,15 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
     // NgbModule.forRoot(),
   ],
   providers: [
-    {provide : LocationStrategy , useClass: HashLocationStrategy}
+    {provide : LocationStrategy , useClass: HashLocationStrategy},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorInterceptor,
+      multi: true
+    },
+    DeActivateGuard
   ],
+ 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
