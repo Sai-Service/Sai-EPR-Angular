@@ -17,6 +17,7 @@ import { PaymentARComponent } from './payment-ar/payment-ar.component';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
+import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
 
 
 
@@ -35,6 +36,8 @@ import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.compon
     PaymentARComponent,
     
     OnHandDetailsComponent,
+    
+    AccountEnquiryComponent,
   ],
   imports: [
     CommonModule,

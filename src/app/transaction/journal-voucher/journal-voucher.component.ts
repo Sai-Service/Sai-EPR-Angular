@@ -9,10 +9,17 @@ import { MasterService } from 'src/app/master/master.service';
 interface IJournalVoucher{
   segmentName:string;
   codeCombinationId:number;
+  docseqvalue:number;
+  emplId:number;
   // lineNumber:number;
   enteredDr:number;
   enteredCr:number;
+  status:string;
+  ouId:number;
   Branchname:string;
+  jeCategory:string;
+  jeSource:string;
+  name:string;
 
   periodName:String;
   runningTotalDr:number
@@ -31,6 +38,7 @@ export class JournalVoucherComponent implements OnInit {
   JournalVoucherForm:FormGroup;
   segmentName:string;
   codeCombinationId:number;
+  docseqvalue:number;
   segment11:string;
   lookupValueDesc1:string;
   segment2:number;
@@ -44,6 +52,11 @@ export class JournalVoucherComponent implements OnInit {
   runningTotalDr:number;
   runningTotalCr:number;
   OUName:string;
+  ouId:number;
+  public status:string="Incomplete";
+  jeSource:string;
+  name:string;
+  emplId:number;
 
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -53,8 +66,10 @@ export class JournalVoucherComponent implements OnInit {
   public TypeList:Array<string>=[];
   public issueByList:Array<string>=[];
   public FinancialYear:any=[];
+  public JournalType:any=[];
   branch:any;
   segmentNameList:any;
+  jeCategory:string;
 
   showModal:boolean;
   title: string;
@@ -85,7 +100,14 @@ export class JournalVoucherComponent implements OnInit {
       lookupValueDesc5:[''],
       periodName:[],
       OUName:[],
-     
+      docseqvalue:[],
+      status:[],
+      ouId:[],
+      emplId:[],
+      jeCategory:[],
+      jeSource:[],
+      name:[],
+
       glLines:this.fb.array([]),
       runningTotalDr:[],
       runningTotalCr:[],
@@ -122,6 +144,10 @@ export class JournalVoucherComponent implements OnInit {
   ngOnInit(): void {
 
     this.OUName=(sessionStorage.getItem('ouName'));
+    this.ouId=Number((sessionStorage.getItem('ouId')));
+    alert('OrgID'+this.ouId);
+    this.emplId=Number((sessionStorage.getItem('emplId')));
+    alert('employee'+this.emplId);
 
     this.addnewglLines();
     var patch=this.JournalVoucherForm.get('glLines') as FormArray
@@ -141,6 +167,10 @@ export class JournalVoucherComponent implements OnInit {
       data => {
         this.BranchList = data;
         console.log(this.BranchList);
+      }
+    );
+    this.service.JournalType().subscribe(
+      data=>{this.JournalType=data;
       }
     );
   this.service.CostCenterList()
@@ -208,19 +238,24 @@ var segment = temp1[0];}
 
     fnCancatination(i)
     {
+      var Code=this.JournalVoucherForm.get('glLines').value;
+      var patch =this.JournalVoucherForm.get('glLines') as FormArray;
       var natacc1 =this.JournalVoucherForm.get('segment4').value.split('--');
       alert(natacc1[0]);
       var natacc=natacc1[0];
-      this.segmentName=this.JournalVoucherForm.get('segment11').value+'.'+
-                       this.JournalVoucherForm.get('segment2').value+'.'+
-                       this.JournalVoucherForm.get('segment3').value+'.'+
+      Code[i].segmentName=this.JournalVoucherForm.get('segment11').value+'.'+
+                          this.JournalVoucherForm.get('segment2').value+'.'+
+                          this.JournalVoucherForm.get('segment3').value+'.'+
                       //  this.JournalVoucherForm.get('segment4').value+'.'+
-                      natacc+'.'+
-                       this.JournalVoucherForm.get('segment5').value;
+                          natacc+'.'+
+                          this.JournalVoucherForm.get('segment5').value;
 
       // alert(this.segmentName);
-
-      this.service.segmentNameList(this.segmentName)
+      var segmentName=Code[i].segmentName;
+      alert(segmentName+"before patch");
+      patch.controls[i].patchValue({'segmentName':segmentName});
+      alert(segmentName+"after patch");
+      this.service.segmentNameList(segmentName)
       .subscribe(
         data => {
 
@@ -234,27 +269,33 @@ var segment = temp1[0];}
               this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
             }
           } else if (this.segmentNameList.code === 400) {
-            this.JournalVoucherForm.patchValue({segmentName:''});
+            // var arraycontrol =this.JournalVoucherForm.get('glLines').value;
+            patch.controls[i].patchValue({segmentName : ''});
             // alert(this.segmentNameList.message);
 
           }
         }
       );
-      this.JournalVoucherForm.get('segment11').reset();
-      this.JournalVoucherForm.get('segment2').reset();
-      this.JournalVoucherForm.get('segment3').reset();
-      this.JournalVoucherForm.get('segment4').reset();
-      this.JournalVoucherForm.get('segment5').reset();
+      // this.JournalVoucherForm.get('segment11').reset();
+      // this.JournalVoucherForm.get('segment2').reset();
+      // this.JournalVoucherForm.get('segment3').reset();
+      // this.JournalVoucherForm.get('segment4').reset();
+      // this.JournalVoucherForm.get('segment5').reset();
 
-      this.JournalVoucherForm.get('lookupValueDesc1').reset();
-      this.JournalVoucherForm.get('lookupValueDesc2').reset();
-      this.JournalVoucherForm.get('lookupValueDesc3').reset();
-      this.JournalVoucherForm.get('lookupValueDesc4').reset();
-      this.JournalVoucherForm.get('lookupValueDesc5').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc1').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc2').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc3').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc4').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc5').reset();
+      // alert('Code Combination search complete')
     }
 
     openCodeCombination(i)
     {
+      var natacc1 =this.JournalVoucherForm.get('segment4').value.split('--');
+      alert(natacc1[0]);
+      var natacc=natacc1[0];
+
       let SegmentName1=this.glLines().controls[i].get('segmentName').value;
 
       if(SegmentName1===null)
@@ -279,6 +320,7 @@ var segment = temp1[0];}
       this.segment2 = temp[1];
       this.segment3 = temp[2];
       this.segment4 = temp[3];
+      // natacc=temp[3];
       this.segment5 = temp[4];
     }
     this.content = i;
@@ -341,4 +383,35 @@ var segment = temp1[0];}
       this.JournalVoucherForm.patchValue({'runningTotalDr':this.runningTotalDr});
 
     }
-}
+
+    postGl()
+    {
+      var totcr=this.JournalVoucherForm.get('runningTotalCr').value;
+      var totdr=this.JournalVoucherForm.get('runningTotalDr').value;
+
+      if(totcr===totdr)
+      {
+        const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+        this.service.glPost(formValue).subscribe((res:any)=>{
+          if(res.code===200)
+          {
+            alert("Record inserted Successfully");
+            console.log(res.obj);
+            this.docseqvalue=res.obj;
+            this.JournalVoucherForm.disable();
+          }
+          else
+         {
+            if (res.code === 400) 
+            {
+              alert("Code already present in data base");
+              this.JournalVoucherForm.reset();
+            }
+          }
+       })
+      }
+      else{
+        alert("Can not do Posting because total credit and debit values are not matching");
+      }
+    }
+  }

@@ -31,6 +31,7 @@ interface IArInvoice {
   taxRecoverable: number;
   extendedAmount: number;
   glDate: Date;
+  accountDesc:string;
   // invoiceAmount:number;
 }
 @Component({
@@ -44,6 +45,7 @@ export class ARInvoiceComponent implements OnInit {
   branch: any;
   itemId: number;
   taxCategoryId: number;
+  accountDesc:string;
   sum: 0;
   custTrxLineId: number = null;
   basicAmt: number;
@@ -73,6 +75,7 @@ export class ARInvoiceComponent implements OnInit {
   poChargeAcc: number;
   taxItemId: number;
   invLineNo: number;
+  InvoiceLineNum:number;
   codeCombinationId: number;
   invCurrancyCode = 'INR';
   charges = 0.00;
@@ -81,6 +84,7 @@ export class ARInvoiceComponent implements OnInit {
   taxCat1: number;
   glDate = new Date();
   taxAmount: number;
+  
   public distributioArr: any;
   public paymentTermList: Array<string> = [];
   public locIdList: Array<string> = [];
@@ -102,6 +106,7 @@ export class ARInvoiceComponent implements OnInit {
   public taxCategoryList: any;
   public segmentNameList: any;
   subscription: any;
+  public taxUistatus:boolean=false;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
@@ -212,6 +217,7 @@ export class ARInvoiceComponent implements OnInit {
       inclusiveFlag: [],
       invLineItemId: [],
       taxItemId: [],
+      
     });
   }
 
@@ -232,6 +238,7 @@ export class ARInvoiceComponent implements OnInit {
       // poSegment: [],
       codeCombinationId: [],
       concatenatedSegment: [],
+      accountDesc:[],
       // poChargeAc: [],
       // poChargeDesc: [],
       // poChargeCode: [],
@@ -389,7 +396,9 @@ export class ARInvoiceComponent implements OnInit {
         data => {
           this.lstcomments = data;
           console.log(this.lstcomments);
-          this.arInvoiceForm.patchValue(this.lstcomments);
+          this.taxUistatus=true;
+          this.arInvoiceForm.patchValue(this.lstcomments,{emitEvent:false});
+          alert('after emit');
           var len = this.lineDetailsArray.length;
           for (let i = 0; i < data.invLines.length - len; i++) {
             var invLnGrp: FormGroup = this.lineDetailsGroup();
@@ -398,13 +407,16 @@ export class ARInvoiceComponent implements OnInit {
           for (let i = 0; i < data.invDisLines.length - len; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
-          }
+            }
           for (let i = 0; i < data.taxLines.length - len; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
             this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
+            
           }
+          alert('second emit call')
           this.arInvoiceForm.patchValue(data);
+
         }
       );
   };
@@ -602,6 +614,58 @@ export class ARInvoiceComponent implements OnInit {
 
     return (val);
   }
+  saveARInvoiceNew(){
+    //Get invoice lines
+    const formValue: IArInvoice = this.transData(this.arInvoiceForm.value);
+    formValue.ouId = this.ouId;
+    var arrayControl = this.arInvoiceForm.get('invLines').value;
+    var patch = this.arInvoiceForm.get('invLines') as FormArray;
+    var taxarr=new Array();
+    var distarr=new Array();
+    this.basicAmt = 0;
+    this.taxRecoverable = 0;
+    this.extendedAmount = 0;
+
+    var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
+    var locId = this.arInvoiceForm.get('locId').value;
+    alert(locId)
+    if (locId == null) {
+      locId = '000';
+    }
+
+    for (var i = 0; i < arrayControl.length; i++) {
+      this.basicAmt = this.basicAmt + arrayControl[i].basicAmt;
+      this.taxRecoverable = this.taxRecoverable + arrayControl[i].taxRecoverable;
+     
+
+      this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, arrayControl[i].basicAmt, arrayControl[i].taxCategoryId, 0)
+        .subscribe(
+          (data: any) => {taxarr[i]=(data)
+          alert(JSON.stringify(data))});
+            
+this.service.distributionApi1(custTrxTypeId, sessionStorage.getItem('ouId'), locId, arrayControl[i].basicAmt, arrayControl[i].extendedAmount)
+              .subscribe(
+                data1 => {distarr[i]=(data)
+                alert(JSON.stringify(data))
+                });
+              
+   
+    }
+    alert(taxarr.length+'Tax');
+    alert(distarr.length+'Dist');
+    this.extendedAmount = (this.basicAmt + this.taxRecoverable);
+    this.arInvoiceForm.patchValue({ invoiceAmount: this.extendedAmount })
+    formValue.invoiceAmount = this.extendedAmount;
+    formValue.taxAmount = this.taxRecoverable;
+    formValue.taxableAmount = this.basicAmt;
+    //For loop
+    //get tax detailplus store
+    //get dist dettailplus store
+    //end for loop
+  
+    //save
+
+    }
   saveArInvoice() {
     const formValue: IArInvoice = this.transData(this.arInvoiceForm.value);
     formValue.ouId = this.ouId;
@@ -635,11 +699,26 @@ export class ARInvoiceComponent implements OnInit {
       }
     });
   }
-  onOptionTaxCatSelected(i, taxCategoryName) {
+  onOptionTaxCatSelected(i,taxcatid, taxCategoryName,basicAmt) {
+    var len1 = this.TaxDetailsArray().length;
+    alert(len1+'lengthUpdate'+this.taxUistatus);
+
+    if(this.taxUistatus===false)
+    {
+      
+      alert('If call');
+      
+      this.TaxDetailsArray().clear();
+      this.lineDistributionArray().clear();
     var arrayControl = this.arInvoiceForm.get('invLines').value;
     var patchtaxDetail = this.arInvoiceForm.get('taxLines') as FormArray;
+    if(taxcatid===null){
     let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
     this.taxCategoryId = selectedValue.taxCategoryId
+    }
+    else{
+      this.taxCategoryId=taxcatid;
+    }
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
     (patch.controls[i]).patchValue(
       {
@@ -651,6 +730,7 @@ export class ARInvoiceComponent implements OnInit {
     var diss = 0;
     var sum = 0;
     var baseAmount = arrayControl[i].basicAmt
+    alert(baseAmount+'basic');
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
     var locId = this.arInvoiceForm.get('locId').value;
     alert(locId)
@@ -698,7 +778,7 @@ export class ARInvoiceComponent implements OnInit {
                 data1 => {
                   this.distributioArr = data1;
                   console.log(this.distributioArr);
-                  for (let i = 0; i < this.distributioArr.length; i++) {
+                  for (let i = 0; i <= this.distributioArr.length; i++) {
                     var invLnGrp: FormGroup = this.distLineDetails();
                     this.lineDistributionArray().push(invLnGrp);
                   }
@@ -728,7 +808,7 @@ control.controls[0].patchValue({invoiceLineNum:this.invLineNo})
       alert('kindly enter the base amount and order qty')
     }
     // this.patchResultList(i, this.taxCalforItem);
-
+  }
   }
   taxDetails(op, i, taxCategoryId) {
     var arrayControl = this.arInvoiceForm.get('invLines').value
@@ -810,6 +890,7 @@ control.controls[0].patchValue({invoiceLineNum:this.invLineNo})
       }
     }
     alert(arrayControl[index].orderedQty);
+    
     arrayControl[index].baseAmtLineWise = arrayControl[index].unitSellingPrice * arrayControl[index].orderedQty;
     patch.controls[index].patchValue({ basicAmt: arrayControl[index].baseAmtLineWise })
     var baseAmount = arrayControl[index].baseAmtLineWise
@@ -819,7 +900,7 @@ control.controls[0].patchValue({invoiceLineNum:this.invLineNo})
     alert(this.taxCategoryId)
     var diss = 0;
     var sum = 0;
-    var baseAmount = arrayControl[index].basicAmt
+    // var baseAmount = arrayControl[index].basicAmt
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
     var locId = this.arInvoiceForm.get('locId').value;
     alert(locId)
@@ -828,72 +909,75 @@ control.controls[0].patchValue({invoiceLineNum:this.invLineNo})
     }
     var len1 = this.TaxDetailsArray().length;
     alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
-    if (baseAmount != null && this.taxCategoryId != undefined) {
-      this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, baseAmount, this.taxCategoryId, diss)
-        .subscribe(
-          (data: any) => {
-            this.taxCalforItem = data.taxLines;
-            console.log(this.taxCalforItem);
-            for (let i = 0; i < data.taxLines.length - len1; i++) {
-              var invLnGrp: FormGroup = this.TaxDetailsGroup();
-              this.TaxDetailsArray().push(invLnGrp);
-            }
-            // let control = this.arInvoiceForm.get('taxLines') as FormArray;
-            // control.clear();
-            this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
+    // if (baseAmount != null && this.taxCategoryId != undefined) {
+    //   this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, baseAmount, this.taxCategoryId, diss)
+    //     .subscribe(
+    //       (data: any) => {
+    //         this.taxCalforItem = data.taxLines;
+    //         console.log(this.taxCalforItem);
+    //         for (let i = 0; i < data.taxLines.length - len1; i++) {
+    //           var invLnGrp: FormGroup = this.TaxDetailsGroup();
+    //           this.TaxDetailsArray().push(invLnGrp);
+    //         }
+    //         // let control = this.arInvoiceForm.get('taxLines') as FormArray;
+    //         // control.clear();
+    //         this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
 
-            alert(this.taxCalforItem.length + ' this.taxCalforItem.length')
-            for (let i = 0; i < this.taxCalforItem.length; i++) {
+    //         alert(this.taxCalforItem.length + ' this.taxCalforItem.length')
+    //         for (let i = 0; i < this.taxCalforItem.length; i++) {
 
-              if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt
-              }
-              alert(sum + " sum")
-            }
-            (patch.controls[index]).patchValue({
-              // baseAmtLineWise: arrayControl[i].baseAmtLineWise,
-              taxRecoverable: sum,
-              extendedAmount: arrayControl[index].basicAmt + sum,
-            });
-            var extendedAmount = arrayControl[index].basicAmt + sum;
-            alert(this.TaxDetailsArray().length + ' this.TaxDetailsArray().length-')
-            for (let i = 0; i < this.TaxDetailsArray().length; i++) {
-              patchtaxDetail.controls[i].patchValue({ taxItemId: this.itemId, invLineNo: this.invLineNo })
-            }
-            var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
-            var len2 = this.lineDistributionArray().length;
-            this.service.distributionApi1(custTrxTypeId, sessionStorage.getItem('ouId'), locId, arrayControl[index].basicAmt, extendedAmount)
-              .subscribe(
-                data1 => {
-                  this.distributioArr = data1;
-                  console.log(this.distributioArr);
-                  for (let i = 0; i < this.distributioArr.length; i++) {
-                    var invLnGrp: FormGroup = this.distLineDetails();
-                    this.lineDistributionArray().push(invLnGrp);
-                  }
-                  this.arInvoiceForm.get('invDisLines').patchValue(data1);
-                  var k = this.lineDistributionArray().length;
-                  for (let j = 0; j < data.invDisLines.length; j++) {
-                    var invLnGrp: FormGroup = this.distLineDetails();
-                    this.lineDistributionArray().push(invLnGrp);
-                  }
-                  var control = this.arInvoiceForm.get('invDisLines') as FormArray;
+    //           if (this.taxCalforItem[i].totTaxPer != 0) {
+    //             sum = sum + this.taxCalforItem[i].totTaxAmt
+    //           }
+    //           alert(sum + " sum")
+    //         }
+    //         (patch.controls[index]).patchValue({
+    //           // baseAmtLineWise: arrayControl[i].baseAmtLineWise,
+    //           taxRecoverable: sum,
+    //           extendedAmount: arrayControl[index].basicAmt + sum,
+    //         });
+    //         var extendedAmount = arrayControl[index].basicAmt + sum;
+    //         alert(this.TaxDetailsArray().length + ' this.TaxDetailsArray().length-')
+    //         for (let i = 0; i < this.TaxDetailsArray().length; i++) {
+    //           patchtaxDetail.controls[i].patchValue({ taxItemId: this.itemId, invLineNo: this.invLineNo })
+    //         }
+    //         var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
+    //         var len2 = this.lineDistributionArray().length;
+    //         this.service.distributionApi1(custTrxTypeId, sessionStorage.getItem('ouId'), locId, arrayControl[index].basicAmt, extendedAmount)
+    //           .subscribe(
+    //             data1 => {
+    //               this.distributioArr = data1;
+    //               console.log(this.distributioArr);
+    //               for (let i = 0; i < this.distributioArr.length; i++) {
+    //                 var invLnGrp: FormGroup = this.distLineDetails();
+    //                 this.lineDistributionArray().push(invLnGrp);
+    //               }
+    //               this.arInvoiceForm.get('invDisLines').patchValue(data1);
+    //               var k = this.lineDistributionArray().length;
+    //               for (let j = 0; j < data.invDisLines.length; j++) {
+    //                 var invLnGrp: FormGroup = this.distLineDetails();
+    //                 this.lineDistributionArray().push(invLnGrp);
+    //               }
+    //               var control = this.arInvoiceForm.get('invDisLines') as FormArray;
                   
-                  for (let i = 0, z = k - 1; i < data.invDisLines.length; i++, z++) {
-                    alert('invoiceLineNum ' + this.invLineNo)
-                    control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
-                    control.controls[z].patchValue(data.invDisLines[i]);
-                  }
-                  // alert('invoiceLineNum ' + this.invLineNo)
-                  // control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
-                  alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
-                  for (let i = 0; i < this.lineDistributionArray().length; i++) {
-                    alert('inside for lineno')
-                    control.controls[i].patchValue({ lineNum: i + 1 })
-                  }
-                }
-              );
-          });
+    //               for (let i = 0, z = k - 1; i < data.invDisLines.length; i++, z++) {
+    //                 alert('invoiceLineNum ' + this.invLineNo)
+    //                 control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
+    //                 control.controls[z].patchValue(data.invDisLines[i]);
+    //               }
+    //               // alert('invoiceLineNum ' + this.invLineNo)
+    //               // control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
+    //               alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
+    //               for (let i = 0; i < this.lineDistributionArray().length; i++) {
+    //                 alert('inside for lineno')
+    //                 control.controls[i].patchValue({ lineNum: i + 1 })
+    //               }
+    //             }
+    //           );
+    //       });
+    // }
+    if (baseAmount != null && this.taxCategoryId != undefined){
+    this.onOptionTaxCatSelected(index, this.taxCategoryId,null,baseAmount)
     }
     // console.log(this.poMasterDtoForm.value);
 
