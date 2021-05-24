@@ -190,7 +190,7 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Amount:</td>
                                     <td>
-                                        <input type="text" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
+                                        <input type="number" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
                                             class="form-control" placeholder="" style="width: 120px;">
                                     </td>
 
@@ -225,7 +225,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle1">
+                                    <td style="width: 15%" class="LabelFontStyle">
                                         Sup&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
                                         <input type="text" formControlName="suppInvNo"
@@ -422,7 +422,7 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Amount:</td>
                                     <td>
-                                        <input type="text" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
+                                        <input type="number" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
                                             class="form-control" placeholder="">
                                     </td>
                                 </tr>
@@ -451,15 +451,21 @@
 
                                 </tr>
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Description:</td>
-                                    <td>
-                                        <input type="text" disabled formControlName="description" class="form-control"
-                                            placeholder="Enter the description" style="width: 280%;">
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Sup&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                    <td colspan="">
+                                        <input disabled type="text" formControlName="suppInvNo"
+                                            class="form-control" style="width: 100%;">
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
+                                    <td style="width: 15%" class="LabelFontStyle">Description:</td>
+                                    <td colspan="3">
+                                        <input disabled type="text" formControlName="description" class="form-control"
+                                            placeholder="Enter the description" style="width: 100%;">
+                                    </td>
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
+                                    <td colspan="2">
                                         <!-- <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModalScrollable"><i class="fa fa-plus"></i></button> -->
                                         <button data-toggle="modal" class="btn btn-primary"
@@ -1004,11 +1010,12 @@
                                                             placeholder="Select Item Category" class="form-control">
                                                     </td> -->
                                                     <td>
+                                                        <input formControlName="segmentName" value={{segmentName}} placeholder="Select Item Category" class="form-control">
                                                         <!-- <div class="row" id="modals"> -->
-                                                        <input formControlName="segmentName" value={{segmentName}}
+                                                        <!-- <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
                                                             placeholder="Select Item Category" class="form-control"
-                                                            (click)="openCodeComb(i)">
+                                                            (click)="openCodeComb(i)"> -->
                                                         <!-- </div> -->
 
                                                         <!-- <a formControlName="segmentName" 
@@ -1576,7 +1583,7 @@
                 <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
             </ng-template>
             <ng-template #elseBlockSave>
-                <button type="button" disabled class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
+                <button type="button"  class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
             </ng-template>
         </td>
         <td>
@@ -1597,7 +1604,26 @@
                 <button type="button" class="btn btn-primary" disabled (click)="Approve()" style="width: 8rem;">Approve</button>
             </ng-template>
         </td>
-               
+        <td>
+            <div *ngIf="displaygoReceiptForm ; then thenBlockgoReceiptForm; else elseBlockgoReceiptForm"></div>
+            <ng-template #thenBlockgoReceiptForm>
+            </ng-template>
+            <ng-template #elseBlockgoReceiptForm>
+                <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;" >New Receipt Creation</button>
+            </ng-template>
+        </td>
+        <td>
+            <div *ngIf="displayNewButtonpoCancel ; then thenBlockpoCancel; else elseBlockpoCancel"></div>
+            <ng-template #thenBlockpoCancel>
+                <!-- <button type="button" class="btn btn-primary" (click)="poCancel()" style="width: 8rem;">PO Cancelled</button> -->
+            </ng-template>
+            <ng-template #elseBlockpoCancel>
+                <input hidden type="text" disabled formControlName="segment1" class="form-control"
+                [(ngModel)]='segment1' placeholder="">
+                <button type="button" class="btn btn-primary"  (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button>
+            </ng-template>
+        </td>
+                  
 
         <!-- <div *ngIf="displaytaxDisscountButton; then thenBlocktaxDisscount; else elseBlocktaxDisscount">
         </div>
