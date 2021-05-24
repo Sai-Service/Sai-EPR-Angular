@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
+// import { CanDeactivateGuard } from './can-deactivate-guard.service';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,6 +19,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ 
+    // CanDeactivateGuard
+  ]
 })
 export class AppRoutingModule { }

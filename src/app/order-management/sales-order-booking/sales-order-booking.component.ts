@@ -93,6 +93,7 @@ interface AccOrderLinesPost1 {
 export class SalesOrderBookingComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   divisionName: string;
+  itemId:number;
   ouName: string;
   locCode: string;
   ticketNo: string;
@@ -178,6 +179,7 @@ export class SalesOrderBookingComponent implements OnInit {
   public addonItemList: any[];
   public addonDescList: any[];
   public colorCodeList: Array<string>[];
+  public taxCalforItem:any;
   displayInsDetails = true;
   displayEWDetails = true;
   lstInvLineDeatails1: any;
@@ -298,25 +300,26 @@ export class SalesOrderBookingComponent implements OnInit {
     return this.fb.group({
       // lineNumber:[''],
       // segment:[''],
+      itemId:[],
       orderedItem: [''],
-      // pricingQty:[''],
+      pricingQty:[''],
       unitSellingPrice: [''],
       taxCategoryName: [''],
-      // baseAmt:[''],
-      // taxAmt:[''],
-      // totAmt:[''],
-      // flowStatusCode:[''],
-      // // category:[''],
-      // itemType:[''],
-      // hsnSacCode:[''],
-      // invType:[''],
-      // taxCategoryId:[''],
+      baseAmt:[''],
+      taxAmt:[''],
+      totAmt:[''],
+      flowStatusCode:[''],
+      category:[''],
+      itemType:[''],
+      hsnSacCode:[''],
+      invType:[''],
+      taxCategoryId:[''],
       displaysegment: false,
       lineNumber: [''],
       orderNumber: [''],
       segment: [''],
-      pricingQty: [''],
-      taxCategoryId: [''],
+      // pricingQty: [''],
+      // taxCategoryId: [''],
       orgId: [''],
       adhocDiscount: [''],
       adhocConsu: [''],
@@ -324,12 +327,12 @@ export class SalesOrderBookingComponent implements OnInit {
       adhocExchBonus: [''],
       adhocFinanceOffer: [''],
       adhocISL: [''],
-      itemType: [''],
-      hsnSacCode: [''],
-      taxAmt: [''],
-      baseAmt: [''],
-      flowStatusCode: [''],
-      totAmt: ['']
+      // itemType: [''],
+      // hsnSacCode: [''],
+      // taxAmt: [''],
+      // baseAmt: [''],
+      // flowStatusCode: [''],
+      // totAmt: ['']
     })
   }
 
@@ -558,6 +561,8 @@ export class SalesOrderBookingComponent implements OnInit {
 
   onOptionTaxCatSelected(taxCategory, i) {
     alert(i);
+
+
     var taxCategoryName = taxCategory.taxCategoryName;
     var taxCategoryId = taxCategoryId;
     // var orderNumber=this.orderNumber;
@@ -569,8 +574,9 @@ export class SalesOrderBookingComponent implements OnInit {
     var amount = arrayControl[i].unitSellingPrice;
     alert(amount);
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
+    this.taxCategoryId= select.taxCategoryId;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-    var taxCategoryId = this.taxCategoryList[0].taxCategoryId;
+    // var taxCategoryId = this.taxCategoryList[0].taxCategoryId;
     alert(taxCategoryId);
     // (controlinv.controls[i]).patchValue({ taxCategoryId: select.taxCategoryId });
     var disAm = 0;
@@ -621,7 +627,9 @@ export class SalesOrderBookingComponent implements OnInit {
   }
 
   onOptionsSelectedDescription(segment: any, k) {
-     
+    let select = this.invItemList1.find(d => d.SEGMENT === segment);
+    this.SalesOrderBookingForm.patchValue({itemId:select.itemId})
+    this.itemId = select.itemId;
     this.orderManagementService.addonDescList(segment)
       .subscribe(
         data => {
@@ -784,6 +792,41 @@ export class SalesOrderBookingComponent implements OnInit {
   }
 
 
+  onKey(index) {
+    console.log(index);
+
+    var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
+    var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    console.log(arrayControl);
+    var itemId=arrayControl[index].itemId;
+   var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
+    alert(arrayControl[index].baseAmtLineWise);
+       var diss = 0;
+    var sum = 0;
+    // var baseAmount = this.sum;
+    this.service.taxCalforItem(itemId, this.taxCategoryId, diss, baseAmt)
+      .subscribe(
+        (data: any[]) => {
+          this.taxCalforItem = data;
+          console.log(this.taxCalforItem);
+
+          for (let i = 0; i < this.taxCalforItem.length; i++) {
+
+            if (this.taxCalforItem[i].totTaxPer != 0) {
+              sum = sum + this.taxCalforItem[i].totTaxAmt
+            }
+          }
+          (patch.controls[index]).patchValue({
+            baseAmt: baseAmt,
+            // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
+            taxAmt: sum,
+            totAmt: baseAmt + sum,
+          });
+        });
+  }
+
+  
 }
+
 
 

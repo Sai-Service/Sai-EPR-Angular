@@ -104,12 +104,19 @@ public lineWISESubmit(Record) {
   const url = this.ServerUrl + `/jobCard/labInsert`;
   return this.http.post(url, Record, options);
 }
+GenerateInvoiceFN(jobCardNum){
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/arInv/jobInv/${jobCardNum}`;
+  return this.http.post(url, options);
+}
 public BillingCal(Record) {
   const options = {
     headers: this.headers
   };
   const url = this.ServerUrl + '/jobCard/jobBilling';
-  return this.http.post(url, Record, options);
+  return this.http.put(url, Record, options);
 }
 saveMaterialSubmit(Record) {
   const options = {

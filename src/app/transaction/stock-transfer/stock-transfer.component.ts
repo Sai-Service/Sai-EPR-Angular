@@ -26,6 +26,7 @@ interface IStockTransfer {
   ewayBillDate: Date;
   issueBy: string;
   transDate: Date;
+  deptName:string;
   
   FrmLocator: string;
   primaryQty: number;
@@ -70,6 +71,7 @@ export class StockTransferComponent implements OnInit {
   onHandQty:number;
   issueTo: string;
   subInventoryId: number;
+  deptName:string;
   getfrmSubLoc: any;
   subInventoryCode: string;
   getItemDetail: any;
@@ -98,6 +100,7 @@ export class StockTransferComponent implements OnInit {
     this.stockTranferForm = fb.group({
       ShipmentNo: [],
       locId: [''],
+      deptName:[''],
       shipmentNumber: [''],
       transferOrgId: [''],
       transactionTypeId:[''],
@@ -164,6 +167,8 @@ export class StockTransferComponent implements OnInit {
     this.locId = Number(sessionStorage.getItem('locId'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
+    this.deptName=(sessionStorage.getItem('deptName'));
+    alert(this.deptName+'Depart');
   
     this.service.searchall(this.locId).subscribe(
       data=>{
@@ -183,7 +188,7 @@ export class StockTransferComponent implements OnInit {
       
     )
 
-    this.service.ItemIdList().subscribe(
+    this.service.ItemIdListDept(this.deptName).subscribe(
       data => {
         this.ItemIdList = data;
         // console.log(this.invItemId);

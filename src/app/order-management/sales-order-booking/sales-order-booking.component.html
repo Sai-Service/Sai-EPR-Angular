@@ -790,10 +790,10 @@
                                                         [formGroupName]="i" class="auto-style5">
                                                         <tr>
                                                             <td>
-                                                                <input type="number" formControlName="orderNumber"
+                                                                <!-- <input type="number" formControlName="orderNumber"
                                                                     class="form-control"
-                                                                    style="height: 20px;width: 90px;">
-                                                                <input disabled type="text" formControlName="lineNumber"
+                                                                    style="height: 20px;width: 90px;"> -->
+                                                                <input  type="number" formControlName="lineNumber"
                                                                     class="form-control"
                                                                     style="height: 20px;width: 40px;">
                                                             </td>
@@ -842,6 +842,7 @@
                                                                             {{sc.SEGMENT}}
                                                                         </option>
                                                                     </select>
+                                                                    <input type="number" formControlName="itemId">
                                                                     <!-- <input  type="text" formControlName="segment"
                                                                id="invItemIdFirstWay"
                                                                list="dynmicUserIds1" class="form-control" (ngModelChange)='onOptionsSelectedDescription($event)' style="height: 20px;width: 170px;"/>
@@ -875,19 +876,19 @@
                                                                 </div>
                                                                 <ng-template #thenpricingQty>
                                                                     <input type="text" formControlName="pricingQty"
-                                                                        class="form-control"
+                                                                        class="form-control" (change)="onKey(i)"
                                                                         style="height: 20px;width: 70px;">
                                                                 </ng-template>
                                                                 <ng-template #elsepricingQty>
                                                                     <input type="text" formControlName="pricingQty"
-                                                                        class="form-control"
+                                                                        class="form-control" 
                                                                         style="height: 20px;width: 70px;">
                                                                 </ng-template>
                                                             </td>
                                                             <td>
                                                                 <input type="text" formControlName="unitSellingPrice"
                                                                     class="form-control"
-                                                                    style="height: 20px;width: 90px;">
+                                                                    style="height: 20px;width: 90px;"  (change)="onKey(i)">
                                                                 <!-- <input  type="number"  formControlName="adhocDiscount"  class="form-control" style="height: 20px;width: 90px;"> -->
                                                             </td>
                                                             <td>
@@ -897,7 +898,7 @@
                                                                 <ng-template #thentaxCategoryName>
                                                                     <select formControlName="taxCategoryName"
                                                                         id="taxCategoryName"
-                                                                        (ngModelChange)='onOptionTaxCatSelected($event,i)'
+                                                                        (ngModelChange)='onOptionTaxCatSelected($event,i)' (change)="onKey(i)"
                                                                         class="form-control"
                                                                         style="width: 150px;height: 25px;font-size: 10px;">
                                                                         <option>--Select--</option>
@@ -923,32 +924,32 @@
                                                             </td>
                                                             <td>
                                                                 <!-- baseAmt -->
-                                                                <input type="number" formControlName="adhocConsu"
-                                                                    [(ngModel)]='adhocConsu' class="form-control"
+                                                                <input disabled type="number" formControlName="baseAmt"
+                                                                   class="form-control"  (change)="onKey(i)"
                                                                     style="height: 20px;width: 70px;">
                                                             </td>
                                                             <td>
                                                                 <!-- taxAmt -->
-                                                                <input type="number" formControlName="additionalDisc"
-                                                                    [(ngModel)]='additionalDisc' class="form-control"
+                                                                <input type="number" formControlName="taxAmt"
+                                                                     class="form-control"
                                                                     style="height: 20px;width: 70px;">
                                                             </td>
                                                             <td>
                                                                 <!-- totAmt -->
-                                                                <input type="number" formControlName="adhocExchBonus"
-                                                                    [(ngModel)]='adhocExchBonus' class="form-control"
+                                                                <input type="number" formControlName="totAmt"
+                                                                    class="form-control"
                                                                     style="height: 20px;width: 70px;">
                                                             </td>
                                                             <td>
                                                                 <!-- hsnSacCode -->
-                                                                <input type="number" formControlName="adhocFinanceOffer"
-                                                                    [(ngModel)]='adhocFinanceOffer' class="form-control"
+                                                                <input type="number" formControlName="hsnSacCode"
+                                                                    class="form-control"
                                                                     style="height: 20px;width: 70px;">
                                                             </td>
                                                             <td>
                                                                 <!-- flowStatusCode -->
-                                                                <input type="number" formControlName="adhocISL"
-                                                                    [(ngModel)]='adhocISL' class="form-control"
+                                                                <input type="number" formControlName="flowStatusCode"
+                                                                     class="form-control"
                                                                     style="height: 20px;width:120px;">
                                                             </td>
                                                             <td>
