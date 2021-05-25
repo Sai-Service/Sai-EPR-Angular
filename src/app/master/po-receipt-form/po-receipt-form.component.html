@@ -704,6 +704,7 @@
                     style="border-color:#959595;width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
+                            <th scope="col">Tax Details</th>
                             <th scope="col">Select</th>
                             <th scope="col" style="width: 5rem;">Quantity Received</th>
                             <th scope="col">Destination Type</th>
@@ -730,13 +731,61 @@
                                 <div *ngIf="disabledLine; then thenBlockLine; else elseBlockLine"></div>
                                 <ng-template #thenBlockLine>
                                 <tr>
+                                    <input hidden type="text" disabled formControlName="poHeaderId" class="form-control"> 
                                     <input hidden type="text" disabled formControlName="poLineId" class="form-control"> 
                                     <input hidden type="text" disabled formControlName="polineNum" class="form-control"> 
                                     <input hidden type="text" disabled formControlName="locatorId" class="form-control"> 
                                     
                                     <!-- <input hidden type="text" disabled formControlName="locId" class="form-control">  -->
-                                                                                                       
-                                    <td>
+                            <!-- <td>
+                                <input hidden type="number" disabled formControlName="poHeaderId" class="form-control"> 
+                                    <input hidden  type="number" disabled formControlName="poLineId" class="form-control"> 
+                                <button type="button" class="btn btn-primary"   (click)="taxDeatils(poHeaderId,poLineId)">Tax Details</button>
+                            </td>                                                                            -->
+                           
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal31"  (click)="taxDeatils(shipHeaderId,shipLineId)" style="height: fit-content;">
+                                    Tax Details
+                                  </button>
+                                  
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="exampleModal31" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Tax Details</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                         <Table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th scope="col">Tax Rate Code</th>
+                                                    <th scope="col">Tax Rate Percent</th>
+                                                    <th scope="col">Tax Amount</th>
+                                                </tr>
+                                            </thead> 
+                                            <tbody>
+                                                <tbody>
+                                            <tr *ngFor="let com of rcvTaxDeatils" class="ItemStyle" style="text-decoration:none;">
+                                                <td style="width: 107px;">{{com.taxRateCode}}</td>
+                                                <td style="width: 107px;">{{com.taxRatePercent}}</td>
+                                                <td style="width: 107px;">{{com.taxAmt}}</td>
+                                            </tr>
+                                            </tbody>
+                                         </Table>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                                          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                                                        </td> 
+                            <td>
                          <!-- <div *ngIf="recFagDiss">   
                          <input  type="checkbox"  name="selectFlag" formControlName="selectFlag" ([ngModel])="selectFlag" (change)="selectFlag($event)">
                          </div> 
@@ -751,6 +800,14 @@
                                 <input  type="checkbox" checked   id="selectFlag" [formControl]="selectFlag"   value="selectFlag"  (change)="selectFlag=$event.target.checked?'Y':'N'">
                              </ng-template>
                         </td>
+                        <!-- <td> -->
+                            <!-- <input type="text" class="btn btn-info btn-lg" 
+                            formControlName="poLineId"(click)="taxDeatils(i,poHeaderId,poLineId)" [(ngModel)]="poLineId"
+                            class="form-control" style="height: 20px;width: 100px;"> -->
+                            <!-- data-toggle="modal" data-target="#myModal2" -->
+                            <!-- <input  type="button"
+                            formControlName="poLineId"  (click)="taxDeatils(i,poHeaderId,poLineId)" class="form-control" style="height: 20px;width: 50px;" > -->
+                        <!-- </td> -->
                                     <td> 
                                         <div *ngIf="DisplayqtyReceived; then thenBlockqtyReceived; else elseBlockqtyReceived"></div>
                                         <ng-template #thenBlockqtyReceived>
@@ -798,8 +855,7 @@
                                         <input type="text" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"
                                             formControlName="locatorDesc" (click)="openLocator(i)" [(ngModel)]="locatorDesc"
                                             class="form-control" style="height: 20px;width: 100px;">
-                                           
-                                            <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
+                                            <input hidden type="number" formControlName="locatorId" [(ngModel)]="locatorId" >
                                             <div class="modal fade" id="myModal1" role="dialog">
                                                 <div class="modal-dialog modal-sm">
                                                   <div class="modal-content">
@@ -915,7 +971,48 @@
                                         <input hidden type="text" disabled formControlName="locatorId" class="form-control"> 
                                         
                                         <!-- <input hidden type="text" disabled formControlName="locId" class="form-control">  -->
-                                                                                                           
+                                        <td>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal30"  (click)="taxDeatils(shipHeaderId,shipLineId)" style="width: fit-content;">
+    Tax Details
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal30" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tax Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <Table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+            <thead>
+                <tr class="GridHeader">
+                    <th scope="col">Tax Rate Code</th>
+                    <th scope="col">Tax Rate Percent</th>
+                    <th scope="col">Tax Amount</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tbody>
+            <tr *ngFor="let com of rcvTaxDeatils" class="ItemStyle" style="text-decoration:none;">
+                <td style="width: 107px;">{{com.taxRateCode}}</td>
+                <td style="width: 107px;">{{com.taxRatePercent}}</td>
+                <td style="width: 107px;">{{com.taxAmt}}</td>
+            </tr>
+            </tbody>
+         </Table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+                                        </td>                                                                     
                                         <td>
                                             <input type="checkbox">
                                         </td>

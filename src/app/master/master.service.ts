@@ -1322,6 +1322,14 @@ getsearchByPOlines(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`);
 }
 
+receiptnotdonetaxDeatils(trxId,trxLineId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=PO_TRANSACTION`);
+}
+
+receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=RCV_TRANSACTION`);
+}
+
 getsearchByReceiptNo(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
 }
