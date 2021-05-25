@@ -168,7 +168,7 @@ export class PricelistMasterComponent implements OnInit {
     }
 
     lineDetailsGroup() {
-      return this.fb.group({
+      return this.fb.group({ 
         priceListLineId:[''],
         itemId :['', [Validators.required]],    
         itemName:['', [Validators.required]],

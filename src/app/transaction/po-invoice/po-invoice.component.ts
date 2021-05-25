@@ -787,9 +787,10 @@ export class PoInvoiceComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
-    this.invLineDetailsArray().clear();
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
+    this.invLineDetailsArray().clear();
+    
     this.transactionService.getApInvLineDetails(invoiceNum)
       .subscribe(
         data => {
