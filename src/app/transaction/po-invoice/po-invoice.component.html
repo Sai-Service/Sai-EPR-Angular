@@ -719,7 +719,7 @@
                                       <th scope="col">Description</th>
                                       <th scope="col">Amount</th>
                                       <th scope="col">Tax Category</th>
-                                      <th scope="col">Location</th>
+                                      <!-- <th scope="col">Location</th> -->
                                       <th scope="col">HSN/SAC</th>
                                       
                                       <!-- <th scope="col">PO No</th> -->
@@ -831,19 +831,19 @@
                                         <select formControlName="taxCategoryName" id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected($event,k)'
                                                     class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList" >
+                                                                <option *ngFor="let sc of  taxCategoryList" value="{{sc.taxCategoryName}}">
                                                                     {{sc.taxCategoryName}}
                                                             </option>
                                                             </select>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <select formControlName="locId" id="locId" class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                             <option>--Select--</option> 
                                             <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" > 
                                                 {{sc.locId}}-{{sc.locCode}}
                                             </option>
                                         </select>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <input disabled type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
                                     </td>

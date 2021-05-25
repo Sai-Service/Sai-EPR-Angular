@@ -69,6 +69,7 @@ export class PoInvoiceComponent implements OnInit {
   dateRangePicker: DateRangePickerComponent;
   indexVal: number;
   firstFieldEmittedValue: IDateRange;
+  isSearchPatch : boolean = false;
   firstFieldOptions: IDateRangePickerOptions = {
     autoApply: false,
     format: 'MM/DD/YYYY',
@@ -241,7 +242,7 @@ export class PoInvoiceComponent implements OnInit {
   public suppIdList: any
   public distributionLineWise: any[];
   taxCat: string;
-  public taxCategoryList: any;
+  public taxCategoryList: any[];
   public ValidateObj: any;
   taxLines: number;
   displayOUName = false;
@@ -832,52 +833,45 @@ export class PoInvoiceComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this.isSearchPatch = true;
           this.poInvoiceForm.patchValue({invoiceNum:data.invoiceNum,
             segment1: data.invLines[0].poNumber,
            })
           this.lstInvLineDeatails = data;
           console.log(data.invoiceStatus);
-          alert(data.source)
-            // var x=this.lstsearchapinv.invLines;
-        // console.log(x);
-        
-        alert(data.invLines[0].taxCategoryName);
-        var invLineControls=this.poInvoiceForm.get('invLines') as FormArray;
-
-        for (let i=0; i<data.invLines.length;i++){
-          if(data.invLines[i].lineTypeLookupCode==='ITEM' || data.invLines[i].lineTypeLookupCode==='OTHER'){
-            // this.poInvoiceForm.patchValue({taxCategoryName:data.invLines[i].taxCategoryName})
-            this.invLineDetailsArray().controls[i].get('taxCategoryName').setValue(data.invLines[i].taxCategoryName);
-          }
-        }
-
-          // if (res.code === 200) {
-          // this.lstsearchapinv=res.obj;
+          
           data.invLines.forEach(f => {
             var invLnGrp: FormGroup = this.invLineDetails();
             this.invLineDetailsArray().push(invLnGrp);
-            this.poInvoiceForm.get('invLines').patchValue(data.invLines);
+           
           });
+        
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
-            this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
+          
           }
-          //   data.invDisLines.forEach(f => {
-          //     var invLnGrp: FormGroup = this.distLineDetails();
-          //     this.lineDistributionArray().push(invLnGrp);
-          //   this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
-          // });
+          
           for (let i = 0; i < data.taxLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
-            this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
+            
           }
-          //     data.taxLines.forEach(f => {
-          //     var invLnGrp: FormGroup = this.TaxDetailsGroup();
-          //     this.TaxDetailsArray().push(invLnGrp);
-          //   this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
-          // });
+          this.poInvoiceForm.get('invLines').patchValue(data.invLines);
+          this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
+          this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
+          let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
+          
+          for (let i=0; i<data.invLines.length;i++){
+            if(data.invLines[i].lineTypeLookupCode==='ITEM' || data.invLines[i].lineTypeLookupCode==='OTHER'){
+              // this.poInvoiceForm.patchValue({taxCategoryName:data.invLines[i].taxCategoryName})
+              //controlinv.controls[i].get('taxCategoryName').setValue(data.invLines[i].taxCategoryName);
+              (controlinv.controls[i]).patchValue({ taxCategoryName: data.invLines[i].taxCategoryName });
+             
+            }
+          }
+         
+        
           this.INVStatus=data.invoiceStatus;
           if(data.invoiceStatus=='Validated'){
             this.poInvoiceForm.disable();
@@ -1226,6 +1220,7 @@ export class PoInvoiceComponent implements OnInit {
     (controlinv.controls[k]).patchValue({ itemId: select.itemId });
   }
   onOptionTaxCatSelected(taxCategoryName, k) {
+    if(this.isSearchPatch === false){
     this.indexVal = k;
     // const amount=this.lineDetailsArray().controls[k].get('amount').value;
     var arrayControl = this.poInvoiceForm.get('invLines').value;
@@ -1349,7 +1344,7 @@ export class PoInvoiceComponent implements OnInit {
           //   // x1=x1+1;
           // }
         })
-  }
+      }}
   Validate() {
         var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
