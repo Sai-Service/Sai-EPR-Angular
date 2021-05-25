@@ -846,8 +846,8 @@ distributionApi1(custTrxTypeId, ouId, locId,basicAmt,extendedAmount){
   const REQUEST_PARAMS = new HttpParams().set('custTrxTypeId', custTrxTypeId)
   .set('ouId',ouId)
   .set('locId', locId)
-  .set('invAmount', basicAmt)
-  .set('taxableAmt', extendedAmount)
+  .set('invAmount',extendedAmount )
+  .set('taxableAmt', basicAmt )
 
   const REQUEST_URI = this.ServerUrl +'/arInv/invLnDis';
   return this.http.get(REQUEST_URI, {
@@ -905,6 +905,10 @@ public stockTransferSubmit(stockTransferRecord)
 getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
+}
+ItemIdListDept(deptname):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent/${deptname}`)
 }
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
@@ -993,6 +997,20 @@ UpdateSubInventory(SubinvRecord) {
   };
   const url = (this.ServerUrl +'/subInvMst');
   return this.http.put(url, SubinvRecord, options);
+}
+//////////Journal Voucher/////////////
+public glPost(glPostValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/glHeader';
+  return this.http.post(url,glPostValue,options);
+}
+
+JournalType():Observable<any>
+{
+  return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/JVType');
 }
 
 //////////////////FlexField////////////////
