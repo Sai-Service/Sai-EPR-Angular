@@ -30,7 +30,7 @@ interface IpoReceipt{
   locId:number;
   poHeaderId:number;
   poLineId:number;
-  suppNo:number;
+    suppNo:number;
   supplierSiteId:number;
   emplId:number;
   totAmount:number;
@@ -42,7 +42,9 @@ interface IpoReceipt{
   locatorId:number;
   poType:string;
   poStatus:string;
-  locatorDesc:any[];
+  // locatorDesc:any[];
+  locatorDesc:string;
+  
 }
 
 interface Ilocator {
@@ -114,7 +116,8 @@ export class PoReceiptFormComponent implements OnInit {
   segment4:string;
   segment5:number;
   segment11:string;
-  locatorDesc:any[];
+  // locatorDesc:any[];
+  locatorDesc:string;
   locatorId:number;
   poType:string;
   poStatus:string;
@@ -144,6 +147,8 @@ export class PoReceiptFormComponent implements OnInit {
   public poLines:any[];
    public lstlocationwise:any[];
    public lstcompolines1:any[];
+   public rcvTaxDeatils:[];
+   public poTaxDeatils:[];
    public lstSupLineDetails:any[];
    public lstPODateWiseData:any[];
    public lstReceiptDateWiseData:any[];
@@ -156,7 +161,7 @@ export class PoReceiptFormComponent implements OnInit {
    divisionId:any[];
    loginName:string;
    poLineId:number;
-   viewAccounting1:any[];
+    viewAccounting1:any[];
    viewAccounting2:any[];
    displayrecDate=false;
   
@@ -228,6 +233,7 @@ export class PoReceiptFormComponent implements OnInit {
    lineDetailsGroup() {
     return this.fb.group({
       poLineId:[],
+      poHeaderId:[],
       orderedQty: [],
       itemType:[],
       itemName:[],
@@ -534,6 +540,7 @@ var len=this.lineDetailsArray.length;
           }
           if(data.code ===200){
             this.lstcompolines = data.obj;
+            // alert( this.lstcompolines.receiptNo);
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
             this.displaySaveButton =true; 
@@ -546,6 +553,8 @@ var len=this.lineDetailsArray.length;
           control.push(poLines);
           this.displaySaveButton =false;
           this.poReceiptForm.patchValue(this.lstcompolines);
+         
+        
           
           }
           else{
@@ -585,7 +594,46 @@ var len=this.lineDetailsArray.length;
       );
     }
 
-
+taxDeatils(poHeaderId,poLineId){
+if(this.lstcompolines.receiptNo===null){
+  const trxId=this.lstcompolines.poLines[0].poHeaderId;
+const trxLineId=this.lstcompolines.poLines[0].poLineId;
+  // alert( 'trxId'+' '+trxId);
+  // alert('trxLineId'+' '+ trxLineId);
+  this.service.receiptnotdonetaxDeatils(trxId,trxLineId)
+  .subscribe((res: any) => {
+    if (res.code === 200) {
+      this.poTaxDeatils = res.obj;   
+      console.log(this.poTaxDeatils);
+    }
+    else  { if (res.code === 400) {
+      alert('Error : ' + res.message);
+    }
+    }
+    // this.poReceiptForm.patchValue(this.lstcompolines);
+  }
+);
+}
+else{
+  const rcvtrxLineId=this.lstcompolines.rcvLines[0].shipLineId;
+const rcvtrxId=this.lstcompolines.shipHeaderId;
+  this.service.receiptdonetaxDeatils(rcvtrxId,rcvtrxLineId)
+  .subscribe((res: any) => {
+    if (res.code === 200) {
+    this.rcvTaxDeatils = res.obj;
+    console.log(this.rcvTaxDeatils);
+    
+    }
+    else  { if (res.code === 400) {
+      alert('Error : ' + res.message);
+    }
+    }
+    // this.poReceiptForm.patchValue(this.lstcompolines);
+  }
+);
+}
+}
+ 
     shipmentNoFind(shipmentNumber:String) {
       // alert(segment1);
       console.log(this.poReceiptForm.value);
@@ -774,14 +822,21 @@ var jsonString = JSON.stringify(reqArr);
     poControls[i].locatorDesc=this.lineDetailsArray.controls[i].get('segment11').value+'.'+
     this.lineDetailsArray.controls[i].get('segment2').value+'.'+
     this.lineDetailsArray.controls[i].get('segment3').value+'.'+
+    // this.lineDetailsArray.controls[i].get('segment4').value;
     this.lineDetailsArray.controls[i].get('segment4').value+'.'+
     this.lineDetailsArray.controls[i].get('segment5').value;
     this.locatorDesc=poControls[i].locatorDesc;
     // alert(poControls[i].locatorDesc);
     this.service.getLocatorPoLines(this.locatorDesc,this.locId)
-      .subscribe(
-        data => {
-          this.lstcompolines1 = data;
+    .subscribe((res: any) => {
+          if (res.code === 200) {
+          this.lstcompolines1 = res.obj;
+          this.locatorId=res.obj.locatorId;
+          }
+          else  { if (res.code === 400) {
+            alert('Error : ' + res.message);
+          }
+          }
           // this.poReceiptForm.patchValue(this.lstcompolines);
         }
       );
@@ -920,6 +975,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
 // alert(this.lstcompolines.poLines[i].qtyReceived)
         // }
         console.log(this.lstcompolines);
+        // delete formValue.locatorDesc;
         
     this.service.poSaveSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -939,7 +995,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
       }
 
 viewAccounting(receiptNo:any){
-  alert(receiptNo);
+  // alert(receiptNo);
   this.service.viewAccounting1(receiptNo).subscribe((res: any) => {
     if (res.code === 200) {
       this.viewAccounting2=res.obj;
@@ -965,20 +1021,20 @@ viewAccounting(receiptNo:any){
   }
 
   poInvoiceCreation(segment1:any){
-    alert(this.segment1);
+    // alert(this.segment1);
     this.service.poinvCre(segment1).subscribe((res: any) => {
     })
   }
 
 
   poAllFind(segment1 : any){
-    alert(this.segment1);
+    // alert(this.segment1);
     // this.poNumber=this.poNumber;
     this.service.poAllRecFind(segment1).subscribe((res: any) => {
       if (res.code === 200) {
         this.poAllRecFind=res.obj;
         console.log(this.poAllRecFind);
-            alert(res.message);
+            // alert(res.message);
           } else {
             if (res.code === 400) {
               alert('Data already present in the data base');

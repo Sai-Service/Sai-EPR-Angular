@@ -265,9 +265,11 @@
             </td>
             <td>
                 <!-- <input type="text" class="form-control" formControlName="paymentMethod" value={{paymentMethod}}  style="width: 120px;height: 25px;font-size: 10px;"> -->
-                <select formControlName="paymentMethod" id="paymentMethod" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
-                    <option>--Select--</option>
-                    <option *ngFor="let sc of  paymentMethodList" [ngValue]="sc.lookupValueId" >
+                <select formControlName="paymentMethod" [(ngModel)]='paymentMethod1'  class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                    <!-- <option>--Select--</option> 
+                    [selected]="sc.paymentMethod==='CHEQUE'" [selected]="sc.lookupValueId===69"-->
+                    <option *ngFor="let sc of  paymentMethodList" [ngValue]="sc.lookupValueId"
+                    >
                         {{sc.lookupValue}}
                     </option>
                 </select>
@@ -521,15 +523,22 @@
     </div>
     <table style="width: 100%; background-color: #FFE4B5;">
         <tr>
-            <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
-            <td>
-                <input type="text" formControlName="segment1" disabled class="form-control" >
-            </td>
+            
             <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Number&nbsp;:</td>
             <td>
                 <input type="text" formControlName="invoiceNum" disabled class="form-control">
             </td>
+            <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Status&nbsp;:</td>
+            <td  style="height: 22px;color: black;">
+                {{INVStatus}}
+                <!-- <input type="text" formControlName="INVStatus" disabled class="form-control"> -->
+            </td>
+            <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
+            <td>
+                <input type="text" formControlName="segment1" disabled class="form-control" >
+            </td>
         </tr>
+        
     </table>
     <!-- ------- End Modal Here ---------- -->
     <div class="auto-style103" >
@@ -579,9 +588,9 @@
                             <!-- <th scope="col">PO No</th> -->
                             <!-- <th scope="col">PO line Number</th> -->
                             <!-- <th scope="col">Receipt No</th> -->
-                            <th scope="col">Status</th>
-                            <th scope="col">Accounting</th>
-                            <th scope="col">Account Description</th>
+                            <th hidden scope="col">Status</th>
+                            <th hidden scope="col">Accounting</th>
+                            <th scope="col" style="width: fit-content;">Account Description</th>
                             <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"></div>
                             <ng-template #thendisDeleteButton>
                             <th scope="col">Delete</th>
@@ -636,21 +645,21 @@
                    
                                 <div *ngIf="dispStatus; then thendispStatus; else elsedispStatus"></div>
                                         <ng-template #thendispStatus>
-                               <td><select formControlName="invTransferStatus" class="form-control"  style="width: 100px;height: 25px;"
+                               <td hidden><select formControlName="invTransferStatus" class="form-control"  style="width: 100px;height: 25px;"
                                 (ngModelChange)='onOptionsSelected($event,k)'>
                                  <option value="--Select--">--Select--</option>
                                      <option value="Never Validated">Never Validated</option>
                                      <option value="Validated">Validated</option>
                                      <option value="Etc">Etc</option>
                                 </select></td>
-                                <td>
+                                <td hidden>
                                     <input disabled formControlName="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
                                 </td>
                                         </ng-template>
                                         <ng-template #elsedispStatus>
-                                            <td><input type="text" disabled formControlName="invTransferStatus" [(ngModel)]="invTransferStatus"  class="form-control"  style="width: 100px;height: 25px;"></td>
+                                            <td hidden><input type="text" disabled formControlName="invTransferStatus" [(ngModel)]="invTransferStatus"  class="form-control"  style="width: 100px;height: 25px;"></td>
                                        
-                                        <td>
+                                        <td hidden>
                                             <input type="text" disabled formControlName="poChargeDesc" [(ngModel)]="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
                                         </td>
                                     </ng-template>
@@ -662,7 +671,7 @@
                                 <input formControlName="poChargeDesc"  class="form-control"  style="width: 120px;height: 25px;">
                             </td> -->
                             <td>
-                                <input formControlName="poChargeAc"  class="form-control"  style="width: 100px;height: 25px;">
+                                <input formControlName="accDesc"  class="form-control"  style="width: fit-content;height: 25px;">
                             </td>
                             <td>
                                 <div *ngIf="disDeleteButton; then thendisDeleteButton; else elsedisDeleteButton"></div>
@@ -688,9 +697,21 @@
                   <!-- <div id="Panel1" class="auto-style103"> -->
                       <!-- <button class="btn btn-primary" (click)="addRow(k)">Add Row</button> -->
                       <div class="grid_scroll">
+                        <table> 
+                            <tr>
+                                <td>
+                                    Add New Line
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary fa fa-plus" (click)="addRow()"></button> 
+                                </td>
+                            </tr>
+                        </table>
                           <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                               <thead>
                                   <tr class="GridHeader">
+                                    <!-- <th scope="col">Add New Line</th>
+                                    <th scope="col">Delete</th> -->
                                     <th scope="col">Distribution</th> 
                                       <th scope="col">No.</th>
                                       <th scope="col">Type</th>
@@ -730,6 +751,12 @@
                                       <ng-container   *ngFor="let group of invLineDetailsArray().controls; let k= index" [formGroupName]="k" class="auto-style5">    
                                  
                                         <tr class="ItemStyle" style="text-decoration:none;">
+                                            <!-- <td>
+                                                <button type="submit" class="btn btn-primary fa fa-plus" (click)="addRow(k)"></button> 
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary fa fa-trash" (click)="Delete(trxLineIndex)"></button> 
+                                            </td> -->
                                             <td>
                                                 <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"    (click)="distribution1(k)">Distribution</button> 
                                             </td>
@@ -800,13 +827,13 @@
                                     </td>
                                     <input hidden type="text" formControlName="taxCategoryId" >
                                     <td>
-                                        <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)' --> 
+                                        <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)' taxCategoryName--> 
                                         <select formControlName="taxCategoryName" id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected($event,k)'
-                                                                class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
+                                                    class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryList" >
                                                                     {{sc.taxCategoryName}}
-                                                                </option>
+                                                            </option>
                                                             </select>
                                     </td>
                                     <td>
@@ -930,6 +957,7 @@
               
               <!--/.Panel 2-->
               <div class="tab-pane fade" id="panel1006" role="tabpanel">
+                  <label>Tax Details of Invoice Line No : {{activeLineNo}}</label>
                 <!-- <div id="Panel1" class="auto-style103"> -->
                     <div class="grid_scroll">
                         <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
