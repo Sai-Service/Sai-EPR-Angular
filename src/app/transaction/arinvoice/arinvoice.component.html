@@ -1,4 +1,4 @@
-<div class="center">
+ng <s></s><div class="center">
     <table style="width: 100%;background-color: white;">
     <tr>
         <td class="PageHeader">
@@ -400,7 +400,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <button type="submit" class="btn btn-primary" (click)="distribution1(i)">Distribution</button> 
+                                                <button type="submit" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
                                             </td>
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
@@ -475,7 +475,7 @@
                                                                  [value]="sc.itemId" -->
                 
                                                             <select formControlName="taxCategoryName" id="taxCategoryName"
-                                                                (ngModelChange)='onOptionTaxCatSelected(i, $event)'
+                                                                (ngModelChange)='onOptionTaxCatSelected(i,null, $event,basicAmt)'
                                                                 class="form-control">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryList">
@@ -557,6 +557,7 @@
                             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                                 <thead>
                                     <tr class="GridHeader"> 
+                                        <th scope="col">Info</th>
                                         <th scope="col">SL. NO.</th>
                                         <th scope="col">Tax Rate Name
                                         </th>
@@ -841,8 +842,8 @@
                                     <!-- <th scope="col">Trans Line</th>
                                     <th scope="col">Detail Line</th> -->
                                     <!-- <th scope="col">Class</th> -->
-                                    <th scope="col">GL Account</th>
                                     <th scope="col">Class</th>
+                                    <th scope="col">GL Account</th>
                                     <th scope="col">GL Account Id</th>
                                     <th scope="col">GL Date</th>
                                     <th scope="col">%</th>
@@ -870,13 +871,15 @@
                                     </td> -->
                                     <td>
                                         
-                                        <input formControlName="concatenatedSegment"  (click)="openCodeComb(k)" data-toggle="modal" data-target="#myModel" class="form-control"  style="width: 160px;height: 25px;">
+                                        <input formControlName="class"  class="form-control"  style="width: 160px;height: 25px;">
                                     </td>
                                     <td>
                                         
-                                        <input formControlName="class"  class="form-control"  style="width: 160px;height: 25px;">
+                                        <input formControlName="concatenatedSegment"  (click)="openCodeComb(k)" data-toggle="modal" data-target="#myModel" class="form-control"  style="width: 160px;height: 25px;">
                                     </td>
-                                    <td> <input  formControlName="codeCombinationId"  class="form-control"  style="width: 160px;height: 25px;"></td>
+                                    <td> 
+                                        <input formControlName="accountDesc" class="form-control"  style="width: 160px;height: 25px;"></td>
+                                        <input  hidden formControlName="codeCombinationId"  class="form-control"  style="width: 160px;height: 25px;">
                                     <td>
                                         <input  formControlName="glDate" [(ngModel)]="glDate" disabled  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                     </td>
@@ -907,10 +910,10 @@
 <!-- </div> -->
                 <table class="center">
                     <tr>
-                        <td> <button type="butt on" class="btn btn-primary" (click)="saveArInvoice()" style="width: 8rem;">Save</button></td>
+                        <td> <button type="butt on" class="btn btn-primary" (click)="saveARInvoiceNew()" style="width: 8rem;">Save</button></td>
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;">Complete</button></td>
                         <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
-                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td>
+                        <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->
                         <td>
                             <button type="button" class="btn btn-primary" (click)="clearFormArray()"
                             style="width: 8rem;">Reset</button>

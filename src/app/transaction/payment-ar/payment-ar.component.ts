@@ -152,7 +152,7 @@ export class PaymentARComponent implements OnInit {
   orgId:number;
 
   public emplId =6;
-  public billToSiteId=107; customerSiteId:number;
+  public billToSiteId=107; customerSiteId=107;
   public applyTo='INVOICE'
   public applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   // applyTo: string;

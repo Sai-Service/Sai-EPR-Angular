@@ -21,7 +21,7 @@
                                 <fieldset class="RFS">
                                         <legend id="FormsPH_LGAadhaar" class="RFSL"
                                         style="font-size: 10px;color: black;">
-                                        <!-- <b> Reversal&nbsp;Detail&nbsp;</b> -->
+                                        <b> Journal&nbsp;Detail&nbsp;</b>
                                     </legend>
                                     <table>
                                         <tr>
@@ -30,6 +30,8 @@
                                             </td>
                                             <td >
                                                 <input type="text" class="form-control" formControlName="OUName" [(ngModel)]='OUName'>
+                                                <input hidden formControlName="ouId" [(ngModel)]='ouId'>
+                                                <input hidden formControlName="emplId" [(ngModel)]='emplId'>
                                             </td>
                                             <td style="width: 15%"class="LabelFontStyle">
                                                     Period&nbsp;:
@@ -37,7 +39,7 @@
                                             <td >
                                                 <select class="form-control"  formControlName="periodName" >
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let fy of FinancialYear" [ngValue]="fy.actualYr">{{fy.financialYear}}</option>
+                                                    <option *ngFor="let fy of FinancialYear" [ngValue]="fy.financialYear">{{fy.financialYear}}</option>
                                                 </select>
                                             </td>
                                             <td style="width: 15%"class="LabelFontStyle">
@@ -52,21 +54,22 @@
                                                         Journal&nbsp;Type&nbsp;:
                                                     </td>
                                                     <td >
-                                                        <select class="form-control" >
+                                                        <select class="form-control" formControlName="jeCategory">
                                                             <option>--Select--</option>
+                                                            <option *ngFor="let jt of JournalType">{{jt.lookupValue}}</option>
                                                         </select>
                                                     </td>
                                                     <td style="width: 15%"class="LabelFontStyle">
                                                             Document&nbsp;Number&nbsp;:
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control" >
-                                                    </td>
+                                                      <b>  <input disabled type="text" class="form-control" formControlName="docseqvalue" [(ngModel)]="docseqvalue">
+                                                      </b></td>
                                                     <td style="width: 15%"class="LabelFontStyle">
                                                            Status&nbsp;:
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control" >
+                                                        <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
                                                     </td>
                                         </tr>
                                     </table>
@@ -105,8 +108,8 @@
                     </td>
                 </tr>
                 <tr>
-                        <td>
-                                <table>
+                        <td colspan="2">
+                                <table style="width: 100%;">
                                     <tr>
                                         <td>
                                             <fieldset class="RFS">
@@ -114,21 +117,21 @@
                                                     <!-- style="font-size: 10px;color: black;"> -->
                                                     <!-- <b> Reversal&nbsp;Detail&nbsp;</b> -->
                                                 <!-- </legend> -->
-                                                <table>
+                                                <table style="width: 100%;">
                                                     <tr>
                                                         <td style="width: 15%"class="LabelFontStyle">
                                                             JV&nbsp;Headers&nbsp;:
                                                         </td>
-                                                        <td >
-                                                            <input type="text" class="form-control"   style="width:40rem;">
+                                                        <td colspan="2">
+                                                            <input type="text" class="form-control"   style="width:80%;" formControlName="jeSource">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                             <td style="width: 15%"class="LabelFontStyle">
                                                                 JV&nbsp;Narration&nbsp;:
                                                             </td>
-                                                            <td >
-                                                                <input type="text" class="form-control"   style="width:40rem;">
+                                                            <td colspan="2">
+                                                                <input type="text" class="form-control"    style="width:80%;" formControlName="name">
                                                             </td>
                                                         </tr>
                                                 </table>
@@ -200,7 +203,7 @@
                      <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
                         <tr class="ItemStyle">
                             
-                            <td  colspan="4">Total:&nbsp;</td>
+                            <td  colspan="4"><b>Total:&nbsp;</b></td>
                             <td style="width: 13.4rem;"></td>
                             <!-- <td style="width: 6rem;"></td> -->
                             <td style="width: 4rem;">
@@ -235,7 +238,7 @@
                     <button type="submit" class="btn btn-primary"  >Save</button>
                   </td>
                   <td>
-                      <button  type="submit" class="btn btn-primary" >Post</button>
+                      <button  type="submit" class="btn btn-primary" (click)="postGl()" >Post</button>
                   </td>
                   <td>
                         <button  type="submit" class="btn btn-primary" >Copy</button>

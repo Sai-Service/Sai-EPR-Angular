@@ -146,6 +146,7 @@ export class OPMasterDtoComponent implements OnInit {
 
 
   deptName: any;
+  
   public poType = 'Standard Purchase Order'
   supplierSiteId: number;
   supplierCode: number;
@@ -972,7 +973,7 @@ export class OPMasterDtoComponent implements OnInit {
 
   goReceiptForm(segment1){
     this.router.navigate(['/PoReceiptForm',segment1]);
-    alert(segment1);
+    // alert(segment1);
   }
 
   poCancel(segment1:any){
@@ -1197,7 +1198,7 @@ export class OPMasterDtoComponent implements OnInit {
 
     // this.displayNewButtonSave=true;
     //let value = $event.target.value.split("-")[1].trim();
-    alert('**supp***' + supp);
+    // alert('**supp***' + supp);
     if (supp != null) {
       var value = supp.substr(supp.indexOf('@') + 1, supp.length);
       let selectedValue = this.supplierCodeList.find(v => v.suppNo == value);
@@ -1219,7 +1220,7 @@ export class OPMasterDtoComponent implements OnInit {
     }
   }
   onOptionTaxCatSelected(i, taxCategoryName) {
-    alert('******' + taxCategoryName);
+    // alert('******' + taxCategoryName);
     if (taxCategoryName != null) {
       let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
 
@@ -1261,7 +1262,7 @@ export class OPMasterDtoComponent implements OnInit {
     }
   }
   onOptioninvItemIdSelected(itemId, index) {
-    alert('**item**' + itemId);
+    // alert('**item**' + itemId);
     if (itemId != null) {
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if (selectedValue != undefined) {
