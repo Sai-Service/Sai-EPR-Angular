@@ -203,6 +203,7 @@ export class PoInvoiceComponent implements OnInit {
   dispStatus=true;
   disDeleteButton=true;
   dispAccountCode=true;
+  displayAddNewLine=true;
   lineNumber: number;
   lineTypeLookupCode: string;
   public segmentNameList: any;
@@ -846,7 +847,7 @@ export class PoInvoiceComponent implements OnInit {
         for (let i=0; i<data.invLines.length;i++){
           if(data.invLines[i].lineTypeLookupCode==='ITEM' || data.invLines[i].lineTypeLookupCode==='OTHER'){
             // this.poInvoiceForm.patchValue({taxCategoryName:data.invLines[i].taxCategoryName})
-            this.invLineDetailsArray().controls[i].get('taxCategoryName').setValue(data.invLines[i].taxCategoryName);
+            // this.invLineDetailsArray().controls[i].get('taxCategoryName').setValue(data.invLines[i].taxCategoryName);
           }
         }
 
@@ -880,6 +881,7 @@ export class PoInvoiceComponent implements OnInit {
           this.INVStatus=data.invoiceStatus;
           if(data.invoiceStatus=='Validated'){
             this.poInvoiceForm.disable();
+            this.displayAddNewLine=true;
           }
           if(data.source == 'MANUAL'){
             this.dispStatus=true;

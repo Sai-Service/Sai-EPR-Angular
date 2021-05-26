@@ -697,16 +697,21 @@
                   <!-- <div id="Panel1" class="auto-style103"> -->
                       <!-- <button class="btn btn-primary" (click)="addRow(k)">Add Row</button> -->
                       <div class="grid_scroll">
+                        <div *ngIf="displayAddNewLine; then thenAddNewLine; else elseAddNewLine"></div>
+                        <ng-template #thenAddNewLine>
+                        </ng-template>
+                        <ng-template #elseAddNewLine>
                         <table> 
                             <tr>
-                                <td>
-                                    Add New Line
+                                <td class="LabelFontStyle">
+                                    Add New Line&nbsp;&nbsp;:&nbsp;
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-primary fa fa-plus" (click)="addRow()"></button> 
                                 </td>
                             </tr>
                         </table>
+                    </ng-template>
                           <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                               <thead>
                                   <tr class="GridHeader">
@@ -752,7 +757,7 @@
                                  
                                         <tr class="ItemStyle" style="text-decoration:none;">
                                             <!-- <td>
-                                                <button type="submit" class="btn btn-primary fa fa-plus" (click)="addRow(k)"></button> 
+                                                <button type="submit" class="btn btn-primgit pushary fa fa-plus" (click)="addRow(k)"></button> 
                                             </td>
                                             <td>
                                                 <button type="submit" class="btn btn-primary fa fa-trash" (click)="Delete(trxLineIndex)"></button> 
