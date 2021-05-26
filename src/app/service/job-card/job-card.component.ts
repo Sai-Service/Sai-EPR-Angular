@@ -161,6 +161,7 @@ export class JobCardComponent implements OnInit {
   public accountNoSearch: any;
   public splitArr;
   @ViewChild("myinput") myInputField: ElementRef;
+  arInvNum: string;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -1010,6 +1011,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');
+        this.arInvNum=res.obj;
         
       } else {
         if (res.code === 400) {
