@@ -65,6 +65,7 @@ interface IjobCard {
   locId: number;
   customerId: number;
   customerSiteId: number;
+  // contact1: string;
   taxCategoryId: number;
 }
 
@@ -83,6 +84,7 @@ export class JobCardComponent implements OnInit {
   jobStatus: string;
   jobCardNum1:string;
   // jobCardNum: string='0';
+  contact1: string;
   jobCardNum: string;
   divisionName: string;
   divisionId: number;
@@ -113,15 +115,22 @@ export class JobCardComponent implements OnInit {
   validTillDt: Date;
   bCustAcct: string;
   bCustType: string;
+  custType:string;
   bName: string;
   bGstNo: string;
+  custserchByRegNoGstNo: string;
   bAdd: string;
   bEmail: string;
+  billToAddress :string;
+  emailId :string
   bContNo: string;
   bgstType: string;
   bcustomerId: string;
+  customerId:string;
   matDisPer: string;
-  labDisPer: string
+  labDisPer: string;
+  accountNo: number;
+  custName: string;
   displaylabMatTab=true;
   displaybilling=true;
   public labDisPerList: Array<string> = [];
@@ -152,6 +161,7 @@ export class JobCardComponent implements OnInit {
   public accountNoSearch: any;
   public splitArr;
   @ViewChild("myinput") myInputField: ElementRef;
+  arInvNum: string;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -853,9 +863,13 @@ totAmt:[],
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+<<<<<<< HEAD
         alert('LINE WISE RECORD INSERTED SUCCESSFULLY');
+=======
+        // alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
+>>>>>>> d1796953f8253b0c22ee38315dc5ad70a61eb577
       this.lineDetailsArray.clear();
-      alert(this.lineDetailsArray.length+ " length")
+      // alert(this.lineDetailsArray.length+ " length")
 var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
 console.log(res.obj.jobCardLinesList);
 for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
@@ -1000,7 +1014,13 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
   GenerateInvoice(jobCardNum){
     this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
       if (res.code === 200) {
+<<<<<<< HEAD
         alert('RECORD INSERTED SUCCESSFULLY');
+=======
+        alert('RECORD INSERTED SUCCESSFUILY');
+        this.arInvNum=res.obj;
+        
+>>>>>>> d1796953f8253b0c22ee38315dc5ad70a61eb577
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
@@ -1032,7 +1052,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
 
     this.serviceService.jobCardStatusReadyInvoice(jobcardNo, status).subscribe((res: any) => {
       if (res.code === 200) {
-        alert(res.message);
+        // alert(res.message);
         this.jobcardForm.patchValue({ jobStatus: 'Ready for Invoice' })
         this.displaybilling=false;
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})

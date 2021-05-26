@@ -403,7 +403,7 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.lstcomments);
           this.taxUistatus = true;
           this.arInvoiceForm.patchValue(this.lstcomments, { emitEvent: false });
-          alert('after emit');
+          // alert('after emit');
           var len = this.lineDetailsArray.length;
           for (let i = 0; i < data.invLines.length - len; i++) {
             var invLnGrp: FormGroup = this.lineDetailsGroup();
@@ -419,7 +419,7 @@ export class ARInvoiceComponent implements OnInit {
             this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
 
           }
-          alert('second emit call')
+          // alert('second emit call')
           this.arInvoiceForm.patchValue(data);
 
         }
@@ -472,13 +472,13 @@ export class ARInvoiceComponent implements OnInit {
     // var arrayControl = this.arInvoiceForm.get('poLines').value
     var patch = this.arInvoiceForm.get('invDisLines') as FormArray;
     // arrayControl[index].segmentName = arrayControl[index].segment11 + '.' + arrayControl[index].segment2 + '.' + arrayControl[index].segment3 + '.' + arrayControl[index].segment4 + '.' + arrayControl[index].segment5 + '.' + arrayControl[index].segment6 + '.' + arrayControl[index].segment7 + '.' + arrayControl[index].segment8 + '.' + arrayControl[index].segment9;
-    alert(this.arInvoiceForm.get('segment11').value)
+    // alert(this.arInvoiceForm.get('segment11').value)
     var segmentName = this.arInvoiceForm.get('segment11').value + '.'
       + this.arInvoiceForm.get('segment2').value + '.'
       + this.arInvoiceForm.get('segment3').value + '.'
       + this.arInvoiceForm.get('segment4').value + '.'
       + this.arInvoiceForm.get('segment5').value;
-    alert(segmentName)
+    // alert(segmentName)
     patch.controls[index].patchValue({ concatenatedSegment: segmentName })
     this.service.segmentNameList(segmentName)
       .subscribe(
@@ -515,7 +515,7 @@ export class ARInvoiceComponent implements OnInit {
   }
 
   openCodeComb(i) {
-    alert('hi')
+    // alert('hi')
     let segmentName1 = this.lineDistributionArray().controls[i].get('concatenatedSegment').value;
     if (segmentName1 === null) {
       this.arInvoiceForm.get('segment11').reset();
@@ -632,7 +632,7 @@ export class ARInvoiceComponent implements OnInit {
 
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
     var locId = this.arInvoiceForm.get('locId').value;
-    alert(locId)
+    // alert(locId)
     if (locId == null) {
       locId = '000';
     }
@@ -656,8 +656,7 @@ export class ARInvoiceComponent implements OnInit {
 
 
   //}
-    alert(this.taxarr.size + 'Tax');
-    alert(this.distarr.size + 'Dist');
+    
     console.log(this.arInvoiceForm.value);
     let jsonData = this.arInvoiceForm.value;
     
@@ -728,11 +727,11 @@ export class ARInvoiceComponent implements OnInit {
   onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt) {
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i+1;
-    alert(len1 + 'lengthUpdate' + this.taxUistatus);
+    // alert(len1 + 'lengthUpdate' + this.taxUistatus);
 
     if (this.taxUistatus === false) {
 
-      alert('If call');
+      // alert('If call');
 
       this.TaxDetailsArray().clear();
       this.lineDistributionArray().clear();
@@ -756,15 +755,15 @@ export class ARInvoiceComponent implements OnInit {
       var diss = 0;
       var sum = 0;
       var baseAmount = arrayControl[i].basicAmt
-      alert(baseAmount + 'basic');
+      // alert(baseAmount + 'basic');
       var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
       var locId = this.arInvoiceForm.get('locId').value;
-      alert(locId)
+      // alert(locId)
       if (locId == null) {
         locId = '000';
       }
       var len1 = this.TaxDetailsArray().length;
-      alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
+      // alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
       if (baseAmount != null && this.taxCategoryId != undefined) {
         this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, baseAmount, this.taxCategoryId, diss)
           .subscribe(
@@ -780,13 +779,13 @@ export class ARInvoiceComponent implements OnInit {
               // control.clear();
               this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
 
-              alert(this.taxCalforItem.length + ' this.taxCalforItem.length')
+              // alert(this.taxCalforItem.length + ' this.taxCalforItem.length')
               for (let i = 0; i < this.taxCalforItem.length; i++) {
 
                 if (this.taxCalforItem[i].totTaxPer != 0) {
                   sum = sum + this.taxCalforItem[i].totTaxAmt
                 }
-                alert(sum + " sum")
+                // alert(sum + " sum")
               }
               (patch.controls[i]).patchValue({
                 // baseAmtLineWise: arrayControl[i].baseAmtLineWise,
@@ -794,7 +793,7 @@ export class ARInvoiceComponent implements OnInit {
                 extendedAmount: arrayControl[i].basicAmt + sum,
               });
               var extendedAmount = arrayControl[i].basicAmt + sum;
-              alert(this.TaxDetailsArray().length + ' this.TaxDetailsArray().length-')
+              // alert(this.TaxDetailsArray().length + ' this.TaxDetailsArray().length-')
               for (let i = 0; i < this.TaxDetailsArray().length; i++) {
                 patchtaxDetail.controls[i].patchValue({ taxItemId: this.itemId, invLineNo: this.invLineNo })
               }
@@ -822,10 +821,11 @@ export class ARInvoiceComponent implements OnInit {
                       control.controls[z].patchValue(data.invDisLines[i]);
                      (control.controls[z]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
-                    alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
+                    // alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
                     for (let i = 0; i < this.lineDistributionArray().length; i++) {
            
-                      control.controls[i].patchValue({ lineNum: i + 1 })
+                      control.controls[i].patchValue({ lineNum: i + 1 });
+                      (control.controls[i]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
                     control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
                     this.distarr.set(this.invLineNo, this.lineDistributionArray());
@@ -865,8 +865,8 @@ export class ARInvoiceComponent implements OnInit {
   patchResultList(i, taxCalforItem) {
     console.log(taxCalforItem);
 
-    alert(i);
-    alert('in patch fn')
+    // alert(i);
+    // alert('in patch fn')
     let control = this.arInvoiceForm.get('taxLines') as FormArray
     // this.TaxDetailsArray().controls[i].get('taxLines') as FormArray
     // let control = this.lineDetailsArray.controls[i].get('taxLines') as FormArray
@@ -910,7 +910,7 @@ export class ARInvoiceComponent implements OnInit {
     var arrayControl = this.arInvoiceForm.get('invLines').value
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
     var patchtaxDetail = this.arInvoiceForm.get('taxLines') as FormArray;
-    alert(arrayControl[index].unitSellingPrice)
+    // alert(arrayControl[index].unitSellingPrice)
 
     if (this.arInvoiceForm.get('class').value == 'Credit Memo') {
       if (Math.sign(arrayControl[index].unitSellingPrice) == 1) {
@@ -918,26 +918,26 @@ export class ARInvoiceComponent implements OnInit {
         patch.controls[index].patchValue({ unitSellingPrice: '' }, { basicAmt: '' });
       }
     }
-    alert(arrayControl[index].orderedQty);
+    // alert(arrayControl[index].orderedQty);
 
     arrayControl[index].baseAmtLineWise = arrayControl[index].unitSellingPrice * arrayControl[index].orderedQty;
     patch.controls[index].patchValue({ basicAmt: arrayControl[index].baseAmtLineWise })
     var baseAmount = arrayControl[index].baseAmtLineWise
     console.log(arrayControl[index].baseAmtLineWise);
     var itemId = arrayControl[index].itemId;
-    alert(itemId);
-    alert(this.taxCategoryId)
+    // alert(itemId);
+    // alert(this.taxCategoryId)
     var diss = 0;
     var sum = 0;
     // var baseAmount = arrayControl[index].basicAmt
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
     var locId = this.arInvoiceForm.get('locId').value;
-    alert(locId)
+    // alert(locId)
     if (locId == null) {
       locId = '000';
     }
     var len1 = this.TaxDetailsArray().length;
-    alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
+    // alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
     // if (baseAmount != null && this.taxCategoryId != undefined) {
     //   this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, baseAmount, this.taxCategoryId, diss)
     //     .subscribe(
@@ -1026,7 +1026,7 @@ export class ARInvoiceComponent implements OnInit {
     // const formValue: IpostPO = this.poMasterDtoForm.value;
     // formValue.polineNum = this.poLineTax;
     const aa = this.poLineTax;
-    alert(aa);
+    // alert(aa);
     var invLine = this.arInvoiceForm.get('invLines').value
     var arrayControl = this.arInvoiceForm.get('taxLines').value
     const invItemId = arrayControl[0].taxItemId
@@ -1104,7 +1104,7 @@ export class ARInvoiceComponent implements OnInit {
     var amount = arrayControl[k].extendedAmount;
     var taxableAmt = arrayControl[k].taxRecoverable;
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
-    alert(custTrxTypeId);
+    // alert(custTrxTypeId);
     // for(let j=0; j<this.invLineDetailsArray().length; j++){
     //    amount = amount + arrayControl2[j].amount;
     // }
