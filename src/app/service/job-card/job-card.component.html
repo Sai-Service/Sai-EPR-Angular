@@ -1255,18 +1255,18 @@
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Customer&nbsp;Account&nbsp;:</td>
                                                         <td>
-                                                            <input type="text" class="form-control" placeholder="" formControlName="bCustAcct" [(ngModel)]="bCustAcct"
-                                                                (keydown.tab)="accountNoSearchfn1(bCustAcct)" style="width: 5rem;">
-                                                           <input type="text" hidden   formControlName="bcustomerId" [(ngModel)]="bcustomerId">
+                                                            <input type="text" class="form-control" placeholder="" formControlName="accountNo" [(ngModel)]="accountNo"
+                                                                (keydown.tab)="accountNoSearchfn1(accountNo)" style="width: 5rem;">
+                                                           <input type="text" hidden   formControlName="customerId">
                                                             </td>
 
                                                         <td>
-                                                            <input type="text" disabled class="form-control" formControlName="bName" [(ngModel)]="bName"
+                                                            <input type="text" disabled class="form-control" formControlName="custName" [(ngModel)]="custName"
                                                                 placeholder="" style="width: 15rem;">
                                                         </td>
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Customer&nbsp;Type&nbsp;:</td>
-                                                        <td><input type="text" disabled formControlName="bCustType" [(ngModel)]="bCustType" class="form-control">
+                                                        <td><input type="text" disabled formControlName="custType" [(ngModel)]="custType" class="form-control">
                                                             <!-- <select class="form-control">
                                                                 <option value="Indivisual">Indivisual </option>
                                                                 <option value="Company">Company</option>
@@ -1276,36 +1276,36 @@
                                                         <td style="width: 15%" class="LabelFontStyle">GSTIN&nbsp;:</td>
                                                         <td>
                                                             <input type="text" disabled class="form-control" class="form-control"
-                                                                placeholder="" formControlName="bGstNo" [(ngModel)]="bGstNo">
+                                                                placeholder="" formControlName="bGstNo" [(ngModel)]=" bGstNo">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td style="width: 15%" class="LabelFontStyle">Address&nbsp;:
                                                         </td>
                                                         <td colspan="2">
-                                                            <input type="text" disabled class="form-control" formControlName="bAdd" [(ngModel)]="bAdd"
+                                                            <input type="text" disabled class="form-control" formControlName="billToAddress" [(ngModel)]="billToAddress"
                                                                 placeholder="" style="width: 20rem">
                                                         </td>
                                                         <td style="width: 15%" class="LabelFontStyle">Email&nbsp;:</td>
                                                         <td>
-                                                            <input type="text" disabled class="form-control" formControlName="bEmail" [(ngModel)]="bEmail"
+                                                            <input type="text" disabled class="form-control" formControlName="emailId" [(ngModel)]="emailId"
                                                                 placeholder="">
                                                         </td>
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Contact&nbsp;No&nbsp;:</td>
                                                         <td>
-                                                            <input type="text" disabled class="form-control" formControlName="bContNo" [(ngModel)]="bContNo"
+                                                            <input type="text" disabled class="form-control" formControlName="contact1" [(ngModel)]="contact1"
                                                                 placeholder="">
                                                         </td>
-                                                        <td style="width: 15%" class="LabelFontStyle">
+                                                        <!-- <td style="width: 15%" class="LabelFontStyle">
                                                             GST&nbsp;Type&nbsp;:</td>
                                                         <td>
-                                                            <input type="text"disabled formControlName="bgstType" [(ngModel)]="bgstType" class="form-control" >
+                                                            <input  type="text"disabled formControlName="bgstType" [(ngModel)]="bgstType" class="form-control" > -->
                                                             <!-- <select class="form-control">
                                                                 <option value="S&C GST">S&C GST</option>
                                                                 <option value="IGST">IGST</option>
                                                             </select> -->
-                                                        </td>
+                                                        <!-- </td> -->
                                                     </tr>
                                                     <tr>
                                                         <td style="width: 15%" class="LabelFontStyle">
