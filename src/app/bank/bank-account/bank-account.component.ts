@@ -191,7 +191,7 @@ receiptMultiCurrFlag:string;
     const formValue: IbankDetails = this.tranceFun(this.bankCreationForm.value);
     this.bankService.bankCreationFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('BANK DETAILS INSERTED SUCCESSFUILY');
+        alert('BANK DETAILS INSERTED SUCCESSFULLY');
         window.location.reload();
         // this.divisionMasterForm.reset();
         // this.divisionMasterForm.get('status').reset();

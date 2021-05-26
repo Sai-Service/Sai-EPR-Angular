@@ -678,7 +678,7 @@ export class ARInvoiceComponent implements OnInit {
     // //save
     this.transactionService.ARInvoiceSubmit(JSON.stringify(formValue)).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
 
         // window.location.reload();
@@ -712,7 +712,7 @@ export class ARInvoiceComponent implements OnInit {
     formValue.taxableAmount = this.basicAmt;
     this.transactionService.ARInvoiceSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
 
         // window.location.reload();

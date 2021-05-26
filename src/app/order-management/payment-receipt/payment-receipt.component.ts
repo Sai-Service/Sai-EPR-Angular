@@ -381,7 +381,7 @@ export class PaymentReceiptComponent implements OnInit  {
     // debugger;
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.paymentReceiptForm.reset();
       } else {
         if (res.code === 400) {

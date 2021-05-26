@@ -959,7 +959,7 @@ export class PaymentARComponent implements OnInit {
         // debugger;
         this.service.ArReceipApplySubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFUILY');
+            alert('RECORD INSERTED SUCCESSFULLY');
             this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
@@ -981,7 +981,7 @@ export class PaymentARComponent implements OnInit {
         // debugger;
         this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFUILY');
+            alert('RECORD INSERTED SUCCESSFULLY');
             this.paymentArForm.reset();
           } else {
             if (res.code === 400) {

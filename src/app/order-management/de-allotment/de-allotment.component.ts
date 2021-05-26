@@ -92,7 +92,7 @@ export class DeAllotmentComponent implements OnInit {
   // Deallocate(){
   //   this.orderManagementService.allotmentSubmit(this.deAllotedChassisArray).subscribe((res: any) => {
   //     if (res.code === 200) {
-  //       alert('RECORD INSERTED SUCCESSFUILY');
+  //       alert('RECORD INSERTED SUCCESSFULLY');
   //       // this.deAllotmentForm.reset();
   //     } else {
   //       if (res.code === 400) {
@@ -107,7 +107,7 @@ export class DeAllotmentComponent implements OnInit {
     // alert(this.orderNumber+' '+this.orderedItem);
     this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.deAllotmentForm.reset();
       } else {
         if (res.code === 400) {

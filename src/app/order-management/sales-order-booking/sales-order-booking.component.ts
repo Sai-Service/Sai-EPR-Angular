@@ -696,7 +696,7 @@ export class SalesOrderBookingComponent implements OnInit {
       if (res.code === 200) {
         this.orderNumber = res.obj;
         console.log(this.orderNumber);
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.SalesOrderBookingForm.reset();
       } else {
         if (res.code === 400) {
@@ -725,7 +725,7 @@ export class SalesOrderBookingComponent implements OnInit {
       if (res.code === 200) {
         this.orderNumber = res.obj;
         console.log(this.orderNumber);
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.SalesOrderBookingForm.reset();
       } else {
         if (res.code === 400) {

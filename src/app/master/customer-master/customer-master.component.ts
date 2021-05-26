@@ -411,7 +411,7 @@ if (person === 'Person'){
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -426,7 +426,7 @@ if (person === 'Person'){
     formValue.customerId1=this.custAccountNo;
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -440,7 +440,7 @@ if (person === 'Person'){
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
@@ -474,7 +474,7 @@ if (person === 'Person'){
     const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.value);
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
