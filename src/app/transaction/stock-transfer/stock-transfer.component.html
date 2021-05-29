@@ -29,7 +29,7 @@
      <table class="center">
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
-            Stock Tansfer Number:
+            Stock Transfer Number:
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
@@ -45,7 +45,7 @@
             To Organization:
           </td>
           <td>
-             <select id="transferOrgId" class="form-control" formControlName="transferOrgId">
+             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" (ngModelChange)="onlocationissueselect($event)">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                       {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
@@ -100,7 +100,7 @@
             Status:
           </td>
           <td>
-            <input type="text" class="form-control" formControlName="status" [(ngModel)]="status">
+            <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
           </td>
         </tr>
         <input hidden formControlName='deptName'[(ngModel)]='deptName'>
@@ -220,11 +220,11 @@
                   <td>
                     <input disabled type="date" class="form-control" formControlName="transDate" >
                   </td>
-                <td style="width: 15%" class="LabelFontStyle">
+                <td style="width: 15%" class="LabelFontStyle1">
                   To Organization:
                 </td>
                 <td>
-                   <input disabled type="text"  class="form-control" formControlName="transferOrgId">
+                   <input disabled type="text"  class="form-control" formControlName="transferLoc" [(ngModel)]="transferLoc">
                         
                 </td>
                           <td>
@@ -349,7 +349,7 @@
         <table class="center">
           <tr>
              <td>
-              <button type="submit" class="btn btn-primary" (click)="closeMoveOrder()">Close</button>
+              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" >Close</button>
             </td>
             <td>
               <button type="submit" class="btn btn-primary" (click)="resetMoveOrder()" >Reset</button>
@@ -479,6 +479,34 @@
 
 </div>
 <!-- Card -->
+
+<!-- ---------------Close Dialog Box----------------- -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                    <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMoveOrder()">Yes</button>
+                    </td>
+                    <td>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
 
 </form>
 

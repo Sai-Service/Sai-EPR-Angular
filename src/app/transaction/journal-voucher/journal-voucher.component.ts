@@ -59,7 +59,7 @@ export class JournalVoucherComponent implements OnInit {
   runningTotalCr:number;
   OUName:string;
   ouId:number;
-  public status:string="Incomplete";
+  public status:string="INCOMPLETE";
   jeSource:string;
   name:string;
   emplId:number;
@@ -405,9 +405,10 @@ var segment = temp1[0];}
         this.service.glPost(formValue).subscribe((res:any)=>{
           if(res.code===200)
           {
-            alert("Record inserted Successfully");
+            alert("GL Lines Details Posted Successfully");
             console.log(res.obj);
-            this.docSeqValue=res.obj;
+            this.docSeqValue=res.obj[0].docSeqValue;
+            this.status=res.obj[0].status;
             this.JournalVoucherForm.disable();
           }
           else
@@ -424,6 +425,30 @@ var segment = temp1[0];}
         alert("Can not do Posting because total credit and debit values are not matching");
       }
     }
+
+    saveGl()
+    { 
+        alert("Hello");
+        const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+        this.service.glSave(formValue).subscribe((res:any)=>{
+          if(res.code===200)
+          {
+            alert("Record inserted Successfully");
+            console.log(res.obj);
+            this.docSeqValue=res.obj;
+            // this.JournalVoucherForm.disable();
+          }
+          else
+         {
+            if (res.code === 400) 
+            {
+              alert("Code already present in data base");
+              this.JournalVoucherForm.reset();
+            }
+          }
+       })
+}
+
     search(docSeqVal){
       this.glLines().clear();
       alert(docSeqVal);
