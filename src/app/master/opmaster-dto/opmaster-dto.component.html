@@ -6,13 +6,13 @@
                     &nbsp;&nbsp;Purchase&nbsp;Order
                 </td>
                 <table style="width: 100%; background-color: #FFE4B5;">
-                    <tr>Search
-                        <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Search&nbsp;PO&nbsp;Number&nbsp;:</td>
                         <td>
                             <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control" #myinput>
                         </td>
                         <td colspan="8" style="text-align: left; width: 100%;">
-                            <button type="submit" [disabled]="!poNo" (click)="(poNo)" class="btn btn-primary"><i
+                            <button type="submit" [disabled]="!poNo" (click)="Search(poNo)" class="btn btn-primary"><i
                                     class="fa fa-search"></i></button>
 
                         </td>
@@ -226,12 +226,12 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Sup&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                        Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
                                         <input type="text" formControlName="suppInvNo"
                                             class="form-control" style="width: 100%;"
                                             [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
-                                            placeholder="Pleasse enter supplier invoice number">
+                                            placeholder="Please enter supplier invoice number">
                                         <div *ngIf="submitted && f.suppInvNo.errors"
                                             class="invalid-feedback">
                                             <div *ngIf="f.suppInvNo.errors?.maxLength">Maximum 8
@@ -452,7 +452,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Sup&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                        Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
                                         <input disabled type="text" formControlName="suppInvNo"
                                             class="form-control" style="width: 100%;">
@@ -515,12 +515,12 @@
                                                         <td colspan="">
                                                             <!-- <input type="text" formControlName="TransactionNature"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse enter transaction nature"> -->
+                                                                placeholder="Please enter transaction nature"> -->
 
                                                             <select formControlName="TransactionNature"
                                                                 id="TransactionNature" class="form-control"
                                                                 style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse select transaction nature">
+                                                                placeholder="Please select transaction nature">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  TransactionNatureList"
                                                                     [ngValue]="sc.code">
@@ -535,7 +535,7 @@
                                                         <td colspan="">
                                                             <input type="text" formControlName="ewayBillNo"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse enter E-Way bill No">
+                                                                placeholder="Please enter E-Way bill No">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -544,7 +544,7 @@
                                                         <td colspan="">
                                                             <input type="date" formControlName="ewayBillDate"
                                                                 class="form-control" style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse enter E-Way bill date"
+                                                                placeholder="Please enter E-Way bill date"
                                                                 max="{{maxDate | date:'yyyy-MM-dd'}}"
                                                                 min="{{priorDate | date:'yyyy-MM-dd'}}">
                                                         </td>
@@ -555,7 +555,7 @@
                                                         <td colspan="">
                                                             <input type="text" formControlName="GSTDocumentNo"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse Enter GST document no">
+                                                                placeholder="Please Enter GST document no">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -564,7 +564,7 @@
                                                         <td colspan="">
                                                             <input type="date" formControlName="GSTDocumentDate"
                                                                 class="form-control" style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse enter GST document date"
+                                                                placeholder="Please enter GST document date"
                                                                 max="{{maxDate | date:'yyyy-MM-dd'}}"
                                                                 min="{{priorDate | date:'yyyy-MM-dd'}}">
                                                         </td>
@@ -575,7 +575,7 @@
                                                         <td colspan="">
                                                             <input type="text" formControlName="iRNNo"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse enter IRN no">
+                                                                placeholder="Please enter IRN no">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -584,11 +584,11 @@
                                                         <td>
                                                             <!-- <input type="text" formControlName="purchaseLocation"
                                                                 style="width: 100%;" class="form-control"
-                                                                placeholder="Pleasse enter purchase location"> -->
+                                                                placeholder="Please enter purchase location"> -->
                                                             <select formControlName="purchaseLocation"
                                                                 id="purchaseLocation" class="form-control"
                                                                 style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse select purchase location">
+                                                                placeholder="Please select purchase location">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  purchaseLocationList"
                                                                     [ngValue]="sc.lookupValue">
@@ -605,11 +605,11 @@
                                                         <!-- <td> <input type="text" formControlName="delearCode"
                                                                 style="width: 100%;" class="form-control"
                                                                 [ngClass]="{ 'is-invalid': submitted && f.delearCode.errors }"
-                                                                placeholder="Pleasse enter delear code"> -->
+                                                                placeholder="Please enter delear code"> -->
                                                         <td>
                                                             <select formControlName="delearCode" class="form-control"
                                                                 style="width: 100%; height: 20px;" id="delearCode"
-                                                                placeholder="Pleasse select delear code">
+                                                                placeholder="Please select delear code">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  delearCodeList"
                                                                     [ngValue]="sc.dealerCode">
@@ -665,7 +665,7 @@
                                                                 Evaluator&nbsp;Name&nbsp;:</td>
                                                             <td><input type="text" formControlName="evaluatorName"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter evaluator name">
+                                                                    placeholder="Please enter evaluator name">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -674,7 +674,7 @@
                                                             <td><input type="text"
                                                                     formControlName="exchangeBonusShare"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter exchange bonus share">
+                                                                    placeholder="Please enter exchange bonus share">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -682,7 +682,7 @@
                                                                 Address&nbsp;&nbsp;&nbsp;:</td>
                                                             <td> <input type="text" formControlName="address"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter address">
+                                                                    placeholder="Please enter address">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -692,7 +692,7 @@
                                                                 <input type="text" formControlName="mobileNo"
                                                                 class="form-control" style="width: 100%;"
                                                                 [ngClass]="{ 'is-invalid': submitted && f.mobileNo.errors }"
-                                                                placeholder="Pleasse enter supplier invoice number">
+                                                                placeholder="Please enter supplier invoice number">
                                                             <div *ngIf="submitted && f.mobileNo.errors"
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="f.mobileNo.errors?.minLength"> 10 digit</div>
@@ -704,7 +704,7 @@
                                                             </span>
                                                                 <!-- <input  formControlName="mobileNo"
                                                                     style="width: 100%;" class="form-control"   
-                                                                    placeholder="Pleasse enter mobileNo">
+                                                                    placeholder="Please enter mobileNo">
                                                                     <div *ngIf="submitted && f. mobileNo.errors" class="invalid-feedback">
                                                                         <div *ngIf="f.mobileNo.errors.required">Mobile no must be required and valid for 10 digit
                                                                         </div>
@@ -721,7 +721,7 @@
                                                                 Kilometer&nbsp;&nbsp;&nbsp;:</td>
                                                             <td> <input type="number" formControlName="kilometer"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter kilometer">
+                                                                    placeholder="Please enter kilometer">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -731,7 +731,7 @@
                                                             <td> <input type="text"
                                                                     formControlName="transferToNewCarACNo"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter transfer to new car A/C No">
+                                                                    placeholder="Please enter transfer to new car A/C No">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -739,7 +739,7 @@
                                                                 Payment&nbsp;to&nbsp;Bank&nbsp;:</td>
                                                             <td> <input type="number" formControlName="paymentToBank"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter payment to bank">
+                                                                    placeholder="Please enter payment to bank">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -748,7 +748,7 @@
                                                             <td> <input type="number"
                                                                     formControlName="paymentToCustomer"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter payment to customer">
+                                                                    placeholder="Please enter payment to customer">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -757,7 +757,7 @@
                                                             <td> <input type="text"
                                                                     formControlName="holdforPendingDoc"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter hold for pending document">
+                                                                    placeholder="Please enter hold for pending document">
                                                             </td>
                                                         </tr>
                                                     </ng-template>
@@ -817,14 +817,14 @@
                                                 <th scope="col">Inventory Item</th>
                                                 <th scope="col">Inventory Category</th>
                                                 <th scope="col">Description</th>
-                                                <th scope="col">uom</th>
+                                                <th scope="col">UOM</th>
                                                 <th scope="col">Tax Category</th>
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Price</th>
 
                                                 <th scope="col">Base Amount</th>
                                                 <th scope="col">Tax Amount</th>
-                                                <th scope="col">Total Amont</th>
+                                                <th scope="col">Total Amount</th>
                                                 <th scope="col">HSN/ SAC code</th>
                                                 <th scope="col">PO Charge Account</th>
                                                 <th scope="col">Add Row</th>
@@ -1010,7 +1010,7 @@
                                                             placeholder="Select Item Category" class="form-control">
                                                     </td> -->
                                                     <td>
-                                                        <input formControlName="segmentName" value={{segmentName}} placeholder="Select Item Category" class="form-control">
+                                                        <input disabled formControlName="segmentName" value={{segmentName}}  class="form-control">
                                                         <!-- <div class="row" id="modals"> -->
                                                         <!-- <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
@@ -1113,8 +1113,9 @@
                                                             data-target="#myModal" placeholder="" class="form-control"> -->
                                                         <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
-                                                            placeholder="Select Item Category" class="form-control"
+                                                             class="form-control"
                                                             (click)="openCodeComb(i)">
+                                                            <!-- <input formControlName="segmentName" value={{segmentName}}    class="form-control"> -->
                                                     </td>
                                                 </ng-template>
                                             </tr>

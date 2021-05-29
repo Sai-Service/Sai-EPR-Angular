@@ -379,7 +379,7 @@ export class AvgCostUpdateComponent implements OnInit {
       const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
       this.transactionService.AvgCostUpdateSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
+          alert('RECORD INSERTED SUCCESSFULLY');
           this.avgCostUpdateForm .reset();
         } else {
           if (res.code === 400) {
@@ -434,7 +434,7 @@ export class AvgCostUpdateComponent implements OnInit {
     //   const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
     //   this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
     //     if (res.code === 200) {
-    //       alert('RECORD UPDATED SUCCESSFUILY');
+    //       alert('RECORD UPDATED SUCCESSFULLY');
     //       window.location.reload();
     //     } else {
     //       if (res.code === 400) {

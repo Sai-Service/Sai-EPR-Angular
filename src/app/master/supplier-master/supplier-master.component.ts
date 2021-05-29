@@ -260,7 +260,7 @@ export class SupplierMasterComponent implements OnInit {
     const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -274,7 +274,7 @@ export class SupplierMasterComponent implements OnInit {
     const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
     this.service.UpdateSiteSupliMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
@@ -315,7 +315,7 @@ export class SupplierMasterComponent implements OnInit {
     const formValue: IsupplierMaster = this.transDataSupp(this.supplierMasterForm.value);
     this.service.UpdateSupliMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
@@ -338,7 +338,7 @@ export class SupplierMasterComponent implements OnInit {
     const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
     this.service.SupliMasterSubmitForSite(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {

@@ -863,7 +863,11 @@ totAmt:[],
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+<<<<<<< HEAD
+        alert('LINE WISE RECORD INSERTED SUCCESSFULLY');
+=======
         // alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
+>>>>>>> d1796953f8253b0c22ee38315dc5ad70a61eb577
       this.lineDetailsArray.clear();
       // alert(this.lineDetailsArray.length+ " length")
 var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -886,7 +890,7 @@ this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');   //
+        alert('RECORD INSERTED SUCCESSFULLY');   //
         this.lineDistributionArray().clear();
 console.log(res.obj.jobCardLinesList);
 for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
@@ -906,7 +910,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     formValue.dmsCustId= Number(this.jobcardForm.get('dmsCustId').value);
     this.serviceService.jobcardHeaderSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.jobcardForm.patchValue({ jobCardNum: res.obj.jobCardNum, jobCardId: res.obj.jobCardId })
         if(res.obj.jobCardNum!=undefined){
           this.displaylabMatTab=false;
@@ -995,7 +999,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     if (matStatus == 'Compeleted') {
       this.serviceService.ReopenMaterialIssue(jobcardNo, matStatus).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
+          alert('RECORD INSERTED SUCCESSFULLY');
           // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
         } else {
           if (res.code === 400) {
@@ -1010,9 +1014,13 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
   GenerateInvoice(jobCardNum){
     this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
       if (res.code === 200) {
+<<<<<<< HEAD
+        alert('RECORD INSERTED SUCCESSFULLY');
+=======
         alert('RECORD INSERTED SUCCESSFUILY');
         this.arInvNum=res.obj;
         
+>>>>>>> d1796953f8253b0c22ee38315dc5ad70a61eb577
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
@@ -1024,7 +1032,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.serviceService.BillingCal(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');

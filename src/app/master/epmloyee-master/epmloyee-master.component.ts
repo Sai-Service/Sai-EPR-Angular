@@ -220,7 +220,7 @@ export class EpmloyeeMasterComponent implements OnInit {
     formValue.locId=this.locId;
     this.service.UpdateEmpMasterById(formValue, formValue.emplId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

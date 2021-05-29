@@ -805,7 +805,7 @@ export class OPMasterDtoComponent implements OnInit {
 
 
   Search(poNo) {
-
+alert(poNo);
     this.poMasterDtoForm.reset();
     this.currentOp = 'Search';
     console.log(this.poMasterDtoForm.value);
@@ -1171,7 +1171,7 @@ export class OPMasterDtoComponent implements OnInit {
       sessionStorage.setItem('poNo', obj);
 
       if (res.code === 200) {
-        alert('PO INSERTED SUCCESSFUILY');
+        alert('PO INSERTED SUCCESSFULLY');
         this.segment1 = sessionStorage.getItem('poNo');
         this.Search(this.segment1);
         // this.displayNewButtonApprove =true;
@@ -1538,7 +1538,7 @@ export class OPMasterDtoComponent implements OnInit {
 
     this.service.UpdatePoDetails(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('PO UPDATED SUCCESSFUILY');
+        alert('PO UPDATED SUCCESSFULLY');
         // this.authorizationStatus = 'APPROVED';
         this.displayNewButton = false;
         this.displayNewButtonApprove = true;
@@ -1565,7 +1565,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.currencyCode = 'INR';
     this.service.ApprovePo(formValue, formValue.segment1).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('PO APPROVED SUCCESSFUILY');
+        alert('PO APPROVED SUCCESSFULLY');
         this.displayNewButtonApprove = false;
         this.displayNewButtonUpdate = false;
         this.displayNewButtonSave = false;
@@ -1732,7 +1732,7 @@ export class OPMasterDtoComponent implements OnInit {
 
         this.service.addDiscount(this.totTaxAmt, taxTypeName).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFUILY');
+            alert('RECORD INSERTED SUCCESSFULLY');
             // this.operatingUnitMasterForm.reset();
           } else {
             if (res.code === 400) {
@@ -1854,7 +1854,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.currencyCode = 'INR';
     this.service.applyPOTax(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.poMasterDtoForm.reset();
       } else {
         if (res.code === 400) {
@@ -1869,8 +1869,8 @@ export class OPMasterDtoComponent implements OnInit {
     this.poMasterDtoForm.reset();
     // this.lineDetailsArray.controls[i].get('taxAmounts')
     // this.poMasterDtoForm.lineDetailsGroup.TaxDetailsArray.clear();
-    this.lineDetailsArray.clear();
-    window.location.reload();
+    // this.lineDetailsArray.clear();
+    // window.location.reload();
   }
   closeMast() {
     this.router.navigate(['admin']);
@@ -2072,7 +2072,7 @@ export class OPMasterDtoComponent implements OnInit {
   //     sessionStorage.setItem('poNo', obj);
   //     this.segment1 = sessionStorage.getItem('poNo');
   //     if (res.code === 200) {
-  //       alert('RECORD INSERTED SUCCESSFUILY');
+  //       alert('RECORD INSERTED SUCCESSFULLY');
   //       this.displayButton = false;
   //       this.displayNewButton = false;
   //     } else {
