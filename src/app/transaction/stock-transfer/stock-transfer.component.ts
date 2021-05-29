@@ -98,6 +98,7 @@ export class StockTransferComponent implements OnInit {
   transDate=this.pipe.transform(this.now,'yyyy-MM-dd')
   displayremakdata=true;
   pendingatother:any;
+  transferLoc:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
@@ -114,6 +115,7 @@ export class StockTransferComponent implements OnInit {
       issueBy: [''],
       transDate: [''],
       subInventoryCode: [''],
+      transferLoc:[],
       status: ['', [Validators.required]],
       transReference:[''],
       trxLinesList: this.fb.array([]),
@@ -172,7 +174,7 @@ export class StockTransferComponent implements OnInit {
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
     this.issueBy=(sessionStorage.getItem('name'))
-    alert(this.deptName+'Depart');
+    // alert(this.deptName+'Depart');
   
     this.service.searchall(this.locId).subscribe(
       data=>{
@@ -205,11 +207,7 @@ export class StockTransferComponent implements OnInit {
         // alert('subInventoryCode');
       });
 
-    this.service.issueByList(this.locId, this.deptId, this.divisionId).subscribe
-      (data => {
-        this.issueByList = data;
-        console.log(this.issueByList);
-      });
+   
 
     this.service.locationIdList().subscribe
       (data => {
@@ -469,6 +467,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
         }
 
         this.stockTranferForm.patchValue(this.lstcomment[0]);
+        this.transferLoc=this.lstcomment[0].transferLoc;
         this.displayButton = false;
         this.display = false;
         this.stockTranferForm.get('trxLinesList').patchValue(this.lstcomment);
@@ -519,6 +518,15 @@ selectByShipNo(shipmentNumber:any)
   alert(shipno.shipmentNumber+'after')
   // this.stockTranferForm.patchValue(shipno);
   
+}
+
+onlocationissueselect(event:any){
+  var loc=this.stockTranferForm.get('transferOrgId').value;
+  this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
+  (data => {
+    this.issueByList = data;
+    console.log(this.issueByList);
+  });
 }
 
 }

@@ -1025,6 +1025,15 @@ public glPost(glPostValue)
   return this.http.post(url,glPostValue,options);
 }
 
+public glSave(glSaveValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/glHeader/Save';
+  return this.http.post(url,glSaveValue,options);
+}
+
 JournalType():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/JVType');
@@ -1557,6 +1566,10 @@ TransactionType():Observable<any>
 ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
+}
+reasonaccCode(locId,reason):Observable<any>
+{ 
+return this.http.get(this.ServerUrl+`/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}`)
 }
 TypeList():Observable<any>
 {
