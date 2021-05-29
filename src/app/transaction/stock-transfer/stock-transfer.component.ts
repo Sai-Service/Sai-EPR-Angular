@@ -8,6 +8,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { DatePipe } from '@angular/common';
 
 
+
 interface IStockTransfer {
   ShipmentNo: String;
   status: string;
@@ -25,11 +26,13 @@ interface IStockTransfer {
   remarks: string;
   ewayBillDate: Date;
   issueBy: string;
-  transDate: Date;
+  
   deptName:string;
   
   FrmLocator: string;
   primaryQty: number;
+
+
 }
 
 @Component({
@@ -92,7 +95,7 @@ export class StockTransferComponent implements OnInit {
   lineNumber:number;
   pipe = new DatePipe('en-US');
   now=new Date();
-  transDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+  transDate=this.pipe.transform(this.now,'yyyy-MM-dd')
   displayremakdata=true;
   pendingatother:any;
 
@@ -168,6 +171,7 @@ export class StockTransferComponent implements OnInit {
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
+    this.issueBy=(sessionStorage.getItem('name'))
     alert(this.deptName+'Depart');
   
     this.service.searchall(this.locId).subscribe(

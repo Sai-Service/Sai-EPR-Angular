@@ -101,7 +101,7 @@
 //     const formValue: IJaiRegime =this.jaiRegimeMasterForm.value;
 //     this.service.JaiRegimeMasterSubmit(formValue).subscribe((res: any) => {
 //       if (res.code === 200) {
-//         alert('RECORD INSERTED SUCCESSFUILY');
+//         alert('RECORD INSERTED SUCCESSFULLY');
 //         this.jaiRegimeMasterForm.reset();
 //       } else {
 //         if (res.code === 400) {
@@ -126,7 +126,7 @@
 //     const formValue: IJaiRegime = this.jaiRegimeMasterForm.value;
 //     this.service.UpdateJaiRegimeById(formValue, formValue.regimeId).subscribe((res: any) => {
 //       if (res.code === 200) {
-//         alert('RECORD UPDATED SUCCESSFUILY');
+//         alert('RECORD UPDATED SUCCESSFULLY');
 //         window.location.reload();
 //       } else {
 //         if (res.code === 400) {
@@ -265,7 +265,7 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
     const formValue: IJaiRegime =this.jaiRegimeMasterForm.value;
     this.service.JaiRegimeMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.jaiRegimeMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -283,7 +283,7 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
     const formValue: IJaiRegime = this.jaiRegimeMasterForm.value;
     this.service.UpdateJaiRegimeById(formValue, formValue.regimeId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

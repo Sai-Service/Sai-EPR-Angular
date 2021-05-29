@@ -204,7 +204,7 @@ AccountCreation(){
     const formValue: IbankBranch = this.bankBranchForm.value;
     this.bankService.BankBranchCreation(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('BRANCH INSERTED SUCCESSFUILY');
+        alert('BRANCH INSERTED SUCCESSFULLY');
         window.location.reload();
         // this.operatingUnitMasterForm.reset();
       } else {

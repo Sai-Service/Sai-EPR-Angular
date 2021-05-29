@@ -93,7 +93,7 @@ SaveMast()
   const formValue:ISubinventory=this.SubinventoryMasterForm.value;
   this.service.saveSubinventory(formValue).subscribe((res:any)=>{
     if (res.code === 200) {
-      alert('RECORD INSERTED SUCCESSFUILY');
+      alert('RECORD INSERTED SUCCESSFULLY');
       this.SubinventoryMasterForm.reset();
     } else {
       if (res.code === 400) {
@@ -120,7 +120,7 @@ Update()
   this.service.UpdateSubInventory(formValue).subscribe((res:any)=>
   {
     if (res.code === 200) {
-      alert('RECORD UPDATED SUCCESSFUILY');
+      alert('RECORD UPDATED SUCCESSFULLY');
       window.location.reload();
     } else {
       if (res.code === 400) {

@@ -248,7 +248,7 @@ get f() { return this.GroupMasterForm.controls; }
     }
     this.service.GroupMasterSubmit(variants.value).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {

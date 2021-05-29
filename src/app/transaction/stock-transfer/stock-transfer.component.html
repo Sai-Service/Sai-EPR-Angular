@@ -39,7 +39,7 @@
               Date:
             </td>
             <td>
-              <input  type="date" class="form-control" formControlName="transDate" >
+              <input  disabled type="text" class="form-control" formControlName="transDate"  [(ngModel)]="transDate">
             </td>
           <td style="width: 15%" class="LabelFontStyle">
             To Organization:
@@ -58,7 +58,7 @@
         </tr>
         <tr>
           <td style="width: 15%" class="LabelFontStyle">SubInventory</td>
-            <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="subInventoryCode" >
+            <td><select class="form-control"  formControlName="subInventoryCode" >
                 <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
                 </select>
@@ -82,10 +82,10 @@
             Request By:
           </td>
           <td>
-            <select type="text" class="form-control" formControlName="issueBy">
-              <option>--Select--</option>
+            <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
+              <!-- <option>--Select--</option>
               <option *ngFor="let ib of issueByList">{{ib.name}}</option>
-              </select>
+              </select> -->
           </td>
           <td style="width: 15%" class="LabelFontStyle">
             Request To:
@@ -205,73 +205,89 @@
       </div>
       <!-- </ng-template> -->
       <ng-template #elseBlock1>
-        <table class="center">
-          <tr>
-            <td style="width: 15%" class="LabelFontStyle">
-              Shipment Number:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              To Organization:
-            </td>
-            <td>
-               <input disabled type="text" id="transReference" class="form-control" formControlName="transReference">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              Shipment Date:
-            </td>
-            <td>
-              <input disabled type="date" class="form-control" formControlName="transDate" >
-            </td>
-
-            <td>
-              <input type="hidden" formControlName="locId" [(ngModel)]="locId">
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 15%" class="LabelFontStyle">
-              Eway Bill Number:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="ewayBill" style="text-align: right;">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              Eway Bill Date:
-            </td>
-            <td>
-              <input disabled type="date" class="form-control" formControlName="ewayBillDate">
-            </td>
+          <table class="center">
+              <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Stock Tansfer Number:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
+                  <input hidden formControlName="transactionTypeId">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Date:
+                  </td>
+                  <td>
+                    <input disabled type="date" class="form-control" formControlName="transDate" >
+                  </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  To Organization:
+                </td>
+                <td>
+                   <input disabled type="text"  class="form-control" formControlName="transferOrgId">
+                        
+                </td>
+                          <td>
+                  <input type="hidden" formControlName="locId" [(ngModel)]="locId">
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 15%" class="LabelFontStyle">SubInventory</td>
+                  <td><input disabled type="text" class="form-control"  formControlName="subInventoryCode" >
+                     
+                    </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Eway Bill Number:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="ewayBill">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Eway Bill Date:
+                </td>
+                <td>
+                    <input disabled type="date" class="form-control" formControlName="ewayBillDate">
+                  </td>
+                
+              </tr>
+              <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Request By:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
+                    <!-- <option>--Select--</option>
+                    <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                    </select> -->
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Request To:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="issueTo">
+                    <!-- <option>--Select--</option>
+                    <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                    </select> -->
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Status:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
+                </td>
+              </tr>
+              <input hidden formControlName='deptName'[(ngModel)]='deptName'>
+      <tr>
+         
             <td style="width: 15%" class="LabelFontStyle">
               Remark:
             </td>
+      
             <td>
-              <input disabled type="text" class="form-control" formControlName="remarks">
-            </td>
-          </tr>
-          <tr>
-            <td style="width: 15%" class="LabelFontStyle">
-              Request By:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="issueBy">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              Request To:
-            </td>
-            <td>
-              <input type="text" class="form-control" formControlName="issueTo">
-            </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              Status:
-            </td>
-            <td>
-              <input disabled type="text" class="form-control" formControlName="status" >
-            </td>
-          </tr>
-
-        </table>
+                <input disabled type="text" class="form-control" formControlName="remarks">
+              </td>
+      </tr>
+            </table>
         <br>
         <!-- <div formArrayName="trxLinesList">
         <div class="grid_scroll">

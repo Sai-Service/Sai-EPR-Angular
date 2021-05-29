@@ -248,7 +248,7 @@ export class SaiEwSchemeComponent implements OnInit {
         // debugger;
         this.service.SaiEwSchemeSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFUILY');
+            alert('RECORD INSERTED SUCCESSFULLY');
             this.saiEwSchemeMasterForm.reset();
           } else {
             if (res.code === 400) {
@@ -265,7 +265,7 @@ export class SaiEwSchemeComponent implements OnInit {
         
           this.service.UpdateSaiEwScheme(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD UPDATED SUCCESSFUILY');
+            alert('RECORD UPDATED SUCCESSFULLY');
             window.location.reload();
           } else {
             if (res.code === 400) {

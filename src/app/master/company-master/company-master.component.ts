@@ -122,7 +122,7 @@ export class CompanyMasterComponent implements OnInit {
     const formValue: ICompany = this.transData(this.CompanyMasterForm.value);
     this.service.CompanyMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.CompanyMasterForm.reset();
         window.location.reload();
       } else {
@@ -139,7 +139,7 @@ export class CompanyMasterComponent implements OnInit {
     const formValue: ICompany = this.CompanyMasterForm.value;
     this.service.UpdateCompanyMasterById(formValue, formValue.compId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

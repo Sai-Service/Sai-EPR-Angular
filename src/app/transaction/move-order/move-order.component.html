@@ -73,7 +73,7 @@
             </td>
             <td>
                 <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
-                <select type="text" class="form-control" formControlName="Billable">
+                <select type="text" class="form-control" formControlName="billable">
                     <option>--Select--</option>
                     <option *ngFor="let bill of Billabletype">{{bill.billableTyName}}</option>
                   </select>
@@ -117,17 +117,18 @@
             Issue By:
           </td>
           <td>
-            <select type="text" class="form-control" formControlName="issueBy">
-              <option>--Select--</option>
-              <option *ngFor="let ib of issueByList">{{ib.name}}</option>
-              </select>
-          </td>
+              <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
+            </td>
+        
           <td style="width: 15%" class="LabelFontStyle">
             Issue To:
           </td>
           <td>
-            <input type="text" class="form-control">
-          </td>
+              <select type="text" class="form-control" formControlName="issueTo">
+                <option>--Select--</option>
+                <option *ngFor="let ib of issueByList"[ngValue]='ib.emplId'>{{ib.name}}</option>
+                </select>
+            </td>
           <td style="width: 15%" class="LabelFontStyle">
             Status:
           </td>
@@ -180,7 +181,7 @@
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}--{{invId.DESCRIPTION}}</option>
                 </select>
                 </td>
-                <td><input type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                 <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td> -->
                 <td><select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,trxLineIndex)'>
                   <option>--Select--</option>
@@ -190,7 +191,7 @@
                 </td>
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
-                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                 <input hidden  type="text"  formControlName="resveQty">
                 <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
                 <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty ></td>
@@ -227,7 +228,7 @@
                 Issue Type:
               </td>
               <td>
-                <input disabled type="text" class="form-control" formControlName="transactionTypeId" [(ngModel)]="transactionTypeName">
+                <input disabled type="text" class="form-control" formControlName="transactionTypeName">
                   <!-- <option>--Select--</option>
                   <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
                 </select> -->
@@ -254,7 +255,7 @@
                 Billable Type:
               </td>
               <td>
-                  <input disabled type="text" class="form-control" formControlName="Billable">
+                  <input disabled type="text" class="form-control" formControlName="billable">
                       <!-- <option>--Select--</option>
                       <option *ngFor="let bill of Billabletype">{{bill.billableTyName}}</option>
                     </select> -->
@@ -265,7 +266,7 @@
                       From Subinventory:
                     </td>
                     <td>
-                      <input disabled type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="subInventoryCode">
+                      <input disabled type="text" class="form-control" formControlName="frmSubInvCode">
                         <!-- <option>--Select--</option>
                         <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
                       </select> -->
@@ -307,7 +308,7 @@
               Issue To:
             </td>
             <td>
-              <input disabled type="text" class="form-control">
+              <input disabled type="text" class="form-control" formControlName="issueTo">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
               Status:
@@ -356,7 +357,7 @@
                   <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
                    </td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocator">
+                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="fromLocator">
                   </td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                   <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
