@@ -522,6 +522,7 @@ export class SalesOrderBookingComponent implements OnInit {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
               control.push(oeOrderLinesAllList1);
             }
+          
             for (let i = 0; i < data.obj.oeOrderLinesAllList[0].taxAmounts.length - 1; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
