@@ -450,7 +450,7 @@ export class PricelistMasterComponent implements OnInit {
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
+          alert('RECORD INSERTED SUCCESSFULLY');
           this.priceListMasterForm.reset();
         } else {
           if (res.code === 400) {
@@ -468,7 +468,7 @@ export class PricelistMasterComponent implements OnInit {
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFUILY');
+          alert('RECORD UPDATED SUCCESSFULLY');
           window.location.reload();
         } else {
           if (res.code === 400) {
@@ -486,7 +486,7 @@ export class PricelistMasterComponent implements OnInit {
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFUILY');
+          alert('RECORD UPDATED SUCCESSFULLY');
           window.location.reload();
         } else {
           if (res.code === 400) {
@@ -719,7 +719,7 @@ export class PricelistMasterComponent implements OnInit {
       this.service.UploadExcel(formData,this.docType).subscribe((res: any) => {
    
         if (res.code === 200) {
-          alert('FILE UPLOADED SUCCESSFUILY');
+          alert('FILE UPLOADED SUCCESSFULLY');
            this.resMsg = res.obj;
            
           // window.location.reload();

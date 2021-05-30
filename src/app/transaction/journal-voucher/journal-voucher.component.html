@@ -1,12 +1,24 @@
 <div class="center">
+        <form [formGroup]="JournalVoucherForm" (ngSubmit)="JournalVoucher(JournalVoucherForm.value)">
        <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader" style="width: 100%;">
                     &nbsp;&nbsp;Journal&nbsp;Voucher
                 </td>
+                <table style="width: 100%; background-color: #a4d3e9;">
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Journal&nbsp;Voucher&nbsp;Number&nbsp;:</td>
+                            <td>
+                                <input type="text"  class="form-control" formControlName="docSeqVal" id="docSeqVal" name="docSeqVal" >
+                            </td>
+                            <td colspan="8" style="text-align: left; width: 100%;">
+                                <button type="submit" class="btn btn-primary" (click)="search(docSeqVal)"><i class="fa fa-search"></i></button>
+                            </td>
+                        </tr>
+                    </table>
             </tr>
         </table>
-        <form [formGroup]="JournalVoucherForm" (ngSubmit)="JournalVoucher(JournalVoucherForm.value)">
+        <!-- <form [formGroup]="JournalVoucherForm" (ngSubmit)="JournalVoucher(JournalVoucherForm.value)"> -->
        <div class="center" style="width: 100%;">
         <div class="form-bg">
                 <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
@@ -39,14 +51,14 @@
                                             <td >
                                                 <select class="form-control"  formControlName="periodName" >
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let fy of FinancialYear" [ngValue]="fy.financialYear">{{fy.financialYear}}</option>
+                                                    <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                                                 </select>
                                             </td>
                                             <td style="width: 15%"class="LabelFontStyle">
                                                     Journal&nbsp;Date&nbsp;:
                                             </td>
                                             <td >
-                                                <input type="Date" class="form-control" >
+                                                <input type="Date" class="form-control" formControlName="postedDate" >
                                             </td>
                                         </tr>
                                         <tr>
@@ -63,8 +75,8 @@
                                                             Document&nbsp;Number&nbsp;:
                                                     </td>
                                                     <td >
-                                                      <b>  <input disabled type="text" class="form-control" formControlName="docseqvalue" [(ngModel)]="docseqvalue">
-                                                      </b></td>
+                                                        <input disabled type="text" class="form-control" formControlName="docSeqValue" [(ngModel)]="docSeqValue" style="font-weight: bold;">
+                                                      </td>
                                                     <td style="width: 15%"class="LabelFontStyle">
                                                            Status&nbsp;:
                                                     </td>
@@ -150,17 +162,15 @@
        </div>
               <br>
        <!-- <div formArrayName="glLines"> -->
-            <div class="grid_scroll">
+            <div class="grid_scroll" >
   
-                <table class="center">
+                <table class="center" >
                   <tr>
-                    <td>
+                    <td colspan="4" style="width:100%; ">
                       <div class="grid_scroll">
                   <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
-                  cellpadding="4" class="auto-style4" class="GridFont">
-                  <!-- <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
-                  cellpadding="4" class="display" class="GridFont"> -->
-                  <div formArrayName="glLines">
+                  cellpadding="4"  class="GridFont">
+                    <div formArrayName="glLines" style="width: 100%;" >
                     <thead>
                         <tr class="GridHeader">
                                 <th scope="col">Srl No.</th>
@@ -180,8 +190,18 @@
                                         <input type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="jeLineNum">
                                 </td>
                                 <td>
-                                        <input   data-toggle="modal" data-target="#myModal1" formControlName="segmentName" value={{segmentName}}  (click)="openCodeCombination(glLineIndex)"
-                                         class="form-control" style="height: 20px;width: 250px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                    <input  disabled  data-target="#myModal1" formControlName="segmentName" value={{segmentName}}  
+                                                    class="form-control" style="height: 20px;width: 250px;">
+                                            </td>
+                                            <td>
+                                                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="width:1rem ; text-align: right;"(click)="openCodeCombination(glLineIndex)">..</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                        
                                 </td>
                                 <input hidden formControlName="codeCombinationId">
                                 <td>
@@ -204,7 +224,7 @@
                         <tr class="ItemStyle">
                             
                             <td  colspan="4"><b>Total:&nbsp;</b></td>
-                            <td style="width: 13.4rem;"></td>
+                            <td style="width: 14.7rem;"></td>
                             <!-- <td style="width: 6rem;"></td> -->
                             <td style="width: 4rem;">
                                 <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" style="height: 20px;width: 100px;text-align: right;">
@@ -235,7 +255,7 @@
                     <button type="submit" class="btn btn-primary">Close</button>
                   </td>
                   <td>
-                    <button type="submit" class="btn btn-primary"  >Save</button>
+                    <button type="submit" class="btn btn-primary" (click)="saveGl()" >Save</button>
                   </td>
                   <td>
                       <button  type="submit" class="btn btn-primary" (click)="postGl()" >Post</button>

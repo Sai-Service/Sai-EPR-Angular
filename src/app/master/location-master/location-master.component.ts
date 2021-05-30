@@ -190,7 +190,7 @@ export class LocationMasterComponent implements OnInit {
     const formValue: ILocationMaster = this.transData(this.LocationMasterForm.value);
     this.service.LocationMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
@@ -210,7 +210,7 @@ export class LocationMasterComponent implements OnInit {
     formValue.ouId=this.ouId;
     this.service.UpdateLocationMasterById(formValue, formValue.locId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

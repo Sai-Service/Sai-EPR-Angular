@@ -341,6 +341,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
         });
         this.addnewcycleLinesList(-1);
         var patch = this.miscellaneousForm.get('trxLinesList') as  FormArray
+
         (patch.controls[0]).patchValue(
        {
          lineNumber: 1,
@@ -895,7 +896,6 @@ export class MiscellaneousTransactionComponent implements OnInit {
         const formValue:Imiscellaneous=this.miscellaneousForm.value;
         this.service.miscSubmit(formValue).subscribe
         ((res:any) => {
-
           if(res.code===200)
           {
             this.compileName=res.obj.compileName;
@@ -925,12 +925,19 @@ export class MiscellaneousTransactionComponent implements OnInit {
         })
       }
 
-      // onSelectReason()
-      // {
-      //   this.service.                                                                                                                                                             ().subscribe(
-      //     data=>{
-      //       this.acccodedesc=data;
-      //     }
-      //   )
-      // }
+     
+      onSelectReason(event:any){
+        alert(event);
+        var reasname=this.miscellaneousForm.get('reason').value;
+        this.service.reasonaccCode(this.locId,reasname).subscribe(
+          data => {
+            this.acccodedesc = data;
+            // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
+            this.segmentName=this.acccodedesc.segmentName;
+
+          }
+        );
+      }  
+      
+    
 }

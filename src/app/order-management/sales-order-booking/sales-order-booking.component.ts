@@ -522,6 +522,7 @@ export class SalesOrderBookingComponent implements OnInit {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
               control.push(oeOrderLinesAllList1);
             }
+          
             for (let i = 0; i < data.obj.oeOrderLinesAllList[0].taxAmounts.length - 1; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
@@ -696,7 +697,7 @@ export class SalesOrderBookingComponent implements OnInit {
       if (res.code === 200) {
         this.orderNumber = res.obj;
         console.log(this.orderNumber);
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.SalesOrderBookingForm.reset();
       } else {
         if (res.code === 400) {
@@ -725,7 +726,7 @@ export class SalesOrderBookingComponent implements OnInit {
       if (res.code === 200) {
         this.orderNumber = res.obj;
         console.log(this.orderNumber);
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.SalesOrderBookingForm.reset();
       } else {
         if (res.code === 400) {

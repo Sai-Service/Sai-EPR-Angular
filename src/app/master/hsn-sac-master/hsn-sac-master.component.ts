@@ -131,7 +131,7 @@ export class HsnSacMasterComponent implements OnInit {
       const formValue: IhsnsacMaster = this.transHSNData(this.hsnsacMasterForm.value);
       this.service.HSNSACMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');    
+          alert('RECORD INSERTED SUCCESSFULLY');    
           // this.hsnsacMasterForm.reset();
           window.location.reload();
         } else {
@@ -199,7 +199,7 @@ export class HsnSacMasterComponent implements OnInit {
     //     const formValue: IhsnsacMaster =this.hsnsacMasterForm.value;
     // this.service.UpdateHSNMasterById(formValue).subscribe((res: any) => {
     //   if (res.code === 200) {
-    //     alert('RECORD UPDATED SUCCESSFUILY');
+    //     alert('RECORD UPDATED SUCCESSFULLY');
     //     window.location.reload();
     //   } else {
     //     if (res.code === 400) {
@@ -231,7 +231,7 @@ export class HsnSacMasterComponent implements OnInit {
         const formValue: IhsnsacMaster =this.transDataUpdate(select);
       this.service.UpdateHSNMasterById(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('ENDDATE UPDATED SUCCESSFUILY');
+          alert('ENDDATE UPDATED SUCCESSFULLY');
           window.location.reload();
         } else {
           if (res.code === 400) {
@@ -248,7 +248,7 @@ export class HsnSacMasterComponent implements OnInit {
     //       const formValue: IhsnsacMaster =this.hsnsacMasterForm.value;
     // this.service.UpdateHSNMasterById(formValue).subscribe((res: any) => {
     //   if (res.code === 200) {
-    //     alert('RECORD UPDATED SUCCESSFUILY');
+    //     alert('RECORD UPDATED SUCCESSFULLY');
     //     window.location.reload();
     //   } else {
     //     if (res.code === 400) {

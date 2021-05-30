@@ -98,7 +98,7 @@ export class TaxCategoryMasterComponent implements OnInit {
     const formValue: IpostPO = this.transData(this.taxCategoryMasterForm.value);
     this.service.TaxCategoryMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.taxCategoryMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -113,7 +113,7 @@ export class TaxCategoryMasterComponent implements OnInit {
     const formValue: IpostPO =this.taxCategoryMasterForm.value;
     this.service.UpdateTaxCategoryMasterById(formValue, formValue.taxCategoryId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

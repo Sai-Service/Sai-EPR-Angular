@@ -636,6 +636,7 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
   FinancialYear():Observable<any>{
     return this.http.get(this.ServerUrl +'/docsrlmst/getYear');
   }
+
   docTypeList():Observable<any>{
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/DocType');
   }
@@ -720,6 +721,22 @@ public CustMasterSubmit(CustMasterRecord) {
 }
 getsearchByAccountNo(customerId1): Observable<any> {
   return this.http.get(this.ServerUrl +  `/Customer/CustomerId1/${customerId1}`);
+}
+/////////AccountEnquiry////////////////////
+public FinancialPeriod():Observable<any>{
+  return this.http.get(this.ServerUrl+'/glPeriod/periodName');
+}
+
+public AccountEnquirySearch(AccountEnquiryRecord):Observable<any>{
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/glHeader/glEnquiry';
+  return this.http.post(url, AccountEnquiryRecord, options);
+}
+public viewAccountingjv(JVNO):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/glHeader/receiptNoWise/${JVNO}`);
 }
 /////////////////////////////HSN-SAC CODE//////////////////////
 getHsnSacSearch(): Observable<any> {
@@ -1008,9 +1025,22 @@ public glPost(glPostValue)
   return this.http.post(url,glPostValue,options);
 }
 
+public glSave(glSaveValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/glHeader/Save';
+  return this.http.post(url,glSaveValue,options);
+}
+
 JournalType():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/JVType');
+}
+SerchBydocseqval(docseqval):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/glHeader/docSeqValueWise/${docseqval}`);
 }
 
 //////////////////FlexField////////////////
@@ -1536,6 +1566,10 @@ TransactionType():Observable<any>
 ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
+}
+reasonaccCode(locId,reason):Observable<any>
+{ 
+return this.http.get(this.ServerUrl+`/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}`)
 }
 TypeList():Observable<any>
 {

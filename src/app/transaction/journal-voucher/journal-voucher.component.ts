@@ -9,7 +9,8 @@ import { MasterService } from 'src/app/master/master.service';
 interface IJournalVoucher{
   segmentName:string;
   codeCombinationId:number;
-  docseqvalue:number;
+  docSeqValue:number;
+  postedDate:Date;
   emplId:number;
   // lineNumber:number;
   enteredDr:number;
@@ -20,6 +21,8 @@ interface IJournalVoucher{
   jeCategory:string;
   jeSource:string;
   name:string;
+  
+
 
   periodName:String;
   runningTotalDr:number
@@ -38,22 +41,25 @@ export class JournalVoucherComponent implements OnInit {
   JournalVoucherForm:FormGroup;
   segmentName:string;
   codeCombinationId:number;
-  docseqvalue:number;
+  docSeqVal:number;
+  docSeqValue:number;
   segment11:string;
   lookupValueDesc1:string;
   segment2:number;
+  postedDate:Date;
   lookupValueDesc2:string;
   segment3:number;
   lookupValueDesc3:string;
   segment4:number;
   lookupValueDesc4:string;
   segment5:string;
+  docseqdata:any;
   lookupValueDesc5:string;
   runningTotalDr:number;
   runningTotalCr:number;
   OUName:string;
   ouId:number;
-  public status:string="Incomplete";
+  public status:string="INCOMPLETE";
   jeSource:string;
   name:string;
   emplId:number;
@@ -83,6 +89,7 @@ export class JournalVoucherComponent implements OnInit {
   description:string;
 
   periodName:string;
+  public PeriodName:any;
  
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.JournalVoucherForm=fb.group({
@@ -97,10 +104,12 @@ export class JournalVoucherComponent implements OnInit {
       lookupValueDesc4:[''],
       segment5:[''],
       trans:[''],
+      docSeqVal:[],
       lookupValueDesc5:[''],
       periodName:[],
       OUName:[],
-      docseqvalue:[],
+      postedDate:[],
+      docSeqValue:[],
       status:[],
       ouId:[],
       emplId:[],
@@ -157,9 +166,10 @@ export class JournalVoucherComponent implements OnInit {
       }
     );
   
-    this.service.FinancialYear()
+    this.service.FinancialPeriod()
     .subscribe(
-      data => {this.FinancialYear = data;
+      data => {this.PeriodName = data.obj;
+        console.log(this.PeriodName);
       }
       );
     this.service.BranchList()
@@ -395,9 +405,10 @@ var segment = temp1[0];}
         this.service.glPost(formValue).subscribe((res:any)=>{
           if(res.code===200)
           {
-            alert("Record inserted Successfully");
+            alert("GL Lines Details Posted Successfully");
             console.log(res.obj);
-            this.docseqvalue=res.obj;
+            this.docSeqValue=res.obj[0].docSeqValue;
+            this.status=res.obj[0].status;
             this.JournalVoucherForm.disable();
           }
           else
@@ -414,4 +425,65 @@ var segment = temp1[0];}
         alert("Can not do Posting because total credit and debit values are not matching");
       }
     }
-  }
+
+    saveGl()
+    { 
+        alert("Hello");
+        const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+        this.service.glSave(formValue).subscribe((res:any)=>{
+          if(res.code===200)
+          {
+            alert("Record inserted Successfully");
+            console.log(res.obj);
+            this.docSeqValue=res.obj;
+            // this.JournalVoucherForm.disable();
+          }
+          else
+         {
+            if (res.code === 400) 
+            {
+              alert("Code already present in data base");
+              this.JournalVoucherForm.reset();
+            }
+          }
+       })
+}
+
+    search(docSeqVal){
+      this.glLines().clear();
+      alert(docSeqVal);
+      var docseq1=this.JournalVoucherForm.get('docSeqVal').value;
+      alert(docseq1);
+      this.service.SerchBydocseqval(docseq1).subscribe
+      (data =>
+       {
+         console.log(data);
+         if(data.code === 400){
+           alert(data.message);
+           window.location.reload();
+         }
+         if(data.code===200)
+         {
+           this.docseqdata=data.obj;
+           let control=this.JournalVoucherForm.get('glLines') as FormArray;
+           data.obj.glLines.forEach(f => {
+             var trxList:FormGroup=this.newglLines();
+             this.glLines().push(trxList);
+   
+           });
+           this.JournalVoucherForm.patchValue(data.obj);
+           this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
+           this.JournalVoucherForm.patchValue({runningTotalDr:data.obj.runningTotalDr});
+
+          
+           this.JournalVoucherForm.patchValue(data.obj.glLines);
+          // for (let i = 0; i < data.obj.glLines().length; i++) {
+           
+          //  this.JournalVoucherForm.get('trxLinesList').patchValue(data.obj.glLines);
+          // }
+         }
+       }
+       );
+    }
+    }
+  

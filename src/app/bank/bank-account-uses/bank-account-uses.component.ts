@@ -275,7 +275,7 @@ Orgmaster(bankAccUsesForm: any) {
     const formValue: IbankBranchUse =this.TransData(this.bankAccUsesForm.value);
     this.bankService.BankAccUseFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('BANK ACCOUNT USE DETAILS INSERTED SUCCESSFUILY');
+        alert('BANK ACCOUNT USE DETAILS INSERTED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

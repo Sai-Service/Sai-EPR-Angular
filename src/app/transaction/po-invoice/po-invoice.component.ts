@@ -135,6 +135,8 @@ export class PoInvoiceComponent implements OnInit {
   ouName: string;
   invoiceNum: string;
   invoiceAmt: number;
+  internalSeqNum:number;
+  invDescription:string;
   
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
@@ -199,11 +201,12 @@ export class PoInvoiceComponent implements OnInit {
   totalDistBaseAmt: number;
   distLineNumber: number;
   invTransferStatus: string="Never Validated";
-  INVStatus:string="Never Validated";
+  INVStatus:string='Never Validated';
   poChargeDesc:string= 'Unprocessed';
   dispStatus=true;
   disDeleteButton=true;
   dispAccountCode=true;
+  displayAddNewLine=true;
   lineNumber: number;
   lineTypeLookupCode: string;
   public segmentNameList: any;
@@ -303,6 +306,7 @@ export class PoInvoiceComponent implements OnInit {
       lookupValueDesc3: [],
       lookupValueDesc5: [],
       segment1:[],
+      internalSeqNum:[],
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
@@ -407,6 +411,7 @@ export class PoInvoiceComponent implements OnInit {
 
   invLineDetails() {
     return this.fb.group({
+      internalSeqNum:[],
       itemId: [],
       invoiceId: [],
       lineNumber: [],
@@ -510,6 +515,7 @@ export class PoInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     // this.glDate = new Date();
+    this.INVStatus='Never Validated';
     this.paymentMethod1 = 69;
     this.ouId = Number(sessionStorage.getItem('ouId'));
 
@@ -696,6 +702,14 @@ export class PoInvoiceComponent implements OnInit {
     this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.lstsearchapinv = res.obj;
+        // alert(res.obj[0].segment1);
+        // if(res.obj[0].segment1===null){
+        //    alert(res.obj[0].segment1);
+        //   this.poInvoiceForm.get('distribution').disable();
+        //   this.poInvoiceForm.get('invLines').disable();
+        //   this.poInvoiceForm.get('taxLines').disable();
+        // }
+       
         this.lstsearchapinv.forEach(f => {
           var invLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(invLnGrp);
@@ -839,7 +853,18 @@ export class PoInvoiceComponent implements OnInit {
            })
           this.lstInvLineDeatails = data;
           console.log(data.invoiceStatus);
-          
+          if(data.source==='PO Receipt' ){
+            // alert(data.invTypeLookupCode);
+           this.poInvoiceForm.get('distribution').disable();
+           this.poInvoiceForm.get('invLines').disable();
+           this.poInvoiceForm.get('taxLines').disable();
+         }
+         if(data.invTypeLookupCode ==='DMS Invoice'){
+          alert(data.invTypeLookupCode);
+          this.poInvoiceForm.get('distribution').disable();
+          this.poInvoiceForm.get('invLines').disable();
+          this.poInvoiceForm.get('taxLines').disable();
+         }
           data.invLines.forEach(f => {
             var invLnGrp: FormGroup = this.invLineDetails();
             this.invLineDetailsArray().push(invLnGrp);
@@ -873,8 +898,22 @@ export class PoInvoiceComponent implements OnInit {
          
         
           this.INVStatus=data.invoiceStatus;
+          // console.log(data.invDisLines[0].invTransferStatus||data.invoiceStatus==='Validated');
+        
+          // if(data.invDisLines[0].invTransferStatus===null){
+          // alert(data.invDisLines[0].invTransferStatus);
+          //   this.INVStatus='Never Validated';
+          // }
+          // else{
+          //   if(data.invoiceStatus==='Validated'){
+          //   alert(data.invoiceStatus);
+          //   this.INVStatus=data.invoiceStatus;
+          // }
+          // }
           if(data.invoiceStatus=='Validated'){
             this.poInvoiceForm.disable();
+            this.displayAddNewLine=true;
+            this.INVStatus=data.invoiceStatus;
           }
           if(data.source == 'MANUAL'){
             this.dispStatus=true;
@@ -955,6 +994,8 @@ export class PoInvoiceComponent implements OnInit {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        alert(res.obj);
+        this.internalSeqNum=res.obj;
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
@@ -1218,6 +1259,8 @@ export class PoInvoiceComponent implements OnInit {
     // this.invItemId=Number (sessionStorage.getItem('ouId'));
     let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
     (controlinv.controls[k]).patchValue({ itemId: select.itemId });
+    // alert(this.invItemList1[0].description);
+    this.invDescription=this.invItemList1[0].description;
   }
   onOptionTaxCatSelected(taxCategoryName, k) {
     if(this.isSearchPatch === false){
@@ -1367,7 +1410,7 @@ export class PoInvoiceComponent implements OnInit {
       // alert(invoiceNum);
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('VALIDATE SUCCESSFUILY');
+          alert('VALIDATE SUCCESSFULLY');
           this.poInvoiceForm.disable();
           // window.location.reload();
         } else {
