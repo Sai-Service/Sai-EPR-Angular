@@ -856,7 +856,7 @@
                                     <ng-container   *ngFor="let group of lineDistributionArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                                 <tr class="ItemStyle" style="text-decoration:none;">
                                     <!-- <input hidden type="text" formControlName="invDistributionId"> -->
-                                    <td><input class="form-control" [(ngModel)]="invoiceLineNum" type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
+                                    <td><input class="form-control"  type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
                                     <td>
                                         <input formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
                                     </td>

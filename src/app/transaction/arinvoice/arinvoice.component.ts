@@ -77,7 +77,7 @@ export class ARInvoiceComponent implements OnInit {
   poChargeAcc: number;
   taxItemId: number;
   invLineNo: number;
-  InvoiceLineNum: number;
+  invoiceLineNum: number;
   codeCombinationId: number;
   invCurrancyCode = 'INR';
   charges = 0.00;
@@ -109,6 +109,8 @@ export class ARInvoiceComponent implements OnInit {
   public segmentNameList: any;
   subscription: any;
   public taxUistatus: boolean = false;
+
+  public taxarray:any[]=[];
 
   public taxarr = new Map<number, any>();
   public distarr = new Map<number, any>();
@@ -396,6 +398,9 @@ export class ARInvoiceComponent implements OnInit {
   arInvoice(arInvoiceForm) { }
   searchByInvoiceNo(trxNumber1) {
     this.arInvoiceForm.reset();
+    // this.TaxDetailsArray().clear();
+    // this.arInvoiceForm.get('invLines').clear();
+    this.lineDistributionArray().clear();
     this.transactionService.searchByInvoiceNoAR(trxNumber1)
       .subscribe(
         data => {
@@ -409,7 +414,7 @@ export class ARInvoiceComponent implements OnInit {
             var invLnGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(invLnGrp);
           }
-          for (let i = 0; i < data.invDisLines.length - len; i++) {
+          for (let i = 0; i < data.invDisLines.length ; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
           }
@@ -626,6 +631,8 @@ export class ARInvoiceComponent implements OnInit {
     var arrayControl = this.arInvoiceForm.get('invLines').value;
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
 
+    this.taxarr.values()
+
     this.basicAmt = 0;
     this.taxRecoverable = 0;
     this.extendedAmount = 0;
@@ -691,6 +698,11 @@ export class ARInvoiceComponent implements OnInit {
     });
 
   }
+  Save(){
+    let jsonData=this.arInvoiceForm.get('invLines').value.obj[0];
+    jsonData.ouId = this.ouId;
+    
+  }
   saveArInvoice() {
     const formValue: IArInvoice = this.transData(this.arInvoiceForm.value);
     formValue.ouId = this.ouId;
@@ -727,6 +739,7 @@ export class ARInvoiceComponent implements OnInit {
   onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt) {
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i+1;
+    alert(this.invLineNo);
     // alert(len1 + 'lengthUpdate' + this.taxUistatus);
 
     if (this.taxUistatus === false) {
@@ -770,11 +783,13 @@ export class ARInvoiceComponent implements OnInit {
             (data: any) => {
               this.taxCalforItem = data.taxLines;
               this.taxarr.set(i, data.taxLines);
+              console.log(this.taxarr);
               console.log(this.taxCalforItem);
               for (let i = 0; i < data.taxLines.length - len1; i++) {
                 var invLnGrp: FormGroup = this.TaxDetailsGroup();
                 this.TaxDetailsArray().push(invLnGrp);
-              }
+
+               }
               // let control = this.arInvoiceForm.get('taxLines') as FormArray;
               // control.clear();
               this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
@@ -796,6 +811,7 @@ export class ARInvoiceComponent implements OnInit {
               // alert(this.TaxDetailsArray().length + ' this.TaxDetailsArray().length-')
               for (let i = 0; i < this.TaxDetailsArray().length; i++) {
                 patchtaxDetail.controls[i].patchValue({ taxItemId: this.itemId, invLineNo: this.invLineNo })
+                
               }
               var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
               var len2 = this.lineDistributionArray().length;
@@ -804,7 +820,7 @@ export class ARInvoiceComponent implements OnInit {
                   data1 => {
                     this.distributioArr = data1;
                     console.log(this.distributioArr);
-                    for (let i = 0; i <= this.distributioArr.length; i++) {
+                    for (let i = 0; i <= this.distributioArr.length-1; i++) {
                       var invLnGrp: FormGroup = this.distLineDetails();
                       this.lineDistributionArray().push(invLnGrp);
                     }
@@ -815,13 +831,13 @@ export class ARInvoiceComponent implements OnInit {
                       this.lineDistributionArray().push(invLnGrp);
                     }
 
+                    
                     var control = this.arInvoiceForm.get('invDisLines') as FormArray;
-                    // if (len == 1) {
-                    for (let i = 0, z = k - 1; i < data.invDisLines.length; i++, z++) {
+                    for (let i = 0, z = k ; i < data.invDisLines.length; i++, z++) {
                       control.controls[z].patchValue(data.invDisLines[i]);
                      (control.controls[z]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
-                    // alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
+                    alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
                     for (let i = 0; i < this.lineDistributionArray().length; i++) {
            
                       control.controls[i].patchValue({ lineNum: i + 1 });

@@ -1034,6 +1034,14 @@ public glSave(glSaveValue)
   return this.http.post(url,glSaveValue,options);
 }
 
+public glCopy(glCopyValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/glHeader/Copy';
+  return this.http.post(url,glCopyValue,options);
+}
 JournalType():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/JVType');

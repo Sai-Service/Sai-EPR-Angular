@@ -10,6 +10,7 @@ class PoInvoiceNew {
   invTypeLookupCode: string;
   amtAppToDisc: number;
   accPayCodeCombId: number;
+
   paymentStatusFlag: string;
   poHeaderId: number;
   exclusivePayFlag: string;
