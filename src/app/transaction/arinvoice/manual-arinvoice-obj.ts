@@ -39,8 +39,8 @@ export class ManualARInvoiceObj {
   ouId: number;
   status: string;
   invLines: any[];
-  invDisLines: any[];
-  taxLines: any[];
+  invDisLines=new Array();
+  taxLines=new Array();
 
 
   getinvLines() {
