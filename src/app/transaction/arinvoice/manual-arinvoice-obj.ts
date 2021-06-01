@@ -39,7 +39,7 @@ export class ManualARInvoiceObj {
   ouId: number;
   status: string;
   invLines: any[];
-  invDisLines=new Array();
+  invDisLines:any;
   taxLines=new Array();
 
 

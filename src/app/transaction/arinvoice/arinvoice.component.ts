@@ -192,6 +192,9 @@ export class ARInvoiceComponent implements OnInit {
     } else {
       this.lineDetailsArray.removeAt(index);
     }
+    index=index+1;
+    this.taxarr.delete(index)
+    this.distarr.delete(index);
   }
   RemoveDistributionRow(index) {
     if (index === 0) {
@@ -393,6 +396,12 @@ export class ARInvoiceComponent implements OnInit {
         data => {
           this.locIdListModel = data;
           console.log(this.locIdListModel);
+        }
+      );
+      var patch = this.arInvoiceForm.get('invLines') as FormArray;
+      (patch.controls[0]).patchValue(
+        {
+          lineNum: 1,
         }
       );
   }
@@ -702,14 +711,37 @@ export class ARInvoiceComponent implements OnInit {
 
   }
   Save(){
+    
     let jsonData=this.arInvoiceForm.value;
     jsonData.ouId = this.ouId;
+    var taxStr = [];
+     for (let taxlinval of this.taxarr.values()) {  
+      // console.log("Map Values= " +JSON.stringify(value));  
+     for(let i=0 ; i< taxlinval.length; i++){
+         taxStr.push(taxlinval[i]);
+        }
+      }
+      var disStr = [];
+     for (let dislinval of this.distarr.values()) {  
+      // console.log("Map Values= " +JSON.stringify(value));  
+     for(let i=0 ; i< dislinval.length; i++){
+      disStr.push(dislinval[i]);
+        }
+      }
+    
+      console.log('---' + JSON.stringify(taxStr));
+  
     let manArInvObj=Object.assign(new ManualARInvoiceObj(),jsonData);
     manArInvObj.setinvLines(this.arInvoiceForm.value.invLines);
-    // manArInvObj.setTaxLines(this.arInvoiceForm.value.taxLines);
-    manArInvObj.setTaxLines(Array.from(this.taxarr.values()));
+    manArInvObj.setTaxLines(taxStr);
+    manArInvObj.setinvDisLines(disStr);
+    // manArInvObj.setTaxLines(Array.from(this.taxarr.values()));
     // manArInvObj.setinvDisLines(this.arInvoiceForm.value.invDisLines);
-    manArInvObj.setinvDisLines(Array.from(this.distarr.values()));
+    // manArInvObj.setinvDisLines(Array.from(this.distarr.values()));
+    alert(this.distarr.size+'Array')
+
+   
+  
 
     console.log(JSON.stringify(manArInvObj));
     this.transactionService.ARInvoiceSubmit(JSON.stringify(manArInvObj)).subscribe((res: any) => {
@@ -807,7 +839,7 @@ export class ARInvoiceComponent implements OnInit {
             (data: any) => {
               this.taxCalforItem = data.taxLines;
               // this.taxCalforItem.invLineNo=(this.invLineNo);
-              this.taxarr.set(i,this.taxCalforItem);
+              
               // this.taxarr.set(i, data.taxLines);
               console.log(this.taxarr);
               console.log(this.taxCalforItem);
@@ -841,6 +873,7 @@ export class ARInvoiceComponent implements OnInit {
               }
               var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
               var len2 = this.lineDistributionArray().length;
+              this.taxarr.set(this.invLineNo,this.arInvoiceForm.get('taxLines').value);
               this.service.distributionApi1(custTrxTypeId, sessionStorage.getItem('ouId'), locId, arrayControl[i].basicAmt, extendedAmount)
                 .subscribe(
                   data1 => {
@@ -855,6 +888,7 @@ export class ARInvoiceComponent implements OnInit {
                     for (let j = 0; j < data.invDisLines.length; j++) {
                       var invLnGrp: FormGroup = this.distLineDetails();
                       this.lineDistributionArray().push(invLnGrp);
+                      
                       // this.distarray.push(invLnGrp);
                     }
 
@@ -871,11 +905,17 @@ export class ARInvoiceComponent implements OnInit {
                       (control.controls[i]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
                     control.controls[0].patchValue({ invoiceLineNum: this.invLineNo })
-                    this.distarr.set(i, this.arInvoiceForm.get('invDisLines').value);
+                    alert(this.distarr.size+'Arraytax')
+                    this.distarr.set(this.invLineNo, this.arInvoiceForm.get('invDisLines').value);
+                    alert(this.distarr.size+'afterArray')
                     console.log(this.arInvoiceForm.get('invDisLines').value);
                   }
                 );
             });
+            
+            // this.distarr.set(i, this.arInvoiceForm.get('invDisLines').value);
+           
+                    // console.log(this.arInvoiceForm.get('invDisLines').value);
       } else {
         alert('kindly enter the base amount and order qty')
       }

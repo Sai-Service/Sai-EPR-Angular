@@ -1042,6 +1042,13 @@ public glCopy(glCopyValue)
   const url=this.ServerUrl+'/glHeader/Copy';
   return this.http.post(url,glCopyValue,options);
 }
+public glReverse(glReverseValue){
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/glHeader/Reverse';
+  return this.http.post(url,glReverseValue,options);
+}
 JournalType():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/fndAcctLookup/lookupTypeWise/JVType');

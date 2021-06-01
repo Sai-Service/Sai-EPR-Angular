@@ -508,5 +508,28 @@ copyGl()
        }
        );
     }
+    reverseGl()
+{ 
+    alert("Hello");
+    const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+    this.service.glReverse(formValue).subscribe((res:any)=>{
+      if(res.code===200)
+      {
+        alert("Record Reversed Successfully");
+        console.log(res.obj);
+        this.docSeqValue=res.obj;
+        // this.status
+        // this.JournalVoucherForm.disable();
+      }
+      else
+     {
+        if (res.code === 400) 
+        {
+          alert("Code already present in data base");
+          this.JournalVoucherForm.reset();
+        }
+      }
+   })
+}
     }
   
