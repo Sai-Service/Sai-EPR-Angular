@@ -63,6 +63,10 @@ interface ISalesBookingForm {
   ouId:number;
   customerId:string;
   // locName:string;
+  billToAddress:string;
+  gstNo:string;
+  panNo:string;
+  invType:string;
 }
 
 
@@ -121,10 +125,24 @@ export class SalesOrderBookingComponent implements OnInit {
   shipLocName:string;
   ouId:number;
   customerId:string;
+  billToAddress:string;
+  deptId:number;
+  locId:number;
+  gstNo:string;
+  panNo:string;
+  invType:string;
   // locCode:string;
   lstgetOrderLineDetails: any[];
+  lstgetOrderTaxDetails:any[];
   public financeTypeList:any;
   public financerNameList:any;
+  public VariantSearch:any;
+  public ticketNoSearch:any;
+  public priceListNameList:any;
+  public ColourSearch:any;
+  public transactionTypeNameList:any;
+  public payTermDescList:any;
+  public salesRepNameList:any;
   
 
   public orderLines:any[];
@@ -162,6 +180,7 @@ export class SalesOrderBookingComponent implements OnInit {
   displaytaxCategoryName=true;
   displayorderedItem=true;
   displayPrice=true;
+  displaypriceListName=true;
 
   displayorderLineDetailsPart=true;
   lstcommentsbyorderNo: any[];
@@ -201,10 +220,55 @@ export class SalesOrderBookingComponent implements OnInit {
   shipLocName:[''],
   ouId:[''],
   customerId:[''],
+  billToAddress:[''],
+  gstNo:[''],
+  panNo:[''],
   oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
+  // taxAmounts: this.fb.array([this.TaxDetailsArray()])
+  taxAmounts: this.fb.array([this.TaxDetailsGroup()])
     })
    
   }
+
+
+  TaxDetailsGroup() {
+    return this.fb.group({
+      totTaxAmt: [],
+      lineNumber: [],
+      taxRateName: [],
+      taxTypeName: [],
+      taxPointBasis: [],
+      precedence1: [],
+      precedence2: [],
+      precedence3: [],
+      precedence4: [],
+      precedence5: [],
+      precedence6: [],
+      precedence7: [],
+      precedence8: [],
+      precedence9: [],
+      precedence10: [],
+      currencyCode: [],
+      totTaxPer: [],
+      recoverableFlag: [],
+      selfAssesedFlag: [],
+      inclusiveFlag: [],
+      invLineItemId: [],
+      invLineNo: [],
+    });
+  }
+
+  TaxDetailsArray(): FormArray {
+    // return this.lineDetailsArray.controls[].get('taxAmounts') as FormArray
+    return <FormArray>this.SalesOrderBookingForm.get('taxAmounts')
+  }
+
+
+  // TaxDetailsArray() {
+  //   return this.fb.group({
+
+  //   })
+  // }
 
   orderlineDetailsGroup() {
     return this.fb.group({
@@ -220,6 +284,8 @@ export class SalesOrderBookingComponent implements OnInit {
       flowStatusCode:[''],
       category:[''],
       hsnSacCode:[''],
+      invType:[''],
+     
     })
   }
 
@@ -241,6 +307,9 @@ export class SalesOrderBookingComponent implements OnInit {
     this.ticketNo=(sessionStorage.getItem('ticketNo'));
     this.emplId=Number(sessionStorage.getItem('emplId'));
     this.ouId=Number(sessionStorage.getItem('ouId'));
+    this.deptId=Number(sessionStorage.getItem('deptId'));
+    this.locId=Number(sessionStorage.getItem('locId'));
+
 
     console.log(this.emplId);
     
@@ -278,6 +347,40 @@ export class SalesOrderBookingComponent implements OnInit {
         console.log(this.colorCodeList);
       }
     );
+
+    this.service.transactionTypeNameList(this.deptId,this.locId,this.ouId)
+    .subscribe(
+      data => {
+        this.transactionTypeNameList = data;
+        console.log(this.transactionTypeNameList);
+      }
+    );
+
+    this.service.payTermDescList()
+    .subscribe(
+      data => {
+        this.payTermDescList = data;
+        console.log(this.payTermDescList);
+      }
+    );
+
+    this.orderManagementService.priceListNameList()
+    .subscribe(
+      data => {
+        this.priceListNameList = data;
+        console.log(this.priceListNameList);
+      }
+    );
+    
+    
+    this.service.salesRepNameList(this.ouId,this.locId,this.deptId)
+    .subscribe(
+      data => {
+        this.salesRepNameList = data.obj;
+        console.log(this.salesRepNameList);
+      }
+    );
+    
     
   }
 
@@ -312,11 +415,14 @@ export class SalesOrderBookingComponent implements OnInit {
     this.displaytaxCategoryName=false;
     this.displayorderedItem=false;
     this.displayPrice=false;
+    this.displaypriceListName=false;
     this.orderManagementService.getsearchByOrderNo(orderNumber)
     .subscribe(
       data => {
         this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
+        this.lstgetOrderTaxDetails=data.obj.taxAmounts;
         let control=this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+        let control1=this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
         if (data.obj.flowStatusCode==='ENTERED'){
           this.displayorderLineDetailsPart=false;
           data.obj.emplId = this.emplId;
@@ -341,23 +447,16 @@ export class SalesOrderBookingComponent implements OnInit {
           var oeOrderLinesAllList1: FormGroup=this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
         }
-       
+        for (let i=0;i<=this.lstgetOrderTaxDetails.length-1;i++){
+          // alert(this.lstgetOrderTaxDetails.length-1);
+          var lstgetOrderTaxDetails1: FormGroup=this.TaxDetailsGroup();
+          control.push(lstgetOrderTaxDetails1);
+        }
       }
         this.SalesOrderBookingForm.patchValue(data.obj);
       }
     )
-    // this.SalesOrderBookingForm.patchValue({emplId:this.emplId})
-    // alert(sessionStorage.getItem('emplId'));
-    // this.emplId=Number(sessionStorage.getItem('emplId'));
-    // this.emplId=Number(sessionStorage.getItem('emplId'))
-    // this.SalesOrderBookingForm.patchValue({'emplId':Number(sessionStorage.getItem('emplId'))});
-    // debugger;
     this.SalesOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
-    // alert(Number(sessionStorage.getItem('emplId')));
-    // this.SalesOrderBookingForm.get('emplId').patchValue(Number(sessionStorage.getItem('emplId')));
-    
-    // setValue(Number(sessionStorage.getItem('emplId')));
-    // this.SalesOrderBookingForm.get('emplId').patchValue('emplId');
   }
 
   addRow() {
@@ -436,20 +535,68 @@ this.orderManagementService.addonDescList(segment)
   }
 
 
-  receiptPayment(){
-    this.router.navigate(['/paymentReceipt']);
+  // receiptPayment(orderNumber){
+  //   alert(this.orderNumber);
+  //   this.router.navigate(['/paymentReceipt',orderNumber]);
+  // }
+
+  // PaymentReceipt(orderNumber){
+  //  alert("ORDER numnber>>"+this.orderNumber) ;
+  //  this.orderManagementService.getOmReceiptSearchByOrdNo(orderNumber)
+  //  .subscribe(
+  //  data => {
+  //    this.lstcommentsbyorderNo = data.obj.oePayList;
+  //    console.log(this.lstcommentsbyorderNo);
+  //   }
+  //  );
+  // }
+
+
+
+  accountNoSearch(accountNo){
+    this.orderManagementService.accountNoSearchFn(accountNo,this.ouId)
+    .subscribe(
+      data => {
+        this.accountNoSearch = data;      
+        console.log(this.accountNoSearch);
+        this.SalesOrderBookingForm.patchValue(this.accountNoSearch);
+      }
+    );
   }
 
-  paymentReceipt(orderNumber){
-   alert(this.orderNumber) ;
-   this.orderManagementService.getOmReceiptSearchByOrdNo(orderNumber)
-   .subscribe(
-   data => {
-     this.lstcommentsbyorderNo = data.obj.oePayList;
-     console.log(this.lstcommentsbyorderNo);
-    }
-   );
+  onOptionsSelectedVariant(mainModel){
+    this.orderManagementService.VariantSearchFn(mainModel)
+    .subscribe(
+      data => {
+        this.VariantSearch = data;
+        console.log(this.VariantSearch);
+      }
+    );
   }
+
+
+  onOptionsSelectedTL(ticketNo){
+    this.orderManagementService.ticketNoSearchFn(ticketNo)
+    .subscribe(
+      data => {
+        this.ticketNoSearch = data.obj;
+        console.log(this.ticketNoSearch);
+        this.tlName=this.ticketNoSearch.leadTicketNo;
+      }
+    );
+  }
+
+  onOptionsSelectedColor(variant){
+    this.orderManagementService.ColourSearchFn(variant)
+    .subscribe(
+      data => {
+        this.ColourSearch = data;
+        console.log(this.ColourSearch);
+      }
+    );
+  }
+
+
 }
 
 

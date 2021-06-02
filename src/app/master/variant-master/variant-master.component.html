@@ -1,0 +1,428 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;VARIANT&nbsp;MASTER&nbsp;
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <form [formGroup]="variantMasterForm" (ngSubmit)="variantMaster(variantMasterForm.value)">
+
+                     <table class="center">
+                        <tr>
+                        <!-- <td  class="LabelFontStyle">DivId/div/ouid/locid/deptid/empId/custid/inssite/Aging/type/Stat/itemcd&nbsp;:&nbsp;</td> -->
+   
+                        <td >
+                            <input  style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                            class="form-control" [(ngModel)]="divisionId" placeholder="">
+
+                        </td>
+                        <td   style="border: none;color: black;">
+                            <input  style="width:100px ;"  type="text" disabled formControlName="loginArray"
+                                class="form-control" [(ngModel)]="loginArray" placeholder="">
+                        </td>
+                    
+                        <td>
+                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            class="form-control" [(ngModel)]="ouId" >
+                        </td>
+                    
+                        <td>
+                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                        </td>
+                        <td >
+                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            class="form-control" [(ngModel)]="deptId" placeholder="">
+
+                        </td>
+                        <td >
+                            <input hidden style="width:30px ;"   type="text" disabled formControlName="emplId"
+                            class="form-control" [(ngModel)]="emplId" placeholder="">
+
+                        </td>
+                        </tr>
+                    </table>
+
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Variant Details</legend>
+                <table class="center">
+                          
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
+
+                    <td>  
+                        <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control" >
+                            <option>--Select--</option>
+                            <option *ngFor="let mm of mainModelList"  [ngValue]="mm.cmnId">
+                                {{mm.code}}
+                            </option>
+                        </select>
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
+                    <td>
+                        <input type="text" formControlName="variant"  [(ngModel)]="variant"   class="form-control" placeholder="" > 
+                    </td> 
+
+                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Desc:&nbsp;</td>
+                    <td>
+                        <input style="width: 280%;" type="text" formControlName="varDescription"  [(ngModel)]="varDescription"   class="form-control" placeholder="" > 
+                    </td> 
+                   
+                </tr>
+
+                <tr>
+
+                    <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;Prefix:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="chasPrefix"  id="chasPrefix" [(ngModel)]="chasPrefix" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Engine&nbsp;Prefix:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="engPrefix"  id="engPrefix" [(ngModel)]="engPrefix" class="form-control" >
+                    </td>
+    
+                    <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;Type:&nbsp;</td>
+    
+                    
+                    <td>  
+                        <select formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" >
+                            <option>--Select--</option>
+                            <option *ngFor="let mm of fuelTypeList" [ngValue]="mm.code" >
+                                {{mm.code}}
+                            </option>
+                        </select>
+                    </td>
+                   
+
+                    <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Class:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="variantClass"  id="variantClass" [(ngModel)]="variantClass" class="form-control" placeholder="lov-saloon" >
+                    </td>
+                </tr>
+               
+                <tr>
+                   <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Type:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="vehicleType"  id="vehicleType" [(ngModel)]="vehicleType" class="form-control" placeholder="LOV" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Cubic&nbsp;Capacity:&nbsp;</td>
+                    <td>
+                        <input   type="text"  formControlName="cubicCapacity"  id="cubicCapacity" [(ngModel)]="cubicCapacity" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Seating&nbsp;:&nbsp;</td>
+                    <td>
+                        <input   type="text"  formControlName="seating"  id="seating" [(ngModel)]="seating" class="form-control" >
+                    </td>
+            
+                    <td style="width: 15%" class="LabelFontStyle">Unladen&nbsp;Weight:&nbsp;</td>
+                    <td>
+                        <input   type="text"  formControlName="unladenWeight"  id="unladenWeight" [(ngModel)]="unladenWeight" class="form-control" >
+                    </td>
+                   
+                    </tr>    
+
+                    <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Gross&nbsp;Weight:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="grossWeight"  id="grossWeight" [(ngModel)]="grossWeight" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Fitted&nbsp;With:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="fittedWith"  id="fittedWith" [(ngModel)]="fittedWith" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" placeholder="LOV" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">MFG&nbsp;Year:&nbsp;</td>
+                    <td>
+                        <input   type="text"  formControlName="mfgYearPrint"  id="mfgYearPrint" [(ngModel)]="mfgYearPrint" class="form-control" >
+                    </td>
+                        
+                    </tr>
+               
+                    <tr>
+                      
+                    
+                    <td style="width: 15%" class="LabelFontStyle1">Cylinder&nbsp;No:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="cylinder"  id="cylinder" [(ngModel)]="cylinder" class="form-control" >
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">BS&nbsp;Norms:&nbsp;</td>
+
+                    <td>
+                        <input  type="text"  formControlName="bharatStageNorms"  id="bharatStageNorms" [(ngModel)]="bharatStageNorms" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle1">Satus&nbsp;:&nbsp;</td>
+                    <td>  
+                        <select formControlName="status" id="status" [(ngModel)]="status" class="form-control" >
+                            <option>--Select--</option>
+                            <option *ngFor="let mm of statusList">
+                                {{mm.code}}
+                            </option>
+                        </select>
+                    </td>
+               </tr>
+            </table>
+            </fieldset>
+
+            
+
+            <br>
+                    <!-- ===================================Buttons======================================== -->
+                      <table class="center">
+                        <tr>
+                            <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                            <ng-template #thenBlock1>
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!variantMasterForm">Save</button>
+                                </td>
+
+                                <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveSatat"></div>
+                                <ng-template #thenBlockSaveStat>
+                                    <div class="alert alert success alert-dismissible fade show " role="alert">
+                                        <strong>Success!</strong> Record Updated Successfully.
+                                        <button  type="button" (click)="closeAlert()"    class="close" data-dismiss="alert" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+
+                                    </ng-template>
+                                <ng-template #elseBlockSaveSatat>
+                                    <!-- <div class="alert warning">
+                                        <span class="closebtn">&times;</span>  
+                                        <strong>Warning!</strong> Rcord Not added.Please check
+                                      </div> -->
+
+                                </ng-template>
+                                
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                </td>
+
+                                    <!-- ====================Reset Dialog ======================== -->
+
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                </td>
+                                 <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                        <!-- =====================Close Dialog Box====================== -->
+                                        <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                    </label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <table class="center">
+                                                        <tr>
+                                                            <td>
+                                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                            </td>
+                                                            <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                        <!-- ==================================================== -->
+
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                   
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!variantMasterForm">Update</button>
+                                            </td>
+
+                                            <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveStat"></div>
+                                            <ng-template #thenBlockSaveStat>
+                                                <div class="alert alert success alert-dismissible fade show " role="alert">
+                                                    <strong>Success!</strong> Record Updated Successfully.
+                                                    <button  type="button" (click)="closeAlert()" class="close" data-dismiss="alert" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                            </ng-template>
+                                            <ng-template #elseBlockSaveStat>
+                                                <!-- <div class="alert warning">
+                                                    <span class="closebtn">&times;</span>  
+                                                    <strong>Warning!</strong> Rcord Not added.Please check
+                                                </div> -->
+                                            </ng-template>
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                            </td>
+                                            <!-- <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                                        </td> -->
+            <!-- ====================Reset Dialog ======================== -->
+
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                    </td>
+                                    <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                             <!-- =====================Close Dialog Box====================== -->
+                                <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                </td>
+                                        <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                        </td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                 <!-- ==================================================== -->
+                                    </ng-template>
+                                    
+                                </tr>
+                            </table>
+                            <!-- ==================================================== -->
+
+
+
+
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br>
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tbody>
+                <tr class="GridHeader">
+                <th style="width:5rem" scope="col">VariantId&nbsp;</th>     
+                <th style="width:5rem" scope="col">Variant&nbsp;Code&nbsp;</th>
+                <th style="width:15rem" scope="col"> Variant&nbsp;Description</th>
+                <th style="width:6rem" scope="col"> Fuel&nbsp;Type</th>
+                <th style="width:10rem" scope="col">Vehicle&nbsp;Class</th>
+                <th style="width:10rem" scope="col">BS&nbsp;Norms</th>
+                <th style="width:10rem" scope="col">Service&nbsp;Model</th>
+                <th style="width:6rem" scope="col">Select</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                <td>{{com.variantId}}</td>
+                <td>{{com.variant}}</td>
+                <td>{{com.varDescription}}</td>   
+                <td>{{com.fuelType}}</td>   
+                <td>{{com.variantClass}}</td> 
+                <td>{{com.bharatStageNorms}}</td>
+                <td>{{com.serviceModel}}</td>
+                <td><button class="btn btn-info" (click)="Select(com.variantId)">Select</button></td>   
+        </tr> 
+    </table>
+</div>
+</div>
+
+
+

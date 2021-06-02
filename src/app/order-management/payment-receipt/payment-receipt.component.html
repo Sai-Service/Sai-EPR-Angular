@@ -21,8 +21,8 @@
                                 <input type="text" disabled formControlName="loginArray"
                                     class="form-control" [(ngModel)]="loginArray" placeholder="">
                             </td>
-                            <td>
-                                <input  type="text" disabled formControlName="emplId"
+                            <td >
+                                <input hidden type="text" disabled formControlName="emplId"
                                 class="form-control" [(ngModel)]="emplId" placeholder="">
                             </td>
 
@@ -86,13 +86,15 @@
                             <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id:&nbsp;</td>
 
                             <td>
-                                <input   type="text" formControlName="customerId"  id="customerId" class="form-control"  placeholder="Customer Id">
+                                <input disabled type="number" class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+                                <!-- <input   type="text" formControlName="customerId"  id="customerId" class="form-control"  placeholder="Customer Id"> -->
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
                             
                             <td>
-                                <input   type="text" formControlName="customerName"  id="customerName" class="form-control"  placeholder="Customer Name">
+                                <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'>
+                                <!-- <input   type="text" formControlName="customerName"  id="customerName" class="form-control"  placeholder="Customer Name"> -->
                             </td>
                             
                             
@@ -100,7 +102,8 @@
                             <td style="width: 15%" class="LabelFontStyle">Order/Ref.&nbsp;Number:&nbsp;</td>
 
                             <td>
-                                <input   type="text" formControlName="orderNumber"  id="orderNumber" class="form-control"  placeholder="Order/Ref. Number">
+                                <input disabled type="text" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'>
+                                <!-- <input   type="text" formControlName="orderNumber"  id="orderNumber" class="form-control"  placeholder="Order/Ref. Number"> -->
                             </td>
                         </tr>
                     <!-- </table> -->
@@ -124,7 +127,7 @@
 
                             <td>  
                                 <!-- payType -->
-                                <select formControlName="methodType" id="methodType" [(ngModel)]="methodType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
                                         {{sc.lookupValue}} 
@@ -492,14 +495,14 @@
 <!-- <br> -->
 <div class="container1">
     <div class="grid_scroll">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
         <tr class="GridHeader">
+            <th style="width:10rem" scope="col">Order No</th>
             <th style="width:6rem" scope="col">SR No</th>
             <th style="width:6rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
-            <th style="width:15rem" scope="col">Order No</th>
             <th style="width:10rem" scope="col">Cust No</th>
             <th style="width:10rem" scope="col">Payment Amt</th>
             <th style="width:10rem" scope="col">Receipt Method</th>
@@ -509,13 +512,14 @@
    </tbody>
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
                 <!-- <td>{{com.oePayList.srlno}}</td> -->
-                <!-- <td>{{com.orderNumber}}</td> -->
+
+                <td>{{orderNumber}}</td>
                 <td>{{com.srlNo}}</td>
                 <td>{{com.receiptNumber}}</td>
                 <td>{{com.receiptDate}}</td>
                 <td>{{com.payType}}</td>  
-                <td>{{com.orderNumber}}</td>
-                <td>{{com.custAccountNo}}</td>
+                <!-- <td>{{com.orderNumber}}</td> -->
+                <td>{{custName}}</td>
                 <td>{{com.paymentAmt}}</td>
                 <td> {{com.receiptMethodId}}-{{com.receiptMethodName}}</td>
                 

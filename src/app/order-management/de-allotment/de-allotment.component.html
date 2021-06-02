@@ -1,0 +1,106 @@
+<form [formGroup]="deAllotmentForm" (ngSubmit)="deAllotment(deAllotmentForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+        <td colspan="4" class="PageHeader" style="width: 100%;">
+            &nbsp;De-Allotment&nbsp;
+        </td>
+    </tr>
+    </table>
+    <div style="background-color: #FFE4B5;width: 100%;">
+        <table class="center">
+            <tr>
+                <td  style="font-weight: bold;width: 100%;text-align: center;">
+                    &nbsp;OU&nbsp;Name&nbsp;:&nbsp;{{ouName}}
+                </td>
+            </tr>
+        </table>
+        <table style="background-color: #FFE4B5;">   
+            <tr>
+                <td style="font-weight: bold;">
+                    &nbsp;Order&nbsp;Number&nbsp;:&nbsp;  
+                </td>
+                <td>
+                    <input   class="form-control" >
+                </td>
+                <td>
+                    <button type="button" class="btn-primary" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                </td>
+            </tr>        
+        </table>
+</div>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="grid_scroll">
+                 <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; "> 
+                    <thead>
+                        <tr class="GridHeader"> 
+                            <th scope="col">Select</th>
+                            <th scope="col">Order Number</th>
+                            <th scope="col">Item Allocated</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Alloted Date</th>
+                           
+                            <th scope="col">RIPS</th>
+                            <th scope="col">Two Tone</th>
+                            <th scope="col">Interiors</th>
+                            <th scope="col">Accessories Fitted</th>
+                            <th scope="col">Hold</th>
+                            <th scope="col">Hold Reason</th>
+                            <th scope="col">Date of Purchase</th>
+                            <th scope="col">Aging</th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                        <tr *ngFor="let com of Deallotmentsearchlist" class="ItemStyle" style="text-decoration:none;">
+                            <td>
+                                <input  type="checkbox" [formControl]="selectOrderNumber"
+                                [(ngModel)]='selectOrderNumber' (change)="selectOrderNumberEvent($event,com.orderNumber,com.orderedItem)">
+                            </td>
+                            <td>{{com.orderNumber}}</td>
+                            <td>{{com.orderedItem}}</td>
+                            <td>{{com.description}}</td>
+                            <td>{{com.lineCreationDt}}</td>
+                            <td>{{com.rips}}</td>
+                            <td>{{com.twoTone}}</td>
+                            <td>{{com.interiors}}</td>
+                            <td></td>
+                            <td>{{com.hold}}</td>
+                            <td>{{com.holdReason}}</td>
+                            <td>{{com.creationDate}}</td>
+                            <td>{{com.aging}}</td>
+                        </tr>
+                    </tbody>
+                </table>  
+                <!-- <table>
+                    <tr>
+                        <td>
+                            order Number : 
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber' value={{orderNumber}}   style="width: 170px;">     
+                        </td>
+                        <td>
+                            Chassis Number :
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="segment" [(ngModel)]='segment' value={{segment}}   style="width: 170px;">     
+                        </td>
+                    </tr>
+                </table> -->
+            </div>
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate()">Deallocate</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>

@@ -9,6 +9,7 @@ export class TransactionService {
 
   httpclient: any;
   headers: any;
+  receiptNumber:number;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
   ServerUrl='http://localhost:8081'; 
@@ -155,7 +156,35 @@ getItemDetail(itemid):Observable<any>{
 }
 
 
-// ============================stock Transfer Componanat============================
+////////////AR Invoice ///////////////
+searchByInvoiceNoAR(trxNumber1):Observable<any>{
+  return this.http.get(this.ServerUrl +`/arInv/invDtls/${trxNumber1}`)
+}
+sourceListFn():Observable<any>{
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/RcvSource`)
+}
+classListFN():Observable<any>{
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/RcvClass`)
+}
+paymentTermListFn():Observable<any>{
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupTypeWise/PaymentTerms`)
+}
+invTypeListFN():Observable<any>{
+  return this.http.get(this.ServerUrl +`/rcvType/status`)
+}
+invItemList():Observable<any>{
+  return this.http.get(this.ServerUrl +`/itemMst`)
+}
+
+public ARInvoiceSubmit(Record) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/arInv';  
+  return this.http.post(url, Record, options);
+}
+
+///////////////////////// AR RECEIPT APPLICATION////////////////////////////////////
 
 
 

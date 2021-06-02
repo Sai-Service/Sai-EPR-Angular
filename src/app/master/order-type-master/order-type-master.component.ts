@@ -235,6 +235,7 @@ export class OrderTypeMasterComponent implements OnInit {
         alert(" divisionid: "+this.divisionId);
         alert(" InvoiceSource: "+this.invoiceSource);
       }
+      
 
       searchMast() {
         this.service.getOrderTypeSearch()

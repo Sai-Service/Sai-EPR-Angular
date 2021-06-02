@@ -1,0 +1,405 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;MCP&nbsp;ITEM&nbsp;MAPPING&nbsp;
+            </td>
+        </tr>
+    </table>
+    
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <form [formGroup]="mcpItemMappingForm" (ngSubmit)="mcpItemMapping(mcpItemMappingForm.value)">
+
+                     <table class="center">
+                        <tr>
+
+                        <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td>
+
+                        <td   style="border: none;color: black;">
+                            <input type="text" disabled formControlName="loginArray"
+                                class="form-control" [(ngModel)]="loginArray" placeholder="">
+                        </td>
+                    
+                        <td>
+                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            class="form-control" [(ngModel)]="ouId" >
+                        </td>
+                    
+                        <td>
+                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                        </td>
+
+                        <td >
+                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            class="form-control" [(ngModel)]="deptId" placeholder="">
+
+                        </td>
+
+                        <td >
+                            <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
+                            class="form-control" [(ngModel)]="emplId" placeholder="">
+
+                        </td>
+                                           
+                        </tr>
+                    </table>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP ITEM DETAILS</legend>
+                        <table class="center">
+                            <tr>
+
+                                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Number:&nbsp;</td>
+                                    
+                                <!-- <td>
+                                    <input   type="text"  formControlName="itemNumber"  id="itemNumber" [(ngModel)]="itemNumber" class="form-control" >
+                                </td> -->
+
+                                <td>
+                                    <input type="text" formControlName="itemNumber"
+                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                    list="dynmicUserIds1" class="form-control"
+                                    (ngModelChange)="onOptionMcpItemIdSelectedSingle($event)"/>
+                                   
+                                    <datalist id="dynmicUserIds1">
+                                        <option *ngFor="let mc of mcpItemList"
+                                            [ngValue]="mc.itemId"> 
+                                            {{mc.itemNumber}}
+                                        </option>
+                                    </datalist>
+                                </td> 
+
+
+
+                                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;type:&nbsp;</td>
+                               
+                                <td>
+                                    <input disabled  type="text"  formControlName="itemType"  id="itemType" [(ngModel)]="itemType" class="form-control" >
+                                </td>
+
+                               <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Description:&nbsp;</td>
+                                    
+                                <td>
+                                    <input disabled  type="text"  formControlName="itemDesc"  id="itemDesc" [(ngModel)]="itemDesc" class="form-control" >
+                                </td>
+                           </tr>
+
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                                    
+                                <td>  
+                                    <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control" (ngModelChange)="onOptionsSelectedModel($event)" >
+                                        <option>--Select--</option>
+                                        <option *ngFor="let mm of mainModelList">
+                                            {{mm.code}}
+                                        </option>
+                                    </select>
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Name:&nbsp;</td>
+                                
+                                <td>  
+                                   
+
+                                    <select formControlName="variant" id="variant" class="form-control" [(ngModel)]="variant" (ngModelChange)="onOptionsSelectedVariant($event)" >
+                                        <option>--Select--</option>
+                                        <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
+                                            {{mv.variant}}-{{mv.varDescription}}
+                                        </option>
+                                    </select>
+
+                                </td>
+
+
+                            
+                                <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
+                                        
+                                <td>
+                                    <input disabled  type="text"  formControlName="itemSrvModel"  id="itemSrvModel" [(ngModel)]="itemSrvModel" class="form-control" >
+                                </td>
+                              
+                               
+                            </tr>
+
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                                        
+                                <td>  
+                                    <select   formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
+                                           {{sc.code}}
+                                        </option>
+                                    </select>
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Quantity&nbsp;:&nbsp;</td>
+                                        
+                                <td>
+                                    <input style="text-align: right;"  type="text"  formControlName="quantity"  id="quantity" [(ngModel)]="quantity" class="form-control" >
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">ERP&nbsp;Item&nbsp;Code:&nbsp;</td>
+                                        
+                                <!-- <td>
+                                    <input   type="text"  formControlName="erpItemCode"  id="erpItemCode" [(ngModel)]="erpItemCode" class="form-control" >
+                                </td> -->
+
+                                <td>
+                                    <input type="text" formControlName="erpItemCode"
+                                    (keyup)="getInvItemId1($event)" id="invItemIdFirstWay"
+                                    list="dynmicUserIds2" class="form-control"
+                                    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)" >
+                                    <datalist id="dynmicUserIds2">
+                                        <option *ngFor="let item of invItemList"
+                                            [ngValue]="item.itemId"> 
+                                            {{item.segment}}
+                                        
+                                        </option>
+                                    </datalist>
+                                </td> 
+                            </tr>
+                           </table>
+                    </fieldset>
+
+                    
+                    <div *ngIf="showRelateItemSection; then thenBlock101; else elseBlock101"></div>
+                    <ng-template #thenBlock101>
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">RELATED ITEMS</legend>
+                       
+
+                    <div class="center">
+                        <!-- <br> -->
+                       <div class="center" formArrayName="mcpMappingitemLine">
+  
+                            <div class="grid_scroll">
+
+                                <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                                          cellspacing="0" cellpadding="4" rules="all" class="center">
+                                          <thead>
+                                            <tr class="GridHeader">
+                                                  <th style="width:10rem" scope="col">Item Code</th>
+                                                  <th style="width:10rem" scope="col">Item Description</th>
+                                                  <th style="width:10rem" scope="col">Item Category</th>
+                                                  <th style="width:5rem" scope="col">UOM</th>
+                                                  <th style="width:3rem" scope="col">Add+</th>
+                                                  <th style="width:3rem" scope="col">Del-</th>
+                                              </tr>
+                                          </thead>
+
+                                        <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
+                                            
+                                        <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                            
+                                        <td>
+                                                <input type="text" formControlName="segment"
+                                                (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                list="dynmicUserIds3" class="form-control"
+                                                (ngModelChange)="onOptioninvItemIdSelectedLine($event,i)" />
+                                            <datalist id="dynmicUserIds3">
+                                                <option *ngFor="let item of invItemList"
+                                                    [ngValue]="item.itemId">{{item.segment}}
+                                                </option>
+                                            </datalist>
+        
+                                            </td> 
+                                            
+                                            <td>
+                                                <input style="width: 500px;" disabled  type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
+                                            </td>
+                                            <td>
+                                                <input style="width: 150px;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                            </td>
+                                            <td>
+                                                <input style="width: 100px;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
+                                            </td>
+                                            
+                                            
+
+                                            <td>
+                                                <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
+                                                class="fa fa-plus"></i></button>
+                                            </td>
+
+                                            <td>
+                                                    <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
+                                                    class="fa fa-trash"></i></button>
+                                            </td>
+
+                                          </tr>
+                                </table>
+                            </div>
+                       </div>
+                    </div>
+                    </fieldset>
+                    </ng-template>
+                    <ng-template #elseBlock101></ng-template>
+
+
+
+
+                    <br>
+                    <!-- ===================================Buttons======================================== -->
+                      <table class="center">
+                        <tr>
+                            <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                            <ng-template #thenBlock1>
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpItemMappingForm">Save</button>
+                                </td>
+                                
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                </td>
+
+                                    <!-- ====================Reset Dialog ======================== -->
+
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                </td>
+                                 <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                        <!-- =====================Close Dialog Box====================== -->
+                                        <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                    </label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <table class="center">
+                                                        <tr>
+                                                            <td>
+                                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                            </td>
+                                                            <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                        <!-- ==================================================== -->
+
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                   
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpItemMappingForm">Update</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                            </td>
+                                            <!-- <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                                        </td> -->
+            <!-- ====================Reset Dialog ======================== -->
+
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                    </td>
+                                    <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                             <!-- =====================Close Dialog Box====================== -->
+                                <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                </td>
+                                        <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                        </td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                 <!-- ==================================================== -->
+                                    </ng-template>
+                                </tr>
+                            </table>
+                            <!-- ==================================================== -->
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

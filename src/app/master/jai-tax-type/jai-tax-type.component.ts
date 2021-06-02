@@ -644,7 +644,7 @@ export class JaiTaxTypeComponent implements OnInit {
     
     updateMast() {
       // alert(this.jaiTaxtypeMasterForm.controls['recoverableFlag'].value)
-      alert(this.recoverableFlag)
+      // alert(this.recoverableFlag)
       const formValue: IJaiTaxtype = this.jaiTaxtypeMasterForm.value;
       formValue.recoverableFlag= this.recoverableFlag;
       formValue.offsetFlag = this.offsetFlag;
@@ -890,7 +890,7 @@ export class JaiTaxTypeComponent implements OnInit {
               var actLines:FormGroup=this.lineDetailsGroup();
               var length1=this.actDetails.accountList.length-1;
   
-              alert(length1);
+              // alert(length1);
               this.lineDetailsArray.removeAt(length1);
               cont.push(actLines);
               this.jaiTaxtypeMasterForm.get('actLines').patchValue(this.actDetails.accountList);
@@ -899,9 +899,11 @@ export class JaiTaxTypeComponent implements OnInit {
           );
   
           }
+
+          
           ontaxTypeCodeSelected(event: any) {
           var  regimeCode = this.jaiTaxtypeMasterForm.get('regimeCode').value;
-          alert(regimeCode)
+          // alert(regimeCode)
             if(event === 'Discount' && regimeCode==3){this.locationDissplay= true;}
             if(event === 'Select'  && regimeCode==3){this.locationDissplay= false;}
           }
@@ -951,7 +953,7 @@ export class JaiTaxTypeComponent implements OnInit {
             var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
             // this.locDescreption = this.locationNameList.locName;
             // var arrayControl = this.jaiTaxtypeMasterForm.get('actLines').value
-            alert(this.locationNameList.locName);
+            // alert(this.locationNameList.locName);
             (patch.controls[i]).patchValue({ locName: this.locationNameList.locName })
           }
         );
@@ -1006,7 +1008,7 @@ export class JaiTaxTypeComponent implements OnInit {
     {
       
       if(j.target.value != ''){
-        alert('i= '+i + '  j= '+j.target.value);
+        // alert('i= '+i + '  j= '+j.target.value);
       var segment =j.target.value
       var  temp = segment.split('.');
       this.a1=temp[0];
@@ -1046,7 +1048,7 @@ export class JaiTaxTypeComponent implements OnInit {
   
   
     openCodeComb1(i, interimRecoveryCcid) {
-      alert('in openCodeComb1 ' + i + 'interimRecoveryCcid ' + interimRecoveryCcid);
+      // alert('in openCodeComb1 ' + i + 'interimRecoveryCcid ' + interimRecoveryCcid);
       // alert(interimRecoveryCcid.length);
       // if(interimRecoveryCcid != 'undefined'){
       //   alert('hi ' + interimRecoveryCcid);

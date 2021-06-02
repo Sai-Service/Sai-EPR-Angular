@@ -1,0 +1,152 @@
+<form [formGroup]="allotmentForm" (ngSubmit)="allotment(allotmentForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Allotment&nbsp;
+            </td>
+            <!-- <td style="background-color: #FFE4B5;">
+                <input  class="form-control" formControlName="ouName" [(ngModel)]='ouName'>
+            </td>         -->
+            <!-- <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="allotmentSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </td> -->
+        </tr>
+        </table>
+        <div style="background-color: #FFE4B5;width: 100%;">
+            <table class="center">
+                <tr>
+                    <td  style="font-weight: bold;width: 100%;text-align: center;">
+                        &nbsp;OU&nbsp;Name&nbsp;:&nbsp; {{ouName}}
+                    </td>
+                </tr>
+            </table>
+        <table style="background-color: #FFE4B5;">
+            <tr>
+                <td style="font-weight: bold;">
+                    &nbsp;Order&nbsp;Number&nbsp;:&nbsp;  
+                </td>
+                <td>
+                    <input   class="form-control" >
+                </td>
+                <td>
+                    <button type="button" class="btn-primary" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                </td>
+            </tr>
+           
+        </table>
+    </div>
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="grid_scroll">
+                    <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
+                        <thead>
+                            <tr class="GridHeader">
+                                <th scope="col">Allocate</th>
+                                <th scope="col">Order Number</th>
+                                <th scope="col">Ordered Date</th>
+                                <th scope="col">Model</th>
+                                <th scope="col">Variant</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Paid Amount</th>
+                                <th scope="col">Order Type</th>
+                                <th scope="col">Taxi Flag</th>
+                                <th scope="col">Exchange Flag</th>
+                                <th scope="col">aging</th>
+                                <th scope="col">Select</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let com of allotmentsearchlist" class="ItemStyle" style="text-decoration:none;">
+                                <!-- [formControl]="selectOrderNumber"  -->
+                                <td>
+                                    <input  type="checkbox" [formControl]="selectOrderNumber"
+                                    [(ngModel)]='selectOrderNumber' (change)="selectOrderNumberEvent($event,com.orderNumber)">
+                                </td>
+                                <td>{{com.orderNumber}}</td>
+                               <td>{{com.orderedDate}}</td>
+                               <td>{{com.model}}</td>
+                               <td>{{com.variant}}</td>
+                               <td>{{com.color}}</td>
+                               <td style="text-align: right;">{{com.paidAmount}}</td>
+                               <td>{{com.transactionTypeName}}</td>
+                               <td>{{com.taxiYN}}</td>
+                               <td>{{com.exchangeYN}}</td>
+                               <td>{{com.aging}}</td>
+                               <td><button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header modal-lg">
+                                            <label style="width: 100%;text-align: center;font-size: 14px;">
+                                                &nbsp;Select&nbsp;Vehicle&nbsp;
+                                            </label>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
+                                                <thead>
+                                                    <tr class="GridHeader">
+                                                        <th scope="col">Select</th>
+                                                        <th scope="col">Item To Allocate</th>
+                                                        <th scope="col">Description</th>
+                                                        <th scope="col">Date Of Purchase</th>
+                                                        <th scope="col">Dealer Code</th>
+                                                        <th scope="col">Rips</th>
+                                                        <th scope="col">Interiors</th>
+                                                        <th scope="col">Two Tone</th>
+                                                        <th scope="col">Hold</th>
+                                                        <th scope="col">Hold Reason</th>
+                                                        <th scope="col">Fuel Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let com of allotmentVehiclesearchlist" class="ItemStyle" style="text-decoration:none;">
+                                                        <td>
+                                                            <input  type="checkbox" [formControl]="selectChasisNumber" 
+                                                            [(ngModel)]='selectChasisNumber' (change)="selectChasisNumberEvent($event,com.segment)">
+                                                        </td>
+                                                        <td>{{com.segment}}</td>
+                                                        <td>{{com.description}}</td>
+                                                        <td>{{com.dateOfPurchase}}</td>
+                                                        <td>{{com.dealerCode}}</td>
+                                                        <td>{{com.rips}}</td>
+                                                        <td>{{com.interiors}}</td>
+                                                        <td>{{com.twoTone}}</td>
+                                                        <td>{{com.hold}}</td>
+                                                        <td>{{com.holdReason}}</td>
+                                                        <td>{{com.fuelType}}</td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="allotedVehicleSelect()">Save</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>   
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="center">
+                        <tr>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="allotment1()">Allotment</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+</form>

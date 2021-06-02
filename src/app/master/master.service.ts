@@ -135,6 +135,14 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
   }
 
+ 
+  taxCategoryListHSN(mPer,mType): Observable<any> {
+    // alert("MTYPE= "+mType + "  MPER= " + mPer);
+    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateGstPer?taxCatType=${mType}&gstPer=${mPer}`);
+  }
+
+
+
   taxCategoryListPoInvoice(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
@@ -436,6 +444,13 @@ hsnSacCodeList(): Observable<any> {
   // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');  
   return this.http.get(this.ServerUrl +'/hsnSacMst');
 }
+
+hsnSacCodeDet(mHsnCode): Observable<any> {
+  // alert("ms >> "+mHsnCode);
+  return this.http.get(this.ServerUrl +`/hsnSacMst/${mHsnCode}`);
+}
+
+
 
 internalOrderList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -1065,6 +1080,28 @@ regimeIdList(): Observable<any> {
 
 }
 
+thresholdTypeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_THRESHOLD_TYPE');
+
+}
+
+tdsVendorList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_VENDOR_TYPE');
+
+}
+
+tdsSectionList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_SECTION');
+
+}
+
+tdsTaxCategoryList(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+
+}
+
+
+
 
 
 
@@ -1555,6 +1592,11 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeCode?code=${mCode}&cmnType=EWSlab`);
     } 
 
+    getSectionTdsDetailsByCode(mCode): Observable<any> {
+      // alert("MS >> "+mCodeDesc);
+      return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeCode?code=${mCode}&cmnType=JAI_TDS_SECTION`);
+    } 
+
     EwSchemeItemList(mVariant,mOuId,mAging,mKms): Observable<any> {
       // alert(  "ms>>> "+ mVariant+","+mAging+","+mKms+","+mOuId);
        return this.http.get(this.ServerUrl +`/EwScheme/ewvariant?variant=${mVariant}&ouId=${mOuId}&aging=${mAging}&kms=${mKms}`);
@@ -1681,6 +1723,16 @@ UpdateVariantMaster(VariantMasterRecord) {
 
 mcpItemList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/McpItemMst');
+}
+
+//////////////////////// TAX THRESHOLD SETUP //////////////////
+
+public taxThresholdSetupSubmit(ThresholdSetupRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/PackageMst';
+  return this.http.post(url, ThresholdSetupRecord, options);
 }
     
 }

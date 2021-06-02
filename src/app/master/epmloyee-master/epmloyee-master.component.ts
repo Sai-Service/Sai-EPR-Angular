@@ -74,7 +74,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   public maxDate = new Date();
   public statusList: Array<string> = [];
   public DesignationList: Array<string> = [];
-  public DepartmentList: Array<string> = [];
+  public DepartmentList: any;
   public locIdList: Array<string> = [];
   public titleList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
@@ -98,8 +98,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       dob: ['', [Validators.required]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
       emailId: ['', [Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      contact1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
-      contact2: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      contact1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
+      contact2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*'), ]],
       loginPass: [''],
       status: ['', [Validators.required]],
       endDate:[''],
@@ -138,13 +138,13 @@ export class EpmloyeeMasterComponent implements OnInit {
           console.log(this.DepartmentList);
         }
       );  
-      this.service.DesignationList()
-      .subscribe(
-        data => {
-          this.DesignationList = data;
-          console.log(this.DesignationList);
-        }
-      );
+      // this.service.DesignationList()
+      // .subscribe(
+      //   data => {
+      //     this.DesignationList = data;
+      //     console.log(this.DesignationList);
+      //   }
+      // );
       this.service.locationIdList()
       .subscribe(
         data => {
@@ -159,13 +159,13 @@ export class EpmloyeeMasterComponent implements OnInit {
           console.log(this.DivisionIDList);
         }
       );
-      this.service.teamRoleListFN(this.deptName)
-    .subscribe(
-      data => {
-        this.teamRoleList = data;
-        console.log(this.teamRoleList);
-      }
-    );
+    //   this.service.teamRoleListFN(this.deptName)
+    // .subscribe(
+    //   data => {
+    //     this.teamRoleList = data;
+    //     console.log(this.teamRoleList);
+    //   }
+    // );
   }
   employeeMaster(employeeMasterForm: any) {
 
@@ -266,7 +266,23 @@ export class EpmloyeeMasterComponent implements OnInit {
     this.name = aaa;
   }
 
-
+  onOptionsDEPTSelected(event){   
+    let select = this.DepartmentList.find(d => d.cmnTypeId === event);
+    this.service.DesignationList(select.code)
+      .subscribe(
+        data => {
+          this.DesignationList = data;
+          console.log(this.DesignationList);
+        }
+      ); 
+      this.service.teamRoleListFN(select.code)
+      .subscribe(
+        data => {
+          this.teamRoleList = data;
+          console.log(this.teamRoleList);
+        }
+      );
+  }
 
   // getlocHeadDashbordSearch(status){
   //  this.service.urlTest(this.status1).subscribe((res: any) => {
