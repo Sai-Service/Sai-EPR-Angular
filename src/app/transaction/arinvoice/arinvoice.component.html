@@ -860,7 +860,7 @@
                                     <ng-container   *ngFor="let group of lineDistributionArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                                 <tr class="ItemStyle" style="text-decoration:none;">
                                     <!-- <input hidden type="text" formControlName="invDistributionId"> -->
-                                    <td><input class="form-control" [(ngModel)]="invoiceLineNum" type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
+                                    <td><input class="form-control"  type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
                                     <td>
                                         <input formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
                                     </td>
@@ -914,7 +914,7 @@
 <!-- </div> -->
                 <table class="center">
                     <tr>
-                        <td> <button type="butt on" class="btn btn-primary" (click)="saveARInvoiceNew()" style="width: 8rem;">Save</button></td>
+                        <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;">Complete</button></td>
                         <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
                         <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->
