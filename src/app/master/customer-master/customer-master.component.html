@@ -89,15 +89,16 @@
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle1">Account&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="accountNo" [(ngModel)]='accountNo' value={{accountNo}}
+                                    <!-- formControlName="accountNo" -->
+                                    <input formControlName="custAccountNo" [(ngModel)]='custAccountNo' value={{custAccountNo}}
                                         class="form-control" placeholder="Enter Account Number">
-                                    <div *ngIf="submitted && f. accountNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.accountNo.errors.required">Account Number must be a valid
+                                    <div *ngIf="submitted && f. custAccountNo.errors" class="invalid-feedback">
+                                        <div *ngIf="f.custAccountNo.errors.required">Account Number must be a valid
                                         </div>
-                                        <div *ngIf="f.accountNo.errors?.maxLength">Account Number must be a valid</div>
+                                        <div *ngIf="f.custAccountNo.errors?.maxLength">Account Number must be a valid</div>
                                     </div>
                                     <span
-                                        *ngIf="!customerMasterForm.get('accountNo').valid && customerMasterForm.get('accountNo').touched">Account
+                                        *ngIf="!customerMasterForm.get('custAccountNo').valid && customerMasterForm.get('custAccountNo').touched">Account
                                         Number must be a valid</span>
                                 </td>
                             </tr>

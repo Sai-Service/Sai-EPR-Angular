@@ -110,6 +110,72 @@ span{
 }
 
 
+.form-control {
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-size: 11px;
+  outline: medium none;
+  padding: 3px;
+  vertical-align: top;
+  width: 190px;
+  height: 18%;
+ border-color: black;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+td{
+  padding: 3px;
+}
+
+span{
+  font-size: xx-small;
+  color:red;
+  position: absolute;
+}
+
+.LabelFontStyle1:before{
+  content:"*";
+  color:rgb(252, 29, 29);
+}
+
+
+.btn-primary{
+  width: 5em;
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3rem;
+  border-color: #2c3e50;
+  height: 22px;
+  font-size: 11px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 10px; /* Tamaño de linea */
+  width: 5rem;
+}
+
+.btn-secondary{
+  width: 5em;
+  background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3rem;
+  border-color: #2c3e50;
+  height: 22px;
+  font-size: 11px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 10px; /* Tamaño de linea */
+  width: 5rem;
+}
+
+
 
 .btn-primary:hover{
   background-color: #5c9bda;
@@ -135,6 +201,16 @@ margin-left: 50%;
   text-decoration: underline;
 }
 
+
+.waves-light{
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.waves-light:hover{
+  text-decoration: underline;
+}
 
 
 
@@ -166,7 +242,34 @@ margin-left: 50%;
   /* position: fixed; */
   position: sticky; top: 0; 
 }
+.GridFont{
+  font-family: "Calibri";
+  font-size: 11px;
+  color: Black;
+  height: 25px;
+  background-color: #eeeeee;
+}
 
+
+
+
+.GridHeader {
+  border-top-width: 1px;
+  border-style: solid;
+  border-top-color: red;
+  border-left: none;
+  border-right: none;
+  height: 25px;
+  padding: 0px 10px 0px 10px;
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-size: 9px;
+  text-align: center;
+  color: black;
+  background-image: linear-gradient(#bcdcee, #4fb6f1 60%, #0299f0);
+  border-bottom: 2px solid rgb(158, 155, 155);
+  /* position: fixed; */
+  position: sticky; top: 0; 
+}
 
 .GridDeatails{
   color: black;
@@ -195,7 +298,8 @@ width: 100%;
 
 .GridFont td, .GridFont th {
 border: 1px solid #ddd;
-padding: 8px;
+/* padding: 8px; */
+padding: 0px;
 }
 
 

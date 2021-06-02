@@ -111,7 +111,7 @@ export class AllotmentComponent implements OnInit {
     allotment1(){
       this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
+          alert('RECORD INSERTED SUCCESSFULLY');
           this.allotmentForm.reset();
         } else {
           if (res.code === 400) {

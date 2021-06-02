@@ -23,6 +23,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
+  categoryList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemCategory/type1`);
+  }
+
 
   getFinTypeSearch1(): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
@@ -38,6 +42,12 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${category}`);
   }
 
+  //http://localhost:8081/itemMst/ByCatType?itemCatType=SS_SPARES&divId=1
+  getItemByCatType(itemCatType, divId):Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
+  }
+
+  
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
@@ -54,6 +64,35 @@ export class OrderManagementService {
     const url = this.ServerUrl + '/orderHeader/Entered';  
     return this.http.post(url, BookRecord, options);
   }
+
+  public AccLineSave(AccLineRecord){
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/orderHeader/postAccItems';  
+    return this.http.post(url, AccLineRecord, options);
+  }
+
+  accountNoSearchFn(accountNo,ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+  }
+  accountNoSearchFn1(accountNo,ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+  }
+
+  VariantSearchFn(mainModel): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
+  }
+
+
+  ticketNoSearchFn(ticketNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${ticketNo}`);
+  }
+
+  ColourSearchFn(variant): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
+  }
+
 
 
   accountNoSearchFn(accountNo,ouId): Observable<any> {

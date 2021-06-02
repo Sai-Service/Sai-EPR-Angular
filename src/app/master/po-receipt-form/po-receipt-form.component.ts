@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
 import { ThemeService } from 'ng2-charts';
 import { MasterService } from '../master.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from "@angular/common";
 
 interface IpoReceipt{
   ouName:string;
@@ -28,7 +30,7 @@ interface IpoReceipt{
   locId:number;
   poHeaderId:number;
   poLineId:number;
-  suppNo:number;
+    suppNo:number;
   supplierSiteId:number;
   emplId:number;
   totAmount:number;
@@ -40,14 +42,17 @@ interface IpoReceipt{
   locatorId:number;
   poType:string;
   poStatus:string;
+  // locatorDesc:any[];
+  locatorDesc:string;
+  
 }
 
 interface Ilocator {
   segment11:string;
   segment2:string;
-  segment3:string;
+  segment3:number;
   segment4:string;
-  segment5:string;
+  segment5:number;
 }
 
 interface IPODateWise{
@@ -66,9 +71,11 @@ export class PoReceiptFormComponent implements OnInit {
   ouName:string;
   poNumber:string;
   submitted = false;
+  private sub: any;
   supplier:string;
   item:string;
   segment1:string;
+  shipmentNumber:string;
   ouId:number;
   totalAmt:number;
   name:string;
@@ -77,9 +84,11 @@ export class PoReceiptFormComponent implements OnInit {
   baseAmount:number;
   taxAmt:number;
   frmDate1:Date;
+  shipmentNo:string;
   disabled = true;
   disabledLine =true;
   disabledViewAccounting=true;
+  DisplayqtyReceived=true;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -103,10 +112,11 @@ export class PoReceiptFormComponent implements OnInit {
   polineNum:number;
   // segment1:string;
   segment2:string;
-  segment3:string;
+  segment3:number;
   segment4:string;
-  segment5:string;
+  segment5:number;
   segment11:string;
+  // locatorDesc:any[];
   locatorDesc:string;
   locatorId:number;
   poType:string;
@@ -114,6 +124,7 @@ export class PoReceiptFormComponent implements OnInit {
   receiptNo:number;
   ledgerId:number;
   runningTotalDr:number;
+  ctgDescription:string;
 
 
   selectAllFlag:string;
@@ -131,10 +142,13 @@ export class PoReceiptFormComponent implements OnInit {
   // loginArray: any[];
   loginArray:string;
   public cityList: Array<string>[];
+  public poAllRecFind:any[];
   lstcompolines: any;
   public poLines:any[];
    public lstlocationwise:any[];
    public lstcompolines1:any[];
+   public rcvTaxDeatils:[];
+   public poTaxDeatils:[];
    public lstSupLineDetails:any[];
    public lstPODateWiseData:any[];
    public lstReceiptDateWiseData:any[];
@@ -147,14 +161,14 @@ export class PoReceiptFormComponent implements OnInit {
    divisionId:any[];
    loginName:string;
    poLineId:number;
-   viewAccounting1:any[];
+    viewAccounting1:any[];
    viewAccounting2:any[];
-
+   displayrecDate=false;
   
   // PO wise Date Paratemeter//////
   frmDate : Date;
   toDate:Date;
-
+ 
 
   xyzdis=false;
 
@@ -168,13 +182,14 @@ export class PoReceiptFormComponent implements OnInit {
   displaySaveButton =false;
   TRUER=false; recFagDiss=true; 
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private router1: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName : [''],
       poNumber:['', Validators.required],
       supplier:[''],
       item:[''],
       segment1:[''],
+      shipmentNumber:[],
       ouId:[''],
       totalAmt:[''],
       divisionName:[''],
@@ -210,6 +225,7 @@ export class PoReceiptFormComponent implements OnInit {
       name1:[''],
       runningTotalDr:[''],
       runningTotalCr:[''],
+      shipmentNo:[''],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -217,6 +233,7 @@ export class PoReceiptFormComponent implements OnInit {
    lineDetailsGroup() {
     return this.fb.group({
       poLineId:[],
+      poHeaderId:[],
       orderedQty: [],
       itemType:[],
       itemName:[],
@@ -224,6 +241,7 @@ export class PoReceiptFormComponent implements OnInit {
       ctgDescription:[],
       itemDesc:[],
       subInvDesc:[],
+      subInventoryId:[],
       locatorDesc:['',[Validators.required]],
       uom:[],
       unitPrice:[],
@@ -246,7 +264,7 @@ export class PoReceiptFormComponent implements OnInit {
       segment5:['',[Validators.required,Validators.minLength(2),Validators.maxLength(2)]],
       polineNum:[''],
       locatorId:[''],
-      selectFlag:[''],
+      selectFlag:[],
     });
   }
   get lineDetailsArray() {
@@ -282,6 +300,56 @@ checkIfAllSelected() {
       this.selectedAll = totalSelected === this.names.length;
       return true;
 }
+
+
+// selectAll(e)
+// {
+//   var patch = this.poReceiptForm.get('poLines') as FormArray;
+//   var invLineArr = this.poReceiptForm.get('poLines').value;
+//  alert("e.target.checked :"  +e.target.checked);
+//   if ( e.target.checked === true) {this.selectAllFlag=true; 
+//   //  alert("select All flag :"+this.selectAllflag);
+ 
+
+// //  if(this.selectAllFlag===true) 
+// //   {
+//   this.recFagDiss=false;
+
+//     // for (let i = 0; i < this.lineDetailsArray.length ; i++) 
+//     //   {
+//     //     alert('in patch')
+//     //     patch.controls[i].patchValue({selectFlag:true});
+//     //   }
+//     }
+//   else { this.selectAllFlag=false; }
+//     //     if (invLineArr[i].selectFlag===true) 
+        
+//     //      { 
+           
+//     //        patch.controls[i].patchValue({applyrcptFlag:''})
+//     //       //  alert("inner loop");
+//     //        this.applyReceiptFlag(e,i);
+//     //      }
+
+//     //       patch.controls[i].patchValue({applyrcptFlag:true})
+//     //       this.applyReceiptFlag(e,i);
+//     //   }
+//   // }
+//   // else
+//   // {
+//   //   // alert("select All flag false :"+this.selectAllflag);
+
+//   //   for (let i = 0; i < this.lstcompolines.length ; i++) 
+//   //     {
+//   //       patch.controls[i].patchValue({applyrcptFlag:''})
+//   //       // this.applyReceiptFlag(e,i);
+//   //     }
+//   // }
+
+// }
+
+
+
 
    get f() { return this.poReceiptForm.controls; }
 
@@ -322,6 +390,71 @@ checkIfAllSelected() {
     );
 
 
+
+    this.sub = this.router1.params.subscribe(params => {
+      this.segment1 = params['segment1'];
+      // alert(this.segment1);
+      console.log(this.poReceiptForm.value);
+    this.service.getsearchByPOlines(this.segment1)
+      .subscribe(
+        data => {
+          if (data.code===400){
+            alert(data.message);
+            // alert(data.obj);
+          }
+          if(data.code ===200){
+            this.lstcompolines = data.obj;
+          if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
+            console.log(this.poStatus);
+            this.displaySaveButton =true; 
+            this.disabled = false;
+              this.disabledLine=false;
+              let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =false;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          
+          }
+          else{
+            const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
+          // alert(invCategory);
+          if(this.ctgDescription==='MCH'){
+          this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.disabledLine=true;
+          this.DisplayqtyReceived=true;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          qtyReceived: 1;
+        }
+        else{
+          this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.DisplayqtyReceived=false;
+          this.disabledLine=true;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+
+        }
+        }
+      }
+    }
+      );
+      });
+
     
   }
 
@@ -344,6 +477,8 @@ checkIfAllSelected() {
           if(data.code ===200){
             this.lstSupLineDetails=data.obj;
           this.poReceiptForm.patchValue(this.lstSupLineDetails);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -358,25 +493,26 @@ checkIfAllSelected() {
     this.service.getsearchByReceiptNo(segment1)
       .subscribe(
         data => {
-          // if (data.code===400){
-          //   alert(data.message);
-          //   // alert(data.obj);
-          // }
-          // if(data.code ===200){
-          // this.lstcompolines = data.obj;
           this.lstcompolines = data;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
           var length1=this.lstcompolines.rcvLines.length-1;
           this.lineDetailsArray.removeAt(length1);
-          for (var i=0;i<=length1;i++){
+          // for (var i=0;i<=length1;i++){
+          //   control.push(poLines);
+          // }
+var len=this.lineDetailsArray.length;
+          for ( var i=0;i<this.lstcompolines.rcvLines.length-len;i++){
             control.push(poLines);
-          };
+          }
         this.disabled = false;
         this.disabledLine=false;
         this.disabledViewAccounting=false;
           this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
+
         // }
       }
       
@@ -398,6 +534,7 @@ checkIfAllSelected() {
           }
           if(data.code ===200){
             this.lstcompolines = data.obj;
+            // alert( this.lstcompolines.receiptNo);
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
             this.displaySaveButton =true; 
@@ -410,10 +547,31 @@ checkIfAllSelected() {
           control.push(poLines);
           this.displaySaveButton =false;
           this.poReceiptForm.patchValue(this.lstcompolines);
+         
+        
+          
           }
           else{
+            const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
+          // alert(invCategory);
+          if(this.ctgDescription==='MCH'){
           this.lstcompolines = data.obj;
           this.disabled = true;
+          this.disabledLine=true;
+          this.DisplayqtyReceived=true;
+          let control = this.poReceiptForm.get('poLines') as FormArray;
+          var poLines:FormGroup=this.lineDetailsGroup();
+          var length1=this.lstcompolines.poLines.length-1;
+          this.lineDetailsArray.removeAt(length1);
+          control.push(poLines);
+          this.displaySaveButton =true;
+          this.poReceiptForm.patchValue(this.lstcompolines);
+          qtyReceived: 1;
+        }
+        else{
+          this.lstcompolines = data.obj;
+          this.disabled = true;
+          this.DisplayqtyReceived=false;
           this.disabledLine=true;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
@@ -422,13 +580,99 @@ checkIfAllSelected() {
           control.push(poLines);
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
+          // this.locatorDesc.push(this.lstcompolines.rcvLines[0].locatorDesc);
         }
         }
       }
+    }
       );
     }
 
-
+taxDeatils(poHeaderId,poLineId){
+if(this.lstcompolines.receiptNo===null){
+  const trxId=this.lstcompolines.poLines[0].poHeaderId;
+const trxLineId=this.lstcompolines.poLines[0].poLineId;
+  // alert( 'trxId'+' '+trxId);
+  // alert('trxLineId'+' '+ trxLineId);
+  this.service.receiptnotdonetaxDeatils(trxId,trxLineId)
+  .subscribe((res: any) => {
+    if (res.code === 200) {
+      this.poTaxDeatils = res.obj;   
+      console.log(this.poTaxDeatils);
+    }
+    else  { if (res.code === 400) {
+      alert('Error : ' + res.message);
+    }
+    }
+    // this.poReceiptForm.patchValue(this.lstcompolines);
+  }
+);
+}
+else{
+  const rcvtrxLineId=this.lstcompolines.rcvLines[0].shipLineId;
+const rcvtrxId=this.lstcompolines.shipHeaderId;
+  this.service.receiptdonetaxDeatils(rcvtrxId,rcvtrxLineId)
+  .subscribe((res: any) => {
+    if (res.code === 200) {
+    this.rcvTaxDeatils = res.obj;
+    console.log(this.rcvTaxDeatils);
+    
+    }
+    else  { if (res.code === 400) {
+      alert('Error : ' + res.message);
+    }
+    }
+    // this.poReceiptForm.patchValue(this.lstcompolines);
+  }
+);
+}
+}
+ 
+    shipmentNoFind(shipmentNumber:String) {
+      // alert(segment1);
+      console.log(this.poReceiptForm.value);
+      this.service.getsearchByshipmentNo(shipmentNumber)
+        .subscribe(
+          data => {
+            if (data.code===400){
+              alert(data.message);
+              // alert(data.obj);
+            }
+            if(data.code ===200){
+              this.lstcompolines = data.obj;
+            if(this.lstcompolines.poStatus==='Receipt Generated'){
+              console.log(this.poStatus);
+              this.displaySaveButton =true; 
+              this.disabled = false;
+                this.disabledLine=false;
+                let control = this.poReceiptForm.get('poLines') as FormArray;
+            var poLines:FormGroup=this.lineDetailsGroup();
+            var length1=this.lstcompolines.poLines.length-1;
+            this.lineDetailsArray.removeAt(length1);
+            control.push(poLines);
+            this.displaySaveButton =false;
+            this.poReceiptForm.patchValue(this.lstcompolines);
+            }
+            else{
+            this.lstcompolines = data.obj;
+            this.disabled = true;
+            this.disabledLine=true;
+            let control = this.poReceiptForm.get('poLines') as FormArray;
+            var poLines:FormGroup=this.lineDetailsGroup();
+            var length1=this.lstcompolines.poLines.length-1;
+            this.lineDetailsArray.removeAt(length1);
+            control.push(poLines);
+            this.displaySaveButton =true;
+            this.poReceiptForm.patchValue(this.lstcompolines);
+            this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+            this.recDate=this.lstcompolines.receiptDate;
+  
+          }
+          }
+        }
+        );
+      }
+  
 
 
   poFind1(segment1) {
@@ -453,6 +697,8 @@ checkIfAllSelected() {
           this.disabledLine=false;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.poLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -481,6 +727,8 @@ checkIfAllSelected() {
           this.disabledLine=false;
           control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
         }
       }
       );
@@ -551,12 +799,15 @@ this.xyzdis=true;
 var jsonString = JSON.stringify(reqArr);
     this.service.receiptDateWiseFind(reqArr[0]).subscribe((res: any) => {
       this.lstReceiptDateWiseData=res;
+      this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+          this.recDate=this.lstcompolines.receiptDate;
     });
   }
 
   close(){
     // this.router.navigate(['login']);
-    this.router.navigate(['admin']);
+    // this.router.navigate(['admin']);
+    this.location.back();
   }
 
   okLocator(i){
@@ -565,14 +816,21 @@ var jsonString = JSON.stringify(reqArr);
     poControls[i].locatorDesc=this.lineDetailsArray.controls[i].get('segment11').value+'.'+
     this.lineDetailsArray.controls[i].get('segment2').value+'.'+
     this.lineDetailsArray.controls[i].get('segment3').value+'.'+
+    // this.lineDetailsArray.controls[i].get('segment4').value;
     this.lineDetailsArray.controls[i].get('segment4').value+'.'+
     this.lineDetailsArray.controls[i].get('segment5').value;
     this.locatorDesc=poControls[i].locatorDesc;
     // alert(poControls[i].locatorDesc);
     this.service.getLocatorPoLines(this.locatorDesc,this.locId)
-      .subscribe(
-        data => {
-          this.lstcompolines1 = data;
+    .subscribe((res: any) => {
+          if (res.code === 200) {
+          this.lstcompolines1 = res.obj;
+          this.locatorId=res.obj.locatorId;
+          }
+          else  { if (res.code === 400) {
+            alert('Error : ' + res.message);
+          }
+          }
           // this.poReceiptForm.patchValue(this.lstcompolines);
         }
       );
@@ -592,7 +850,8 @@ var jsonString = JSON.stringify(reqArr);
     }
   }
 
-  calculation(i){
+  calculation(i,qty){
+    // alert(this.lstcompolines.poLines[i].qtyReceived);
     var patch = this.poReceiptForm.get('poLines') as FormArray;
     let quantity=this.lineDetailsArray.controls[i].get('qtyReceived').value;
     // alert(quantity); 
@@ -606,6 +865,31 @@ var taxAmt =baseAmt*taxPer/100;
     taxAmount : taxAmt,
     totAmount: baseAmt +taxAmt,
    });
+  //  alert("Validate");
+   var trxLnArr=this.poReceiptForm.get('poLines').value;
+   var trxLnArr1=this.poReceiptForm.get('poLines') as FormArray
+   let toBeIssuequantity=this.lstcompolines.poLines[i].qtyReceived;
+  // var receivedqty=this.poReceiptForm.get('poLines').value.qtyReceived;
+  //  let qty=trxLnArr[i].qtyReceived;  
+  // alert(quantity+'receivedqty');
+  // alert(toBeIssuequantity +' qty');
+   if(toBeIssuequantity<quantity)
+   {
+     alert("You can not enter more than available quantity");
+     trxLnArr1.controls[i].patchValue({qtyReceived:''});
+     qty.focus();
+    // this.displaySaveButton =false;   
+   }
+   if(quantity<=0)
+   {
+     alert("Please enter quantity more than zero");
+     trxLnArr1.controls[i].patchValue({qtyReceived:''});
+     qty.focus();
+    //  this.displaySaveButton =false;
+   }
+// else{
+//   this.displaySaveButton =true;
+// }
   }
 
   Select(suppSiteId: number) {
@@ -626,6 +910,32 @@ refresh()
       // }
 
 
+
+
+//       validate(i:number,qty1)
+// {alert("Validate");
+//   var trxLnArr=this.poReceiptForm.get('poLines').value;
+//   var trxLnArr1=this.poReceiptForm.get('poLines') as FormArray
+//   let avalqty=trxLnArr[i].qtyReceived;
+//   let qty=trxLnArr[i].qtyReceived;  
+//  alert(avalqty+'avalqty');
+//  alert(trxLnArr[i].primaryQty +' qty');
+//   if(qty>avalqty)
+//   {
+//     alert("You can not enter more than available quantity");
+//     trxLnArr1.controls[i].patchValue({primaryQty:''});
+//     qty1.focus();
+//   }
+//   if(qty<=0)
+//   {
+//     alert("Please enter quantity more than zero");
+//     trxLnArr1.controls[i].patchValue({primaryQty:''});
+//     qty1.focus();
+//   }
+  
+// }
+
+
       poSave(){
         this.displaySaveButton =false;
         const totlCalControls=this.poReceiptForm.get('poLines').value;
@@ -635,7 +945,7 @@ refresh()
         for (var i=0;i<totlCalControls.length;i++)   {
           this.baseAmount=this.baseAmount+totlCalControls[i].baseAmount;
           this.taxAmt=this.taxAmt+totlCalControls[i].taxAmount;
-
+          
         }
         this.totalAmt=this.baseAmount+this.taxAmt;
         // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
@@ -659,6 +969,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
 // alert(this.lstcompolines.poLines[i].qtyReceived)
         // }
         console.log(this.lstcompolines);
+        // delete formValue.locatorDesc;
         
     this.service.poSaveSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -703,7 +1014,29 @@ viewAccounting(receiptNo:any){
       });
   }
 
+  poInvoiceCreation(segment1:any){
+    // alert(this.segment1);
+    this.service.poinvCre(segment1).subscribe((res: any) => {
+    })
+  }
 
+
+  poAllFind(segment1 : any){
+    // alert(this.segment1);
+    // this.poNumber=this.poNumber;
+    this.service.poAllRecFind(segment1).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.poAllRecFind=res.obj;
+        console.log(this.poAllRecFind);
+            // alert(res.message);
+          } else {
+            if (res.code === 400) {
+              alert('Data already present in the data base');
+            }
+          }
+        });
+
+  }  
 
 }
 

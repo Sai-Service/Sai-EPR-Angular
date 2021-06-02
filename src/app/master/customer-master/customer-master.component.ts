@@ -51,7 +51,7 @@ interface IcustomerMaster {
   sstartDate: Date;
   sendDate: Date;
   sstatus: string;
-  accountNo:number;
+  custAccountNo:number;
   divisionName: string;
 }
 
@@ -113,7 +113,7 @@ export class CustomerMasterComponent implements OnInit {
   sstartDate: Date;
   sendDate: Date;
   sstatus: string;
-  accountNo:number;
+  custAccountNo:number;
   ExeAddress: string;
   divisionName: string;
   name:string;
@@ -199,7 +199,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      accountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
+      custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       ExeAddress: [],
       customerId:[],
       divisionName: [],
@@ -404,14 +404,14 @@ if (person === 'Person'){
     delete val.spinCd;
     delete val.sstartDate;
     delete val.sendDate;
-    delete val.accountNo;
+    delete val.custAccountNo;
     return val;
   }
   newOnlySiteMast() {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -423,10 +423,10 @@ if (person === 'Person'){
   }
   newMast() {
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
-    formValue.customerId1=this.accountNo;
+    formValue.customerId1=this.custAccountNo;
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -440,7 +440,7 @@ if (person === 'Person'){
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
@@ -474,7 +474,7 @@ if (person === 'Person'){
     const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.value);
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

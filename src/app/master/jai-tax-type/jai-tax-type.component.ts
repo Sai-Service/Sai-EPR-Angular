@@ -631,7 +631,7 @@ export class JaiTaxTypeComponent implements OnInit {
   
       this.service.jaiTaxTypeMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
+          alert('RECORD INSERTED SUCCESSFULLY');
           this.jaiTaxtypeMasterForm.reset();
         } else {
           if (res.code === 400) {
@@ -656,7 +656,7 @@ export class JaiTaxTypeComponent implements OnInit {
       formValue.regimeId = this.regimeId;
       this.service.UpdateJaiTaxTypeMasterById(formValue, formValue.taxTypeId).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFUILY');
+          alert('RECORD UPDATED SUCCESSFULLY');
           window.location.reload();
         } else {
           if (res.code === 400) {

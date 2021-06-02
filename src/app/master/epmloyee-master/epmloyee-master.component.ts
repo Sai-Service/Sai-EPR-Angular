@@ -40,11 +40,11 @@ export class EpmloyeeMasterComponent implements OnInit {
   emplId: number;
   ticketNo: string;
   divisionId: number;
-  title: string;
-  fname: string
-  mname: string
-  lname: string
-  name: string
+  title: string= '';
+  fname: string= '';
+  mname: string= '';
+  lname: string= '';
+  name: string= '';
   locId: number;
   deptId: string;
   designation: string;
@@ -79,9 +79,14 @@ export class EpmloyeeMasterComponent implements OnInit {
   public titleList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
   public teamRoleList : Array<string>=[];
+  public empIdList:Array<string>=[];
   status1:any;
+  empId:string;
+  userList1: any[] = [];
+  // userList2: any[] = [];
 
-
+  lastkeydown1: number = 0;
+  subscription: any;
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.employeeMasterForm = fb.group({
       emplId: [],
@@ -100,7 +105,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       emailId: ['', [Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       contact1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
       contact2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*'), ]],
-      loginPass: [''],
+      loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
       status: ['', [Validators.required]],
       endDate:[''],
       loginAccess:[''],
@@ -109,6 +114,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       divisionName:[],
       locCode:[],
       teamRole:[],
+      empId:[],
     });
 
   }
@@ -138,14 +144,15 @@ export class EpmloyeeMasterComponent implements OnInit {
           console.log(this.DepartmentList);
         }
       );  
-      // this.service.DesignationList()
-      // .subscribe(
-      //   data => {
-      //     this.DesignationList = data;
-      //     console.log(this.DesignationList);
-      //   }
-      // );
-      this.service.locationIdList()
+      this.service.empIdListFn()
+      .subscribe(
+        data => {
+          this.empIdList = data;
+          console.log(this.empIdList);
+        }
+      );
+      // this.service.locationIdList()
+      this.service.getLocationId(sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.locIdList = data;
@@ -190,11 +197,11 @@ export class EpmloyeeMasterComponent implements OnInit {
     const formValue: IEmployeeMaster = this.transData(this.employeeMasterForm.value);
     this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');    
+        alert('RECORD INSERTED SUCCESSFULLY');    
         this.employeeMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert('Error while data insertion');
           this.employeeMasterForm.reset();
         }
       }
@@ -202,15 +209,18 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
 
   updateMast() {
-    let select = this.lstcomments.find(d => d.divisionId.divisionName === this.divisionName);
-    this.divisionId =select.divisionId.divisionId;
-    this.locId=select.locId.locId;
+    alert(this.divisionName);
+    let select = this.lstcomments.find(d => d.divisionName === this.divisionName);
+   console.log(select);
+   
+    this.divisionId =select.divisionId;
+    this.locId=select.locId;
     const formValue: IEmployeeMaster = this.employeeMasterForm.value;
     formValue.divisionId=this.divisionId;
     formValue.locId=this.locId;
     this.service.UpdateEmpMasterById(formValue, formValue.emplId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
@@ -238,16 +248,28 @@ export class EpmloyeeMasterComponent implements OnInit {
         }
       );
   };
-
+  SearchByEmpId(empId){
+    alert(empId);
+    this.service.getEmpIdDetails(empId)
+    .subscribe(
+      data => {
+        this.lstcomments = data;
+        console.log(this.lstcomments);
+      }
+    );
+  }
   Select(emplId: number) {
     let select = this.lstcomments.find(d => d.emplId === emplId);
     if (select) {
       this.employeeMasterForm.patchValue(select);
-      this.divisionId = select.divisionId.divisionId;
-      this.divisionName=select.divisionId.divisionName;
-      this.locCode=select.locId.locCode;
-      this.locId = select.locId.locId;
+      // this.divisionId = select.divisionId.divisionId;
+      // this.divisionName=select.divisionId.divisionName;
+      // this.locCode=select.locId.locCode;
+      // this.locId = select.locId.locId;
+      // this.deptId= select.deptId+'-'
       this.displayButton = false;
+      this.deptId= select.deptId+'-'+select.deptName;
+      alert(this.deptId);
       this.display = false;
     }
   }
@@ -262,7 +284,7 @@ export class EpmloyeeMasterComponent implements OnInit {
     }
   }
   onKey(event: any) {
-    const aaa = this.title + ' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+    const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
     this.name = aaa;
   }
 
@@ -289,4 +311,24 @@ export class EpmloyeeMasterComponent implements OnInit {
   //   this.lstcomments=status;
   //  });
   //  }
+  getUserIdsFirstWay($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList1 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList1 = this.searchFromArray(this.empIdList, userId);
+      }
+    }
+  }
+
+  searchFromArray(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
 }

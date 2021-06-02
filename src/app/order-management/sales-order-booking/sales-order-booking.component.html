@@ -1,30 +1,32 @@
 <form [formGroup]="SalesOrderBookingForm" (ngSubmit)="SalesOrderBooking(SalesOrderBookingForm.value)">
-    <input hidden type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId'  style="width: 40px;">
+    <input hidden type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId' style="width: 40px;">
     <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
     <input hidden type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
     <input hidden class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
- <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
- <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
-<table style="width: 100%;background-color: white;">
-    <tr>
-        <td colspan="4" class="PageHeader" style="width: 100%;">
-            &nbsp;Sales&nbsp;Order&nbsp;Booking&nbsp;
-        </td>
-        <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;" >
-            &nbsp;Order&nbsp;No&nbsp;&nbsp; 
-        </td>
-        <td style="background-color: #FFE4B5;">
-            <input  class="form-control"  formControlName="orderNumber" [(ngModel)]='orderNumber' value={{orderNumber}} >
-        </td>        
-        <td style="background-color: #FFE4B5;">
-            <button type="button" class="btn-primary" (click)="OrderFind(orderNumber)"><i class="fa fa-search" aria-hidden="true"></i></button>
-        </td>
-    </tr>
+    <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
+    <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Sales&nbsp;Order&nbsp;Booking&nbsp;
+            </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;Order&nbsp;No&nbsp;&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                    value={{orderNumber}}>
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
+        </tr>
     </table>
     <div class="center" style="width: 100%;">
         <div class="form-bg">
             <!-- <form [formGroup]="SalesOrderBookingForm" (ngSubmit)="SalesOrderBooking(SalesOrderBookingForm.value)"> -->
-                <!-- <fieldset class="RFS">
+            <!-- <fieldset class="RFS">
                 <table class="center" style="width: 100%;">
                     <tr>
                         <td style="width: 10%" class="LabelFontStyle">
@@ -54,71 +56,76 @@
                     </tr>
                 </table>
                 </fieldset> -->
-                <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Customer Details&nbsp;/&nbsp;
+            <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Customer
+                    Details&nbsp;/&nbsp;
                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 8rem;color: white;">
-    Additional&nbsp;Details
-  </button>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-         <table class="center" style="width: 100%;">
-            <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Contact&nbsp;No&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input type="text" class="form-control" style="width: 150px;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    GSTN&nbsp;No&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" class="form-control" formControlName="gstNo" [(ngModel)]='gstNo' value={{gstNo}} style="width: 150px;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    GSTN&nbsp;No&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" class="form-control" formControlName="panNo" [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    DMS&nbsp;INS&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input type="text" class="form-control"  style="width: 150px;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    DMS&nbsp;Transaction&nbsp;No&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input type="text" class="form-control"  style="width: 150px;">
-                </td>
-            </tr>
-         </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Ok</button>
-        </div>
-      </div>
-    </div>
-  </div>
-                    </legend>
-                    <table class="center" style="width: 100%;">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        style="width: 8rem;color: white;">
+                        Additional&nbsp;Details
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="center" style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Contact&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" style="width: 150px;">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                GSTN&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" class="form-control" formControlName="gstNo"
+                                                    [(ngModel)]='gstNo' value={{gstNo}} style="width: 150px;">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                GSTN&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" class="form-control" formControlName="panNo"
+                                                    [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                DMS&nbsp;INS&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" style="width: 150px;">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                DMS&nbsp;Transaction&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" style="width: 150px;">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Ok</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </legend>
+                <table class="center" style="width: 100%;">
                     <tr>
-                        
+
                         <td>
                             <table style="width: 100%;" class="center">
                                 <tr>
@@ -126,7 +133,9 @@
                                         Customer&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" formControlName="accountNo" [(ngModel)]='accountNo' value={{accountNo}}   (keydown.tab)="accountNoSearch(accountNo)" style="width: 170px;">     
+                                        <input type="text" class="form-control" formControlName="accountNo"
+                                            [(ngModel)]='accountNo' value={{accountNo}}
+                                            (keydown.tab)="accountNoSearch(accountNo)" style="width: 170px;">
                                     </td>
                                 </tr>
                                 <tr>
@@ -134,7 +143,8 @@
                                         Customer&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName' value={{custName}} style="width: 170px;">
+                                        <input disabled type="text" class="form-control" formControlName="custName"
+                                            [(ngModel)]='custName' value={{custName}} style="width: 170px;">
                                     </td>
                                 </tr>
                             </table>
@@ -146,14 +156,16 @@
                                         Biil&nbsp;To&nbsp;Address&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control" formControlName="custAddress" [(ngModel)]='custAddress' value={{custAddress}} style="width: 170px;">
+                                        <input disabled type="text" class="form-control" formControlName="custAddress"
+                                            [(ngModel)]='custAddress' value={{custAddress}} style="width: 170px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <!-- custAddress -->
-                                        <input disabled type="text" class="form-control" formControlName="billToAddress" [(ngModel)]='custAddress' value={{billToAddress}} style="width: 170px;">
+                                        <input disabled type="text" class="form-control" formControlName="billToAddress"
+                                            [(ngModel)]='custAddress' value={{billToAddress}} style="width: 170px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Lessee&nbsp;Account&nbsp;No:&nbsp;
@@ -179,7 +191,7 @@
                                         <input type="text" class="form-control" style="width: 170px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                       Lessee&nbsp;Address&nbsp;:&nbsp;
+                                        Lessee&nbsp;Address&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <!-- <textarea  class="form-control"></textarea> -->
@@ -189,993 +201,1382 @@
                             </table>
                         </td>
                     </tr>
-                    </table> 
-                </fieldset>
-                <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Details</legend>
-             <table class="center" style="width: 100%;">
-                <!-- <input formControlName="emplId" class="form-control"
+                </table>
+            </fieldset>
+            <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Details</legend>
+                <table class="center" style="width: 100%;">
+                    <!-- <input formControlName="emplId" class="form-control"
                 [(ngModel)]='emplId' style="width: 25px;"> -->
-                <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Order&nbsp;No&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 170px;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;&nbsp;&nbsp;Order&nbsp;Date&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displayorderedDate; then thenorderedDate; else elseorderedDate"></div>
-                <ng-template #thenorderedDate>
-                    <input disabled type="text" class="form-control" formControlName="orderedDate" value={{orderedDate}} 
-                    [ngModel]="orderedDate | date:'yyyy-MM-dd'"
-                    style="width: 170px;"> 
-                </ng-template>
-                <ng-template #elseorderedDate>
-                    <input disabled type="text" class="form-control" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}} style="width: 170px;">
-                </ng-template>
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order&nbsp;Type&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displaytransactionTypeName; then thentransactionTypeName; else elsetransactionTypeName"></div>
-                    <ng-template #thentransactionTypeName>
-                        <select formControlName="transactionTypeName" id="transactionTypeName" class="form-control" style="width: 170px;" >
-                            <option>--Select--</option>
-                            <option *ngFor="let tt of transactionTypeNameList">
-                                {{tt.transactionTypeName}}
-                            </option>
-                        </select>
-                    <!-- <input  type="text" class="form-control" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;"> -->
-                    </ng-template>
-                    <ng-template #elsetransactionTypeName>
-                        <input disabled type="text" class="form-control" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;">
-                    </ng-template>
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displayflowStatusCode; then thenflowStatusCode; else elseflowStatusCode"></div>
-                    <ng-template #thenflowStatusCode>
-                    <input disabled type="text" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode' value={{flowStatusCode}} class="form-control" style="width: 170px;">
-                    </ng-template>
-                    <ng-template #elseflowStatusCode>
-                        <input disabled type="text" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode' value={{flowStatusCode}} class="form-control" style="width: 170px;">
-                    </ng-template>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Payment&nbsp;Term&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displaypayTermDesc; then thenpayTermDesc; else elsepayTermDesc"></div>
-                    <ng-template #thenpayTermDesc>
-                        <select formControlName="payTermDesc" id="payTermDesc" class="form-control" style="width: 170px;" >
-                            <option>--Select--</option>
-                            <option *ngFor="let pt of payTermDescList">
-                                {{pt.codeDesc}}
-                            </option>
-                        </select>
-                    <!-- <input  type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;"> -->
-                    </ng-template>
-                    <ng-template #elsepayTermDesc>
-                        <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;">
-                    </ng-template>
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Sales&nbsp;Person&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
-                    <ng-template #thensalesRepName>
-                        <select formControlName="salesRepName" id="salesRepName" class="form-control" (ngModelChange)="onOptionsSelectedTL($event)" style="width: 170px;" >
-                            <option>--Select--</option>
-                            <option *ngFor="let pt of salesRepNameList" [(ngModel)]='salesRepName' >
-                                {{pt.ticketNo}}
-                            </option>
-                        </select>
-                    <!-- <input type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control" style="width: 170px;"> -->
-                    </ng-template>
-                    <ng-template #elsesalesRepName>
-                        <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control" style="width: 170px;">
-                    </ng-template>
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    TL&nbsp;Name&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displaytlName; then thentlName; else elsetlName"></div>
-                    <ng-template #thentlName>
-                    <input  type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}  class="form-control" style="width: 170px;">
-                    </ng-template>
-                    <ng-template #elsetlName>
-                        <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}  class="form-control" style="width: 170px;">
-                    </ng-template>
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Remark&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displayremarks; then thenremarks; else elseremarks"></div>
-                    <ng-template #thenremarks>
-                    <input  type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}  class="form-control" style="width: 170px;">
-                    </ng-template>
-                    <ng-template #elseremarks>
-                        <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}  class="form-control" style="width: 170px;">
-                    </ng-template>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;&nbsp;&nbsp;&nbsp; Subtotal&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" formControlName="subtotal" [(ngModel)]='subtotal' value={{subtotal}} class="form-control" style="width: 170px;text-align: right;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Tax&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}} class="form-control" style="width: 170px;text-align: right;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Total&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt' value={{totAmt}} class="form-control" style="width: 170px;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle" >
-                    Allotment&nbsp;flag&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displayallotmentFlag; then thenallotmentFlag; else elseallotmentFlag"></div>
-                    <ng-template #thenallotmentFlag>
-                    <input  type="text" class="form-control" style="width: 170px;">
-                    </ng-template>
-                    <ng-template #elseallotmentFlag>
-                        <input disabled type="text" class="form-control" style="width: 170px;">
-                    </ng-template>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;&nbsp;&nbsp;&nbsp; Price List&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <div *ngIf="displaypriceListName; then thenpriceListName; else elsepriceListName"></div>
-                    <ng-template #thenpriceListName>
-                        <select formControlName="priceListName" id="priceListName" class="form-control" style="width: 170px;" >
-                            <option>--Select--</option>
-                            <option *ngFor="let pl of priceListNameList" > 
-                                {{pl.priceListName}}
-                            </option>
-                        </select>
-                    </ng-template>
-                    <ng-template #elsepriceListName>
-                        <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName' value={{priceListName}} class="form-control" style="width: 170px;text-align: left;">
-                    </ng-template>
-                </td>
-            </tr>
-            </table>
-                </fieldset>
-                <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios"  style="font-size: 10px;color: black;">Vehicle Details</legend>
-                    <div id="radios">
-                        <div class="panel-body">
-                            <table class="center" style="width: 100%;">
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;Model&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displaymodel; then thenmodel; else elsemodel" ></div>
-                    <ng-template #thenmodel>
-                        <select formControlName="model" id="model" class="form-control" style="width: 170px;" (ngModelChange)="onOptionsSelectedVariant($event)">
-                        <option>--Select--</option>
-                        <option *ngFor="let mm of mainModelList">
-                            {{mm.code}}
-                        </option>
-                    </select>
-                        <!-- <input  type="text" formControlName="model" [(ngModel)]='model' value={{model}} class="form-control" style="width: 170px;"> -->
-                    </ng-template>
-                    <ng-template #elsemodel>
-                           <input disabled type="text" formControlName="model" [(ngModel)]='model' value={{model}} class="form-control" style="width: 170px;">
-                    </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Variant&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displayvariant; then thenvariant; else elsevariant"></div>
-                    <ng-template #thenvariant>
-
-                        <select formControlName="variant" id="variant" class="form-control" style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)">
-                            <option>--Select--</option>
-                            <option *ngFor="let mm of VariantSearch">
-                                {{mm.variant}}
-                            </option>
-                        </select>
-                        <!-- <input type="text" formControlName="variant" [(ngModel)]='variant' value={{variant}} class="form-control" style="width: 170px;"> -->
-                    </ng-template>
-                    <ng-template #elsevariant>
-                        <input disabled type="text" formControlName="variant" [(ngModel)]='variant' value={{variant}} class="form-control" style="width: 170px;">
-                    </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Color&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displaycolor; then thencolor; else elsecolor"></div>
-                    <ng-template #thencolor>
-                                        <!-- <input  type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;"> -->
-                                        <select formControlName="color" id="color"class="form-control" style="width: 170px;">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let cc of ColourSearch">
-                                            {{cc.colorCode}}
-                                        </option>
-                                    </select>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Order&nbsp;No&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" class="form-control" formControlName="orderNumber"
+                                [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 170px;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;&nbsp;&nbsp;Order&nbsp;Date&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displayorderedDate; then thenorderedDate; else elseorderedDate"></div>
+                            <ng-template #thenorderedDate>
+                                <input disabled type="text" class="form-control" formControlName="orderedDate"
+                                    value={{orderedDate}} [ngModel]="orderedDate | date:'yyyy-MM-dd'"
+                                    style="width: 170px;">
+                            </ng-template>
+                            <ng-template #elseorderedDate>
+                                <input disabled type="text" class="form-control" formControlName="orderedDate"
+                                    [(ngModel)]='orderedDate' value={{orderedDate}} style="width: 170px;">
+                            </ng-template>
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Order&nbsp;Type&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div
+                                *ngIf="displaytransactionTypeName; then thentransactionTypeName; else elsetransactionTypeName">
+                            </div>
+                            <ng-template #thentransactionTypeName>
+                                <select formControlName="transactionTypeName" id="transactionTypeName"
+                                    class="form-control" style="width: 170px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let tt of transactionTypeNameList">
+                                        {{tt.transactionTypeName}}
+                                    </option>
+                                </select>
+                                <!-- <input  type="text" class="form-control" formControlName="transactionTypeName" [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;"> -->
+                            </ng-template>
+                            <ng-template #elsetransactionTypeName>
+                                <input disabled type="text" class="form-control" formControlName="transactionTypeName"
+                                    [(ngModel)]='transactionTypeName' value={{transactionTypeName}}
+                                    style="width: 170px;">
+                            </ng-template>
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displayflowStatusCode; then thenflowStatusCode; else elseflowStatusCode"></div>
+                            <ng-template #thenflowStatusCode>
+                                <input disabled type="text" formControlName="flowStatusCode"
+                                    [(ngModel)]='flowStatusCode' value={{flowStatusCode}} class="form-control"
+                                    style="width: 170px;">
+                            </ng-template>
+                            <ng-template #elseflowStatusCode>
+                                <input disabled type="text" formControlName="flowStatusCode"
+                                    [(ngModel)]='flowStatusCode' value={{flowStatusCode}} class="form-control"
+                                    style="width: 170px;">
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Payment&nbsp;Term&nbsp;:&nbsp;
+                        </td>
+                      
+                        <td>
+                            <div *ngIf="displaypayTermDesc; then thenpayTermDesc; else elsepayTermDesc"></div>
+                            <ng-template #thenpayTermDesc>
+                                <select formControlName="payTermDesc" id="payTermDesc" class="form-control"
+                                    style="width: 170px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let pt of payTermDescList">
+                                        {{pt.codeDesc}}
+                                    </option>
+                                </select>
+                                <!-- <input  type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;"> -->
+                            </ng-template>
+                            <ng-template #elsepayTermDesc>
+                                <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc'
+                                    value={{payTermDesc}} class="form-control" style="width: 170px;">
+                            </ng-template>
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Sales&nbsp;Person&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
+                            <ng-template #thensalesRepName>
+                                <select formControlName="salesRepName" id="salesRepName" class="form-control"
+                                    (ngModelChange)="onOptionsSelectedTL($event)" style="width: 170px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let pt of salesRepNameList" [(ngModel)]='salesRepName'>
+                                        {{pt.ticketNo}}
+                                    </option>
+                                </select>
+                                <!-- <input type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}} class="form-control" style="width: 170px;"> -->
+                            </ng-template>
+                            <ng-template #elsesalesRepName>
+                                <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
+                                    value={{salesRepName}} class="form-control" style="width: 170px;">
+                            </ng-template>
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            TL&nbsp;Name&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displaytlName; then thentlName; else elsetlName"></div>
+                            <ng-template #thentlName>
+                                <input type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}
+                                    class="form-control" style="width: 170px;">
+                            </ng-template>
+                            <ng-template #elsetlName>
+                                <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName'
+                                    value={{tlName}} class="form-control" style="width: 170px;">
+                            </ng-template>
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Remark&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displayremarks; then thenremarks; else elseremarks"></div>
+                            <ng-template #thenremarks>
+                                <input type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}
+                                    class="form-control" style="width: 170px;">
+                            </ng-template>
+                            <ng-template #elseremarks>
+                                <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks'
+                                    value={{remarks}} class="form-control" style="width: 170px;">
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;&nbsp;&nbsp;&nbsp; Subtotal&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="subtotal" [(ngModel)]='subtotal'
+                                value={{subtotal}} class="form-control" style="width: 170px;text-align: right;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Tax&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
+                                class="form-control" style="width: 170px;text-align: right;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Total&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt' value={{totAmt}}
+                                class="form-control" style="width: 170px;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Allotment&nbsp;flag&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displayallotmentFlag; then thenallotmentFlag; else elseallotmentFlag"></div>
+                            <ng-template #thenallotmentFlag>
+                                <input type="text" class="form-control" style="width: 170px;">
+                            </ng-template>
+                            <ng-template #elseallotmentFlag>
+                                <input disabled type="text" class="form-control" style="width: 170px;">
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;&nbsp;&nbsp;&nbsp; Price List&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <div *ngIf="displaypriceListName; then thenpriceListName; else elsepriceListName"></div>
+                            <ng-template #thenpriceListName>
+                                <select formControlName="priceListName" id="priceListName" class="form-control"
+                                    style="width: 170px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let pl of priceListNameList">
+                                        {{pl.priceListName}}
+                                    </option>
+                                </select>
+                            </ng-template>
+                            <ng-template #elsepriceListName>
+                                <input disabled type="text" formControlName="priceListName" [(ngModel)]='priceListName'
+                                    value={{priceListName}} class="form-control" style="width: 170px;text-align: left;">
+                            </ng-template>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset class="RFS">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios"
+                    style="font-size: 10px;color: black;">Vehicle Details</legend>
+                <div id="radios">
+                    <div class="panel-body">
+                        <table class="center" style="width: 100%;">
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;Model&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displaymodel; then thenmodel; else elsemodel"></div>
+                                    <ng-template #thenmodel>
+                                        <select formControlName="model" id="model" class="form-control"
+                                            style="width: 170px;" (ngModelChange)="onOptionsSelectedVariant($event)">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let mm of mainModelList">
+                                                {{mm.code}}
+                                            </option>
+                                        </select>
+                                        <!-- <input  type="text" formControlName="model" [(ngModel)]='model' value={{model}} class="form-control" style="width: 170px;"> -->
                                     </ng-template>
-                    <ng-template #elsecolor>
-                        <input disabled type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;">
-                    </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displayPrice; then thenPrice; else elsePrice"></div>
-                                        <ng-template #thenPrice>
+                                    <ng-template #elsemodel>
+                                        <input disabled type="text" formControlName="model" [(ngModel)]='model'
+                                            value={{model}} class="form-control" style="width: 170px;">
+                                    </ng-template>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Variant&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displayvariant; then thenvariant; else elsevariant"></div>
+                                    <ng-template #thenvariant>
+
+                                        <select formControlName="variant" id="variant" class="form-control"
+                                            style="width: 170px;" (ngModelChange)="onOptionsSelectedColor($event)">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let mm of VariantSearch">
+                                                {{mm.variant}}
+                                            </option>
+                                        </select>
+                                        <!-- <input type="text" formControlName="variant" [(ngModel)]='variant' value={{variant}} class="form-control" style="width: 170px;"> -->
+                                    </ng-template>
+                                    <ng-template #elsevariant>
+                                        <input disabled type="text" formControlName="variant" [(ngModel)]='variant'
+                                            value={{variant}} class="form-control" style="width: 170px;">
+                                    </ng-template>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Color&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displaycolor; then thencolor; else elsecolor"></div>
+                                    <ng-template #thencolor>
+                                        <!-- <input  type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;"> -->
+                                        <select formControlName="color" id="color" class="form-control"
+                                            style="width: 170px;">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let cc of ColourSearch">
+                                                {{cc.ColorCode}}
+                                            </option>
+                                        </select>
+                                    </ng-template>
+                                    <ng-template #elsecolor>
+                                        <input disabled type="text" formControlName="color" [(ngModel)]='color'
+                                            value={{color}} class="form-control" style="width: 170px;">
+                                    </ng-template>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displayPrice; then thenPrice; else elsePrice"></div>
+                                    <ng-template #thenPrice>
                                         <input disabled type="text" class="form-control" style="width: 150px;">
-                                        </ng-template>
-                                        <ng-template #elsePrice>
-                                            <input disabled type="text" class="form-control" style="width: 150px;">
-                                        </ng-template>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                      </div>
-                </fieldset>
-                <fieldset class="RFS">
-                    <table>
-                        <tr>
-                            <td>
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios1" class="data-toggle" collapse style="font-size: 10px;color: black;">Finance Details</legend>
-                            </td>&nbsp;&nbsp;
-                            <td>
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios2" class="data-toggle" collapse style="font-size: 10px;color: black;">Exchange Details</legend>
-                            </td>&nbsp;&nbsp;
-                            <td>
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios3" class="data-toggle" collapse style="font-size: 10px;color: black;">MCP Details</legend>
-                            </td>&nbsp;&nbsp;
-                            <td>
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios3" class="data-toggle" collapse style="font-size: 10px;color: black;">Auto Card Details</legend>
-                            </td>
-                        </tr>
-                    </table>
-                   
-                  
-                   
-                      <div id="radios1" class="panel-collapse collapse">
-                        <!-- add class "collapse" to start out closed -->
-                        <div class="panel-body">
-                            <table class="center" style="width: 100%;">
-                              <tr> 
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;Finance&nbsp;Type&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
+                                    </ng-template>
+                                    <ng-template #elsePrice>
+                                        <input disabled type="text" class="form-control" style="width: 150px;">
+                                    </ng-template>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="RFS">
+                <table>
+                    <tr>
+                        <td>
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios1"
+                                class="data-toggle" collapse style="font-size: 10px;color: black;">Finance Details
+                            </legend>
+                        </td>&nbsp;&nbsp;
+                        <td>
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios2"
+                                class="data-toggle" collapse style="font-size: 10px;color: black;">Exchange Details
+                            </legend>
+                        </td>&nbsp;&nbsp;
+                        <td>
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios3"
+                                class="data-toggle" collapse style="font-size: 10px;color: black;">MCP Details</legend>
+                        </td>&nbsp;&nbsp;
+                        <td>
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" data-toggle="collapse" data-target="#radios3"
+                                class="data-toggle" collapse style="font-size: 10px;color: black;">Auto Card Details
+                            </legend>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+                <div id="radios1" class="panel-collapse collapse">
+                    <!-- add class "collapse" to start out closed -->
+                    <div class="panel-body">
+                        <table class="center" style="width: 100%;">
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;Finance&nbsp;Type&nbsp;:&nbsp;
+                                </td>
+                                <td>
                                     <div *ngIf="displayfinanceType; then thenfinanceType; else elsefinanceType"></div>
                                     <ng-template #thenfinanceType>
-                                        <select formControlName="financeType"  id="financeType" class="form-control" style="width: 170px;">
+                                        <select formControlName="financeType" id="financeType" class="form-control"
+                                            style="width: 170px;">
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  financeTypeList">{{sc.codeDesc}}</option>
-                                            </select>
+                                        </select>
                                     </ng-template>
                                     <ng-template #elsefinanceType>
-                                        <input disabled type="text" formControlName="financeType" [(ngModel)]='financeType' value={{financeType}} class="form-control" style="width: 170px;">
+                                        <input disabled type="text" formControlName="financeType"
+                                            [(ngModel)]='financeType' value={{financeType}} class="form-control"
+                                            style="width: 170px;">
                                     </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Financer&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displayfinancerName; then thenfinancerName; else elsefinancerName"></div>
-                                        <ng-template #thenfinancerName>
-                                            <select formControlName="financerName"  id="financerName" class="form-control" style="width: 170px;">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}</option>
-                                                </select>
-                                        </ng-template>
-                                        <ng-template #elsefinancerName>
-                                        <input disabled type="text" formControlName="financerName" [(ngModel)]='financerName' value={{financerName}} class="form-control" style="width: 170px;">
-                                        </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finance&nbsp;Amount&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displayfinanceAmt; then thenfinanceAmt; else elsefinanceAmt"></div>
-                                        <ng-template #thenfinanceAmt>
-                                            <input  type="text" formControlName="financeAmt" [(ngModel)]='financeAmt' value={{financeAmt}} class="form-control" style="width: 150px;">
-                                        </ng-template>
-                                        <ng-template #elsefinanceAmt>
-                                        <input disabled type="text" formControlName="financeAmt" [(ngModel)]='financeAmt' value={{financeAmt}} class="form-control" style="width: 150px;">
-                                        </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EMI&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displayemi; then thenemi; else elseemi"></div>
-                                        <ng-template #thenemi>
-                                            <input  type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}} class="form-control" style="width: 150px;">
-                                        </ng-template>
-                                        <ng-template #elseemi>
-                                        <input disabled type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}} class="form-control" style="width: 150px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Financer&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displayfinancerName; then thenfinancerName; else elsefinancerName">
+                                    </div>
+                                    <ng-template #thenfinancerName>
+                                        <select formControlName="financerName" id="financerName" class="form-control"
+                                            style="width: 170px;">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}</option>
+                                        </select>
                                     </ng-template>
-                                    </td>
-                                </tr> 
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tenure&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displaytenure; then thentenure; else elsetenure"></div>
-                                        <ng-template #thentenure>
-                                            <input  type="text" formControlName="tenure" [(ngModel)]='tenure' value={{tenure}} class="form-control" style="width: 170px;">
-                                        </ng-template>
-                                        <ng-template #elsetenure>
-                                        <input disabled type="text" formControlName="tenure" [(ngModel)]='tenure' value={{tenure}} class="form-control" style="width: 170px;">
-                                        </ng-template>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Down&nbsp;Payment&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <div *ngIf="displaydownPayment; then thendownPayment; else elsedownPayment"></div>
-                                        <ng-template #thendownPayment>
-                                            <input  type="text" formControlName="downPayment" [(ngModel)]='downPayment' value={{downPayment}} class="form-control" style="width: 170px;">
-                                        </ng-template>
-                                        <ng-template #elsedownPayment>
-                                        <input disabled type="text" formControlName="downPayment" [(ngModel)]='downPayment' value={{downPayment}} class="form-control" style="width: 170px;">
+                                    <ng-template #elsefinancerName>
+                                        <input disabled type="text" formControlName="financerName"
+                                            [(ngModel)]='financerName' value={{financerName}} class="form-control"
+                                            style="width: 170px;">
                                     </ng-template>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                      </div>
-                      <div id="radios2" class="panel-collapse collapse">
-                        <!-- add class "collapse" to start out closed -->
-                        <div class="panel-body">
-                            <table class="center" style="width: 100%;">
-                                <tr> 
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Exchange&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 120px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Loyalty&nbsp;Bonus&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 100px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                      Exchange&nbsp;Reg&nbsp;No&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 120px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ins&nbsp;Charges&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 100px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Offer&nbsp;Price&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 100px;">
-                                    </td>
-                                </tr> 
-                            
-                            </table>
-                        </div>
-                      </div>
-                      <div id="radios3" class="panel-collapse collapse">
-                        <!-- add class "collapse" to start out closed -->
-                        <div class="panel-body">
-                            <table class="center" style="width: 100%;">
-                                <tr> 
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Type&nbsp;of&nbsp;Card&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 120px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Application&nbsp;Form&nbsp;No&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 100px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Loyality&nbsp;Card&nbsp;Amont&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" style="width: 120px;">
-                                    </td>
-                                </tr> 
-                            
-                            </table>
-                        </div>
-                      </div>
-                </fieldset>
-                <div *ngIf="displayorderLineDetailsPart; then thenorderLineDetailsPart; else elseorderLineDetailsPart"></div>
-                <ng-template #thenorderLineDetailsPart>
-                    <div class="grid_scroll">
-                        <fieldset class="RFS">
-                            <legend id="FormsPH_LGAadhaar" class="RFSL"   style="font-size: 10px;color: black;">Line & Tax Details</legend>   
-                            <div class="classic-tabs">
-                                <!-- Nav tabs -->
-                                <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
-                                  <!-- <li class="nav-item ml-0">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finance&nbsp;Amount&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displayfinanceAmt; then thenfinanceAmt; else elsefinanceAmt"></div>
+                                    <ng-template #thenfinanceAmt>
+                                        <input type="text" formControlName="financeAmt" [(ngModel)]='financeAmt'
+                                            value={{financeAmt}} class="form-control" style="width: 150px;">
+                                    </ng-template>
+                                    <ng-template #elsefinanceAmt>
+                                        <input disabled type="text" formControlName="financeAmt"
+                                            [(ngModel)]='financeAmt' value={{financeAmt}} class="form-control"
+                                            style="width: 150px;">
+                                    </ng-template>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EMI&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displayemi; then thenemi; else elseemi"></div>
+                                    <ng-template #thenemi>
+                                        <input type="text" formControlName="emi" [(ngModel)]='emi' value={{emi}}
+                                            class="form-control" style="width: 150px;">
+                                    </ng-template>
+                                    <ng-template #elseemi>
+                                        <input disabled type="text" formControlName="emi" [(ngModel)]='emi'
+                                            value={{emi}} class="form-control" style="width: 150px;">
+                                    </ng-template>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tenure&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displaytenure; then thentenure; else elsetenure"></div>
+                                    <ng-template #thentenure>
+                                        <input type="text" formControlName="tenure" [(ngModel)]='tenure'
+                                            value={{tenure}} class="form-control" style="width: 170px;">
+                                    </ng-template>
+                                    <ng-template #elsetenure>
+                                        <input disabled type="text" formControlName="tenure" [(ngModel)]='tenure'
+                                            value={{tenure}} class="form-control" style="width: 170px;">
+                                    </ng-template>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Down&nbsp;Payment&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <div *ngIf="displaydownPayment; then thendownPayment; else elsedownPayment"></div>
+                                    <ng-template #thendownPayment>
+                                        <input type="text" formControlName="downPayment" [(ngModel)]='downPayment'
+                                            value={{downPayment}} class="form-control" style="width: 170px;">
+                                    </ng-template>
+                                    <ng-template #elsedownPayment>
+                                        <input disabled type="text" formControlName="downPayment"
+                                            [(ngModel)]='downPayment' value={{downPayment}} class="form-control"
+                                            style="width: 170px;">
+                                    </ng-template>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="radios2" class="panel-collapse collapse">
+                    <!-- add class "collapse" to start out closed -->
+                    <div class="panel-body">
+                        <table class="center" style="width: 100%;">
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Exchange&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 120px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Loyalty&nbsp;Bonus&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 100px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Exchange&nbsp;Reg&nbsp;No&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 120px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ins&nbsp;Charges&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 100px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Offer&nbsp;Price&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 100px;">
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <div id="radios3" class="panel-collapse collapse">
+                    <!-- add class "collapse" to start out closed -->
+                    <div class="panel-body">
+                        <table class="center" style="width: 100%;">
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Type&nbsp;of&nbsp;Card&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 120px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Application&nbsp;Form&nbsp;No&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 100px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Loyality&nbsp;Card&nbsp;Amont&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" style="width: 120px;">
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </fieldset>
+            <div *ngIf="displayorderLineDetailsPart; then thenorderLineDetailsPart; else elseorderLineDetailsPart">
+            </div>
+            <ng-template #thenorderLineDetailsPart>
+                <div class="grid_scroll">
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Line & Tax
+                            Details</legend>
+                        <div class="classic-tabs">
+                            <!-- Nav tabs -->
+                            <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
+                                <!-- <li class="nav-item ml-0">
                                     <a class="nav-link waves-light active"  data-toggle="tab" href="#panel1001" role="tab">General</a>
                                   </li> -->
-                                  <li class="nav-item">
-                                    <a class="nav-link waves-light active"   data-toggle="tab" href="#panel1002" role="tab">Lines</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab">Tax Details</a>
-                                  </li>
-                                   <!-- <li class="nav-item">
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light active" data-toggle="tab" href="#panel1002"
+                                        role="tab">Lines</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab">Tax
+                                        Details</a>
+                                </li>
+                                <!-- <li class="nav-item">
                                     <a class="nav-link waves-light" data-toggle="tab" href="#panel10099" role="tab">Distribution</a>
                                   </li> -->
-                                 <!-- <li class="nav-item">
+                                <!-- <li class="nav-item">
                                       <a class="nav-link waves-light" data-toggle="tab" href="#panel1003" role="tab">View Payments</a>
                                     </li> -->
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                    <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
-                                </ul>
-                                <div class="tab-content rounded-bottom">
-                                  <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
-                                          <div class="grid_scroll">
-                                            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
-                                                <thead>
-                                                     <tr class="GridHeader">
-                                                         <th scope="col" style="width: 40px;">Line No</th> 
-                                                         <th scope="col" style="width: 40px;">Type Category</th> 
-                                                         <th scope="col" style="width: 170px;">Item code</th> 
-                                                         <th scope="col" style="width: 170px;">Description</th> 
-                                                         <th scope="col" style="width: 70px;">Qty</th> 
-                                                         <th scope="col" style="width: 90px;">Unit Price</th> 
-                                                         <th scope="col" style="width: 170px;">Tax Category</th> 
-                                                         <th scope="col" style="width: 90px;">Base Amount</th> 
-                                                         <th scope="col" style="width: 90px;">Tax Amount</th> 
-                                                         <th scope="col" style="width: 90px;">Total Amont</th> 
-                                                         <th scope="col" style="width: 90px;">HSN/SAC code</th> 
-                                                         <th scope="col" style="width: 120px;">Status</th> 
-                                                         <th scope="col" style="width: 120px;">Add</th> 
-                                                         <th scope="col" style="width: 120px;">Remove</th> 
-                                                     </tr>
-                                                 </thead>
-                                                 <tbody class="ItemStyle">
-                                                     <ng-container class="center" formArrayName="oeOrderLinesAllList">
-                                                         <ng-container  *ngFor="let group of orderlineDetailsArray().controls; let i= index"
-                                                                         [formGroupName]="i" class="auto-style5">
-                                                     <tr>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="lineNumber"  class="form-control" style="height: 20px;width: 40px;">
-                                                        </td>
-                                                        <td>
-                                                         <div *ngIf="displaycategory; then thencategory; else elsecategory"></div>
-                                                         <ng-template #thencategory>
-                                                             <select  class="form-control"  formControlName="category" [ngModel]="category" style="height: 20px;width: 120px;"
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                                <li class="nav-item"></li>
+                            </ul>
+                            <div class="tab-content rounded-bottom">
+                                <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
+                                    <div class="grid_scroll">
+                                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4"
+                                            border="0" id="ctl00_cpForm_grdActions"
+                                            style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th scope="col" style="width: 40px;">Line No</th>
+                                                    <th scope="col" style="width: 40px;">Type Category</th>
+                                                    <th scope="col" style="width: 170px;">Item code</th>
+                                                    <th scope="col" style="width: 170px;">Description</th>
+                                                    <th scope="col" style="width: 70px;">Qty</th>
+                                                    <th scope="col" style="width: 90px;">Unit Price</th>
+                                                    <th scope="col" style="width: 170px;">Tax Category</th>
+                                                    <th scope="col" style="width: 90px;">Base Amount</th>
+                                                    <th scope="col" style="width: 90px;">Tax Amount</th>
+                                                    <th scope="col" style="width: 90px;">Total Amont</th>
+                                                    <th scope="col" style="width: 90px;">HSN/SAC code</th>
+                                                    <th scope="col" style="width: 120px;">Status</th>
+                                                    <th scope="col" style="width: 120px;">Add</th>
+                                                    <th scope="col" style="width: 120px;">Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="ItemStyle">
+                                                <ng-container class="center" formArrayName="oeOrderLinesAllList">
+                                                    <ng-container
+                                                        *ngFor="let group of orderlineDetailsArray().controls; let i= index"
+                                                        [formGroupName]="i" class="auto-style5">
+                                                        <tr>
+                                                            <td>
+                                                                <!-- <input type="number" formControlName="orderNumber"
+                                                                    class="form-control"
+                                                                    style="height: 20px;width: 90px;"> -->
+                                                                <input  type="number" formControlName="lineNumber"
+                                                                    class="form-control"
+                                                                    style="height: 20px;width: 40px;">
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    *ngIf="displaycategory; then thencategory; else elsecategory">
+                                                                </div>
+                                                                <ng-template #thencategory>
+                                                                    <select formControlName="itemType" id="itemType"
+                                                                        (ngModelChange)='onOptionsSelectedCategory($event, i)'
+                                                                        class="form-control"
+                                                                        style="width: 100px;height: 25px;font-size: 10px;">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let sc of  categoryList">
+                                                                            {{sc.type}}
+                                                                        </option>
+                                                                    </select>
+                                                                    <!-- <select  class="form-control"  formControlName="category" [ngModel]="category" style="height: 20px;width: 120px;"
                                                              (ngModelChange)='onOptionsSelectedCategory($event)'  >
                                                                <option value="RTO">RTO</option>
                                                                <option value="INS">INS</option>
                                                                <option value="EW">EW</option>
-                                                               </select>
-                                                         </ng-template>  
-                                                         <ng-template #elsecategory>
-                                                             <input disabled type="text"   formControlName="invType" value="invType" [ngModel]="invType"    class="form-control" style="height: 20px;width: 170px;">
-                                                         </ng-template>
-                                                        </td>
-                                                        <td>
-                                                         <div *ngIf="displaysegment; then thensegment; else elsesegment"></div>
-                                                         <ng-template #thensegment>
-                                                               <input  type="text" formControlName="segment"
+                                                               </select> -->
+                                                                </ng-template>
+                                                                <ng-template #elsecategory>
+                                                                    <input disabled type="text"
+                                                                        formControlName="itemType" value="itemType"
+                                                                        class="form-control"
+                                                                        style="height: 20px;width: 170px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            <!-- <td> -->
+
+                                                            <!-- </td> -->
+                                                            <td>
+                                                                <div
+                                                                    *ngIf="displaysegment; then thensegment; else elsesegment">
+                                                                </div>
+                                                                <ng-template #thensegment>
+                                                                    <select formControlName="segment" id="segment"
+                                                                        (ngModelChange)='onOptionsSelectedDescription($event,i)'
+                                                                        class="form-control"
+                                                                        style="width: 100px;height: 25px;font-size: 10px;">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let sc of  invItemList1">
+                                                                            {{sc.SEGMENT}}
+                                                                        </option>
+                                                                    </select>
+                                                                    <input type="number" formControlName="itemId">
+                                                                    <!-- <input  type="text" formControlName="segment"
                                                                id="invItemIdFirstWay"
                                                                list="dynmicUserIds1" class="form-control" (ngModelChange)='onOptionsSelectedDescription($event)' style="height: 20px;width: 170px;"/>
-                                                          
-                                                               <datalist id="dynmicUserIds1"  (ngModelChange)='onOptionsSelectedDescription($event)'>
+                                                           <datalist id="dynmicUserIds1"  (ngModelChange)='onOptionsSelectedDescription($event)'>
                                                                <option *ngFor="let item of addonItemList"
                                                                    [ngValue]="item.itemId">{{item.segment}}
                                                                </option>
-                                                           </datalist>
-                                                           
-                                                         </ng-template>  
-                                                         <ng-template #elsesegment>
-                                                             <input disabled type="text"  formControlName="segment"   class="form-control" style="height: 20px;width: 170px;">
-                                                         </ng-template>
-                                                     </td>
-                                                        <td>
-                                                         <div *ngIf="displayorderedItem; then thenorderedItem; else elseorderedItem"></div>
-                                                         <ng-template #thenorderedItem>
-                                                             <input disabled type="text"  formControlName="orderedItem" value="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
-                                                         </ng-template>
-                                                         <ng-template #elseorderedItem>
-                                                         <input disabled type="text"  formControlName="orderedItem" value="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;">
-                                                         </ng-template>   
-                                                     </td>
-                                                        <td>
-                                                         <div *ngIf="displaypricingQty; then thenpricingQty; else elsepricingQty"></div>
-                                                         <ng-template #thenpricingQty>
-                                                             <input type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
-                                                         </ng-template>
-                                                         <ng-template #elsepricingQty>
-                                                         <input disabled type="text"  formControlName="pricingQty"  class="form-control" style="height: 20px;width: 70px;">
-                                                         </ng-template>  
-                                                     </td>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="unitSellingPrice"  class="form-control" style="height: 20px;width: 90px;">
-                                                        </td>
-                                                        <td>
-                                                         <div *ngIf="displaytaxCategoryName; then thentaxCategoryName; else elsetaxCategoryName"></div>
-                                                         <ng-template #thentaxCategoryName>
-                                                         <input  type="text"  formControlName="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control" style="height: 20px;width: 170px;">
-                                                         </ng-template>  
-                                                         <ng-template #elsetaxCategoryName>
-                                                             <input disabled type="text"  formControlName="taxCategoryName"  class="form-control" style="height: 20px;width: 170px;">
-                                                         </ng-template>
-                                                     </td>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="baseAmt"  class="form-control" style="height: 20px;width: 70px;">
-                                                        </td>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="taxAmt"  class="form-control" style="height: 20px;width: 70px;">
-                                                        </td>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="totAmt"  class="form-control" style="height: 20px;width: 70px;">
-                                                        </td>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="hsnSacCode" [(ngModel)]='hsnSacCode'  class="form-control" style="height: 20px;width: 70px;">
-                                                        </td>
-                                                        <td>
-                                                         <input disabled type="text"  formControlName="flowStatusCode"  class="form-control" style="height: 20px;width:120px;">
-                                                        </td>
-                                                        <td>
-                                                         <button type="submit" class="btn btn-primary" (click)="addRow()" 
-                                                           style="width: min-content;"><i class="fa fa-plus"></i></button>
-                                                        </td>
-                                                        <td>
-                                                         <button type="submit" class="btn btn-primary" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>
-                                                        </td>
-                                                        <div *ngIf="displayInsDetails; then thenBlockInsDetails; else elseBlockInsDetails"></div>
-                                                     <ng-template #thenBlockInsDetails>
-                                                     </ng-template>
-                                                     <ng-template #elseBlockInsDetails>
-                                                        <td>
+                                                           </datalist> -->
+                                                                </ng-template>
+                                                                <ng-template #elsesegment>
+                                                                    <input disabled type="text"
+                                                                        formControlName="segment" class="form-control"
+                                                                        style="height: 20px;width: 170px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            <td>
+                                                                <!-- <div *ngIf="displayorderedItem; then thenorderedItem; else elseorderedItem"></div>
+                                                         <ng-template #thenorderedItem> -->
+                                                                <!-- <input disabled type="text"  formControlName="orderedItem" value="orderedItem" [(ngModel)]='orderedItem'  class="form-control" style="height: 20px;width: 170px;"> -->
+                                                                <!-- </ng-template> -->
+                                                                <!-- <ng-template #elseorderedItem> -->
+                                                                <input disabled type="text"
+                                                                    formControlName="orderedItem" value="orderedItem"
+                                                                    class="form-control"
+                                                                    style="height: 20px;width: 170px;">
+                                                                <!-- </ng-template>    -->
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    *ngIf="displaypricingQty; then thenpricingQty; else elsepricingQty">
+                                                                </div>
+                                                                <ng-template #thenpricingQty>
+                                                                    <input type="text" formControlName="pricingQty"
+                                                                        class="form-control" (change)="onKey(i)"
+                                                                        style="height: 20px;width: 70px;">
+                                                                </ng-template>
+                                                                <ng-template #elsepricingQty>
+                                                                    <input type="text" formControlName="pricingQty"
+                                                                        class="form-control" 
+                                                                        style="height: 20px;width: 70px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" formControlName="unitSellingPrice"
+                                                                    class="form-control"
+                                                                    style="height: 20px;width: 90px;"  (change)="onKey(i)">
+                                                                <!-- <input  type="number"  formControlName="adhocDiscount"  class="form-control" style="height: 20px;width: 90px;"> -->
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    *ngIf="displaytaxCategoryName; then thentaxCategoryName; else elsetaxCategoryName">
+                                                                </div>
+                                                                <ng-template #thentaxCategoryName>
+                                                                    <select formControlName="taxCategoryName"
+                                                                        id="taxCategoryName"
+                                                                        (ngModelChange)='onOptionTaxCatSelected($event,i)' (change)="onKey(i)"
+                                                                        class="form-control"
+                                                                        style="width: 150px;height: 25px;font-size: 10px;">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let sc of  taxCategoryList">
+                                                                            {{sc.taxCategoryName}}
+                                                                        </option>
+                                                                    </select>
+                                                                    <input hidden type="number"
+                                                                        formControlName="taxCategoryId"
+                                                                        [(ngModel)]='taxCategoryId' class="form-control"
+                                                                        style="height: 20px;width: 170px;">
+                                                                    <input hidden type="number" formControlName="orgId"
+                                                                        [(ngModel)]='orgId' class="form-control"
+                                                                        style="height: 20px;width: 170px;">
+                                                                    <!-- <input  type="text"  formControlName="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control" style="height: 20px;width: 170px;"> -->
+                                                                </ng-template>
+                                                                <ng-template #elsetaxCategoryName>
+                                                                    <input disabled type="text"
+                                                                        formControlName="taxCategoryName"
+                                                                        class="form-control"
+                                                                        style="height: 20px;width: 170px;">
+                                                                </ng-template>
+                                                            </td>
+                                                            <td>
+                                                                <!-- baseAmt -->
+                                                                <input disabled type="number" formControlName="baseAmt"
+                                                                   class="form-control"  (change)="onKey(i)"
+                                                                    style="height: 20px;width: 70px;">
+                                                            </td>
+                                                            <td>
+                                                                <!-- taxAmt -->
+                                                                <input type="number" formControlName="taxAmt"
+                                                                     class="form-control"
+                                                                    style="height: 20px;width: 70px;">
+                                                            </td>
+                                                            <td>
+                                                                <!-- totAmt -->
+                                                                <input type="number" formControlName="totAmt"
+                                                                    class="form-control"
+                                                                    style="height: 20px;width: 70px;">
+                                                            </td>
+                                                            <td>
+                                                                <!-- hsnSacCode -->
+                                                                <input type="number" formControlName="hsnSacCode"
+                                                                    class="form-control"
+                                                                    style="height: 20px;width: 70px;">
+                                                            </td>
+                                                            <td>
+                                                                <!-- flowStatusCode -->
+                                                                <input type="number" formControlName="flowStatusCode"
+                                                                     class="form-control"
+                                                                    style="height: 20px;width:120px;">
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    (click)="addRow()" style="width: min-content;"><i
+                                                                        class="fa fa-plus"></i></button>
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    (click)="RemoveRow(i)"
+                                                                    style="width: min-content;"><i
+                                                                        class="fa fa-trash"></i></button>
+                                                            </td>
+                                                            <div
+                                                                *ngIf="displayInsDetails; then thenBlockInsDetails; else elseBlockInsDetails">
+                                                            </div>
+                                                            <ng-template #thenBlockInsDetails>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockInsDetails>
+                                                                <td>
 
-                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: 8rem;">
-                         Insurance Details
-                         </button>
-                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                           <div class="modal-content">
-                             <div class="modal-header">
-                               <h5 class="modal-title" id="exampleModalLongTitle">Insurance Details</h5>
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                               </button>
-                             </div>
-                             <div class="modal-body">
-                              <table class="center">
-                                 <tr>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         MI&nbsp;Premium&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <input type="text" disabled  class="form-control">
-                                     </td>
-                                 </tr>
-                              </table>
-                             </div>
-                             <div class="modal-footer">
-                               <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                             </div>
-                           </div>
-                         </div>
-                         </div>
-                          </td>
-                         </ng-template>                   
-                                                 
-                         <div *ngIf="displayEWDetails; then thenBlockEWDetails; else elseBlockEWDetails"></div>
-                                                     <ng-template #thenBlockEWDetails>
-                                                     </ng-template>
-                                                     <ng-template #elseBlockEWDetails>
-                                                     <td>
-                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 8rem;">
-                         EW Details
-                         </button>
-                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                         <div class="modal-dialog modal-lg" role="document">
-                           <div class="modal-content">
-                             <div class="modal-header">
-                               <h5 class="modal-title" id="exampleModalLabel">EW Details</h5>
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                               </button>
-                             </div>
-                             <div class="modal-body">
-                              <table class="center">
-                                  <tr>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         Interensted&nbsp;in&nbsp;EW&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <select class="form-control">
-                                             <option value="Yes">Yes</option>
-                                             <option value="No">No</option>
-                                         </select>
-                                     </td>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         EW&nbsp;Type&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <select class="form-control">
-                                             <option value="Yes">Yes</option>
-                                             <option value="No">No</option>
-                                         </select>
-                                     </td>
-                                  </tr>
-                                  <tr>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         EW&nbsp;Code&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <input class="form-control">
-                                     </td>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         EW&nbsp;Amount&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <input class="form-control">
-                                     </td>
-                                  </tr>
-                                  <tr>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         Start&nbsp;Date&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <input type="text" class="form-control">
-                                     </td>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         End&nbsp;Date&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <input type="text" class="form-control">
-                                     </td>
-                                  </tr>
-                                  <tr>
-                                     <td style="width: 15%" class="LabelFontStyle">
-                                         Booklet&nbsp;No&nbsp;:&nbsp;
-                                     </td>
-                                     <td>
-                                         <input type="text" class="form-control">
-                                     </td>
-                                  </tr>
-                              </table>
-                             </div>
-                             <div class="modal-footer">
-                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                               <button type="button" class="btn btn-primary">Ok</button>
-                             </div>
-                           </div>
-                         </div>
-                         </div>
-                                                     </td>
-                           </ng-template>
-                                                     </tr>
-                                                 </ng-container>
-                                                     </ng-container>
-                                                 </tbody>
-                                                 
-                                             </table>                            
-                                          </div>
-                                  </div>
-                                  <div class="tab-pane fade" id="panel1006" role="tabpanel">
-                                        <div class="grid_scroll">
-                                             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
-                                                <thead>
-                                                    <tr class="GridHeader"> 
-                                                        <th scope="col">SL. NO.</th>
-                                                        <th scope="col">Tax Rate Name
-                                                        </th>
-                                                        <th scope="col">Tax Type</th>
-                                                        <th scope="col">Tax Point Basis
-                                                        </th>
-                                                        <th scope="col">
-                                                            <table style="width: 100%;">
-                                                                <tr style="border-bottom: solid 1px Gray;">
-                                                                    <td colspan="10" style="text-align: center;">
-                                                                        Precedence</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        1</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        2</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        3</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        4</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        5</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        6</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        7</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        8</td>
-                                                                    <td style="width: 2rem; border-right: solid 1px Gray;">
-                                                                        9</td>
-                                                                    <td style="width: 2rem;">
-                                                                        10</td>
-                                                                </tr>
-                                                            </table>
-                                                        </th>
-                                                        <th scope="col">Currency</th>
-                                                        <th scope="col">Tax Rate</th>
-                                                        <th scope="col">Tax Amount</th>
-                                                        <th scope="col">Recoverabl </th>
-                                                        <th scope="col">Inclusive</th>
-                                                        <th scope="col">Self Assesed/Reverse Charge </th>
-                                                    </tr>   
-                                                </thead>
-                                                <tbody>
-                                                    <ng-container  class="center" formArrayName="taxAmounts">
-                                                            <ng-container *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
-                                                            [formGroupName]="j"  class="auto-style5">
-                                                          <tr class="ItemStyle" style="text-decoration:none;">
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        data-toggle="modal"
+                                                                        data-target="#exampleModalCenter"
+                                                                        style="width: 8rem;">
+                                                                        Insurance Details
+                                                                    </button>
+                                                                    <div class="modal fade" id="exampleModalCenter"
+                                                                        tabindex="-1" role="dialog"
+                                                                        aria-labelledby="exampleModalCenterTitle"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg modal-dialog-centered"
+                                                                            role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLongTitle">
+                                                                                        Insurance Details</h5>
+                                                                                    <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <table class="center">
+                                                                                        <tr>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                MI&nbsp;Premium&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    disabled
+                                                                                                    class="form-control">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary"
+                                                                                        data-dismiss="modal">Ok</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </ng-template>
+
+                                                            <div
+                                                                *ngIf="displayEWDetails; then thenBlockEWDetails; else elseBlockEWDetails">
+                                                            </div>
+                                                            <ng-template #thenBlockEWDetails>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockEWDetails>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        data-toggle="modal" data-target="#exampleModal"
+                                                                        style="width: 8rem;">
+                                                                        EW Details
+                                                                    </button>
+                                                                    <div class="modal fade" id="exampleModal"
+                                                                        tabindex="-1" role="dialog"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg"
+                                                                            role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLabel">EW
+                                                                                        Details</h5>
+                                                                                    <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <table class="center">
+                                                                                        <tr>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                Interensted&nbsp;in&nbsp;EW&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select
+                                                                                                    class="form-control">
+                                                                                                    <option value="Yes">
+                                                                                                        Yes</option>
+                                                                                                    <option value="No">
+                                                                                                        No</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                EW&nbsp;Type&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select
+                                                                                                    class="form-control">
+                                                                                                    <option value="Yes">
+                                                                                                        Yes</option>
+                                                                                                    <option value="No">
+                                                                                                        No</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                EW&nbsp;Code&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input
+                                                                                                    class="form-control">
+                                                                                            </td>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                EW&nbsp;Amount&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input
+                                                                                                    class="form-control">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                Start&nbsp;Date&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    class="form-control">
+                                                                                            </td>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                End&nbsp;Date&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    class="form-control">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td style="width: 15%"
+                                                                                                class="LabelFontStyle">
+                                                                                                Booklet&nbsp;No&nbsp;:&nbsp;
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input type="text"
+                                                                                                    class="form-control">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-secondary"
+                                                                                        data-dismiss="modal">Close</button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary">Ok</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </ng-template>
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="panel1006" role="tabpanel">
+                                    <div class="grid_scroll">
+                                        <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                            style="width:100%;border-collapse:collapse;">
+                                            <thead>
+                                                <tr class="GridHeader">
+                                                    <th scope="col">SL. NO.</th>
+                                                    <th scope="col">Tax Rate Name
+                                                    </th>
+                                                    <th scope="col">Tax Type</th>
+                                                    <th scope="col">Tax Point Basis
+                                                    </th>
+                                                    <th scope="col">
+                                                        <table style="width: 100%;">
+                                                            <tr style="border-bottom: solid 1px Gray;">
+                                                                <td colspan="10" style="text-align: center;">
+                                                                    Precedence</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    1</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    2</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    3</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    4</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    5</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    6</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    7</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    8</td>
+                                                                <td style="width: 2rem; border-right: solid 1px Gray;">
+                                                                    9</td>
+                                                                <td style="width: 2rem;">
+                                                                    10</td>
+                                                            </tr>
+                                                        </table>
+                                                    </th>
+                                                    <th scope="col">Currency</th>
+                                                    <th scope="col">Tax Rate</th>
+                                                    <th scope="col">Tax Amount</th>
+                                                    <th scope="col">Recoverabl </th>
+                                                    <th scope="col">Inclusive</th>
+                                                    <th scope="col">Self Assesed/Reverse Charge </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <ng-container class="center" formArrayName="taxAmounts">
+                                                    <ng-container
+                                                        *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
+                                                        [formGroupName]="j" class="auto-style5">
+                                                        <tr class="ItemStyle" style="text-decoration:none;">
                                                             <td> <input disabled formControlName="lineNumber"
-                                                                class="form-control" style="width: 2rem;height: 25px;font-size: 10px;">
-                                                        </td>
-                                                        <td> <input disabled type="text" style="width: 9rem;height: 25px;font-size: 10px;"
-                                                                formControlName="taxRateName" class="form-control">
-                                                        </td>
-                                                        <td> <input disabled type="text" style="width: 6rem;height: 25px;font-size: 10px;"
-                                                                formControlName="taxTypeName" class="form-control">
-                                                        </td>
-                                                        <td> <input disabled type="text" 
-                                                                formControlName="taxPointBasis" class="form-control"
-                                                                style="width: 5rem; text-align: center;margin-left: 6px; height: 25px;font-size: 10px;">
-                                                        </td>
-                                                        <td>
-                                                            <table  style="width: 100%;">
-                                                                <tr>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled  
-                                                                            formControlName="precedence1"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence2"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>   
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence3"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence4"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence5"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence6"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence7"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence8"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                    <td style=" border-right: solid 1px Gray;">
-                                                                        <input disabled
-                                                                            formControlName="precedence9"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
-                                                                            class="form-control">
-                                                                    </td>
-                                                                    <td> <input disabled
-                                                                            formControlName="precedence10"
-                                                                            class="form-control"
-                                                                            style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                        
-                                                        <td> <input disabled type="text"
-                                                                formControlName="currencyCode" style="width: 3rem; height: 25px;font-size: 10px;"
-                                                                class="form-control">
-                                                        </td>
-                                                        <td> <input disabled formControlName="totTaxPer"
-                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
-                                                                class="form-control">
-                                                        </td>
-                                                        <div *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
-                                                        </div>
-                                                        <ng-template #thenBlock>
-                                                            <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
-                                                                    class="form-control" 
-                                                                    style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                    class="form-control"
+                                                                    style="width: 2rem;height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td> <input disabled type="text"
+                                                                    style="width: 9rem;height: 25px;font-size: 10px;"
+                                                                    formControlName="taxRateName" class="form-control">
+                                                            </td>
+                                                            <td> <input disabled type="text"
+                                                                    style="width: 6rem;height: 25px;font-size: 10px;"
+                                                                    formControlName="taxTypeName" class="form-control">
+                                                            </td>
+                                                            <td> <input disabled type="text"
+                                                                    formControlName="taxPointBasis" class="form-control"
+                                                                    style="width: 5rem; text-align: center;margin-left: 6px; height: 25px;font-size: 10px;">
+                                                            </td>
+                                                            <td>
+                                                                <table style="width: 100%;">
+                                                                    <tr>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence1"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence2"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence3"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence4"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence5"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence6"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence7"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence8"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                        <td style=" border-right: solid 1px Gray;">
+                                                                            <input disabled
+                                                                                formControlName="precedence9"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                                class="form-control">
+                                                                        </td>
+                                                                        <td> <input disabled
+                                                                                formControlName="precedence10"
+                                                                                class="form-control"
+                                                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+
+                                                            <td> <input disabled type="text"
+                                                                    formControlName="currencyCode"
+                                                                    style="width: 3rem; height: 25px;font-size: 10px;"
                                                                     class="form-control">
                                                             </td>
+                                                            <td> <input disabled formControlName="totTaxPer"
+                                                                    style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                    class="form-control">
+                                                            </td>
+                                                            <div
+                                                                *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
+                                                            </div>
+                                                            <ng-template #thenBlock>
+                                                                <td><input type="number" formControlName="totTaxAmt"
+                                                                        (change)="validateNum(i,j)" class="form-control"
+                                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
+                                                                        class="form-control">
+                                                                </td>
                                                             </ng-template>
-                                                <ng-template #elseBlock>
-                                                    <td><input disabled type="number"
-                                                            formControlName="totTaxAmt"
-                                                            class="form-control"
-                                                            style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                            <ng-template #elseBlock>
+                                                                <td><input disabled type="number"
+                                                                        formControlName="totTaxAmt" class="form-control"
+                                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                                </td>
+                                                            </ng-template>
+                                                            <div
+                                                                *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
+                                                            </div>
+                                                            <ng-template #thenBlockRecFlag>
+                                                                <td><input type="checkbox" disabled
+                                                                        name="recoverableFlag" value="recoverableFlag"
+                                                                        checked>
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockRecFlag>
+                                                                <td><input type="checkbox" disabled
+                                                                        name="recoverableFlag" value="recoverableFlag">
+                                                                </td>
+                                                            </ng-template>
+                                                            <div
+                                                                *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.inclusiveFlag.value === 'Y'; then thenBlockInclFlag; else elseBlockInclFlag">
+                                                            </div>
+                                                            <ng-template #thenBlockInclFlag>
+                                                                <td><input type="checkbox" disabled name="inclusiveFlag"
+                                                                        value="inclusiveFlag" checked></td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockInclFlag>
+                                                                <td><input type="checkbox" disabled name="inclusiveFlag"
+                                                                        value="inclusiveFlag">
+                                                                </td>
+                                                            </ng-template>
+                                                            <div
+                                                                *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.selfAssesedFlag.value === 'Y'; then thenBlockselfAssFlag; else elseBlockselfAssFlag">
+                                                            </div>
+                                                            <ng-template #thenBlockselfAssFlag>
+                                                                <td><input type="checkbox" disabled
+                                                                        name="selfAssesedFlag" value="selfAssesedFlag"
+                                                                        checked>
+                                                                </td>
+                                                            </ng-template>
+                                                            <ng-template #elseBlockselfAssFlag>
+                                                                <td><input type="checkbox" disabled
+                                                                        name="selfAssesedFlag" value="selfAssesedFlag">
+                                                                </td>
+                                                            </ng-template>
+                                                        </tr>
+                                                        <tr>
+                                                            <input hidden type="text" formControlName="invLineItemId"
+                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                            <input hidden type="text" class="form-control"
+                                                                formControlName="invLineNo"
+                                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                        </tr>
+                                                    </ng-container>
+                                                </ng-container> -->
+                                                <ng-container
+                                                *ngFor="let taxDet of TaxDetailsArray(i).controls; let j= index"
+                                                [formGroupName]="j">
+                                                <tr>
+                                                    <td> <input disabled formControlName="lineNumber"
+                                                            class="form-control" style="width: 2rem;">
                                                     </td>
-                                                </ng-template>
-                                            <div *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
-                                        </div>
-                                            <ng-template #thenBlockRecFlag>
-                                                <td><input type="checkbox"
-                                                        disabled
-                                                        name="recoverableFlag"
-                                                        value="recoverableFlag"
-                                                        checked>
-                                                </td>
-                                            </ng-template>
-                                            <ng-template #elseBlockRecFlag>
-                                                <td><input type="checkbox"
-                                                        disabled
-                                                        name="recoverableFlag"
-                                                        value="recoverableFlag">
-                                                </td>
-                                            </ng-template>
-                                            <div *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.inclusiveFlag.value === 'Y'; then thenBlockInclFlag; else elseBlockInclFlag"></div>
-                                            <ng-template #thenBlockInclFlag>
-                                                <td><input type="checkbox"
-                                                        disabled
-                                                        name="inclusiveFlag"
-                                                        value="inclusiveFlag"
-                                                        checked></td>
-                                            </ng-template>
-                                            <ng-template #elseBlockInclFlag>
-                                                <td><input type="checkbox"
-                                                        disabled
-                                                        name="inclusiveFlag"
-                                                        value="inclusiveFlag">
-                                                </td>
-                                            </ng-template>
-                                            <div *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.selfAssesedFlag.value === 'Y'; then thenBlockselfAssFlag; else elseBlockselfAssFlag"></div>
-                                            <ng-template #thenBlockselfAssFlag>
-                                                <td><input type="checkbox"
-                                                        disabled
-                                                        name="selfAssesedFlag"
-                                                        value="selfAssesedFlag"
-                                                        checked>
-                                                </td>
-                                            </ng-template>
-                                            <ng-template #elseBlockselfAssFlag>
-                                                <td><input type="checkbox"
-                                                        disabled
-                                                        name="selfAssesedFlag"
-                                                        value="selfAssesedFlag">
-                                                </td>
-                                            </ng-template>
-                                                    </tr>
-                                                    <tr>
-                                                        <input hidden type="text" formControlName="invLineItemId" style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
-                                                        <input hidden type="text" class="form-control" formControlName="invLineNo"  style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
-                                                    </tr>
-                                                    </ng-container>
-                                                    </ng-container>
-                                                </tbody>
-                            
-                                            </table> 
-                                            <button type="button" class="btn btn-primary" (click)="addDiscount(selectedLine)"
-                                                style="width: 8rem; border: solid 1px Gray">Apply
-                                                Discount</button>
-                                        </div>
-                                </div>
-                                </div>
-                            
-                              </div>
-                        </fieldset>
-                    </div>
-                </ng-template> 
-                <ng-template #elseorderLineDetailsPart>
-                </ng-template>
+                                                    <td> <input disabled type="text"
+                                                            formControlName="taxRateName" class="form-control">
+                                                    </td>
+                                                    <td> <input disabled type="text"
+                                                            formControlName="taxTypeName" class="form-control">
+                                                    </td>
+                                                    <td> <input disabled type="text"
+                                                            formControlName="taxPointBasis" class="form-control"
+                                                            style="width: 5rem; text-align: center;margin-left: 6px;">
+                                                    </td>
+                                                    <td>
+                                                        <table style="text-align: center;">
+                                                            <tr>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence1"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence2"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence3"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence4"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence5"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence6"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence7"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence8"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                                <td style=" border-right: solid 1px Gray;">
+                                                                    <input disabled
+                                                                        formControlName="precedence9"
+                                                                        style="width: 2rem; text-align: right;"
+                                                                        class="form-control">
+                                                                </td>
+                                                                <td> <input disabled
+                                                                        formControlName="precedence10"
+                                                                        class="form-control"
+                                                                        style="width: 2rem; text-align: right;">
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
 
-                  <table class="center">
-                      <tr>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register"  (click)="refresh()">Clear</button>
-                        </td>
-                        <td>
-                            <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
-                        </td>
-                      
-                        <td>
-                            <!-- <button type="submit" class="btn btn-primary"   (click)="receiptPayment(orderNumber)" >Payment</button>   -->
-                       <button class="btn btn-primary" [routerLink]="['/paymentReceipt',orderNumber]">PAYMENTS</button>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary"   (click)=" OrderBooked()" >Save</button>  
-                        </td>
+                                                    <td> <input disabled type="text"
+                                                            formControlName="currencyCode" style="width: 3rem;"
+                                                            class="form-control">
+                                                    </td>
+                                                    <td> <input disabled formControlName="totTaxPer"
+                                                            style="width: 2rem; text-align: right;"
+                                                            class="form-control">
+                                                    </td>
+                                                    <!-- <div
+                                            *ngIf="poMasterDtoForm.controls['poLines'].controls[0].controls['taxAmounts'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
+                                        </div>
+                                        <ng-template #thenBlock> -->
+                                            <div
+                                            *ngIf="poMasterDtoForm.controls['poLines'].controls[i].controls['taxAmounts'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
+                                        </div>
+                                        <ng-template #thenBlock>
+                                            <!-- (change)="validateNum(i)" -->
+                                                    <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                                            class="form-control" 
+                                                            style="width: 4rem; text-align: right;"
+                                                            class="form-control">
+                                                    </td>
+                                                    </ng-template>
+                                        <ng-template #elseBlock>
+                                            <td><input disabled
+                                                    type="number"
+                                                    formControlName="totTaxAmt"
+                                                    class="form-control"
+                                                    style="width: 4rem; text-align: right;">
+                                            </td>
+                                        </ng-template>
+                                        <div
+                                        *ngIf="poMasterDtoForm.controls['poLines'].controls[i].controls['taxAmounts'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
+                                    </div>
+                                        <ng-template #thenBlockRecFlag>
+                                            <td><input type="checkbox"
+                                                    disabled
+                                                    name="recoverableFlag"
+                                                    value="recoverableFlag"
+                                                    checked>
+                                            </td>
+                                        </ng-template>
+                                        <ng-template #elseBlockRecFlag>
+                                            <td><input type="checkbox"
+                                                    disabled
+                                                    name="recoverableFlag"
+                                                    value="recoverableFlag">
+                                            </td>
+                                        </ng-template>
+                                        <div
+                                                                                    *ngIf="poMasterDtoForm.controls['poLines'].controls[i].controls['taxAmounts'].controls[j].controls.inclusiveFlag.value === 'Y'; then thenBlockInclFlag; else elseBlockInclFlag">
+                                                                                </div>
+                                        <ng-template #thenBlockInclFlag>
+                                            <td><input type="checkbox"
+                                                    disabled
+                                                    name="inclusiveFlag"
+                                                    value="inclusiveFlag"
+                                                    checked></td>
+                                        </ng-template>
+                                        <ng-template #elseBlockInclFlag>
+                                            <td><input type="checkbox"
+                                                    disabled
+                                                    name="inclusiveFlag"
+                                                    value="inclusiveFlag">
+                                            </td>
+                                        </ng-template>
+                                        <div
+                                                                                    *ngIf="poMasterDtoForm.controls['poLines'].controls[i].controls['taxAmounts'].controls[j].controls.selfAssesedFlag.value === 'Y'; then thenBlockselfAssFlag; else elseBlockselfAssFlag">
+                                                                                </div>
+                                        <ng-template
+                                            #thenBlockselfAssFlag>
+                                            <td><input type="checkbox"
+                                                    disabled
+                                                    name="selfAssesedFlag"
+                                                    value="selfAssesedFlag"
+                                                    checked>
+                                            </td>
+                                        </ng-template>
+                                        <ng-template
+                                            #elseBlockselfAssFlag>
+                                            <td><input type="checkbox"
+                                                    disabled
+                                                    name="selfAssesedFlag"
+                                                    value="selfAssesedFlag">
+                                            </td>
+                                        </ng-template> 
 
-                      </tr>
-                  </table>
+                                                </tr>
+
+                                            </ng-container>
+                                            </tbody>
+
+                                        </table> 
+                                       
+                                        <button type="button" class="btn btn-primary"
+                                            (click)="addDiscount(selectedLine)"
+                                            style="width: 8rem; border: solid 1px Gray">Apply
+                                            Discount</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </ng-template>
+            <ng-template #elseorderLineDetailsPart>
+            </ng-template>
+
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+
+                    <td>
+                        <!-- <button type="submit" class="btn btn-primary"   (click)="receiptPayment(orderNumber)" >Payment</button>   -->
+                        <button class="btn btn-primary" [routerLink]="['/paymentReceipt',orderNumber]">Payment</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" (click)=" OrderBooked()">Save</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" (click)="AccOrderLineSave()">Acc line
+                            Save</button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-

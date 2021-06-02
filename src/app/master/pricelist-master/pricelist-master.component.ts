@@ -168,7 +168,7 @@ export class PricelistMasterComponent implements OnInit {
     }
 
     lineDetailsGroup() {
-      return this.fb.group({
+      return this.fb.group({ 
         priceListLineId:[''],
         itemId :['', [Validators.required]],    
         itemName:['', [Validators.required]],
@@ -450,7 +450,7 @@ export class PricelistMasterComponent implements OnInit {
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
+          alert('RECORD INSERTED SUCCESSFULLY');
           this.priceListMasterForm.reset();
         } else {
           if (res.code === 400) {
@@ -468,7 +468,7 @@ export class PricelistMasterComponent implements OnInit {
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFUILY');
+          alert('RECORD UPDATED SUCCESSFULLY');
           window.location.reload();
         } else {
           if (res.code === 400) {
@@ -478,6 +478,24 @@ export class PricelistMasterComponent implements OnInit {
         }
       });
     };
+
+    //  ------------------------Header updattion..........................
+    // updateMastHeader() {
+    //   alert ("Putting data  to PL mater header.part .....")
+    //   // const formValue: IPriceList = this.priceListMasterForm.value;
+    //   const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
+    //   this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
+    //     if (res.code === 200) {
+    //       alert('RECORD UPDATED SUCCESSFULLY');
+    //       window.location.reload();
+    //     } else {
+    //       if (res.code === 400) {
+    //         alert('ERROR OCCOURED IN PROCEESS');
+    //         this.priceListMasterForm.reset();
+    //       }
+    //     }
+    //   });
+    // };
 
     //  ------------------------Header updattion..........................
     updateMastHeader() {
@@ -719,7 +737,11 @@ export class PricelistMasterComponent implements OnInit {
       this.service.UploadExcel(formData,this.docType).subscribe((res: any) => {
    
         if (res.code === 200) {
+<<<<<<< HEAD
           alert('FILE UPLOADED SUCCESSFUILY');
+=======
+          alert('FILE UPLOADED SUCCESSFULLY');
+>>>>>>> 6cb3c7aa338f8d4f6b7543c86c5eb890f3fe39bb
            this.resMsg = res.obj;
            
           // window.location.reload();

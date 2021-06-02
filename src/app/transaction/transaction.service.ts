@@ -14,7 +14,7 @@ export class TransactionService {
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
   ServerUrl='http://localhost:8081'; 
   // ServerUrl='http://saihorizon.com:8080/ErpReplica'
-
+   
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
@@ -160,6 +160,11 @@ getItemDetail(itemid):Observable<any>{
 searchByInvoiceNoAR(trxNumber1):Observable<any>{
   return this.http.get(this.ServerUrl +`/arInv/invDtls/${trxNumber1}`)
 }
+
+DistributionCal(amount,taxableAmt, custTrxTypeId ):Observable<any>{
+  return this.http.get(this.ServerUrl +`/arInv/invLnDis?custTrxTypeId=${custTrxTypeId}&invAmount=${amount}&taxableAmt=${taxableAmt}`)
+}
+
 sourceListFn():Observable<any>{
   return this.http.get(this.ServerUrl +`/cmnLookup/type/RcvSource`)
 }
@@ -184,8 +189,28 @@ public ARInvoiceSubmit(Record) {
   return this.http.post(url, Record, options);
 }
 
-///////////////////////// AR RECEIPT APPLICATION////////////////////////////////////
+ 
 
+///////////////////////////AVERAGE COST UPDATE//////////////////////////
 
+avgCurrentCost(mitemId,mLocId): Observable<any> {
+  // alert("Master Service :"+ mitemId+" ,"+mLocId);
+  return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${mLocId}&itemId=${mitemId}`);
+}
+
+public AvgCostUpdateSubmit(AvgCostUpdateRecord) {
+  alert('in service')
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/averageCost';
+  return this.http.post(url, AvgCostUpdateRecord, options);
+}
+
+// getAvgHistoryList
+getAvgHistoryList(mLocId,mitemId,frmDate,toDate): Observable<any> {
+  alert("Master Service :"+ mLocId+","+mitemId+" ,"+frmDate+","+toDate);
+  return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
+  }
 
 }

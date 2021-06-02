@@ -7,7 +7,7 @@
                 </td>
                 <table style="width: 100%; background-color: #FFE4B5;">
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
+                        <td style="width: 15%" class="LabelFontStyle">Search&nbsp;PO&nbsp;Number&nbsp;:</td>
                         <td>
                             <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control" #myinput>
                         </td>
@@ -45,7 +45,7 @@
                                             </option>
                                         </select>
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Department:</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Department:</td>
                                     <td>
                                         <div *ngIf="displayDept; then thenBlockDept; else elseBlockDept"></div>
                                         <ng-template #thenBlockDept>
@@ -81,9 +81,9 @@
                                     <td>
                                         <input type="text" formControlName="supplierCode"
                                             (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
-                                            list="dynmicUserIds" class="form-control"
-                                            (ngModelChange)="onSupplierCodeSelected($event)" />
-                                        <datalist id="dynmicUserIds">
+                                            list="dynmicUserIds" class="form-control"  placeholder="Supplier details"
+                                            (ngModelChange)="onSupplierCodeSelected($event)"/>
+                                        <datalist id="dynmicUserIds"  >
                                             <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
                                                 {{item.name}}@{{item.suppNo}}</option>
                                         </datalist>
@@ -91,6 +91,8 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Site:</td>
                                     <td>
+                                        <div *ngIf="displaysupplierSiteId; then thensupplierSiteId; else elsesupplierSiteId"></div>
+                                        <ng-template #thensupplierSiteId>
                                         <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
                                             data-live-search="true" (ngModelChange)='onSiteSelected($event)'
                                             class="form-control">
@@ -100,6 +102,18 @@
                                                 {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
                                             </option>
                                         </select>
+                                        </ng-template>
+                                        <ng-template #elsesupplierSiteId>
+                                            <select disabled formControlName="supplierSiteId" id="supplierSiteId" #myinput
+                                            data-live-search="true" (ngModelChange)='onSiteSelected($event)'
+                                            class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
+                                                {{sc.suppSiteId}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
+                                                {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
+                                            </option>
+                                        </select>
+                                        </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Base&nbsp;Amount:</td>
                                     <td>
@@ -119,6 +133,8 @@
                                     <td style="width: 15%" class="LabelFontStyle1">Ship-To:
                                     </td>
                                     <td>
+                                        <div *ngIf="displayBillShipList; then thenBillShipList; else elseBillShipList"></div>
+                                        <ng-template #thenBillShipList>
                                         <select formControlName="shipToLoc" id="shipToLoc" class="form-control">
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  BillShipList" [ngValue]="sc.locId">
@@ -132,10 +148,21 @@
                                                 *ngIf="!poMasterDtoForm.get('shipToLoc').valid && poMasterDtoForm.get('shipToLoc').touched">Please
                                                 Enter valid Ship-To </span>
                                         </div>
+                                        </ng-template>
+                                        <ng-template #elseBillShipList>
+                                            <select disabled formControlName="shipToLoc" id="shipToLoc" class="form-control">
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of  BillShipList" [ngValue]="sc.locId">
+                                                    {{sc.locCode}}
+                                                </option>
+                                            </select>
+                                        </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Bill-To:
                                     </td>
                                     <td>
+                                        <div *ngIf="displayBillShipList1; then thenBillShipList1; else elseBillShipList1"></div>
+                                        <ng-template #thenBillShipList1>
                                         <select formControlName="billToLoc" id="billToLoc" [(ngModel)]="billToLoc"
                                             class="form-control" >
                                             <option>--Select--</option>
@@ -150,10 +177,20 @@
                                                 *ngIf="!poMasterDtoForm.get('billToLoc').valid && poMasterDtoForm.get('billToLoc').touched">Please
                                                 Enter valid Bill-To </span>
                                         </div>
+                                        </ng-template>
+                                        <ng-template #elseBillShipList1>
+                                            <select disabled formControlName="billToLoc" id="billToLoc" [(ngModel)]="billToLoc"
+                                            class="form-control" >
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  BillShipList1" [ngValue]="sc.locId">
+                                                {{sc.locCode}}
+                                            </option>
+                                        </select>
+                                        </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Amount:</td>
                                     <td>
-                                        <input type="text" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
+                                        <input type="number" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
                                             class="form-control" placeholder="" style="width: 120px;">
                                     </td>
 
@@ -175,7 +212,7 @@
                                         <input type="text" disabled formControlName="authorizationStatus"
                                             [(ngModel)]='authorizationStatus' class="form-control" placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Approve&nbsp;Date:
+                                    <td style="width: 15%" class="LabelFontStyle">Approval&nbsp;Date:
                                     </td>
                                     <td> <input disabled formControlName="approveDate" class="form-control">
                                     </td>
@@ -188,20 +225,52 @@
 
                                 </tr>
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle1">Description:</td>
-                                    <td>
-                                        <input type="text" formControlName="description" class="form-control"
-                                            placeholder="Enter the description" style="width: 280%;">
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                    <td colspan="">
+                                        <input type="text" formControlName="suppInvNo"
+                                            class="form-control" style="width: 100%;"
+                                            [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
+                                            placeholder="Please enter supplier invoice number">
+                                        <div *ngIf="submitted && f.suppInvNo.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.suppInvNo.errors?.maxLength">Maximum 8
+                                                characters characters valid</div>
+                                            <div *ngIf="f.suppInvNo.errors?.minLength">Minimum 6
+                                                characters valid</div>
+                                        </div>
+                                        <span
+                                            *ngIf="!poMasterDtoForm.get('suppInvNo').valid && poMasterDtoForm.get('suppInvNo').touched">
+                                            Supplier invoice no valid for minimum 3 digit and
+                                            maximum 30
+                                            digit
+                                        </span>
+
                                     </td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Description:</td>
+                                    <td colspan="3">
+                                        <input type="text" formControlName="description" class="form-control"
+                                            placeholder="Enter the description" style="width: 100%;">
+                                    </td>
+                                    <!-- <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
+                                    <td></td> -->
+                                    <td colspan="2">
                                         <!-- <button data-toggle="modal" class="btn btn-primary"
                                         data-target="#exampleModalScrollable"><i class="fa fa-plus"></i></button> -->
+                                        <div
+                                            *ngIf="dispbut; then thenBlockdispbut; else elseBlockdispbut">
+                                        </div>
+                                        <ng-template #thenBlockdispbut>
                                         <button data-toggle="modal" class="btn btn-primary"
                                             data-target="#exampleModalScrollable" style="width: fit-content;">Additional
                                             Details</button>
+                                            </ng-template>
+                                            <ng-template #elseBlockdispbut>
+                                            <button  class="btn btn-primary" 
+                                            style="width: fit-content;">Additional
+                                            Details</button>
+                                            </ng-template>
                                         <!-- <button class="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModalScrollable" style="width: 8rem;">
                                             Additional Information
@@ -353,7 +422,7 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Amount:</td>
                                     <td>
-                                        <input type="text" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
+                                        <input type="number" disabled formControlName="totTaxAmt" [(ngModel)]='totTaxAmt'
                                             class="form-control" placeholder="">
                                     </td>
                                 </tr>
@@ -382,15 +451,21 @@
 
                                 </tr>
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Description:</td>
-                                    <td>
-                                        <input type="text" disabled formControlName="description" class="form-control"
-                                            placeholder="Enter the description" style="width: 280%;">
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                    <td colspan="">
+                                        <input disabled type="text" formControlName="suppInvNo"
+                                            class="form-control" style="width: 100%;">
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
+                                    <td style="width: 15%" class="LabelFontStyle">Description:</td>
+                                    <td colspan="3">
+                                        <input disabled type="text" formControlName="description" class="form-control"
+                                            placeholder="Enter the description" style="width: 100%;">
+                                    </td>
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
+                                    <td colspan="2">
                                         <!-- <button type="button" class="btn btn-primary" data-toggle="modal"
                                             data-target="#exampleModalScrollable"><i class="fa fa-plus"></i></button> -->
                                         <button data-toggle="modal" class="btn btn-primary"
@@ -430,31 +505,9 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="grid_scroll1">
+                                                
                                                 <table class="center" style="width: 100%;">
-                                                    <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Supplier&nbsp;Invoice&nbsp;Number:&nbsp;</td>
-                                                        <td colspan="">
-                                                            <input type="text" formControlName="suppInvNo"
-                                                                class="form-control" style="width: 100%;"
-                                                                [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
-                                                                placeholder="Pleasse enter supplier invoice number">
-                                                            <div *ngIf="submitted && f.suppInvNo.errors"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="f.suppInvNo.errors?.maxLength">Maximum 8
-                                                                    characters characters valid</div>
-                                                                <div *ngIf="f.suppInvNo.errors?.minLength">Minimum 6
-                                                                    characters valid</div>
-                                                            </div>
-                                                            <span
-                                                                *ngIf="!poMasterDtoForm.get('suppInvNo').valid && poMasterDtoForm.get('suppInvNo').touched">
-                                                                Supplier invoice no valid for minimum 3 digit and
-                                                                maximum 30
-                                                                digit
-                                                            </span>
-
-                                                        </td>
-                                                    </tr>
+                                                  
                                                     <tr>
                                                         <td style="width: 15%" class="LabelFontStyle">
                                                             Transaction&nbsp;Nature&nbsp;:&nbsp;
@@ -462,12 +515,12 @@
                                                         <td colspan="">
                                                             <!-- <input type="text" formControlName="TransactionNature"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse enter transaction nature"> -->
+                                                                placeholder="Please enter transaction nature"> -->
 
                                                             <select formControlName="TransactionNature"
                                                                 id="TransactionNature" class="form-control"
                                                                 style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse select transaction nature">
+                                                                placeholder="Please select transaction nature">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  TransactionNatureList"
                                                                     [ngValue]="sc.code">
@@ -482,7 +535,7 @@
                                                         <td colspan="">
                                                             <input type="text" formControlName="ewayBillNo"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse enter E-Way bill No">
+                                                                placeholder="Please enter E-Way bill No">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -491,7 +544,7 @@
                                                         <td colspan="">
                                                             <input type="date" formControlName="ewayBillDate"
                                                                 class="form-control" style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse enter E-Way bill date"
+                                                                placeholder="Please enter E-Way bill date"
                                                                 max="{{maxDate | date:'yyyy-MM-dd'}}"
                                                                 min="{{priorDate | date:'yyyy-MM-dd'}}">
                                                         </td>
@@ -502,7 +555,7 @@
                                                         <td colspan="">
                                                             <input type="text" formControlName="GSTDocumentNo"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse Enter GST document no">
+                                                                placeholder="Please Enter GST document no">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -511,7 +564,7 @@
                                                         <td colspan="">
                                                             <input type="date" formControlName="GSTDocumentDate"
                                                                 class="form-control" style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse enter GST document date"
+                                                                placeholder="Please enter GST document date"
                                                                 max="{{maxDate | date:'yyyy-MM-dd'}}"
                                                                 min="{{priorDate | date:'yyyy-MM-dd'}}">
                                                         </td>
@@ -522,7 +575,7 @@
                                                         <td colspan="">
                                                             <input type="text" formControlName="iRNNo"
                                                                 class="form-control" style="width: 100%;"
-                                                                placeholder="Pleasse enter IRN no">
+                                                                placeholder="Please enter IRN no">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -531,11 +584,11 @@
                                                         <td>
                                                             <!-- <input type="text" formControlName="purchaseLocation"
                                                                 style="width: 100%;" class="form-control"
-                                                                placeholder="Pleasse enter purchase location"> -->
+                                                                placeholder="Please enter purchase location"> -->
                                                             <select formControlName="purchaseLocation"
                                                                 id="purchaseLocation" class="form-control"
                                                                 style="width: 100%; height: 20px;"
-                                                                placeholder="Pleasse select purchase location">
+                                                                placeholder="Please select purchase location">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  purchaseLocationList"
                                                                     [ngValue]="sc.lookupValue">
@@ -552,11 +605,11 @@
                                                         <!-- <td> <input type="text" formControlName="delearCode"
                                                                 style="width: 100%;" class="form-control"
                                                                 [ngClass]="{ 'is-invalid': submitted && f.delearCode.errors }"
-                                                                placeholder="Pleasse enter delear code"> -->
+                                                                placeholder="Please enter delear code"> -->
                                                         <td>
                                                             <select formControlName="delearCode" class="form-control"
                                                                 style="width: 100%; height: 20px;" id="delearCode"
-                                                                placeholder="Pleasse select delear code">
+                                                                placeholder="Please select delear code">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  delearCodeList"
                                                                     [ngValue]="sc.dealerCode">
@@ -612,7 +665,7 @@
                                                                 Evaluator&nbsp;Name&nbsp;:</td>
                                                             <td><input type="text" formControlName="evaluatorName"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter evaluator name">
+                                                                    placeholder="Please enter evaluator name">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -621,7 +674,7 @@
                                                             <td><input type="text"
                                                                     formControlName="exchangeBonusShare"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter exchange bonus share">
+                                                                    placeholder="Please enter exchange bonus share">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -629,16 +682,30 @@
                                                                 Address&nbsp;&nbsp;&nbsp;:</td>
                                                             <td> <input type="text" formControlName="address"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter address">
+                                                                    placeholder="Please enter address">
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="width: 15%" class="LabelFontStyle">
                                                                 Mobile&nbsp;No&nbsp;&nbsp;:</td>
-                                                            <td> <input type="number" formControlName="mobileNo"
+                                                            <td> 
+                                                                <input type="text" formControlName="mobileNo"
+                                                                class="form-control" style="width: 100%;"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.mobileNo.errors }"
+                                                                placeholder="Please enter supplier invoice number">
+                                                            <div *ngIf="submitted && f.mobileNo.errors"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="f.mobileNo.errors?.minLength"> 10 digit</div>
+                                                                <div *ngIf="f.mobileNo.errors?.maxLength">Maximum 10 digit</div>
+                                                            </div>
+                                                            <span
+                                                                *ngIf="!poMasterDtoForm.get('mobileNo').valid && poMasterDtoForm.get('mobileNo').touched">
+                                                                Mobile number should be 10 digit
+                                                            </span>
+                                                                <!-- <input  formControlName="mobileNo"
                                                                     style="width: 100%;" class="form-control"   
-                                                                    placeholder="Pleasse enter mobileNo">
-                                                                    <!-- <div *ngIf="submitted && f. mobileNo.errors" class="invalid-feedback">
+                                                                    placeholder="Please enter mobileNo">
+                                                                    <div *ngIf="submitted && f. mobileNo.errors" class="invalid-feedback">
                                                                         <div *ngIf="f.mobileNo.errors.required">Mobile no must be required and valid for 10 digit
                                                                         </div>
                                                                         <div *ngIf="f.mobileNo.errors?.maxLength">Mobile no must be a valid for 10 digit
@@ -654,7 +721,7 @@
                                                                 Kilometer&nbsp;&nbsp;&nbsp;:</td>
                                                             <td> <input type="number" formControlName="kilometer"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter kilometer">
+                                                                    placeholder="Please enter kilometer">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -664,7 +731,7 @@
                                                             <td> <input type="text"
                                                                     formControlName="transferToNewCarACNo"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter transfer to new car A/C No">
+                                                                    placeholder="Please enter transfer to new car A/C No">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -672,7 +739,7 @@
                                                                 Payment&nbsp;to&nbsp;Bank&nbsp;:</td>
                                                             <td> <input type="number" formControlName="paymentToBank"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter payment to bank">
+                                                                    placeholder="Please enter payment to bank">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -681,7 +748,7 @@
                                                             <td> <input type="number"
                                                                     formControlName="paymentToCustomer"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter payment to customer">
+                                                                    placeholder="Please enter payment to customer">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -690,7 +757,7 @@
                                                             <td> <input type="text"
                                                                     formControlName="holdforPendingDoc"
                                                                     style="width: 100%;" class="form-control"
-                                                                    placeholder="Pleasse enter hold for pending document">
+                                                                    placeholder="Please enter hold for pending document">
                                                             </td>
                                                         </tr>
                                                     </ng-template>
@@ -726,6 +793,7 @@
                                 </div>
                             </div>
                         </table>
+                        <div class="pt-2">
                         <div *ngIf="displayOnStatus; then thenBlockOnStatus; else elseBlockOnStatus"></div>
                         <ng-template #thenBlockOnStatus>
                             <!-- <div *ngIf="displayOnStatus"> -->
@@ -749,14 +817,14 @@
                                                 <th scope="col">Inventory Item</th>
                                                 <th scope="col">Inventory Category</th>
                                                 <th scope="col">Description</th>
-                                                <th scope="col">uom</th>
+                                                <th scope="col">UOM</th>
                                                 <th scope="col">Tax Category</th>
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Price</th>
 
                                                 <th scope="col">Base Amount</th>
                                                 <th scope="col">Tax Amount</th>
-                                                <th scope="col">Total Amont</th>
+                                                <th scope="col">Total Amount</th>
                                                 <th scope="col">HSN/ SAC code</th>
                                                 <th scope="col">PO Charge Account</th>
                                                 <th scope="col">Add Row</th>
@@ -822,9 +890,11 @@
                                                         class="form-control"></td> -->
                                                     <td> <select formControlName="itemType" class="form-control"
                                                             style="width: 5rem;" 
-                                                            (ngModelChange)='onOptioninvitemTypeSelected($event)'>
+                                                            
+                                                            (change)='onOptioninvitemTypeSelected($event,i)'>
+                                                            <option value="">--Select--</option>
                                                             <option value="GOODS">GOODS</option>
-                                                            <option value="EXPENCE">EXPENCE</option>
+                                                            <option value="EXPENCE">EXPENSE</option>
                                                         </select>
                                                     </td>
                                                     <td>
@@ -836,7 +906,8 @@
                                                                 {{sc.segment}}
                                                             </option>
                                                         </select> -->
-
+                                                        <div *ngIf="displaygetInvItemId; then thengetInvItemId; else elsegetInvItemId"></div>
+                                                        <ng-template #thengetInvItemId>
                                                         <input type="text" formControlName="segment"
                                                             (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                             list="dynmicUserIds1" class="form-control"
@@ -846,6 +917,18 @@
                                                                 [ngValue]="item.itemId">{{item.segment}}
                                                             </option>
                                                         </datalist>
+                                                        </ng-template>
+                                                        <ng-template #elsegetInvItemId>
+                                                            <input disabled type="text" formControlName="segment"
+                                                            (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                            list="dynmicUserIds1" class="form-control"
+                                                            (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
+                                                        <datalist id="dynmicUserIds1">
+                                                            <option *ngFor="let item of invItemList"
+                                                                [ngValue]="item.itemId">{{item.segment}}
+                                                            </option>
+                                                        </datalist>
+                                                        </ng-template>
                                                     </td>
                                                     <input hidden type="text" formControlName="invItemId">
                                                     <td> <input disabled type="text" formControlName="invCategory"
@@ -879,8 +962,9 @@
                                                             </option>
                                                         </select>
                                                     </td>
-                                                    <td> <input type="text"  formControlName="orderedQty"
-                                                            style="width: 4rem;" class="form-control" ></td>
+                                                    <td> <input type="number"  formControlName="orderedQty"
+                                                            style="width: 4rem;" class="form-control" >
+                                                        </td>
                                                     <!-- <td> <input type="number" formControlName="orderedQty"
                                                             style="width: 4rem;" class="form-control"
                                                             [ngClass]="{ 'is-invalid': submitted && f.orderedQty.errors }">
@@ -897,16 +981,16 @@
                                                         <input hidden formControlName="diss1" value={{diss1}}>
                                                    
                                                     <td> <input type="number" formControlName="unitPrice"
-                                                            style="width: 4rem;" class="form-control"
+                                                            style="width: 6rem;" class="form-control"
                                                             (change)="onKey(i)"></td>
 
                                                     <td> <input disabled type="number" formControlName="baseAmtLineWise"
-                                                            (keyup)="onKey(i)" style="width: 4rem;"
+                                                            (keyup)="onKey(i)" style="width: 6rem;"
                                                             class="form-control"></td>
                                                     <td> <input disabled type="number" formControlName="taxAmtLineWise"
-                                                            style="width: 4rem;" class="form-control"></td>
+                                                            style="width: 6rem;" class="form-control"></td>
                                                     <td> <input disabled type="number" formControlName="totAmtLineWise"
-                                                            style="width: 4rem;" class="form-control"></td>
+                                                            style="width: 6rem;" class="form-control"></td>
                                                     <td>
                                                         <div *ngIf="displayHSN; then thenBlockHSN; else elseBlockHSN"></div>
                     <ng-template #thenBlockHSN>
@@ -926,11 +1010,12 @@
                                                             placeholder="Select Item Category" class="form-control">
                                                     </td> -->
                                                     <td>
+                                                        <input disabled formControlName="segmentName" value={{segmentName}}  class="form-control">
                                                         <!-- <div class="row" id="modals"> -->
-                                                        <input formControlName="segmentName" value={{segmentName}}
+                                                        <!-- <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
                                                             placeholder="Select Item Category" class="form-control"
-                                                            (click)="openCodeComb(i)">
+                                                            (click)="openCodeComb(i)"> -->
                                                         <!-- </div> -->
 
                                                         <!-- <a formControlName="segmentName" 
@@ -999,7 +1084,7 @@
                                                             style="width: 4rem;" class="form-control" >
                                                        
                                                     </td>
-                                                    <input  formControlName="diss1" value={{diss1}}>
+                                                    <!-- <input  formControlName="diss1" value={{diss1}}> -->
                                                     <td> <input disabled type="number" formControlName="unitPrice"
                                                             style="width: 4rem;" class="form-control" (change)="onKey(i)"></td>
 
@@ -1019,7 +1104,7 @@
                                                         <ng-template #elseBlockHSN>
                                                             <input  type="text" formControlName="hsnSacCode" id="hsnSacCode"
                                                             style="width: 4rem;" class="form-control">
-                                                        </ng-template>></td>
+                                                        </ng-template></td>
 
                                                     <input hidden formControlName="poChargeAcc">
                                                     <td>
@@ -1028,8 +1113,9 @@
                                                             data-target="#myModal" placeholder="" class="form-control"> -->
                                                         <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
-                                                            placeholder="Select Item Category" class="form-control"
+                                                             class="form-control"
                                                             (click)="openCodeComb(i)">
+                                                            <!-- <input formControlName="segmentName" value={{segmentName}}    class="form-control"> -->
                                                     </td>
                                                 </ng-template>
                                             </tr>
@@ -1318,6 +1404,7 @@
                             </div>
                         </div>
                         </ng-template>
+                    </div>
                     <!-- </div> -->
                         <ng-template #elseBlockOnStatus>
                             <table style="width: 100%;background-color: white;">
@@ -1470,6 +1557,7 @@
                                 </ng-template>
                            
                         </ng-template>
+                    
                     </div>
                     <!-- <table>
                       
@@ -1496,7 +1584,7 @@
                 <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
             </ng-template>
             <ng-template #elseBlockSave>
-                <button type="button" disabled class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
+                <button type="button"  class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
             </ng-template>
         </td>
         <td>
@@ -1517,7 +1605,26 @@
                 <button type="button" class="btn btn-primary" disabled (click)="Approve()" style="width: 8rem;">Approve</button>
             </ng-template>
         </td>
-               
+        <td>
+            <div *ngIf="displaygoReceiptForm ; then thenBlockgoReceiptForm; else elseBlockgoReceiptForm"></div>
+            <ng-template #thenBlockgoReceiptForm>
+            </ng-template>
+            <ng-template #elseBlockgoReceiptForm>
+                <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;" >New Receipt Creation</button>
+            </ng-template>
+        </td>
+        <td>
+            <div *ngIf="displayNewButtonpoCancel ; then thenBlockpoCancel; else elseBlockpoCancel"></div>
+            <ng-template #thenBlockpoCancel>
+                <!-- <button type="button" class="btn btn-primary" (click)="poCancel()" style="width: 8rem;">PO Cancelled</button> -->
+            </ng-template>
+            <ng-template #elseBlockpoCancel>
+                <input hidden type="text" disabled formControlName="segment1" class="form-control"
+                [(ngModel)]='segment1' placeholder="">
+                <button type="button" class="btn btn-primary"  (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button>
+            </ng-template>
+        </td>
+                  
 
         <!-- <div *ngIf="displaytaxDisscountButton; then thenBlocktaxDisscount; else elseBlocktaxDisscount">
         </div>
@@ -1735,7 +1842,7 @@
 </ng-template>
 
 </div>
-</div>
+</div>	
 </div>
 </form>
 </div>

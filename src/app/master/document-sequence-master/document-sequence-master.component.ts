@@ -205,7 +205,7 @@ export class DocumentSequenceMasterComponent implements OnInit {
     formValue.docSrlNo =this.docSrlNo
     this.service.docSeqMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         
         // this.DocSeriealMasterForm.reset();
                   window.location.reload();
@@ -225,7 +225,7 @@ export class DocumentSequenceMasterComponent implements OnInit {
     const formValue: IserialMaster = this.DocSeriealMasterForm.value;
     this.service.UpdatedocSeqMasterById(formValue, formValue.docSrlId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

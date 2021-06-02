@@ -24,6 +24,14 @@ import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.componen
 import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
 
 
+  import { from } from 'rxjs';
+import { StockTakingComponent } from './stock-taking/stock-taking.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
+import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
+
+
+
 @NgModule({
   declarations: [
     PoInvoiceComponent,
@@ -46,6 +54,13 @@ import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.co
     McpEnrollmentComponent, 
     McpCancellationComponent, 
   
+    StockTakingComponent,
+   JournalVoucherComponent,
+    AvgCostUpdateComponent,
+ 
+    OnHandDetailsComponent,
+    
+    AccountEnquiryComponent,
   ],
   
   imports: [

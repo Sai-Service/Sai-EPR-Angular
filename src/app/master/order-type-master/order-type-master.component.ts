@@ -255,7 +255,7 @@ export class OrderTypeMasterComponent implements OnInit {
         // const formValue: IOrderType =this.transeData(this.orderTypeMasterForm.value);
         this.service.OrderTypeMasterSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFUILY');
+            alert('RECORD INSERTED SUCCESSFULLY');
             this.orderTypeMasterForm.reset();
           } else {
             if (res.code === 400) {
@@ -276,7 +276,7 @@ export class OrderTypeMasterComponent implements OnInit {
         // this.service.UpdateOrderTypeMasterById(formValue, formValue.transactionTypeId).subscribe((res: any) => {
           this.service.UpdateOrderTypeMasterById1(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD UPDATED SUCCESSFUILY');
+            alert('RECORD UPDATED SUCCESSFULLY');
             window.location.reload();
           } else {
             if (res.code === 400) {

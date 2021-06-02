@@ -99,7 +99,7 @@ export class CommonMasterComponent implements OnInit {
     const formValue: ICommon = this.commonMasterForm.value;
     this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

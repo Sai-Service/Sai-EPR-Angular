@@ -151,7 +151,7 @@ export class JaiTaxCategoryLineComponent implements OnInit {
     const formValue: IpostPO = this.transData(this.jaiTaxCategoryLineMasterForm.value);
     this.service.JaiTaxCategoryLineMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert('RECORD INSERTED SUCCESSFULLY');
         this.jaiTaxCategoryLineMasterForm.reset();   
       } else {
         if (res.code === 400) {
@@ -166,7 +166,7 @@ export class JaiTaxCategoryLineComponent implements OnInit {
     const formValue: IpostPO = this.jaiTaxCategoryLineMasterForm.value;
     this.service.UpdateJaiTaxCategoryLineMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUILY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {
