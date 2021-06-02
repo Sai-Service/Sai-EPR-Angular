@@ -400,7 +400,11 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <button type="submit" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
+                                                <button type="button" href="#contact-tab-md" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
+                                                <!-- <li class="nav-item waves-effect waves-light">
+                                                    <a (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)" class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false">Distribution</a>
+                                                  </li> -->
+                                           
                                             </td>
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
