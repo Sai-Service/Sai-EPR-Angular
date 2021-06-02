@@ -834,12 +834,25 @@ expenceItemDetailsList(invItemId):Observable<any>{
 }
 
 
+taxCalforItemWithVOR(itemId,taxCatId,diss,baseAmount,vorAmt,drfAmt) {
+  const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCatId)
+  .set('disAmt', diss)
+  .set('vorAmt',vorAmt)
+  .set('drfAmt',drfAmt)
+  const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
 taxCalforItem(itemId,taxCatId,diss,baseAmount) {
   const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
   .set('baseAmt', baseAmount)
   .set('taxCateId', taxCatId)
   .set('disAmt', diss)
-
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
   return this.http.get(REQUEST_URI, {
     params: REQUEST_PARAMS,

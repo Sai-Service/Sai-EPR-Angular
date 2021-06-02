@@ -1482,8 +1482,11 @@ alert(poNo);
     // this.taxCatId = taxCategoryId;
     var diss = 0;
     var sum = 0;
+
+    var vorAmt: number = 0;
+    var drfAmt:number = 0;
     // var baseAmount = this.sum;
-    this.service.taxCalforItem(itemId, this.taxCategoryId, diss, baseAmount)
+    this.service.taxCalforItemWithVOR(itemId, this.taxCategoryId, diss, baseAmount,vorAmt,drfAmt)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
@@ -1684,8 +1687,28 @@ alert(poNo);
     this.taxCat1 = arrayControl[this.poLineTax].taxCategoryId
     console.log(this.taxCat);
     var arrayControltaxAmounts = this.lineDetailsArray.controls[aa].get('taxAmounts').value
+    var vorAmt:number=0;
+    var drfAmt:number=0;
+    var diss:number=0;
 
-    var diss = arrayControltaxAmounts[0].totTaxAmt;
+    for (let j=0; j<arrayControltaxAmounts.length;j++){
+      const taxRtName = arrayControltaxAmounts[i].taxRateName;
+      alert(taxRtName);
+      console.log(arrayControltaxAmounts[i].taxRateName.indexOf('VOR Charges')>-1);
+    
+      if(arrayControltaxAmounts[i].taxRateName.indexOf('VOR Charges')>-1){
+        alert('HI VOR');
+        vorAmt=arrayControltaxAmounts[i].totTaxAmt
+      }
+      if(arrayControltaxAmounts[i].taxRateName.indexOf('DRF Inventive')>-1){
+        drfAmt=arrayControltaxAmounts[i].totTaxAmt
+      }
+      if(arrayControltaxAmounts[i].taxRateName.indexOf('Discount')>-1){
+        diss=arrayControltaxAmounts[i].totTaxAmt
+      }
+
+    }
+    // var diss = arrayControltaxAmounts[0].totTaxAmt;
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
 
@@ -1695,7 +1718,7 @@ alert(poNo);
     let control = this.lineDetailsArray.controls[aa].get('taxAmounts') as FormArray;
     control.clear();
     // this.taxCatId
-    this.service.taxCalforItem(invItemId, this.taxCat1, diss, baseAmount)
+    this.service.taxCalforItemWithVOR(invItemId, this.taxCat1, diss, baseAmount,vorAmt,drfAmt)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
@@ -1703,11 +1726,19 @@ alert(poNo);
           var sum = 0;
           for (i = 0; i < this.taxCalforItem.length; i++) {
 
-            if (this.taxCalforItem[i].totTaxPer != 0) {
-              sum = sum + this.taxCalforItem[i].totTaxAmt
+            // if (this.taxCalforItem[i].totTaxPer != 0) {
+            //   sum = sum + this.taxCalforItem[i].totTaxAmt
+            // }
+            if(!(this.taxCalforItem[i].taxRateName.indexOf('VOR Charges')>-1)){
+              sum=sum + this.taxCalforItem[i].totTaxAmt
             }
+            if(!(this.taxCalforItem[i].taxRateName.indexOf('Discount')>-1) ){
+              sum=sum + this.taxCalforItem[i].totTaxAmt
           }
-          const TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise
+          var TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise;
+          if((this.taxCalforItem[i].taxRateName.indexOf('VOR Charges')>-1)){
+            TotAmtLineWise1 = TotAmtLineWise1 + this.taxCalforItem[i].totTaxAmt;
+          }}
           var tolAmoutLine = sum + TotAmtLineWise1
 
           var patch = this.poMasterDtoForm.get('poLines') as FormArray;
