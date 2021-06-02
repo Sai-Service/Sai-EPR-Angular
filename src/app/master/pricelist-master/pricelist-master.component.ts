@@ -737,11 +737,7 @@ export class PricelistMasterComponent implements OnInit {
       this.service.UploadExcel(formData,this.docType).subscribe((res: any) => {
    
         if (res.code === 200) {
-<<<<<<< HEAD
           alert('FILE UPLOADED SUCCESSFUILY');
-=======
-          alert('FILE UPLOADED SUCCESSFULLY');
->>>>>>> 6cb3c7aa338f8d4f6b7543c86c5eb890f3fe39bb
            this.resMsg = res.obj;
            
           // window.location.reload();
