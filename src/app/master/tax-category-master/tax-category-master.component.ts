@@ -55,6 +55,38 @@ export class TaxCategoryMasterComponent implements OnInit {
       startDate: [],
       status: ['', [Validators.required]],
       endDate: ['', [Validators.nullValidator]],
+      taxLines: this.fb.array([this.TaxDetailsGroup()])
+    });
+  }
+
+  TaxDetailsArray(): FormArray {
+    return <FormArray>this.taxCategoryMasterForm.get('taxLines')
+  }
+
+  TaxDetailsGroup() {
+    return this.fb.group({
+      totTaxAmt: [],
+      lineNumber: [],
+      taxRateName: [],
+      taxTypeName: [],
+      taxPointBasis: [],
+      precedence1: [],
+      precedence2: [],
+      precedence3: [],
+      precedence4: [],
+      precedence5: [],
+      precedence6: [],
+      precedence7: [],
+      precedence8: [],
+      precedence9: [],
+      precedence10: [],
+      currencyCode: [],
+      totTaxPer: [],
+      recoverableFlag: [],
+      selfAssesedFlag: [],
+      inclusiveFlag: [],
+      invLineItemId: [],
+      invLineNo: [],
     });
   }
 

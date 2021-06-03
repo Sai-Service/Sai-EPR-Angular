@@ -1,189 +1,318 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div class="form-bg">
-    <div class="center">
-        <form [formGroup]="taxCategoryMasterForm" (ngSubmit)="taxCategoryMaster(taxCategoryMasterForm.value)">
-            <div id="Panel1" class="auto-style103">
-                <div class="container">
-                    <div class="row">
-                        <table style="width: 100%;background-color: white;">
-                            <tr>
-                                <td class="PageHeader">
-                                    &nbsp;&nbsp;Tax&nbsp;Category&nbsp;Master&nbsp;
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="center">
-                            <table style="width: fit-content;">
-                                <tr>
-                                    <td><input hidden formControlName="taxCategoryId" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                                    <td>
-                                        <select formControlName="ouId" id="ouId" class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                                {{sc.ouName}}
-                                            </option>
-                                        </select>
-                                        <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
-                                            <div *ngIf="f.ouId.errors.required">OU Id is required</div>
-                                            <span
-                                                *ngIf="!taxCategoryMasterForm.get('ouId').valid && taxCategoryMasterForm.get('ouId').touched">Please
-                                                Enter valid Operating Unit </span>
-                                        </div>
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;Name:</td>
-                                    <td><input type="text" formControlName="taxCategoryName" class="form-control"
-                                            placeholder="Enter tax Category name">
-                                        <span
-                                            *ngIf="!taxCategoryMasterForm.get('taxCategoryName').valid && taxCategoryMasterForm.get('taxCategoryName').touched">Please
-                                            Enter tax Category name </span>
-                                    </td>
-
-                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;Description:
-                                    </td>
-                                    <td><input type="text" formControlName="taxCategoryDesc" class="form-control"
-                                            placeholder="Enter tax category desc">
-                                        <span
-                                            *ngIf="!taxCategoryMasterForm.get('taxCategoryDesc').valid && taxCategoryMasterForm.get('taxCategoryDesc').touched">Please
-                                            Enter tax category desc </span>
-                                    </td>
-
-                                    <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Class&nbsp;Code:</td>
-                                    <td><input type="text" formControlName="itemClassCode" class="form-control"
-                                            placeholder="Enter item class code">
-                                        <span
-                                            *ngIf="!taxCategoryMasterForm.get('itemClassCode').valid && taxCategoryMasterForm.get('itemClassCode').touched">Please
-                                            Enter item class code </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Record&nbsp;Type&nbsp;Code:</td>
-                                    <td><input type="text" formControlName="recordTypeCode" class="form-control"
-                                            placeholder="Enter record type code">
-                                        <span
-                                            *ngIf="!taxCategoryMasterForm.get('recordTypeCode').valid && taxCategoryMasterForm.get('recordTypeCode').touched">Please
-                                            Enter record type code </span>
-                                    </td>
-
-                                    <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:</td>
-                                    <td>
-                                        <input type="date" formControlName="startDate" class="form-control"
-                                            placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
-                                        <span
-                                            *ngIf="!taxCategoryMasterForm.get('startDate').valid && taxCategoryMasterForm.get('startDate').touched">Please
-                                            Enter start Date </span>
-                                    </td>
-
-                                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:</td>
-                                    <td>
-                                        <!-- <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" > -->
-                                        <select formControlName="status" id="status" class="form-control"
-                                            [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  statusList">
-                                                {{sc.codeDesc}}
-                                            </option>
-                                        </select>
-                                        <span
-                                            *ngIf="!taxCategoryMasterForm.get('status').valid && taxCategoryMasterForm.get('status').touched">Please
-                                            Enter valid status </span>
-                                    </td>
-                                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                                    <ng-template #thenBlockInactive>
-                                    </ng-template>
-                                    <ng-template #elseBlockInactive>
-                                        <td style="width: 15%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;</td>
-                                        <td> <input disabled type="text" formControlName="endDate" class="form-control"
-                                                [ngModel]="endDate | date:'yyyy-MM-dd'">
-                                        </td>
-                                    </ng-template>
-
-                                </tr>
-                            </table>
-                        </div>
-
-                        <table class="center">
-                            <tr>
-                                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                                <ng-template #thenBlock1>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            [disabled]="!taxCategoryMasterForm.valid" (click)="newMast()">New</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="resetMast()">Reset</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="closeMast()">Close</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="searchMast()">Search</button>
-                                    </td>
-                                </ng-template>
-                                <ng-template #elseBlock1>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            [disabled]="!taxCategoryMasterForm.valid"
-                                            (click)="updateMast()">Update</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="resetMast()">Reset</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="closeMast()">Close</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary" id="register"
-                                            (click)="searchMast()">Search</button>
-                                    </td>
-                                </ng-template>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<br>
-<div class="container1">
-    <div class="grid_scroll">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
-       <thead>
-            <tr class="GridHeader">
-                <th scope="col">Tax Category Id</th>
-                <th scope="col">Tax Category Name</th>
-                <th scope="col">Tax Category Desc</th>
-                <th scope="col">Item Class Code</th>
-                <th scope="col">Record Type Code</th>
-                <th scope="col">Start Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Select one</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let com of lstcomments"  class="ItemStyle" style="text-decoration:none;">
-            <td>{{com.taxCategoryId}}</td>
-            <td>{{com.taxCategoryName}}</td>
-            <td>{{com.taxCategoryDesc}}</td>
-            <td>{{com.itemClassCode}}</td>
-            <td>{{com.recordTypeCode }}</td>
-            <td>{{com.startDate}}</td>
-            <td>{{com.status}}</td>
-            <td><button class="btn btn-primary" (click)="Select(com.taxCategoryId)">Select</button></td>
+<form [formGroup]="taxCategoryMasterForm" (ngSubmit)="taxCategoryMaster(taxCategoryMasterForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;&nbsp;Tax&nbsp;Category&nbsp;Master&nbsp;
+            </td>
         </tr>
-    </tbody>
     </table>
-</div>
-</div>
-<br>
-<br>
+    <div class="center">
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Header Details</legend>
+        <table style="width: 100%;">
+           <tr>
+            <td style="width: 15%" class="LabelFontStyle1">
+                Operating&nbsp;Unit&nbsp;:&nbsp;
+            </td>
+            <td>
+                <select formControlName="ouId" id="ouId" class="form-control">
+                    <option>--Select--</option>
+                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                        {{sc.ouName}}
+                    </option>
+                </select>
+                <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
+                    <div *ngIf="f.ouId.errors.required">OU Id is required</div>
+                    <span
+                        *ngIf="!taxCategoryMasterForm.get('ouId').valid && taxCategoryMasterForm.get('ouId').touched">Please
+                        Enter valid Operating Unit </span>
+                </div>
+            </td>
+           </tr>
+           <tr>
+            <td style="width: 15%" class="LabelFontStyle1">
+                &nbsp;Tax&nbsp;Category&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" formControlName="taxCategoryName" class="form-control"  placeholder="Enter tax Category name">
+                  <span *ngIf="!taxCategoryMasterForm.get('taxCategoryName').valid && taxCategoryMasterForm.get('taxCategoryName').touched">Please  Enter tax Category name </span>
+            </td>
+            <td style="width: 15%" class="LabelFontStyle1">
+                Description&nbsp;:&nbsp;
+            </td>
+            <td>
+               <input type="text" formControlName="taxCategoryDesc" class="form-control" placeholder="Enter tax category desc">
+        <span *ngIf="!taxCategoryMasterForm.get('taxCategoryDesc').valid && taxCategoryMasterForm.get('taxCategoryDesc').touched">Please Enter tax category desc </span>
+            </td>
+            <td style="width: 15%" class="LabelFontStyle1">
+                GST&nbsp;Percentage&nbsp;:&nbsp;
+            </td>
+            <td>
+        <input type="text" formControlName="itemClassCode" class="form-control" placeholder="Enter item class code">
+   <span *ngIf="!taxCategoryMasterForm.get('itemClassCode').valid && taxCategoryMasterForm.get('itemClassCode').touched">Please Enter item class code </span>
+
+            </td>
+            <td style="width: 15%" class="LabelFontStyle1">
+                &nbsp;Tax&nbsp;category&nbsp;type&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" formControlName="recordTypeCode" class="form-control" placeholder="Enter record type code">
+          <span *ngIf="!taxCategoryMasterForm.get('recordTypeCode').valid && taxCategoryMasterForm.get('recordTypeCode').touched">Please Enter record type code </span>
+
+            </td>
+           </tr>
+           <tr>
+            <td style="width: 15%" class="LabelFontStyle1">
+                Start&nbsp;Date&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input disabled type="date" formControlName="recordTypeCode" class="form-control" placeholder="Enter record type code">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle1">
+                End&nbsp;Date&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input disabled type="date" formControlName="recordTypeCode" class="form-control" placeholder="Enter record type code">
+            </td>
+           </tr>
+        </table>
+        </fieldset>
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Line Details</legend>
+            <div class="grid_scroll">
+                <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr class="GridHeader"> 
+                            <th scope="col">SL. NO.</th>
+                            <th scope="col">Tax Rate Name
+                            </th>
+                            <th scope="col">Tax Type</th>
+                            <th scope="col">Tax Point Basis
+                            </th>
+                            <th scope="col">
+                                <table style="width: 100%;">
+                                    <tr style="border-bottom: solid 1px Gray;">
+                                        <td colspan="10" style="text-align: center;">
+                                            Precedence</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            1</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            2</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            3</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            4</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            5</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            6</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            7</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            8</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            9</td>
+                                        <td style="width: 2rem;">
+                                            10</td>
+                                    </tr>
+                                </table>
+                            </th>
+                            <th scope="col">Currency</th>
+                            <th scope="col">Tax Rate</th>
+                            <th scope="col">Tax Amount</th>
+                            <th scope="col">Recoverable
+                                <!-- Amount -->
+                            </th>
+                            <th scope="col">Inclusive</th>
+                            <th scope="col">Self
+                                Assesed/Reverse
+                                Charge
+                            </th>
+                        </tr>   
+                    </thead>
+                    <tbody>
+                        <ng-container  class="center" formArrayName="taxLines">
+                            <!-- <ng-container   *ngFor="let group of invLineDetailsArray().controls; let k= index" [formGroupName]="k" class="auto-style5">     -->
+                                <ng-container *ngFor="let taxDet of TaxDetailsArray().controls; let j= index"
+                                [formGroupName]="j"  class="auto-style5">
+                              <tr class="ItemStyle" style="text-decoration:none;">
+                                <td> <input disabled formControlName="lineNumber"
+                                    class="form-control" style="width: 2rem;height: 25px;font-size: 10px;">
+                            </td>
+                            <td> <input  type="text" style="width: 9rem;height: 25px;font-size: 10px;"
+                                    formControlName="taxRateName" class="form-control">
+                            </td>
+                            <td> <input disabled type="text" style="width: 6rem;height: 25px;font-size: 10px;"
+                                    formControlName="taxTypeName" class="form-control">
+                            </td>
+                            <td> <input disabled type="text" 
+                                    formControlName="taxPointBasis" class="form-control"
+                                    style="width: 5rem; text-align: center;margin-left: 6px; height: 25px;font-size: 10px;">
+                            </td>
+                            <td>
+                                <table  style="width: 100%;">
+                                    <tr>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled  
+                                                formControlName="precedence1"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence2"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>   
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence3"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence4"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence5"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence6"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence7"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence8"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence9"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                class="form-control">
+                                        </td>
+                                        <td> <input disabled
+                                                formControlName="precedence10"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td> <input disabled type="text"
+                                    formControlName="currencyCode" style="width: 3rem; height: 25px;font-size: 10px;"
+                                    class="form-control">
+                            </td>
+                            <td> <input disabled formControlName="totTaxPer"
+                                    style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                    class="form-control">
+                            </td>
+                            <div *ngIf="taxCategoryMasterForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
+                            </div>
+                            <ng-template #thenBlock>
+                                <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                        class="form-control" 
+                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
+                                        class="form-control">
+                                </td>
+                                </ng-template>
+                    <ng-template #elseBlock>
+                        <td><input disabled type="number"
+                                formControlName="totTaxAmt"
+                                class="form-control"
+                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                        </td>
+                    </ng-template>
+               
+                <div *ngIf="taxCategoryMasterForm.controls['taxLines'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
+            </div>
+                <ng-template #thenBlockRecFlag>
+                    <td><input type="checkbox"
+                            disabled
+                            name="recoverableFlag"
+                            value="recoverableFlag"
+                            checked>
+                    </td>
+                </ng-template>
+                <ng-template #elseBlockRecFlag>
+                    <td><input type="checkbox"
+                            disabled
+                            name="recoverableFlag"
+                            value="recoverableFlag">
+                    </td>
+                </ng-template>
+                <div *ngIf="taxCategoryMasterForm.controls['taxLines'].controls[j].controls.inclusiveFlag.value === 'Y'; then thenBlockInclFlag; else elseBlockInclFlag">
+                                                        </div>
+                <ng-template #thenBlockInclFlag>
+                    <td><input type="checkbox"
+                            disabled
+                            name="inclusiveFlag"
+                            value="inclusiveFlag"
+                            checked></td>
+                </ng-template>
+                <ng-template #elseBlockInclFlag>
+                    <td><input type="checkbox"
+                            disabled
+                            name="inclusiveFlag"
+                            value="inclusiveFlag">
+                    </td>
+                </ng-template>
+                <div *ngIf="taxCategoryMasterForm.controls['taxLines'].controls[j].controls.selfAssesedFlag.value === 'Y'; then thenBlockselfAssFlag; else elseBlockselfAssFlag">
+                                                        </div>
+                <ng-template #thenBlockselfAssFlag>
+                    <td><input type="checkbox"
+                            disabled
+                            name="selfAssesedFlag"
+                            value="selfAssesedFlag"
+                            checked>
+                    </td>
+                </ng-template>
+                <ng-template #elseBlockselfAssFlag>
+                    <td><input type="checkbox"
+                            disabled
+                            name="selfAssesedFlag"
+                            value="selfAssesedFlag">
+                    </td>
+                </ng-template>
+                        </tr>
+                        <tr>
+                            <input hidden type="text" formControlName="invLineItemId" style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                            <input hidden type="text" class="form-control" formControlName="invLineNo"  style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                            
+                        </tr>
+                        </ng-container>
+                        </ng-container>
+                    </tbody>
+
+                </table>
+            </div>
+        </fieldset>
+    </div>
+</form>
