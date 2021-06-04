@@ -46,7 +46,7 @@ interface IJaiTaxtype{
   lookupValueDesc2 : string;
   lookupValueDesc3 : string;
   lookupValueDesc4 : string;
-  lookupValueDesc5 : string;
+  // lookupValueDesc5 : string;
   // showOu : boolean[];
   // showOrg: boolean[];
 
@@ -59,6 +59,22 @@ interface IJaiTaxtype{
 })
 export class JaiTaxTypeComponent implements OnInit {
     jaiTaxtypeMasterForm:FormGroup;
+
+
+      loginName:string;
+      loginArray:string;
+      name:string;
+      ouName : string;
+      locId: number;
+      locName : string;
+      orgId:number;
+      ouId :number;
+      deptId:number; 
+      divisionId:number;
+    // emplId :number;
+      public emplId =6;
+      lineIndex:number;
+
   
       iValue:number;
       // PLANE =true;   
@@ -87,9 +103,10 @@ export class JaiTaxTypeComponent implements OnInit {
         
     ledgerId:number;
     opUnit : number;
-    ouId: number; ouName : string;
-    locId: number;
-    locName: string; locCode : string;
+    // ouId: number; ouName : string;
+    // locId: number;
+    // locName: string; 
+    locCode : string;
     interimRecoveryCcid: string;
     recoveryCcid: string;
     interimLiablilityCcid: string;
@@ -110,6 +127,8 @@ export class JaiTaxTypeComponent implements OnInit {
    
   
     // locDescreption : string;
+
+    
   
     lookupValueDesc: string;
     lookupValueDesc1: string;
@@ -169,6 +188,28 @@ export class JaiTaxTypeComponent implements OnInit {
     a3: string;
     a4: string;
     a5: string;
+
+    b1: string;
+    b2: string;
+    b3: string;
+    b4: string;
+    b5: string;
+    b6: string;
+    b7: string;
+    b8: string;
+    b9: string;
+
+    b1Desc: string;
+    b2Desc: string;
+    b3Desc: string;
+    b4Desc: string;
+    b5Desc: string;
+    b6Desc: string;
+    b7Desc: string;
+    b8Desc: string;
+    b9Desc: string;
+    
+  
   
   
     showModal: boolean;
@@ -193,6 +234,19 @@ export class JaiTaxTypeComponent implements OnInit {
   
     constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
       this.jaiTaxtypeMasterForm = fb.group({
+
+
+        loginArray:[''],
+        loginName:[''],
+        ouName :[''],
+        locId:[''],
+        locName :[''],
+        ouId :[],
+        deptId :[],
+        emplId:[''],
+        orgId:[],
+        divisionId:[],
+
         status: ['', [Validators.required]],
         taxTypeCode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
         taxTypeName: ['', [Validators.required]],
@@ -211,19 +265,40 @@ export class JaiTaxTypeComponent implements OnInit {
         wthldTrxApplicableFlag: ['', [Validators.required]],
         locationId:[''],
         opUnit :['', [Validators.required]],
-             
+        lineIndex:[],     
         a1: ['', [Validators.required]],
         a2: ['', [Validators.required]],
         a3: ['', [Validators.required]],
         a4: ['', [Validators.required]],
         a5: ['', [Validators.required]],
+
+        b1: ['', [Validators.required]],
+        b2: ['', [Validators.required]],
+        b3: ['', [Validators.required]],
+        b4: ['', [Validators.required]],
+        b5: ['', [Validators.required]],
+        b6: ['', [Validators.required]],
+        b7: ['', [Validators.required]],
+        b8: ['', [Validators.required]],
+        b9: ['', [Validators.required]],
+
+        b1Desc: ['', [Validators.required]],
+        b2Desc: ['', [Validators.required]],
+        b3Desc: ['', [Validators.required]],
+        b4Desc: ['', [Validators.required]],
+        b5Desc: ['', [Validators.required]],
+        b6Desc: ['', [Validators.required]],
+        b7Desc: ['', [Validators.required]],
+        b8Desc: ['', [Validators.required]],
+        b9Desc: ['', [Validators.required]],
+        
         
         regimeName: [],
         lookupValueDesc1: [],
         lookupValueDesc2: [],
         lookupValueDesc3: [],
         lookupValueDesc4: [],
-        lookupValueDesc5: [],
+        // lookupValueDesc5: [],
       
   
         actLines: this.fb.array([this.lineDetailsGroup()])
@@ -270,6 +345,7 @@ export class JaiTaxTypeComponent implements OnInit {
       this.lineDetailsArray.push(this.lineDetailsGroup());
       this.showOu=false;
       this.showOrg=false;
+      this.restModalData();
     }
   
     RemoveRow(index) {
@@ -289,6 +365,22 @@ export class JaiTaxTypeComponent implements OnInit {
     }
     //////////////////////////////////////////////////ngOninit///////////////////////
     ngOnInit(): void {
+
+
+      this.name=  sessionStorage.getItem('name');
+      this.loginArray=sessionStorage.getItem('divisionName');
+      this.divisionId=Number(sessionStorage.getItem('divisionId'));
+      this.loginName=sessionStorage.getItem('name');
+      this.ouName = (sessionStorage.getItem('ouName'));
+      this.ouId=Number(sessionStorage.getItem('ouId'));
+      this.locId=Number(sessionStorage.getItem('locId'));
+      // this.locName=(sessionStorage.getItem('locName'));
+      this.deptId=Number(sessionStorage.getItem('dept'));
+      // this.emplId= Number(sessionStorage.getItem('emplId'));
+     
+      this.orgId=this.ouId;
+      console.log(this.loginArray);
+      console.log(this.locId);
      
       this.service.statusList()
         .subscribe(
@@ -341,20 +433,23 @@ export class JaiTaxTypeComponent implements OnInit {
             console.log(this.locationCodeList);
           }
         );
-      this.service.DivisionIDList()
-        .subscribe(
-          data => {
-            this.DivisionIDList = data;
-            console.log(this.DivisionIDList);
-          }
-        );
-      this.service.companyCodeList()
-        .subscribe(
-          data => {
-            this.companyCodeList = data;
-            console.log(this.companyCodeList);
-          }
-        );
+
+      // this.service.DivisionIDList()
+      //   .subscribe(
+      //     data => {
+      //       this.DivisionIDList = data;
+      //       console.log(this.DivisionIDList);
+      //     }
+      //   );
+
+      // this.service.companyCodeList()
+      //   .subscribe(
+      //     data => {
+      //       this.companyCodeList = data;
+      //       console.log(this.companyCodeList);
+      //     }
+      //   );
+
       this.service.BranchList()
         .subscribe(
           data => {
@@ -400,6 +495,11 @@ export class JaiTaxTypeComponent implements OnInit {
         );
       ///////////////////////////////////GL Code///////////////////////////////
   
+    }
+
+    LoadValues(i){
+      // alert("load value i ="+i);
+      this.lineIndex=i;
     }
   
     ///////////////////////Recoverable Tax CheckBox/////////////////////////
@@ -793,6 +893,94 @@ export class JaiTaxTypeComponent implements OnInit {
       // alert('in ' +this.jaiTaxtypeMasterForm.get('myModal').reset);
       // this.showModal = false;
     }
+
+    fndinterimRecoveryCcidGlCodeNew1(i) {
+      // var i = this.iValue;
+      // alert("index="+i);
+      var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+      // alert('a1 '+ this.jaiTaxtypeMasterForm.get('a1').value);
+      let c1 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b1').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c2 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c3 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b3').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c4 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b4').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c5 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b5').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c6 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b6').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c7 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b7').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c8 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b8').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c9 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b9').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+
+      (patch.controls[i]).patchValue({ interimRecoveryCcid: c1});
+      (patch.controls[i]).patchValue({ recoveryCcid: c2});
+      (patch.controls[i]).patchValue({ interimLiablilityCcid: c3});
+      (patch.controls[i]).patchValue({ liablilityCcid: c4});
+      (patch.controls[i]).patchValue({ expenseCcid: c5});
+      (patch.controls[i]).patchValue({ roundingCcid: c6});
+      (patch.controls[i]).patchValue({ suspenseCcid: c7});
+      (patch.controls[i]).patchValue({ advRcptSuspenseCcid: c8});
+      (patch.controls[i]).patchValue({ isoSuspenseCcid: c9});
+      
+  
+    }
+
+    restModalData(){
+
+      this.jaiTaxtypeMasterForm.get('a1').reset(); 
+      this.jaiTaxtypeMasterForm.get('a2').reset();
+      this.jaiTaxtypeMasterForm.get('a3').reset();
+      this.jaiTaxtypeMasterForm.get('a4').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc1').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc2').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc3').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc4').reset();
+ 
+
+      this.jaiTaxtypeMasterForm.get('b1').reset(); 
+      this.jaiTaxtypeMasterForm.get('b2').reset();
+      this.jaiTaxtypeMasterForm.get('b3').reset();
+      this.jaiTaxtypeMasterForm.get('b4').reset();
+      this.jaiTaxtypeMasterForm.get('b5').reset();
+      this.jaiTaxtypeMasterForm.get('b6').reset(); 
+      this.jaiTaxtypeMasterForm.get('b7').reset();
+      this.jaiTaxtypeMasterForm.get('b8').reset();
+      this.jaiTaxtypeMasterForm.get('b9').reset();
+      this.jaiTaxtypeMasterForm.get('b1Desc').reset(); 
+      this.jaiTaxtypeMasterForm.get('b2Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b3Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b4Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b5Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b6Desc').reset(); 
+      this.jaiTaxtypeMasterForm.get('b7Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b8Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b9Desc').reset();
+    }
+
   
     onOptionsSelectedStatus(event: any) {
       this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
@@ -816,8 +1004,8 @@ export class JaiTaxTypeComponent implements OnInit {
             this.service.getLocationSearch1(ouId)
             .subscribe(
               data => {
-                this.locIdList = data;
-                console.log(this.locIdList);
+                this.locIdList[index] = data;
+                console.log(this.locIdList[index]);
                 
               }
             );
@@ -975,11 +1163,9 @@ export class JaiTaxTypeComponent implements OnInit {
       // alert ('Location id/Code/Name='+locId+'/'+this.locCode+'/'+this.locName);
     }
   
-    onLookupSelected1(mlookupValue: any, mlookupType: string) {
-  
-      // alert('LookupValue: '+mlookupValue+ ' Type : '+mlookupType);
-  
-      this.service.lookupNameList(mlookupValue, mlookupType)
+    onLookupSelected1(mlookupValue: any, mlookupType: string,mAccountType :string) {
+      // alert('LookupValue: '+mlookupValue+ ' Type : '+mlookupType +" Account Type: "+mAccountType);
+        this.service.lookupNameList(mlookupValue, mlookupType)
         .subscribe(
           data => {
             this.lookupNameList = data;
@@ -992,10 +1178,28 @@ export class JaiTaxTypeComponent implements OnInit {
               this.lookupValueDesc2 = this.lookupNameList.lookupValueDesc;
             if (this.lookupNameList.lookupType === "CostCentre")
               this.lookupValueDesc3 = this.lookupNameList.lookupValueDesc;
-            if (this.lookupNameList.lookupType === "NaturalAccount")
-              this.lookupValueDesc4 = this.lookupNameList.lookupValueDesc;
             if (this.lookupNameList.lookupType === "SS_Interbranch")
-              this.lookupValueDesc5 = this.lookupNameList.lookupValueDesc;
+              this.lookupValueDesc4 = this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="INTERIM RECOVERY")
+                this.b1Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="RECOVERY")
+                this.b2Desc= this.lookupNameList.lookupValueDesc;
+		        if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="INTERIM LIABILITY")
+                // alert("in INTERIM LIABILITY");
+                this.b3Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="LIABILITY")
+                this.b4Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="EXPENSE")
+                this.b5Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="ROUNDING")
+                this.b6Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="SUSPENSE")
+                this.b7Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="ADVANCE")
+                this.b8Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="ISO SUSPENSE")
+                this.b9Desc= this.lookupNameList.lookupValueDesc;
+
           }
         }
         );
@@ -1027,12 +1231,13 @@ export class JaiTaxTypeComponent implements OnInit {
   
      openCodeComb11(i,j,index) 
     {
-      // alert(index)
+      alert('i= '+i + '  j= '+j.target.value +" INDEX =" +index);
       this.iValue = index;
       if(j.target.value != ''){
-        // alert('i= '+i + '  j= '+j.target.value);
+        // alert('i= '+i + '  j= '+j.target.value +" INDEX =" +index);
       var segment =j.target.value
       var  temp = segment.split('.');
+      
       this.a1=temp[0];
       this.a2=temp[1];
       this.a3=temp[2];
