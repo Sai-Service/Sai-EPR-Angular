@@ -14,6 +14,7 @@ interface IpostPO {
   startDate: Date;
   status: string;
   endDate: Date;
+
 }
 
 @Component({
@@ -29,9 +30,9 @@ export class TaxCategoryMasterComponent implements OnInit {
   taxCategoryDesc: string;
   itemClassCode: string;
   recordTypeCode: string;
-  startDate: Date;
+  // startDate: Date;
   endDate: Date;
-
+  startDate = new Date();
   public status = "Active";
   public minDate = new Date();
   displayButton = true;

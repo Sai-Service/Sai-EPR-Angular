@@ -1742,7 +1742,7 @@ export class OPMasterDtoComponent implements OnInit {
             } else {
               sum = sum + this.taxCalforItem[i].totTaxAmt
             }
-            alert(i + "--" + this.taxCalforItem[i].taxRateName + "---" + sum);
+            // alert(i + "--" + this.taxCalforItem[i].taxRateName + "---" + sum);
           }
           var TotAmtLineWise1 = arrayControl[this.poLineTax].baseAmtLineWise;
 
