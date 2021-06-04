@@ -73,11 +73,30 @@ export class OrderManagementService {
     return this.http.post(url, AccLineRecord, options);
   }
 
-  accountNoSearchFn(accountNo, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
-  }
+  // accountNoSearchFn(accountNo, ouId): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+  // }
   accountNoSearchFn1(accountNo, ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+  }
+
+  // VariantSearchFn(mainModel): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
+  // }
+
+
+  // ticketNoSearchFn(ticketNo): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${ticketNo}`);
+  // }
+
+  // ColourSearchFn(variant): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
+  // }
+
+
+
+  accountNoSearchFn(accountNo,ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   VariantSearchFn(mainModel): Observable<any> {

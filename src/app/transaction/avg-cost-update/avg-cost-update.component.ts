@@ -1,17 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-avg-cost-update',
-//   templateUrl: './avg-cost-update.component.html',
-//   styleUrls: ['./avg-cost-update.component.css']
-// })
-// export class AvgCostUpdateComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,7 +7,6 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
-import { TransactionService } from 'src/app/transaction/transaction.service';
 
 
 interface IAvgCostUpdate {
@@ -147,7 +132,7 @@ export class AvgCostUpdateComponent implements OnInit {
   public locatorId=999
   public subInventoryCode='SP'
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router,private transactionService: TransactionService) 
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
       this.avgCostUpdateForm  = fb.group({
 
@@ -216,8 +201,6 @@ export class AvgCostUpdateComponent implements OnInit {
    
 
      get f() { return this.avgCostUpdateForm .controls; }
-
- 
      avgCostUpdate(avgCostUpdateForm:any) {  }
 
  
@@ -377,9 +360,9 @@ export class AvgCostUpdateComponent implements OnInit {
       // alert ("Posting data  to PL mater......")
       // const formValue: IPriceList =this.priceListMasterForm.value;
       const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
-      this.transactionService.AvgCostUpdateSubmit(formValue).subscribe((res: any) => {
+      this.service.AvgCostUpdateSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFULLY');
+          alert('RECORD INSERTED SUCCESSFUILY');
           this.avgCostUpdateForm .reset();
         } else {
           if (res.code === 400) {
@@ -413,7 +396,7 @@ export class AvgCostUpdateComponent implements OnInit {
         variantFormGroup.addControl('createdBy', new FormControl(createdBy, Validators.required));
       }
       console.log(variants.value);
-      this.transactionService.AvgCostUpdateSubmit(variants.value).subscribe((res: any) => {
+      this.service.AvgCostUpdateSubmit(variants.value).subscribe((res: any) => {
         // var obj=res;
         // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
         if (res.code === 200) {
@@ -434,7 +417,7 @@ export class AvgCostUpdateComponent implements OnInit {
     //   const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
     //   this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
     //     if (res.code === 200) {
-    //       alert('RECORD UPDATED SUCCESSFULLY');
+    //       alert('RECORD UPDATED SUCCESSFUILY');
     //       window.location.reload();
     //     } else {
     //       if (res.code === 400) {
@@ -491,7 +474,7 @@ export class AvgCostUpdateComponent implements OnInit {
   searchMast(locId:any,itemId:any,frmDate:any,toDate:any) {
     frmDate=this.pipe.transform(frmDate, 'dd/MM/y');
     toDate=this.pipe.transform(toDate, 'dd/MM/y');
-    this.transactionService.getAvgHistoryList(locId,itemId,frmDate,toDate)
+    this.service.getAvgHistoryList(locId,itemId,frmDate,toDate)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -566,7 +549,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
         // ---------------------Prior Cost picking--------------------------
         var patch = this.avgCostUpdateForm.get('priceListDetailList') as FormArray; 
-        this.transactionService.avgCurrentCost(this.itemId,this.locId)
+        this.service.avgCurrentCost(this.itemId,this.locId)
         .subscribe(
           data => {
             this.avgCurrrentCost = data;
@@ -595,6 +578,8 @@ export class AvgCostUpdateComponent implements OnInit {
   
     }
   }
+// ======================================================================
+
 
   onOptioninvItemIdSelectedSingle(itemId) {
  
@@ -670,5 +655,3 @@ export class AvgCostUpdateComponent implements OnInit {
 
 
  
-
-

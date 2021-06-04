@@ -288,13 +288,7 @@ export class PoReceiptFormComponent implements OnInit {
   selectAll(e) {
     // alert(e.target.checked);
     let control=this.poReceiptForm.get('poLines') as FormArray;
-    // if( e.target.checked === true){
-    //   this.TRUER=true;
-    //   this.recFagDiss =false;
-    // }else{
-    //   this.TRUER=false;
-    //   this.recFagDiss =true;
-    // }
+    
     if ( e.target.checked === true){
         this.recFagDiss=false;
   }
@@ -305,12 +299,12 @@ export class PoReceiptFormComponent implements OnInit {
   
 checkIfAllSelected() {
   var totalSelected =  0;
-  for (var i = 0; i < this.names.length; i++) {
+  for (var i = 0; i < this.names.length; i++) 
+    {
         if(this.names[i].selected) totalSelected++;
     } 
-this.selectedAll = totalSelected === this.names.length;
-
-return true;
+      this.selectedAll = totalSelected === this.names.length;
+      return true;
 }
 
 

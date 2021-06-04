@@ -11,19 +11,58 @@
         <div class="form-bg">
             <div class="center" style="width: 100%;">
                 <form [formGroup]="orderTypeMasterForm" (ngSubmit)="orderTypeMaster(orderTypeMasterForm.value)">
+                    
                     <table class="center">
-                    <tr>
+                        <tr>
+                        <!-- <td  class="LabelFontStyle">DivId/div/ouid/locid/deptid/empId/custid/inssite/Aging/type/Stat/itemcd&nbsp;:&nbsp;</td> -->
+   
+                        <td >
+                            <input  style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                            class="form-control" [(ngModel)]="divisionId" placeholder="">
 
-                        <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
-
-                        <td>  
-                            <select   formControlName="divisionId" id="divisionId" [(ngModel)]="divisionId" class="form-control"  >
-                                <option>--Select--</option>
-                            <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
-                               {{sc.divisionId}}-{{sc.divisionName}}
-                            </option>
-                            </select>
                         </td>
+                        <td   style="border: none;color: black;">
+                            <input  style="width:100px ;"  type="text" disabled formControlName="loginArray"
+                                class="form-control" [(ngModel)]="loginArray" placeholder="">
+                        </td>
+                    
+                        <td>
+                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            class="form-control" [(ngModel)]="ouId" >
+                        </td>
+                    
+                        <td>
+                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                        </td>
+                        <td >
+                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            class="form-control" [(ngModel)]="deptId" placeholder="">
+
+                        </td>
+                        <td >
+                            <input hidden style="width:30px ;"   type="text" disabled formControlName="emplId"
+                            class="form-control" [(ngModel)]="emplId" placeholder="">
+
+                        </td>
+                        </tr>
+                    </table>
+
+                    
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Type Details</legend>
+               
+                    
+                    <table class="center">
+                      <tr>
+
+                        <!-- <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
+
+                        
+                            <td>
+                                <input  disabled  type="text" formControlName="division"  id="division" class="form-control" placeholder="Order Type Name"  >
+                            </td> -->
+                            
+                       
                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td>
                        
                         <td>  
@@ -60,11 +99,8 @@
                                         </select>
                                     </ng-template>
                                 </td>
-                       
-                        
-                    </tr>
-                    <tr>
 
+                                
                                 <td style="width: 15%" class="LabelFontStyle">Department&nbsp;:</td>
 
                                 <td>  
@@ -75,6 +111,11 @@
                                         </option>
                                     </select>
                                 </td>
+                       
+                        
+                            </tr>
+                            <tr>
+
 
                         <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Category:&nbsp;</td>
 
@@ -98,9 +139,9 @@
                             </select>
                         </td>
 
-                    </tr>
+                      </tr>
 
-                    <tr>
+                      <tr>
 
                         <td style="width: 15%" class="LabelFontStyle">Transaction&nbsp;Type:&nbsp;</td>
 
@@ -177,25 +218,20 @@
                                             </td>
                                    
                                     </ng-template>
-                    </tr>
+                      </tr>
+                        <tr>
+                            <td style="width:8.6%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
+                            <td>
+                               <input  style="width:430%;" type="text" formControlName="remark"  id="remark" class="form-control" placeholder="Remarks"  >
+                            </td>
+                        </tr>
 
                    
-                    </table>
+                      </table>
 
-                    <table class="center">
+                    
+                    </fieldset>
 
-                    <tr>
-
-                                           
-                        <td style="width:8.6%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
-                        <td>
-                           <input  style="width:580px;" type="text" formControlName="remark"  id="remark" class="form-control" placeholder="Remarks"  >
-                        </td>
-
-                        
-
-                    </tr>
-                    </table>
 
 
                     <table style="width: 100%; background-color: #FFE4B5;">
