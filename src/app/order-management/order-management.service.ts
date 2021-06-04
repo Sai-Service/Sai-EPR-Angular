@@ -10,11 +10,11 @@ export class OrderManagementService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  ServerUrl='http://localhost:8081'; 
+  ServerUrl = 'http://localhost:8081';
   // ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
   }
@@ -43,11 +43,11 @@ export class OrderManagementService {
   }
 
   //http://localhost:8081/itemMst/ByCatType?itemCatType=SS_SPARES&divId=1
-  getItemByCatType(itemCatType, divId):Observable<any> {
+  getItemByCatType(itemCatType, divId): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
   }
 
-  
+
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
@@ -55,28 +55,28 @@ export class OrderManagementService {
   priceListNameList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist`);
   }
-  
+
 
   public OrderBook(BookRecord) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/orderHeader/Entered';  
+    const url = this.ServerUrl + '/orderHeader/Entered';
     return this.http.post(url, BookRecord, options);
   }
 
-  public AccLineSave(AccLineRecord){
+  public AccLineSave(AccLineRecord) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/orderHeader/postAccItems';  
+    const url = this.ServerUrl + '/orderHeader/postAccItems';
     return this.http.post(url, AccLineRecord, options);
   }
 
-  // accountNoSearchFn(accountNo,ouId): Observable<any> {
+  // accountNoSearchFn(accountNo, ouId): Observable<any> {
   //   return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   // }
-  accountNoSearchFn1(accountNo,ouId): Observable<any> {
+  accountNoSearchFn1(accountNo, ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
@@ -116,18 +116,18 @@ export class OrderManagementService {
 
   // ////////////////************Order Payment Receipt **************//////////////////
   PaymentModeList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');
-  } 
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
+  }
 
   getOmReceiptSearchByOrdNo(orderNumber): Observable<any> {
-    alert("MS>>ORDER number :" +orderNumber);
+    alert("MS>>order number :" + orderNumber);
     return this.http.get(this.ServerUrl + `/omPayment/${orderNumber}`);
   }
 
 
 
 
-  ReceiptMethodList(mPaytype ,mLocId,mStatus): Observable<any> {
+  ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
   }
@@ -138,24 +138,24 @@ export class OrderManagementService {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/omPayment/omPayment';  
+    const url = this.ServerUrl + '/omPayment/omPayment';
     return this.http.post(url, OrderReceiptRecord, options);
-  }   
+  }
 
-  
-  
+
+
   // ************Deallotment Form**************/////////////////
-  
+
   Deallotmentsearchlist(ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/DeAllotment/${ouId}`);
   }
-  
-  // http://localhost:8081/orderHeader/deallotment?orderNumber=2111242153&segment=MVSAA4CZ2-ZQD-278852
-  DeallocateSubmit(orderNumber,segment) {
-    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
-    .set('segment', segment)
 
-    const REQUEST_URI = this.ServerUrl +`/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
+  // http://localhost:8081/orderHeader/deallotment?orderNumber=2111242153&segment=MVSAA4CZ2-ZQD-278852
+  DeallocateSubmit(orderNumber, segment) {
+    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+      .set('segment', segment)
+
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
     return this.http.put(REQUEST_URI, {
       params: REQUEST_PARAMS,
 
@@ -163,48 +163,67 @@ export class OrderManagementService {
   }
 
 
- 
-  getOmReceiptSearchBy(rcptNumber,orderNumber,custAcNumber): Observable<any> {
+
+  getOmReceiptSearchBy(rcptNumber, orderNumber, custAcNumber): Observable<any> {
     // getOmReceiptSearchBy(rcptNumber): Observable<any> {
-    alert("MS>>RCPT NO : " +rcptNumber );
-    // + " ORD NO : " + orderNumber +" cust no : " +custAcNumber );
-    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custAcNumber}&orderNumber=${orderNumber}&receiptNumber=${rcptNumber}`);
-    // receiptNumber=${rcptNumber}&orderNumber=${orderNumber}&accountNo=${custAcNumber}
-   
+    alert("MS>>RCPT NO : " + rcptNumber);
+    var baseUrl = this.ServerUrl + '/arCashReceipts/Search?';
+    var receipt, order, cust ;
+    if (rcptNumber === undefined) {
+    // baseUrl = baseUrl + '&receiptNumber=' ;
+    receipt = '&receiptNumber=';
+    }else{
+      receipt = '&receiptNumber='+rcptNumber;
+    }
+    if (orderNumber === undefined) {
+      order = '&orderNumber=';
+    }else{
+      order = '&orderNumber'+orderNumber;
+    }
+    if (custAcNumber === undefined) {
+    //  baseUrl = baseUrl + '&accountNo=' ;
+    cust =   '&accountNo=' ;
+    }else{
+      cust =  '&accountNo=' +custAcNumber;
+    }
+    return this.http.get(baseUrl +receipt+order+cust);
+   // return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custAcNumber}&orderNumber=${orderNumber}&receiptNumber=${rcptNumber}`);
+    // receiptNumber=${rcptNumber}&baseorderNumber=${orderNumber}&accountNo=${custAcNumber}
+  
   }
 
 
 
   getOmReceiptSearchByRcptNo(rcptNumber): Observable<any> {
-    alert("MS>>Receipt number :" +rcptNumber);
+    alert("MS>>Receipt number :" + rcptNumber);
     return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
   }
 
   getOmReceiptSearchByCustAcNo(custAcNumber): Observable<any> {
-    alert("MS>>Customer Accunt number :" +custAcNumber);
+    alert("MS>>Customer Accunt number :" + custAcNumber);
     return this.http.get(this.ServerUrl + `/arCashReceipts/custmst/${custAcNumber}`);
   }
 
 
 
 
-// ***************************** Allotment Form ****************************
-allotmentSearch(): Observable<any> {
-   return this.http.get(this.ServerUrl + `/orderHeader/Allotment`);
-}
+  // ***************************** Allotment Form ****************************
+  allotmentSearch(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/Allotment`);
+  }
 
-allotmentVehicleSearch(model,color,variant,locId): Observable<any> {
-   return this.http.get(this.ServerUrl + `/orderHeader/StockList?mainModel=${model}&colorCode=${color}&variantCode=${variant}&locationId=${locId}`);
-}
+  allotmentVehicleSearch(model, color, variant, locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/StockList?mainModel=${model}&colorCode=${color}&variantCode=${variant}&locationId=${locId}`);
+  }
 
 
 
-public allotmentSubmit(allotedChassisArray) {
-  const options = {
-    headers: this.headers
-  };
-  const url = this.ServerUrl + '/orderHeader/allotment/';  
-  return this.http.post(url,allotedChassisArray,  options);
-}
+  public allotmentSubmit(allotedChassisArray) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/orderHeader/allotment/';
+    return this.http.post(url, allotedChassisArray, options);
+  }
 
 }

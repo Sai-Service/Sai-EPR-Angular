@@ -287,12 +287,12 @@ export class PaymentReceiptComponent implements OnInit  {
     
   }
 
-  searchMastNew(rcptNo : any,ordNo: any,custNo: any) {
+  searchMastNew(rcptNo ,ordNo,custNo) {
     alert("Receipt No : "+ rcptNo + " Order no :"+ordNo + " Cust Ac No :" + custNo);
     this.orderManagementService.getOmReceiptSearchBy(rcptNo,ordNo,custNo)
     .subscribe(
     data => {
-      this.lstcomments = data.obj;
+      this.lstcomments = data.obj.oePayList;
       console.log(this.lstcomments);
      }
     );
@@ -386,7 +386,7 @@ export class PaymentReceiptComponent implements OnInit  {
       } else {
         if (res.code === 400) {
           alert('Code already present in the data base');
-          this.paymentReceiptForm.reset();
+          // this.paymentReceiptForm.reset();
         }
       }
     });
