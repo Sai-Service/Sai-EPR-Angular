@@ -130,7 +130,7 @@
                                         <input type="text" disabled formControlName="segment1" class="form-control"
                                             [(ngModel)]='segment1' placeholder="">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Ship-To:
+                                    <td style="width: 15%" class="LabelFontStyle1">Bill-To:
                                     </td>
                                     <td>
                                         <div *ngIf="displayBillShipList; then thenBillShipList; else elseBillShipList"></div>
@@ -142,11 +142,11 @@
                                             </option>
                                         </select>
                                         <div *ngIf="submitted && f. shipToLoc.errors" class="invalid-feedback">
-                                            <div *ngIf="f.shipToLoc.errors.required">Ship-To is required
+                                            <div *ngIf="f.shipToLoc.errors.required">Bill-To is required
                                             </div>
                                             <span
                                                 *ngIf="!poMasterDtoForm.get('shipToLoc').valid && poMasterDtoForm.get('shipToLoc').touched">Please
-                                                Enter valid Ship-To </span>
+                                                Enter valid Bill-To </span>
                                         </div>
                                         </ng-template>
                                         <ng-template #elseBillShipList>
@@ -158,7 +158,7 @@
                                             </select>
                                         </ng-template>
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Bill-To:
+                                    <td style="width: 15%" class="LabelFontStyle1">Ship-To:
                                     </td>
                                     <td>
                                         <div *ngIf="displayBillShipList1; then thenBillShipList1; else elseBillShipList1"></div>
@@ -171,11 +171,11 @@
                                             </option>
                                         </select>
                                         <div *ngIf="submitted && f. billToLoc.errors" class="invalid-feedback">
-                                            <div *ngIf="f.billToLoc.errors.required">Bill-To is required
+                                            <div *ngIf="f.billToLoc.errors.required">Ship-To is required
                                             </div>
                                             <span
                                                 *ngIf="!poMasterDtoForm.get('billToLoc').valid && poMasterDtoForm.get('billToLoc').touched">Please
-                                                Enter valid Bill-To </span>
+                                                Enter valid Ship-To </span>
                                         </div>
                                         </ng-template>
                                         <ng-template #elseBillShipList1>

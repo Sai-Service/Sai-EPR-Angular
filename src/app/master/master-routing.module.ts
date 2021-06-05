@@ -68,7 +68,7 @@ const routes: Routes = [
   {path:'WsVehicleMaster', component:WsVehicleMasterComponent },
   {path:'VariantMaster', component:VariantMasterComponent },
   {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
-
+  {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

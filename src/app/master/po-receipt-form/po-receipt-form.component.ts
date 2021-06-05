@@ -22,6 +22,8 @@ interface IpoReceipt{
   taxAmt:number;
   recDate:Date;
   Comments:string;
+  suppInvDate:Date;
+  suppInvNo:string;
   gstDocNo:string;
   // EwayBill:string;
   ewayBillNo:string;
@@ -94,6 +96,8 @@ export class PoReceiptFormComponent implements OnInit {
   now = Date.now();
   recDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   Comments:string;
+  suppInvDate:Date;
+  suppInvNo:string;
   gstDocNo:string;
   user:any[];
   // EwayBill:string;
@@ -198,6 +202,8 @@ export class PoReceiptFormComponent implements OnInit {
       taxAmt:[''],
       recDate:[''],
       Comments:['',Validators.required],
+      suppInvDate:[''],
+  suppInvNo:[''],
       gstDocNo:[''],
       ewayBillNo:[''],
       docDate:[''],

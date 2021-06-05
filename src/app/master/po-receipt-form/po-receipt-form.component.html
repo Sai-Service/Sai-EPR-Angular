@@ -576,6 +576,24 @@
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
+                                            Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                value={{suppInvNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                                value={{suppInvDate}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
                                             Comments&nbsp;:&nbsp;
                                         </td>
                                         <td>
