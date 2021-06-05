@@ -4,7 +4,7 @@
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader">
-                    &nbsp;&nbsp;Item&nbsp;Master
+                    &nbsp;&nbsp;ITEM&nbsp;MASTER
                 </td>
 
                 <table style="width: 100%; background-color: #FFE4B5;">
@@ -27,6 +27,51 @@
             <div class="form-bg">
                 <div class="center" style="width: 100%;">
                     <div id="Panel1" class="auto-style103">
+                     
+                        <table class="center">
+                            <tr>
+
+                                <td >
+                                    <input  style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                                    class="form-control" [(ngModel)]="divisionId" placeholder="">
+        
+                                </td>
+                                <td   style="border: none;color: black;">
+                                    <input  style="width:100px ;"  type="text" disabled formControlName="loginArray"
+                                        class="form-control" [(ngModel)]="loginArray" placeholder="">
+                                </td>
+                            
+                                <td>
+                                    <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                                    class="form-control" [(ngModel)]="ouId" >
+                                </td>
+                            
+                                <td>
+                                    <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                                </td>
+                                <td >
+                                    <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                                    class="form-control" [(ngModel)]="deptId" placeholder="">
+        
+                                </td>
+                                <td >
+                                    <input  style="width:30px ;"   type="text" disabled formControlName="emplId"
+                                    class="form-control" [(ngModel)]="emplId" placeholder="">
+        
+                                </td>
+                                <td>
+                                    <input style="width:60px ;" disabled type="number" formControlName="hsnGstPer" class="form-control"
+                                        [ngModel]="hsnGstPer">
+                                </td>
+
+                            </tr>
+                        </table>
+
+             
+
+                        <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Item Details</legend>
+                   
                         <table class="center">
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
@@ -60,18 +105,17 @@
                                         Enter Item Category </span>
                                 </td>
                                 
-                                <!-- <td>
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                       </td> -->
+                                            <!-- <td>
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </td> -->
 
                                 <td style="width: 15%" class="LabelFontStyle1">HSN&nbsp;/&nbsp;SAC&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control">
+                                    <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control"  (ngModelChange)='onHsnCodeSelected($event)'>
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
-                                            {{sc.hsnsaccode}}-{{sc.description}}
-                                            <!-- -{{sc.divisionName}} -->
-                                        </option>
+                                            {{sc.hsnsaccode}}-{{sc.description}}-{{sc.gstPercentage}}%
+                                         </option>
                                     </select>
                                     <div *ngIf="submitted && f. hsnSacCode.errors" class="invalid-feedback">
                                         <div *ngIf="f.hsnSacCode.errors.required">Enter hsn/sac </div>
@@ -82,24 +126,7 @@
                                         *ngIf="!itemMasterForm.get('hsnSacCode').valid && itemMasterForm.get('hsnSacCode').touched">Please
                                         Enter hsn/sac </span>
                                 </td>
-                                <td style="width: 15%" class="LabelFontStyle1">UOM&nbsp;:&nbsp;</td>
-                                <td>
-                                    <!-- <input type="checkbox" formControlName="uom" [(ngModel)]='uom'(change)="UomEvent($event)"> -->
-                                    <select formControlName="uom" id="uom" class="form-control">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of uomList">
-                                            {{sc.code}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="submitted && f. uom.errors" class="invalid-feedback">
-                                        <div *ngIf="f.uom.errors.required">Enter UOM </div>
-                                        <div *ngIf="f.uom.errors?.maxLength">Enter UOM
-                                        </div>
-                                    </div>
-                                    <span
-                                        *ngIf="!itemMasterForm.get('uom').valid && itemMasterForm.get('uom').touched">Please
-                                        Enter UOM </span>
-                                </td>
+                               
                             </tr>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle1">Item&nbsp;Code&nbsp;:&nbsp;</td>
@@ -122,20 +149,39 @@
                                 <ng-template #elseBlockdisItemCode>
                                 <td><input type="text" disabled class="form-control" formControlName="segment"></td>
                             </ng-template>
+
                                 <td style="width: 15%" class="LabelFontStyle1">Item&nbsp;Description&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="description" value={{description}} class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
-                                        placeholder="Enter Item Description" style="width: 100%;">
-                                    <div *ngIf="submitted && f. description.errors" class="invalid-feedback">
-                                        <div *ngIf="f.description.errors.required">Enter Item Description </div>
-                                        <div *ngIf="f.description.errors?.maxLength">Enter Item Description
+                                    <!-- <select  class="form-control"  formControlName="itemTypeForCat" (ngModelChange)='onOptionsSelectedItemType($event)'  >
+                                      <option value="ss_spares">ss_spares</option>
+                                       <option value="ss_vehicle">ss_vehicle</option>
+                                      </select> -->
+                                    <select formControlName="itemTypeForCat" id="itemTypeForCat" class="form-control" (ngModelChange)='onOptionsSelectedItemType($event)'>
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  SSitemTypeList">
+                                            {{sc.itemType}}
+                                        </option>
+                                    </select>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle1">Item&nbsp;Category&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="categoryId" id="categoryId" class="form-control">
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of  categoryIdList" [ngValue]="sc.categoryId">
+                                            {{sc.attribute1}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f. categoryId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.categoryId.errors.required">Enter Item Category </div>
+                                        <div *ngIf="f.categoryId.errors?.maxLength">Enter Item Category
                                         </div>
                                     </div>
                                     <span
-                                        *ngIf="!itemMasterForm.get('description').valid && itemMasterForm.get('description').touched">Please
-                                        Enter Item Description </span>
+                                        *ngIf="!itemMasterForm.get('categoryId').valid && itemMasterForm.get('categoryId').touched">Please
+                                        Enter Item Category </span>
                                 </td>
+                                </tr>
+                                <tr>
                                 
                                 <td style="width: 15%" class="LabelFontStyle1">Status&nbsp;:&nbsp;</td>
                                 <td>
@@ -177,6 +223,8 @@
                                 </ng-template>
                             </tr>
                         </table>
+                    </fieldset>
+
                     </div>
                 </div>
             </div>
@@ -1175,6 +1223,7 @@
                                 </table>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

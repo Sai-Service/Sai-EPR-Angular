@@ -167,7 +167,7 @@ export class SalesOrderBookingComponent implements OnInit {
   public transactionTypeNameList: any;
   public payTermDescList: any;
   public salesRepNameList: any;
-  public taxCategoryList: any;
+  public taxCategoryList: any[];
 
   indexVal: number;
   public orderLines: any[];
@@ -182,7 +182,7 @@ export class SalesOrderBookingComponent implements OnInit {
   public taxCalforItem:any;
   displayInsDetails = true;
   displayEWDetails = true;
-  lstInvLineDeatails1: any;
+  lstInvLineDeatails1: any[];
   displayfinanceType = true;
   displayfinancerName = true;
   displayfinanceAmt = true;
@@ -292,7 +292,6 @@ export class SalesOrderBookingComponent implements OnInit {
     // return this.lineDetailsArray.controls[].get('taxAmounts') as FormArray
     return <FormArray>this.SalesOrderBookingForm.get('taxAmounts')
   }
-
 
 
 
@@ -522,6 +521,7 @@ export class SalesOrderBookingComponent implements OnInit {
               var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
               control.push(oeOrderLinesAllList1);
             }
+          
             for (let i = 0; i < data.obj.oeOrderLinesAllList[0].taxAmounts.length - 1; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
@@ -574,6 +574,8 @@ export class SalesOrderBookingComponent implements OnInit {
     var amount = arrayControl[i].unitSellingPrice;
     alert(amount);
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
+    console.log(this.taxCategoryList[0].taxCategoryName);
+    
     this.taxCategoryId= select.taxCategoryId;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     // var taxCategoryId = this.taxCategoryList[0].taxCategoryId;
@@ -587,13 +589,14 @@ export class SalesOrderBookingComponent implements OnInit {
           console.log(this.lstInvLineDeatails1);
           let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
           this.TaxDetailsArray().clear();
-          for (let i = 0; i < data.taxLines.length; i++) {
+          for (let i = 0; i < data.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
           }
 
-          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data.taxLines);
-
+          this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+          // console.log(this.SalesOrderBookingForm.get('taxAmounts').patchValue(data));
+          
         }
 
 

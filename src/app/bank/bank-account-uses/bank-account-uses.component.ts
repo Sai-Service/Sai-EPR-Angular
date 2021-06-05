@@ -423,22 +423,7 @@ Orgmaster(bankAccUsesForm: any) {
       if(this.content === "bankInterestIncomeCcid" ){
         this.bankInterestIncomeCcid =abc;
       }
-      this.service.segmentNameList(abc)
-      .subscribe(
-        data => {
-
-          this.segmentNameList = data;
-          // if (this.segmentNameList.data === 200) {
-            // this.JournalVoucherForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
-           
-          // } else if (this.segmentNameList.code === 400) {
-            // var arraycontrol =this.JournalVoucherForm.get('glLines').value;
-            // patch.controls[i].patchValue({segmentName : ''});
-            // alert(this.segmentNameList.message);
-
-          }
-        }
-      );
+     
     this.bankAccUsesForm.get('segment11').reset();
     this.bankAccUsesForm.get('segment2').reset();
     this.bankAccUsesForm.get('segment3').reset();
@@ -486,7 +471,7 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankAcDtlsList(bkBranchName)
     .subscribe(
       data => {
-        this.BankAcDtlsList = data;
+        // this.BankAcDtlsList = data;
         console.log(this.BankAcDtlsList);
       //  this.customerId= this.BankNameList.customerId;
       // this.branchId = this.BankBranchList.name2;
@@ -502,7 +487,7 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankAcDtlsList(branchName)
     .subscribe(
       data => {
-        this.BankAcDtlsList = data.obj;
+        // this.BankAcDtlsList = data.obj;
         console.log(this.BankAcDtlsList);
        this.bankAccountId= this.BankNameList.id;
       console.log(this.BankNameList.id);

@@ -24,9 +24,9 @@
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/DocumentSequenceMaster']">Document Sequence Master</a></li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeeMaster']">Employee Master</a> </li>   
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Pricelist Master</a> </li>  
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/orderType']">Order Type Master</a> </li> 
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/SaiEwScheme']">Sai Ew Scheme Master</a> </li> 
-                
+                <li> <a class="dropdown-item" [routerLink]="['/admin/master/orderType']">Order Type Master</a> </li>
+                <li> <a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master - Workshop</a> </li>     
+                <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMaster']">Variant Master</a> </li>  
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Items Master</a>
@@ -62,12 +62,12 @@
               </li> 
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Tax Master</a>
               <ul class="dropdown-menu">
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiRegimeMaster']">Jai-Regime Master</a> </li>
-          <li> <a class="dropdown-item" [routerLink]="['/admin/master/TaxAccounts']">Tax Accounts Master</a>  </li>
+                <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiRegimeMaster']">Tax Regime Master</a> </li>
+          <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/TaxAccounts']">Tax Accounts Master</a>  </li> -->
           <li> <a class="dropdown-item" [routerLink]="['/admin/master/taxCategoryMaster']">Tax Category Master</a> </li> 
-          <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxCategoryLine']">Jai Tax Category Line Master</a> </li>
-          <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxType']">Jai Tax Type Master</a> </li>
-          <li> <a class="dropdown-item" [routerLink]="['/admin/master/jaiTaxRatesMaster']">Jai Tax Rates Master</a> </li>
+          <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxCategoryLine']">Tax Category Line Master</a> </li> -->
+          <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxType']">Tax Type Master</a> </li>
+          <li> <a class="dropdown-item" [routerLink]="['/admin/master/jaiTaxRatesMaster']">Tax Rates Master</a> </li>
               </ul>
             </li>
           </ul>
@@ -98,7 +98,8 @@
         </li>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Avg Cost Upadte</a></li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Avg Cost Upadte</a></li> -->
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpdate']">Average Cost Update</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Move Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Miscellaneous Transaction</a></li>
@@ -121,19 +122,34 @@
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
             </ul>  
             </li>   
-            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Workshop</a>
+
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receipts</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
+                <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpdate']">Average Cost Update</a></li> -->
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentReceipt']">OM-Payment Receipt</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR-Payment Receipt</a></li>
+                <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReceiptArApplication']">AR Receipt Application</a></li> -->
+
               </ul>  
-              </li> 
-              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">General Ledger</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" [routerLink]="['/admin/transaction/JournalVoucher']">Journal Voucher</a></li>
-                  <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AccountEnquiry']">Account Enquiry</a></li>
-                </ul>  
-                </li> 
-      <!-- </ul> -->
-    <!-- </li> -->
+            </li>  
+
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Extended Warranty</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiEwSchemeMaster']">Sai EW Scheme Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiExtendedWarranty']">Sai Extended Warranty</a></li>
+              </ul>  
+            </li>  
+
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">MCP</a>
+              <ul class="dropdown-menu"> 
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMaster']">MCP Item Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMapping']">MCP Item Mapping</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpPackageMaster']">MCP Package Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpEnquiry']">MCP Enquiry Generation</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpEnrollment']">MCP Enrollment Form</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpCancellation']">MCP Termination</a></li>
+              </ul>
+            </li>  
   </ul>
 </li>  
 

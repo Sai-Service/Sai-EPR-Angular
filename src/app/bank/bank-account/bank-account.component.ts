@@ -205,15 +205,12 @@ receiptMultiCurrFlag:string;
     const formValue: IbankDetails = this.tranceFun(this.bankCreationForm.value);
     this.bankService.bankCreationFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('BANK DETAILS INSERTED SUCCESSFULLY');
-        // window.location.reload();
         // this.divisionMasterForm.reset();
         // this.divisionMasterForm.get('status').reset();
-      } else {
         if (res.code === 400) {
           alert('Error occurred during data inserting');
           // this.divisionMasterForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });

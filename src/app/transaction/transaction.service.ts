@@ -9,6 +9,7 @@ export class TransactionService {
 
   httpclient: any;
   headers: any;
+  receiptNumber:number;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
   ServerUrl='http://localhost:8081'; 

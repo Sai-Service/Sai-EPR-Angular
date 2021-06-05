@@ -47,6 +47,20 @@ export class OrderTypeMasterComponent implements OnInit {
     transactionTypeDescription:string
     remark :string;
 
+    loginName:string;
+    loginArray:string;
+    name:string;
+    ouName : string;
+    // locId: number;
+    // locName : string;
+    // ouId :number;
+    // deptId:number; 
+    // divisionId:number;
+   // emplId :number;
+    public emplId =6;
+
+
+
     displayInactive = true;
     Status1: any;
     inactiveDate: Date;
@@ -85,6 +99,16 @@ export class OrderTypeMasterComponent implements OnInit {
         attribute2:[],
         attribute3:[],
 
+        loginArray:[''],
+        loginName:[''],
+        ouName :[''],
+        locName :[''],
+        // locId:[''],
+        // ouId :[],
+        // deptId :[],
+        // divisionId:[],
+        emplId:[''],
+
       });
     }
 
@@ -93,6 +117,22 @@ export class OrderTypeMasterComponent implements OnInit {
 
       ngOnInit(): void 
       {
+        this.name=  sessionStorage.getItem('name');
+        this.loginArray=sessionStorage.getItem('divisionName');
+        this.division=sessionStorage.getItem('divisionName');
+        this.divisionId=Number(sessionStorage.getItem('divisionId'));
+        this.loginName=sessionStorage.getItem('name');
+        this.ouName = (sessionStorage.getItem('ouName'));
+        this.ouId=Number(sessionStorage.getItem('ouId'));
+        this.locId=Number(sessionStorage.getItem('locId'));
+        // this.locName=(sessionStorage.getItem('locName'));
+        this.deptId=Number(sessionStorage.getItem('dept'));
+        // this.emplId= Number(sessionStorage.getItem('emplId'));
+        console.log(this.loginArray);
+        console.log(this.locId);
+        
+        
+
 
             this.service.OUIdList()
             .subscribe(
@@ -112,13 +152,13 @@ export class OrderTypeMasterComponent implements OnInit {
 
            
         
-            this.service.DivisionIDList()
-            .subscribe(
-              data => {
-                this.DivisionIDList = data;
-                console.log(this.DivisionIDList);
-              }
-            );
+            // this.service.DivisionIDList()
+            // .subscribe(
+            //   data => {
+            //     this.DivisionIDList = data;
+            //     console.log(this.DivisionIDList);
+            //   }
+            // );
 
 
             this.service.statusList()
@@ -235,6 +275,7 @@ export class OrderTypeMasterComponent implements OnInit {
         alert(" divisionid: "+this.divisionId);
         alert(" InvoiceSource: "+this.invoiceSource);
       }
+      
 
       searchMast() {
         this.service.getOrderTypeSearch()

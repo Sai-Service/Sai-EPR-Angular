@@ -22,6 +22,8 @@ interface IpoReceipt{
   taxAmt:number;
   recDate:Date;
   Comments:string;
+  suppInvDate:Date;
+  suppInvNo:string;
   gstDocNo:string;
   // EwayBill:string;
   ewayBillNo:string;
@@ -94,6 +96,8 @@ export class PoReceiptFormComponent implements OnInit {
   now = Date.now();
   recDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   Comments:string;
+  suppInvDate:Date;
+  suppInvNo:string;
   gstDocNo:string;
   user:any[];
   // EwayBill:string;
@@ -198,6 +202,8 @@ export class PoReceiptFormComponent implements OnInit {
       taxAmt:[''],
       recDate:[''],
       Comments:['',Validators.required],
+      suppInvDate:[''],
+  suppInvNo:[''],
       gstDocNo:[''],
       ewayBillNo:[''],
       docDate:[''],
@@ -282,13 +288,7 @@ export class PoReceiptFormComponent implements OnInit {
   selectAll(e) {
     // alert(e.target.checked);
     let control=this.poReceiptForm.get('poLines') as FormArray;
-    // if( e.target.checked === true){
-    //   this.TRUER=true;
-    //   this.recFagDiss =false;
-    // }else{
-    //   this.TRUER=false;
-    //   this.recFagDiss =true;
-    // }
+    
     if ( e.target.checked === true){
         this.recFagDiss=false;
   }
@@ -299,12 +299,12 @@ export class PoReceiptFormComponent implements OnInit {
   
 checkIfAllSelected() {
   var totalSelected =  0;
-  for (var i = 0; i < this.names.length; i++) {
+  for (var i = 0; i < this.names.length; i++) 
+    {
         if(this.names[i].selected) totalSelected++;
     } 
-this.selectedAll = totalSelected === this.names.length;
-
-return true;
+      this.selectedAll = totalSelected === this.names.length;
+      return true;
 }
 
 

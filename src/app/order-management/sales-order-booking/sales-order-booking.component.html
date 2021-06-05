@@ -275,6 +275,7 @@
                         <td style="width: 15%" class="LabelFontStyle">
                             Payment&nbsp;Term&nbsp;:&nbsp;
                         </td>
+                      
                         <td>
                             <div *ngIf="displaypayTermDesc; then thenpayTermDesc; else elsepayTermDesc"></div>
                             <ng-template #thenpayTermDesc>
@@ -458,7 +459,7 @@
                                             style="width: 170px;">
                                             <option>--Select--</option>
                                             <option *ngFor="let cc of ColourSearch">
-                                                {{cc.colorCode}}
+                                                {{cc.ColorCode}}
                                             </option>
                                         </select>
                                     </ng-template>

@@ -102,19 +102,19 @@ export class StockTransferComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
-      ShipmentNo: [],
+      ShipmentNo: ['',[Validators.required]],
       locId: [''],
       deptName:[''],
       shipmentNumber: [''],
-      transferOrgId: [''],
+      transferOrgId: ['',[Validators.required]],
       transactionTypeId:[''],
-      issueTo: [''],
+      issueTo: ['',[Validators.required]],
       ewayBill: [''],
       ewayBillDate: [''],
       remarks: [''],
       issueBy: [''],
       transDate: [''],
-      subInventoryCode: [''],
+      subInventoryCode: ['',[Validators.required]],
       transferLoc:[],
       status: ['', [Validators.required]],
       transReference:[''],

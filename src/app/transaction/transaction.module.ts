@@ -10,8 +10,19 @@ import { StockTransferComponent } from './stock-transfer/stock-transfer.componen
 import { MiscellaneousTransactionComponent } from './miscellaneous-transaction/miscellaneous-transaction.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
+import { PaymentReceiptComponent } from './payment-receipt/payment-receipt.component';
+import { PaymentArComponent } from './payment-ar/payment-ar.component';
 import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
-import { PaymentARComponent } from './payment-ar/payment-ar.component';
+import { ReceiptArApplicationComponent } from './receipt-ar-application/receipt-ar-application.component';
+import { SaiExtendedWarrantyComponent } from './sai-extended-warranty/sai-extended-warranty.component';
+import { SaiEwSchemeMasterComponent } from './sai-ew-scheme-master/sai-ew-scheme-master.component';
+import { McpItemMasterComponent } from './mcp-item-master/mcp-item-master.component';
+import { McpItemMappingComponent } from './mcp-item-mapping/mcp-item-mapping.component';
+import { McpPackageMasterComponent } from './mcp-package-master/mcp-package-master.component';
+import { McpEnquiryComponent } from './mcp-enquiry/mcp-enquiry.component';
+import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.component';
+import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
+
 
   import { from } from 'rxjs';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
@@ -24,21 +35,34 @@ import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.compo
 @NgModule({
   declarations: [
     PoInvoiceComponent,
-     MoveOrderComponent, 
-     StockTransferComponent, 
-     MiscellaneousTransactionComponent,
+    MoveOrderComponent, 
+    StockTransferComponent, 
+    MiscellaneousTransactionComponent,
     PaymentsComponent,
     PoInvoiceComponent,
     ARInvoiceComponent,
+    PaymentReceiptComponent, 
+    PaymentArComponent, 
+    AvgCostUpdateComponent, 
+    ReceiptArApplicationComponent, 
+    SaiExtendedWarrantyComponent, 
+    SaiEwSchemeMasterComponent, 
+    McpItemMasterComponent, 
+    McpItemMappingComponent, 
+    McpPackageMasterComponent, 
+    McpEnquiryComponent, 
+    McpEnrollmentComponent, 
+    McpCancellationComponent, 
+  
     StockTakingComponent,
    JournalVoucherComponent,
     AvgCostUpdateComponent,
-    PaymentARComponent,
-    
+ 
     OnHandDetailsComponent,
     
     AccountEnquiryComponent,
   ],
+  
   imports: [
     CommonModule,
     TransactionRoutingModule, ReactiveFormsModule,NgxDateRangeModule,

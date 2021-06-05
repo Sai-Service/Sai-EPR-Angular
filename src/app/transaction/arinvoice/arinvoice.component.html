@@ -301,7 +301,7 @@
             </td>
                     <td style="width: 15%"  class="LabelFontStyle">&nbsp;Paying&nbsp;Cust&nbsp;Name&nbsp;:</td>
                     <td>
-                        <input type="text"  class="form-control">
+                        <input type="text" formControlName="billToCustName" class="form-control">
                     </td>
                    
                 </tr>
@@ -350,6 +350,7 @@
                             <td>
                                 <input type="text"  class="form-control">
                             </td>
+                           
                         </tr>
                         </fieldset>
         </table>
@@ -400,7 +401,11 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <button type="submit" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
+                                                <button type="button" href="#contact-tab-md" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
+                                                <!-- <li class="nav-item waves-effect waves-light">
+                                                    <a (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)" class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false">Distribution</a>
+                                                  </li> -->
+                                           
                                             </td>
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
@@ -856,7 +861,7 @@
                                     <ng-container   *ngFor="let group of lineDistributionArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                                 <tr class="ItemStyle" style="text-decoration:none;">
                                     <!-- <input hidden type="text" formControlName="invDistributionId"> -->
-                                    <td><input class="form-control" [(ngModel)]="invoiceLineNum" type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
+                                    <td><input class="form-control"  type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
                                     <td>
                                         <input formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
                                     </td>
@@ -910,7 +915,7 @@
 <!-- </div> -->
                 <table class="center">
                     <tr>
-                        <td> <button type="butt on" class="btn btn-primary" (click)="saveARInvoiceNew()" style="width: 8rem;">Save</button></td>
+                        <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;">Complete</button></td>
                         <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
                         <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->

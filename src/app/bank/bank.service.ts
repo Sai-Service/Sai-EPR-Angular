@@ -60,6 +60,10 @@ public BankAccUseFun(bankRecord) {
     return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${BkName}`);
   } 
   
+
+  BankAcDtlsList1(bkBranchName){
+    return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${bkBranchName}`);
+  }
   BankAcccountList(bkBranchName,bkName): Observable<any> {
     return this.http.get(this.ServerUrl +`/abc/${bkBranchName}${bkBranchName}`);
   } 

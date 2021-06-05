@@ -29,7 +29,7 @@
     outline: medium none;
     padding: 3px;
     vertical-align: top;
-    width: 180px;
+    width: 220px;
     height: 50%;
     border-color: gray;
    /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
@@ -88,6 +88,16 @@
     width: 100%;
 }
 
+
+.grid_scroll_3{
+    overflow: auto;
+    /* width: 800px; */
+    width: 100%;
+    height: 360px;
+    width: 100%;
+  }
+  
+
 .btn-info{
     width: 5em;
     background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
@@ -111,3 +121,11 @@
     input.ng-untouched{
     border-color: white;
     } */
+    .modal-dialog {
+        max-width: 1200px;
+        margin: 0 auto;
+        /* vertical-align: top; */
+        /* display: inline-block;  */
+        text-align: left; 
+      }
+    
