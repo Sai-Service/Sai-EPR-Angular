@@ -6,7 +6,8 @@ import{ BankService} from '../bank.service';
 
 interface IbankDetails{
   custName:string;
-branchId:string;  
+branchId:number;  
+branchNumber:string;
 branchName:string;
   customerId:number;
   bankAccountName:string;
@@ -35,7 +36,8 @@ receiptMultiCurrFlag:string;
 export class BankAccountComponent implements OnInit {
   bankCreationForm: FormGroup;
   custName:string;
-branchId:string;  
+branchId:number;  
+branchNumber:string;
 branchName:string;
   bankAccountName:string;
   status :string = 'Active';
@@ -68,6 +70,7 @@ receiptMultiCurrFlag:string;
      this.bankCreationForm = fb.group({
       custName:['',[Validators.required] ],
       branchId:['',[Validators.required] ], 
+      branchNumber:[],
       branchName:['',[Validators.required] ],
       customerId:[''],
       bkName:[''],
@@ -102,7 +105,7 @@ receiptMultiCurrFlag:string;
     this.bankService.BankNameListFn()
     .subscribe(
       data => {
-        this.BankNameList = data.obj;
+        this.BankNameList = data;
         console.log(this.BankNameList);
       }
     );
@@ -178,8 +181,19 @@ receiptMultiCurrFlag:string;
     let select = this.BankBranchList.find(d => d.name=== branchName);
     console.log(select);
     console.log(select.name2);
-    this.branchId = select.name2;
+    this.branchNumber = select.name2;
+    this.branchId = select.id;
   }
+
+    // onbranchIdSelected(branchName){
+  //   let select = this.BankBranchList.find(d => d.name=== branchName);
+  //   console.log(select);
+  //   console.log(select.name2);
+  //   this.branchId = select.name2;
+    
+  //   // console.log(select.name2);
+  //   // this.branchId = select.name2;
+  // }
   SelectbranchId(branchId){}
   bankCreation(bankCreationForm){}
 
@@ -192,7 +206,7 @@ receiptMultiCurrFlag:string;
     this.bankService.bankCreationFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('BANK DETAILS INSERTED SUCCESSFULLY');
-        window.location.reload();
+        // window.location.reload();
         // this.divisionMasterForm.reset();
         // this.divisionMasterForm.get('status').reset();
       } else {

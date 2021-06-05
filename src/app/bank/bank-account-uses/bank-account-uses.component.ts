@@ -7,6 +7,7 @@ import{ BankService} from '../bank.service';
 
 interface IbankBranchUse{
 bankAccountId: number;
+customerId:number;
 ouId: number;
     orgPartyId: number;
     apUseEnableFlag:string;
@@ -42,6 +43,7 @@ ouId: number;
 export class BankAccountUsesComponent implements OnInit {
   bankAccUsesForm: FormGroup;
   bankAccountId: number;
+  customerId:number;
 ouId: number;
     orgPartyId: number;
     apUseEnableFlag:string;
@@ -89,6 +91,8 @@ bkBranchName:string;
 bkName:string;
   public BranchSearch : any;
   public BankBranchList:any[];
+  public BankAcDtlsList:any[];
+  public segmentNameList:any[];
 public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
@@ -104,6 +108,7 @@ bkBranchName: [''],
     bankAccountId: [''],
 ouId:  [''],
 bkName:[''],
+customerId:[],
     orgPartyId: [''],
     apUseEnableFlag: [''],
     arUseEnableFlag: [''],
@@ -161,8 +166,10 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankNameListFn()
     .subscribe(
       data => {
-        this.BankNameList = data.obj;
+        this.BankNameList = data;
         console.log(this.BankNameList);
+        this.customerId= this.BankNameList.customerId;
+     //   alert(this.BankNameList.customerId);
       }
     );
     this.service.locationCodeList()
@@ -416,6 +423,22 @@ Orgmaster(bankAccUsesForm: any) {
       if(this.content === "bankInterestIncomeCcid" ){
         this.bankInterestIncomeCcid =abc;
       }
+      this.service.segmentNameList(abc)
+      .subscribe(
+        data => {
+
+          this.segmentNameList = data;
+          // if (this.segmentNameList.data === 200) {
+            // this.JournalVoucherForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+           
+          // } else if (this.segmentNameList.code === 400) {
+            // var arraycontrol =this.JournalVoucherForm.get('glLines').value;
+            // patch.controls[i].patchValue({segmentName : ''});
+            // alert(this.segmentNameList.message);
+
+          }
+        }
+      );
     this.bankAccUsesForm.get('segment11').reset();
     this.bankAccUsesForm.get('segment2').reset();
     this.bankAccUsesForm.get('segment3').reset();
@@ -441,6 +464,7 @@ Orgmaster(bankAccUsesForm: any) {
     alert(BkName);
      let selectedValue = this.BankNameList.find(v => v.custName == BkName);
      alert(selectedValue.custName+" "+selectedValue.customerId);
+     this.bankAccountId = selectedValue.customerId;
     //  this.bankId=selectedValue.customerId;
     //  this.custName =selectedValue.custName;
   }
@@ -451,16 +475,50 @@ Orgmaster(bankAccUsesForm: any) {
       data => {
         this.BankBranchList = data.obj;
         console.log(this.BankBranchList);
+      //  this.customerId= this.BankNameList.customerId;
       // this.branchId = this.BankBranchList.name2;
       }
     );
   }
+
+  onBranchNameSelected(bkBranchName) {
+    alert(bkBranchName);
+    this.bankService.BankAcDtlsList(bkBranchName)
+    .subscribe(
+      data => {
+        this.BankAcDtlsList = data;
+        console.log(this.BankAcDtlsList);
+      //  this.customerId= this.BankNameList.customerId;
+      // this.branchId = this.BankBranchList.name2;
+      }
+    );
+  }
+
   onbranchIdSelected(branchName){
     let select = this.BankBranchList.find(d => d.name=== branchName);
     console.log(select);
     console.log(select.name2);
-    this.bankAccountNo = select.name2;
+    // this.bankAccountNo = select.name2;
+    this.bankService.BankAcDtlsList(branchName)
+    .subscribe(
+      data => {
+        this.BankAcDtlsList = data.obj;
+        console.log(this.BankAcDtlsList);
+       this.bankAccountId= this.BankNameList.id;
+      console.log(this.BankNameList.id);
+      
+      // this.branchId = this.BankBranchList.name2;
+      }
+    );
   }
+
+  onBankAccIdSelected(accountName){
+    let select = this.BankAcDtlsList.find(d => d.name=== accountName);
+    console.log(select);
+    console.log(select.name1);
+    this.bankAccountNo = select.name1;
+  }
+
   BreanchNameSearch(bkBranchName){
     this.bankService.BranchSearchFn(bkBranchName)
     .subscribe(
