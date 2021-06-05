@@ -57,7 +57,7 @@
 
                               <td> 
                                    
-                                           <select  style="width: 140px;"   formControlName="regimeCode" [(ngModel)]="regimeId" id="regimeId" class="form-control" (ngModelChange)='onOptionSelected($event)'>
+                                           <select  style="width: 140px;"   formControlName="regimeId" [(ngModel)]="regimeId" id="regimeId" class="form-control" (ngModelChange)='onOptionSelected($event)'>
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of regimeIdList" [ngValue]="sc.regimeId" >
                                                {{sc.regimeId}}-{{sc.regimeCode}}-{{sc.regimeName}}
@@ -409,6 +409,10 @@
 
                             </td>
 
+                            <td>
+                                <button  style="width: 150px;" type="button" class="btn btn-info" id="register"   (click)="loadActDetails()" >Show Account Details</button>
+                            </td>
+
                             </tr>
 
                         </table>
@@ -507,8 +511,8 @@
                                                                             <!-- (ngModelChange)='onLocationSelected1($event,i)'  -->
                                                                                 <option>--Select--</option>
                                                                                 <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
-                                                                                <!-- {{sc.locId}}-{{sc.locCode}}-{{sc.locName}} -->
-                                                                                {{sc.locId}}
+                                                                                {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
+                                                                                <!-- {{sc.locId}} -->
                                                                                 </option>
                                                                             </select>
                                                                         </ng-template>
@@ -518,8 +522,8 @@
                                                                                 <!-- (ngModelChange)='onLocationSelected1($event,i)' -->
                                                                                     <option>--Select--</option>
                                                                                     <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
-                                                                                    <!-- {{sc.locId}}-{{sc.locCode}}-{{sc.locName}} -->
-                                                                                    {{sc.locId}}
+                                                                                    {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
+                                                                                    <!-- {{sc.locId}} -->
                                                                                     </option>
                                                                                 </select>
                                                                             </ng-template>
@@ -539,10 +543,19 @@
                                     
                                                                     </td> -->
 
-                                                                    <button type="button" class="btn btn-info"  (click)=LoadValues(i) 
-                                                                    data-toggle="modal" data-target="#exampleModal3">Code...</button>
-
-
+                                                                    <!-- <div *ngIf="showCodeButton; then thenBlockShowCodeB else  elseBlockShowCodeB"></div>
+                                                                     <ng-template #thenBlockShowCodeB>  -->
+                                                                         <td> 
+                                                                            <button type="button" class="btn btn-info"  (click)=LoadValues(i) 
+                                                                            data-toggle="modal" data-target="#exampleModal3">Code...</button>
+                                                                        </td>  
+                                                                    <!-- </ng-template> -->
+                                                                     <!-- <ng-template #elseBlockShowCodeB>   
+                                                                        <td> 
+                                                                            <button disabled type="button" class="btn btn-info"  (click)=LoadValues(i) 
+                                                                            data-toggle="modal" data-target="#exampleModal3">Code...</button>
+                                                                        </td>  
+                                                                     </ng-template> -->
                                                                 <td>
                                                                         <input disabled type="text"  formControlName="interimRecoveryCcid"
                                                                         id="interimRecoveryCcid" value={{interimRecoveryCcid}} class="form-control"
@@ -606,10 +619,20 @@
                                                                 </td>
 
                                                                          <!-- ===============================Modal form Add/Remove Buttons =========================================================== -->
-                                                                <td>
+                                                                
+                                                                <!-- <div *ngIf="showCodeButton; then thenBlockShowAddB else  elseBlockShowAddB"></div>
+                                                                <ng-template #thenBlockShowAddB>  -->
+                                                                         <td>
                                                                         <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
                                                                         class="fa fa-plus"></i></button>
-                                                                </td>
+                                                                        </td>
+                                                                <!-- </ng-template> -->
+                                                                <!-- <ng-template #elseBlockShowAddB> 
+                                                                    <td>
+                                                                   <button disabled type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
+                                                                   class="fa fa-plus"></i></button>
+                                                                   </td>
+                                                                 </ng-template> -->
 
                                                                 <td>
                                                                         <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
@@ -645,6 +668,10 @@
                                                     data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button> -->
+
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
                                             </div>
         
                                                 
@@ -901,7 +928,7 @@
                                                 <div class="modal-footer">
         
                                                     <button type="button" class="btn btn-success"  data-dismiss="modal" 
-                                                        (click)="fndinterimRecoveryCcidGlCodeNew1(lineIndex)" >Ok</button>
+                                                        (click)="fndinterimRecoveryCcidGlCodeNew1(lineIndex)" >Accept</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1103,18 +1130,18 @@
                                             <td>
                                                 <div *ngIf="displayButton; then thenBlockYes; else elseBlockNo"></div>
                                                 <ng-template #thenBlockYes>
-                                                    <button  disabled type="button" class="btn btn-info" id="register">Apply</button>
+                                                    <button  disabled type="button" class="btn btn-info" id="register">Search</button>
                                                   
                                                 </ng-template>
                                                 <ng-template #elseBlockNo>
-                                                    <button   type="button" class="btn btn-info" id="register">Apply</button>
+                                                    <button   type="button" class="btn btn-info" id="register">Search</button>
                                                    
                                                 </ng-template>
                                            </td>
 
-                                           <td>
+                                           <!-- <td>
                                            <button   type="button" class="btn btn-info" id="register"   (click)="loadActDetails()" >Load Act</button>
-                                        </td>
+                                        </td> -->
                                         </tr>
                                     </table>
          
