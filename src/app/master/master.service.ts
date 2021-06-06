@@ -1177,6 +1177,7 @@ public taxAccountMasterSubmit(taxAccountMasterRecord) {
   return this.http.post(url, taxAccountMasterRecord, options);
 }
 
+
 UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   const options = {
     headers: this.headers
@@ -1185,10 +1186,11 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   return this.http.put(url, taxAccountMasterRecord, options);
 }
 //////////////////////Tax Category Master //////////////////////
-actDetails(taxTypeCode): Observable<any> {
+geActDetails(taxTypeCode): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
 
  }
+
 getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
  }

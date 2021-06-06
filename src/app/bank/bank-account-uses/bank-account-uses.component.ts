@@ -283,11 +283,11 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankAccUseFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('BANK ACCOUNT USE DETAILS INSERTED SUCCESSFULLY');
-        window.location.reload();
+        //window.location.reload();
       } else {
         if (res.code === 400) {
           alert('Error occurred during data inserting');
-          window.location.reload();
+          //window.location.reload();
         }
       }
     });
@@ -471,10 +471,10 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankAcDtlsList(bkBranchName)
     .subscribe(
       data => {
-        // this.BankAcDtlsList = data;
+        this.BankAcDtlsList = data;
         console.log(this.BankAcDtlsList);
-      //  this.customerId= this.BankNameList.customerId;
-      // this.branchId = this.BankBranchList.name2;
+       //this.customerId= this.BankNameList.customerId;
+       //this.branchId = this.BankBranchList.name2;
       }
     );
   }
@@ -487,7 +487,7 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankAcDtlsList(branchName)
     .subscribe(
       data => {
-        // this.BankAcDtlsList = data.obj;
+        this.BankAcDtlsList = data.obj;
         console.log(this.BankAcDtlsList);
        this.bankAccountId= this.BankNameList.id;
       console.log(this.BankNameList.id);
