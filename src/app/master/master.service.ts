@@ -1176,7 +1176,7 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   return this.http.put(url, taxAccountMasterRecord, options);
 }
 //////////////////////Tax Category Master //////////////////////
-actDetails(taxTypeCode): Observable<any> {
+geActDetails(taxTypeCode): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
 
  }
