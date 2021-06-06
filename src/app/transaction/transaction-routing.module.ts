@@ -30,7 +30,7 @@ const routes: Routes = [
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
-  {path:'PaymentAr',component:PaymentArComponent },
+  {path:'PaymentAr',component:PaymentArComponent},
   {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},
   {path:'SaiEwSchemeMaster',component:SaiEwSchemeMasterComponent},
@@ -40,6 +40,7 @@ const routes: Routes = [
   {path:'McpEnquiry',component:McpEnquiryComponent},
   {path:'McpEnrollment',component:McpEnrollmentComponent},
   {path:'McpCancellation',component:McpCancellationComponent},
+  
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

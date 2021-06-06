@@ -44,6 +44,7 @@ export class BankAccountUsesComponent implements OnInit {
   bankAccUsesForm: FormGroup;
   bankAccountId: number;
   customerId:number;
+  custName:string;
 ouId: number;
     orgPartyId: number;
     apUseEnableFlag:string;
@@ -98,7 +99,7 @@ public BranchList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
   public locIdList: Array<string> = [];
-public BankNameList: any;
+public BankNameList: Array<string> = [];
 public OUIdList: Array<string> = [];
 
 constructor(private fb: FormBuilder, private router: Router, private bankService: BankService,  private service: MasterService) { 
@@ -166,9 +167,9 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankNameListFn()
     .subscribe(
       data => {
-        this.BankNameList = data;
+        this.BankNameList = data.obj;
         console.log(this.BankNameList);
-        this.customerId= this.BankNameList.customerId;
+        this.customerId= data.obj.customerId;
      //   alert(this.BankNameList.customerId);
       }
     );
@@ -292,6 +293,7 @@ Orgmaster(bankAccUsesForm: any) {
       }
     });
   }
+  
   openCodeComb(i, apAssetCcid){
     alert('apAssetCcid '+apAssetCcid);
     
@@ -447,9 +449,9 @@ Orgmaster(bankAccUsesForm: any) {
   }
   onBankNameSelected(BkName) {
     alert(BkName);
-     let selectedValue = this.BankNameList.find(v => v.custName == BkName);
-     alert(selectedValue.custName+" "+selectedValue.customerId);
-     this.bankAccountId = selectedValue.customerId;
+    //  let selectedValue = this.BankNameList.find(v => v.custName == BkName);
+    //  alert(selectedValue.custName+" "+selectedValue.customerId);
+    //  this.bankAccountId = selectedValue.customerId;
     //  this.bankId=selectedValue.customerId;
     //  this.custName =selectedValue.custName;
   }
@@ -471,7 +473,7 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankAcDtlsList(bkBranchName)
     .subscribe(
       data => {
-        this.BankAcDtlsList = data;
+        this.BankAcDtlsList = data.obj;
         console.log(this.BankAcDtlsList);
        //this.customerId= this.BankNameList.customerId;
        //this.branchId = this.BankBranchList.name2;
@@ -489,8 +491,8 @@ Orgmaster(bankAccUsesForm: any) {
       data => {
         this.BankAcDtlsList = data.obj;
         console.log(this.BankAcDtlsList);
-       this.bankAccountId= this.BankNameList.id;
-      console.log(this.BankNameList.id);
+       this.bankAccountId= data.obj.id;
+      console.log(data.obj.id);
       
       // this.branchId = this.BankBranchList.name2;
       }

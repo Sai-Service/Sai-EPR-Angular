@@ -1195,6 +1195,14 @@ getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
  }
 
+ selectTypewiseCategory(cateType): Observable<any> {
+  return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCate/${cateType}`);
+ }
+
+ getsearchCategoryData(taxCategoryId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/JaiTaxCatg/${taxCategoryId}`);
+ }
+
 public TaxCategoryMasterSubmit(TaxCategoryMasterRecord) {
   const options = {
     headers: this.headers
