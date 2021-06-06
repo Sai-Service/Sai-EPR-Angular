@@ -951,11 +951,11 @@ export class PaymentArComponent implements OnInit {
         this.service.ArReceipApplySubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
-            this.paymentArForm.reset();
+            // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Code already present in the data base');
-              this.paymentArForm.reset();
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
             }
           }
         });
@@ -973,11 +973,13 @@ export class PaymentArComponent implements OnInit {
         this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
-            this.paymentArForm.reset();
+            this.receiptNumber=res.obj;
+            this.paymentArForm.disable();
+            // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Code already present in the data base');
-              this.paymentArForm.reset();
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
             }
           }
         });

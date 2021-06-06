@@ -55,7 +55,7 @@ public BankAccUseFun(bankRecord) {
     return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${BkName}`);
   } 
 
-  BankAcDtlsList(bkBranchName){
+  BankAcDtlsList(bkBranchName): Observable<any> {
     return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${bkBranchName}`);
   }
   BankAcccountList(bkBranchName,bkName): Observable<any> {
