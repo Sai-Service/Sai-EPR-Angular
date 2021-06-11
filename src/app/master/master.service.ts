@@ -208,7 +208,7 @@ NaturalAccountList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
 }
 InterBrancList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_InterBranch');
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
 }
 FutureList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Future');
@@ -1986,9 +1986,9 @@ ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
 }
-reasonaccCode(locId,reason):Observable<any>
+reasonaccCode(locId,reason,costCode):Observable<any>
 { 
-return this.http.get(this.ServerUrl+`/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}`)
+return this.http.get(this.ServerUrl+`/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}&costCode=${costCode}`)
 }
 TypeList():Observable<any>
 {

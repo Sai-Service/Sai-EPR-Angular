@@ -270,6 +270,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
+    this.approvedBy=(sessionStorage.getItem('name'));
      
      this.displayLocator[0]=false;
 
@@ -371,6 +372,10 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     return matches;
   };
+  
+close(){
+this.router.navigate(['admin']);
+}
   
   onOptionItemDetails(event:any,i){
 
@@ -926,10 +931,14 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
 
      
-      onSelectReason(event:any){
+      onSelectReason(event){
         alert(event);
-        var reasname=this.miscellaneousForm.get('reason').value;
-        this.service.reasonaccCode(this.locId,reasname).subscribe(
+        // var reasname=this.miscellaneousForm.get('reason').value;
+        // this.service.reasonaccCode(this.locId,reasname).subscribe(
+          var reasonArr  = event.split('-');
+          alert(reasonArr.length);
+          this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
+          
           data => {
             this.acccodedesc = data;
             // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});

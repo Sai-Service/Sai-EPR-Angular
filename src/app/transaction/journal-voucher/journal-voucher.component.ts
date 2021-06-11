@@ -295,18 +295,18 @@ var segment = temp1[0];}
           }
         }
       );
-      this.JournalVoucherForm.get('segment11').reset();
-      this.JournalVoucherForm.get('segment2').reset();
-      this.JournalVoucherForm.get('segment3').reset();
-      this.JournalVoucherForm.get('segment4').reset();
-      this.JournalVoucherForm.get('segment5').reset();
+      // this.JournalVoucherForm.get('segment11').reset();
+      // this.JournalVoucherForm.get('segment2').reset();
+      // this.JournalVoucherForm.get('segment3').reset();
+      // this.JournalVoucherForm.get('segment4').reset();
+      // this.JournalVoucherForm.get('segment5').reset();
 
-      this.JournalVoucherForm.get('lookupValueDesc1').reset();
-      this.JournalVoucherForm.get('lookupValueDesc2').reset();
-      this.JournalVoucherForm.get('lookupValueDesc3').reset();
-      this.JournalVoucherForm.get('lookupValueDesc4').reset();
-      this.JournalVoucherForm.get('lookupValueDesc5').reset();
-      // alert('Code Combination search complete')
+      // this.JournalVoucherForm.get('lookupValueDesc1').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc2').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc3').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc4').reset();
+      // this.JournalVoucherForm.get('lookupValueDesc5').reset();
+      // // alert('Code Combination search complete')
     }
 
     openCodeCombination(i)
@@ -489,7 +489,7 @@ copyGl()
          console.log(data);
          if(data.code === 400){
           //  alert(data.message);
-           window.location.reload();
+          // window.location.reload();
          }
          if(data.code===200)
          {
