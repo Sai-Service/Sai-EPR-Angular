@@ -62,7 +62,7 @@
           <td>
             <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
               <option>--Select--</option>
-              <option *ngFor="let reason of reasonlist">{{reason.reasonName}}</option>
+              <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
               </select>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
@@ -113,10 +113,11 @@
           Made By:
          </td>
          <td>
-           <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+           <input type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+           <!-- <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
             <option>--Select--</option>
             <option *ngFor="let ib of issueByList">{{ib.name}}</option>
-            </select>
+            </select> -->
          </td>
          <!-- (click)="process()" -->
           <td>
@@ -245,7 +246,7 @@
     <table class="center">
       <tr>
          <td>
-          <button type="submit" class="btn btn-primary" >Close</button>
+          <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
         </td>
         <td>
           <button type="submit" class="btn btn-primary" (click)="resetMiscTrans()">Reset</button>

@@ -66,7 +66,15 @@ export class DocumentSequenceMasterComponent implements OnInit {
   public transtype:any[];
   // public tySrlNo:any[];
 
+  activeTab = 'search';
 
+  search(activeTab){
+    this.activeTab = activeTab;
+  }
+
+  result(activeTab){
+    this.activeTab = activeTab;
+  }
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.DocSeriealMasterForm = fb.group({
       docSrlId: [''],

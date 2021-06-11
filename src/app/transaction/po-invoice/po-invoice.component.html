@@ -135,12 +135,18 @@
 
                 <select formControlName="name" id="name" class="form-control" 
                 (ngModelChange)='onOptionsSelectedsuppName($event,i)'
-                style="width: 160px;height: 25px;font-size: 10px;">
+                style="width: 160px;height: 25px;font-size: 10px;" >
                     <option>--Select--</option>
                     <option *ngFor="let item of  supplierCodeList" [ngValue]="item.suppNo"  >
                         {{item.name}}
                     </option>
                 </select>
+                <span
+                *ngIf="getGroupControl(i, 'name').touched && getGroupControl(i, 'name').invalid">Valid name
+                            </span>
+                <!-- <app-field-error-display [displayError]="isFieldValid(i,'name')" errorMsg="Please Enter Supplier Name">
+                </app-field-error-display>  -->
+     
                 </ng-template>
             </td>
             <td>
@@ -170,28 +176,40 @@
                 </select> -->
                 <select formControlName="supplierSiteId" id="supplierSiteId" #myinput
                 data-live-search="true" (ngModelChange)='onSiteSelected($event)'
-                class="form-control" style="width: 70px;height: 25px;font-size: 10px;">
+                class="form-control" style="width: 70px;height: 25px;font-size: 10px;" >
                 <option>--Select--</option>
                 <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
                     {{sc.suppSiteId}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
                     {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
                 </option>
             </select>
+            <span
+            *ngIf="getGroupControl(i, 'supplierSiteId').touched && getGroupControl(i, 'supplierSiteId').invalid">Valid SiteName
+                        </span>
             </ng-template>
             </td>
             <td>
                 <input type="date" class="form-control" formControlName="invoiceDate" value={{invoiceDate}}  
                 min="{{minDate | date:'yyyy-MM-dd'}}"
                 style="width: 120px;height: 25px;font-size: 10px;">
+                <span
+                *ngIf="getGroupControl(i, 'invoiceDate').touched && getGroupControl(i, 'invoiceDate').invalid">Valid date
+                            </span>
             </td>
             <td>
                 <input type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}} style="width: 120px;height: 25px;font-size: 10px;">
+                <span
+                *ngIf="getGroupControl(i, 'invoiceNum').touched && getGroupControl(i, 'invoiceNum').invalid">Valid Number
+                            </span>
             </td>
             <td>
                 <input type="number" disabled class="form-control"  formControlName="internalSeqNum" value={{internalSeqNum}}   style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
-                <input  type="number" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
+                <input  type="number" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;"(change)="prepaymentData($event)" #amt>
+                <span
+                *ngIf="getGroupControl(i, 'invoiceAmt').touched && getGroupControl(i, 'invoiceAmt').invalid">Valid Amount
+                            </span>
             </td>
             <td>
                 <input disabled type="text" class="form-control" formControlName="taxAmt" value={{taxAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;">
@@ -417,7 +435,6 @@
                             </td>
                             <!-- <td><input type="date" formControlName="invoiceDate" value={{invoiceDate}} class="form-control"> </td> -->
                         </tr>   
-                         
                         <th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;Status&nbsp;</th>
                         <tr style="border-top: solid 1px gray; width: 100%;">
                             <td  class="LabelFontStyle">&nbsp;Status&nbsp;:</td>
@@ -557,6 +574,7 @@
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
+                            <th scope="col">Invoice Line</th>
                             <th scope="col">No.</th>
                             <th scope="col">Type</th>
                             <th scope="col">Amount</th>
@@ -586,7 +604,7 @@
                             <ng-container   *ngFor="let group of lineDistributionArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                         <tr class="ItemStyle" style="text-decoration:none;">
                             <input hidden type="text" formControlName="invDistributionId">
-                            <input hidden type="text" formControlName="invoiceLineNum">
+                            <input  type="text" formControlName="invoiceLineNum">
                             <td>
                                 <input formControlName="distLineNumber" class="form-control" style="width: 40px;height: 25px;">
                             </td>
@@ -594,7 +612,7 @@
                                 <input formControlName="lineTypeLookupCode" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 100px;height: 25px;">
                             </td>
                             <td>
-                                <input formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;">
+                                <input formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
                             </td>
                             <td>
                                 <input type="text" disabled formControlName="accountingDate" [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control"  style="width: 140px;height: 25px;">
@@ -606,7 +624,7 @@
                                 <input formControlName="distCodeCombSeg"  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
                            </ng-template>
                            <ng-template #elsedispAccountCode>
-                            <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;">
+                            <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;" >
                             <input formControlName="distCodeCombSeg" disabled  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
                            </ng-template>
                             </td>
@@ -679,6 +697,7 @@
                       <div class="grid_scroll">
                         <div *ngIf="displayAddNewLine; then thenAddNewLine; else elseAddNewLine"></div>
                         <ng-template #thenAddNewLine>
+                                <button class="btn btn-primary" (click)="addRow(k)">Add Row</button>
                         </ng-template>
                         <ng-template #elseAddNewLine>
                         <table> 
@@ -687,7 +706,7 @@
                                     Add New Line&nbsp;&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary fa fa-plus" (click)="addRow()"></button> 
+                                    <button type="submit" class="btn btn-primary fa fa-plus" (click)="addRow()">Add Row</button> 
                                 </td>
                             </tr>
                         </table>
@@ -697,7 +716,7 @@
                                   <tr class="GridHeader">
                                     <!-- <th scope="col">Add New Line</th>
                                     <th scope="col">Delete</th> -->
-                                    <th scope="col">Distribution</th> 
+                                    <!-- <th scope="col">Distribution</th>  -->
                                       <th scope="col">No.</th>
                                       <th scope="col">Type</th>
                                       <th scope="col">Item</th>
@@ -738,23 +757,23 @@
                                         <tr class="ItemStyle" style="text-decoration:none;">
                                             <!-- <td>
                                                 <button type="submit" class="btn btn-primgit pushary fa fa-plus" (click)="addRow(k)"></button> 
-                                            </td>
-                                            <td>
+                                            </td> -->
+                                            <!-- <td>
                                                 <button type="submit" class="btn btn-primary fa fa-trash" (click)="Delete(trxLineIndex)"></button> 
                                             </td> -->
-                                            <td>
-                                                <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"    (click)="distribution1(k)">Distribution</button> 
-                                            </td>
+                                            <!-- <td>
+                                                <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"    (click)="distribution1(k)" >Distribution</button> 
+                                            </td> -->
                                       <td>
                                           <input type="text" class="form-control" formControlName="lineNumber" value={{lineNumber}} 
                                           data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
                                           style="width: 50px;height: 25px;font-size: 10px;" (click)="selectDisLineDtl(k)" #val1 (change)="move(val1,val2)"> 
-                                          <!-- selectINVLineDtl  -->
+                                          <!-- selectINVLineDtl  --> 
                                           <!-- (click)="selectDisLineDtl(i)" -->
                                       </td>
                                       <td>
                                           <!-- <input type="text" class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;" (keydown.shift.arrowdown)="addRow(k)" (keydown.arrowup)="distribution1(k)">   -->
-                                        <select class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;" (keydown.shift.arrowdown)="addRow(k)" (keydown.arrowup)="distribution1(k)">
+                                        <select class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;" (keydown.shift.arrowdown)="addRow(k)" (keydown.arrowup)="distribution1(k)"(change)="HeaderValidation(typecode)" #typecode >
                                         <option value="ITEM">ITEM</option>
                                         <option value="OTHER">OTHER</option>
                                         <option value="MISCELLANEOUS">MISCELLANEOUS</option>
@@ -835,7 +854,14 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input disabled type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
+                                        <!-- <input  type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;"> -->
+                                        <select formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
+                                            <option>--Select--</option> 
+                                            <option *ngFor="let sc of  hsnsaclist" [ngValue]="sc.hsnsaccode" > 
+                                                {{sc.hsnsaccode}}
+                                            </option>
+                                        </select>
+                                        
                                     </td>
                                      
                                       <!-- <td>
@@ -920,6 +946,9 @@
                                           <!-- filed not available in json -->
                                           <input type="text" class="form-control" formControlName="segment1" value={{segment1}} style="width: 100px;height: 25px;font-size: 10px;">  
                                       </td>
+                                      <td>
+                                        <button type="submit" class="btn btn-primary fa fa-trash" (click)="Delete(trxLineIndex)"></button> 
+                                    </td>
                                   </tr>
                                   <tr>
                                       <!-- <td>
@@ -1236,7 +1265,7 @@
         <table class="center" style="width: 30%;">
         <tr>
             <td>
-                <button type="submit" class="btn btn-primary" id="register"  (click)="refresh()">Clear</button>
+                <button type="submit" class="btn btn-primary" id="register"(click)="HeaderValidation(null)">Clear</button>
             </td>
             <td>
                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
@@ -1244,9 +1273,9 @@
             <td>
                 <button type="submit" class="btn btn-primary"   (click)=" apInvoiceSave()">Save</button>  
             </td>
-            <td>
+            <!-- <td>
                 <button type="submit" class="btn btn-primary"   (click)="distribution()">Distribution</button>  
-            </td>
+            </td> -->
             <td>
                 <div *ngIf="displayValidateButton; then thenValidateButton; else elseValidateButton"></div>
                 <ng-template #thenValidateButton>
@@ -1256,9 +1285,9 @@
                     <button type="submit" class="btn btn-primary"   (click)="Validate()">Validate</button>   
                 </ng-template>
             </td>
-            <td>
+            <!-- <td>
                 <button type="submit" style="width: fit-content;" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  (click)="ShowAllDistribution()">Show&nbsp;All&nbsp;Distribution</button>  
-            </td>
+            </td> -->
         </tr>
         </table>
     <br>

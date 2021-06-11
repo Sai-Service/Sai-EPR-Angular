@@ -241,12 +241,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
   })}
 
   addnewcycleLinesList(i:number){
-    alert('hi');
+    //alert('hi');
     alert(this.miscellaneousForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
      if(i>-1 && this.miscellaneousForm.get('compileType').value===4)
     {
-      alert('hi');
+      //alert('hi');
     this.reservePos(i);
     }
     this.cycleLinesList().push(this.newcycleLinesList());
@@ -270,6 +270,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
+    this.approvedBy=(sessionStorage.getItem('name'));
      
      this.displayLocator[0]=false;
 
@@ -371,6 +372,10 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
     return matches;
   };
+  
+close(){
+this.router.navigate(['admin']);
+}
   
   onOptionItemDetails(event:any,i){
 
@@ -480,7 +485,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
           trxLnArr1.controls[i].patchValue({id:getfrmSubLoc[0].id});
           let reserve=trxLnArr[i].resveQty;
           // alert(onHand1+'OnHand');
-          alert(reserve+'reserve');
+          //alert(reserve+'reserve');
           let avlqty1=0;
           avlqty1= getfrmSubLoc[0].onHandQty-reserve;
           trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
@@ -510,12 +515,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
   var itemid=trxLnArr[i].invItemId;
   var locId=trxLnArr[i].LocatorSegment;
   trxLnArr1.controls[i].patchValue({locatorId:locId});
-  alert(locId+'locatorID');
+  //alert(locId+'locatorID');
   var subcode=trxLnArr[i].subInventory;
-  alert(subcode);
+  //alert(subcode);
   let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
-  alert(select2.subInventoryId+'Id')
-  alert(event);
+  //alert(select2.subInventoryId+'Id')
+  //alert(event);
   // var onHand1:number;
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')),select2.subInventoryId,locId,itemid).subscribe
     (data =>{ 
@@ -527,7 +532,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       
       let reserve=trxLnArr[i].resveQty;
       // alert(onHand1+'OnHand');
-      alert(reserve+'reserve');
+      // alert(reserve+'reserve');
       let avlqty1=0;
       avlqty1= data.obj.onHandQty-reserve;
       trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
@@ -553,7 +558,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     var subcode=this.miscellaneousForm.get('subInventory').value;
     let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     let selloc=this.getfrmSubLoc.find(d=>d.segmentName===event);
-    alert(selloc.locatorId+'Id')
+    // alert(selloc.locatorId+'Id')
 
       this.service.getonhandqty(Number(sessionStorage.getItem('locId')),select2.subInventoryId,selloc.locatorId,itemid).subscribe
       (data =>{ this.onhand = data
@@ -741,7 +746,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
 
       reservePos(i)
-      {alert("Hello");
+      {//alert("Hello");
       var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
           const formValue: Imiscellaneous = this.miscellaneousForm.value;
           let variants = <FormArray>this.cycleLinesList();
@@ -776,13 +781,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
 
       validate(i:number,qty1)
-{alert("Validate");
+{//alert("Validate");
   var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].physicalQty;  
- alert(avalqty+'avalqty');
- alert(trxLnArr[i].physicalQty +' qty');
+ //alert(avalqty+'avalqty');
+ //alert(trxLnArr[i].physicalQty +' qty');
   if(qty>avalqty  && this.miscellaneousForm.get('compileType').value!==13)
   {
     alert("You can not enter more than available quantity");
@@ -813,7 +818,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
             if(data.code===400)
             {
               // window.location.reload();
-              alert('hELLO');
+             // alert('hELLO');
 
             }
             if(data.code===200)
@@ -926,10 +931,14 @@ export class MiscellaneousTransactionComponent implements OnInit {
       }
 
      
-      onSelectReason(event:any){
+      onSelectReason(event){
         alert(event);
-        var reasname=this.miscellaneousForm.get('reason').value;
-        this.service.reasonaccCode(this.locId,reasname).subscribe(
+        // var reasname=this.miscellaneousForm.get('reason').value;
+        // this.service.reasonaccCode(this.locId,reasname).subscribe(
+          var reasonArr  = event.split('-');
+          alert(reasonArr.length);
+          this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
+          
           data => {
             this.acccodedesc = data;
             // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});

@@ -1432,12 +1432,12 @@
                                                                         <div *ngIf="displayLabDiscount; then LabDiscoutthenBlock; else LabDiscoutelseBlock"></div>
                                                                         <ng-template #LabDiscoutthenBlock>
                                                                             <td><input type="text" formControlName="labDiscount"></td>
-                                                                            <td><input type="text" formControlName="labDisPer" disabled></td>
+                                                                            <td><input type="text" formControlName="labDiscountPer" disabled></td>
                                                                         </ng-template>
                                                                         <ng-template #LabDiscoutelseBlock>
-                                                                            <td><select formControlName="labDisPer" id="labDisPer" class="form-control" (ngModelChange)="labDisPerCal($event)">
+                                                                            <td><select formControlName="labDiscountPer" id="labDiscountPer" class="form-control" (ngModelChange)="labDiscountPerCal($event)">
                                                                                 <option>--Select--</option>
-                                                                                <option *ngFor="let sc of  labDisPerList">
+                                                                                <option *ngFor="let sc of  labDiscountPerList">
                                                                                     {{sc.code}}  
                                                                                 </option>
                                                                             </select></td>
@@ -1473,12 +1473,12 @@
                                                                         <div *ngIf="displayMatDiscount; then matDiscoutthenBlock; else matDiscoutelseBlock"></div>
                                                                             <ng-template #matDiscoutthenBlock>
                                                                                 <td><input type="text" formControlName="matDiscout"></td>
-                                                                                <td><input type="text" formControlName="matDisPer" disabled></td>
+                                                                                <td><input type="text" formControlName="matDiscountPer" disabled></td>
                                                                             </ng-template>
                                                                             <ng-template #matDiscoutelseBlock>
-                                                                                <td><select formControlName="matDisPer" id="matDisPer" class="form-control" (ngModelChange)="matDisPerCal($event)">
+                                                                                <td><select formControlName="matDiscountPer" id="matDiscountPer" class="form-control" (ngModelChange)="matDiscountPerCal($event)">
                                                                                     <option>--Select--</option>
-                                                                                    <option *ngFor="let sc of  matDisPerList">
+                                                                                    <option *ngFor="let sc of  matDiscountPerList">
                                                                                         {{sc.code}}  
                                                                                     </option>
                                                                                 </select></td>
