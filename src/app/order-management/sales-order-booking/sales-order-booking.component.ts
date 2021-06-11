@@ -94,6 +94,7 @@ interface AccOrderLinesPost1 {
 export class SalesOrderBookingComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   divisionName: string;
+  dept:number;
   itemId:number;
   ouName: string;
   locCode: string;
@@ -830,8 +831,9 @@ export class SalesOrderBookingComponent implements OnInit {
   }
 
 
-  onOptionsSelectedTL(ticketNo) {
-    this.orderManagementService.ticketNoSearchFn(ticketNo)
+  onOptionsSelectedTL(ticketNo:any) {
+    this.dept = Number(sessionStorage.getItem('deptId'));
+    this.orderManagementService.ticketNoSearchFn(ticketNo,this.dept)
       .subscribe(
         data => {
           this.ticketNoSearch = data.obj;

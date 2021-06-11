@@ -52,6 +52,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl +`/OrderTrnType/otAccSpList?deptId=${deptId}&locId=${locId}&ouId=${ouId}`);
   }
 
+
+  counterSaleOrderSearch(orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl +`/orderHeader/ACSP/${orderNumber}`);
+  }
   
   public  countersaleReadyForInvFn(orderNumber){
     const options = {
@@ -122,9 +126,6 @@ export class OrderManagementService {
   // }
 
 
-  // ticketNoSearchFn(ticketNo): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${ticketNo}`);
-  // }
 
   // ColourSearchFn(variant): Observable<any> {
   //   return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
@@ -141,8 +142,8 @@ export class OrderManagementService {
   }
 
 
-  ticketNoSearchFn(ticketNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${ticketNo}`);
+  ticketNoSearchFn(salesRepName,dept): Observable<any> {
+    return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${salesRepName}&dept=${dept}`);
   }
 
   ColourSearchFn(variant): Observable<any> {
