@@ -492,6 +492,7 @@ payTermDescList(): Observable<any> {
 }
 
 
+
 salesRepNameList(ouId,locId,dept): Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`);
 }

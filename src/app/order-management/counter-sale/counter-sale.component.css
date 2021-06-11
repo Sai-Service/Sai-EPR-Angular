@@ -1,0 +1,62 @@
+td{
+    padding: 0px;
+}
+
+.grid_scroll{
+    overflow: auto;
+     height: 200px; 
+    width: 100%;
+    }
+
+
+legend {
+    display: block;
+    padding-inline-start: 1px;
+    padding-inline-end: 1px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    width: fit-content;
+}
+
+
+
+fieldset {
+    display: block;
+    margin-inline-start: 1px;
+    margin-inline-end: 1px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+}
+
+.RFS legend {
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    color: #000 !important;
+    
+    padding: 2px 5px;
+    background: #fefeff;
+    border-radius: 3px;
+    border: #608cb0 solid 1px;
+}
+
+.RFS {
+    margin: 1px auto;
+    border: 1px solid #608cb0;
+    /* padding-bottom: 10px; */
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-radius: 7px;
+    border-radius: 3px;
+    min-height: 30px;
+}
