@@ -19,6 +19,10 @@ import { McpPackageMasterComponent } from './mcp-package-master/mcp-package-mast
 import { McpEnquiryComponent } from './mcp-enquiry/mcp-enquiry.component';
 import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.component';
 import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
+import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
+import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
+import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
+import { StockTakingComponent } from './stock-taking/stock-taking.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -40,7 +44,11 @@ const routes: Routes = [
   {path:'McpEnquiry',component:McpEnquiryComponent},
   {path:'McpEnrollment',component:McpEnrollmentComponent},
   {path:'McpCancellation',component:McpCancellationComponent},
-  
+ {path:'JournalVoucher',component:JournalVoucherComponent},
+ {path:'AccountEnquiry',component:AccountEnquiryComponent},
+ {path:'OnHandDetails',component:OnHandDetailsComponent},
+ {path:'AvgCostUpadte',component:AvgCostUpdateComponent},
+ {path:'StockTaking',component:StockTakingComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 
