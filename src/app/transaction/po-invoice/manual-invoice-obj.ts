@@ -15,7 +15,7 @@ export class ManualInvoiceObj {
   exclusivePayFlag: string;
 invLines: any[];
 invDisLines: any[];
-taxLines:any[];
+taxLines=new Array();
 
 getinvLines(){
   return this.invLines;

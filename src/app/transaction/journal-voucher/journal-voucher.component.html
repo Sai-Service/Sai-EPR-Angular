@@ -9,10 +9,10 @@
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Journal&nbsp;Voucher&nbsp;Number&nbsp;:</td>
                             <td>
-                                <input type="text"  class="form-control" formControlName="docSeqVal" id="docSeqVal" name="docSeqVal" >
+                              <input type="text"  class="form-control" formControlName="docSeqVal1" id="docSeqVal1" name="docSeqVal1"  [(ngModel)]="docSeqVal1" #myinput>
                             </td>
                             <td colspan="8" style="text-align: left; width: 100%;">
-                                <button type="submit" class="btn btn-primary" (click)="search(docSeqVal)"><i class="fa fa-search"></i></button>
+                                <button type="submit" class="btn btn-primary" (click)="search(docSeqVal1)"><i class="fa fa-search"></i></button>
                             </td>
                         </tr>
                     </table>
@@ -43,9 +43,9 @@
                                             <td >
                                                 <input type="text" class="form-control" formControlName="OUName" [(ngModel)]='OUName'>
                                                 <input hidden formControlName="ouId" [(ngModel)]='ouId'>
-                                                <input hidden formControlName="emplId" [(ngModel)]='emplId'>
+                                                <input  formControlName="emplId" [(ngModel)]='emplId'>
                                             </td>
-                                            <td style="width: 15%"class="LabelFontStyle">
+                                            <td style="width: 15%"class="LabelFontStyle1">
                                                     Period&nbsp;:
                                             </td>
                                             <td >
@@ -53,16 +53,20 @@
                                                     <option>--Select--</option>
                                                     <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                                                 </select>
+                                                <span  *ngIf="!JournalVoucherForm.get('periodName').valid && JournalVoucherForm.get('periodName').touched">Please
+                                                        Select Period Name </span>
                                             </td>
-                                            <td style="width: 15%"class="LabelFontStyle">
+                                            <td style="width: 15%"class="LabelFontStyle1">
                                                     Journal&nbsp;Date&nbsp;:
                                             </td>
                                             <td >
                                                 <input type="Date" class="form-control" formControlName="postedDate" >
+                                                <span  *ngIf="!JournalVoucherForm.get('postedDate').valid && JournalVoucherForm.get('postedDate').touched">Please
+                                                        Select Period Date </span>
                                             </td>
                                         </tr>
                                         <tr>
-                                                <td style="width: 15%"class="LabelFontStyle">
+                                                <td style="width: 15%"class="LabelFontStyle1">
                                                         Journal&nbsp;Type&nbsp;:
                                                     </td>
                                                     <td >
@@ -70,6 +74,8 @@
                                                             <option>--Select--</option>
                                                             <option *ngFor="let jt of JournalType">{{jt.lookupValue}}</option>
                                                         </select>
+                                                        <span  *ngIf="!JournalVoucherForm.get('jeCategory').valid && JournalVoucherForm.get('jeCategory').touched">Please
+                                                                Select Journal Type </span>
                                                     </td>
                                                     <td style="width: 15%"class="LabelFontStyle">
                                                             Document&nbsp;Number&nbsp;:
@@ -102,8 +108,9 @@
                                                     Reversal&nbsp;Period&nbsp;:
                                             </td>
                                             <td >
-                                                <select class="form-control"  formControlName="periodName" >
+                                                <select class="form-control"  formControlName="reversalPeriod" >
                                                     <option>--Select--</option>
+                                                    <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -112,7 +119,7 @@
                                                     Reversal&nbsp;Date&nbsp;:
                                             </td>
                                             <td >
-                                                <input type="Date" class="form-control" >
+                                                <input type="Date" class="form-control" formControlName="reversalDate">
                                             </td>
                                         </tr>
                                     </table>
@@ -261,7 +268,7 @@
                       <button  type="submit" class="btn btn-primary" (click)="postGl()" >Post</button>
                   </td>
                   <td>
-                        <button  type="submit" class="btn btn-primary"(click)="saveGl()" >Copy</button>
+                        <button  type="submit" class="btn btn-primary"(click)="copyGl()" >Copy</button>
                   </td>
                   <td>
                         <button  type="submit" class="btn btn-primary" (click)="reverseGl()" >Reverse</button>
@@ -360,7 +367,7 @@
                                               {{sc.lookupValue}}--{{sc.lookupValueDesc}}
                                           </option>
                                       </select> -->
-                                       <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
+                                       <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds1" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
                                        <datalist id="dynmicUserIds1">
                                             <option>--Select--</option>
                                           <option *ngFor="let sc of  NaturalAccountList" >

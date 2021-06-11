@@ -72,10 +72,10 @@
         <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false">AR Invoice Line</a>
       </li>
       <li class="nav-item waves-effect waves-light">
-        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false">Distribution</a>
-      </li>
+        <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false"  >Distribution</a> 
+    </li>
     </ul>
-    <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
+     <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
       <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
         <div class="center" style="width: 100%;">
             <div class="form-bg">
@@ -400,7 +400,10 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <button type="submit" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
+                                                    <!-- <div class="tab-pane fade" id="contact-md" role="tabpanel" aria-labelledby="contact-tab-md"> -->
+                                                <button type="submit" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt,'contact-md')"  >Distribution</button> 
+                                                <!-- <button type="submit" class="btn btn-primary" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false" [ngClass]="{ 'active':activeTab==='contact-md'}" (click)="search('contact-md')">Distribution</button>  -->
+                                                <!-- </div> -->
                                             </td>
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->

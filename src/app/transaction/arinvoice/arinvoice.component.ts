@@ -116,6 +116,17 @@ export class ARInvoiceComponent implements OnInit {
 
   public taxarr = new Map<number, any>();
   public distarr = new Map<number, any>();
+
+
+  activeTab = 'home-md';
+
+  search(activeTab){
+    this.activeTab = activeTab;
+  }
+
+  result(activeTab){
+    this.activeTab = activeTab;
+  }
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
@@ -193,7 +204,7 @@ export class ARInvoiceComponent implements OnInit {
       this.lineDetailsArray.removeAt(index);
     }
     index=index+1;
-    this.taxarr.delete(index)
+    this.taxarr.delete(index);
     this.distarr.delete(index);
   }
   RemoveDistributionRow(index) {
@@ -651,6 +662,8 @@ export class ARInvoiceComponent implements OnInit {
 
     var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value;
     var locId = this.arInvoiceForm.get('locId').value;
+
+
     // alert(locId)
     if (locId == null) {
       locId = '000';
@@ -792,7 +805,7 @@ export class ARInvoiceComponent implements OnInit {
       }
     });
   }
-  onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt) {
+  onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt,activeTab) {
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i+1;
     alert(this.invLineNo);
@@ -921,6 +934,7 @@ export class ARInvoiceComponent implements OnInit {
       }
       // this.patchResultList(i, this.taxCalforItem);
     }
+    this.activeTab=activeTab;
   }
   taxDetails(op, i, taxCategoryId) {
     var arrayControl = this.arInvoiceForm.get('invLines').value
@@ -1089,7 +1103,7 @@ export class ARInvoiceComponent implements OnInit {
     //       });
     // }
     if (baseAmount != null && this.taxCategoryId != undefined) {
-      this.onOptionTaxCatSelected(index, this.taxCategoryId, null, baseAmount)
+      this.onOptionTaxCatSelected(index, this.taxCategoryId, null, baseAmount,'profile-md')
     }
     // console.log(this.poMasterDtoForm.value);
 
