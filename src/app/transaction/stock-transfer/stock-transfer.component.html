@@ -41,7 +41,7 @@
             <td>
               <input  disabled type="text" class="form-control" formControlName="transDate"  [(ngModel)]="transDate">
             </td>
-          <td style="width: 15%" class="LabelFontStyle">
+          <td style="width: 15%" class="LabelFontStyle1">
             To Organization:
           </td>
           <td>
@@ -51,17 +51,21 @@
                       {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
                   </option>
               </select>
+              <span  *ngIf="!stockTranferForm.get('transferOrgId').valid && stockTranferForm.get('transferOrgId').touched">Please
+                  select Organization Name </span>
           </td>
                     <td>
             <input type="hidden" formControlName="locId" [(ngModel)]="locId">
           </td>
         </tr>
         <tr>
-          <td style="width: 15%" class="LabelFontStyle">SubInventory</td>
+          <td style="width: 15%" class="LabelFontStyle1">SubInventory</td>
             <td><select class="form-control"  formControlName="subInventoryCode" >
                 <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
                 </select>
+                <span  *ngIf="!stockTranferForm.get('subInventoryCode').valid && stockTranferForm.get('subInventoryCode').touched">Please
+                    select Organization Name </span>
               </td>
           <td style="width: 15%" class="LabelFontStyle">
             Eway Bill Number:
@@ -87,7 +91,7 @@
               <option *ngFor="let ib of issueByList">{{ib.name}}</option>
               </select> -->
           </td>
-          <td style="width: 15%" class="LabelFontStyle">
+          <td style="width: 15%" class="LabelFontStyle1">
             Request To:
           </td>
           <td>
@@ -95,6 +99,8 @@
               <option>--Select--</option>
               <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
               </select>
+              <span  *ngIf="!stockTranferForm.get('issueTo').valid && stockTranferForm.get('issueTo').touched">Please
+                  select Issue Name </span>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
             Status:

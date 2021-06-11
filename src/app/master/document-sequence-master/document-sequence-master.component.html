@@ -357,6 +357,28 @@
     </div>
 </div>
 <br>
+<div id="tabs" #tabs>
+
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="#search" [ngClass]="{ 'active':activeTab==='search'}" (click)="search('search')"
+               data-toggle="tab">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#results" [ngClass]="{ 'active':activeTab==='result'}" data-toggle="tab"
+               (click)="result('result')">Results</a>
+          </li>
+        </ul>
+      
+        <div class="tab-content">
+          <div class="tab-pane" id="search" [ngClass]="{ 'active':activeTab==='search'}">
+            search screen
+            <button type="button" (click)="search('result')">Search</button>
+          </div>
+          <div class="tab-pane" id="results" [ngClass]="{ 'active':activeTab==='result'}">results screen</div>
+        </div>
+      
+      </div>
 <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
