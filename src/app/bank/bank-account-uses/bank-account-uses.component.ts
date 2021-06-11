@@ -7,6 +7,7 @@ import{ BankService} from '../bank.service';
 
 interface IbankBranchUse{
 bankAccountId: number;
+customerId:number;
 ouId: number;
     orgPartyId: number;
     apUseEnableFlag:string;
@@ -42,6 +43,8 @@ ouId: number;
 export class BankAccountUsesComponent implements OnInit {
   bankAccUsesForm: FormGroup;
   bankAccountId: number;
+  customerId:number;
+  custName:string;
 ouId: number;
     orgPartyId: number;
     apUseEnableFlag:string;
@@ -89,12 +92,14 @@ bkBranchName:string;
 bkName:string;
   public BranchSearch : any;
   public BankBranchList:any[];
+  public BankAcDtlsList:any[];
+  public segmentNameList:any[];
 public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
   public locIdList: Array<string> = [];
-public BankNameList: any;
+public BankNameList: Array<string> = [];
 public OUIdList: Array<string> = [];
 
 constructor(private fb: FormBuilder, private router: Router, private bankService: BankService,  private service: MasterService) { 
@@ -104,6 +109,7 @@ bkBranchName: [''],
     bankAccountId: [''],
 ouId:  [''],
 bkName:[''],
+customerId:[],
     orgPartyId: [''],
     apUseEnableFlag: [''],
     arUseEnableFlag: [''],
@@ -163,6 +169,8 @@ Orgmaster(bankAccUsesForm: any) {
       data => {
         this.BankNameList = data.obj;
         console.log(this.BankNameList);
+        this.customerId= data.obj.customerId;
+     //   alert(this.BankNameList.customerId);
       }
     );
     this.service.locationCodeList()
@@ -416,6 +424,7 @@ Orgmaster(bankAccUsesForm: any) {
       if(this.content === "bankInterestIncomeCcid" ){
         this.bankInterestIncomeCcid =abc;
       }
+     
     this.bankAccUsesForm.get('segment11').reset();
     this.bankAccUsesForm.get('segment2').reset();
     this.bankAccUsesForm.get('segment3').reset();
@@ -439,8 +448,9 @@ Orgmaster(bankAccUsesForm: any) {
   }
   onBankNameSelected(BkName) {
     alert(BkName);
-     let selectedValue = this.BankNameList.find(v => v.custName == BkName);
-     alert(selectedValue.custName+" "+selectedValue.customerId);
+    //  let selectedValue = this.BankNameList.find(v => v.custName == BkName);
+    //  alert(selectedValue.custName+" "+selectedValue.customerId);
+    //  this.bankAccountId = selectedValue.customerId;
     //  this.bankId=selectedValue.customerId;
     //  this.custName =selectedValue.custName;
   }
@@ -451,16 +461,50 @@ Orgmaster(bankAccUsesForm: any) {
       data => {
         this.BankBranchList = data.obj;
         console.log(this.BankBranchList);
+      //  this.customerId= this.BankNameList.customerId;
       // this.branchId = this.BankBranchList.name2;
       }
     );
   }
+
+  onBranchNameSelected(bkBranchName) {
+    alert(bkBranchName);
+    this.bankService.BankAcDtlsList(bkBranchName)
+    .subscribe(
+      data => {
+        this.BankAcDtlsList = data.obj;
+        console.log(this.BankAcDtlsList);
+      //  this.customerId= this.BankNameList.customerId;
+      // this.branchId = this.BankBranchList.name2;
+      }
+    );
+  }
+
   onbranchIdSelected(branchName){
     let select = this.BankBranchList.find(d => d.name=== branchName);
     console.log(select);
     console.log(select.name2);
-    this.bankAccountNo = select.name2;
+    // this.bankAccountNo = select.name2;
+    this.bankService.BankAcDtlsList(branchName)
+    .subscribe(
+      data => {
+        this.BankAcDtlsList = data.obj;
+        console.log(this.BankAcDtlsList);
+       this.bankAccountId= data.obj.id;
+      console.log(data.obj.id);
+      
+      // this.branchId = this.BankBranchList.name2;
+      }
+    );
   }
+
+  onBankAccIdSelected(accountName){
+    let select = this.BankAcDtlsList.find(d => d.name=== accountName);
+    console.log(select);
+    console.log(select.name1);
+    this.bankAccountNo = select.name1;
+  }
+
   BreanchNameSearch(bkBranchName){
     this.bankService.BranchSearchFn(bkBranchName)
     .subscribe(

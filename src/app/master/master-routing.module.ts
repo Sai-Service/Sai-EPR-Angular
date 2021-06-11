@@ -28,8 +28,10 @@ import { FlexFieldComponent } from './flex-field/flex-field.component';
 import {PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
 import { OmGruopMasterComponent } from './om-gruop-master/om-gruop-master.component';
 import { OrderTypeMasterComponent } from './order-type-master/order-type-master.component';
-import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
-import { SaiEwSchemeComponent } from './sai-ew-scheme/sai-ew-scheme.component';
+import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.component';
+import { VariantMasterComponent } from './variant-master/variant-master.component';
+import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
+
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
@@ -58,18 +60,16 @@ const routes: Routes = [
   {path:'JaiTaxCategoryLine', component:JaiTaxCategoryLineComponent},
   {path:'jaiTaxRatesMaster', component:JaiTaxRatesMasterComponent},
   {path:'JaiTaxType', component:JaiTaxTypeComponent},
- {path:'PoReceiptForm',component:PoReceiptFormComponent},
- {path:'FlexField',component:FlexFieldComponent},
- {path:'Subinventory',component:SubinventoryMasterComponent},
-
-//    { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
-// {path:'FlexField',component:FlexFieldComponent},
-{path:'pricelistMaster', component:PricelistMasterComponent},
-{path:'OMGRP',component:OmGruopMasterComponent},
-{path:'orderType', component:OrderTypeMasterComponent},
-{path:'SaiEwScheme',component:SaiEwSchemeComponent},
-{path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
-{ path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
+  {path:'PoReceiptForm',component:PoReceiptFormComponent},
+  {path:'FlexField',component:FlexFieldComponent},
+  {path:'pricelistMaster', component:PricelistMasterComponent},
+  {path:'OMGRP',component:OmGruopMasterComponent},
+  {path:'orderType', component:OrderTypeMasterComponent},
+  {path:'WsVehicleMaster', component:WsVehicleMasterComponent },
+  {path:'VariantMaster', component:VariantMasterComponent },
+  {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
+  {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
+  { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

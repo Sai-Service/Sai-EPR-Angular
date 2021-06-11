@@ -1,0 +1,759 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;EXTENDEND&nbsp;WARRANTY&nbsp;CUSTOMER&nbsp;FORM
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <form [formGroup]="saiEwForm" (ngSubmit)="saiEw(saiEwForm.value)">
+
+                     <table class="center">
+                        <tr>
+                        <!-- <td  class="LabelFontStyle">DivId/div/ouid/locid/deptid/empId/custid/inssite/Aging/type/Stat/itemcd&nbsp;:&nbsp;</td> -->
+   
+                        <td >
+                            <input hidden style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                            class="form-control" [(ngModel)]="divisionId" placeholder="">
+
+                        </td>
+                        <td   style="border: none;color: black;">
+                            <input hidden style="width:60px ;"  type="text" disabled formControlName="loginArray"
+                                class="form-control" [(ngModel)]="loginArray" placeholder="">
+                        </td>
+                    
+                        <td>
+                            <input hidden  style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            class="form-control" [(ngModel)]="ouId" >
+                        </td>
+                    
+                        <td>
+                            <input hidden style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                        </td>
+
+                        <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id:&nbsp;</td> -->
+
+                       
+                        <td >
+                            <input hidden style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            class="form-control" [(ngModel)]="deptId" placeholder="">
+
+                        </td>
+                        <td >
+                            <input hidden style="width:30px ;"   type="text" disabled formControlName="emplId"
+                            class="form-control" [(ngModel)]="emplId" placeholder="">
+
+                        </td>
+
+                        <td>
+                            <input hidden disabled style="width:30px ;" type="text"  formControlName="custId"  id="custId" [(ngModel)]="custId" class="form-control" >
+                        </td>
+                        
+                        <td>
+                            <input hidden disabled style="width:30px ;" type="text"  formControlName="ewInsurerSiteId"  id="ewInsurerSiteId" [(ngModel)]="ewInsurerSiteId" class="form-control" >
+                        </td>
+                        
+                        
+                       
+                        <td>
+                            <input hidden disabled style="width:50px ;" type="text"  formControlName="vehicleAgeDays"  id="vehicleAgeDays" [(ngModel)]="vehicleAgeDays" class="form-control" >
+                        </td>
+
+                        <td>
+                            <input hidden disabled style="width:50px ;" type="text"  formControlName="ewType"  id="ewType" [(ngModel)]="ewType" class="form-control" >
+                        </td>
+
+                        <td>
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="ewStatus"  id="ewStatus" [(ngModel)]="ewStatus" class="form-control">
+                        </td>
+                        <td>
+                            <input hidden hidden  type="text" formControlName="ewStatusBookletno"[(ngModel)]="ewStatusBookletno"  >
+                            <input hidden hidden  type="text" formControlName="ewStatusStartDate" [(ngModel)]="ewStatusStartDate" >
+                            <input hidden  hidden  type="text" formControlName="ewStatusPeriod" [(ngModel)]="ewStatusPeriod" >
+                        </td>
+
+           
+                            
+                        <td>
+                            <input hidden  disabled  style="width:50px ;"  type="text" formControlName="variantItemId"  id="variantItemId" [(ngModel)]="variantItemId" class="form-control">
+                        </td>
+
+                        <td>
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="itemId"  id="itemId" [(ngModel)]="itemId" class="form-control">
+                        </td>
+                            
+                        </tr>
+                    </table>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle|Customer Details</legend>
+                    <table class="center">
+                          
+                    <tr>
+    
+                            <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
+    
+                            <td>
+                             <input type="text"
+                                formControlName="vehRegNo"
+                                [(ngModel)]="vehRegNo"
+                                (change)="serchByRegNo(vehRegNo)"
+                                (keyup)="getUserIdsFirstWay($event)"
+                                id="userIdFirstWay"
+                                list="dynmicUserIds"
+                                class="form-control" />
+
+                                <datalist id="dynmicUserIds">
+                                    <option
+                                        *ngFor="let item of VehRegNoList"
+                                        [ngValue]="item.regNo">
+                                        {{item.regNo}}
+                                    </option>
+                                </datalist>
+
+                            </td> 
+
+                            <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
+    
+                            <td>
+                            <input type="text"
+                            formControlName="vehicleId"
+                            [(ngModel)]="vehicleId"
+                            (change)="serchByVin(vehicleId)"
+                            (keyup)="getUserIdsFirstWayVin($event)"
+                            id="userIdFirstWay"
+                            list="dynmicUserIds1"
+                            class="form-control" />
+
+                            <datalist id="dynmicUserIds1">
+                                <option
+                                    *ngFor="let item of VehVinList"
+                                    [ngValue]="item.vin">
+                                    {{item.vin}}
+                                </option>
+                            </datalist>
+                          </td>
+
+                          <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
+                    </td>
+                            
+                          
+                            
+                           
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Item:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="text"  formControlName="itemDesc"  id="itemDesc" [(ngModel)]="itemDesc" class="form-control" >
+                        </td>
+                        
+
+                    <td style="width: 15%" class="LabelFontStyle">Model&nbsp;Variant:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="variant"  id="variant" [(ngModel)]="variant" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+    
+                    <td>
+                        <input disabled  type="text"  formControlName="fuelType"  id="fuelType" [(ngModel)]="fuelType" class="form-control" >
+                    </td>
+
+                    
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
+
+                    <td>
+                        <input  disabled type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" >
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" class="form-control" >
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
+
+                    
+                    <td>
+                        <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
+                    </td>
+                    
+
+                    </tr>
+
+                    <tr>
+
+                   
+                        <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
+    
+                        <td>
+                            <input   type="text"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
+                        </td>
+
+                        <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+
+                        <td>
+                            <select type="text" class="form-control" formControlName="soldByEmpId">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
+                            {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
+                            </option>
+                            </select>
+                        </td>
+
+                        <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+
+                        <td>
+                            <input   type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" >
+                        </td>
+
+                    
+                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+
+                    <td>
+                        <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                    </td>
+            
+                    </tr>
+
+                    </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">EW Details</legend>
+                    <table class="center">
+
+                        <tr>
+
+                            <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Contract&nbsp;No:&nbsp;</td>
+
+                            <td>
+                                <input  disabled   type="text" formControlName="ewId"  id="ewId" [(ngModel)]="ewId" class="form-control">
+                            </td>
+                            
+                            <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Invoice&nbsp;No:&nbsp;</td>
+
+                            <td>
+                                <input  disabled   type="text" formControlName="ewInvoiceNo"  id="ewInvoiceNo" [(ngModel)]="ewInvoiceNo" class="form-control">
+                            </td>
+
+                            <!-- <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Status:&nbsp;</td> -->
+            
+                            <!-- <td>  
+                                <select   formControlName="ewType" id="ewType" [(ngModel)]="ewType" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                            </td> -->
+
+                           
+                            <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+
+                          <!-- <td>  
+                              <select disabled  formControlName="paytmentSource" id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control" >
+                                  <option>--Select--</option>
+                                  <option *ngFor="let sc of  EwSourceList" [ngValue]="sc.code">
+                                      {{sc.code}}
+                                  </option>
+                              </select>
+                          </td> -->
+                            <td>
+                                <input  disabled   type="text" formControlName="paytmentSource"  id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control">
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Scheme:&nbsp;</td>
+    
+                            <td>  
+                                <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  >
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
+                                        {{sc.ewSchemeNo}}
+                                    </option>
+                                </select>
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td   style="width: 15%" class="LabelFontStyle1">EW&nbsp;Item&nbsp;Code:&nbsp;</td>
+
+                            <!-- <td>
+                            
+                                <input type="text" formControlName="segment"
+                                (keyup)="getInvItemId($event)" id="invItemIdFirstWay" 
+                                list="dynmicUserIds2" class="form-control"
+                                (ngModelChange)="onOptioninvItemIdSelectedSingle($event)" >
+                                <datalist id="dynmicUserIds2">
+                                    <option *ngFor="let item of invItemListEw"
+                                        [ngValue]="item.itemId"> 
+                                        {{item.segment}}
+                                    </option>
+                                </datalist>
+                
+                            </td>  -->
+
+                            <td>  
+                                <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.itemId">
+                                <!-- {{sc.itemId}}- -->
+                                {{sc.SEGMENT}}
+                                </option>
+                                </select>
+                            </td>
+   
+                            <!-- <td>
+                                <input  style="font-weight: bold;text-align: right;"   type="text" formControlName="ewItemCode"  id="ewItemCode"  [(ngModel)]="ewItemCode" class="form-control" placeholder="EW item Code">
+                            </td> -->
+
+
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
+    
+                            <td>
+                                <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Insurance:&nbsp;</td>
+    
+                            
+                            <td>  
+                                <select   formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" >
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  ewInsNameList" [ngValue]="sc.customerId">
+                                {{sc.customerId}}-{{sc.custName}}
+                                </option>
+                                </select>
+                            </td>
+                            
+                            <td   style="width: 15%" class="LabelFontStyle">Period&nbsp;:&nbsp;</td>
+
+                            <td>
+                                <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="ewPeriod"  id="ewPeriod"  [(ngModel)]="ewPeriod" class="form-control" placeholder="Period">
+                            </td>
+  
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
+    
+                            <td>
+                                <input disabled  type="text" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate" class="form-control" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
+    
+                            <td>
+                                <input   type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;End&nbsp;Date:&nbsp;</td>
+    
+                            <td>
+                                <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
+                            </td>
+               
+                            <td   style="width: 15%" class="LabelFontStyle">Premium&nbsp;Amt:&nbsp;</td>
+
+                            <td>
+                                <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="ewSchemeAmt"  id="ewSchemeAmt"  [(ngModel)]="ewSchemeAmt" class="form-control" placeholder=" Premium Amt">
+                            </td>
+          
+                          </tr>
+
+                          <!-- <tr>
+                            <td   style="width: 15%" class="LabelFontStyle">Date&nbsp;:&nbsp;</td>
+                            <input type="date" value="fsd" id="startdateId" class="form-control" required>
+                          </tr> -->
+                    </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Payment Details</legend>
+                    <table class="center">
+
+                        <tr>
+
+                            <td   style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
+
+                            <td>
+                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" placeholder="Receipt Amount">
+                            </td>
+                        <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
+
+                        <td>  
+                            <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                    {{sc.lookupValue}} 
+                                </option>
+                            </select>
+                        </td>
+                        
+                        <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
+                        <td>  
+                            <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
+                                    {{sc.receiptMethodId}}-{{sc.methodName}} 
+                                </option>
+                            </select>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+ 
+                        <div *ngIf="showBankDetails; then thenBlock3; else elseBlock3"></div>
+                        <ng-template #thenBlock3>
+
+                            <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
+
+                            <td>
+                                <input   type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
+
+                            <td>
+                                <input   type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                            </td>
+
+
+                            <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
+                            <td>
+                                <input    type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">DD/Chq.&nbsp;Date:&nbsp;</td>
+                            <td>
+                                <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                            </td>
+                            
+                        </ng-template>
+
+
+                        <ng-template #elseBlock3>
+                        <!-- <div *ngIf="showBankDetails; then thenBlock4; else elseBlock4"></div>
+                        <ng-template #thenBlock4> -->
+
+                            <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
+
+                            <td>
+                                <input   disabled type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                            </td>
+
+                        <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
+
+                        <td>
+                            <input  disabled  type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                        </td>
+
+                        
+
+                        <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;No:&nbsp;</td>
+                            <td>
+                                <input  disabled  type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                            </td>
+                    
+                        <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
+                        <td>
+                            <input disabled  type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                        </td>
+
+                        </ng-template>
+
+               
+                     </tr>
+                    </table>
+                </fieldset>
+
+                <div *ngIf="showCancelDetails; then thenBlock13; else elseBlock13"></div>
+                    <ng-template #thenBlock13>
+
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">EW Cancellation Details</legend>
+                <table class="center">
+
+                    <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Reason:&nbsp;</td>
+                     <td>  
+                        <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
+                                {{sc.code}}
+                            </option>
+                        </select>
+                     </td>
+              
+                    <!-- <td>
+                        <input  disabled  type="text" formControlName="ewCancelReason"  id="ewCancelReason"  [(ngModel)] ="ewCancelReason"  class="form-control"  placeholder="Cancellation Reason">
+                    </td> -->
+
+                    <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Date:&nbsp;</td>
+                    <td>
+                        <input  disabled  type="text" formControlName="ewCancelDate"  id="ewCancelDate"  [(ngModel)] ="ewCancelDate"  class="form-control"  placeholder="Cancellation Date">
+                    </td>
+
+
+                    </tr>
+                
+
+                </table> 
+                </fieldset>
+                    </ng-template>
+            
+                <ng-template #elseBlock13> 
+
+                </ng-template>
+
+                <br>
+                  <!-- ===================================Buttons======================================== -->
+                    <!-- <br> -->
+                    <table class="center">
+                        <tr>
+                            <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                            <ng-template #thenBlock1>
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!saiEwForm">Save</button>
+                                </td>
+
+                                <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveSatat"></div>
+                                <ng-template #thenBlockSaveStat>
+                                <div class="alert success">
+                                    <span class="closebtn">&times;</span>  
+                                    <strong>Success!</strong> Record Saved Successfully!!!
+                                  </div>
+                                </ng-template>
+                                <ng-template #elseBlockSaveSatat>
+                                    <div class="alert warning">
+                                        <span class="closebtn">&times;</span>  
+                                        <strong>Warning!</strong> Rcord Not added.Please check
+                                      </div>
+
+                                </ng-template>
+
+                                 
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                </td>
+
+                                    <!-- ====================Reset Dialog ======================== -->
+
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                </td>
+                                 <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                        <!-- =====================Close Dialog Box====================== -->
+                                        <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                    </label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <table class="center">
+                                                        <tr>
+                                                            <td>
+                                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                            </td>
+                                                            <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                        <!-- ==================================================== -->
+
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                   
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!saiEwForm">Update</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                            </td>
+
+                                            <td>
+                                                <button type="button" class="btn btn-info" (click)="cancelEW()">Cancel</button>
+                                            </td>
+                                            <!-- <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                            </td> -->
+ <!-- ====================Reset Dialog ======================== -->
+
+                        <td>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                        </td>
+                        <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                    <!-- =====================Close Dialog Box====================== -->
+                            <td>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                            </td>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                        </td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                    <!-- ==================================================== -->
+                                    </ng-template>
+                                </tr>
+                            </table>
+                 <!-- ==================================================== -->
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tbody>
+                <tr class="GridHeader">
+                <th style="width:5rem" scope="col">EW&nbsp;No&nbsp;</th>
+                <th style="width:5rem" scope="col"> Type&nbsp;</th>
+                <th style="width:5rem" scope="col"> Scheme&nbsp;</th>
+                <th style="width:6rem" scope="col"> Vehicle&nbsp;No</th>
+                <th style="width:20rem" scope="col">Customer&nbsp;Name</th>
+                <th style="width:10rem" scope="col">Source&nbsp;</th>
+                <th style="width:5rem" scope="col">EW&nbsp;Period&nbsp;</th>
+                <th style="width:8rem" scope="col">Sale&nbsp;Date&nbsp;</th>
+                <th style="width:8rem" scope="col">EW&nbsp;Start&nbsp;Date</th>
+                <th style="width:8rem" scope="col">EW&nbsp;End&nbsp;Date</th>
+                <th style="width:5rem" scope="col">Select</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                <td>{{com.ewId}}</td>
+                <td>{{com.ewType}}</td>
+                <td>{{com.ewSchemeId}}</td>   
+                <td>{{com.vehRegNo}}</td>   
+                <td>{{com.custName}}</td>
+                <td>{{com.paytmentSource}}</td>
+                <td>{{com.ewPeriod}}</td>
+                <td>{{com.ewSaleDate | date:'dd-MM-y'}}</td>
+                <td>{{com.ewStartDate | date:'dd-MM-y'}}</td>
+                <td>{{com.ewEndDate | date:'dd-MM-y'}}</td>
+                <td><button class="btn btn-info" (click)="Select(com.ewId)">Select</button></td>   
+        </tr>
+    </table>
+</div>
+</div>
+

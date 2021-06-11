@@ -458,7 +458,6 @@ export class ARInvoiceComponent implements OnInit {
   clearFormArray() {
     window.location.reload();
   }
-
   onOptioninvItemIdSelected(itemId, index) {
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     // alert(selectedValue.itemId)
@@ -573,7 +572,6 @@ export class ARInvoiceComponent implements OnInit {
       //       var patch = this.arInvoiceForm.get('poLines') as FormArray;
       //       (patch.controls[i]).patchValue({ segmentName: ''})
       //       alert(this.segmentNameList.message);
-
       //     }
       //   }
       // );

@@ -1,20 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-payment-ar',
-//   templateUrl: './payment-ar.component.html',
-//   styleUrls: ['./payment-ar.component.css']
-// })
-// export class PaymentARComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NumberValueAccessor } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -40,7 +23,7 @@ referenceNo:string;
   templateUrl: './payment-ar.component.html',
   styleUrls: ['./payment-ar.component.css']
 })
-export class PaymentARComponent implements OnInit {
+export class PaymentArComponent implements OnInit {
   paymentArForm : FormGroup;
   applyRcptFlag1 :boolean
 
@@ -81,7 +64,7 @@ export class PaymentARComponent implements OnInit {
   orderNumber:string;
   referenceNo:string = null;
   custAccountNo :number;
-  customerId:number=8
+  // customerId:number=8
   accountNo:number;
   vehNo : string;
   custName:string;
@@ -107,9 +90,11 @@ export class PaymentARComponent implements OnInit {
   searchValue : string;
  
   public srlNo =1;
-  public searchByRcptNo =1000012;
+  // public searchByRcptNo =1000012;
+  public searchByRcptNo =1000024;
   // public searchByOrderNo =2111202148;
-  public searchByCustNo =1212;
+  // public searchByCustNo =1212;
+  public searchByCustNo =2234;
   searchByDate :Date;
   ordNumber : number;
   cancelReason:string;
@@ -152,7 +137,10 @@ export class PaymentARComponent implements OnInit {
   orgId:number;
 
   public emplId =6;
-  public billToSiteId=107; customerSiteId=107;
+  customerId:number=1
+  public billToSiteId=101;
+  // public billToSiteId=107; 
+  customerSiteId:number;
   public applyTo='INVOICE'
   public applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   // applyTo: string;
@@ -347,9 +335,12 @@ export class PaymentARComponent implements OnInit {
       onPayTypeSelected(payType : any  , rmStatus : any){
         // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
     
-          if (payType === 'CASH') {   
-            // alert("checque seleected")   ;    
-              this.service.ReceiptMethodList(payType ,this.locId,rmStatus)
+       if (payType==='--Select--' || payType==='undefined') {
+        // alert("null selected");
+         return;
+       } else if (payType === 'CASH') {  
+        // alert("cash selected");
+             this.service.ReceiptMethodList(payType ,this.locId,rmStatus)
               .subscribe(
                 data => {
                   this.ReceiptMethodList = data.obj;
@@ -359,7 +350,7 @@ export class PaymentARComponent implements OnInit {
               );
               } else{
     
-                // alert("cash selected");
+                // alert("Chq/dd/neft/... selected");
               this.service.ReceiptMethodList(payType ,this.ouId,rmStatus)
               .subscribe(
                 data => {
@@ -959,12 +950,12 @@ export class PaymentARComponent implements OnInit {
         // debugger;
         this.service.ArReceipApplySubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFULLY');
-            this.paymentArForm.reset();
+            alert('RECORD INSERTED SUCCESSFUILY');
+            // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Code already present in the data base');
-              this.paymentArForm.reset();
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
             }
           }
         });
@@ -981,12 +972,14 @@ export class PaymentARComponent implements OnInit {
         // debugger;
         this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFULLY');
-            this.paymentArForm.reset();
+            alert('RECORD INSERTED SUCCESSFUILY');
+            this.receiptNumber=res.obj;
+            this.paymentArForm.disable();
+            // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Code already present in the data base');
-              this.paymentArForm.reset();
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
             }
           }
         });

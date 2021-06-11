@@ -950,18 +950,8 @@ getGroupControl(index, fieldName) {
            })
           this.lstInvLineDeatails = data;
           console.log(data.invoiceStatus);
-          if(data.source==='PO Receipt' ){
-            // alert(data.invTypeLookupCode);
-           this.poInvoiceForm.get('distribution').disable();
-           this.poInvoiceForm.get('invLines').disable();
-           this.poInvoiceForm.get('taxLines').disable();
-         }
-         if(data.invTypeLookupCode ==='DMS Invoice'){
-          alert(data.invTypeLookupCode);
-          this.poInvoiceForm.get('distribution').disable();
-          this.poInvoiceForm.get('invLines').disable();
-          this.poInvoiceForm.get('taxLines').disable();
-         }
+        
+        
           data.invLines.forEach(f => {
             var invLnGrp: FormGroup = this.invLineDetails();
             this.invLineDetailsArray().push(invLnGrp);
@@ -983,6 +973,8 @@ getGroupControl(index, fieldName) {
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
           let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
+
+         
           
           for (let i=0; i<data.invLines.length;i++){
             if(data.invLines[i].lineTypeLookupCode==='ITEM' || data.invLines[i].lineTypeLookupCode==='OTHER'){
@@ -1021,9 +1013,22 @@ getGroupControl(index, fieldName) {
             this.poInvoiceForm.get('distribution').enable();
             this.poInvoiceForm.get('invLines').enable();
             this.poInvoiceForm.get('taxLines').enable();
-            // this.poInvoiceForm.get('hsnSacCode').enable();
-
-          }else{
+            // if(data.invTypeLookupCode ==='DMS Invoice'){
+            //   // alert(dmsType );
+            //   this.poInvoiceForm.get('invLines').disable();
+            //   this.poInvoiceForm.get('distribution').disable();
+            //   this.poInvoiceForm.get('taxLines').disable();
+            //  }
+      
+          }
+        //   if(data.source==='PO Receipt'  ){
+        //     // alert(data.invTypeLookupCode);
+        //     this.poInvoiceForm.get('invLines').disable();
+        //    this.poInvoiceForm.get('distribution').disable(); 
+        //    this.poInvoiceForm.get('taxLines').disable();
+        //  }
+  
+          else{
             this.dispStatus=false;
             this.disDeleteButton=false;
             this.dispAccountCode =false;
@@ -1036,6 +1041,10 @@ getGroupControl(index, fieldName) {
         }
 
 
+
+       
+     
+       
       )
   }
 

@@ -480,13 +480,31 @@ export class PricelistMasterComponent implements OnInit {
     };
 
     //  ------------------------Header updattion..........................
+    // updateMastHeader() {
+    //   alert ("Putting data  to PL mater header.part .....")
+    //   // const formValue: IPriceList = this.priceListMasterForm.value;
+    //   const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
+    //   this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
+    //     if (res.code === 200) {
+    //       alert('RECORD UPDATED SUCCESSFULLY');
+    //       window.location.reload();
+    //     } else {
+    //       if (res.code === 400) {
+    //         alert('ERROR OCCOURED IN PROCEESS');
+    //         this.priceListMasterForm.reset();
+    //       }
+    //     }
+    //   });
+    // };
+
+    //  ------------------------Header updattion..........................
     updateMastHeader() {
       alert ("Putting data  to PL mater header.part .....")
       // const formValue: IPriceList = this.priceListMasterForm.value;
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD UPDATED SUCCESSFULLY');
+          alert('RECORD UPDATED SUCCESSFUILY');
           window.location.reload();
         } else {
           if (res.code === 400) {
@@ -625,7 +643,7 @@ export class PricelistMasterComponent implements OnInit {
 
   onOptioninvItemIdSelected(itemId, index) {
  
-    //  alert('item function');
+     alert('item function-'+itemId);
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
       alert('Item Id :' +selectedValue.itemId);
@@ -719,7 +737,7 @@ export class PricelistMasterComponent implements OnInit {
       this.service.UploadExcel(formData,this.docType).subscribe((res: any) => {
    
         if (res.code === 200) {
-          alert('FILE UPLOADED SUCCESSFULLY');
+          alert('FILE UPLOADED SUCCESSFUILY');
            this.resMsg = res.obj;
            
           // window.location.reload();

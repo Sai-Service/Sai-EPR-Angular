@@ -28,18 +28,48 @@ import { JaiTaxCategoryLineComponent } from './jai-tax-category-line/jai-tax-cat
 import { JaiTaxRatesMasterComponent } from './jai-tax-rates-master/jai-tax-rates-master.component';
 import { JaiTaxTypeComponent } from './jai-tax-type/jai-tax-type.component';
 import { PoReceiptFormComponent } from './po-receipt-form/po-receipt-form.component';
-import{FlexFieldComponent} from './flex-field/flex-field.component';
-
+import { FlexFieldComponent} from './flex-field/flex-field.component';
 import { PricelistMasterComponent } from './pricelist-master/pricelist-master.component';
 import { OmGruopMasterComponent } from './om-gruop-master/om-gruop-master.component';
 import { OrderTypeMasterComponent } from './order-type-master/order-type-master.component';
-import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
-import { SaiEwSchemeComponent } from './sai-ew-scheme/sai-ew-scheme.component';
+import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.component';
+import { VariantMasterComponent } from './variant-master/variant-master.component';
+import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
-  declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
+  declarations: [DivisionMasterComponent, 
+    OrganizationMasterComponent, 
+    LocationMasterComponent, 
+    CompanyMasterComponent, 
+    FNDCommonLookupComponent, 
+    ItemCategortComponent, 
+    SupplierMasterComponent, 
+    LocatorMasterComponent, 
+    ItemMasterComponent, 
+    CommonMasterComponent, 
+    DocumentSequenceMasterComponent, 
+    EpmloyeeMasterComponent, 
+    CustomerMasterComponent, 
+    GlCodeCombinationComponent, 
+    HsnSacMasterComponent, 
+    OPMasterDtoComponent, 
+    JaiRegimeMasterComponent, 
+    TaxAccountsComponent,
+    TaxCategoryMasterComponent, 
+    JaiTaxCategoryLineComponent, 
+    JaiTaxRatesMasterComponent, 
+    JaiTaxTypeComponent,
+    FlexFieldComponent, 
+    PricelistMasterComponent, 
+    OmGruopMasterComponent, 
+    OrderTypeMasterComponent, 
+    WsVehicleMasterComponent, 
+    VariantMasterComponent, 
+    TaxThresholdSetupComponent],
+    
+  // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
   
  imports: [
     CommonModule,

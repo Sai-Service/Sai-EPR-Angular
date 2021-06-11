@@ -1,3 +1,15 @@
+.form-control {
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-size: 12px;
+  outline: medium none;
+  padding: 3px;
+  vertical-align: top;
+  width: 220px;
+  height: 50%;
+  border-color: gray;
+ /* box-shadow: 5px 5px 8px rgb(13, 13, 19); */
+}
+
 .LabelFontStyle2{
 text-align: left;
 }
@@ -100,9 +112,11 @@ legend {
     width: fit-content;
 }
 
-.td{
+/* .td{
   padding: 0px;
-}
+} */
+
+
 /* fieldset  tr td {
   width: 15%;
   background-color: cadetblue;
@@ -124,9 +138,10 @@ legend {
     /* background-color: #fefeff; */
     /* width: 100%; */
 }
-td{
+
+/* td{
   padding: 0px;
-}
+} */
 
 
 

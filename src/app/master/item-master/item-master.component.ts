@@ -28,6 +28,7 @@ interface IItemMaster{
   purchasable:string;
   costCenter:number;
   hsnSacCode:string;
+  hsnGstPer:number;
   internalOrder:string;
   marginCategory:string;
   assetItem:string;
@@ -107,6 +108,7 @@ export class ItemMasterComponent implements OnInit {
   costCenter:number;
   materialType:string;
   hsnSacCode:string;
+  hsnGstPer:number;
   internalOrder:string;
   marginCategory:string='null';
   assetItem:string;
@@ -199,6 +201,7 @@ export class ItemMasterComponent implements OnInit {
   public purchasableList: Array<string>=[];
   public costCenterList:Array<string>=[];
   public hsnSacCodeList: Array<string>[];
+ 
   public internalOrderList:Array<string>[];
   public marginCategoryList:Array<string>[];
   public assetItemList:Array<string>[];
@@ -230,9 +233,12 @@ export class ItemMasterComponent implements OnInit {
   public locIdList: Array<string> = [];
   public taxCategoryListS: Array<string> = [];
   public taxCategoryListP: Array<string> = [];
-  public segmentNameList: any;
+
+ public segmentNameList: any;
  public SSitemTypeList:any;
  public maxDate = new Date();
+
+ public hsnSacCodeDet: any;
  displayHold=true;
  stockableShow=true;
  costingShow=true;
@@ -240,9 +246,37 @@ export class ItemMasterComponent implements OnInit {
  assetItemShow =true;
  purchasableShow=true;
  isTaxableShow=true;
+
+  
+ loginName:string;
+ loginArray:string;
+ name:string;
+ ouName : string;
+ locId: number;
+ locName : string;
+ orgId:number;
+ ouId :number;
+ deptId:number; 
+ divisionId:number;
+// emplId :number;
+ public emplId =6;
+
  
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService:OrderManagementService) {
     this.itemMasterForm = fb.group({
+
+      loginArray:[''],
+      loginName:[''],
+      ouName :[''],
+      locId:[''],
+      locName :[''],
+      ouId :[],
+      deptId :[],
+      emplId:[''],
+      orgId:[],
+      divisionId:[],
+
+
       segment:['', [Validators.required]],
       description:['', [Validators.required]],
       categoryId:['', [Validators.required]],
@@ -257,6 +291,7 @@ export class ItemMasterComponent implements OnInit {
       purchasable:['', [Validators.required]],
       costCenter:['', [Validators.required]],
       hsnSacCode:['', [Validators.required]],
+      hsnGstPer:[],
       internalOrder:['', [Validators.required]],
       marginCategory:[],
       assetItem:['', [Validators.required]],
@@ -343,6 +378,25 @@ taxCategorySale:[],
    get f() { return this.itemMasterForm.controls; }
 
   ngOnInit(): void {
+
+    this.name=  sessionStorage.getItem('name');
+    this.loginArray=sessionStorage.getItem('divisionName');
+    this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    this.loginName=sessionStorage.getItem('name');
+    this.ouName = (sessionStorage.getItem('ouName'));
+    this.ouId=Number(sessionStorage.getItem('ouId'));
+    this.locId=Number(sessionStorage.getItem('locId'));
+    // this.locName=(sessionStorage.getItem('locName'));
+    this.deptId=Number(sessionStorage.getItem('dept'));
+    // this.emplId= Number(sessionStorage.getItem('emplId'));
+   
+    this.orgId=this.ouId;
+    console.log(this.loginArray);
+    console.log(this.locId);
+   
+
+
+
     this.service.statusList()
       .subscribe(
         data => {
@@ -653,9 +707,48 @@ taxCategorySale:[],
         console.log(this.holdReasonList);
       }
     );
- 
+   }
+
+  
+  onHsnCodeSelected(mHsnCode:any){
+
+    alert("Hsn Code :"+mHsnCode);
+
+    // if(mHsnCode != undefined) {
+   
+      this.service.hsnSacCodeDet(mHsnCode)
+      .subscribe(
+      data => {
+        this.hsnSacCodeDet = data;
+        console.log(this.hsnSacCodeDet);
+        this.itemMasterForm.patchValue(this.hsnSacCodeDet.gstPercentage);
+        this.hsnGstPer = this.hsnSacCodeDet.gstPercentage;
+
+        this.service.taxCategoryListHSN(this.hsnGstPer,'SALES')
+        .subscribe(
+          data1 => {
+            this.taxCategoryListS = data1;
+            console.log(this.taxCategoryListS);
+            data1 = this.taxCategoryListS;
+          });
+
+        this.service.taxCategoryListHSN(this.hsnGstPer,'PURCHASE')
+        .subscribe(
+          data1 => {
+            this.taxCategoryListP = data1;
+            console.log(this.taxCategoryListP);
+            data1 = this.taxCategoryListP;
+          });
+      });
+    // } else {
+    //    alert ("hsn code not found....");
+    //    this.itemMasterForm.get('taxCategorySale').reset()
+    //    this.itemMasterForm.get('taxCategoryPur').reset()
+    //   }
   }
+
   onOptionsSelectedVariant(mainModel){
+   if(mainModel===!null){
     this.orderManagementService.VariantSearchFn(mainModel)
     .subscribe(
       data => {
@@ -663,10 +756,13 @@ taxCategorySale:[],
         console.log(this.VariantSearch);  
       }
     );
+   }
+   else{}
   }
 
   onOptionsSelectedColor(variant){
     // alert(variant)
+   if(variant===!null){
     this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
@@ -675,6 +771,8 @@ taxCategorySale:[],
         this.onKey(0);
       }
     );
+   }
+   else{}
   }
 
 
@@ -712,23 +810,33 @@ taxCategorySale:[],
     );
     if(category=='SS_VEHICLE'){    this.ssVehical=true; this.ssSpares=false;}
     if(category=='SS_SPARES'){     this.ssVehical=false; this.ssSpares=true;}
+
+     
+    
+     this.itemMasterForm.get('hsnGstPer').reset();
+     this.itemMasterForm.get('hsnSacCode').reset();
+     this.taxCategoryListS=null;
+     this.taxCategoryListP=null;
+    
    }
-  UomEvent(e) {
-    if (e.target.checked) {
-    this.stockable='Y'
+
+
+    UomEvent(e) {
+      if (e.target.checked) {
+      this.stockable='Y'
+      }
+      else{
+        this.stockable = 'N';
+      }
     }
-    else{
-      this.stockable = 'N';
+    stockableEvent(e) {
+      if (e.target.checked) {
+      this.stockable='Y'
+      }
+      else{
+        this.stockable = 'N';
+      }
     }
-  }
-  stockableEvent(e) {
-    if (e.target.checked) {
-    this.stockable='Y'
-    }
-    else{
-      this.stockable = 'N';
-    }
-  }
   purchasableEvent(e) {
     if (e.target.checked) {
     this.purchasable='Y'
@@ -884,10 +992,11 @@ taxCategorySale:[],
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
-        this.itemMasterForm.reset();
+        this.itemMasterForm.disable();
+        // this.itemMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert('ERROR OCCOURED IN PROCEESS'+res.obj);
           // this.itemMasterForm.reset();
         }
       }

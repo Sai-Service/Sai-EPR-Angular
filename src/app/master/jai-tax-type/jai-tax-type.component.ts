@@ -46,7 +46,7 @@ interface IJaiTaxtype{
   lookupValueDesc2 : string;
   lookupValueDesc3 : string;
   lookupValueDesc4 : string;
-  lookupValueDesc5 : string;
+  // lookupValueDesc5 : string;
   // showOu : boolean[];
   // showOrg: boolean[];
 
@@ -59,6 +59,22 @@ interface IJaiTaxtype{
 })
 export class JaiTaxTypeComponent implements OnInit {
     jaiTaxtypeMasterForm:FormGroup;
+
+
+      loginName:string;
+      loginArray:string;
+      name:string;
+      ouName : string;
+      locId: number;
+      locName : string;
+      orgId:number;
+      ouId :number;
+      deptId:number; 
+      divisionId:number;
+    // emplId :number;
+      public emplId =6;
+      lineIndex:number;
+
   
       iValue:number;
       // PLANE =true;   
@@ -87,9 +103,10 @@ export class JaiTaxTypeComponent implements OnInit {
         
     ledgerId:number;
     opUnit : number;
-    ouId: number; ouName : string;
-    locId: number;
-    locName: string; locCode : string;
+    // ouId: number; ouName : string;
+    // locId: number;
+    // locName: string; 
+    locCode : string;
     interimRecoveryCcid: string;
     recoveryCcid: string;
     interimLiablilityCcid: string;
@@ -110,6 +127,8 @@ export class JaiTaxTypeComponent implements OnInit {
    
   
     // locDescreption : string;
+
+    
   
     lookupValueDesc: string;
     lookupValueDesc1: string;
@@ -130,7 +149,7 @@ export class JaiTaxTypeComponent implements OnInit {
     submitted = false;
   
    
-  
+    showCodeButton=false;
     displayInactive = true;
     Status1: any;
     lstcomments: any[];
@@ -169,6 +188,28 @@ export class JaiTaxTypeComponent implements OnInit {
     a3: string;
     a4: string;
     a5: string;
+
+    b1: string;
+    b2: string;
+    b3: string;
+    b4: string;
+    b5: string;
+    b6: string;
+    b7: string;
+    b8: string;
+    b9: string;
+
+    b1Desc: string;
+    b2Desc: string;
+    b3Desc: string;
+    b4Desc: string;
+    b5Desc: string;
+    b6Desc: string;
+    b7Desc: string;
+    b8Desc: string;
+    b9Desc: string;
+    
+  
   
   
     showModal: boolean;
@@ -193,6 +234,19 @@ export class JaiTaxTypeComponent implements OnInit {
   
     constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
       this.jaiTaxtypeMasterForm = fb.group({
+
+
+        loginArray:[''],
+        loginName:[''],
+        ouName :[''],
+        locId:[''],
+        locName :[''],
+        ouId :[],
+        deptId :[],
+        emplId:[''],
+        orgId:[],
+        divisionId:[],
+
         status: ['', [Validators.required]],
         taxTypeCode: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
         taxTypeName: ['', [Validators.required]],
@@ -200,7 +254,7 @@ export class JaiTaxTypeComponent implements OnInit {
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.nullValidator]],
         taxTypeId: [''],
-        regimeId: ['', [Validators.required]],
+        regimeId: [],
         regimeCode:['',[Validators.nullValidator]],
         recoverableFlag: ['', [Validators.required]],
         offsetFlag: ['', [Validators.required]],
@@ -211,19 +265,40 @@ export class JaiTaxTypeComponent implements OnInit {
         wthldTrxApplicableFlag: ['', [Validators.required]],
         locationId:[''],
         opUnit :['', [Validators.required]],
-             
+        lineIndex:[],     
         a1: ['', [Validators.required]],
         a2: ['', [Validators.required]],
         a3: ['', [Validators.required]],
         a4: ['', [Validators.required]],
         a5: ['', [Validators.required]],
+
+        b1: ['', [Validators.required]],
+        b2: ['', [Validators.required]],
+        b3: ['', [Validators.required]],
+        b4: ['', [Validators.required]],
+        b5: ['', [Validators.required]],
+        b6: ['', [Validators.required]],
+        b7: ['', [Validators.required]],
+        b8: ['', [Validators.required]],
+        b9: ['', [Validators.required]],
+
+        b1Desc: ['', [Validators.required]],
+        b2Desc: ['', [Validators.required]],
+        b3Desc: ['', [Validators.required]],
+        b4Desc: ['', [Validators.required]],
+        b5Desc: ['', [Validators.required]],
+        b6Desc: ['', [Validators.required]],
+        b7Desc: ['', [Validators.required]],
+        b8Desc: ['', [Validators.required]],
+        b9Desc: ['', [Validators.required]],
+        
         
         regimeName: [],
         lookupValueDesc1: [],
         lookupValueDesc2: [],
         lookupValueDesc3: [],
         lookupValueDesc4: [],
-        lookupValueDesc5: [],
+        // lookupValueDesc5: [],
       
   
         actLines: this.fb.array([this.lineDetailsGroup()])
@@ -239,11 +314,9 @@ export class JaiTaxTypeComponent implements OnInit {
         ledgerId:['', [Validators.required]],
         ouId: ['', [Validators.required]],
         locId: ['', [Validators.required]],
-        locName: ['', [Validators.required]],
-        locCode: ['', [Validators.required]],
-        ouName: ['', [Validators.required]],
-  
-  
+        // locName: ['', [Validators.required]],
+        // locCode: ['', [Validators.required]],
+        // ouName: ['', [Validators.required]],
         interimRecoveryCcid: ['', [Validators.required]],
         recoveryCcid: ['', [Validators.required]],
         interimLiablilityCcid: ['', [Validators.required]],
@@ -270,6 +343,7 @@ export class JaiTaxTypeComponent implements OnInit {
       this.lineDetailsArray.push(this.lineDetailsGroup());
       this.showOu=false;
       this.showOrg=false;
+      this.resetModalData();
     }
   
     RemoveRow(index) {
@@ -289,6 +363,22 @@ export class JaiTaxTypeComponent implements OnInit {
     }
     //////////////////////////////////////////////////ngOninit///////////////////////
     ngOnInit(): void {
+
+
+      this.name=  sessionStorage.getItem('name');
+      this.loginArray=sessionStorage.getItem('divisionName');
+      this.divisionId=Number(sessionStorage.getItem('divisionId'));
+      this.loginName=sessionStorage.getItem('name');
+      this.ouName = (sessionStorage.getItem('ouName'));
+      this.ouId=Number(sessionStorage.getItem('ouId'));
+      this.locId=Number(sessionStorage.getItem('locId'));
+      // this.locName=(sessionStorage.getItem('locName'));
+      this.deptId=Number(sessionStorage.getItem('dept'));
+      // this.emplId= Number(sessionStorage.getItem('emplId'));
+     
+      this.orgId=this.ouId;
+      console.log(this.loginArray);
+      console.log(this.locId);
      
       this.service.statusList()
         .subscribe(
@@ -341,20 +431,23 @@ export class JaiTaxTypeComponent implements OnInit {
             console.log(this.locationCodeList);
           }
         );
-      this.service.DivisionIDList()
-        .subscribe(
-          data => {
-            this.DivisionIDList = data;
-            console.log(this.DivisionIDList);
-          }
-        );
-      this.service.companyCodeList()
-        .subscribe(
-          data => {
-            this.companyCodeList = data;
-            console.log(this.companyCodeList);
-          }
-        );
+
+      // this.service.DivisionIDList()
+      //   .subscribe(
+      //     data => {
+      //       this.DivisionIDList = data;
+      //       console.log(this.DivisionIDList);
+      //     }
+      //   );
+
+      // this.service.companyCodeList()
+      //   .subscribe(
+      //     data => {
+      //       this.companyCodeList = data;
+      //       console.log(this.companyCodeList);
+      //     }
+      //   );
+
       this.service.BranchList()
         .subscribe(
           data => {
@@ -400,6 +493,44 @@ export class JaiTaxTypeComponent implements OnInit {
         );
       ///////////////////////////////////GL Code///////////////////////////////
   
+    }
+
+    LoadValues(i){
+      // alert("load value i ="+i);
+      this.lineIndex=i;
+      var iRecovery;
+
+      var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+      var invLineArr = this.jaiTaxtypeMasterForm.get('actLines').value;
+      // alert(iRecovery);
+      // var xyz =iRecovery;
+        // iRecovery = invLineArr[i].interimRecoveryCcid;
+      // var  temp = iRecovery.split('.');
+      var  temp = invLineArr[i].interimRecoveryCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b1=temp[3];
+      var  temp = invLineArr[i].recoveryCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b2=temp[3];
+      var  temp = invLineArr[i].interimLiablilityCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b3=temp[3];
+      var  temp = invLineArr[i].liablilityCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b4=temp[3];
+      var  temp = invLineArr[i].expenseCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b5=temp[3];
+      var  temp = invLineArr[i].roundingCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b6=temp[3];
+      var  temp = invLineArr[i].suspenseCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b7=temp[3];
+      var  temp = invLineArr[i].advRcptSuspenseCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b8=temp[3];
+      var  temp = invLineArr[i].isoSuspenseCcid.split('.');
+      this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2];this.a4=temp[4];this.b9=temp[3];
+
+      // this.a1=temp[0]; this.a2=temp[1]; this.a3=temp[2]; this.b1=temp[3]; this.a4=temp[4];
+      
+      
+      // alert("temp: "+temp +"  temp[0]="+temp[0]);
+      // alert("a4=" +temp[3]);
+
     }
   
     ///////////////////////Recoverable Tax CheckBox/////////////////////////
@@ -532,30 +663,14 @@ export class JaiTaxTypeComponent implements OnInit {
         }if(select.wthldTrxApplicableFlag === 'N'){
           this.TRUEwth=true;  this.FALSEwth= false;
         }
-          
-      //   if (select.recoverableFlag === 'N'){ this.recFagDiss= true;}
-      //     if (select.recoverableFlag === 'Y'){this.recFagDiss= false}
-      //       if (select.offsetFlag  === 'N'){this.offsetFlagFagDiss = true;}
-      //         if (select.offsetFlag === 'Y'){ this.offsetFlagFagDiss= false}
-      //  if (select.selfAssesedFlag  === 'N'){ this.selfAssesedFagDiss  = true;}
-      //            if (select.selfAssesedFlag === 'Y'){this.selfAssesedFagDiss = false}
-      //               if (select.reportingOnlyFlag === 'N'){ this.reportingOnlyFlagDiss= true;}
-      //                 if (select.reportingOnlyFlag === 'Y'){ this.reportingOnlyFlagDiss= false}
-      //                   if (select.updVendorOnTran === 'N'){ this.updVendorOnTranDiss= true;}
-      //                     if (select.updVendorOnTran === 'Y'){this.updVendorOnTranDiss= false}
-      //                       if (select.allowAbatement === 'N'){ this.allowAbatementDiss= true;}
-      //                         if (select.allowAbatement === 'Y'){this.allowAbatementDiss= false}
-      //                       if (select.wthldTrxApplicableFlag === 'N'){ this.wthldTrxApplicableFlagDiss= true;}
-      //                         if (select.wthldTrxApplicableFlag === 'Y'){this.wthldTrxApplicableFlagDiss= false}
-  
-                      this.regimeId= select.regimeId.regimeId   ;
-                      this.regimeCode= select.regimeId.regimeCode ;
-                      
-                      // alert( this.regimeId);
-                      // alert( this.regimeCode);
                       this.jaiTaxtypeMasterForm.patchValue(select);
                       this.taxTypeId = select.taxTypeId;
-                       this.displayButton = false;
+                      this.regimeId= select.regimeId.regimeId   ;
+                      this.regimeCode= select.regimeId.regimeCode ;
+                      this.regimeName= select.regimeId.regimeName ;
+                      
+                    
+                      this.displayButton = false;
                       this.display = false;
                       // this.regimeId = select[0].regimeId.regimeIdfal
                       // this.regimeId=select.regimeId.regimeCode;
@@ -589,6 +704,16 @@ export class JaiTaxTypeComponent implements OnInit {
     //////////////////////////////////////New Button 
   
   transeData(val) {
+
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.ouName;
+    delete val.locId;
+    delete val.locName;
+    delete val.ouId;
+    delete val.deptId;
+    delete val.orgId;
+
     delete val.a1;
     delete val.a2;
     delete val.a3;
@@ -601,6 +726,27 @@ export class JaiTaxTypeComponent implements OnInit {
     delete val.lookupValueDesc5;
     delete val.regimeCode;
     delete val.regimeName;
+
+    delete val.b1;
+    delete val.b2;
+    delete val.b3;
+    delete val.b4;
+    delete val.b5;
+    delete val.b6;
+    delete val.b7;
+    delete val.b8;
+    delete val.b9;
+    delete val.b1Desc;
+    delete val.b2Desc;
+    delete val.b3Desc;
+    delete val.b4Desc;
+    delete val.b5Desc;
+    delete val.b6Desc;
+    delete val.b7Desc;
+    delete val.b8Desc;
+    delete val.b9Desc;
+    delete val.locationId;
+    delete val.lineIndex;
     return val;
   }
   
@@ -644,7 +790,7 @@ export class JaiTaxTypeComponent implements OnInit {
     
     updateMast() {
       // alert(this.jaiTaxtypeMasterForm.controls['recoverableFlag'].value)
-      alert(this.recoverableFlag)
+      // alert(this.recoverableFlag)
       const formValue: IJaiTaxtype = this.jaiTaxtypeMasterForm.value;
       formValue.recoverableFlag= this.recoverableFlag;
       formValue.offsetFlag = this.offsetFlag;
@@ -793,6 +939,94 @@ export class JaiTaxTypeComponent implements OnInit {
       // alert('in ' +this.jaiTaxtypeMasterForm.get('myModal').reset);
       // this.showModal = false;
     }
+
+    fndinterimRecoveryCcidGlCodeNew1(i) {
+      // var i = this.iValue;
+      // alert("index="+i);
+      var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+      // alert('a1 '+ this.jaiTaxtypeMasterForm.get('a1').value);
+      let c1 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b1').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c2 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c3 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b3').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c4 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b4').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c5 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b5').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c6 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b6').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c7 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b7').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c8 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b8').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+      let c9 = this.jaiTaxtypeMasterForm.get('a1').value + '.' + this.jaiTaxtypeMasterForm.get('a2').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a3').value + '.' + this.jaiTaxtypeMasterForm.get('b9').value + '.' +
+      this.jaiTaxtypeMasterForm.get('a4').value;
+
+
+      (patch.controls[i]).patchValue({ interimRecoveryCcid: c1});
+      (patch.controls[i]).patchValue({ recoveryCcid: c2});
+      (patch.controls[i]).patchValue({ interimLiablilityCcid: c3});
+      (patch.controls[i]).patchValue({ liablilityCcid: c4});
+      (patch.controls[i]).patchValue({ expenseCcid: c5});
+      (patch.controls[i]).patchValue({ roundingCcid: c6});
+      (patch.controls[i]).patchValue({ suspenseCcid: c7});
+      (patch.controls[i]).patchValue({ advRcptSuspenseCcid: c8});
+      (patch.controls[i]).patchValue({ isoSuspenseCcid: c9});
+      
+  
+    }
+
+    resetModalData(){
+
+      this.jaiTaxtypeMasterForm.get('a1').reset(); 
+      this.jaiTaxtypeMasterForm.get('a2').reset();
+      this.jaiTaxtypeMasterForm.get('a3').reset();
+      this.jaiTaxtypeMasterForm.get('a4').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc1').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc2').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc3').reset();
+      this.jaiTaxtypeMasterForm.get('lookupValueDesc4').reset();
+ 
+
+      this.jaiTaxtypeMasterForm.get('b1').reset(); 
+      this.jaiTaxtypeMasterForm.get('b2').reset();
+      this.jaiTaxtypeMasterForm.get('b3').reset();
+      this.jaiTaxtypeMasterForm.get('b4').reset();
+      this.jaiTaxtypeMasterForm.get('b5').reset();
+      this.jaiTaxtypeMasterForm.get('b6').reset(); 
+      this.jaiTaxtypeMasterForm.get('b7').reset();
+      this.jaiTaxtypeMasterForm.get('b8').reset();
+      this.jaiTaxtypeMasterForm.get('b9').reset();
+      this.jaiTaxtypeMasterForm.get('b1Desc').reset(); 
+      this.jaiTaxtypeMasterForm.get('b2Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b3Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b4Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b5Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b6Desc').reset(); 
+      this.jaiTaxtypeMasterForm.get('b7Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b8Desc').reset();
+      this.jaiTaxtypeMasterForm.get('b9Desc').reset();
+    }
+
   
     onOptionsSelectedStatus(event: any) {
       this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
@@ -836,9 +1070,11 @@ export class JaiTaxTypeComponent implements OnInit {
         // alert('ledger id =' +ledgerId);
           if (ledgerId > 0) {
             this.showOu=true;
+            this.showCodeButton=true;
           }
           else {
             this.showOu=false;
+            this.showCodeButton=false;
             
           }
     
@@ -846,6 +1082,7 @@ export class JaiTaxTypeComponent implements OnInit {
             // alert('testing...')
             this.lineDetailsArray.controls[index].get('ouId').reset();
             this.lineDetailsArray.controls[index].get('locId').reset();
+            this.showCodeButton=false;
             // this.lineDetailsArray.controls[index].get('locName').reset();
           }
     
@@ -878,30 +1115,40 @@ export class JaiTaxTypeComponent implements OnInit {
   
   
         loadActDetails(){
-          var taxTypeCode = this.jaiTaxtypeMasterForm.get('taxTypeCode').value;
-          alert('taxtypecode='+taxTypeCode);
+          this.lineDetailsArray.clear();
+          // var taxTypeCode = this.jaiTaxtypeMasterForm.get('taxTypeCode').value;
+          var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
+          alert('taxTypeId='+taxTypeId);
           
-          this.service.actDetails(taxTypeCode)
+          this.service.geActDetails(taxTypeId)
           .subscribe(
             data => {
               this.actDetails = data;
               console.log(this.actDetails);
               let cont=this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+            
               var actLines:FormGroup=this.lineDetailsGroup();
+
               var length1=this.actDetails.accountList.length-1;
-  
+        
               alert(length1);
+
               this.lineDetailsArray.removeAt(length1);
-              cont.push(actLines);
-              this.jaiTaxtypeMasterForm.get('actLines').patchValue(this.actDetails.accountList);
-              
+              for (let i=0; i<length1;i++) {
+              cont.push(actLines);}
+
+              // this.jaiTaxtypeMasterForm.get('actLines').patchValue(this.actDetails.accountList);
+              this.jaiTaxtypeMasterForm.get('actLines').patchValue({ledgerId:this.actDetails.accountList[0].ledgerId,
+                ledgerName:this.actDetails.accountList[0].ledgerName});
             }
           );
   
           }
+
+          
           ontaxTypeCodeSelected(event: any) {
           var  regimeCode = this.jaiTaxtypeMasterForm.get('regimeCode').value;
-          alert(regimeCode)
+          // alert(regimeCode)
             if(event === 'Discount' && regimeCode==3){this.locationDissplay= true;}
             if(event === 'Select'  && regimeCode==3){this.locationDissplay= false;}
           }
@@ -951,7 +1198,7 @@ export class JaiTaxTypeComponent implements OnInit {
             var patch = this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
             // this.locDescreption = this.locationNameList.locName;
             // var arrayControl = this.jaiTaxtypeMasterForm.get('actLines').value
-            alert(this.locationNameList.locName);
+            // alert(this.locationNameList.locName);
             (patch.controls[i]).patchValue({ locName: this.locationNameList.locName })
           }
         );
@@ -973,11 +1220,9 @@ export class JaiTaxTypeComponent implements OnInit {
       // alert ('Location id/Code/Name='+locId+'/'+this.locCode+'/'+this.locName);
     }
   
-    onLookupSelected1(mlookupValue: any, mlookupType: string) {
-  
-      // alert('LookupValue: '+mlookupValue+ ' Type : '+mlookupType);
-  
-      this.service.lookupNameList(mlookupValue, mlookupType)
+    onLookupSelected1(mlookupValue: any, mlookupType: string,mAccountType :string) {
+      // alert('LookupValue: '+mlookupValue+ ' Type : '+mlookupType +" Account Type: "+mAccountType);
+        this.service.lookupNameList(mlookupValue, mlookupType)
         .subscribe(
           data => {
             this.lookupNameList = data;
@@ -990,10 +1235,28 @@ export class JaiTaxTypeComponent implements OnInit {
               this.lookupValueDesc2 = this.lookupNameList.lookupValueDesc;
             if (this.lookupNameList.lookupType === "CostCentre")
               this.lookupValueDesc3 = this.lookupNameList.lookupValueDesc;
-            if (this.lookupNameList.lookupType === "NaturalAccount")
-              this.lookupValueDesc4 = this.lookupNameList.lookupValueDesc;
             if (this.lookupNameList.lookupType === "SS_Interbranch")
-              this.lookupValueDesc5 = this.lookupNameList.lookupValueDesc;
+              this.lookupValueDesc4 = this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="INTERIM RECOVERY")
+                this.b1Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="RECOVERY")
+                this.b2Desc= this.lookupNameList.lookupValueDesc;
+		        if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="INTERIM LIABILITY")
+                // alert("in INTERIM LIABILITY");
+                this.b3Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="LIABILITY")
+                this.b4Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="EXPENSE")
+                this.b5Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="ROUNDING")
+                this.b6Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="SUSPENSE")
+                this.b7Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="ADVANCE")
+                this.b8Desc= this.lookupNameList.lookupValueDesc;
+            if (this.lookupNameList.lookupType === "NaturalAccount" && mAccountType==="ISO SUSPENSE")
+                this.b9Desc= this.lookupNameList.lookupValueDesc;
+
           }
         }
         );
@@ -1005,28 +1268,6 @@ export class JaiTaxTypeComponent implements OnInit {
     openCodeComb(i,j ) 
     {
       
-      if(j.target.value != ''){
-        alert('i= '+i + '  j= '+j.target.value);
-      var segment =j.target.value
-      var  temp = segment.split('.');
-      this.a1=temp[0];
-      this.a2=temp[1];
-      this.a3=temp[2];
-      this.a4=temp[3];
-      this.a5=temp[4];
-      }
-    
-      this.showModal = true; // Show-Hide Modal Check
-      this.content = i; // Dynamic Data
-      this.title = i    // Dynamic Data
-  
-    }
-  
-  
-     openCodeComb11(i,j,index) 
-    {
-      // alert(index)
-      this.iValue = index;
       if(j.target.value != ''){
         // alert('i= '+i + '  j= '+j.target.value);
       var segment =j.target.value
@@ -1045,8 +1286,31 @@ export class JaiTaxTypeComponent implements OnInit {
     }
   
   
+     openCodeComb11(i,j,index) 
+    {
+      alert('i= '+i + '  j= '+j.target.value +" INDEX =" +index);
+      this.iValue = index;
+      if(j.target.value != ''){
+        // alert('i= '+i + '  j= '+j.target.value +" INDEX =" +index);
+      var segment =j.target.value
+      var  temp = segment.split('.');
+      
+      this.a1=temp[0];
+      this.a2=temp[1];
+      this.a3=temp[2];
+      this.a4=temp[3];
+      this.a5=temp[4];
+      }
+    
+      this.showModal = true; // Show-Hide Modal Check
+      this.content = i; // Dynamic Data
+      this.title = i    // Dynamic Data
+  
+    }
+  
+  
     openCodeComb1(i, interimRecoveryCcid) {
-      alert('in openCodeComb1 ' + i + 'interimRecoveryCcid ' + interimRecoveryCcid);
+      // alert('in openCodeComb1 ' + i + 'interimRecoveryCcid ' + interimRecoveryCcid);
       // alert(interimRecoveryCcid.length);
       // if(interimRecoveryCcid != 'undefined'){
       //   alert('hi ' + interimRecoveryCcid);

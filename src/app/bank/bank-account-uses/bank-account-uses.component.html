@@ -22,6 +22,8 @@
                                             {{sc.custName}}
                                         </option>
                                     </select>
+
+                                   
                                     <!-- <input formControlName="bkName" class="form-control" placeholder="Search by bank name"
                                         (keydown.tab)="serchByBanhName(bkName)"> -->
                                 </td>
@@ -65,6 +67,7 @@
                                                         {{sc.custName}}
                                                     </option>
                                                 </select>
+                                                <input formControlName="customerId" class="form-control" placeholder="Search by bank name" >
                                                 <!-- <input formControlName="bkName" class="form-control" placeholder="Search by bank name"
                                                     (keydown.tab)="serchByBanhName(bkName)"> -->
                                             </td>
@@ -83,10 +86,16 @@
                                                         </option>
                                                     </select>
                                             </td>
-                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Account&nbsp;:&nbsp; </td>
+                                            
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Accounts&nbsp;Name&nbsp;:&nbsp; </td>
                                             <td>
-                                                <input formControlName="bankAccountNo" [(ngModel)]="bankAccountNo" class="form-control" placeholder="Search by branch number"
-                                                    >
+                                                 <select formControlName="bankAccountId" id="bankAccountId" [(ngModel)]="bankAccountId" class="form-control" style="width: 250px;">
+                                              <option>--Select--</option>
+                                                        <option *ngFor="let sc of BankAcDtlsList" [ngValue]="sc.id">
+                                                            {{sc.name}}-{{sc.name1}}
+                                                        </option>
+                                                    </select>
+                                                    <!-- <input type="number"  formControlName="bankAccountId" id="bankAccountId" [(ngModel)]="bankAccountId" > -->
                                             </td> 
                                         
                                     </tr>

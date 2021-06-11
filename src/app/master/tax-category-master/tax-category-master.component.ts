@@ -6,7 +6,7 @@ import { MasterService } from '../master.service';
 
 interface IpostPO {
   ouId: number;
-  taxCategoryId: string;
+  taxCategoryId: number;
   taxCategoryName: string;
   taxCategoryDesc: string;
   itemClassCode: string;
@@ -14,6 +14,7 @@ interface IpostPO {
   startDate: Date;
   status: string;
   endDate: Date;
+
 }
 
 @Component({
@@ -24,14 +25,15 @@ interface IpostPO {
 export class TaxCategoryMasterComponent implements OnInit {
   taxCategoryMasterForm: FormGroup;
   ouId: number;
-  taxCategoryId: string;
+  taxCategoryId: number;
+  cateType:string;
   taxCategoryName: string;
   taxCategoryDesc: string;
   itemClassCode: string;
   recordTypeCode: string;
-  startDate: Date;
+  // startDate: Date;
   endDate: Date;
-
+  startDate = new Date();
   public status = "Active";
   public minDate = new Date();
   displayButton = true;
@@ -40,9 +42,11 @@ export class TaxCategoryMasterComponent implements OnInit {
   display = true;
   submitted = false;
   lstcomments: any[];
+ public getsearchCategoryData:any[];
 
   public OUIdList: Array<string> = [];
   public statusList: Array<string> = [];
+ public taxCategoryNameList:any[];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.taxCategoryMasterForm = fb.group({
@@ -55,6 +59,40 @@ export class TaxCategoryMasterComponent implements OnInit {
       startDate: [],
       status: ['', [Validators.required]],
       endDate: ['', [Validators.nullValidator]],
+      cateType:[],
+      // taxCategoryName:[],
+      taxLines: this.fb.array([this.TaxDetailsGroup()])
+    });
+  }
+
+  TaxDetailsArray(): FormArray {
+    return <FormArray>this.taxCategoryMasterForm.get('taxLines')
+  }
+
+  TaxDetailsGroup() {
+    return this.fb.group({
+      totTaxAmt: [],
+      lineNumber: [],
+      taxRateName: [],
+      taxTypeName: [],
+      taxPointBasis: [],
+      precedence1: [],
+      precedence2: [],
+      precedence3: [],
+      precedence4: [],
+      precedence5: [],
+      precedence6: [],
+      precedence7: [],
+      precedence8: [],
+      precedence9: [],
+      precedence10: [],
+      currencyCode: [],
+      totTaxPer: [],
+      recoverableFlag: [],
+      selfAssesedFlag: [],
+      inclusiveFlag: [],
+      invLineItemId: [],
+      invLineNo: [],
     });
   }
 
@@ -151,4 +189,36 @@ export class TaxCategoryMasterComponent implements OnInit {
       this.display = false;
     }
   }
+
+
+  onOptionsSelectedTaxCategory(cateType: any) {
+    this.service.selectTypewiseCategory(cateType)
+    .subscribe(
+      data => {
+        this.taxCategoryNameList = data;
+        console.log(this.taxCategoryNameList);
+        console.log(data.taxCategoryId);
+       
+      }
+    );
+    
+  }
+
+  searchCategoryDataMast1(taxCategoryName) {
+     let select = this.taxCategoryNameList.find(d => d.taxCategoryName === taxCategoryName);
+    // alert(select.taxCategoryId);
+    this.taxCategoryId=select.taxCategoryId;
+    alert(this.taxCategoryId);
+    this.service.getsearchCategoryData(this.taxCategoryId)
+    .subscribe(
+      data => {
+        this.getsearchCategoryData= data;
+        console.log(this.getsearchCategoryData);
+        // console.log(data.taxCategoryId);
+      }
+    );
+  };
+
+ 
+  
 }

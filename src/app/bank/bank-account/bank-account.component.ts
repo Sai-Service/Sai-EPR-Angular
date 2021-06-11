@@ -6,7 +6,8 @@ import{ BankService} from '../bank.service';
 
 interface IbankDetails{
   custName:string;
-branchId:string;  
+  branchNumber:string;  
+branchId:number;
 branchName:string;
   customerId:number;
   bankAccountName:string;
@@ -35,7 +36,8 @@ receiptMultiCurrFlag:string;
 export class BankAccountComponent implements OnInit {
   bankCreationForm: FormGroup;
   custName:string;
-branchId:string;  
+  branchNumber:string;  
+branchId:number;
 branchName:string;
   bankAccountName:string;
   status :string = 'Active';
@@ -67,7 +69,8 @@ receiptMultiCurrFlag:string;
   constructor(private fb: FormBuilder, private router: Router, private bankService: BankService) { 
      this.bankCreationForm = fb.group({
       custName:['',[Validators.required] ],
-      branchId:['',[Validators.required] ], 
+      branchNumber:['',[Validators.required] ],
+      branchId:[],
       branchName:['',[Validators.required] ],
       customerId:[''],
       bkName:[''],
@@ -178,7 +181,8 @@ receiptMultiCurrFlag:string;
     let select = this.BankBranchList.find(d => d.name=== branchName);
     console.log(select);
     console.log(select.name2);
-    this.branchId = select.name2;
+    this.branchNumber = select.name2;
+    this.branchId = select.id;
   }
   SelectbranchId(branchId){}
   bankCreation(bankCreationForm){}
@@ -191,15 +195,16 @@ receiptMultiCurrFlag:string;
     const formValue: IbankDetails = this.tranceFun(this.bankCreationForm.value);
     this.bankService.bankCreationFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('BANK DETAILS INSERTED SUCCESSFULLY');
-        window.location.reload();
+        alert('BANK DETAILS INSERTED SUCCESSFUILY');
+        this.bankCreationForm.disabled;
+        // window.location.reload();
         // this.divisionMasterForm.reset();
         // this.divisionMasterForm.get('status').reset();
       } else {
         if (res.code === 400) {
           alert('Error occurred during data inserting');
           // this.divisionMasterForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });
