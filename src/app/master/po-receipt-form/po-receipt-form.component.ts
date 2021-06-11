@@ -46,7 +46,7 @@ interface IpoReceipt{
   poStatus:string;
   // locatorDesc:any[];
   locatorDesc:string;
-  
+  shipmentNumber:string;
 }
 
 interface Ilocator {

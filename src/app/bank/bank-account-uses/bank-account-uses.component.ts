@@ -167,9 +167,9 @@ Orgmaster(bankAccUsesForm: any) {
     this.bankService.BankNameListFn()
     .subscribe(
       data => {
-        this.BankNameList = data.obj;
+        this.BankNameList = data;
         console.log(this.BankNameList);
-        this.customerId= data.obj.customerId;
+        this.customerId= data.customerId;
      //   alert(this.BankNameList.customerId);
       }
     );

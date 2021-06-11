@@ -39,10 +39,10 @@ getSubSrTypeIdList(srTypeId): Observable<any> {
 matStatusListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/matStatus`);
 } 
-matDisPerListFN(): Observable<any> {
+matDiscPerListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/matDisPercentage`);
 } 
-labDisPerListFN(): Observable<any> {
+labDiscPerListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/labDisPercentage`);
 } 
 srvAdvisorListtFN(locId,deptId) : Observable<any> {
