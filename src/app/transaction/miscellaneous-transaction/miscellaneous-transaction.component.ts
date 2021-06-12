@@ -2,10 +2,11 @@
 import { PathLocationStrategy } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { controllers } from 'chart.js';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+import {} from 'rxjs';
 
 interface Imiscellaneous
 {
@@ -165,12 +166,17 @@ export class MiscellaneousTransactionComponent implements OnInit {
   View1:string;
   content: number;
   title: string;
+  sub:string;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService)
+  type1:string;
+  dispheader:boolean=false;
+  displable: boolean=false;
+
+  constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
   {
     this.miscellaneousForm=fb.group({
       compNo:[''],
-      compileName:[''],
+             compileName:[''],
       compileId:[''],
       locId:[''],
       subInventory:['',Validators.required],
@@ -266,6 +272,19 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    alert(this.route1.queryParams+'hell')
+console.log(this.route1.queryParams+'hell');
+    this.route1.queryParams.subscribe(params => {
+      console.log(params.type1)
+      let id=params.type1;
+      alert(id+'ID');
+      if(id != undefined )
+      {
+      this.dispheader=true;
+      this.displable=true;
+      }
+      }); 
+
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -348,7 +367,20 @@ export class MiscellaneousTransactionComponent implements OnInit {
          lineNumber: 1,
        }
      );
+    //  this.route1.queryParams
+    //   .filter(params => params.type1)
+    //   .subscribe(params => {
+    //     console.log(params); // { order: "popular" }
 
+    //     this.type1 = params.type1;
+    //     alert('sub'+this.sub)
+    //     console.log(this.type1); // popular
+    //   }
+    // );
+
+    //  alert('sub'+this.sub);
+     
+  
   }
   miscellaneous(miscellaneousForm:any){}
 

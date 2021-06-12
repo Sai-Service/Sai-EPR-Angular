@@ -10,6 +10,7 @@ interface IStockaking
 {
   compileName:String;
   compileDate:Date;
+  compNo:string;
   compileId:number;
   compileType:number;
   subInventory:string;
@@ -44,6 +45,7 @@ interface IStockaking
 export class StockTakingComponent implements OnInit {
   StockTakingForm:FormGroup;
   compileName:String;
+  compNo:string;
   compileDate:Date;
   segmentName:string;
   public minDate = new Date();
@@ -110,6 +112,7 @@ export class StockTakingComponent implements OnInit {
       compileName:[''],
       compileDate:[''],
       compileId:[''],
+      compNo:[''], 
       compileType:['',Validators.required],
       subInventory:['',Validators.required],
       reason:['',Validators.required],
@@ -605,5 +608,32 @@ okLocator(i)
          }
    }
  })
+   }
+   search(compNo)
+   {
+
+     var compno=this.StockTakingForm.get('compNo').value;
+     var appflag=this.StockTakingForm.get('trans').value;
+     this.service.getSearchViewBycompNo(compno).subscribe
+         (data=>{
+           if(data.code===400)
+           {
+              alert("Can not View data");
+           }
+           if(data.code===200)
+           {
+     //       // this.lstcomment=data.obj;
+               let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
+               var len = this.cycleLinesList().length;
+               for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
+                 var trxlist:FormGroup=this.newcycleLinesList();
+                 this.cycleLinesList().push(trxlist);
+
+             }
+                   this.StockTakingForm.patchValue(data.obj);
+                   this.StockTakingForm.disable();
+                 }
+         })
+       
    }
 }
