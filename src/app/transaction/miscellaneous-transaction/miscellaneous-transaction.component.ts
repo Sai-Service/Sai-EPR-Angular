@@ -272,12 +272,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    alert(this.route1.queryParams+'hell')
+    // alert(this.route1.queryParams+'hell')
 console.log(this.route1.queryParams+'hell');
     this.route1.queryParams.subscribe(params => {
       console.log(params.type1)
       let id=params.type1;
-      alert(id+'ID');
+      // alert(id+'ID');
       if(id != undefined )
       {
       this.dispheader=true;
