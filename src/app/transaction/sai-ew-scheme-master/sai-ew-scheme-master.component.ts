@@ -277,6 +277,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
 
 
         onOptionsSelectedModel(mainModel){
+          if(mainModel !=null) {
           this.orderManagementService.VariantSearchFn(mainModel)
           .subscribe(
             data => {
@@ -284,6 +285,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
               console.log(this.VariantSearch);
             }
           );
+          } else {}
         }
 
         onOptionsSelectedVariant(modelVariant){

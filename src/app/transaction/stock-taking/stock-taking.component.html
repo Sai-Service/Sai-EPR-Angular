@@ -42,13 +42,16 @@
                   <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
                   <!-- </select> -->
               </td>
+              <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
+                      
+                      
               <td style="width: 15%" class="LabelFontStyle">
                 Reason:
               </td>
               <td>
-                <select class="form-control" formControlName="reason" [(ngModel)]="reason">
+                <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
                   <option>--Select--</option>
-                  <option *ngFor="let reason of reasonlist">{{reason.reasonName}}</option>
+                  <option *ngFor="let reason of reasonlist">{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
                   </select>
               </td>
               <input hidden type="number" formControlName="codeCombinationId">
@@ -231,7 +234,7 @@
                <td>
                  <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
                   <option>--Select--</option>
-                  <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                  <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
                   </select>
                </td>
                <td style="width: 15%" class="LabelFontStyle">

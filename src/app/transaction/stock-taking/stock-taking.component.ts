@@ -104,6 +104,7 @@ export class StockTakingComponent implements OnInit {
   RowNo:number;
   content: number;
   title: string;
+  acccodedesc: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm=fb.group({
@@ -112,6 +113,7 @@ export class StockTakingComponent implements OnInit {
       compileId:[''],
       compileType:['',Validators.required],
       subInventory:['',Validators.required],
+      locId:['',Validators.required],
       reason:['',Validators.required],
       segmentName:[''],
       description:[''],
@@ -606,4 +608,20 @@ okLocator(i)
    }
  })
    }
+   onSelectReason(event){
+    alert(event);
+    // var reasname=this.miscellaneousForm.get('reason').value;
+    // this.service.reasonaccCode(this.locId,reasname).subscribe(
+      var reasonArr  = event.split('-');
+      alert(reasonArr.length);
+      this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
+      
+      data => {
+        this.acccodedesc = data;
+        // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
+        this.segmentName=this.acccodedesc.segmentName;
+  
+      }
+    );
+  }  
 }
