@@ -4,6 +4,18 @@
         <td class="PageHeader">
           &nbsp;&nbsp;Stock&nbsp;Taking &nbsp;
         </td>
+        <table style="width: 100%; background-color: #a4d3e9;">
+          <tr>
+              <td style="width: 15%" class="LabelFontStyle">Compile&nbsp;&nbsp;Number&nbsp;:</td>
+              <td>
+                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+              </td>
+              <td colspan="8" style="text-align: left; width: 100%;">
+                  <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
+                  <!-- Modal -->
+              </td>
+          </tr>
+      </table>
        </tr>
     </table>
     <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)">

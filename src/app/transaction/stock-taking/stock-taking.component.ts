@@ -10,6 +10,7 @@ interface IStockaking
 {
   compileName:String;
   compileDate:Date;
+  compNo:string;
   compileId:number;
   compileType:number;
   subInventory:string;
@@ -44,6 +45,7 @@ interface IStockaking
 export class StockTakingComponent implements OnInit {
   StockTakingForm:FormGroup;
   compileName:String;
+  compNo:string;
   compileDate:Date;
   segmentName:string;
   public minDate = new Date();
@@ -111,6 +113,7 @@ export class StockTakingComponent implements OnInit {
       compileName:[''],
       compileDate:[''],
       compileId:[''],
+      compNo:[''], 
       compileType:['',Validators.required],
       subInventory:['',Validators.required],
       locId:['',Validators.required],

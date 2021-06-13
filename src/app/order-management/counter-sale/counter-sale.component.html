@@ -104,13 +104,15 @@
                     Customer&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="text" class="form-control" formControlName="accountNo" [(ngModel)]='accountNo'
-                        value={{accountNo}} (keydown.tab)="accountNoSearch(accountNo)" style="width: 160px;" ModFocus>
+                    <input type="text" class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
+                        value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)" style="width: 160px;" ModFocus>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Customer&nbsp;:&nbsp;
                 </td>
                 <td>
+                    <!-- <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
+                    value={{custName}} style="width: 100%;"> -->
                     <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
                         value={{custName}} style="width: 100%;">
                 </td>
@@ -147,14 +149,14 @@
                     Reference&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="text" class="form-control" style="width: 160px;">
+                    <input type="text" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}}  class="form-control" style="width: 160px;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle1">
                     Order&nbsp;Type&nbsp;:&nbsp;
                 </td>
                 <!-- (ngModelChange)='onOptionsSelectedCategoryType($event)' -->
                 <td>
-                    <select formControlName="orderType" id="orderType" class="form-control" style="width: 160px;"
+                    <select formControlName="transactionTypeName" id="transactionTypeName" class="form-control" style="width: 160px;"
                     (ngModelChange)='onOptionsSelectedlncategoryType($event)' >
                     <option>--Select--</option>
                     <option *ngFor="let orderType of orderTypeList">
@@ -166,11 +168,11 @@
                     Create&nbsp;Order&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <select class="form-control" formControlName="createOrder" [(ngModel)]='createOrder'
-                        value={{createOrder}} style="width: 160px;">
+                    <select class="form-control" formControlName="createOrderType" [(ngModel)]='createOrderType'
+                        value={{createOrderType}} style="width: 160px;">
                         <option>--Select--</option>
                         <option value="Pick Ticket">Pick Ticket</option>
-                        <option value="Direct invoice">Direct invoice</option>
+                        <option value="Direct Invoice">Direct Invoice</option>
                         <option value="Pick Ticket Invoice">Pick Ticket Invoice</option>
                     </select>
                 </td>
@@ -181,25 +183,31 @@
                     Payment&nbsp;Term&nbsp;:&nbsp;
                 </td>
                 <td>
+                    <!-- (change)="onKeyPaymentTerm($event)" -->
                     <select formControlName="payTermDesc" id="payTermDesc" class="form-control" style="width: 160px;"
-                        (ngModelChange)='onOptionsSelectedpaymentOption($event)'>
+                        (ngModelChange)='onOptionsSelectedpaymentOption($event)' >
                         <option>--Select--</option>
                         <option *ngFor="let pt of payTermDescList">
                             {{pt.codeDesc}}
                         </option>
                     </select>
+                    <input hidden  disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId' value={{paymentTermId}}
+                    class="form-control" style="width: 160px;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle1">
                     Price&nbsp;List&nbsp;:&nbsp;
                 </td>
                 <td>
                     <select formControlName="priceListName" id="priceListName" class="form-control"
-                        style="width: 160px;">
+                        style="width: 160px;"   (ngModelChange)="onOptionsSelectedPriceListID($event)">
                         <option>--Select--</option>
                         <option *ngFor="let pl of priceListNameList">
                             {{pl.priceListName}}
                         </option>
                     </select>
+
+                    <input hidden disabled type="text" formControlName="priceListId" [(ngModel)]='priceListId' value={{priceListId}}
+                        class="form-control" style="width: 160px;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle1">
                     Sales&nbsp;Person&nbsp;:&nbsp;
@@ -227,7 +235,7 @@
                     Order&nbsp;Status&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="text" class="form-control" style="width: 160px;font-weight: bold;">
+                    <input disabled  type="text" class="form-control" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode' value={{flowStatusCode}} style="width: 160px;font-weight: bold;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Remark&nbsp;:&nbsp;
@@ -239,7 +247,13 @@
               
             </tr>
             <tr>
-               
+                <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                    Order&nbsp;Date&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input  type="date" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}}
+                        class="form-control" style="width: 160px;text-align: right;font-weight: bold;">
+                </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Subtotal&nbsp;Amount&nbsp;:&nbsp;
                 </td>
@@ -368,11 +382,11 @@
                                                 style="height: 20px;width: 40px;">
                                         </td>
                                         <td>
-                                            <input disabled type="text" formControlName="itemType" value="itemType"
-                                            [(ngModel)]='itemType'    class="form-control" style="height: 20px;width: 160px;">
+                                            <input disabled type="text" formControlName="invType" value="invType"
+                                            [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;">
                                         </td>
                                         <td>
-                                            <select formControlName="segment" id="segment"  [(ngModel)]='segment'  
+                                            <select formControlName="segment" id="segment"  
                                                     (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                     class="form-control"
                                                     style="width: 100px;height: 25px;font-size: 10px;">
@@ -443,7 +457,7 @@
                                                 style="width: min-content;"><i class="fa fa-plus"></i></button>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-primary" (click)="RemoveRow(i)"
+                                            <button type="submit" class="btn btn-primary" (click)="RemoveRow(OrderLineIndex)"
                                                 style="width: min-content;"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </tr>
