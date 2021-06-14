@@ -1,4 +1,5 @@
 <div class="center">
+  <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
@@ -8,7 +9,7 @@
           <tr>
               <td style="width: 15%" class="LabelFontStyle">Compile&nbsp;&nbsp;Number&nbsp;:</td>
               <td>
-                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo">
               </td>
               <td colspan="8" style="text-align: left; width: 100%;">
                   <button type="submit" class="btn btn-primary" (click)="search(compNo)"><i class="fa fa-search"></i></button>
@@ -18,7 +19,7 @@
       </table>
        </tr>
     </table>
-    <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)">
+    <!-- <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)"> -->
         <table class="center">
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
