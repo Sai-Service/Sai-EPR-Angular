@@ -385,6 +385,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         GetSchemeDetails(mSchemeId){
           // alert("mscheme id :" + mSchemeId);
+          if(mSchemeId !=null) {
           this.service.getEWSchemeDetails(mSchemeId)
           .subscribe(
             data => {
@@ -401,6 +402,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
            
          }
           );
+        } else{}
         }
 
         GetEWitemList(e,v,p) {
