@@ -611,6 +611,70 @@ okLocator(i)
    }
  })
    }
+   search(compNo)
+   {
+
+     var compno=this.StockTakingForm.get('compNo').value;
+     var appflag=this.StockTakingForm.get('trans').value;
+     // var adjFlag=this.miscellaneousForm.get('Adjustment').value;
+     alert(appflag+'flag');
+     // alert(adjFlag+'flag');
+      if('Adjustment'===appflag)
+      {
+         this.service.getSearchByNo(compno)
+         .subscribe( data =>
+          {
+             if(data.code===400)
+             {
+                 window.location.reload();
+              }
+              if(data.code===200)
+              {
+     //       this.lstcomment=data.obj;
+                 this.StockTakingForm.patchValue(data.obj);
+              }
+           })
+       }
+       else if('Approve'===appflag)
+       {
+         this.service.getSearchBycompNo(compno)
+         .subscribe( data =>
+         {
+           if(data.code===400)
+           {
+             // window.location.reload();
+             alert("Hello");
+           }
+           if(data.code===200)
+           {
+     //       // this.lstcomment=data.obj;
+     let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
+     var len = this.cycleLinesList().length;
+     for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
+       var trxlist:FormGroup=this.newcycleLinesList();
+       this.cycleLinesList().push(trxlist);
+
+     }
+
+
+     this.StockTakingForm.patchValue(data.obj);
+     for(let i=0; i<this.cycleLinesList().length; i++){
+       alert(data.obj.cycleLinesList[i].segment+'segment');
+     this.StockTakingForm.patchValue({'srlNo':i+1})
+     control.controls[i].patchValue({srlNo:i+1  })
+     this.StockTakingForm.patchValue({'segment':data.obj.cycleLinesList[i].segment});
+     this.StockTakingForm.patchValue({'subInventory':data.obj.cycleLinesList[i].subInventory});
+     }
+     // this.miscellaneousForm.disable();
+       }
+        })
+       }
+
+
+
+
+   }
+
    onSelectReason(event){
     alert(event);
     // var reasname=this.miscellaneousForm.get('reason').value;
