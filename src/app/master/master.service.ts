@@ -1180,6 +1180,10 @@ actDetails(taxTypeCode): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
 
  }
+ geActDetails(taxTypeId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/taxType/acInfoByTaxtype/${taxTypeId}`);
+
+ }
 getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
  }
