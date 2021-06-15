@@ -409,15 +409,15 @@
                                        <table>
                                            <tr>
                                                <td>
-                                                <input type="text" formControlName="shipmentNo"  [(ngModel)]='shipmentNo' value={{shipmentNo}} class="form-control" style="width: 130px;"  >
+                                                <input type="text" formControlName="shipmentNumber"  [(ngModel)]='shipmentNumber' value={{shipmentNumber}} class="form-control" style="width: 130px;"  >
                                                </td>
                                                <td>
                                                 <table>
                                                     <tr>  
                                                         <td>
                                                             <button type="button" class="btn btn-primary" 
-                                                            [disabled]="!shipmentNo"
-                                                             (click)="shipmentNoFind(shipmentNo)" style="width: 2rem;">
+                                                            [disabled]="!shipmentNumber"
+                                                             (click)="shipmentNoFind(shipmentNumber)" style="width: 2rem;">
                                                                 <i class="fa fa-search"></i>
                                                               </button>
                                                             
@@ -601,6 +601,11 @@
                                                 value={{Comments}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input hidden type="text" formControlName="shipmentNumber"  [(ngModel)]='shipmentNumber' value={{shipmentNumber}} class="form-control" style="width: 130px;"  >
+                                           </td>
                                     </tr>
                                     </ng-template>
                                     <ng-template #elseBlock1>

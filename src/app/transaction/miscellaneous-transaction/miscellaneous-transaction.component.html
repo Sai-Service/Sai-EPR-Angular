@@ -2,12 +2,14 @@
     <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
+        <div  *ngIf="dispheader; then thenIC; else elsestock"></div>
+        <ng-template #thenIC>
         <td class="PageHeader">
-          &nbsp;&nbsp;Stock&nbsp;&nbsp; Adjustment &nbsp;
+          &nbsp;&nbsp;Internal&nbsp;&nbsp; Consumption &nbsp;
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
-              <td style="width: 15%" class="LabelFontStyle">Compile&nbsp;&nbsp;Number&nbsp;:</td>
+              <td style="width: 15%" class="LabelFontStyle">IC&nbsp;&nbsp;Number&nbsp;:</td>
               <td>
                   <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
               </td>
@@ -15,20 +17,40 @@
                   <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
                   <!-- Modal -->
               </td>
-          </tr>
+            </tr>
       </table>
+      </ng-template>
+      <ng-template #elsestock>
+          <td class="PageHeader">
+            &nbsp;&nbsp;Stock&nbsp;&nbsp; Adjustment &nbsp;
+          </td>
+          <table style="width: 100%; background-color: #a4d3e9;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Stock Adjustment&nbsp;&nbsp;Number&nbsp;:</td>
+                <td>
+                    <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+                </td>
+                <td colspan="8" style="text-align: left; width: 100%;">
+                    <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
+                    <!-- Modal -->
+                </td>
+              </tr>
+        </table>
+        </ng-template>
       </tr>
     </table>
     <table class="center">
       <tr>
-          <td style="width: 15%" class="LabelFontStyle">
-             Stock Adjustment No:
+          <div  *ngIf="displable; then thenIC1; else elsestock1"></div>
+          <ng-template #thenIC1>
+            <td style="width: 15%" class="LabelFontStyle">
+             IC No:
             </td>
             <td>
               <input disabled type="text" class="form-control" formControlName="compileName" [(ngModel)]="compileName">
             </td>
             <td style="width: 15%" class="LabelFontStyle">
-                Stock Adjustment Date:
+                IC Date:
               </td>
               <td>
                 <input type="date" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
@@ -43,8 +65,31 @@
             <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
           </select>
         </td>
-       
-       
+       </ng-template>
+       <ng-template #elsestock1>
+          <td style="width: 15%" class="LabelFontStyle">
+           Stock Adjustment No:
+          </td>
+          <td>
+            <input disabled type="text" class="form-control" formControlName="compileName" [(ngModel)]="compileName">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+              Stock Adjustment Date:
+            </td>
+            <td>
+              <input type="date" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
+            </td>
+      <td style="width: 15%" class="LabelFontStyle">
+        Transaction Type:
+      </td>
+      <input hidden formControlName="compileId" [(ngModel)]="compileId">
+      <td>
+        <select class="form-control" formControlName="compileType">
+          <option>--Select--</option>
+          <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
+        </select>
+      </td>
+     </ng-template>
       </tr>
       <tr>
         <td style="width: 15%" class="LabelFontStyle">
@@ -62,7 +107,7 @@
           <td>
             <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
               <option>--Select--</option>
-              <option *ngFor="let reason of reasonlist">{{reason.reasonName}}</option>
+              <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
               </select>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
@@ -113,10 +158,11 @@
           Made By:
          </td>
          <td>
-           <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+           <input type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+           <!-- <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
             <option>--Select--</option>
             <option *ngFor="let ib of issueByList">{{ib.name}}</option>
-            </select>
+            </select> -->
          </td>
          <!-- (click)="process()" -->
           <td>
@@ -245,7 +291,7 @@
     <table class="center">
       <tr>
          <td>
-          <button type="submit" class="btn btn-primary" >Close</button>
+          <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
         </td>
         <td>
           <button type="submit" class="btn btn-primary" (click)="resetMiscTrans()">Reset</button>

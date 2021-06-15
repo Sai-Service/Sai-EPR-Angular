@@ -48,6 +48,35 @@ export class OrderManagementService {
   }
 
 
+  orderTypeList(deptId,locId,ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/OrderTrnType/otAccSpList?deptId=${deptId}&locId=${locId}&ouId=${ouId}`);
+  }
+
+
+  counterSaleOrderSearch(orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl +`/orderHeader/ACSP/${orderNumber}`);
+  }
+  
+  public  countersaleReadyForInvFn(orderNumber){
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/orderHeader/AccSp/InvoiceStatus?orderNumber=${orderNumber}`;
+    return this.http.put(url, options);
+  }
+
+
+
+  
+  public countersaleInvFn(orderNumber) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/arInv/inserDtls/${orderNumber}`;
+    return this.http.post(url, orderNumber, options);
+  }
+
+
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
@@ -73,6 +102,18 @@ export class OrderManagementService {
     return this.http.post(url, AccLineRecord, options);
   }
 
+// **************** counter Sale order Save post *****************************/////
+
+  public SaveCounterSaleOrder(AccLineRecord1) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/orderHeader/postAccSPOrders';
+    return this.http.post(url, AccLineRecord1, options);
+  }
+  
+  // **************** counter Sale order Save post *****************************/////
+
   // accountNoSearchFn(accountNo, ouId): Observable<any> {
   //   return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   // }
@@ -85,9 +126,6 @@ export class OrderManagementService {
   // }
 
 
-  // ticketNoSearchFn(ticketNo): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${ticketNo}`);
-  // }
 
   // ColourSearchFn(variant): Observable<any> {
   //   return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
@@ -107,8 +145,8 @@ export class OrderManagementService {
   }
 
 
-  ticketNoSearchFn(ticketNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${ticketNo}`);
+  ticketNoSearchFn(salesRepName,dept): Observable<any> {
+    return this.http.get(this.ServerUrl + `/teamMaster/TicketNowise?ticketNo=${salesRepName}&dept=${dept}`);
   }
 
   ColourSearchFn(variant): Observable<any> {

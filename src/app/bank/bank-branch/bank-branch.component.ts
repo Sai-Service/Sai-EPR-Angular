@@ -123,8 +123,8 @@ ngOnInit(): void {
     this.bankService.BankNameListFn()
     .subscribe(
       data => {
-        this.BankNameList = data.obj;
-        console.log(this.BankNameList);
+        this.BankNameList = data;
+        console.log(this.BankNameList)
       }
     );
 }

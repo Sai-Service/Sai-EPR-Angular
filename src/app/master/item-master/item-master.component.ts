@@ -714,7 +714,7 @@ taxCategorySale:[],
   
   onHsnCodeSelected(mHsnCode:any){
 
-    // alert("Hsn Code :"+mHsnCode);
+    alert("Hsn Code :"+mHsnCode);
 
     // if(mHsnCode != undefined) {
    
@@ -750,7 +750,7 @@ taxCategorySale:[],
   }
 
   onOptionsSelectedVariant(mainModel){
-    
+   if(mainModel===!null){
     this.orderManagementService.VariantSearchFn(mainModel)
     .subscribe(
       data => {
@@ -758,11 +758,14 @@ taxCategorySale:[],
         console.log(this.VariantSearch);  
       }
     );
+   }
+   else{}
   }
 
   onOptionsSelectedColor(variant){
     // alert(variant)
-     this.orderManagementService.ColourSearchFn(variant)
+   if(variant===!null){
+    this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
         this.ColourSearch = data;
@@ -770,6 +773,8 @@ taxCategorySale:[],
         this.onKey(0);
       }
     );
+   }
+   else{}
   }
 
 
@@ -989,10 +994,11 @@ taxCategorySale:[],
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
-        this.itemMasterForm.reset();
+        this.itemMasterForm.disable();
+        // this.itemMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert('ERROR OCCOURED IN PROCEESS'+res.obj);
           // this.itemMasterForm.reset();
         }
       }

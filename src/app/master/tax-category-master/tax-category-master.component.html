@@ -92,11 +92,14 @@
               
             </table>
         </fieldset>
+        <br>
         <!-- <fieldset class="RFS">
             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Line Details</legend> -->
             <div class="grid_scroll">
-                <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
-                    style="width:100%;border-collapse:collapse;">
+                <!-- <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                    style="width:100%;border-collapse:collapse;"> -->
+                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                                                          cellspacing="0" cellpadding="4" rules="all" class="center">
                     <thead>
                         <tr class="GridHeader">
                             <th scope="col">SL. NO.</th>
@@ -290,5 +293,86 @@
                 </table>
             </div>
         <!-- </fieldset> -->
+        <table style="width: 100%; background-color: #FFE4B5;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle1">Category&nbsp;Type&nbsp;:</td> 
+                <td>
+                    <select formControlName="cateType" id="cateType" class="form-control"
+                            [ngModel]="cateType" (ngModelChange)='onOptionsSelectedTaxCategory($event)'>
+                                <option>--Select--</option>
+                                <option value="SALES">SALES</option>
+                                <option value="Purchase">Purchase</option>
+                            </select>
+                </td>
+                <td style="width: 15%" class="LabelFontStyle1">Category&nbsp;Name&nbsp;:</td> 
+                <td>
+                    <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control"
+                    style="width: 170px;" (ngModelChange)="searchCategoryDataMast1($event)">
+                    <option>--Select--</option>
+                    <option *ngFor="let cc of taxCategoryNameList" >
+                        {{cc.taxCategoryName}}
+                    </option>
+                </select>
+                <input hidden type="number" class="form-control" formControlName="taxCategoryId" [ngModel]="taxCategoryId">
+                </td>
+                <td>
+                    <button type="button" class="btn-primary" (click)="searchCategoryDataMast1(taxCategoryId)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+                </td>
+                <td style="width: 15%"></td><td style="width: 15%"></td><td style="width: 15%"></td>
+                <td style="width: 15%"></td>
+            </tr>
+        </table>
+        <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+        cellspacing="0" cellpadding="4" rules="all" class="center">
+<thead>
+<tr class="GridHeader">
+<th scope="col">Tax Category Type</th>
+<th scope="col">Tax Category Name</th>
+<th scope="col">Tax Category Desc</th>
+<th scope="col">Item Class Code</th>
+<th scope="col">Start Date </th>
+<th scope="col">
+    <table style="width: 100%;">
+        <tr style="border-bottom: solid 1px Gray;">
+            <td colspan="10" style="text-align: center;">
+                Precedence</td>
+        </tr>
+        <tr>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                1</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                2</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                3</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                4</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                5</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                6</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                7</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                8</td>
+            <td style="width: 2rem; border-right: solid 1px Gray;">
+                9</td>
+            <td style="width: 2rem;">
+                10</td>
+        </tr>
+    </table>
+</th>
+</tr>
+</thead>
+<tbody>
+    <tr class="ItemStyle" style="text-decoration:none;" *ngFor="let com of getsearchCategoryData">
+        <td>{{com.taxCatType}}</td>
+        <td>{{com.taxCategoryName}}</td>
+        <td>{{com.taxCategoryDesc}}</td>
+        <td>{{com.itemClassCode}}</td>
+        <td>{{com.startDate}}</td>
+    </tr>
+</tbody>
+        </table>
     </div>
 </form>

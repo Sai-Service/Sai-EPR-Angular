@@ -22,13 +22,15 @@ interface IJournalVoucher{
   jeSource:string;
   name:string;
   
-
+  reversalPeriod:string;
+  reversalDate:Date;
 
   periodName:String;
   runningTotalDr:number
   runningTotalCr:number;
   description:string;
   jeLineNum:number;
+  docSeqVal1:number;
 } 
 @Component({
   selector: 'app-journal-voucher',
@@ -43,6 +45,7 @@ export class JournalVoucherComponent implements OnInit {
   codeCombinationId:number;
   docSeqVal:number;
   docSeqValue:number;
+  docSeqVal1:number;
   segment11:string;
   lookupValueDesc1:string;
   segment2:number;
@@ -63,6 +66,9 @@ export class JournalVoucherComponent implements OnInit {
   jeSource:string;
   name:string;
   emplId:number;
+
+  reversalPeriod:string;
+  reversalDate:Date;
 
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -109,6 +115,7 @@ export class JournalVoucherComponent implements OnInit {
       periodName:[],
       OUName:[],
       postedDate:[],
+      docSeqVal1:[],
       docSeqValue:[],
       status:[],
       ouId:[],
@@ -116,6 +123,8 @@ export class JournalVoucherComponent implements OnInit {
       jeCategory:[],
       jeSource:[],
       name:[],
+      reversalPeriod:[],
+      reversalDate:[],
 
       glLines:this.fb.array([]),
       runningTotalDr:[],
@@ -154,9 +163,9 @@ export class JournalVoucherComponent implements OnInit {
 
     this.OUName=(sessionStorage.getItem('ouName'));
     this.ouId=Number((sessionStorage.getItem('ouId')));
-    alert('OrgID'+this.ouId);
+    // alert('OrgID'+this.ouId);
     this.emplId=Number((sessionStorage.getItem('emplId')));
-    alert('employee'+this.emplId);
+    // alert('employee'+this.emplId);
 
     this.addnewglLines();
     var patch=this.JournalVoucherForm.get('glLines') as FormArray
@@ -217,7 +226,7 @@ JournalVoucher(JournalVoucherForm:any){}
 onOptionsSelectedBranch(segment: any, lType: string) {
   if(segment!=undefined)
   {var temp1 = segment.split('--');
-  alert(temp1[0]);
+  // alert(temp1[0]);
 var segment = temp1[0];}
   this.service.getInterBranch(segment, lType).subscribe(
     data => {
@@ -251,7 +260,7 @@ var segment = temp1[0];}
       var Code=this.JournalVoucherForm.get('glLines').value;
       var patch =this.JournalVoucherForm.get('glLines') as FormArray;
       var natacc1 =this.JournalVoucherForm.get('segment4').value.split('--');
-      alert(natacc1[0]);
+      // alert(natacc1[0]);
       var natacc=natacc1[0];
       Code[i].segmentName=this.JournalVoucherForm.get('segment11').value+'.'+
                           this.JournalVoucherForm.get('segment2').value+'.'+
@@ -262,9 +271,9 @@ var segment = temp1[0];}
 
       // alert(this.segmentName);
       var segmentName=Code[i].segmentName;
-      alert(segmentName+"before patch");
+      // alert(segmentName+"before patch");
       patch.controls[i].patchValue({'segmentName':segmentName});
-      alert(segmentName+"after patch");
+      // alert(segmentName+"after patch");
       this.service.segmentNameList(segmentName)
       .subscribe(
         data => {
@@ -297,13 +306,13 @@ var segment = temp1[0];}
       // this.JournalVoucherForm.get('lookupValueDesc3').reset();
       // this.JournalVoucherForm.get('lookupValueDesc4').reset();
       // this.JournalVoucherForm.get('lookupValueDesc5').reset();
-      // alert('Code Combination search complete')
+      // // alert('Code Combination search complete')
     }
 
     openCodeCombination(i)
     {
       var natacc1 =this.JournalVoucherForm.get('segment4').value.split('--');
-      alert(natacc1[0]);
+      // alert(natacc1[0]);
       var natacc=natacc1[0];
 
       let SegmentName1=this.glLines().controls[i].get('segmentName').value;
@@ -407,8 +416,8 @@ var segment = temp1[0];}
           {
             alert("GL Lines Details Posted Successfully");
             console.log(res.obj);
-            this.docSeqValue=res.obj[0].docSeqValue;
-            this.status=res.obj[0].status;
+            this.docSeqValue=res.obj.DocSeqValue;
+            this.status=res.obj.Status;
             this.JournalVoucherForm.disable();
           }
           else
@@ -428,7 +437,6 @@ var segment = temp1[0];}
 
     saveGl()
     { 
-        alert("Hello");
         const formValue:IJournalVoucher=this.JournalVoucherForm.value;
         this.service.glSave(formValue).subscribe((res:any)=>{
           if(res.code===200)
@@ -451,7 +459,6 @@ var segment = temp1[0];}
 
 copyGl()
 { 
-    alert("Hello");
     const formValue:IJournalVoucher=this.JournalVoucherForm.value;
     this.service.glCopy(formValue).subscribe((res:any)=>{
       if(res.code===200)
@@ -472,18 +479,17 @@ copyGl()
    })
 }
 
-    search(docSeqVal){
+    search(docSeqVal1){
       this.glLines().clear();
-      alert(docSeqVal);
-      var docseq1=this.JournalVoucherForm.get('docSeqVal').value;
-      alert(docseq1);
-      this.service.SerchBydocseqval(docseq1).subscribe
+     // var docseq1=this.JournalVoucherForm.get('docSeqVal1').value;
+      // alert(docseq1);
+      this.service.SerchBydocseqval(docSeqVal1).subscribe
       (data =>
        {
          console.log(data);
          if(data.code === 400){
-           alert(data.message);
-           window.location.reload();
+          //  alert(data.message);
+          // window.location.reload();
          }
          if(data.code===200)
          {
@@ -497,9 +503,9 @@ copyGl()
            this.JournalVoucherForm.patchValue(data.obj);
            this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
            this.JournalVoucherForm.patchValue({runningTotalDr:data.obj.runningTotalDr});
-
-          
+                    
            this.JournalVoucherForm.patchValue(data.obj.glLines);
+           this.JournalVoucherForm.patchValue({emplId:sessionStorage.getItem('emplId')})
           // for (let i = 0; i < data.obj.glLines().length; i++) {
            
           //  this.JournalVoucherForm.get('trxLinesList').patchValue(data.obj.glLines);
@@ -507,19 +513,26 @@ copyGl()
          }
        }
        );
+      //  this.emplId=Number((sessionStorage.getItem('emplId')));
     }
     reverseGl()
 { 
-    alert("Hello");
+    // alert("Hello");
     const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+    var stat=this.JournalVoucherForm.get('status').value;
+    if(stat="POST")
+    {
     this.service.glReverse(formValue).subscribe((res:any)=>{
       if(res.code===200)
       {
         alert("Record Reversed Successfully");
         console.log(res.obj);
-        this.docSeqValue=res.obj;
+        this.docSeqValue=res.obj.DocSeqValue;
+        this.status=res.obj.Status;
+        this.search(res.obj.DocSeqValue);
+      
         // this.status
-        // this.JournalVoucherForm.disable();
+        this.JournalVoucherForm.disable();
       }
       else
      {
@@ -531,5 +544,11 @@ copyGl()
       }
    })
 }
+
+else
+{
+  alert("JV Status is not POST So,you can not reverse the JV");
+}
     }
+      }
   

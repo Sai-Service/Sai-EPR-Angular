@@ -44,9 +44,14 @@ public BankAccUseFun(bankRecord) {
     const url = this.ServerUrl + '/ceBankAccounts/post';  
     return this.http.post(url,bankRecord, options);
   }
-  ///////////////////////BANK BRANCH CREATION///////////
+  ///////////////////////BANK BRANCH CREATION/////////// 
+  
+  // BankNameListFn(): Observable<any> {
+  //   return this.http.get(this.ServerUrl +'/ceBankBranch/custName/edp');
+  // } 
+  
   BankNameListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/ceBankBranch/custName/edp');
+    return this.http.get(this.ServerUrl +'/Customer/ClassCode/BANK');
   } 
   BankNameList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/Customer/ClassCodeCompany');
@@ -54,13 +59,17 @@ public BankAccUseFun(bankRecord) {
   BankBranchList(BkName): Observable<any> {
     return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${BkName}`);
   } 
+  
 
-  BankAcDtlsList(bkBranchName){
-    return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${bkBranchName}`);
-  }
   BankAcccountList(bkBranchName,bkName): Observable<any> {
-    return this.http.get(this.ServerUrl +`/abc/${bkBranchName}${bkName}`);
+      return this.http.get(this.ServerUrl +`/abc/${bkBranchName}${bkName}`);
+
   } 
+
+  BankAcDtlsList(bkBranchName): Observable<any> {
+    return this.http.get(this.ServerUrl +`/ceBankAccounts/BranchwiseBankAcct/${bkBranchName}`);
+  } 
+
   BranchSearchFn(bkBranchName): Observable<any> {
     return this.http.get(this.ServerUrl +`/ceBankBranch/branchName/${bkBranchName}`);
   } 

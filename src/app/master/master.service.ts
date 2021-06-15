@@ -91,6 +91,7 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/TitleList');
   }
   DepartmentList(): Observable<any> {
+
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
   empIdListFn(): Observable<any> {
@@ -194,7 +195,8 @@ classCodeTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
 getTaxCat(ouId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
+ // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
+ return this.http.get(this.ServerUrl + `/taxCtgHeader/${ouId}`);
 }
 BranchList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Branch');
@@ -206,7 +208,7 @@ NaturalAccountList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
 }
 InterBrancList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_InterBranch');
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
 }
 FutureList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Future');
@@ -492,6 +494,7 @@ payTermDescList(): Observable<any> {
 }
 
 
+
 salesRepNameList(ouId,locId,dept): Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`);
 }
@@ -698,6 +701,13 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
 getEmpIdDetails(ticketNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/empMst/EmpTicket/${ticketNo}`);
 }
+
+
+getEmpIdDetails1(fullName): Observable<any> {
+  return this.http.get(this.ServerUrl + `/empMst/EmpSearchByName?fullName=${fullName}`);
+}
+
+
 public EmployeeMasterSubmit(EmpMasterRecord) {
   const options = {
     headers: this.headers
@@ -1173,6 +1183,7 @@ public taxAccountMasterSubmit(taxAccountMasterRecord) {
   return this.http.post(url, taxAccountMasterRecord, options);
 }
 
+
 UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   const options = {
     headers: this.headers
@@ -1181,7 +1192,7 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   return this.http.put(url, taxAccountMasterRecord, options);
 }
 //////////////////////Tax Category Master //////////////////////
-actDetails(taxTypeCode): Observable<any> {
+geActDetails(taxTypeCode): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
  }
 
@@ -1191,6 +1202,14 @@ actDetails(taxTypeCode): Observable<any> {
 
 getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
+ }
+
+ selectTypewiseCategory(cateType): Observable<any> {
+  return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCate/${cateType}`);
+ }
+
+ getsearchCategoryData(taxCategoryId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/JaiTaxCatg/${taxCategoryId}`);
  }
 
 public TaxCategoryMasterSubmit(TaxCategoryMasterRecord) {
@@ -1990,9 +2009,9 @@ ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
 }
-reasonaccCode(locId,reason):Observable<any>
+reasonaccCode(locId,reason,costCode):Observable<any>
 { 
-return this.http.get(this.ServerUrl+`/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}`)
+return this.http.get(this.ServerUrl+`/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}&costCode=${costCode}`)
 }
 TypeList():Observable<any>
 {

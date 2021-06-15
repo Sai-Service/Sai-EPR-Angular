@@ -127,14 +127,14 @@ export class JobCardComponent implements OnInit {
   bgstType: string;
   bcustomerId: string;
   customerId:string;
-  matDisPer: string;
-  labDisPer: string;
+  matDiscountPer: number;
+  labDiscountPer: number;
   accountNo: number;
   custName: string;
   displaylabMatTab=true;
   displaybilling=true;
-  public labDisPerList: Array<string> = [];
-  public matDisPerList: Array<string> = [];
+  public labDiscountPerList: Array<string> = [];
+  public matDiscountPerList: Array<string> = [];
   public jobCarStatusList: Array<string> = [];
   public pickupTypeList: Array<string> = [];
   public srTypeIdList: Array<string> = [];
@@ -233,7 +233,7 @@ export class JobCardComponent implements OnInit {
       dmsJCDate: [],
       validTillDt: [],
       owner: [],
-      matDisPer: [],
+      matDiscountPer: [],
       bCustAcct: [],
       bCustType: [],
       bName: [],
@@ -278,7 +278,7 @@ export class JobCardComponent implements OnInit {
       disAuthBy: [],
       balanceAmt: [],
       advAmt: [],
-      labDisPer: [],
+      labDiscountPer: [],
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
@@ -438,18 +438,18 @@ totAmt:[],
         }
       );
 
-    this.serviceService.matDisPerListFN()
+    this.serviceService.matDiscPerListFN()
       .subscribe(
         data1 => {
-          this.matDisPerList = data1;
-          console.log(this.matDisPerList);
+          this.matDiscountPerList = data1;
+          console.log(this.matDiscountPerList);
         }
       );
-    this.serviceService.labDisPerListFN()
+    this.serviceService.labDiscPerListFN()
       .subscribe(
         data1 => {
-          this.labDisPerList = data1;
-          console.log(this.labDisPerList);
+          this.labDiscountPerList = data1;
+          console.log(this.labDiscountPerList);
         }
       );
     this.serviceService.srvAdvisorListtFN((sessionStorage.getItem('locId')), (sessionStorage.getItem('deptId')))
@@ -1058,7 +1058,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     //   alert("Material status not completed")
     // }
   }
-  labDisPerCal(event){
+  labDiscountPerCal(event){
     // alert(event);
     var labBasicAmt= (this.jobcardForm.get('labBasicAmt').value)
     var perValueLab= (labBasicAmt* event)/100;
@@ -1072,7 +1072,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
       labTotAmt:labTotTaxAmt+aaa,
     })
   }
-  matDisPerCal(event){
+  matDiscountPerCal(event){
     // alert(event);
     var matBasicAmt= (this.jobcardForm.get('matBasicAmt').value)
     var perValueLab= (matBasicAmt* event)/100;

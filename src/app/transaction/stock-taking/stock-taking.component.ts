@@ -10,6 +10,7 @@ interface IStockaking
 {
   compileName:String;
   compileDate:Date;
+  compNo:string;
   compileId:number;
   compileType:number;
   subInventory:string;
@@ -44,6 +45,7 @@ interface IStockaking
 export class StockTakingComponent implements OnInit {
   StockTakingForm:FormGroup;
   compileName:String;
+  compNo:string;
   compileDate:Date;
   segmentName:string;
   public minDate = new Date();
@@ -104,14 +106,17 @@ export class StockTakingComponent implements OnInit {
   RowNo:number;
   content: number;
   title: string;
+  acccodedesc: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm=fb.group({
       compileName:[''],
       compileDate:[''],
       compileId:[''],
+      compNo:[''], 
       compileType:['',Validators.required],
       subInventory:['',Validators.required],
+      locId:['',Validators.required],
       reason:['',Validators.required],
       segmentName:[''],
       description:[''],
@@ -606,4 +611,84 @@ okLocator(i)
    }
  })
    }
+   search(compNo)
+   {
+
+     var compno=this.StockTakingForm.get('compNo').value;
+     var appflag=this.StockTakingForm.get('trans').value;
+     // var adjFlag=this.miscellaneousForm.get('Adjustment').value;
+     alert(appflag+'flag');
+     // alert(adjFlag+'flag');
+      if('Adjustment'===appflag)
+      {
+         this.service.getSearchByNo(compno)
+         .subscribe( data =>
+          {
+             if(data.code===400)
+             {
+                 window.location.reload();
+              }
+              if(data.code===200)
+              {
+     //       this.lstcomment=data.obj;
+                 this.StockTakingForm.patchValue(data.obj);
+              }
+           })
+       }
+       else if('Approve'===appflag)
+       {
+         this.service.getSearchBycompNo(compno)
+         .subscribe( data =>
+         {
+           if(data.code===400)
+           {
+             // window.location.reload();
+             alert("Hello");
+           }
+           if(data.code===200)
+           {
+     //       // this.lstcomment=data.obj;
+     let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
+     var len = this.cycleLinesList().length;
+     for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
+       var trxlist:FormGroup=this.newcycleLinesList();
+       this.cycleLinesList().push(trxlist);
+
+     }
+
+
+     this.StockTakingForm.patchValue(data.obj);
+     for(let i=0; i<this.cycleLinesList().length; i++){
+       alert(data.obj.cycleLinesList[i].segment+'segment');
+     this.StockTakingForm.patchValue({'srlNo':i+1})
+     control.controls[i].patchValue({srlNo:i+1  })
+     this.StockTakingForm.patchValue({'segment':data.obj.cycleLinesList[i].segment});
+     this.StockTakingForm.patchValue({'subInventory':data.obj.cycleLinesList[i].subInventory});
+     }
+     // this.miscellaneousForm.disable();
+       }
+        })
+       }
+
+
+
+
+   }
+
+   onSelectReason(event){
+    alert(event);
+    // var reasname=this.miscellaneousForm.get('reason').value;
+    // this.service.reasonaccCode(this.locId,reasname).subscribe(
+      var reasonArr  = event.split('-');
+      alert(reasonArr.length);
+      this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
+      
+      data => {
+        this.acccodedesc = data;
+        // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
+        this.segmentName=this.acccodedesc.segmentName;
+  
+      }
+    );
+  }  
 }

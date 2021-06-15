@@ -4,6 +4,50 @@
         <td class="PageHeader">
           &nbsp;&nbsp;Stock&nbsp;Taking &nbsp;
         </td>
+        <table style="width: 100%; background-color: #a4d3e9;">
+          <tr>
+              <td style="width: 15%" class="LabelFontStyle">Compile&nbsp;&nbsp;Number&nbsp;:</td>
+              <td>
+                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+              </td>
+              <td colspan="8" style="text-align: left; width: 100%;">
+                  <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Select.
+                          </label>
+                          <input type="radio" formControlName="trans" id =Adjustment  value="Adjustment" [(ngModel)]="Adjustment" (change)="postAdjustment($event)">
+                          <label for ="Adjustment">Adjustment</label>
+                          <input type="radio" formControlName="trans" id =Approve  value="Approve" [(ngModel)]="Approve" (change)="postAdjustment($event)">
+                          <label for ="Approve">Approve</label>
+                          </div>
+                          <div class="modal-footer">
+                              <table class="center">
+                                  <tr>
+                                      <td>
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="search(compNo)">Ok</button>
+                                      </td>
+   
+                                 </tr>
+                              </table>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+              
+              </td>
+          </tr>
+      </table>
        </tr>
     </table>
     <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)">
@@ -42,13 +86,16 @@
                   <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
                   <!-- </select> -->
               </td>
+              <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
+                      
+                      
               <td style="width: 15%" class="LabelFontStyle">
                 Reason:
               </td>
               <td>
-                <select class="form-control" formControlName="reason" [(ngModel)]="reason">
+                <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
                   <option>--Select--</option>
-                  <option *ngFor="let reason of reasonlist">{{reason.reasonName}}</option>
+                  <option *ngFor="let reason of reasonlist">{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
                   </select>
               </td>
               <input hidden type="number" formControlName="codeCombinationId">
@@ -231,7 +278,7 @@
                <td>
                  <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
                   <option>--Select--</option>
-                  <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                  <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
                   </select>
                </td>
                <td style="width: 15%" class="LabelFontStyle">
@@ -240,7 +287,7 @@
               <td >
               <input type="text" class="form-control" formControlName="description"[(ngModel)]="description">
               </td>
-              <td>&nbsp;</td>
+              <!-- <td>&nbsp;</td>
               <td rowspan="2">
                     <fieldset id="fieldset3" style="padding:20px;">
                         <legend class="LabelFontStyle">Process to be done</legend>
@@ -258,7 +305,7 @@
                  </tr>
                     </fieldset>
                          
-                        </td>
+                        </td> -->
                      
                       <!-- <div class="radio"> 
                        
