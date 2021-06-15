@@ -9,10 +9,23 @@ import { NgForm } from '@angular/forms';
 interface IOrderType {
 
   transactionTypeId:number;
-  orderCategoryCode : string;
-  deptId : number;
+ 
+
   divisionId:number;
   ouId :number;
+  locId:number;
+  deptId : number;
+  orderCategoryCode : string;
+  invoiceSource:string;
+  transactionTypeName :string;
+  transactionTypeDescription:string
+  primaryPriceListId :number;
+  secondaryPriceListId:number;
+  status:string;
+  startDate:Date;
+  endDate:Date;
+
+
  }
 @Component({
   selector: 'app-order-type-master',
@@ -60,7 +73,7 @@ export class OrderTypeMasterComponent implements OnInit {
     public emplId =6;
 
 
-
+    checkValidation=false; 
     displayInactive = true;
     Status1: any;
     inactiveDate: Date;
@@ -290,7 +303,11 @@ export class OrderTypeMasterComponent implements OnInit {
       }
       newMast() {
 
-        alert ("Posting data  to PL mater......")
+        this.CheckDataValidations();
+
+        if (this.checkValidation===true) {
+          alert("Data Validation Sucessfull....\nPosting data  to ORDER TYPE TABLE")
+
         const formValue: IOrderType =this.orderTypeMasterForm.value;
         // const formValue: IOrderType =this.transeData(this.orderTypeMasterForm.value);
         this.service.OrderTypeMasterSubmit(formValue).subscribe((res: any) => {
@@ -304,11 +321,18 @@ export class OrderTypeMasterComponent implements OnInit {
             }
           }
         });
+      } else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
       }
   
   
       updateMast() {
-        alert ("Putting data  to PL mater......")
+
+        this.CheckDataValidations();
+
+        if (this.checkValidation===true) {
+
+        alert("Data Validation Sucessfull....\nPutting data to ORDER TYPE MASTER  TABLE")
+
         const formValue: IOrderType = this.orderTypeMasterForm.value;
         // const formValue: IOrderType =this.transeData(this.orderTypeMasterForm.value);
         alert("OrderType -Transactiontypeid:" +formValue.transactionTypeId);
@@ -325,6 +349,106 @@ export class OrderTypeMasterComponent implements OnInit {
             }
           }
         });
-      };
+      }  else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+
+      }
+
+
+      CheckDataValidations(){
+    
+        const formValue: IOrderType = this.orderTypeMasterForm.value;
+
+        // alert("ou id : "+formValue.ouId);
+
+        if (formValue.ouId===undefined || formValue.ouId===null )
+        {
+          this.checkValidation=false; 
+          alert ("OPERATING UNIT : Should not be null....");
+          return;
+        } 
+
+        if (formValue.locId===undefined || formValue.locId===null )
+        {
+          this.checkValidation=false; 
+          alert ("LOCATION : Should not be null....");
+          return;
+        } 
+
+        if (formValue.deptId===undefined || formValue.deptId===null )
+        {
+          this.checkValidation=false; 
+          alert ("DEPT : Should not be null....");
+          return;
+        } 
+
+       
+         if (formValue.orderCategoryCode===undefined || formValue.orderCategoryCode===null)
+        {
+           this.checkValidation=false; 
+           alert ("ORDER CATEGORY: Should not be null....");
+            return;
+         } 
+
+          if (formValue.invoiceSource===undefined || formValue.invoiceSource===null )
+          {
+              this.checkValidation=false; 
+              alert ("INVOICE SOURCE : Should not be null....");
+              return;
+            } 
+
+            if (formValue.transactionTypeName===undefined || formValue.transactionTypeName===null || formValue.transactionTypeName.trim()==='')
+            {
+                this.checkValidation=false; 
+                alert ("TRANSACTION TYPE: Should not be null....");
+                return;
+              } 
+
+              
+            if (formValue.transactionTypeDescription===undefined || formValue.transactionTypeDescription===null || formValue.transactionTypeDescription.trim()==='')
+            {
+                this.checkValidation=false; 
+                alert ("TRANSACTION DESCRIPTION: Should not be null....");
+                return;
+              } 
+
+              if (formValue.primaryPriceListId===undefined || formValue.primaryPriceListId===null)
+              {
+                 this.checkValidation=false; 
+                 alert ("PRIMARY PRICE LIST: Should not be null....");
+                  return;
+               } 
+
+               if (formValue.secondaryPriceListId===undefined || formValue.secondaryPriceListId===null)
+               {
+                  this.checkValidation=false; 
+                  alert ("SECONDARY PRICE LIST: Should not be null....");
+                   return;
+                } 
+
+                if(formValue.status===undefined || formValue.status===null ) 
+                {
+                    this.checkValidation=false;
+                    alert ("STATUS: Should not be null value");
+                    return; 
+                  }
+               
+            if(formValue.startDate===undefined || formValue.startDate===null ) 
+            {
+                this.checkValidation=false;
+                alert ("START DATE: Should not be null value");
+                return; 
+              }
+   
+              if(formValue.status==='Inactive' ) {
+                if(formValue.endDate===undefined || formValue.endDate===null ) 
+                {
+                    this.checkValidation=false;
+                    alert ("END DATE: Should not be null value");
+                    return; 
+                  } 
+                }
+                this.checkValidation=true
+
+      }
 }
 

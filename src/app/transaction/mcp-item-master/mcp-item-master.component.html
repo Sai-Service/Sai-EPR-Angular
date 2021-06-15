@@ -67,7 +67,7 @@
                                         
                                 <td>  
                                     <select   formControlName="itemType" id="itemType" [(ngModel)]="itemType" class="form-control">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ItemTypeList1" [ngValue]="sc.code">
                                             <!-- {{sc.cmnTypeId}}- -->
                                             {{sc.code}}
@@ -107,7 +107,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:&nbsp;</td>
                                         
                                 <td>
-                                    <input   type="date"  formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control" >
+                                    <input   type="date"  formControlName="startDate"  id="startDate"  [(ngModel)]="startDate" class="form-control" >
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date:&nbsp;</td>
                                         
@@ -116,6 +116,8 @@
                                 </td>
     
                             </tr>
+
+                            
                            </table>
                     </fieldset>
 
@@ -129,24 +131,7 @@
                                     <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpItemMasterForm">Save</button>
                                 </td>
 
-                                <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveSatat"></div>
-                                <ng-template #thenBlockSaveStat>
-                                    <div class="alert alert success alert-dismissible fade show " role="alert">
-                                        <strong>Success!</strong> Record Updated Successfully.
-                                        <button  type="button" (click)="closeAlert()"    class="close" data-dismiss="alert" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-
-                                  
-                                </ng-template>
-                                <ng-template #elseBlockSaveSatat>
-                                    <!-- <div class="alert warning">
-                                        <span class="closebtn">&times;</span>  
-                                        <strong>Warning!</strong> Rcord Not added.Please check
-                                      </div> -->
-
-                                </ng-template>
+                             
                                 
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
@@ -159,7 +144,7 @@
                                 </td>
                                  <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-dialog-centered " role="document">
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
@@ -189,7 +174,7 @@
                                         </td>
                                         <!-- Modal -->
                                         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
-                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-dialog modal-dialog-centered " role="document">
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
@@ -253,7 +238,7 @@
                                     </td>
                                     <!-- Modal -->
                                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
-                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-dialog modal-dialog-centered " role="document">
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
@@ -283,7 +268,7 @@
                                 </td>
                                         <!-- Modal -->
                                     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-dialog-centered " role="document">
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
@@ -308,7 +293,58 @@
                                     </div>
                                  <!-- ==================================================== -->
                                     </ng-template>
-                                    
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-info"  (click)="AlertDialog()"  >alert</button>
+                                    </td> -->
+ 
+
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLongMsg" (click)="AlertDialog()"  >alert</button>
+                                    </td> -->
+
+                                   
+                                        <!-- ------------------------------------------------ -->
+
+                                        <div *ngIf="isAlert; then ShowMsgYes; else ShowMsgNo"></div>
+                                        <ng-template #ShowMsgYes> 
+                                            <div class="modal fade" id="exampleModalLongMsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitleMsg" aria-hidden="true" style="width:600px;">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+
+                                                    <div class="modal-header" style="background-color:lightblue; height:auto;" >
+                                                        <h5 class="modal-title"  id="exampleModal3Label">{{alertMsgTitle}}</h5>
+                                                            
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                        <div class="modal-body">
+                                                            <label style="font-size: small; color: black; font-weight: bold; text-align: right; vertical-align: middle;">
+                                                                {{alertMsg}}
+                                                            </label>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <table class="center">
+                                                                <tr>
+                                                                    <td>
+                                                                    <button type="button" class="btn btn-info" data-dismiss="modal">ok</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        
+                                        </ng-template>
+                                        <ng-template #ShowMsgNo>
+
+                                        </ng-template>
+
+                                        <!-- -------------------------------------------------------- -->
+                                  
+
+                                                               
                                 </tr>
                             </table>
                             <!-- ==================================================== -->

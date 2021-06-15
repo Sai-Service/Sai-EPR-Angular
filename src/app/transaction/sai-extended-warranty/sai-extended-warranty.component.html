@@ -18,64 +18,64 @@
                         <!-- <td  class="LabelFontStyle">DivId/div/ouid/locid/deptid/empId/custid/inssite/Aging/type/Stat/itemcd&nbsp;:&nbsp;</td> -->
    
                         <td >
-                            <input hidden style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                            <input disabled style="width:30px ;"   type="text" disabled formControlName="divisionId"
                             class="form-control" [(ngModel)]="divisionId" placeholder="">
 
                         </td>
                         <td   style="border: none;color: black;">
-                            <input hidden style="width:60px ;"  type="text" disabled formControlName="loginArray"
+                            <input disabled style="width:60px ;"  type="text" disabled formControlName="loginArray"
                                 class="form-control" [(ngModel)]="loginArray" placeholder="">
                         </td>
                     
                         <td>
-                            <input hidden  style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            <input disabled  style="width:30px ;"  disabled type="text" formControlName="ouId"
                             class="form-control" [(ngModel)]="ouId" >
                         </td>
                     
                         <td>
-                            <input hidden style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                            <input disabled style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
                         </td>
 
                         <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id:&nbsp;</td> -->
 
                        
                         <td >
-                            <input hidden style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            <input disabled style="width:30px ;"  type="text" disabled formControlName="deptId"
                             class="form-control" [(ngModel)]="deptId" placeholder="">
 
                         </td>
                         <td >
-                            <input hidden style="width:30px ;"   type="text" disabled formControlName="emplId"
+                            <input disabled style="width:30px ;"   type="text" disabled formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
 
                         </td>
 
                         <td>
-                            <input hidden disabled style="width:30px ;" type="text"  formControlName="custId"  id="custId" [(ngModel)]="custId" class="form-control" >
+                            <input disabled  style="width:30px ;" type="text"  formControlName="custId"  id="custId" [(ngModel)]="custId" class="form-control" >
                         </td>
                         
                         <td>
-                            <input hidden disabled style="width:30px ;" type="text"  formControlName="ewInsurerSiteId"  id="ewInsurerSiteId" [(ngModel)]="ewInsurerSiteId" class="form-control" >
+                            <input  disabled style="width:30px ;" type="text"  formControlName="ewInsurerSiteId"  id="ewInsurerSiteId" [(ngModel)]="ewInsurerSiteId" class="form-control" >
                         </td>
                         
                         
                        
                         <td>
-                            <input hidden disabled style="width:50px ;" type="text"  formControlName="vehicleAgeDays"  id="vehicleAgeDays" [(ngModel)]="vehicleAgeDays" class="form-control" >
+                            <input  disabled style="width:50px ;" type="text"  formControlName="vehicleAgeDays"  id="vehicleAgeDays" [(ngModel)]="vehicleAgeDays" class="form-control" >
                         </td>
 
                         <td>
-                            <input hidden disabled style="width:50px ;" type="text"  formControlName="ewType"  id="ewType" [(ngModel)]="ewType" class="form-control" >
+                            <input  disabled style="width:50px ;" type="text"  formControlName="ewType"  id="ewType" [(ngModel)]="ewType" class="form-control" >
                         </td>
 
                         <td>
-                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="ewStatus"  id="ewStatus" [(ngModel)]="ewStatus" class="form-control">
+                            <input  disabled  style="width:50px ;"  type="text" formControlName="isEwActive"  id="isEwActive" [(ngModel)]="isEwActive" class="form-control">
                         </td>
-                        <td>
-                            <input hidden hidden  type="text" formControlName="ewStatusBookletno"[(ngModel)]="ewStatusBookletno"  >
-                            <input hidden hidden  type="text" formControlName="ewStatusStartDate" [(ngModel)]="ewStatusStartDate" >
-                            <input hidden  hidden  type="text" formControlName="ewStatusPeriod" [(ngModel)]="ewStatusPeriod" >
-                        </td>
+                        <!-- <td>
+                            <input  hidden  type="text" formControlName="ewStatusBookletno"[(ngModel)]="ewStatusBookletno"  >
+                            <input  hidden  type="text" formControlName="ewStatusStartDate" [(ngModel)]="ewStatusStartDate" >
+                            <input   hidden  type="text" formControlName="ewStatusPeriod" [(ngModel)]="ewStatusPeriod" >
+                        </td> -->
 
            
                             
@@ -86,6 +86,12 @@
                         <td>
                             <input hidden disabled  style="width:50px ;"  type="text" formControlName="itemId"  id="itemId" [(ngModel)]="itemId" class="form-control">
                         </td>
+
+                        <td>
+                            <input  disabled  style="width:50px ;"  type="text" formControlName="customerSiteId"  id="customerSiteId" [(ngModel)]="customerSiteId" class="form-control">
+                        </td>
+
+                        
                             
                         </tr>
                     </table>
@@ -99,7 +105,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
                             <td>
-                             <input type="text"
+                             <input style="font-weight: bold;" type="text"
                                 formControlName="vehRegNo"
                                 [(ngModel)]="vehRegNo"
                                 (change)="serchByRegNo(vehRegNo)"
@@ -121,7 +127,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
     
                             <td>
-                            <input type="text"
+                            <input disabled style="font-weight: bold;" type="text"
                             formControlName="vehicleId"
                             [(ngModel)]="vehicleId"
                             (change)="serchByVin(vehicleId)"
@@ -216,14 +222,14 @@
                         <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
     
                         <td>
-                            <input   type="text"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
+                            <input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
                         </td>
 
                         <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
 
                         <td>
                             <select type="text" class="form-control" formControlName="soldByEmpId">
-                            <option>--Select--</option>
+                            <option disabled>--Select--</option>
                             <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
                             {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
                             </option>
@@ -233,7 +239,7 @@
                         <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
 
                         <td>
-                            <input   type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" >
+                            <input   type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" >
                         </td>
 
                     
@@ -257,13 +263,13 @@
                             <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Contract&nbsp;No:&nbsp;</td>
 
                             <td>
-                                <input  disabled   type="text" formControlName="ewId"  id="ewId" [(ngModel)]="ewId" class="form-control">
+                                <input  disabled  style="font-weight: bold;"  type="text" formControlName="ewId"  id="ewId" [(ngModel)]="ewId" class="form-control">
                             </td>
                             
                             <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Invoice&nbsp;No:&nbsp;</td>
 
                             <td>
-                                <input  disabled   type="text" formControlName="ewInvoiceNo"  id="ewInvoiceNo" [(ngModel)]="ewInvoiceNo" class="form-control">
+                                <input style="font-weight: bold;" disabled   type="text" formControlName="ewInvoiceNo"  id="ewInvoiceNo" [(ngModel)]="ewInvoiceNo" class="form-control">
                             </td>
 
                             <!-- <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Status:&nbsp;</td> -->
@@ -296,7 +302,7 @@
     
                             <td>  
                                 <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  >
-                                    <option>--Select--</option>
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
                                         {{sc.ewSchemeNo}}
                                     </option>
@@ -325,7 +331,7 @@
 
                             <td>  
                                 <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
-                                <option>--Select--</option>
+                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.itemId">
                                 <!-- {{sc.itemId}}- -->
                                 {{sc.SEGMENT}}
@@ -350,7 +356,7 @@
                             
                             <td>  
                                 <select   formControlName="ewInsurerId" id="ewInsurerId" [(ngModel)]="ewInsurerId"  class="form-control" (change) ="onEwInsurerSalected(ewInsurerId)" >
-                                <option>--Select--</option>
+                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  ewInsNameList" [ngValue]="sc.customerId">
                                 {{sc.customerId}}-{{sc.custName}}
                                 </option>
@@ -403,6 +409,11 @@
                     <table class="center">
 
                         <tr>
+                            <td   style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>
+
+                            <td>
+                                <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="receiptNumber"  id="receiptNumber"  [(ngModel)]="receiptNumber" class="form-control" placeholder="">
+                            </td>
 
                             <td   style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
 
@@ -413,7 +424,7 @@
 
                         <td>  
                             <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
-                                <option>--Select--</option>
+                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
                                     {{sc.lookupValue}} 
                                 </option>
@@ -423,7 +434,7 @@
                         <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
                         <td>  
                             <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
-                                <option>--Select--</option>
+                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
                                     {{sc.receiptMethodId}}-{{sc.methodName}} 
                                 </option>
@@ -508,7 +519,7 @@
                     <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Reason:&nbsp;</td>
                      <td>  
                         <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control">
-                            <option>--Select--</option>
+                            <option disabled>--Select--</option>
                             <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
                                 {{sc.code}}
                             </option>
@@ -543,9 +554,19 @@
                         <tr>
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
-                                <td>
-                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!saiEwForm">Save</button>
-                                </td>
+
+                                <!-- <div *ngIf="checkValidation; then thenBlockValidate; else elseBlockValidate"></div>
+                                <ng-template #thenBlockValidate> -->
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!saiEwForm">Save</button>
+                                    </td>
+                                <!-- </ng-template>
+                                <ng-template #elseBlockValidate>
+                                    <td>
+                                        <button disabled type="button" class="btn btn-info" (click)="newMast()" >Save</button>
+                                    </td>
+                                </ng-template> -->
+
 
                                 <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveSatat"></div>
                                 <ng-template #thenBlockSaveStat>
@@ -555,10 +576,10 @@
                                   </div>
                                 </ng-template>
                                 <ng-template #elseBlockSaveSatat>
-                                    <div class="alert warning">
+                                    <!-- <div class="alert warning">
                                         <span class="closebtn">&times;</span>  
                                         <strong>Warning!</strong> Rcord Not added.Please check
-                                      </div>
+                                      </div> -->
 
                                 </ng-template>
 
@@ -711,6 +732,10 @@
                                     </div>
                     <!-- ==================================================== -->
                                     </ng-template>
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-info" (click)="getEwStatus(this.vehRegNo)" >Validate</button>
+                                    </td> -->
+                                        
                                 </tr>
                             </table>
                  <!-- ==================================================== -->

@@ -372,6 +372,7 @@ RemoveRow2(index) {
   }
 
   onTaxCocdeSelected(taxTypeId: any) {
+    if(taxTypeId===!null){
     this.service.taxTypeNameList(taxTypeId)
       .subscribe(
         data => {
@@ -382,10 +383,12 @@ RemoveRow2(index) {
           // alert(taxTypeId  +' ' + this.taxTypeName);
         }
       );
+    }else {}
   }
 
   onRegimeSelected(regimeId: any) {
     // alert(regimeId);
+    if(regimeId===!null){
     this.service.regimNameList(regimeId)
       .subscribe(
         data => {
@@ -395,6 +398,7 @@ RemoveRow2(index) {
           this.regimeName = this.regimNameList.regimeName;
         }
       );
+    }else{}
   }
 
   onLocationSelected(locCode: any ,i) {

@@ -452,22 +452,24 @@ taxCategorySale:[],
           console.log(this.SSitemTypeList);
         }
       );
-      this.service.taxCategoryListForSALES()
-      .subscribe(
-        data1 => {
-          this.taxCategoryListS = data1;
-          console.log(this.taxCategoryListS);
-          data1 = this.taxCategoryListS;
-        }
-      );
-      this.service.taxCategoryList()
-      .subscribe(
-        data1 => {
-          this.taxCategoryListP = data1;
-          console.log(this.taxCategoryListP);
-          data1 = this.taxCategoryListP;
-        }
-      );
+
+      // this.service.taxCategoryListForSALES()
+      // .subscribe(
+      //   data1 => {
+      //     this.taxCategoryListS = data1;
+      //     console.log(this.taxCategoryListS);
+      //     data1 = this.taxCategoryListS;
+      //   }
+      // );
+      // this.service.taxCategoryList()
+      // .subscribe(
+      //   data1 => {
+      //     this.taxCategoryListP = data1;
+      //     console.log(this.taxCategoryListP);
+      //     data1 = this.taxCategoryListP;
+      //   }
+      // );
+
     // this.service.YesNoList()
     //   .subscribe(
     //     data => {
@@ -748,6 +750,7 @@ taxCategorySale:[],
   }
 
   onOptionsSelectedVariant(mainModel){
+    
     this.orderManagementService.VariantSearchFn(mainModel)
     .subscribe(
       data => {
@@ -759,7 +762,7 @@ taxCategorySale:[],
 
   onOptionsSelectedColor(variant){
     // alert(variant)
-    this.orderManagementService.ColourSearchFn(variant)
+     this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
         this.ColourSearch = data;
@@ -774,7 +777,7 @@ taxCategorySale:[],
   }
   
   onOptionsSelectedItemType(category:any){
-    // alert(category);
+    // alert("onOptionsSelectedItemType");
     if(category == 'SS_VEHICLE'){
       this.disItemCode = false;
     }else{

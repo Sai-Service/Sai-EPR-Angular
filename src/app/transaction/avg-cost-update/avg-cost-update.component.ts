@@ -11,18 +11,18 @@ import { DatePipe } from '@angular/common';
 
 interface IAvgCostUpdate {
 
-  // priceListId :number;
-  // priceListName:string;
-  // priceDesc:string;
-
-  // status:string;
-  // startDate:Date;
-  
-  // ouId: number; 
-  // ouName : string;
-  // description : string; 
   priceListType: string;
   priceListHeaderId:number;
+
+  divisionId : number;
+  ouId :number;
+  locId: number;
+  deptId :number;
+  orgId:number;
+
+  codeCombinationId:number;
+  reasonCode:string;
+  transSourceTypeId:number;
   
 
 }
@@ -92,6 +92,8 @@ export class AvgCostUpdateComponent implements OnInit {
   enableDesc=false;
   
   public status = "Active";
+  headerValidation=false;
+  lineValidation=false;
   displayInactive = true;
   Status1: any;
   // display= true;
@@ -119,18 +121,19 @@ export class AvgCostUpdateComponent implements OnInit {
   orgId:number;
   priorCost:number;
   actualCost:number;
+  // transSourceTypeId:number;
   // codeCombinationId:number;
-  // reason:string;
+  // reasonCode:string;
   createdBy :number;
   lastUpdatedBy:number
 
 
   public emplId =6;
   public codeCombinationId=2079;
-  public reason='IC001';
+  public reasonCode='IC001';
   public transSourceTypeId=17;
-  public locatorId=999
-  public subInventoryCode='SP'
+  // public locatorId=999
+  // public subInventoryCode='SP'
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
@@ -163,7 +166,7 @@ export class AvgCostUpdateComponent implements OnInit {
         
         transDate:[],
         codeCombinationId:[],
-        reason:[],
+        reasonCode:[],
         transSourceTypeId:[],
         segmentName:[],
         // locatorId:[],
@@ -208,6 +211,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
       this.name=  sessionStorage.getItem('name');
       this.loginArray=sessionStorage.getItem('divisionName');
+      this.divisionId=Number(sessionStorage.getItem('divisionId'));
       this.loginName=sessionStorage.getItem('name');
       this.ouName = (sessionStorage.getItem('ouName'));
       this.ouId=Number(sessionStorage.getItem('ouId'));
@@ -249,13 +253,13 @@ export class AvgCostUpdateComponent implements OnInit {
       }
     );
 
-    this.service.DivisionIDList()
-    .subscribe(
-      data => {
-        this.DivisionIDList = data;
-        console.log(this.DivisionIDList);
-      }
-    );
+    // this.service.DivisionIDList()
+    // .subscribe(
+    //   data => {
+    //     this.DivisionIDList = data;
+    //     console.log(this.DivisionIDList);
+    //   }
+    // );
 
     // this.service.statusList()
     // .subscribe(
@@ -306,11 +310,19 @@ export class AvgCostUpdateComponent implements OnInit {
   
  
 
-  addRow() {
-    // alert('addrow index '+index);
-    this.lineDetailsArray().push(this.lineDetailsGroup());
+  addRow(index) {
     
+     this.CheckLineValidations(index);
+
+        if (this.lineValidation) 
+      {
+        //  alert(this.lineValidation);
+          this.lineDetailsArray().push(this.lineDetailsGroup());
+         
+      }
+
   }
+
 
   RemoveRow(index) {
     if (index===0){
@@ -357,8 +369,6 @@ export class AvgCostUpdateComponent implements OnInit {
   
     newMast1() {
 
-      // alert ("Posting data  to PL mater......")
-      // const formValue: IPriceList =this.priceListMasterForm.value;
       const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
       this.service.AvgCostUpdateSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
@@ -371,45 +381,73 @@ export class AvgCostUpdateComponent implements OnInit {
           }
         }
       });
+  
     }
 
     newMast() {
-      alert('Posting data....')
-      // alert(this.avgCostUpdateForm.get('locId').value);
-      const formValue: IAvgCostUpdate = this.avgCostUpdateForm.value;
-      let variants = <FormArray>this.lineDetailsArray();
-      var locationId = this.avgCostUpdateForm.get('locId').value;
-      var transSourceTypeId = this.avgCostUpdateForm.get('transSourceTypeId').value;
-      var codeCombinationId = this.avgCostUpdateForm.get('codeCombinationId').value;
-      var segmentName = this.avgCostUpdateForm.get('segmentName').value;
-      var reason = this.avgCostUpdateForm.get('reason').value;
-      var lastUpdatedBy = this.avgCostUpdateForm.get('emplId').value;
-      var createdBy = this.avgCostUpdateForm.get('emplId').value;
-      for (let i = 0; i < this.lineDetailsArray().length; i++) {
-        let variantFormGroup = <FormGroup>variants.controls[i];
-        variantFormGroup.addControl('locationId', new FormControl(locationId, Validators.required));
-        variantFormGroup.addControl('transSourceTypeId', new FormControl(transSourceTypeId, Validators.required));
-        variantFormGroup.addControl('codeCombinationId', new FormControl(codeCombinationId, Validators.required));
-        variantFormGroup.addControl('segmentName', new FormControl(segmentName, Validators.required));
-        variantFormGroup.addControl('reason', new FormControl(reason, Validators.required));
-        variantFormGroup.addControl('lastUpdatedBy', new FormControl(lastUpdatedBy, Validators.required));
-        variantFormGroup.addControl('createdBy', new FormControl(createdBy, Validators.required));
-      }
-      console.log(variants.value);
-      this.service.AvgCostUpdateSubmit(variants.value).subscribe((res: any) => {
-        // var obj=res;
-        // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
-        if (res.code === 200) {
-          alert("Record inserted Successfully");
-          this.avgCostUpdateForm .reset();
-        }
-        else {
-          if (res.code === 400) {
-            alert("Code already present in data base");
-            this.avgCostUpdateForm.reset();
+          this.CheckHeaderValidations();
+
+          if (this.headerValidation==true ) { alert("Header Validation Sucessfull...") }
+          else { alert("Header Validation Failed... Please Check");  return;   }
+
+          this.lineValidation=false;
+          var prcLineArr = this.avgCostUpdateForm.get('priceListDetailList').value;
+          var len1=prcLineArr.length;
+          
+          for (let i = 0; i < len1 ; i++) 
+            {
+              this.CheckLineValidations(i);
+            }
+
+            // alert("Line Validation :" + this.lineValidation);
+
+            if(this.lineValidation===false) { 
+              alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
+              return;
+            }
+          
+        
+          alert("Heder Validation : "+this.headerValidation +"\nLine Validation : "+this.lineValidation);
+          
+          if (this.headerValidation  && this.lineValidation ) 
+          {
+            alert("Data Validation Sucessfull....\nPosting data  to AVG COST UPDATE TABLE")
+          // alert(this.avgCostUpdateForm.get('locId').value);
+          const formValue: IAvgCostUpdate = this.avgCostUpdateForm.value;
+          let variants = <FormArray>this.lineDetailsArray();
+          var locationId = this.avgCostUpdateForm.get('locId').value;
+          var transSourceTypeId = this.avgCostUpdateForm.get('transSourceTypeId').value;
+          var codeCombinationId = this.avgCostUpdateForm.get('codeCombinationId').value;
+          var segmentName = this.avgCostUpdateForm.get('segmentName').value;
+          var reasonCode = this.avgCostUpdateForm.get('reasonCode').value;
+          var lastUpdatedBy = this.avgCostUpdateForm.get('emplId').value;
+          var createdBy = this.avgCostUpdateForm.get('emplId').value;
+          for (let i = 0; i < this.lineDetailsArray().length; i++) {
+            let variantFormGroup = <FormGroup>variants.controls[i];
+            variantFormGroup.addControl('locationId', new FormControl(locationId, Validators.required));
+            variantFormGroup.addControl('transSourceTypeId', new FormControl(transSourceTypeId, Validators.required));
+            variantFormGroup.addControl('codeCombinationId', new FormControl(codeCombinationId, Validators.required));
+            variantFormGroup.addControl('segmentName', new FormControl(segmentName, Validators.required));
+            variantFormGroup.addControl('reasonCode', new FormControl(reasonCode, Validators.required));
+            variantFormGroup.addControl('lastUpdatedBy', new FormControl(lastUpdatedBy, Validators.required));
+            variantFormGroup.addControl('createdBy', new FormControl(createdBy, Validators.required));
           }
-        }
-      });
+          console.log(variants.value);
+          this.service.AvgCostUpdateSubmit(variants.value).subscribe((res: any) => {
+          
+            if (res.code === 200) {
+              alert("Record inserted Successfully");
+              this.avgCostUpdateForm .reset();
+            }
+            else {
+              if (res.code === 400) {
+                alert("Code already present in data base");
+                this.avgCostUpdateForm.reset();
+              }
+            }
+          });
+
+            }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
     }
 
     // updateMast() {
@@ -649,6 +687,107 @@ export class AvgCostUpdateComponent implements OnInit {
     // return;
     
   }
+
+  CheckHeaderValidations(){
+    
+    const formValue: IAvgCostUpdate = this.avgCostUpdateForm.value;
+
+        if (formValue.divisionId===undefined || formValue.divisionId===null)
+        {
+          this.headerValidation=false; 
+          alert ("DIVISION : Should not be null....");
+            return;
+        } 
+
+        if (formValue.ouId===undefined || formValue.ouId===null )
+        {
+          this.headerValidation=false; 
+          alert ("OPERATING UNIT: Should not be null....");
+            return;
+        } 
+
+        if (formValue.locId===undefined || formValue.locId===null )
+        {
+            this.headerValidation=false; 
+            alert ("LOCATION : Should not be null....");
+            return;
+          } 
+       
+        if (formValue.ouId===undefined || formValue.ouId===null)
+        {
+          this.headerValidation=false; 
+          alert ("OPERATING UNIT : Should not be null....");
+          return;
+        } 
+        
+        if(formValue.transSourceTypeId===undefined || formValue.transSourceTypeId===null || formValue.transSourceTypeId<=0 ) 
+        {
+            this.headerValidation=false;
+            alert ("SOURCE TYPE: Should not be null value");
+            return; 
+         }
+         
+        //  alert("Reason :"+ formValue.reasonCode);
+        if(formValue.reasonCode===undefined || formValue.reasonCode===null || formValue.reasonCode.trim()==='' ) 
+        {
+            this.headerValidation=false;
+            alert ("REASON CODE: Should not be null value");
+            return; 
+         }
+
+         if(formValue.codeCombinationId===undefined || formValue.codeCombinationId===null || formValue.codeCombinationId<=0 ) 
+         {
+             this.headerValidation=false;
+             alert ("ACCOUNT CODE: Should not be null value");
+             return; 
+          }
+      
+      this.headerValidation=true
+
+  }
+
+  CheckLineValidations(i) {
+
+    // alert('CheckLineValidations index '+i);
+  
+    var prcLineArr1 = this.avgCostUpdateForm.get('priceListDetailList').value;
+    var lineValue1=prcLineArr1[i].itemId;
+    var lineValue2=prcLineArr1[i].actualCost;
+    var lineValue3=prcLineArr1[i].locatorId;
+    var lineValue4=prcLineArr1[i].subInventoryCode;
+    
+  
+    // alert("Line Value :"+lineValue1);
+     var j=i+1;
+    if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
+      alert("Line-"+j+ " ITEM NUMBER :  should not be null value/ Select valid item from the list");
+      this.lineValidation=false;
+      return;
+    } 
+
+    if(lineValue2===undefined || lineValue2===null  || lineValue2 <=0){
+      alert("Line-"+j+ " AVG COST NEW :  should be above Zero");
+      this.lineValidation=false;
+      return;
+    } 
+    
+    if(lineValue3===undefined || lineValue3===null || lineValue3.trim()===''){
+      alert("Line-"+j+ " LOCATOR :  should not be null value");
+      this.lineValidation=false;
+      return;
+    } 
+  
+    if(lineValue4===undefined || lineValue4===null || lineValue4.trim()===''){
+      alert("Line-"+j+ " SUB INVENTORY CODE :  should not be null value");
+      this.lineValidation=false;
+      return;
+    } 
+   
+    this.lineValidation=true;
+      // alert("Chek line valid - "+this.lineValidation);
+  
+    }
+
 
 
 }

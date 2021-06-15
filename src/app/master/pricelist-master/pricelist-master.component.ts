@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
+import { now } from 'jquery';
 // import { saveAs } from 'file-saver';
 
 const MIME_TYPES = {
@@ -28,6 +29,19 @@ interface IPriceList {
   // ouName : string;
   // description : string; 
   priceListType: string;
+  priceListName:string;
+  description:string;
+  ouId:number;
+  divisionId:number;
+  deptId:number;
+  status:string;
+  priceSubType:string;
+  startDate:Date;
+  endDate:string;
+
+  // priceValue:number;
+
+
   priceListHeaderId:number;
   fileName :string; 
   docType :string;
@@ -70,6 +84,14 @@ export class PricelistMasterComponent implements OnInit {
 
   startDate:Date;
   endDate:Date;
+  
+  
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+
+  // startDate= Date.now();
+
 
   showOu=false;
   showItemSearch=false;
@@ -94,12 +116,17 @@ export class PricelistMasterComponent implements OnInit {
   public itemNameList: any;
   public priceListNameList: any;
 
-  enableDesc=false;
+  // priceValue:number;
+
   // public emplId =6;
-  public status = "Active";
+  // display= true;
+  headerValidation=false; 
+  lineValidation=false;
+  enableDesc=false;
+  // public status = "Active";
+  status :string ='Active'
   displayInactive = true;
   Status1: any;
-  // display= true;
   display1 = true;
   displayButton = true;
   plsearch=false;
@@ -236,13 +263,13 @@ export class PricelistMasterComponent implements OnInit {
       }
     );
 
-    this.service.DivisionIDList()
-    .subscribe(
-      data => {
-        this.DivisionIDList = data;
-        console.log(this.DivisionIDList);
-      }
-    );
+    // this.service.DivisionIDList()
+    // .subscribe(
+    //   data => {
+    //     this.DivisionIDList = data;
+    //     console.log(this.DivisionIDList);
+    //   }
+    // );
 
     this.service.statusList()
     .subscribe(
@@ -403,10 +430,15 @@ export class PricelistMasterComponent implements OnInit {
 
 
 
-  addRow() {
-    // alert('addrow index '+index);
-    this.lineDetailsArray().push(this.lineDetailsGroup());
-    
+  addRow(index) {
+    //  alert('addrow index '+index);
+
+     this.CheckLineValidations(index);
+     if (this.lineValidation==true) 
+      {
+          this.lineDetailsArray().push(this.lineDetailsGroup());
+      }
+
   }
 
   RemoveRow(index) {
@@ -418,6 +450,8 @@ export class PricelistMasterComponent implements OnInit {
     }
   
   }
+
+  
 
   ////////////////////////// Reset Button module
   resetMast() {  window.location.reload();   }
@@ -445,8 +479,33 @@ export class PricelistMasterComponent implements OnInit {
   
     newMast() {
 
-      // alert ("Posting data  to PL mater......")
-      // const formValue: IPriceList =this.priceListMasterForm.value;
+      this.CheckHeaderValidations();
+      if (this.headerValidation==true ) { alert("Header Validation Sucessfull...") }
+      else { alert("Header Validation Failed... Please Check");  return;   }
+
+      this.lineValidation=false;
+      var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+      var len1=prcLineArr.length;
+      
+      for (let i = 0; i < len1 ; i++) 
+        {
+          this.CheckLineValidations(i);
+        }
+
+        // alert("Line Validation :" + this.lineValidation);
+
+        if(this.lineValidation===false) { 
+          alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
+          return;
+        }
+       
+     
+      alert("Heder Validation : "+this.headerValidation +"\nLine Validation : "+this.lineValidation);
+      
+      if (this.headerValidation  && this.lineValidation ) 
+      {
+        alert("Data Validation Sucessfull....\nPosting data  to PRICE LIST TABLE")
+           
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
@@ -459,12 +518,33 @@ export class PricelistMasterComponent implements OnInit {
           }
         }
       });
+
+
+    }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
     }
 
     //  ------------------------Line updattion..........................
-    updateMast() {
-      alert ("Putting data  to PL mater Line item......")
-      // const formValue: IPriceList = this.priceListMasterForm.value;
+    updateMastLine() {
+
+      this.lineValidation=false;
+      var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+      var len1=prcLineArr.length;
+      
+      for (let i = 0; i < len1 ; i++) 
+        {
+          this.CheckLineValidations(i);
+        }
+ 
+        if(this.lineValidation===false) { 
+          alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
+          return;
+        }
+
+        if (this.lineValidation ) 
+        {
+          alert("Line Validation Sucessfull....\nPutting Line data  to PRICE LIST TABLE")
+
+  
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
@@ -477,7 +557,8 @@ export class PricelistMasterComponent implements OnInit {
           }
         }
       });
-    };
+      }else{ alert("Line Validation Not Sucessfull....\nData not Saved...")  }
+    }
 
     //  ------------------------Header updattion..........................
     // updateMastHeader() {
@@ -499,8 +580,11 @@ export class PricelistMasterComponent implements OnInit {
 
     //  ------------------------Header updattion..........................
     updateMastHeader() {
-      alert ("Putting data  to PL mater header.part .....")
-      // const formValue: IPriceList = this.priceListMasterForm.value;
+      
+         this.CheckHeaderValidations();
+        if (this.headerValidation===true) {
+          alert("Data Validation Sucessfull....\nPutting data to PRICE LIST MASTER  TABLE") 
+
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
@@ -513,7 +597,8 @@ export class PricelistMasterComponent implements OnInit {
           }
         }
       });
-    };
+    } else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+    }
 
   // ============================================================
 
@@ -525,12 +610,12 @@ export class PricelistMasterComponent implements OnInit {
     console.log(select.priceListDetailList[0]);
     // alert(this.lineDetailsArray.length);
 
-    alert("lineDetailsArray Length=" +this.lineDetailsArray.length);
+    // alert("lineDetailsArray Length=" +this.lineDetailsArray.length);
 
     for(let i=0; i<this.lineDetailsArray.length; i++){ 
       this.lineDetailsArray().removeAt(i);
     }
-    alert("priceListDetailList LENGTH: "+ select.priceListDetailList.length);
+    // alert("priceListDetailList LENGTH: "+ select.priceListDetailList.length);
     // alert("lineDetailsArray Length=" +this.lineDetailsArray.length);
 
     if(select.priceListDetailList.length>0){
@@ -540,7 +625,7 @@ export class PricelistMasterComponent implements OnInit {
       if (select) {
 
           this.priceListType = select.priceListType+ "-" + select.priceListName;
-          alert("priceListDetailList LENGTH: "+ select.priceListDetailList.length);
+          // alert("priceListDetailList LENGTH: "+ select.priceListDetailList.length);
           var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
          
           for (let i=0; i<select.priceListDetailList.length;i++) 
@@ -643,10 +728,10 @@ export class PricelistMasterComponent implements OnInit {
 
   onOptioninvItemIdSelected(itemId, index) {
  
-     alert('item function-'+itemId);
+    //  alert('item function-'+itemId);
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
-      alert('Item Id :' +selectedValue.itemId);
+      // alert('Item Id :' +selectedValue.itemId);
       console.log(selectedValue);
       
       var arrayControl = this.priceListMasterForm.get('priceListDetailList').value
@@ -757,6 +842,125 @@ export class PricelistMasterComponent implements OnInit {
   refershForm(){
     alert("....WIP");
   }
+
+  CheckHeaderValidations(){
+    
+    const formValue: IPriceList = this.priceListMasterForm.value;
+
+        if (formValue.priceListType===undefined || formValue.priceListType===null)
+        {
+          this.headerValidation=false; 
+          alert ("PRICE LIST TYPE : Should not be null....");
+            return;
+        } 
+
+        if (formValue.priceListName===undefined || formValue.priceListName===null || formValue.priceListName.trim()==='')
+        {
+          this.headerValidation=false; 
+          alert ("PRICE LIST NAME: Should not be null....");
+            return;
+        } 
+
+        if (formValue.description===undefined || formValue.description===null || formValue.description.trim()==='')
+        {
+            this.headerValidation=false; 
+            alert ("DESCRIPTION : Should not be null....");
+            return;
+          } 
+
+         if (formValue.divisionId===undefined || formValue.divisionId===null)
+        {
+          this.headerValidation=false; 
+          alert ("DIVISION : Should not be null....");
+          return;
+        } 
+
+        if (formValue.deptId===undefined || formValue.deptId===null)
+        {
+          this.headerValidation=false; 
+          alert ("DEPT : Should not be null....");
+          return;
+        } 
+
+        if (formValue.ouId===undefined || formValue.ouId===null)
+        {
+          this.headerValidation=false; 
+          alert ("OPERATING UNIT : Should not be null....");
+          return;
+        } 
+        
+        if(formValue.status===undefined || formValue.status===null ) 
+        {
+            this.headerValidation=false;
+            alert ("STATUS: Should not be null value");
+            return; 
+         }
+         
+        if(formValue.startDate===undefined || formValue.startDate===null ) 
+        {
+            this.headerValidation=false;
+            alert ("START DATE: Should not be null value");
+            return; 
+         }
+
+        
+
+          if(formValue.status==='Inactive' ) {
+            if(formValue.endDate===undefined || formValue.endDate===null ) 
+            {
+                this.headerValidation=false;
+                alert ("END DATE: Should not be null value");
+                return; 
+              } 
+            }
+
+            if (formValue.priceSubType===undefined || formValue.priceSubType===null)
+            {
+              this.headerValidation=false; 
+              alert ("PRICE SUB TYPE : Should not be null....");
+              return;
+            } 
+    
+
+       
+      this.headerValidation=true
+
+  }
+
+  CheckLineValidations(i) {
+
+    // alert('addrow index '+i);
+  
+    var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
+    var lineValue1=prcLineArr1[i].itemId;
+    var lineValue2=prcLineArr1[i].batchCode;
+    var lineValue3=prcLineArr1[i].priceValue;
+  
+    // alert("Line Value :"+lineValue1);
+     var j=i+1;
+    if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
+      alert("Line-"+j+ " ITEM NUMBER :  should not be null value/ Select valid item from the list");
+      this.lineValidation=false;
+      return;
+    } 
+  
+    if(lineValue2===undefined || lineValue2===null || lineValue2.trim()===''){
+      alert("Line-"+j+ " BATCH CODE :  should not be null value");
+      this.lineValidation=false;
+      return;
+    } 
+  
+    if(lineValue3===undefined || lineValue3===null  || lineValue3 <=0){
+      alert("Line-"+j+ " PRICE :  should be above Zero");
+      this.lineValidation=false;
+      return;
+    } 
+     
+    this.lineValidation=true;
+  
+    }
+
+
  
   
 }

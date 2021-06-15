@@ -8,12 +8,20 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { now } from 'jquery';
 
 
 interface IMcpitemMaster {
  
   itemId:number;
-  
+  itemNumber:string;
+  itemType:number;
+  itemName:string;
+  itemDesc:string;
+  discount:number;
+  startDate:Date;
+  endDate:Date;
+
   }
 
 @Component({
@@ -50,10 +58,17 @@ export class McpItemMasterComponent implements OnInit {
         itemDesc:string;
         itemType:string;
         discount:number;
-        startDate:Date;
+        // startDate:Date;
         endDate:Date;
+       
+        pipe = new DatePipe('en-US');
+        startDate = Date.now();
+       
+        // receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+        
 
         //////////////////////////////////
+        checkValidation=false;
         displayInactive = true;
         Status1: any;
         inactiveDate: Date;
@@ -61,6 +76,13 @@ export class McpItemMasterComponent implements OnInit {
         displayButton = true;
         displaySuccess=false;
         //////////////////////////////////
+        isAlert=false;
+        title1="Alert Message Testing..."
+        alertMsg : string;
+        alertMsgTitle : string;
+
+
+        ///////////////////////////////
   
 
   get f() { return this.mcpItemMasterForm.controls; }
@@ -161,7 +183,10 @@ export class McpItemMasterComponent implements OnInit {
           }
 
           newMast() {
-            alert ("Posting data  to MCP ITEM MASTER.....")
+            this.CheckDataValidations();
+
+            if (this.checkValidation===true) {
+              alert("Data Validation Sucessfull....\nPosting data  to MCP ITEM MASTER TABLE")
            
             // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
             const formValue: IMcpitemMaster =this.transeData(this.mcpItemMasterForm.value);
@@ -179,13 +204,17 @@ export class McpItemMasterComponent implements OnInit {
                 }
               }
             });
+          }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
           }
 
 
           updateMast() {
-            // alert ("Putting data  to mcp ite master......")
-            const formValue: IMcpitemMaster =this.transeData(this.mcpItemMasterForm.value);
-            
+            this.CheckDataValidations();
+
+            if (this.checkValidation===true) {
+              alert("Data Validation Sucessfull....\nPutting data to MCP ITEM MASTER  TABLE")
+
+              const formValue: IMcpitemMaster =this.transeData(this.mcpItemMasterForm.value);
               this.service.UpdateMcpItemMaster(formValue,formValue.itemId).subscribe((res: any) => {
               if (res.code === 200) {
              
@@ -201,6 +230,7 @@ export class McpItemMasterComponent implements OnInit {
                 }
               }
             });
+          }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
           }
 
          
@@ -217,6 +247,90 @@ export class McpItemMasterComponent implements OnInit {
              window.location.reload();
           }
 
+          CheckDataValidations(){
+    
+            const formValue: IMcpitemMaster = this.mcpItemMasterForm.value;
+
+            if (formValue.itemNumber===undefined || formValue.itemNumber===null || formValue.itemNumber.trim()==='')
+            {
+               this.checkValidation=false; 
+               alert ("ITEM NO : Should not be null....");
+               this.isAlert=true;
+                return;
+             } 
+
+             if (formValue.itemType===undefined || formValue.itemType===null)
+            {
+               this.checkValidation=false; 
+               alert ("ITEM TYPE: Should not be null....");
+                return;
+             } 
+
+              if (formValue.itemName===undefined || formValue.itemName===null || formValue.itemName.trim()==='')
+              {
+                  this.checkValidation=false; 
+                  alert ("ITEM NAME : Should not be null....");
+                  return;
+                } 
+
+                if (formValue.itemDesc===undefined || formValue.itemDesc===null || formValue.itemDesc.trim()==='')
+                {
+                    this.checkValidation=false; 
+                    alert ("ITEM DESCRIPTION : Should not be null....");
+                    return;
+                  } 
+
+                if (formValue.discount < 0 || formValue.discount===undefined || formValue.discount===null )
+                {
+                    this.checkValidation=false;  
+                    alert ("DISCOUNT: Should not be below Zero");
+                    return;
+                } 
+                 
+                if(formValue.startDate===undefined || formValue.startDate===null ) 
+                {
+                    this.checkValidation=false;
+                    alert ("START DATE: Should not be null value");
+                    
+                    return; 
+                 }
+
+                 if(formValue.endDate===undefined || formValue.endDate===null || formValue.endDate<=formValue.startDate ) 
+                 {
+                     this.checkValidation=false;
+                     alert ("END DATE: Should not be null value/grater than Start Date.");
+                     return; 
+                  }
+
+               
+              this.checkValidation=true
+
+          }
+
+          AlertDialog(){
+            // this.isAlert=true;
+            // this.alertMsgTitle="MCP ITEM MASTER"
+            // this.alertMsg="Record Updated Successfully..."
+            // // alert(this.alertMsg);
+            // let msg1 =alert("enter your name" );
+            // console.log(msg1);
+            // alert(msg1);
+
+            
+            // let msg1=prompt("Enter Name:","myname");
+        
+            // alert(msg1);
+
+            // let deletePost=confirm("Delete?");
+            // if(deletePost){
+            // alert("Deleted successfully");
+
+            // } else {
+            // alert("not Deleted ")
+
+
+          }
+ 
 }
 
 
