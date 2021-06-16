@@ -127,18 +127,18 @@
                             Full&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <input formControlName="name" [(ngModel)]='name' value={{name}}  (keyup)="onKey($event)"  class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                            <input formControlName="fullName" [(ngModel)]='fullName' value={{fullName}}  (keyup)="onKey($event)"  class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }"
                             placeholder="Enter full name" uppercase  style="text-transform: uppercase;">
-                        <div *ngIf="submitted && f. name.errors" class="invalid-feedback">
-                            <div *ngIf="f.name.errors.required">Full Name must be a valid</div>
+                        <div *ngIf="submitted && f. fullName.errors" class="invalid-feedback">
+                            <div *ngIf="f.fullName.errors.required">Full Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.name.errors?.maxLength">Full  Name must be a valid 
+                            <div *ngIf="f.fullName.errors?.maxLength">Full  Name must be a valid 
                             </div>
                         </div>
                         <span
-                            *ngIf="!employeeMasterForm.get('name').valid && employeeMasterForm.get('name').touched">Please
+                            *ngIf="!employeeMasterForm.get('fullName').valid && employeeMasterForm.get('fullName').touched">Please
                             Enter Full  Name </span>
                         </td>
                         <td style="width: 12%" class="LabelFontStyle1">
@@ -454,18 +454,18 @@
                             Full&nbsp;Name&nbsp;:
                         </td>
                         <td>
-                            <input formControlName="name" [(ngModel)]='name' value={{name}} (keyup)="onKey($event)" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                            <input formControlName="fullName" [(ngModel)]='fullName' value={{fullName}} (keyup)="onKey($event)" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }"
                             placeholder="Enter full name">
-                        <div *ngIf="submitted && f. name.errors" class="invalid-feedback">
-                            <div *ngIf="f.name.errors.required">Full Name must be a valid</div>
+                        <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
+                            <div *ngIf="f.fullName.errors.required">Full Name must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
                     </div> -->
-                            <div *ngIf="f.name.errors?.maxLength">Full  Name must be a valid 
+                            <div *ngIf="f.fullName.errors?.maxLength">Full  Name must be a valid 
                             </div>
                         </div>
                         <span
-                            *ngIf="!employeeMasterForm.get('name').valid && employeeMasterForm.get('name').touched">Please
+                            *ngIf="!employeeMasterForm.get('fullName').valid && employeeMasterForm.get('fullName').touched">Please
                             Enter Full  Name </span>
                         </td>
                         <td style="width: 10%" class="LabelFontStyle1">
@@ -483,7 +483,7 @@
                             Department&nbsp;&nbsp;:
                         </td>
                         <td>
-                            <input disabled formControlName="deptId" [(ngModel)]="deptId" class="form-control"> 
+                            <input disabled formControlName="deptId" [(ngModel)]="deptId"  value={{deptName}} class="form-control"> 
                         </td>
                     </tr>
                     <tr>
@@ -689,9 +689,28 @@
                             {{sc.ticketNo}}</option>
                     </datalist>
                     </td>
-                    <td colspan="8" style="text-align: left; width: 100%;">
+                    <!-- colspan="8" -->
+                    <td  style="text-align: left; width: 100%;">
                         <button type="submit" [disabled]="!empId" (click)="SearchByEmpId(empId)" class="btn btn-primary"><i
                                 class="fa fa-search"></i></button>
+            
+                    </td>
+                
+                
+                    <td style="width: 15%" class="LabelFontStyle">Search&nbsp;By&nbsp;Name&nbsp;:</td>
+                    <td>
+                     <input type="text" formControlName="fullName1" class="form-control" [(ngModel)]="fullName1">  
+                    <!-- <select formControlName="fullName" id="fullName" class="form-control" (ngModelChange)='onOptionsFullNameSelected($event)'> 
+                        <option>--Select--</option>
+                        <option *ngFor="let sc of  fullNameList" >
+                            {{sc.fullName}}
+                        </option>
+                    </select> -->
+                    </td>
+                    <td colspan="8" style="text-align: left; width: 100%;">
+                        <button type="submit" [disabled]="!fullName1" (click)="SearchByFullName(fullName1)" class="btn btn-primary"><i
+                                class="fa fa-search"></i></button>
+                        
             
                     </td>
                 </tr>
@@ -730,7 +749,7 @@
             <td>{{com.designation}}</td>
             <td>{{com.dob}}</td>
             <td>{{com.panNo}}</td>
-            <td>{{com.emailId}}</td>/td>
+            <td>{{com.emailId}}</td>
             <td>{{com.contact1}}</td>
             <td>{{com.contact2}}</td>  
             <td>{{com.status}}</td>

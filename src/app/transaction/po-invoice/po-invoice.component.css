@@ -52,7 +52,8 @@ td{
 span{
   font-size: xx-small;
   color:red;
-  position: absolute;
+  /* position: absolute; */
+  position: relative;
 }
 
 
@@ -231,3 +232,17 @@ margin-left: 30%;
       color: Black;
       font-size: small;
          }
+
+input.ng-invalid{
+  background-color:yellow;
+}
+input.ng-valid{
+  background-color:white; 
+}
+
+.error-msg {
+  color: #a94442;
+}
+.fix-error-icon {
+  top: 27px;
+}

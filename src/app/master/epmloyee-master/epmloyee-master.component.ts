@@ -12,7 +12,7 @@ interface IEmployeeMaster {
   fname: string
   mname: string
   lname: string
-  name: string
+  fullName: string
   locId: number;
   deptId: string;
   designation: string;
@@ -44,7 +44,8 @@ export class EpmloyeeMasterComponent implements OnInit {
   fname: string= '';
   mname: string= '';
   lname: string= '';
-  name: string= '';
+  fullName: string= '';
+  fullName1: string= '';
   locId: number;
   deptId: string;
   designation: string;
@@ -80,10 +81,12 @@ export class EpmloyeeMasterComponent implements OnInit {
   public DivisionIDList: Array<string> = [];
   public teamRoleList : Array<string>=[];
   public empIdList:Array<string>=[];
+  public fullNameList:Array<string>=[];
+
   status1:any;
   empId:string;
   userList1: any[] = [];
-  // userList2: any[] = [];
+  userList2: any[] = [];
 
   lastkeydown1: number = 0;
   subscription: any;
@@ -96,7 +99,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       mname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
-      name: ['', [Validators.required,Validators.maxLength(100)]],
+      fullName: ['', [Validators.required,Validators.maxLength(100)]],
+      fullName1: [''],
       locId: ['', [Validators.required]],
       deptId: ['', [Validators.required]],
       designation: [''],
@@ -177,6 +181,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   employeeMaster(employeeMasterForm: any) {
 
   }
+  
   onOptionsSelected(event: any) {
     this.Status1 = this.employeeMasterForm.get('status').value;
     // alert(this.Status1);
@@ -188,7 +193,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       this.employeeMasterForm.get('endDate').reset();
     }
   }
-  transData(val) {
+    transData(val) {
     delete val.emplId;
     return val;
   }
@@ -258,7 +263,19 @@ export class EpmloyeeMasterComponent implements OnInit {
       }
     );
   }
+
+  SearchByFullName(fullName){
+    
+    this.service.getEmpIdDetails1(fullName)
+    .subscribe(
+      data => {
+        this.lstcomments = data;
+        console.log(this.fullNameList);
+      }
+    );
+  }
   Select(emplId: number) {
+    
     let select = this.lstcomments.find(d => d.emplId === emplId);
     if (select) {
       this.employeeMasterForm.patchValue(select);
@@ -269,8 +286,9 @@ export class EpmloyeeMasterComponent implements OnInit {
       // this.deptId= select.deptId+'-'
       this.displayButton = false;
       this.deptId= select.deptId+'-'+select.deptName;
-      alert(this.deptId);
-      this.display = false;
+      this.deptName = select.deptName;
+      // alert(this.deptId);
+      this.employeeMasterForm.patchValue({title:select.title});
     }
   }
   AccessChange(e) {
@@ -285,7 +303,7 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
   onKey(event: any) {
     const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
-    this.name = aaa;
+    this.fullName = aaa;
   }
 
   onOptionsDEPTSelected(event){   
@@ -321,7 +339,6 @@ export class EpmloyeeMasterComponent implements OnInit {
       }
     }
   }
-
   searchFromArray(arr, regex) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
@@ -331,4 +348,16 @@ export class EpmloyeeMasterComponent implements OnInit {
     }
     return matches;
   };
+
+  getUserIdsFirstWay1($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay1')).value;
+    this.userList2 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList2 = this.searchFromArray(this.fullNameList, userId);
+      }
+    }
+  }
+
 }

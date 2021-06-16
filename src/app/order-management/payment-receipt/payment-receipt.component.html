@@ -513,15 +513,15 @@
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
                 <!-- <td>{{com.oePayList.srlno}}</td> -->
 
-                <td>{{orderNumber}}</td>
+                <td>{{com.orderNumber}}</td>
                 <td>{{com.srlNo}}</td>
                 <td>{{com.receiptNumber}}</td>
                 <td>{{com.receiptDate}}</td>
                 <td>{{com.payType}}</td>  
                 <!-- <td>{{com.orderNumber}}</td> -->
-                <td>{{custName}}</td>
+                <td>{{com.custName}}</td>
                 <td>{{com.paymentAmt}}</td>
-                <td> {{com.receiptMethodId}}</td>
+                <td> {{com.receiptMethodName}}</td>
                 <!-- -{{com.receiptMethodName}} -->
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
             </tr>

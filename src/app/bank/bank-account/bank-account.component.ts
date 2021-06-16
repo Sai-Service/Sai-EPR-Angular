@@ -6,8 +6,8 @@ import{ BankService} from '../bank.service';
 
 interface IbankDetails{
   custName:string;
-  branchNumber:string;  
-branchId:number;
+branchId:number;  
+branchNumber:string;
 branchName:string;
   customerId:number;
   bankAccountName:string;
@@ -36,8 +36,8 @@ receiptMultiCurrFlag:string;
 export class BankAccountComponent implements OnInit {
   bankCreationForm: FormGroup;
   custName:string;
-  branchNumber:string;  
-branchId:number;
+branchId:number;  
+branchNumber:string;
 branchName:string;
   bankAccountName:string;
   status :string = 'Active';
@@ -69,8 +69,8 @@ receiptMultiCurrFlag:string;
   constructor(private fb: FormBuilder, private router: Router, private bankService: BankService) { 
      this.bankCreationForm = fb.group({
       custName:['',[Validators.required] ],
-      branchNumber:['',[Validators.required] ],
-      branchId:[],
+      branchId:['',[Validators.required] ], 
+      branchNumber:[],
       branchName:['',[Validators.required] ],
       customerId:[''],
       bkName:[''],
@@ -105,7 +105,7 @@ receiptMultiCurrFlag:string;
     this.bankService.BankNameListFn()
     .subscribe(
       data => {
-        this.BankNameList = data.obj;
+        this.BankNameList = data;
         console.log(this.BankNameList);
       }
     );
@@ -184,6 +184,16 @@ receiptMultiCurrFlag:string;
     this.branchNumber = select.name2;
     this.branchId = select.id;
   }
+
+    // onbranchIdSelected(branchName){
+  //   let select = this.BankBranchList.find(d => d.name=== branchName);
+  //   console.log(select);
+  //   console.log(select.name2);
+  //   this.branchId = select.name2;
+    
+  //   // console.log(select.name2);
+  //   // this.branchId = select.name2;
+  // }
   SelectbranchId(branchId){}
   bankCreation(bankCreationForm){}
 
@@ -195,12 +205,8 @@ receiptMultiCurrFlag:string;
     const formValue: IbankDetails = this.tranceFun(this.bankCreationForm.value);
     this.bankService.bankCreationFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('BANK DETAILS INSERTED SUCCESSFUILY');
-        this.bankCreationForm.disabled;
-        // window.location.reload();
         // this.divisionMasterForm.reset();
         // this.divisionMasterForm.get('status').reset();
-      } else {
         if (res.code === 400) {
           alert('Error occurred during data inserting');
           // this.divisionMasterForm.reset();

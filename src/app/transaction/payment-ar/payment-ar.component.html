@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;RECEIPT&nbsp;-&nbsp;AR&nbsp;
+                &nbsp;&nbsp;AR&nbsp;PAYMENT&nbsp;RECEIPT&nbsp;&nbsp;
             </td>
         </tr>
     </table>
@@ -32,103 +32,117 @@
                         <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id:&nbsp;</td> -->
 
                         <td >
-                            <input    type="text" disabled formControlName="emplId"
+                            <input  style="width:30px ;"  type="text" disabled formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
 
+                        </td>
+
+                        <td>
+                            <input  disabled style="width:30px ;" type="text"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
                         </td>
                                             
                       </tr>
                     </table>
 
-                    
+                    <!-- 
+                    <tr>
+                    <td> -->
+
                     <fieldset class="RFS">
                         <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Details</legend> -->
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Location/Customer Details</legend>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Location </legend>
                     <table class="center">
                           
-                          <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>
+                       <tr>
 
-                            <td>
-                                <input  disabled   type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control">
-                            </td>
-    
-                            <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date&nbsp;</td>
-    
-                            <td>
-                                <input  disabled type="text"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" >
-                            </td>
+                        <td style="width: 15%" class="LabelFontStyle1">Operating&nbsp;Unit:&nbsp;</td>
 
-                                                       
-                            <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
-    
-                            <td>
-                                <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
-                                <input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" >
-                            </td>
+                        <td>  
+                            <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" (ngModelChange)='onOuIdSelected($event)'  >
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                            {{sc.ouId}}-{{sc.ouName}}
+                            </option>
+                            </select>
+                        </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
+                        
+                        <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;No:&nbsp;</td>
+                        <td>
+                         <input type="text"
+                            formControlName="attribute1"
+                            [(ngModel)]="attribute1"
+                            (change)="serchByRegNo(attribute1)"
+                            (keyup)="getUserIdsFirstWay($event)"
+                            id="userIdFirstWay"
+                            list="dynmicUserIds"
+                            class="form-control" />
 
-                            <td>  
-                                <select  disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
-                                        {{sc.cmnTypeId}}-{{sc.code}}
-                                    </option>
-                                </select>
-                            </td>
-                            
-                        </tr>
+                            <datalist id="dynmicUserIds">
+                                <option
+                                    *ngFor="let item of VehRegNoList"
+                                    [ngValue]="item.regNo">
+                                    {{item.regNo}}
+                                </option>
+                            </datalist>
 
-                        <tr>
+                        </td> 
 
+                     <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;:&nbsp;</td>
+                     
+                     <td>
+                         <input  type="checkbox"  name="insuranceFlag" formControlName="insuranceFlag"  [(ngModel)]="insuranceFlag"  (change)="insuranceFlag1($event)">
+                     </td>
+                       </tr>
 
-                            <td style="width: 15%" class="LabelFontStyle1">Location&nbsp;Name:&nbsp;</td>
+                       <tr>
+                                                    
+                            <td style="width: 15%" class="LabelFontStyle1">Location&nbsp;:&nbsp;</td>
 
                             <td>
                             <select  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control"    >
                                 <!-- (ngModelChange)='onLocationSelected1($event,i)' -->
-                                <option>--Select--</option>
+                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                 {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
                                 </option>
                             </select>
                             </td>
 
-         
-                            <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;:&nbsp;</td>
-                            
-                            <td>
-                                <!-- <input   type="checkbox" formControlName="insurance"  id="insurance" class="form-control"  > -->
-                                <input  type="checkbox"  name="insuranceFlag" formControlName="insuranceFlag"  [(ngModel)]="insuranceFlag"  (change)="insuranceFlag1($event)">
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;No:&nbsp;</td>
-                            
-                        <td>
-                            <input   type="text" formControlName="vehNo"  id="vehNo" [(ngModel)]="vehNo" class="form-control"  placeholder="Veh Reg No">
-                        </td>
-                           
                             <td style="width: 15%" class="LabelFontStyle1">Customer&nbsp;No:&nbsp;</td>
                             
                             <td>
                                 <table>
                                 <tr>
+                                <div *ngIf="enableCustAccount ,then thenBlockCustno; else elseBlockCustno")></div>
+                                <ng-template #thenBlockCustno>
+                                    <td>
+                                    <input  style="width: 170px;" type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="Customer Account No">
+                                    </td>
+                                </ng-template>
+                                <ng-template #elseBlockCustno>
+                                    <td>
+                                    <input style="width: 170px;"  disabled type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="Customer Account No">
+                                    </td>
+                                </ng-template>
 
-                                <td>
-                                <input   type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="Customer Account No">
-                                </td>
-                       
-                        
-
-                    
-                           
+                             
                                <!-- //////////////////////////CUSTOMER MODAL FORM/////////////////////// -->
-                               <td>
-                                <button type="button" class="btn btn-primary"  (click)=SearchCustomerAll() 
-                                    data-toggle="modal" data-target="#exampleModal3">...</button>
                               
-                                <div class="modal fade" id="exampleModal3" tabindex="-1"
+                              
+                               
+                               <td>
+
+                                <td colspan="8" style="text-align: left; width: 100%;">
+                                    <button type="submit"  (click)= "SearchCustomerAll()" class="btn btn-primary"><i
+                                            class="fa fa-search" data-toggle="modal" data-target="#exampleModal3"></i></button> 
+
+                                <!-- <button type="button" class="btn btn-primary"  (click)=SearchCustomerAll() 
+                                    data-toggle="modal" data-target="#exampleModal3">...</button>
+                               -->
+                               
+                               
+                                    <div class="modal fade" id="exampleModal3" tabindex="-1"
                                     role="dialog" aria-labelledby="exampleModal3Label"
                                     aria-hidden="true" style="height: 450px ; padding-top: 0px;" >
 
@@ -229,47 +243,42 @@
                                     </div>
                                 </div>
                             </td>
-                        </tr>
-                       </table>
+                            </tr>
+                            </table>
+                            </td>
 
-                        </td>
-
-                        
+                                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
+                                <td>
+                                    <input  disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control"  placeholder="Customer Name">
+                                </td>
                         </tr>
                         <tr>
 
-                            <td style="width: 15%" class="LabelFontStyle1">Customer&nbsp;Name:&nbsp;</td>
-                            
-                            <td>
-                                <input  disabled style="width: 360%;"  type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control"  placeholder="Customer Name">
-                            </td>
-                            
-                        </tr>
+                            <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
 
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle1">Customer&nbsp;Site:&nbsp;</td>
-                            
-                            <td>
-                                <input disabled style="width: 360%;"   type="text" formControlName="custSiteAddress"  id="custSiteAddress" [(ngModel)]="custSiteAddress" class="form-control"  placeholder="Customer Site Address..">
-                            </td>
-                            <td>
-                                <input hidden style="width: 100px;"  type="text" formControlName="billToSiteId"  id="billToSiteId" [(ngModel)]="billToSiteId" class="form-control" >
-                            </td>
-                           
-
-                            <!-- <td>  
-                                <select  disabled formControlName="custSiteId" id="custSiteId" [(ngModel)]="custSiteId" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  custSiteIdList" [ngValue]="sc.custSiteId">
+                            <td>  
+                                <select  disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
                                         {{sc.cmnTypeId}}-{{sc.code}}
                                     </option>
                                 </select>
-                            </td> -->
-                        </tr>
-                  
+                            </td>
 
+                            <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Address:&nbsp;</td>
+                            
+                            <td>
+                                <input  disabled   type="text" formControlName="custSiteAddress"  id="custSiteAddress" [(ngModel)]="custSiteAddress" class="form-control"  placeholder="Customer Site Address............................................................">
+                            </td>
+                            <td>
+                                <input hidden  type="text" formControlName="billToSiteId"  id="billToSiteId" [(ngModel)]="billToSiteId" class="form-control" >
+                            </td>
+                        </tr>
                     </table>
-                </fieldset>
+                    </fieldset>
+
+                                    
+                     
 
                     <!-- <table style="width: 100%; background-color: #4d3f28;" >
                     <tr>
@@ -277,207 +286,269 @@
                     </tr>
                     </table> -->
 
-                    <fieldset class="RFS">
-                        <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Details</legend> -->
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Payment Details</legend>
-                        
-                    <table class="center">
-
-                        <tr>
-
-                            <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
-
-                            <td>  
-                                <select formControlName="refType" id="refType" [(ngModel)]="refType" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  ReceiptTypeArList" [ngValue]="sc.code"  >
-                                        {{sc.code}}
-                                        <!-- {{sc.cmnTypeId}}- -->
-                                    </option>
-                                </select>
-                            </td>
-
-
-                            <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
-
-                            <td>
-                                <!-- [(ngModel)]="referenceNo" -->
-                                <input   type="text" formControlName="referenceNo"  id="referenceNo"  class="form-control"  placeholder="Refernce No -sale/Sr no">
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
-
-                            <td>  
-                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
-                                        {{sc.lookupValue}} 
-                                    </option>
-                                </select>
-                            </td>
-                            
-                            <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
-                            <td>  
-                                <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
-                                        {{sc.receiptMethodId}}-{{sc.methodName}} 
-                                    </option>
-                                </select>
-
-                            </td>
-                        </tr>
-                        <tr>
- 
-                            <div *ngIf="showBankDetails; then thenBlock3; else elseBlock3"></div>
-                            <ng-template #thenBlock3>
-
-                                <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
-    
-                                <td>
-                                    <input   type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
-
-                                <td>
-                                    <input   type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
-                                </td>
-
-
-                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
-                                <td>
-                                    <input    type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
-                                </td>
-                                <td style="width: 15%" class="LabelFontStyle1">DD/Chq.&nbsp;Date:&nbsp;</td>
-                                <td>
-                                    <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
-                                </td>
-                                
-                            </ng-template>
-
-
-                            <ng-template #elseBlock3>
-                            <!-- <div *ngIf="showBankDetails; then thenBlock4; else elseBlock4"></div>
-                            <ng-template #thenBlock4> -->
-
-                                <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
-    
-                                <td>
-                                    <input   disabled type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
-                                </td>
-
-                            <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
-                            </td>
-
-                            
-
-                            <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;No:&nbsp;</td>
-                                <td>
-                                    <input  disabled  type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
-                                </td>
-                        
-                            <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
-                            <td>
-                                <input disabled  type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
-                            </td>
-
-                            </ng-template>
-
                    
-                         </tr>
 
-                         <tr>
+                            <fieldset class="RFS">
+                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Receipt Details</legend>
+                                
+                            <table class="center">
 
-                            <td   style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
-
-                            <td>
-                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" placeholder="Receipt Amount">
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
-    
-                            <td>  
-                            <select formControlName="receiptStatus" id="receiptStatus" [(ngModel)]="receiptStatus" class="form-control">
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.cmnTypeId"  >
-                                    {{sc.cmnTypeId}}-{{sc.code}}
-                                </option>
-                            </select>
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
-    
-                            <td>
-                                <input  disabled type="text"  formControlName="cancelDate"  id="cancelDate"  [(ngModel)]="cancelDate" class="form-control" >
-                            </td>
-
-                            <div *ngIf="showReason; then thenBlock2; else elseBlock2"></div>
-                            <ng-template #thenBlock2>
-
-                            <td style="width: 15%" class="LabelFontStyle">Rev.&nbsp;Reason:&nbsp;</td>
-
-                            <td>
-                                <select formControlName="cancelReason" id="cancelReason" [(ngModel)]="cancelReason" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
-                                        {{sc.cmnTypeId}}-{{sc.code}}
-                                    </option>
-                                </select>
-                            </td>
-                                </ng-template>
-
-                                <ng-template #elseBlock2>
-                                    <td style="width: 15%" class="LabelFontStyle">Rev.&nbsp;Reason:&nbsp;</td>
+                                
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>
 
                                     <td>
-                                        <select disabled formControlName="cancelReason" id="cancelReason" [(ngModel)]="cancelReason" class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
-                                                {{sc.cmnTypeId}}-{{sc.code}}
+                                        <input  disabled style="font-weight: bold;"  type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control">
+                                    </td>
+                                
+                                    <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date&nbsp;</td>
+            
+                                    <td>
+                                        <input  disabled type="text"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
+            
+                                    <td>  
+                                    <select formControlName="receiptStatus" id="receiptStatus" [(ngModel)]="receiptStatus" class="form-control">
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.cmnTypeId"  >
+                                            {{sc.cmnTypeId}}-{{sc.code}}
+                                        </option>
+                                    </select>
+                                    </td>
+                                    </tr>
+
+                                    <tr>
+                                                               
+                                    <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
+            
+                                    <td>
+                                        <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
+                                        <input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" >
+                                    </td>
+
+                                            <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
+        
+                                            <td>
+                                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" placeholder="Receipt Amount">
+                                            </td>
+                                           
+                                        
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
+
+                                    <td>  
+                                        <select formControlName="refType" id="refType" [(ngModel)]="refType" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  ReceiptTypeArList" [ngValue]="sc.code"  >
+                                                {{sc.code}}
+                                                <!-- {{sc.cmnTypeId}}- -->
                                             </option>
                                         </select>
                                     </td>
 
-                                </ng-template>
+                                    <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
+                                    <div *ngIf="showBankDetails; then thenBlock3; else elseBlock3"></div>
+                                    <ng-template #thenBlock3>
+                                     <td>
+                                        <input    type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                                    </td>
+                             
+                                    </ng-template>
+                                    <ng-template #elseBlock3>
 
-                         </tr>
+                                        <td>
+                                            <input  disabled  type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                                        </td>
+
+                                    </ng-template>
+
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalUnappliedAmt"  id="totalUnappliedAmt" [(ngModel)] ="totalUnappliedAmt" class="form-control" placeholder="Total Unapplied Amt">
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
+
+                                    <td>
+                                    <input   type="text" formControlName="referenceNo"  id="referenceNo"  class="form-control"  placeholder="Refernce No -sale/Sr no">
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
+                                    <div *ngIf="showBankDetails; then thenBlock31; else elseBlock31"></div>
+                                    <ng-template #thenBlock31>
+                                    <td>
+                                        <input    type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                                    </td>
+                                    </ng-template>
+                                    <ng-template #elseBlock31>
+                                        <td>
+                                            <input disabled   type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                                        </td>
+                                    </ng-template>
+
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Applied&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalAppliedAmt"  id="totalAppliedAmt" [(ngModel)] ="totalAppliedAmt" class="form-control" placeholder="Total Applied Amt">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
+    
+                                    <td>  
+                                        <select   formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                                {{sc.lookupValue}} 
+                                            </option>
+                                        </select>
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
+                                    <div *ngIf="showBankDetails; then thenBlock32; else elseBlock32"></div>
+                                    <ng-template #thenBlock32>
+                                    <td>
+                                        <input     type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                                    </td>
+                                    </ng-template>
+                                    <ng-template #elseBlock32>
+                                        <td>
+                                            <input  disabled   type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                                        </td>
+                                    </ng-template>
+
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;OnAct&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input  disabled style="text-align: right;"  type="text" formControlName="totalOnAccountAmt"  id="totalOnAccountAmt" [(ngModel)] ="totalOnAccountAmt" class="form-control" placeholder="Total OnAccount Amt">
+                                    </td>
+
+                                    </tr>
+    
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
+                                        <td>  
+                                            <select  formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
+                                                <option disabled>--Select--</option>
+                                                <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
+                                                    {{sc.receiptMethodId}}-{{sc.methodName}} 
+                                                </option>
+                                            </select>
+    
+                                        </td>
+
+                                        <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
+                                        
+                                        <div *ngIf="showBankDetails; then thenBlock33; else elseBlock33"></div>
+                                        <ng-template #thenBlock33>
+                                        <td>
+                                            <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                                        </td>
+                                        </ng-template>
+                                        <ng-template #elseBlock33>
+                                            <td>
+                                                <input  disabled  type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                                            </td>
+                                        </ng-template>
+
+                                        <td style="width: 15%" class="LabelFontStyle">Balance&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="balanceAmount"  id="balanceAmount" [(ngModel)] ="balanceAmount" class="form-control" placeholder="Total Balance Amt">
+                                    </td>
+
+                                    </tr>
+                                    <tr>
+                                      
+                                        <td style="width: 15%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
+        
+                                        <td>
+                                            <input style="width: 268%;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here">
+                                        </td>
+        
+                                        <!-- <td style="width: 15%" class="LabelFontStyle">PrePayment&nbsp;&nbsp;:&nbsp;</td>
+                                        <td>
+                                            <input  disabled  style="text-align: right;" type="text" formControlName="prePayment"  id="prePayment" [(ngModel)] ="prePayment" class="form-control" placeholder="Pre Payments">
+                                        </td> -->
+
+                                    </tr>
+
+                                    
+
+                            </table>
+                            </fieldset>
                          
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied&nbsp;Amt&nbsp;:&nbsp;</td>
-                            <td>
-                                <input  disabled  style="text-align: right;" type="text" formControlName="totalUnappliedAmt"  id="totalUnappliedAmt" [(ngModel)] ="totalUnappliedAmt" class="form-control" placeholder="Total Unapplied Amt">
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Applied&nbsp;Amt&nbsp;:&nbsp;</td>
-                            <td>
-                                <input  disabled  style="text-align: right;" type="text" formControlName="totalAppliedAmt"  id="totalAppliedAmt" [(ngModel)] ="totalAppliedAmt" class="form-control" placeholder="Total Applied Amt">
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;OnAct&nbsp;Amt&nbsp;:&nbsp;</td>
-                            <td>
-                                <input  disabled style="text-align: right;"  type="text" formControlName="totalOnAccountAmt"  id="totalOnAccountAmt" [(ngModel)] ="totalOnAccountAmt" class="form-control" placeholder="Total OnAccount Amt">
-                            </td>
+                          <!-- </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">Balance&nbsp;Amt&nbsp;:&nbsp;</td>
+                         
+
+                           </tr>
+
+                         <tr> -->
+
+                         <!-- <td> -->
+                        <div *ngIf="showReason; then thenBlock2; else elseBlock2"></div>
+                        <ng-template #thenBlock2>
+
+                        <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Reversal Details</legend>
+                            
+                        <table class="center">
+
+                            <tr>
+                                
+                            <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
+                                
                             <td>
-                                <input  disabled  style="text-align: right;" type="text" formControlName="balanceAmount"  id="balanceAmount" [(ngModel)] ="balanceAmount" class="form-control" placeholder="Total Balance Amt">
-                            </td>
-
-                        </tr>
-
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input style="width: 560%;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here">
+                                <input   type="text"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
                             </td>
 
-                    </tr>
+                          
+                                <td style="width: 15%" class="LabelFontStyle">Rev.&nbsp;Reason:&nbsp;</td>
 
-                   
+                                <td>
+                                    <select formControlName="reversalReasonCode" id="reversalReasonCode" [(ngModel)]="reversalReasonCode" class="form-control">
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
+                                            {{sc.cmnTypeId}}-{{sc.code}}
+                                        </option>
+                                    </select>
+                                </td>
+                           
+                                <td style="width: 15%" class="LabelFontStyle">Rev.&nbsp;Category:&nbsp;</td>
+
+                                <td>
+                                    <select  formControlName="reversalCategory" id="reversalCategory" [(ngModel)]="reversalCategory" class="form-control">
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
+                                            {{sc.cmnTypeId}}-{{sc.code}}
+                                        </option>
+                                    </select>
+                                </td>
+                            
+                              </tr>
+                              <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
+                                
+                            <td>
+                                <input style="width: 265%;"   type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
+                            </td>
+
+
+
+                            </tr>
                         </table>
-                    </fieldset>
+                        </fieldset>
+                        </ng-template>
+                        <ng-template #elseBlock2> </ng-template>
+                  
+
+
 
 
                             <!-- <table style="width: 100%; background-color: #4d3f28;" >
@@ -730,14 +801,14 @@
  
                                                 <th style="width:6rem" scope="col">Srl#</th>
                                                 <!-- <th style="width:6rem" scope="col">Apply</th> -->
-                                                <th style="width:8rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th>
+                                                <th style="width:5rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th>
 
                                                 <!-- <th><input  type="checkbox"  style="text-align: center;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,totUnApplAmt,k)"></td> -->
                                                 <th style="width:6rem" scope="col">Application Type</th>
                                                 <th style="width:6rem" scope="col">Invoice No</th>
                                                 <th style="width:6rem" scope="col">Invoice Date</th>
                                                 <th style="width:10rem" scope="col">Invoice Amt</th>
-                                                <th style="width:10rem" scope="col">Apply Date</th>
+                                                <th style="width:11rem" scope="col">Apply Date</th>
                                                 <th style="width:10rem" scope="col">Applied Amt</th>
                                                 <th style="width:10rem" scope="col">Balance  Due</th>
                                                 <!-- <th style="width:10rem" scope="col">Balance</th> -->
@@ -755,13 +826,13 @@
                                                    <tr>
                                                     <td style="text-align: right;">{{k+1}}</td>
                                                    
-                                                    <td><input  type="checkbox"  style="text-align: center;width: 8em;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
+                                                    <td><input  type="checkbox"  style="text-align: center;width: 5rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
                                                     <td><input style="width: 100px;height: 25px;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
                                                     <td><input style="width: 110px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
                                                     <td><input style="width: 145px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>    
                                                     <td><input style="width: 130px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
                                                     <!-- <td><input style="width: 110px;height: 25px;text-align: right;" disabled  type="text" formControlName="balance" class="form-control"></td> -->
-                                                    <td><input style="width: 130px;height: 25px;text-align: right;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
+                                                    <td><input style="width: 145px;height: 25px;text-align: right; background-color: white;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
                                                     <td><input style="width: 130px;height: 25px;text-align: right;"    type="text" formControlName="applAmt" (change)="validateLineApplAmt(k)" class="form-control" placeholder="Enter Apply Amt" > </td>
                                                     <td><input style="width: 130px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="balance Due" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled hidden  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
@@ -855,10 +926,10 @@
                     </ng-template>
 
                    <!-- ////////////////VALIDATIONS -->
-                   <td>
-                    <button type="button" class="btn btn-info" (click)="CheckDataValidations()" >Validate</button>
+                   <!-- <td>
+                    <button type="button" class="btn btn-info" (click)="CheckDataValidations1()" >Validate</button>
                    </td>
-                    
+                     -->
 
                 </tr>
                 </table>

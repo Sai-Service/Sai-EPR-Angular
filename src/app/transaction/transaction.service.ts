@@ -53,6 +53,10 @@ UpdateValidate(invoiceNum) {
     return this.http.get(this.ServerUrl + `/apInv/apinvDisLinewise?invoiceId=${invoiceId}&distLineNumber=${lineNumber}`);
   }
 
+  getprepay(supId,supsiteId):Observable<any>{
+    return this.http.get(this.ServerUrl+`/apInv/apSuppDtls/?suppId=${supId}&suppSiteId=${supsiteId}`)
+  }
+
   paymentMethodList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   } 

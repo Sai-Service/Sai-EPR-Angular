@@ -331,6 +331,7 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   var itemid=trxLnArr1[i].invItemId;
+  alert (itemid);
   // var frmSubCode=trxLnArr1[i].frmSubInvCode;
   // alert("FromSub"+frmSubCode);
   // alert(select1);

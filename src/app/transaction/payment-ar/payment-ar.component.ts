@@ -11,10 +11,24 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 
 
 interface IPaymentRcptAr {
-insuranceFlag : string;
-srlNo: number;
-refType :string;
+
 referenceNo:string;
+refType :string;
+ouId:number;
+locId:number;
+deptId:number;
+custAccountNo:number;
+billToSiteId:number;
+glDate :Date;
+receiptStatus:number;
+
+payType:string;
+receiptMethodId:number;
+paymentAmt:number;
+bankName:string;
+bankBranch:string;
+checkNo:string;
+checkDate:string;
 
 }
 
@@ -30,6 +44,7 @@ export class PaymentArComponent implements OnInit {
   // public DivisionIDList : Array<string>=[];
   // public OUIdList: Array<string> = [];
   
+  public OUIdList: Array<string> = [];
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
   public locIdList: Array<string> = [];
@@ -38,7 +53,13 @@ export class PaymentArComponent implements OnInit {
   public ReceiptStatusList: Array<string> = [];
   public ReverseReasonList: Array<string> = [];
   public ReceiptTypeArList: Array<string> = [];
+  public VehRegNoList       : Array<string> = [];
   accountNoSearch:any;
+  getVehRegDetails:any;
+  CustomerDetailsList:any;
+
+  userList1: any[] = [];
+  lastkeydown1: number = 0;
 
   lstcomments: any[];
   lstinvoices: any[];
@@ -52,7 +73,7 @@ export class PaymentArComponent implements OnInit {
   bankBranch : string;
   paymentAmt : number;
   
-  payType : string; 
+  payType : string;
   rmStatus :string
   paymentMethod : string;
   receiptAmount:number;
@@ -65,21 +86,29 @@ export class PaymentArComponent implements OnInit {
   referenceNo:string = null;
   custAccountNo :number;
   // customerId:number=8
+  // custId:number;
   accountNo:number;
-  vehNo : string;
+  vehRegNo : string;
+  attribute1:string;
   custName:string;
  
   // billToSiteId:number;
   custAddr:string;
   custSiteAddress : string 
   mobileNo:string;
- 
   
+  glDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
   receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-  glDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+  // glDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   trxdate= this.pipe.transform(this.now, 'dd-MM-y');
+  reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
+  
+  reversalComment: string;
+  reversalReasonCode:string;
+  // reversalDate:string;
+  reversalCategory:string;
 
   cancelDate =null;
   receiptStatus : string;
@@ -90,11 +119,13 @@ export class PaymentArComponent implements OnInit {
   searchValue : string;
  
   public srlNo =1;
-  // public searchByRcptNo =1000012;
-  public searchByRcptNo =1000024;
+
+  // public searchByRcptNo =1000024;
   // public searchByOrderNo =2111202148;
   // public searchByCustNo =1212;
-  public searchByCustNo =2234;
+  searchByRcptNo:number;
+  searchByCustNo:number;
+  
   searchByDate :Date;
   ordNumber : number;
   cancelReason:string;
@@ -106,7 +137,7 @@ export class PaymentArComponent implements OnInit {
   selectAllflag1 =false;
 
   // newBal:number;
-
+  prePayment:number;
   totalUnappliedAmt : number;
   totalAppliedAmt : number;
   totalOnAccountAmt:number;
@@ -115,6 +146,8 @@ export class PaymentArComponent implements OnInit {
   totAppliedtAmount:number;
   totUnAppliedtAmount:number;
 
+  enableCustAccount=true;
+  checkValidation=false;
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
@@ -137,7 +170,7 @@ export class PaymentArComponent implements OnInit {
   orgId:number;
 
   public emplId =6;
-  customerId:number=1
+  customerId:number;
   public billToSiteId=101;
   // public billToSiteId=107; 
   customerSiteId:number;
@@ -189,7 +222,8 @@ export class PaymentArComponent implements OnInit {
       customerId:[],
       custAddr:[],
       accountNo:[],
-      vehNo:[],
+      vehRegNo:[],
+      attribute1:[],
 
       checkNo:[],
       checkDate: [],
@@ -213,9 +247,14 @@ export class PaymentArComponent implements OnInit {
       totUnApplAmt:[],
       onAccountAmt:[],
 
+      reversalComment: [],
+      reversalReasonCode:[],
+      reversalDate:[],
+      reversalCategory:[],
+
       cancelReason:[],
       cancelDate:[],
-
+      prePayment:[],
       totalUnappliedAmt : [],
       totalAppliedAmt : [],
       totalOnAccountAmt:[],
@@ -275,6 +314,22 @@ export class PaymentArComponent implements OnInit {
 
           //  alert("Org Id :"+ this.orgId);
 
+          this.service.RegNoListFN()
+          .subscribe(
+            data1 => {
+              this.VehRegNoList = data1;
+              console.log(this.VehRegNoList);
+            }
+          ); 
+
+
+        this.service.OUIdList()
+            .subscribe(
+              data => {
+                this.OUIdList = data;
+                console.log(this.OUIdList);
+              }
+            );
 
           this.service.locationIdList()
           .subscribe(
@@ -331,6 +386,81 @@ export class PaymentArComponent implements OnInit {
 
 
       }
+
+      onOuIdSelected(ouId : any ){
+        // alert('ouId id =' +ouId );
+          if (ouId > 0) {
+            this.locIdList=null;
+            // this.showOrg=false;
+              this.service.getLocationSearch1(ouId)
+              .subscribe(
+                data => {
+                  this.locIdList = data;
+                  console.log(this.locIdList);
+                }
+              );
+         }
+          else { }
+      }
+
+
+      getUserIdsFirstWay($event) {
+        let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+        this.userList1 = [];
+    
+        if (userId.length > 2) {
+          if ($event.timeStamp - this.lastkeydown1 > 200) {
+            this.userList1 = this.searchFromArray(this.VehRegNoList, userId);
+          }
+        }
+      }
+      searchFromArray(arr, regex) {
+        let matches = [], i;
+        for (i = 0; i < arr.length; i++) {
+          if (arr[i].match(regex)) {
+            matches.push(arr[i]);
+          }
+        }
+        return matches;
+      };
+
+      serchByRegNo(mRegNo) {
+
+        // alert(mRegNo);
+        this.service.getVehRegDetails(mRegNo)
+        .subscribe(
+          data => {
+            this.getVehRegDetails = data;
+            console.log(this.getVehRegDetails);
+
+            this.paymentArForm.patchValue({
+              
+              customerId: this.getVehRegDetails.customerId,
+           });
+         alert("customer Id:"+this.customerId);
+         this.enableCustAccount =false;
+         this.GetCustomerDetails(this.customerId);
+         
+       
+       } );
+      }
+
+      GetCustomerDetails(mCustId :any){
+        // alert("Customer Id: "+mCustId);
+      this.service.ewInsSiteList(mCustId)
+      .subscribe(
+        data1 => {
+          this.CustomerDetailsList = data1;
+          console.log(this.CustomerDetailsList);
+          this.paymentArForm.patchValue({
+            custAccountNo:this.CustomerDetailsList.custAccountNo,
+            // custName: this.CustomerDetailsList.custName,
+
+        });
+        this.CustAccountNoSearch(this.custAccountNo)
+        }
+      );  
+    }
 
       onPayTypeSelected(payType : any  , rmStatus : any){
         // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
@@ -441,7 +571,7 @@ export class PaymentArComponent implements OnInit {
       {
       //  alert("e.target.checked :"  +e.target.checked);
         if ( e.target.checked === true) {this.selectAllflag1=true; }else { this.selectAllflag1=false; }
-        //  alert("select All flag :"+this.selectAllflag);
+        //  alert("select All flag :"+this.selectAllflag1);
          var patch = this.paymentArForm.get('invLine') as FormArray;
          var invLineArr = this.paymentArForm.get('invLine').value;
 
@@ -456,17 +586,17 @@ export class PaymentArComponent implements OnInit {
                { 
                  
                  patch.controls[i].patchValue({applyrcptFlag:''})
-                //  alert("inner loop");
+                 alert("inner loop");
                  this.applyReceiptFlag(e,i);
                }
-
+                alert ("accessing Selact all  ELSE section. marking line applyto to true");
                 patch.controls[i].patchValue({applyrcptFlag:true})
                 this.applyReceiptFlag(e,i);
             }
         }
         else
         {
-          // alert("select All flag false :"+this.selectAllflag);
+          alert("select All flag ELSE :"+this.selectAllflag1);
 
           for (let i = 0; i < this.lstinvoices.length ; i++) 
             {
@@ -481,8 +611,8 @@ export class PaymentArComponent implements OnInit {
      
       applyReceiptFlag(e,index) 
       {
-        //  alert("invoked fn from applyReceiptFlagAll");
-        // alert("e  ,index= "+ e +","+index);
+         alert("invoked fn from applyReceiptFlagAll");
+        alert("e  ,index= "+ e +","+index);
           var xyz;
           var tApplAmt; 
           var tUappAmt;
@@ -504,6 +634,8 @@ export class PaymentArComponent implements OnInit {
   
           if (e.target.checked) 
           {
+            alert("applyReceiptFlag-IF selected ");   
+            alert("applyReceiptFlag>>> e.target.checked :"  +e.target.checked);
             // this.applyrcptFlag = 'Y'
             // alert("yes:"+this.applyrcptFlag);
          
@@ -536,6 +668,7 @@ export class PaymentArComponent implements OnInit {
           {
                   // this.applyrcptFlag = 'N';
                   // alert("no:"+this.applyrcptFlag);
+                  alert("applyReceiptFlag-ELSE selected ");
                   xyz=LineinvAmt;
                   lineBalDueAmt=invLineArr[index].balance1;
                   LineApplAmount=invLineArr[index].applAmt;
@@ -758,8 +891,8 @@ export class PaymentArComponent implements OnInit {
       }
 
        searchCustomer(searchBy : any,searchValue: any) {
-        alert("Searchparam :" +searchBy +","+searchValue);
-        // this.service.custAccountNoSearch(searchValue,this.ouId)
+        // alert("Searchparam :" +searchBy +","+searchValue);
+ 
         this.service.insSiteList(searchValue)
         .subscribe(
         data => {
@@ -774,6 +907,7 @@ export class PaymentArComponent implements OnInit {
 
 
       CustAccountNoSearch(accountNo){
+        // alert("CustAccountNoSearch:"+accountNo);
        if(accountNo<=0)
         {
           this.custName=null;
@@ -842,6 +976,14 @@ export class PaymentArComponent implements OnInit {
         delete val.totalOnAccountAmt;
         delete val.invoiceBalnaceAmt;
 
+        delete val.receiptMethodName;
+        delete val.receiptAmount;
+        delete val.custAddr;
+        delete val.customerSiteId;
+        delete val.custSiteAddress;
+        delete val.cancelReason;
+        delete val.cancelDate;
+
         return val;
       }
 
@@ -901,9 +1043,9 @@ export class PaymentArComponent implements OnInit {
         return val;
       }
 
-      CheckDataValidations(){
+      CheckDataValidations1(){
         const formValue: IPaymentRcptAr = this.paymentArForm.value;
-        alert('refType ='+formValue.refType+' '+'referenceNo='+formValue.referenceNo);  // refType undefined null referenceNo
+        // alert('refType ='+formValue.refType+' '+'referenceNo='+formValue.referenceNo);  // refType undefined null referenceNo
        
         if (formValue.refType == undefined)
         {
@@ -916,6 +1058,7 @@ export class PaymentArComponent implements OnInit {
         alert("REFERENCE NO\nRef.number to be entered for Non-Advance Receipts");
         return;
        }
+
        if(formValue.refType =='Advance')
        {
         alert("Advance Selected....")
@@ -951,11 +1094,11 @@ export class PaymentArComponent implements OnInit {
         this.service.ArReceipApplySubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
-            this.paymentArForm.reset();
+            // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Code already present in the data base');
-              this.paymentArForm.reset();
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
             }
           }
         });
@@ -964,23 +1107,28 @@ export class PaymentArComponent implements OnInit {
 
 
       newMast() {
-        alert ("Posting data  to AR RECEIPT......")
-       
 
-        // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
+        this.CheckDataValidations();
+
+          if (this.checkValidation===true) {
+            alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE")
+
         const formValue: IPaymentRcptAr =this.transeData(this.paymentArForm.value);
-        // debugger;
         this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
-            this.paymentArForm.reset();
+            this.receiptNumber=res.obj;
+            this.paymentArForm.disable();
+            // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Code already present in the data base');
-              this.paymentArForm.reset();
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
             }
           }
         });
+      }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
+
       }
 
       ReceiptArApplication(rcptNumber:any,custActNo:any,rcptDate:any){
@@ -1008,4 +1156,143 @@ export class PaymentArComponent implements OnInit {
           //       }
               
           }
+
+
+          reverseReceipt(){ 
+            this.showReason=true;
+            
+            alert("Cancel Receipt........wip");
+          }
+
+
+          CheckDataValidations(){
+
+            const formValue: IPaymentRcptAr = this.paymentArForm.value;
+
+            if (formValue.ouId===undefined || formValue.ouId===null)
+            {
+               this.checkValidation=false; 
+               alert ("OPERATING UNIT: Should not be null....");
+                return;
+             } 
+
+            if (formValue.locId===undefined || formValue.locId===null)
+            {
+               this.checkValidation=false; 
+               alert ("LOCATION: Should not be null....");
+                return;
+             } 
+
+             if (formValue.deptId===undefined || formValue.deptId===null)
+            {
+               this.checkValidation=false; 
+               alert ("DEPT: Should not be null....");
+                return;
+             } 
+
+
+             if (formValue.custAccountNo===undefined || formValue.custAccountNo===null || formValue.custAccountNo<=0)
+             {
+                this.checkValidation=false; 
+                alert ("CUST NO : Should not be null / Enter valid Customer No");
+                 return;
+              } 
+
+
+              if (formValue.billToSiteId===undefined || formValue.billToSiteId===null)
+              {
+                  this.checkValidation=false; 
+                  alert ("BILL TO SITE : Should not be null....");
+                  return;
+                } 
+
+    
+                if(formValue.glDate===undefined || formValue.glDate===null ) 
+                {
+                    this.checkValidation=false;
+                    alert ("GL DATE: Should not be null value");
+                    return; 
+                 }
+
+                if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
+                {
+                    this.checkValidation=false;  
+                    alert ("RECEIPT AMT: Should be above Zero");
+                    return;
+                } 
+    
+              if (formValue.refType===undefined || formValue.refType===null)
+              {
+                  this.checkValidation=false; 
+                  alert ("REF TYPE: Should not be null....");
+                  return;
+                } 
+
+              if(formValue.refType !='Advance' && (formValue.referenceNo==null || formValue.referenceNo.trim()=='' ))
+              {
+                alert("REFERENCE NO\nRef.number to be entered for Non-Advance Receipts");
+                return;
+              }
+
+              if (formValue.payType===undefined || formValue.payType===null)
+              {
+                 this.checkValidation=false;   
+                 alert ("PAY MODE: Please Select payment Type....");
+                  return;
+               } 
+
+               if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null)
+               {
+                 this.checkValidation=false;  
+                 alert ("PAY METHOD: Please Select Receipt Method....");
+                 
+                 return;
+                } 
+
+                if (formValue.payType !==null) {
+                  if (formValue.payType != 'CASH') {
+
+                   if (formValue.bankName===undefined || formValue.bankName===null || formValue.bankName.trim()==='')
+                   {
+                       this.checkValidation=false;  
+                       alert ("BANK : Please Enter Bank Name....");
+                       return;
+                    } 
+
+                    if (formValue.bankBranch===undefined || formValue.bankBranch===null || formValue.bankBranch.trim()==='')
+                    {
+                        this.checkValidation=false;  
+                        alert ("BANK BRANCH : Please Enter Bank Branch....");
+                        return;
+                     } 
+
+                     if (formValue.checkNo===undefined || formValue.checkNo===null || formValue.checkNo.trim()==='')
+                     {
+                         this.checkValidation=false;  
+                         alert ("CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...");
+                         return;
+                      } 
+
+                      if (formValue.checkDate===undefined || formValue.checkDate===null)
+                      {
+                          this.checkValidation=false;  
+                          alert ("CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....");
+                          return;
+                       } 
+                  }
+                 
+                 }
+
+                 if (formValue.receiptStatus===undefined || formValue.receiptStatus===null)
+                 {
+                    this.checkValidation=false; 
+                    alert ("RECEIPT STATUS: Should not be null....");
+                     return;
+                  } 
+              this.checkValidation=true
+
+          }
+
+           
+          
 }

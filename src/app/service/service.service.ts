@@ -10,8 +10,8 @@ export class ServiceService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  // ServerUrl='http://localhost:8081';
+  ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -39,10 +39,10 @@ getSubSrTypeIdList(srTypeId): Observable<any> {
 matStatusListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/matStatus`);
 } 
-matDisPerListFN(): Observable<any> {
+matDiscPerListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/matDisPercentage`);
 } 
-labDisPerListFN(): Observable<any> {
+labDiscPerListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/labDisPercentage`);
 } 
 srvAdvisorListtFN(locId,deptId) : Observable<any> {

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EpmloyeeMasterComponent } from './epmloyee-master.component';
+import { CounterSaleComponent } from './counter-sale.component';
 
-describe('EpmloyeeMasterComponent', () => {
-   let component: EpmloyeeMasterComponent;
-  let fixture: ComponentFixture<EpmloyeeMasterComponent>;
+describe('CounterSaleComponent', () => {
+  let component: CounterSaleComponent;
+  let fixture: ComponentFixture<CounterSaleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EpmloyeeMasterComponent ]
+      declarations: [ CounterSaleComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EpmloyeeMasterComponent);
+    fixture = TestBed.createComponent(CounterSaleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

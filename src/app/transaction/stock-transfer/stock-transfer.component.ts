@@ -64,6 +64,7 @@ export class StockTransferComponent implements OnInit {
   public subInvCode: any[];
   public issueByList: Array<string> = [];
   public locIdList: any[];
+  onHandId:number;
   locData =[ {
     "locatorId": 999,
     "segmentName": "D.U.01.D.01",
@@ -224,14 +225,14 @@ export class StockTransferComponent implements OnInit {
   }
   stockTransfer(stockTranferForm: any) { }
   onOptionSelect(event: any, i) {
-    alert(event);
-    alert(this.locId);
+   // alert(event);
+    //alert(this.locId);
     console.log(this.subInvCode);
     let select1 = this.subInvCode.find(d => d.subInventoryCode === event);
     console.log(select1);
     var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
     var itemid = trxLnArr[i].itemId;
-    alert(itemid + "itemId")
+    //alert(itemid + "itemId")
 
     this.service.getfrmSubLoc(this.locId, itemid, select1.subInventoryId).subscribe(
       data => {
@@ -242,18 +243,18 @@ export class StockTransferComponent implements OnInit {
   }
   onOptionItemDetails(event: any, i) {
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
-    alert(subcode+'Subinventory')
+   // alert(subcode+'Subinventory')
     let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
-    alert(subcode1.subInventoryId);
+   // alert(subcode1.subInventoryId);
     var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
     var itemid = trxLnArr[i].itemId;
-    alert(itemid + "itemId")
+   // alert(itemid + "itemId")
     var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
     // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
     this.service.getItemDetail(itemid).subscribe
       (data => {
         this.getItemDetail = data;
-        alert("this.getItemDetail.description" + this.getItemDetail.description);
+       // alert("this.getItemDetail.description" + this.getItemDetail.description);
         if (this.getItemDetail.description != undefined) {
           trxLnArr1.controls[i].patchValue({ description: this.getItemDetail.description });
           trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
@@ -273,7 +274,7 @@ export class StockTransferComponent implements OnInit {
           //   // alert(getfrmSubLoc.segmentName+'SegmentName')
     
     
-            alert(i +'i');
+            // alert(i +'i');
             this.locData[i] = data;
             if(getfrmSubLoc.length==1)
             {
@@ -307,21 +308,23 @@ export class StockTransferComponent implements OnInit {
   var itemid=trxLnArr[i].itemId;
   var locId=trxLnArr[i].frmLocator;
   // trxLnArr1.controls[i].patchValue({locatorId:locId});
-  alert(locId+'locatorID');
+ alert(locId+'locatorID');
   var subcode=this.stockTranferForm.get('subInventoryCode').value;
-  alert(subcode);
+ // alert(subcode);
   let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
-  alert(select2.subInventoryId+'Id')
+ // alert(select2.subInventoryId+'Id')
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),select2.subInventoryId,locId,itemid).subscribe
     (data =>{ 
       this.onhand1 = data;
       console.log(this.onhand1);
+      alert(this.onHandId);
+      alert(this.onhand1);
       trxLnArr1.controls[i].patchValue({onHandQty:data.obj.onHandQty});
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj.onHandQty;
   let reserve=trxLnArr[i].resveQty;
-  alert(onHand+'OnHand');
-  alert(reserve+'reserve');
+  //alert(onHand+'OnHand');
+  //alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
   // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
@@ -391,6 +394,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
 
     const formValue: IStockTransfer = this.stockTranferForm.value;
     let variants = <FormArray>this.trxLinesList();
+    console.log(variants);
     var tranorgid = this.stockTranferForm.get('transferOrgId').value;
     var isso = this.stockTranferForm.get('issueTo').value;
     var ewaybil = this.stockTranferForm.get('ewayBill').value;
@@ -440,7 +444,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       else {
         if (res.code === 400) {
           alert("Code already present in data base");
-          this.stockTranferForm.reset();
+          //this.stockTranferForm.reset();
         }
       }
     });
@@ -497,7 +501,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   }
 searchAll()
 {
-  alert(this.locId+'Location');
+  //alert(this.locId+'Location');
  
   this.service.searchall(this.locId).subscribe(
     data=>{
@@ -512,10 +516,10 @@ searchAll()
 
 selectByShipNo(shipmentNumber:any)  
 {
-  alert(shipmentNumber);
+  //alert(shipmentNumber);
   let shipno=this.lstcomment.find(d=>d.shipmentNumber===shipmentNumber);
   console.log(shipno);
-  alert(shipno.shipmentNumber+'after')
+  //alert(shipno.shipmentNumber+'after')
   // this.stockTranferForm.patchValue(shipno);
   
 }

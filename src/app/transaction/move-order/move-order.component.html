@@ -126,7 +126,7 @@
           <td>
               <select type="text" class="form-control" formControlName="issueTo">
                 <option>--Select--</option>
-                <option *ngFor="let ib of issueByList"[ngValue]='ib.emplId'>{{ib.name}}</option>
+                <option *ngFor="let ib of issueByList" [ngValue]='ib.emplId'>{{ib.fullName}}</option>
                 </select>
             </td>
           <td style="width: 15%" class="LabelFontStyle">
