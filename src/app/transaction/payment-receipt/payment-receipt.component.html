@@ -137,9 +137,9 @@
 
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Method:&nbsp;</td>
                             <td>  
-                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}}   class="form-control">
+                                <select  formControlName="receiptMethodId" [(ngModel)]='receiptMethodId' value={{receiptMethodId}}   class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  ReceiptMethodList "  [ngValue]="sc.methodName">
+                                    <option *ngFor="let sc of  ReceiptMethodList "  [ngValue]="sc.receiptMethodId">
                                         {{sc.methodName}} 
                                     </option>
                                 </select>
@@ -456,32 +456,25 @@
                        
                         <table class="center" style="width:100%; background-color:beige" >
                             
-                            <tr>
-                                 <td  style="width: 13% " class="LabelFontStyle">Search&nbsp;By&nbsp;:</td>
+                            <!-- <tr> -->
+                                 <!-- <td  style="width: 13% " class="LabelFontStyle">Search&nbsp;By&nbsp;:</td>
                                 <td> 
                                     <select   formControlName="searchBy" id="searchBy" [(ngModel)]="searchBy" class="form-control">
                                         <option value="ORDER NUMBER">ORDER NUMBER</option>
                                         <option value="RECEIPT NUMBER">RECEIPT NUMBER</option>
                                         <option value="CUSTOMER NUMBER">CUSTOMER NUMBER</option>
                                     </select>
-                                </td>
+                                </td> -->
 
-                                <td style="width: 15%" class="LabelFontStyle">Search&nbsp;Value&nbsp;:</td>
-                                <!-- <td style="width: 15%" class="LabelFontStyle">{{searchBy}}</td> -->
-
+                                <!-- <td style="width: 15%" class="LabelFontStyle">Search&nbsp;Value&nbsp;:</td>
                                 <td>
                                     <input   type="text" formControlName="searchValue" [(ngModel)]="searchValue"   class="form-control" placeholder="Enter Search value" >
-                                </td>
+                                </td> -->
 
-                                <!-- <td colspan="8" style="text-align: left; width: 100%;">
-                                    <button type="submit"  (click)="searchMast(searchValue ,searchBy)" class="btn btn-primary"><i
-                                            class="fa fa-search"></i></button> -->
-
-                                            <!-- [disabled]="!searchValue" -->
-                                <td>
+                                <!-- <td>
                                     <button style="width: 10em;" type="button" (click)="searchMast(searchValue,searchBy)" class="btn btn-info"  id="register" >Search</button>
-                                </td>
-                            </tr>
+                                </td> -->
+                            <!-- </tr> -->
 
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>

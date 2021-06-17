@@ -16,22 +16,17 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 interface IPaymentRcpt {
     deptId : number;
-    divisionId:number;
-    ouId :number;
-    receiptNumber: number;
-    receiptDate :Date;
-    cancelDate:Date;
-    ouName:string;
-    locId:number;
-    emplId:number;
-    locName : string
+    customerId: number;
     orderNumber:number;
-    receiptMethodName:string;
-    customerId:number;
-    custName:string;
-      // customerName:string;
-      // methodType:string;
-      payType:string;
+    ayType:string;
+    receiptMethodId:number;
+    paymentAmt:number;
+    bankName:string;
+    bankBranch:string;
+    checkNo:string;
+    checkDate:string;
+
+   
   }
 
 
@@ -209,13 +204,13 @@ export class PaymentReceiptComponent implements OnInit  {
 
    
 
-    this.service.DivisionIDList()
-    .subscribe(
-      data => {
-        this.DivisionIDList = data;
-        console.log(this.DivisionIDList);
-      }
-    );
+    // this.service.DivisionIDList()
+    // .subscribe(
+    //   data => {
+    //     this.DivisionIDList = data;
+    //     console.log(this.DivisionIDList);
+    //   }
+    // );
 
 
         
@@ -247,7 +242,7 @@ export class PaymentReceiptComponent implements OnInit  {
 
     this.sub = this.router1.params.subscribe(params => {
       this.orderNumber = params['orderNumber'];
-      alert(this.orderNumber);
+      // alert(this.orderNumber);
       this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
       .subscribe(
       data => {
@@ -419,6 +414,140 @@ export class PaymentReceiptComponent implements OnInit  {
     this.showReason=true;
     
   }
+
+
+  // ------------------------Validatiopns------------------------------------
+
+  // CheckDataValidations(){
+
+  //   const formValue: IPaymentRcpt = this.paymentReceiptForm.value;
+
+  //   if (formValue.ouId===undefined || formValue.ouId===null)
+  //   {
+  //      this.checkValidation=false; 
+  //      alert ("OPERATING UNIT: Should not be null....");
+  //       return;
+  //    } 
+
+  //   if (formValue.ouId===undefined || formValue.ouId===null)
+  //   {
+  //      this.checkValidation=false; 
+  //      alert ("LOCATION: Should not be null....");
+  //       return;
+  //    } 
+
+  //    if (formValue.ouId===undefined || formValue.ouId===null)
+  //   {
+  //      this.checkValidation=false; 
+  //      alert ("DEPT: Should not be null....");
+  //       return;
+  //    } 
+
+
+  //    if (formValue.custAccountNo===undefined || formValue.custAccountNo===null)
+  //    {
+  //       this.checkValidation=false; 
+  //       alert ("CUST NO : Should not be null....");
+  //        return;
+  //     } 
+
+
+  //     if (formValue.billToSiteId===undefined || formValue.billToSiteId===null)
+  //     {
+  //         this.checkValidation=false; 
+  //         alert ("BILL TO SITE : Should not be null....");
+  //         return;
+  //       } 
+
+
+  //       if(formValue.glDate===undefined || formValue.glDate===null ) 
+  //       {
+  //           this.checkValidation=false;
+  //           alert ("GL DATE: Should not be null value");
+  //           return; 
+  //        }
+
+  //       if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
+  //       {
+  //           this.checkValidation=false;  
+  //           alert ("RECEIPT AMT: Should be above Zero");
+  //           return;
+  //       } 
+
+  //     if (formValue.refType===undefined || formValue.refType===null)
+  //     {
+  //         this.checkValidation=false; 
+  //         alert ("REF TYPE: Should not be null....");
+  //         return;
+  //       } 
+
+  //     if(formValue.refType !='Advance' && (formValue.referenceNo==null || formValue.referenceNo.trim()=='' ))
+  //     {
+  //       alert("REFERENCE NO\nRef.number to be entered for Non-Advance Receipts");
+  //       return;
+  //     }
+
+  //     if (formValue.payType===undefined || formValue.payType===null)
+  //     {
+  //        this.checkValidation=false;   
+  //        alert ("PAY MODE: Please Select payment Type....");
+  //         return;
+  //      } 
+
+  //      if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null)
+  //      {
+  //        this.checkValidation=false;  
+  //        alert ("PAY METHOD: Please Select Receipt Method....");
+         
+  //        return;
+  //       } 
+
+  //       if (formValue.payType !==null) {
+  //         if (formValue.payType != 'CASH') {
+
+  //          if (formValue.bankName===undefined || formValue.bankName===null)
+  //          {
+  //              this.checkValidation=false;  
+  //              alert ("BANK : Please Enter Bank Name....");
+  //              return;
+  //           } 
+
+  //           if (formValue.bankBranch===undefined || formValue.bankBranch===null)
+  //           {
+  //               this.checkValidation=false;  
+  //               alert ("BANK BRANCH : Please Enter Bank Branch....");
+  //               return;
+  //            } 
+
+  //            if (formValue.checkNo===undefined || formValue.checkNo===null)
+  //            {
+  //                this.checkValidation=false;  
+  //                alert ("CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...");
+  //                return;
+  //             } 
+
+  //             if (formValue.checkDate===undefined || formValue.checkDate===null)
+  //             {
+  //                 this.checkValidation=false;  
+  //                 alert ("CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....");
+  //                 return;
+  //              } 
+  //         }
+         
+  //        }
+
+  //        if (formValue.receiptStatus===undefined || formValue.receiptStatus===null)
+  //        {
+  //           this.checkValidation=false; 
+  //           alert ("RECEIPT STATUS: Should not be null....");
+  //            return;
+  //         } 
+  //     this.checkValidation=true
+
+  // }
+
+
+
 
 }
 
