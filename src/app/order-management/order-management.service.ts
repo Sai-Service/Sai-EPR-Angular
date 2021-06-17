@@ -138,7 +138,10 @@ export class OrderManagementService {
   }
 
   VariantSearchFn(mainModel): Observable<any> {
+    // alert("MS>> "+mainModel);
+    if(mainModel !=null) {
     return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
+    }
   }
 
 
@@ -147,7 +150,9 @@ export class OrderManagementService {
   }
 
   ColourSearchFn(variant): Observable<any> {
-    return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
+    if(variant !=null) {
+     return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
+    }
   }
 
 
@@ -158,8 +163,10 @@ export class OrderManagementService {
   }
 
   getOmReceiptSearchByOrdNo(orderNumber): Observable<any> {
-    alert("MS>>order number :" + orderNumber);
+    // alert("MS>>order number :" + orderNumber);
+    if(orderNumber !=null){
     return this.http.get(this.ServerUrl + `/omPayment/${orderNumber}`);
+  }
   }
 
 

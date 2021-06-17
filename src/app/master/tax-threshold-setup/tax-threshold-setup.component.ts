@@ -54,18 +54,27 @@ export class TaxThresholdSetupComponent implements OnInit {
   // ewSaleDate = this.pipe.transform(this.now, 'y-MM-dd');
 
   
+  thresholdHdrId:number;
+  thresholdSetupName:string;
+  description:string;
+  sectionCode:string; sectionDesc:string;
+  sectionType:string;
+  vendorTypeLookupCode:string;
+ 
   regimeId: number;
   regimeCode:string;
-  vendorType:string;
-  sectionCode:string;
-  sectionDesc:string;
-  exceptionSetupFlag:string;
+  multipleRateSetup:string;
   retrospectiveFlag:string;
-  taxCategoryId:number;
-   
+  exceptionSetupFlag:string;
+  custTypeLookupCode
+  
+  
+  
+  
+  
  
-
-
+  showTaxLine=false;
+  showLineInputCol=false;
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
@@ -96,18 +105,22 @@ export class TaxThresholdSetupComponent implements OnInit {
       orgId:[],
       divisionId:[],
 
+      thresholdHdrId:[],
+      thresholdSetupName:[],
+      description:[],
       regimeId: ['', [Validators.required]],
       regimeCode:[],
-      vendorType:[],
+      vendorTypeLookupCode:[],
       sectionCode:[],
+      sectionType:[],
       sectionDesc:[],
       exceptionSetupFlag:[],   /* check box */
       retrospectiveFlag:[], /* check box */
-      taxCategoryId:[],
+      // taxCategoryId:[],
 
      
-      thresholdTypeLines: this.fb.array([this.lineDetailsGroup()]) ,
-      thresholdTaxLines: this.fb.array([this.lineDetailsGroupTax()])        
+      jaiApThreshSlabs: this.fb.array([this.lineDetailsGroup()]) ,
+      jaiApThreshTaxes: this.fb.array([this.lineDetailsGroupTax()])        
         
 
       });
@@ -115,32 +128,39 @@ export class TaxThresholdSetupComponent implements OnInit {
       }
       lineDetailsGroup() {
         return this.fb.group({
-          thresholdTypeId :['', [Validators.required]],    
+          thresholdTypeId :[],
+          // thresholdHdrId:[], 
           thresholdType:['', [Validators.required]],
-          fromAmt: [],
-          toAmt: [],
-          startDate:[],
-          endDate:[],
+          thresholdSlabId:[], 
+          fromAmount: [],
+          toAmount: [],
+          fromDate:[],
+          toDate:[],
                   
          });
       }
 
       lineDetailsGroupTax() {
         return this.fb.group({
-          thresholdTaxId :['', [Validators.required]],    
+          thresholdTypeId :[],
+          thresholdTaxId :[],
+          thresholdTypeTax:[],
+          // thresholdSlabId:[],
+          // thresholdTypeId:[], 
           ouId:['', [Validators.required]],
-          taxCatId: [],
+          // taxId:[],
+          taxCategoryId: [],
           
                   
          });
       }
     
      lineDetailsArray() :FormArray{
-        return <FormArray>this.taxThresholdSetupForm.get('thresholdTypeLines')
+        return <FormArray>this.taxThresholdSetupForm.get('jaiApThreshSlabs')
       }
 
       lineDetailsArrayTax() :FormArray{
-        return <FormArray>this.taxThresholdSetupForm.get('thresholdTaxLines')
+        return <FormArray>this.taxThresholdSetupForm.get('jaiApThreshTaxes')
       }
 
         ngOnInit(): void {
@@ -214,6 +234,52 @@ export class TaxThresholdSetupComponent implements OnInit {
          
         }
 
+        onThresholdTypeSelected(threshSlabCode : any ,index){
+          // alert('threshId  =' +threshSlabCode + " index :"+index);
+
+            if (threshSlabCode != '--Select--') {
+              this.showLineInputCol=true;
+
+             }
+            else {
+              this.showLineInputCol=false;
+              // this.lineDetailsArray.clear();
+              //  this.lineDetailsArray.controls[index].get('ouId').reset();
+            }
+          }
+
+          onTaxThreshTypeSelected(txTreshSlab:any,index){
+            // alert('TAX thresh SLAB =' +txTreshSlab + " index :"+index);
+            var invLineArr = this.taxThresholdSetupForm.get('jaiApThreshSlabs').value;
+            // var patch = this.taxThresholdSetupForm.get('jaiApThreshSlabs') as FormArray;
+            // alert("lineDetailsArray Slab Length=" +invLineArr.length);
+            // alert("lineDetailsArray Tax Length=" +this.lineDetailsArrayTax.length);
+            var len1=invLineArr.length;
+
+            for (let i = 0; i < len1 ; i++) 
+              {
+                var lineValue=invLineArr[i].thresholdType;
+                // alert("lineValue"+i+"= "+lineValue);
+
+                if(txTreshSlab===lineValue) 
+                { 
+                  alert("FOUND SELECTED VALUE IN THRESHOLD TYPE SLAB");
+                  this.showTaxLine=true;
+                }
+                  else
+                {
+                  alert("SELECTED VALUE DOESN'T EXISIT IN SLAB TYPE...CAN'T PROCEED");
+                  this.showTaxLine=false;
+                  // this.lineDetailsArrayTax.clear();
+                  
+                }
+              
+              }
+
+          }
+
+
+
         onOptionSelectedSectionCode(sectionCode: any) {
           //  alert("sectionCode  :" + sectionCode);
          
@@ -265,6 +331,9 @@ export class TaxThresholdSetupComponent implements OnInit {
           delete val.emplId;
           delete val.orgId;
           delete val.divisionId;
+          delete val.regimeCode;
+          delete val.sectionDesc;
+
           return val;
         }
 
@@ -310,10 +379,9 @@ export class TaxThresholdSetupComponent implements OnInit {
         newMast() {
 
           alert ("Threshold seetup..posting....wip")
-          return;
-
+          
           const formValue: ITaxThresholdSetup =this.transeData(this.taxThresholdSetupForm.value);
-          this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
+          this.service.taxThresholdSetupSubmit(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
               this.taxThresholdSetupForm.reset();
@@ -327,7 +395,87 @@ export class TaxThresholdSetupComponent implements OnInit {
         }
 
         updateMast() {alert("Update....wip")}
-        searchMast() {alert("Search....wip")}
+       
+        
+        
+         Select1(setupId: number) {
+          // alert ('regimeid='+regimeId)
+          let select = this.lstcomments.find(d => d.thresholdHdrId === setupId);
+          if (select) {
+            this.taxThresholdSetupForm.patchValue(select);
+             this.thresholdHdrId = select.thresholdHdrId;
+            this.displayButton = false;
+            this.display = false;
+          }
+        }
+
+        searchMast() {
+          this.service.getThresholdSetup()
+            .subscribe(
+              data => {
+                this.lstcomments = data;
+                console.log(this.lstcomments);
+              }
+            );
+        }
+
+        Select(setupId: any) {
+          alert("Threshold Setup Id :"+setupId);
+          this.taxThresholdSetupForm.reset();
+          let select = this.lstcomments.find(d => d.thresholdHdrId === setupId);
+
+          alert( "select.thresholdHdrId : " + select.thresholdHdrId);
+          alert("lineDetailsArray Length=" +this.lineDetailsArray.length);
+        //  ------------------------- Threshold Slab-----------------------
+          for(let i=0; i<this.lineDetailsArray.length; i++){ 
+            this.lineDetailsArray().removeAt(i);
+          }
+
+          if(select.jaiApThreshSlabs.length>0){
+      
+             this.lineDetailsArray().clear();
+      
+            if (select) {
+
+                var control = this.taxThresholdSetupForm.get('jaiApThreshSlabs') as FormArray;
+               
+                for (let i=0; i<select.jaiApThreshSlabs.length;i++) 
+                  {
+                    var jaiApThreshSlabs:FormGroup=this.lineDetailsGroup();
+                    control.push(jaiApThreshSlabs);
+                  }
+                }
+          }
+
+          // --------------------------------Threshold Taxes ------------------------------------
+          // for(let i=0; i<this.lineDetailsArrayTax.length; i++){ 
+          //   this.lineDetailsArrayTax().removeAt(i);
+          // }
+
+          // if(select.jaiApThreshTaxes.length>0){
+      
+          //    this.lineDetailsArrayTax().clear();
+      
+          //   if (select) {
+
+          //       var control1 = this.taxThresholdSetupForm.get('jaiApThreshTaxes') as FormArray;
+               
+          //       for (let i=0; i<select.jaiApThreshTaxes.length;i++) 
+          //         {
+          //           var jaiApThreshTaxes:FormGroup=this.lineDetailsGroupTax();
+          //           control1.push(jaiApThreshTaxes);
+          //         }
+          //       }
+          // }
+
+          // ----------------------------------------------------------------------
+
+           this.taxThresholdSetupForm.patchValue(select);  
+           this.thresholdHdrId = select.thresholdHdrId;
+            this.displayButton = false;
+            this.display = false;
+           
+          }
 
 
 }

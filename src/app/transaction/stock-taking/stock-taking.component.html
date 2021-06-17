@@ -1,5 +1,9 @@
 <div class="center">
+<<<<<<< HEAD
   <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)">
+=======
+    <form [formGroup]="StockTakingForm" (ngSubmit)="StockTaking(StockTakingForm.value)">
+>>>>>>> 332913c4a0e877d468d0167b2b41227c317db4df
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
@@ -14,7 +18,7 @@
               <td colspan="8" style="text-align: left; width: 100%;">
                   <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
                   <!-- Modal -->
-                  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -44,7 +48,7 @@
                             </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
               
               </td>
           </tr>
@@ -70,7 +74,7 @@
                 Transaction Type:
               </td>
               <td>
-              <input hidden formControlName="compileId" [(ngModel)]="compileId">
+              <input  formControlName="compileId" [(ngModel)]="compileId">
               <select class="form-control" formControlName="compileType">
                 <option>--Select--</option>
                 <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
@@ -277,10 +281,11 @@
                 Made By:
                </td>
                <td>
-                 <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+                 <input  type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+                 <!-- <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
                   <option>--Select--</option>
                   <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
-                  </select>
+                  </select> -->
                </td>
                <td style="width: 15%" class="LabelFontStyle">
                 Description:
@@ -310,8 +315,37 @@
                      
                       <!-- <div class="radio"> 
                        
-                        <!-- </div> -->
+                         </div> -->
               
+            </tr>
+            <tr>
+              <td  style="width: 15%" class="LabelFontStyle"></td>
+              <td rowspan="2" style="width: 18%;margin-right: 30px;">
+                  <div  *ngIf="displayprocess; then thenvis; else elseinvs"></div>
+                  <ng-template #thenvis>
+              
+                  <fieldset class="RFS">
+                      <legend id="FormsPH_LGAadhaar" class="RFSL"
+                      style="font-size: 10px;color: black;">
+                   Process to be done</legend>
+                   <table>
+             <tr>
+                 <td>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" class="form-check-input" formControlName="trans" id =Adjustment  value="Adjustment" [(ngModel)]="Adjustment" (change)="postAdjustment($event)" (click)="viewdata(compNo)">
+                        <label for ="Adjustment"  class="LabelFontStyle">Adjustment</label>
+                 </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <td>
+                        <input type="radio" class="form-check-input" formControlName="trans" id =Approve  value="Approve" [(ngModel)]="Approve" (change)="postAdjustment($event)" (click)="viewdata(compNo)">
+                        <label for ="Approve" style="width: 15%" class="LabelFontStyle">Approve</label>
+                 </td>
+                    
+             </tr>
+            </table>
+                </fieldset>
+              </ng-template>
+              <ng-template #elseinvs>
+              </ng-template>
+              </td>
             </tr>
           </table>
           <br>
@@ -349,7 +383,7 @@
                    <tr>
                       <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="srlNo">
                       </td>
-                       <input hidden formControlName="compileId" [(ngModel)]="compileId">
+                       <input hidden formControlName="compileId1" [(ngModel)]="compileId1">
                        <input hidden formControlName="compileLineId">
                          <td>
                        <select type="text"  class="form-control"  style="height: 20px;width: 70px;" formControlName="entryStatusCode" >

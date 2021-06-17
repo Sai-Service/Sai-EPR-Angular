@@ -515,4 +515,26 @@ alert(suppSiteId);
           }
         );
       }
+      onOptionGstno(event:any,contno)
+      {
+        // alert(event);
+        var gstno=event.target.value;
+        // alert(gstno);
+        if(gstno.length==15)
+        {
+          
+          const gstNo1 = gstno.substr(3,10);
+          this.panNo = gstNo1;
+        }
+        else 
+        {
+          // this.gstNo='GSTUNREGISTERED';
+          this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
+          contno.focus();
+        }
+        return;
+
+      }
+
+      
 }

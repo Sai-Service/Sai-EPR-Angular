@@ -10,7 +10,23 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IEwScheme {
-  premiumPeriod:string;
+  
+
+  mainModel:string;
+  variant:string;
+  ewType:string;
+  ewSchemeName:string;
+  premiumPeriod:number;
+  slab:string;
+  ewSchemeNo:string;
+  ewSchemeDesc:string;
+  ewInsId : number;
+  schemeStartDate:Date;
+  schemeEndDate:Date;
+  schemeKms:number;
+  schemeAmount:number;
+
+  
   
   }
 @Component({
@@ -76,7 +92,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         schemeStartDate:Date;
         schemeEndDate:Date;
       
-        premiumPeriod:string;
+        premiumPeriod:number;
         schemeKms:number;
         schemeAmount:number;
 
@@ -86,7 +102,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
        
       
         //////////////////////////////////
-      
+        checkValidation=false;
         displayInactive = true;
         Status1: any;
         inactiveDate: Date;
@@ -155,8 +171,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           // this.emplId= Number(sessionStorage.getItem('emplId'));
          
           this.orgId=this.ouId;
-          this.ewInsId=this.ouId;
-          this.ewInsurerSiteId=this.ouId;
+          // this.ewInsId=this.ouId;
+          // this.ewInsurerSiteId=this.ouId;
           console.log(this.loginArray);
           console.log(this.locId);
 
@@ -276,17 +292,6 @@ export class SaiEwSchemeMasterComponent implements OnInit {
 
 
 
-        onOptionsSelectedModel(mainModel){
-          if(mainModel !=null) {
-          this.orderManagementService.VariantSearchFn(mainModel)
-          .subscribe(
-            data => {
-              this.VariantSearch = data;
-              console.log(this.VariantSearch);
-            }
-          );
-          } else {}
-        }
 
         onOptionsSelectedVariant(modelVariant){
 
@@ -349,8 +354,12 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         
 
          newMast() {
-        alert ("Posting data  to EW SCHEME TABLE......")
-       
+
+          this.CheckDataValidations();
+         
+          if (this.checkValidation===true) {
+          alert("Data Validation Sucessfull....\nPosting data  to EW SCHEME MASTER TABLE")
+
 
         // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
         const formValue: IEwScheme =this.transeData(this.saiEwSchemeMasterForm.value);
@@ -363,14 +372,22 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           } else {
             if (res.code === 400) {
               alert('Code already present in the data base');
-              this.saiEwSchemeMasterForm.reset();
+              // this.saiEwSchemeMasterForm.reset();
+              window.location.reload();
             }
           }
         });
+      } else { alert("Data Validation Not Sucessfull....\nPosting Not Done...Pls Check.")}
+
       }
 
       updateMast() {
-        alert ("Putting data  to EW SCHEME......")
+
+         this.CheckDataValidations();
+         
+          if (this.checkValidation===true) {
+          alert("Data Validation Sucessfull....\nPutting data  to EW SCHEME MASTER TABLE")
+          
         const formValue: IEwScheme =this.transeData(this.saiEwSchemeMasterForm.value);
         
           this.service.UpdateSaiEwScheme(formValue).subscribe((res: any) => {
@@ -384,6 +401,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
             }
           }
         });
+      }else { alert("Data Validation Not Sucessfull....\n Please Check and Try Again...")}
       }
 
         resetMast() {
@@ -394,6 +412,122 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           this.router.navigate(['admin']);
         }
 
+
+        
+        onOptionsSelectedModel(mainModel){
+      
+          if(mainModel != null){
+            this.orderManagementService.VariantSearchFn(mainModel)
+            .subscribe(
+              data => {
+                this.VariantSearch = data;
+                console.log(this.VariantSearch);
+              }
+            );
+          }
+          else{}
+        }
+
+        CheckDataValidations()
+        {
+      
+            const formValue: IEwScheme = this.saiEwSchemeMasterForm.value;
+            // alert("mainModel date :" +formValue.mainModel);
+    
+            if(formValue.mainModel===undefined || formValue.mainModel===null ) {
+                this.checkValidation=false;
+                alert ("MODEL: Should not be null value");
+                return; 
+            }
+    
+            if(formValue.variant===undefined || formValue.variant===null ) {
+              this.checkValidation=false;
+              alert ("VARIANT: Should not be null value");
+              return; 
+           }
+         
+           if(formValue.ewType===undefined || formValue.ewType===null) {
+            this.checkValidation=false;
+            alert ("SCHEME TYPE: Should not be null value");
+            return; 
+           }
+  
+           if (formValue.ewSchemeName===undefined || formValue.ewSchemeName===null)
+           {
+              this.checkValidation=false; 
+              alert ("SCHEME NAME: Should not be null value");
+               return;
+            } 
+          
+            if (formValue.premiumPeriod <=0  || formValue.premiumPeriod===undefined || formValue.premiumPeriod===null)
+            {
+                this.checkValidation=false;
+                alert ("SCHEME PREIOD: Should be above Zero....");
+                return;
+             } 
+  
+             if (formValue.slab===undefined || formValue.slab===null)
+             {
+                this.checkValidation=false;   
+                alert ("SLAB: Should not be null value....");
+                 return;
+              } 
+  
+              if (formValue.ewSchemeNo===undefined || formValue.ewSchemeNo===null || formValue.ewSchemeNo.trim()==='')
+              {
+                  this.checkValidation=false;  
+                  alert ("SCHEME CODE : Should not be null value...");
+                  return;
+               } 
+              //  alert("Scheme desc "+formValue.ewSchemeDesc);
+              if (formValue.ewSchemeDesc===undefined || formValue.ewSchemeDesc===null || formValue.ewSchemeDesc.trim()==='')
+              {
+                  this.checkValidation=false;
+                  alert ("SCHEME DESC: Should not be null value...");
+                  return;
+               } 
+
+              
+               if (formValue.ewInsId===undefined || formValue.ewInsId===null)
+               {
+                   this.checkValidation=false;
+                   alert ("EW INSURANCE: Should not be null value...");
+                   return;
+                } 
+
+               if (formValue.schemeStartDate===undefined || formValue.schemeStartDate===null)
+               {
+                   this.checkValidation=false;
+                   alert ("SCHEME START DATE: Should not be null value...");
+                   return;
+                } 
+  
+                if (formValue.schemeEndDate===undefined || formValue.schemeEndDate===null || formValue.schemeEndDate<=formValue.schemeStartDate)
+                {
+                    this.checkValidation=false;  
+                    alert ("SCHEME END DATE: Should not be null value/grater than Scheme Start Date...");
+                    return;
+                 } 
+
+                 if (formValue.schemeKms <=0 || formValue.schemeKms===undefined || formValue.schemeKms===null )
+                 {
+                     this.checkValidation=false;  
+                     alert ("SCHEME KM LIMIT: Should be above Zero");
+                     return;
+                  } 
+  
+                 if (formValue.schemeAmount===undefined || formValue.schemeAmount===null || formValue.schemeAmount<=0)
+                 {
+                     this.checkValidation=false;  
+                     alert ("SCHEME AMOUNT: Should be above Zero");
+                     return;
+                  } 
+
+  
+                
+                  this.checkValidation=true
+        }
+      
 
   }
 

@@ -10,8 +10,13 @@
             <div class="center" style="width: 100%;">
                 <form [formGroup]="avgCostUpdateForm" (ngSubmit)="avgCostUpdate(avgCostUpdateForm.value)">
                     <table class="center" >
+
+                        <td><input hidden type="text" disabled formControlName="divisionId"
+                            class="form-control" [(ngModel)]="divisionId"> </td>
+                   
                        
                         <tr>
+
                             <td style="width: 15%" class="LabelFontStyle">Division&nbsp;Name:&nbsp;</td>
                         <td   style="border: none;color: black;">
                             <input type="text" disabled formControlName="loginArray"
@@ -28,7 +33,7 @@
                             <select disabled  formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control">
                                 <!-- (ngModelChange)='onOuIdSelected($event)' -->
                                
-                            <option>--Select--</option>
+                            <option disabled>--Select--</option>
                             <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                {{sc.ouId}}-{{sc.ouName}}
                             </option>
@@ -43,7 +48,7 @@
                         <td>
                             <select  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control">
                                 <!-- (ngModelChange)='onLocationSelected1($event,i)' -->
-                                <option>--Select--</option>
+                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                 {{sc.locId}} {{sc.locCode}} {{sc.locName}}
                                 </option>
@@ -72,19 +77,19 @@
 
                             <td style="width: 15%" class="LabelFontStyle">Source&nbsp;Type:&nbsp;</td>
                             <td>
-                                <input   type="text"  formControlName="transSourceTypeId"  id="transSourceTypeId" [(ngModel)]="transSourceTypeId" class="form-control" >
+                                <input   type="number"  formControlName="transSourceTypeId"  id="transSourceTypeId" [(ngModel)]="transSourceTypeId" class="form-control" >
                             </td>
                        
                             <td style="width: 15%" class="LabelFontStyle">Reason&nbsp;Code:&nbsp;</td>
                             <td>
-                                <input   type="text"  formControlName="reason"  id="reason" [(ngModel)]="reason" class="form-control" >
+                                <input   type="text"  formControlName="reasonCode"  id="reasonCode" [(ngModel)]="reasonCode" class="form-control" >
                             </td>
                     </tr>
                      <tr> 
 
                         <td style="width: 15%" class="LabelFontStyle">Account&nbsp;Code:&nbsp;</td>
                         <td>
-                            <input   type="text"  formControlName="codeCombinationId"  id="codeCombinationId" [(ngModel)]="codeCombinationId" class="form-control" >
+                            <input   type="number"  formControlName="codeCombinationId"  id="codeCombinationId" [(ngModel)]="codeCombinationId" class="form-control" >
                         </td>
                        
 
@@ -200,10 +205,10 @@
                                                 </td>
                                                 
                                                 <td>
-                                                    <input  style="width: 100px;"  type="text" formControlName="actualCost"  class="form-control" (change)="validateAvgPrice(i)" placeholder="New Avg Cost "  >
+                                                    <input  style="width: 100px; text-align: right;"  type="number" formControlName="actualCost"  class="form-control" (change)="validateAvgPrice(i)" placeholder="New Avg Cost "  >
                                                 </td>
                                                 <td>
-                                                    <input disabled style="width: 100px;"  type="text" formControlName="priorCost"  class="form-control" placeholder="Current Avg Cost "  >
+                                                    <input disabled style="width: 100px; text-align: right;"  type="text" formControlName="priorCost"  class="form-control" placeholder="Current Avg Cost "  >
                                                 </td>
                                                 <td>
                                                 <input  style="width: 100px;"  type="text" formControlName="locatorId" [(ngModel)]="locatorId" class="form-control" placeholder="locatorId "  >

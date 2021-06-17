@@ -96,8 +96,8 @@
                                 
                                                         <td>  
                                                             <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  (ngModelChange)="onOptionsSelectedModel($event)">
-                                                                <option>--Select--</option>
-                                                                <option *ngFor="let mm of mainModelList">
+                                                                <option disabled>--Select--</option>
+                                                                <option *ngFor="let mm of mainModelList"  [ngValue]="mm.code">
                                                                     {{mm.code}}
                                                                 </option>
                                                             </select>
@@ -115,7 +115,7 @@
                         
                                                             <select formControlName="variant" id="variant" class="form-control" [(ngModel)]="variant" (ngModelChange)="onOptionsSelectedVariant($event)" >
                                                                 <!-- (ngModelChange)="onOptionsSelectedVariant($event)" -->
-                                                                <option>--Select--</option>
+                                                                <option disabled>--Select--</option>
                                                                 <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
                                                                     {{mv.variant}}
                                                                     <!-- -{{mm.varDescription}} -->
@@ -139,7 +139,7 @@
         
                                 <td>  
                                     <select   formControlName="ewType" id="ewType" [(ngModel)]="ewType" class="form-control" (ngModelChange)="onSelectedEWtype($event)">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
                                             {{sc.code}}
                                         </option>
@@ -150,7 +150,7 @@
         
                                 <td>  
                                     <select   formControlName="ewSchemeName" id="ewSchemeName" [(ngModel)]="ewSchemeName" class="form-control" (ngModelChange)="onSelectedEWtype($event)">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  EwSchemeList" [ngValue]="sc.code">
                                             {{sc.code}}-{{sc.codeDesc}}
                                         </option>
@@ -161,7 +161,7 @@
                                 
                                 <td>  
                                     <select   formControlName="premiumPeriod" id="premiumPeriod" [(ngModel)]="premiumPeriod" class="form-control" (ngModelChange)="onSelectedEWtype($event)">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  PremiumPeriodList" [ngValue]="sc.code">
                                            {{sc.code}}
                                         </option>
@@ -177,7 +177,7 @@
         
                                 <td>  
                                     <select   formControlName="slab" id="slab" [(ngModel)]="slab" class="form-control" (ngModelChange)="onSelectedEWSlab($event)">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  EWSlabList" [ngValue]="sc.code">
                                            {{sc.code}}-{{sc.codeDesc}}
                                         </option>
@@ -219,7 +219,7 @@
     
                                 <td>  
                                     <select   formControlName="ewInsId" id="ewInsId" [(ngModel)]="ewInsId"  class="form-control"  >
-                                    <option>--Select--</option>
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  ewInsNameList" [ngValue]="sc.customerId">
                                     {{sc.customerId}}-{{sc.custName}}
                                     </option>
@@ -244,7 +244,7 @@
     
                                 <td style="width: 15%" class="LabelFontStyle">Scheme&nbsp;Kms&nbsp;Limit:&nbsp;</td>
                                 <td>
-                                    <input   type="text"  formControlName="schemeKms"  id="schemeKms" [(ngModel)]="schemeKms" class="form-control" placeholder="Enter KM Reading" >
+                                    <input   type="number"  formControlName="schemeKms"  id="schemeKms" [(ngModel)]="schemeKms" class="form-control" placeholder="Enter KM Reading" >
                                 </td>
     
     

@@ -424,10 +424,12 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       if (res.code === 200) {
         alert("Record inserted Successfully");
         this.shipmentNumber =res.obj.shipmentNumber;
-         this.stockTranferForm.patchValue({'transferOrgId':res.obj[0].transferOrgId,
+         this.stockTranferForm.patchValue({
+           'transferLoc':res.obj[0].transReference,
          'issueTo':res.obj[0].issueTo,
-         'shipmentNumber':res.obj[0].shipmentNumber,
-        'transReference':res.obj[0].transReference});
+         'shipmentNumber':res.obj[0].shipmentNumber,});
+        // 'transReference':res.obj[0].transReference
+        // 'transferOrgId':res.obj[0].transReference });
          var trxLnArr2 = this.stockTranferForm.get('trxLinesList') as FormArray;
          for(let i=0; i<res.obj.length; i++){
           // trxLnArr2.controls[i].patchValue(res.obj[i]);

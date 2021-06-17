@@ -45,7 +45,7 @@
             To Organization:
           </td>
           <td>
-             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" (ngModelChange)="onlocationissueselect($event)">
+             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId"(ngModelChange)="onlocationissueselect($event)">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                       {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
@@ -99,7 +99,7 @@
               <option>--Select--</option>
               <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
               </select>
-              <span  *ngIf="!stockTranferForm.get('issueTo').valid && stockTranferForm.get('issueTo').touched">Please
+              <span  *ngIf="!stockTranferForm.get('issueTo').valid && stockTranferForm.get('issueTo').touched" class="cross-validation-error-message alert">Please
                   select Issue Name </span>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
@@ -162,8 +162,8 @@
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
                   </select>
                 </td>
-                <td><input type="text" class="form-control" style="height: 20px;"formControlName="description"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;"formControlName="description"></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
                 
                 <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="transCost"></td>
                 <td><select class=" form-control" style="height: 20px; width: 110px;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">

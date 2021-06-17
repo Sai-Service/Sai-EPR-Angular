@@ -57,7 +57,7 @@
 
                     <td>  
                         <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control" >
-                            <option>--Select--</option>
+                            <option disabled>--Select--</option>
                             <option *ngFor="let mm of mainModelList"  [ngValue]="mm.cmnId">
                                 {{mm.code}}
                             </option>
@@ -95,7 +95,7 @@
                     
                     <td>  
                         <select formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" >
-                            <option>--Select--</option>
+                            <option disabled>--Select--</option>
                             <option *ngFor="let mm of fuelTypeList" [ngValue]="mm.code" >
                                 {{mm.code}}
                             </option>
@@ -176,13 +176,38 @@
 
                     <td style="width: 15%" class="LabelFontStyle1">Satus&nbsp;:&nbsp;</td>
                     <td>  
-                        <select formControlName="status" id="status" [(ngModel)]="status" class="form-control" >
-                            <option>--Select--</option>
-                            <option *ngFor="let mm of statusList">
+                        <select formControlName="status" id="status" [(ngModel)]="status" class="form-control" (ngModelChange)='onOptionsSelected($event)'>
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of statusList" [ngValue]="mm.code" >
                                 {{mm.code}}
                             </option>
                         </select>
                     </td>
+
+                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                                    <ng-template #thenBlockInactive> 
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Start&nbsp;Date&nbsp;:
+                                        </td>
+                
+                                        <td>
+                                            <input   type="date"   id="startDate"  formControlName="startDate" [ngModel]="startDate"  class="form-control"
+                                                max="{{minDate | date:'yyyy-MM-dd'}}">
+                                        </td>
+                                        
+                                    </ng-template>
+
+
+                                    <ng-template #elseBlockInactive>
+                                            <td style="width: 18%" class="LabelFontStyle">
+                                                Inactive&nbsp;Date:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="endDate" [ngModel]="endDate" class="form-control"
+                                                       [ngModel]="endDate | date:'dd/MM/yyyy'">
+                                            </td>
+                                   
+                                    </ng-template>
                </tr>
             </table>
             </fieldset>
@@ -227,11 +252,17 @@
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                                 </td>
                                  <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
-                                        <div class="modal-dialog" role="document">
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:darkblue;">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+
                                             <div class="modal-body">
-                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
                                                     <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                                                     Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
                                                 </label>
