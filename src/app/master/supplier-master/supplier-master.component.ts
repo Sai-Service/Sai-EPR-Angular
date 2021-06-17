@@ -59,7 +59,7 @@ interface IsupplierMaster {
   styleUrls: ['./supplier-master.component.css']
 })
 export class SupplierMasterComponent implements OnInit {
-
+  
   supplierMasterForm: FormGroup;
   suppId: number;
   suppNo: number;
@@ -127,23 +127,28 @@ export class SupplierMasterComponent implements OnInit {
       suppId: [],
       suppNo: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       name: ['', [Validators.required]],
-      address1: ['', [Validators.required]],
-      address2: ['', [Validators.required]],
-      address3: ['', [Validators.required]],
-      address4: [''],
+      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address3: ['',[Validators.maxLength(50)]],
+      address4: ['',[Validators.maxLength(50)]],
+      //address2: ['', [Validators.required]],
+      //address3: ['', [Validators.required]],
+      //address4: [''],
       city: ['', [Validators.required]],
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      emailId: ['', [Validators.required, Validators.email]],
+      // emailId: ['', [Validators.required, Validators.email]],
+      emailId: [''],
       contactPerson: [''],
       taxCategoryName: ['', Validators.required],
-      ticketNo: ['', Validators.required],
-      creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+       ticketNo: ['', Validators.required],
+       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       remarks: [''],
       state: ['', [Validators.required]],
-      gstNo: [],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      //gstNo: [],
       // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
       tanNo: [''],
@@ -418,6 +423,7 @@ alert(suppSiteId);
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
           this.city = this.lstcomments.city
+          this.displayInactive = true;
         }
       );
   }
@@ -437,7 +443,8 @@ alert(suppSiteId);
 
   }
   SearchTaxCat(ouId) {
-    // alert(locId);
+     // alert(ouId);
+    if (ouId > 0 ) {
     this.service.getTaxCat(ouId)
       .subscribe(
         data => {
@@ -446,6 +453,7 @@ alert(suppSiteId);
           // this.allFunction(locId);
         }
       );
+    }
   }
   onOptionsSelected(event: any) {
     this.Status1 = this.supplierMasterForm.get('sstatus').value;
@@ -456,6 +464,7 @@ alert(suppSiteId);
     }
     else if (this.Status1 === 'Active') {
       this.supplierMasterForm.get('endDate').reset();
+      this.displayInactive = true;
     }
   }   
   onOptionsSelectedSupp(event: any) {
@@ -467,6 +476,7 @@ alert(suppSiteId);
     }
     else if (this.Status1 === 'Active') {
       this.supplierMasterForm.get('endDate').reset();
+      this.displayInactive = true;
     }
   } 
 
