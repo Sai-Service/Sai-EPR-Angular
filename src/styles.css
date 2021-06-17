@@ -316,3 +316,8 @@ table tbody .GridHeader th {
 position: sticky; top: 0; 
 position: relative; 
 }
+
+  
+.form-control:focus {
+  background-color :#FFE4B5;
+}

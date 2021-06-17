@@ -332,14 +332,14 @@
                             <td>
                                 <input formControlName="gstNo" value={{gstNo}} [(ngModel)]='gstNo' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"  
-                                placeholder="Enter GST no" (keyup)="onKey($event)">
+                                placeholder="Enter GST no"  (focusout)="onOptionGstno($event,contno)">
                                 <!-- (keyup)="onKey($event)" -->
                             <div *ngIf="submitted && f. gstNo.errors" class="invalid-feedback">
                                 <div *ngIf="f.gstNo.errors.required">Enter gst no </div>
                                 <div *ngIf="f.gstNo.errors?.maxLength">Enter gst no
                                 </div>
                             </div>
-                            <span *ngIf="!supplierMasterForm.get('gstNo').valid && supplierMasterForm.get('gstNo').touched">Please
+                            <span *ngIf="!supplierMasterForm.get('gstNo').valid && supplierMasterForm.get('gstNo').touched"  >Please
                                 gst no </span>
                             </td>
                         </tr>
@@ -354,7 +354,7 @@
                                 <div *ngIf="f.contactPerson.errors?.maxLength">Enter Contact Person Name
                                 </div>
                             </div>
-                            <span *ngIf="!supplierMasterForm.get('contactPerson').valid && supplierMasterForm.get('contactPerson').touched">Please
+                            <span *ngIf="!supplierMasterForm.get('contactPerson').valid && supplierMasterForm.get('contactPerson').touched" >Please
                                 Contact Person Name </span>
                             </td>
                             <td></td>
@@ -362,7 +362,7 @@
                             <td>
                                 <input formControlName="contactNo" value={{contactNo}} [(ngModel)]='contactNo' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }"
-                                placeholder="Enter Contact Person number" >
+                                placeholder="Enter Contact Person number" #contno >
                             <div *ngIf="submitted && f. contactNo.errors" class="invalid-feedback">
                                 <div *ngIf="f.contactNo.errors.required">Enter Contact person number </div>
                                 <div *ngIf="f.contactNo.errors?.maxLength">Enter Contact person number
@@ -373,7 +373,7 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;PAN&nbsp;No&nbsp;:&nbsp;</td>
                             <td>
-                                <input disabled formControlName="panNo" value={{panNo}} [(ngModel)]='panNo' class="form-control"
+                                <input  formControlName="panNo" value={{panNo}} [(ngModel)]='panNo' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Enter PAN no" >
                             <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">

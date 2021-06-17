@@ -2062,7 +2062,7 @@ miscellaneousUpdate(comId,cyclelinerecord){
   const options={
     headers:this.headers
   };
-  const url=(this.ServerUrl+`/cycleline`);
+  const url=(this.ServerUrl+`/cycleline/${comId}`);
   return this.http.put(url,cyclelinerecord,options);
 }
 
