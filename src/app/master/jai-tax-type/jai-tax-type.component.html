@@ -6,7 +6,7 @@
             </td>
         </tr>
     </table>
- <div class="center" style="width: 100%;">
+    <div class="center" style="width: 100%;">
         <div class="form-bg">
             <div class="center" style="width: 100%;">
                 <form [formGroup]="jaiTaxtypeMasterForm" (ngSubmit)="jaiTaxtypeMaster(jaiTaxtypeMasterForm.value)">
@@ -53,12 +53,13 @@
                            
                             <tr>
                               
+                              
                                 <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Code&nbsp;:</td>
 
                               <td> 
                                    
                                            <select  style="width: 140px;"   formControlName="regimeId" [(ngModel)]="regimeId" id="regimeId" class="form-control" (ngModelChange)='onOptionSelected($event)'>
-                                            <option>--Select--</option>
+                                            <option disabled>--Select--</option>
                                             <option *ngFor="let sc of regimeIdList" [ngValue]="sc.regimeId" >
                                                {{sc.regimeId}}-{{sc.regimeCode}}-{{sc.regimeName}}
                                             </option>
@@ -81,7 +82,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Tax&nbsp;Point&nbsp;Basis&nbsp;:
                                 </td>
-    
+                            
                           
                             <td> 
                                 <select style="width: 140px;"  formControlName="taxPointBasis" id="taxPointBasis" [(ngModel)]="taxPointBasis" class="form-control">
@@ -91,13 +92,10 @@
                                </select>
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">
-                                Tax&nbsp;Type&nbsp;Id&nbsp;:
-                            </td>
-
+                            <td style="width: 15%" class="LabelFontStyle">  Tax&nbsp;Type&nbsp;Id&nbsp;:&nbsp;</td>
                             <td>
-                                <input  disabled type="text"  formControlName="taxTypeId" id="taxTypeId" class="form-control" style="width: 140px">
-                            </td>
+                               <input  disabled type="text"  formControlName="taxTypeId" id="taxTypeId" class="form-control" style="width: 140px">
+                           </td>
                            
                             </tr>
                             <tr>
@@ -113,16 +111,6 @@
                                                    [(ngModel)]='taxTypeCode' value={{taxTypeCode}} 
                                                    pattern=[A-Za-z0-9]{5} >
                             
-                                               
-                                                       
-                                                
-                                                <!-- <select  style="width: 140px;"  formControlName="taxTypeCode"  id="taxTypeCode" class="form-control" (ngModelChange)='ontaxTypeCodeSelected($event)'> -->
-                                        <!-- <option>--Select--</option> -->
-                                        <!-- <select Discountclass="form-control" name="status" [(ngModel)]="category.status"> -->
-                                            <!-- <option value="Select">--Select--</option>
-                                            <option value="Discount">Discount</option>
-                                         </select> -->
-                                    
                              </td>
                           
                             
@@ -132,15 +120,11 @@
                              <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Type&nbsp;Name&nbsp;:</td>
     
                              <td>
-                                <input style="width: 200px;" required maxlength="10" type="text" formControlName="taxTypeName" class="form-control"  
+                                <input style="width: 200px;" required maxlength="10" type="text" formControlName="taxTypeName" [(ngModel)]="taxTypeName"  class="form-control"  
                                 placeholder="Tax Type Name" [ngClass]="{ 'is-invalid': submitted && f.taxTypeName.errors }"  
                                 [(ngModel)]='taxTypeName' value={{taxTypeName}}>
                                 
-                                <!-- <div *ngIf="submitted && f.taxTypeName.errors" class="invalid-feedback">
-                                    <div *ngIf= "f.taxTypeName.invalid && f.taxTypeName.dirty|| f.taxTypeName.touched"   style="color: red;"> 
-                                        <div *ngIf="f.taxTypeName.errors.required">Tax Type Name is Required</div>
-                                    </div>
-                                </div> -->
+                            
 
                                 <div  *ngIf="f.taxTypeName.invalid && (f.taxTypeName.dirty || f.taxTypeName.touched)"  style="color: red;  font-size:x-small;">
                                     <div  *ngIf="f.taxTypeName.errors.required">Name is Required/Maxlength 10 chars</div>
@@ -151,78 +135,47 @@
                                 
 
 
-                                <td style="width: 15%" class="LabelFontStyle">Status&nbsp;: </td>
-                                      
-                                <td>
-                                    <!-- <select formControlName="status" [(ngModel)]="status" id="status" class="form-control"
-                                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  statusList">
-                                            {{sc.codeDesc}}
-                                        </option>
-                                    </select> -->
+                             <td style="width: 15%" class="LabelFontStyle">
+                                Status&nbsp;&nbsp;:
+                            </td>
 
-                                    <div *ngIf="display; then thenBlockStatus; else elseBlockStatus"></div>
-                                    <ng-template #thenBlockStatus>
-                                        <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" style="width: 140px;"  >
-                                    </ng-template>
+                            <td>
+                                <select style="width: 140px;"  formControlName="status" id="status" class="form-control"  
+                                [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                    {{sc.code}}
+                                </option>
+                            </select>
+                            </td>
 
-                                    <ng-template #elseBlockStatus>
-                                        <select formControlName="status" id="status" class="form-control"  style="width: 140px;" 
-                                            [ngModel]="status" (ngModelChange)='onOptionsSelectedStatus($event)'>
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  statusList">
-                                                {{sc.codeDesc}}
-                                            </option>
-                                        </select>
-                                    </ng-template>
-
-
-                                </td>
-
-
-                                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                                    <ng-template #thenBlockInactive> 
-                                        <td style="width: 15%" class="LabelFontStyle">
-                                            Start&nbsp;Date&nbsp;:
-                                        </td>
                 
-                                        <td>
-                                            <input  style="width: 140px;" type="date"   id="startDate"  formControlName="startDate"  class="form-control"
-                                            min="{{minDate | date:'yyyy-MM-dd'}}">
-                                        </td>
-                                        
-                                    </ng-template>
+                        <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                            <ng-template #thenBlockInactive> 
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Start&nbsp;Date&nbsp;:
+                                </td>
+        
+                                <td>
+                                    <input style="width: 140px;"  type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"
+                                        max="{{minDate | date:'yyyy-MM-dd'}}">
+                                </td>
+                                
+                            </ng-template>
 
 
-                                    <ng-template #elseBlockInactive>
-                                            <td style="width: 18%" class="LabelFontStyle">
-                                                Inactive&nbsp;Date:&nbsp;
-                                            </td>
-                                            <td>
-                                                <input disabled type="text" formControlName="endDate" class="form-control" style="width: 115px;"
-                                                       [ngModel]="endDate | date:'dd/MM/yyyy'">
-                                            </td>
-                                   
-                                    </ng-template>
+                            <ng-template #elseBlockInactive>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Inactive&nbsp;Date:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" formControlName="endDate"  [ngModel]="endDate" class="form-control"
+                                               [ngModel]="endDate | date:'dd/MM/yyyy'">
+                                    </td>
+                           
+                            </ng-template>
 
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
-                                Start&nbsp;Date&nbsp;:
-                            </td>
-    
-                            <td>
-                                <input type="date" formControlName="startDate" class="form-control" placeholder="Choose"
-                                    max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td> -->
-    
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
-                                End&nbsp;Date&nbsp;:
-                            </td>
-    
-                            <td>
-                                <input disabled type="date" formControlName="endDate" class="form-control" placeholder="Choose"
-                                    max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td> -->
+                          
 
                            </tr>
 
@@ -259,27 +212,11 @@
                                         <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   [(ngModel)]="recoverableFlag" (change)="recoverableFlag=$event.target.checked?'Y':'N'">
                                     </div>
 
-                                    <!-- <input type="checkbox" formControlName="recoverableFlag" [(ngModel)]='recoverableFlag' (change)='recoverableFlg1($event)'> -->
-                                    
-                                    <!-- <div *ngIf="recFagDiss; then thenBlockrec; else elseBlockrec"></div>
-                                    <ng-template #thenBlockrec>
-                                        <input  type="checkbox"  id="recoverableFlag" [formControl]="recoverableFlag"   value="recoverableFlag" [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockrec>  
-                                        <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   value="recoverableFlag" [(ngModel)]="recoverableFlag" (change)="recoverableFlg1($event)">
-                                    </ng-template> -->
                                 </td> 
 
                                 <td  style="width: 15%" class="LabelFontStyle">Applicable&nbsp;for&nbsp;offset&nbsp;:</td>
                                 <td>
-                                        <!-- <input type="checkbox" formControlName="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)"> -->
-                                        <!-- <div *ngIf="offsetFlagFagDiss; then thenBlockoffsetFlag; else elseBlockoffsetFlag"></div>
-                                        <ng-template #thenBlockoffsetFlag>
-                                        <input  type="checkbox"  id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)">
-                                        </ng-template>
-                                        <ng-template #elseBlockoffsetFlag>  
-                                            <input  type="checkbox" checked   id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlg($event)">
-                                        </ng-template>     -->
+                                       
 
                                         <div *ngIf="offsetFlagFagDiss"> 
                                           <input  type="checkbox"  name="offsetFlag" formControlName="offsetFlag"  [(ngModel)]="offsetFlag"   (change)="offsetFlg($event)">
@@ -294,14 +231,7 @@
 
                                 <td  style="width: 15%" class="LabelFontStyle">Self&nbsp;Assessed/Reverse&nbsp;Change&nbsp;:</td>
                                 <td>
-                                    <!-- <input type="checkbox" formControlName="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)" > -->
-                                    <!-- <div *ngIf="selfAssesedFagDiss; then thenBlockselfAssesedFlag; else elseBlockselfAssesedFlag"></div>
-                                    <ng-template #thenBlockselfAssesedFlag>
-                                    <input  type="checkbox"  id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockselfAssesedFlag>  
-                                        <input  type="checkbox" checked   id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlg($event)">
-                                    </ng-template>         -->
+                                   
 
                                     <div *ngIf="selfAssesedFagDiss">   
                                        <input  type="checkbox"  name="selfAssesedFlag" formControlName="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag"  (change)="selfAssesedFlg($event)">
@@ -318,15 +248,7 @@
                                 <td  style="width: 15%" class="LabelFontStyle"> Set&nbsp;Taxtype&nbsp;for&nbsp;Reporting&nbsp;Only&nbsp;:</td>
 
                                 <td>
-                                        <!-- <input type="checkbox" formControlName="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">     -->
-                                        <!-- <div *ngIf="reportingOnlyFlagDiss; then thenBlockreportingOnlyFlag; else elseBlockreportingOnlyFlag"></div>
-                                        <ng-template #thenBlockreportingOnlyFlag>
-                                        <input  type="checkbox"  id="reportingOnlyFlag" [formControl]="reportingOnlyFlag"   value="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">
-                                        </ng-template>
-                                        <ng-template #elseBlockreportingOnlyFlag>  
-                                            <input  type="checkbox" checked   id="reportingOnlyFlag" [formControl]="reportingOnlyFlag"   value="reportingOnlyFlag" [(ngModel)]="reportingOnlyFlag" (change)="reportingOnlyFlg($event)">
-                                        </ng-template>       -->
-
+                                       
                                         <div *ngIf="reportingOnlyFlagDiss">  
                                           <input  type="checkbox"  name="reportingOnlyFlag" formControlName="reportingOnlyFlag"  [(ngModel)]="reportingOnlyFlag"  (change)="reportingOnlyFlg($event)" >
                                         </div> 
@@ -343,14 +265,7 @@
                             <tr>
                                 <td  style="width: 15%" class="LabelFontStyle"> Update&nbsp;Vendor&nbsp;on&nbsp;Transaction&nbsp;: </td>
                                 <td>
-                                    <!-- <input type="checkbox" formControlName="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">     -->
-                                    <!-- <div *ngIf="updVendorOnTranDiss; then thenBlockupdVendorOnTran; else elseBlockupdVendorOnTran"></div>
-                                    <ng-template #thenBlockupdVendorOnTran>
-                                    <input  type="checkbox"  id="updVendorOnTran" [formControl]="updVendorOnTran"   value="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockupdVendorOnTran>  
-                                        <input  type="checkbox" checked   id="updVendorOnTran" [formControl]="updVendorOnTran"   value="updVendorOnTran" [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)">
-                                    </ng-template>      -->
+                                  
 
                                     <div *ngIf="updVendorOnTranDiss">   
                                        <input  type="checkbox"  name="updVendorOnTran" formControlName="updVendorOnTran"  [(ngModel)]="updVendorOnTran" (change)="updVendorOnTranFlg($event)" >
@@ -366,14 +281,7 @@
 
                                 <td  style="width: 15%" class="LabelFontStyle"> Allow&nbsp;Abetment&nbsp;:</td>
                                <td>
-                                        <!-- <input type="checkbox" formControlName="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">     -->
-                                        <!-- <div *ngIf="allowAbatementDiss; then thenBlockallowAbatement; else elseBlockallowAbatement"></div>
-                                        <ng-template #thenBlockallowAbatement>
-                                        <input  type="checkbox"  id="allowAbatement" [formControl]="allowAbatement"   value="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
-                                        </ng-template>
-                                        <ng-template #elseBlockallowAbatement>  
-                                            <input  type="checkbox" checked   id="allowAbatement" [formControl]="allowAbatement"   value="allowAbatement" [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
-                                        </ng-template>  -->
+                                       
 
                                         <div *ngIf="allowAbatementDiss"> 
                                            <input  type="checkbox"  name="allowAbatement" formControlName="allowAbatement"  [(ngModel)]="allowAbatement" (change)="allowAbatementFlg($event)">
@@ -388,14 +296,7 @@
                                 
                                 <td  style="width: 15%" class="LabelFontStyle">Witholding&nbsp;Tax&nbsp;Applicable&nbsp;: </td>
                                 <td>
-                                     <!-- <input type="checkbox" formControlName="wthldTrxApplicableFlag" [(ngModel)]='wthldTrxApplicableFlag'(change)="wthldTrxApplicableFlg($event)">     -->
-                                    <!-- <div *ngIf="wthldTrxApplicableFlagDiss; then thenwthldTrxApplicableFlag; else elseBlockwthldTrxApplicableFlag"></div>
-                                    <ng-template #thenwthldTrxApplicableFlag>
-                                    <input  type="checkbox"  id="wthldTrxApplicableFlag" [formControl]="wthldTrxApplicableFlag"   value="wthldTrxApplicableFlag" [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
-                                    </ng-template>
-                                    <ng-template #elseBlockwthldTrxApplicableFlag>  
-                                        <input  type="checkbox" checked   id="wthldTrxApplicableFlag" [formControl]="wthldTrxApplicableFlag"   value="wthldTrxApplicableFlag" [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
-                                    </ng-template>  -->
+                                    
 
                                     <div *ngIf="wthldTrxApplicableFlagDiss"> 
                                        <input  type="checkbox"  name="wthldTrxApplicableFlag" formControlName="wthldTrxApplicableFlag"  [(ngModel)]="wthldTrxApplicableFlag" (change)="wthldTrxApplicableFlg($event)">
@@ -480,7 +381,8 @@
                                                                 <div *ngIf="showOu; then thenBlockShowOu else  elseBlockShowOu"></div>
                                                                 <ng-template #thenBlockShowOu>      
                                                                 <select formControlName="ouId" id="ouId" class="form-control" enabled  (ngModelChange)='onOuIdSelected($event,i)' >
-                                                                    <option>--Select--</option>
+                                                                   
+                                                                    <option disabled>--Select--</option>
                                                                     <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                                         {{sc.ouName}}
                                                                     </option>
@@ -489,7 +391,7 @@
                                                                 
                                                                 <ng-template #elseBlockShowOu>       
                                                                     <select formControlName="ouId" id="ouId" class="form-control" disabled >
-                                                                        <option>--Select--</option>
+                                                                        <option disabled>--Select--</option>
                                                                         <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                                             <!-- {{sc.ouName}} -->
                                                                             {{sc.ouId}}
@@ -509,7 +411,7 @@
                                                                         <ng-template #thenBlockShowOrg>   
                                                                         <select  enabled formControlName="locId" id="locId" class="form-control"   >
                                                                             <!-- (ngModelChange)='onLocationSelected1($event,i)'  -->
-                                                                                <option>--Select--</option>
+                                                                                <option disabled>--Select--</option>
                                                                                 <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                                                                 {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
                                                                                 <!-- {{sc.locId}} -->
@@ -520,7 +422,7 @@
                                                                         <ng-template #elseBlockShowOrg>   
                                                                             <select  disabled formControlName="locId" id="locId" class="form-control"    >
                                                                                 <!-- (ngModelChange)='onLocationSelected1($event,i)' -->
-                                                                                    <option>--Select--</option>
+                                                                                    <option disabled>--Select--</option>
                                                                                     <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                                                                     {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
                                                                                     <!-- {{sc.locId}} -->
@@ -623,8 +525,8 @@
                                                                 <!-- <div *ngIf="showCodeButton; then thenBlockShowAddB else  elseBlockShowAddB"></div>
                                                                 <ng-template #thenBlockShowAddB>  -->
                                                                          <td>
-                                                                        <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
-                                                                        class="fa fa-plus"></i></button>
+                                                                        <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;">
+                                                                            <i class="fa fa-plus"></i></button>
                                                                         </td>
                                                                 <!-- </ng-template> -->
                                                                 <!-- <ng-template #elseBlockShowAddB> 
@@ -1175,8 +1077,8 @@
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                             </td>
                             <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                            <div class="modal-dialog modal-sm modal-dialog-centered " role="document">
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
@@ -1188,10 +1090,10 @@
                                                     <table class="center">
                                                         <tr>
                                                             <td>
-                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                                             </td>
                                                             <td>
-                                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Yes</button> 
+                                                                <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -1205,8 +1107,8 @@
                                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                                                 </td>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
+                                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"  >
+                                                    <div class="modal-dialog modal-sm" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">
                                                             <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
@@ -1218,10 +1120,10 @@
                                                             <table class="center">
                                                                 <tr>
                                                                     <td>
-                                                                    <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                                    <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
                                                                     </td>
                                                                     <td>
-                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -1262,8 +1164,8 @@
     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
 </td>
 <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
@@ -1275,10 +1177,10 @@
                         <table class="center">
                             <tr>
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Yes</button> 
+                                    <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
                                 </td>
                             </tr>
                         </table>
@@ -1292,8 +1194,8 @@
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                     </td>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+                        <div class="modal-dialog modal-sm" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
@@ -1305,10 +1207,10 @@
                                 <table class="center">
                                     <tr>
                                         <td>
-                                        <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
                                         </td>
                                         <td>
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                         </td>
                                     </tr>
                                 </table>

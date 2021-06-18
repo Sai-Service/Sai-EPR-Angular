@@ -12,21 +12,74 @@
  <div class="form-bg">
     <form [formGroup]="jaiRegimeMasterForm" (ngSubmit)="jaiRegimeMaster(jaiRegimeMasterForm.value)">
         <div class="center" style="width: 100%;">
-            <table class="center">
-                        <!-- <td>
-                            <input type="text" hidden  formControlName="regimeId">
-                        </td> -->
+                        <table class="center">
+                            <tr>
+                            <!-- <td  class="LabelFontStyle">DivId/div/ouid/locid/deptid/empId/custid/inssite/Aging/type/Stat/itemcd&nbsp;:&nbsp;</td> -->
 
-                        <!-- <div *ngIf="display; then thenBlock; else elseBlock"></div> -->
-                        <!-- <ng-template #thenBlock> -->
+                            <td >
+                                <input  style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                                class="form-control" [(ngModel)]="divisionId" placeholder="">
 
-                        <tr>
+                            </td>
+                            <td   style="border: none;color: black;">
+                                <input  style="width:100px ;"  type="text" disabled formControlName="loginArray"
+                                    class="form-control" [(ngModel)]="loginArray" placeholder="">
+                            </td>
+                        
+                            <td>
+                                <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                                class="form-control" [(ngModel)]="ouId" >
+                            </td>
+                        
+                            <td>
+                                <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                            </td>
+                            <td >
+                                <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                                class="form-control" [(ngModel)]="deptId" placeholder="">
+
+                            </td>
+                            <td >
+                                <input hidden style="width:30px ;"   type="text" disabled formControlName="emplId"
+                                class="form-control" [(ngModel)]="emplId" placeholder="">
+
+                            </td>
+                            </tr>
+                        </table>
+
+                        <fieldset class="RFS">
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Tax Regime</legend>
+                       
+            
+                                <table class="center">
+                                    <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Id&nbsp;:</td>
+                                    <td>
+                                        <input type="text" disabled  formControlName="regimeId" id="regimeId" class="form-control">
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">  Regime&nbsp;Type&nbsp;:&nbsp;</td>
+                                    <td>
+                                    <select formControlName="regimeType" id="regimeType" [ngModel]="regimeType" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of regimeTypeList" [ngValue] ="sc.codeDesc">
+                                                {{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                    </td>
+
+                                    </tr>
+
+                                    <tr>
+
+
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Regime&nbsp;Code&nbsp;:
                                     </td>
 
                                     <td>
-                                        <input autofocus  type="text" formControlName="regimeCode" class="form-control" maxlength="7"
+                                        <input autofocus  type="text" formControlName="regimeCode" id="regimeCode" [ngModel]="regimeCode"  class="form-control" maxlength="7"
                                             placeholder="Enter Regime code"
                                             [ngClass]="{ 'is-invalid': submitted && f.regimeCode.errors }"
                                             placeholder="Enter Tax Regime code">
@@ -36,10 +89,7 @@
                                             <div *ngIf="f.regimeCode.errors?.maxLength">Regime code must be a valid for 7 digit>
                                             </div>
                                         </div>
-                                        <!-- <span
-                                            *ngIf="!jaiRegimeMasterForm.get('regimeCode').valid && jaiRegimeMasterForm.get('regimeCode').touched">Please
-                                            Enter regime code 
-                                        </span> -->
+                                       
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle">
@@ -47,26 +97,14 @@
                                     </td>
 
                                     <td>
-                                        <input type="text" formControlName="regimeName" class="form-control" placeholder="Enter Regime Name">
+                                        <input type="text" formControlName="regimeName" id="regimeName" [ngModel]="regimeName" class="form-control" placeholder="Enter Regime Name">
                                     </td>
 
-                           
-                        
-                     
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Regime&nbsp;Type&nbsp;:
-                                    </td>
+                                    </tr>
 
-                                    <td>
-                                    <select formControlName="regimeType" id="regimeType" class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of regimeTypeList">
-                                                {{sc.codeDesc}}
-                                            </option>
-                                        </select>
-                                    </td>
-                        </tr>
-                       <tr>
+                                    <tr>
+
+                                       
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Status&nbsp;&nbsp;:
                                     </td>
@@ -74,12 +112,12 @@
                                     <td>
                                         <select formControlName="status" id="status" class="form-control"  
                                         [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  statusList">
-                                            {{sc.codeDesc}}
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
+                                            {{sc.code}}
                                         </option>
                                     </select>
-                                </td>
+                                    </td>
 
                         
                                 <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
@@ -89,7 +127,7 @@
                                         </td>
                 
                                         <td>
-                                            <input   type="date"   id="startDate"  formControlName="startDate"  class="form-control"
+                                            <input   type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"
                                                 max="{{minDate | date:'yyyy-MM-dd'}}">
                                         </td>
                                         
@@ -101,23 +139,15 @@
                                                 Inactive&nbsp;Date:&nbsp;
                                             </td>
                                             <td>
-                                                <input disabled type="text" formControlName="endDate" class="form-control"
+                                                <input disabled type="text" formControlName="endDate"  [ngModel]="endDate" class="form-control"
                                                        [ngModel]="endDate | date:'dd/MM/yyyy'">
                                             </td>
                                    
                                     </ng-template>
-
-                                    <td style="width: 15%" class="LabelFontStyle">Regime&nbsp;Id&nbsp;:</td>
-                                    <td>
-                                        <input type="text" disabled  formControlName="regimeId" id="regimeId" class="form-control">
-                                    </td>
-
                             </tr>
                             
-
-                                    
-                                  
-                            </table>                    
+                    </table>   
+                </fieldset>                 
                             <br>
                             <table class="center">
                                 <tr>

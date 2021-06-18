@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NumberValueAccessor, MaxLengthValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
@@ -8,11 +8,31 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { now } from 'jquery';
-// import { OrderManagementService } from 'src/app/order-management/order-management.service';
+// import { MatDialogModule } from '@angular/material/dialog';
+// import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 
 interface IExtendedWarranty {
-  regNo: string;
+  custId:number;
+  kmsEwSale: number;
+  soldByEmpId : number;
+  variant:string;
+  deliveryDate:Date;
+  ewSchemeId:number;
+  ewBookletNo:string;
+  itemId:number;
+  ewInsurerId:number;
+  ewSaleDate:Date;
+  ewStartDate :Date
+  ewEndDate:Date
+  payType:string;
+  receiptMethodId:number;
+  paymentAmt:number;
+  bankName:string;
+  bankBranch:string;
+  checkNo:string;
+  checkDate:string;
+  customerSiteId:number;
 
 }
 
@@ -39,15 +59,18 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   
   pipe = new DatePipe('en-US');
 
-  invItemListEw: any;
+  invItemListEw: any[];
   VehicleRegDetails:any;
   EWItemList: any;
   ItemDetailList:any;
   CustomerDetailsList:any;
   variantDetailsList:any;
+  ewReceiptDeails:any
   getVehRegDetails:any;
   getVehVinDetails:any;
   lstEwSchemeDetails:any;
+  EwStatusDetails:any;
+  CustomerSiteDetails:any;
   lstcomments: any[];
   
   userList1: any[] = [];
@@ -67,13 +90,14 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   public emplId =6;
   public varAging : number;
   ddate= Date.now();
-  
+ 
 
   ///////////////////////////
   ewStatus:string;
   ewStatusBookletno:string;
   ewStatusStartDate: string;
   ewStatusPeriod:number;
+  isEwActive  = false;
 
   ewInvoiceNo:string;
   regNo: string;
@@ -95,9 +119,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   serviceModel:string;
   deliveryDate:string;
   dealerCode:string;
-  kmsEwSale:string;
-  soldByEmpId : string;
-  custId:number;
+  kmsEwSale:number;
+  soldByEmpId : number;
+  custId:number; customerSiteId:number;
   custAccountNo:number;
   dmsCustNo:number;
   custName:string;
@@ -124,7 +148,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   ewStartDate :Date
   ewEndDate:Date
 
-  payType:number;
+  receiptNumber:number;
+  payType:string;
   receiptMethodId:number;
   paymentAmt:number;
   bankName:string;
@@ -132,6 +157,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   checkNo:string;
   checkDate:string;
 
+  checkValidation=false;
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
@@ -191,8 +217,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       warrantyDealer:[],
 
       custId:[],
+      customerSiteId:[],
       custAccountNo:[],
-      dmsCustNo:[],
+      dmsCustNo:['',Validators.required,  Validators.pattern('^[a-zA-Z0-9]')],
       custName:[],
       // dealerCode:[],
       ewPeriod:[],
@@ -210,10 +237,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       ewDiscAmt:[],
       ewTotalAmt:[],
 
-      ewSaleDate:[],
+      ewSaleDate:['',Validators.required],
       ewStartDate:[],
       ewEndDate:[],
 
+      receiptNumber:[],
       payType:[],
       receiptMethodId:[],
       paymentAmt:[],
@@ -229,6 +257,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       variantItemId:[],
       segment :[],
       ewStatus:[],
+      isEwActive:[],
       ewStatusBookletno:[],
       ewStatusStartDate:[],
       ewStatusPeriod:[],
@@ -345,30 +374,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           // alert("ins Site Id :" + this.ewInsurerSiteId);
         }
 
-        GetCustomerDetails(mCustId :any){
-              // alert("Customer Id: "+mCustId);
-            this.service.ewInsSiteList(mCustId)
-            .subscribe(
-              data1 => {
-                this.CustomerDetailsList = data1;
-                console.log(this.CustomerDetailsList);
-                this.saiEwForm.patchValue({
-                  custAccountNo:this.CustomerDetailsList.custAccountNo,
-                  custName: this.CustomerDetailsList.custName,
-              });
-              }
-            );  
-          }
+      
 
         onEnterKms(mKms : any)
         {
-          // alert(this.variant +","+this.vehicleAgeDays+","+mKms);
-
-          if(mKms<0) {
-            alert("Please Enter valid KM Readiing value")
-          } else {
-          this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,mKms);
-          }
+         if(mKms>0 && this.variant !=null ) { this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,mKms);} 
+         else {alert("Invalid KM Readiing / Model Variant....Please check")  }
         }
 
         LoadEWSchemeVariant(mVariant,mAging,mKmsCurr){
@@ -385,6 +396,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         GetSchemeDetails(mSchemeId){
           // alert("mscheme id :" + mSchemeId);
+          if(mSchemeId !==null){
           this.service.getEWSchemeDetails(mSchemeId)
           .subscribe(
             data => {
@@ -395,24 +407,37 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 ewSchemeAmt: this.lstEwSchemeDetails.schemeAmount,
                 ewPeriod :this.lstEwSchemeDetails.premiumPeriod,
                 ewType:this.lstEwSchemeDetails.ewType,
+                paymentAmt: this.lstEwSchemeDetails.schemeAmount,
+
+                
            });
+          //  alert(this.lstEwSchemeDetails.schemeAmount+","+this.lstEwSchemeDetails.premiumPeriod);
 
            this.GetEWitemList(this.ewType, this.variant,this.ewPeriod)
-           
-         }
-          );
+         });
+        } else {}
+
         }
 
         GetEWitemList(e,v,p) {
         // alert("evp= "+e +"," +v+","+p);
-
           this.service.invItemListEw( e, v,p)
           .subscribe(
             data => {
               this.invItemListEw = data;
-              console.log(this.invItemListEw);
-            }
-          );}
+
+              // alert("Length :"+  this.invItemListEw.length);
+           
+              if(this.invItemListEw.length>0 ) {
+                console.log(this.invItemListEw);
+              } 
+              else 
+              { 
+                alert( "EW ITEM CODE Not Available for this Scheme-Model");
+              }
+            });
+          }
+        
 
 
         GetVariantDeatils(modelVariant){
@@ -431,6 +456,35 @@ export class SaiExtendedWarrantyComponent implements OnInit {
              );
 
         }
+
+        GetEwReceiptDetails(mEwId){
+         
+          this.service.getEWCustomerSearchByEWNo(mEwId)
+          .subscribe(
+            data => {
+              this.ewReceiptDeails = data;
+              console.log(this.ewReceiptDeails);
+              
+              this.saiEwForm.patchValue({
+                receiptNumber: this.ewReceiptDeails.receiptNumber,
+                payType: this.ewReceiptDeails.payType,
+                receiptMethodId: this.ewReceiptDeails.receiptMethodId,
+                bankName: this.ewReceiptDeails.bankName,
+                bankBranch: this.ewReceiptDeails.bankBranch,
+                checkNo: this.ewReceiptDeails.checkNo,
+                checkDate: this.ewReceiptDeails.checkDate,
+
+                
+
+              });
+              // alert("pay type ="+this.ewReceiptDeails.payType);
+              // alert("BANK ="+this.ewReceiptDeails.bankName);
+            }
+             );
+
+        }
+
+        
 
         GetItemDeatils1(mItemId){
 
@@ -469,6 +523,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         GetVehicleRegInfomation(mRegNo){
         this.service.getVehRegDetails(mRegNo)
+
           .subscribe(
             data => {
               this.VehicleRegDetails = data;
@@ -485,9 +540,41 @@ export class SaiExtendedWarrantyComponent implements OnInit {
              );
         }
 
-        serchByRegNo(mRegNo) {
 
-          // alert(mRegNo);
+        getEwStatus(mRegNo:any) {
+          // alert ("Reg No:"+mRegNo);
+           this.service.getEWStatusVehcile(mRegNo)
+          .subscribe(
+            data => {
+              this.EwStatusDetails = data;
+              // alert ("this.EwStatusDetails :"  +this.EwStatusDetails);
+
+              if (this.EwStatusDetails !=null) {
+              console.log(this.EwStatusDetails);
+              this.saiEwForm.patchValue({
+                ewId:this.EwStatusDetails.ewId,
+                ewInvoiceNo:this.EwStatusDetails.ewInvoiceNo,
+                ewBookletNo:this.EwStatusDetails.ewBookletNo,
+                ewSaleDate:this.EwStatusDetails.ewSaleDate,
+                ewStartDate:this.EwStatusDetails.ewStartDate,
+                ewEndDate:this.EwStatusDetails.ewEndDate,
+                ewPeriod:this.EwStatusDetails.ewPeriod,
+              });   
+              this.isEwActive=true;
+              alert("Extended Warranty is Active for the Vehicle : "+mRegNo +
+              "\nEW Contract No  : "+this.ewId +
+              "\nEW Invoice No  : "+this.ewInvoiceNo +
+              "\nEW BookletNo  : "+this.ewBookletNo +
+              "\nEW Start Date - End Date : "+this.ewStartDate+ " to "+this.ewEndDate+
+              "\nEW Term     : "+this.ewPeriod)
+              this.resetMast();
+              return;
+            } else { this.isEwActive=false;}
+         
+        }); }
+
+
+        serchByRegNo(mRegNo) {
           this.service.getVehRegDetails(mRegNo)
           .subscribe(
             data => {
@@ -506,35 +593,66 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 variantItemId: this.getVehRegDetails.itemId.itemId,
                 itemDesc: this.getVehRegDetails.itemId.segment,
                 custId: this.getVehRegDetails.customerId,
-                ewStatus:this.getVehRegDetails.ewStatus,
-                ewStatusBookletno:this.getVehRegDetails.ewBookletNo,
-                ewStatusStartDate:this.getVehRegDetails.ewStartDate,
-                ewStatusPeriod:this.getVehRegDetails.ewPeriod,
-   
-           });
+                // ewStatus:this.getVehRegDetails.ewStatus,
+                // ewStatusBookletno:this.getVehRegDetails.ewBookletNo,
+                // ewStatusStartDate:this.getVehRegDetails.ewStartDate,
+                // ewStatusPeriod:this.getVehRegDetails.ewPeriod,
+         });
            this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
-          //  this.LoadEWSchemeVariant(this.variant);
-       
+           
+           this.getEwStatus(mRegNo);
            this.GetVariantDeatils(this.variant);
            this.GetCustomerDetails(this.custId);
+   
+           if(this.isEwActive ==false) {
+              this.GetCustomerSiteDetails(this.custId);
+              var saleDate=new Date(this.deliveryDate);
+              var mToday   = new Date(Date.now());
+              this.getDiffDays(saleDate,mToday);
 
-            var saleDate=new Date(this.deliveryDate);
-            var mToday   = new Date(Date.now());
-
-            if(this.ewStatus==='Active'){
-              alert("Extended Warranty is Active for the Vehicle : "+mRegNo +
-              "\nEW BookletNo  : "+this.ewStatusBookletno +
-              "\nEW Start Date : "+this.ewStatusStartDate+
-              "\nEW Period     : "+this.ewStatusPeriod)
-              this.resetMast();
-            }
-        
-             this.getDiffDays(saleDate,mToday);
-          
+            } 
          }
           );
-
         }
+
+
+        GetCustomerDetails(mCustId :any){
+          // alert("Customer Id: "+mCustId);
+        this.service.ewInsSiteList(mCustId)
+        .subscribe(
+          data1 => {
+            this.CustomerDetailsList = data1;
+            console.log(this.CustomerDetailsList);
+            this.saiEwForm.patchValue({
+              custAccountNo:this.CustomerDetailsList.custAccountNo,
+              custName: this.CustomerDetailsList.custName,
+          });
+          }
+        );  
+      }
+
+
+      GetCustomerSiteDetails(mCustId :any){
+        // alert("Customer Id: "+mCustId);
+      this.service.GetCustomerSiteDetails(mCustId,this.ouId)
+      .subscribe(
+        data1 => {
+          this.CustomerSiteDetails = data1;
+
+          if (this.CustomerSiteDetails===null) 
+             {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
+          else {
+             console.log(this.CustomerSiteDetails);
+             this.saiEwForm.patchValue({
+              customerSiteId:this.CustomerSiteDetails.customerSiteId,
+             });
+
+            //  alert("Customer Site Found ...Site Id..."+this.customerSiteId)
+          }
+
+        }); 
+       
+    }
 
         getDiffDays(date1 ,date2){
 
@@ -629,7 +747,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         onPayTypeSelected(payType : any  , rmStatus : any){
           // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
-      
+          if (payType !==null) {
             if (payType === 'CASH') {   
               // alert("checque seleected")   ;    
                 this.service.ReceiptMethodList(payType ,this.locId,rmStatus)
@@ -651,6 +769,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                     this.showBankDetails=true;
               });
             }
+          } 
           
         }
 
@@ -679,6 +798,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             this.saiEwForm.patchValue(select);
             // this.ewId = select.ewId;
 
+            this.GetEwReceiptDetails(ewId);
             this.GetVariantDeatils(this.variant);
             this.GetCustomerDetails(this.custId);
             this.GetVehicleRegInfomation(this.vehRegNo);
@@ -696,6 +816,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
          }
          
         }
+
+
 
         transeData(val) 
         {
@@ -728,36 +850,37 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
         newMast() {
-          alert ("Posting data  to EW SCHEME TABLE......")
-         
-  
-          // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
-        
-          const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
-         
-         
-          // debugger;
-          console.log(formValue);
-          this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
+          this.CheckDataValidations();
+
+          if (this.checkValidation===true) {
+            alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
+            const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
+            console.log(formValue);
+            this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
               this.displaySuccess=true;
-              // this.saiEwSchemeMasterForm.reset();
               window.location.reload();
             } else {
               if (res.code === 400) {
                 this.displaySuccess=false;
                 alert('Code already present in the data base');
-                this.saiEwForm.reset();
+                window.location.reload();
               }
             }
-          });
+            });
+
+          } else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
         }
+
+
   
         updateMast() {
-          alert ("Putting data  to EW SCHEME......")
-          const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
-          
+          this.CheckDataValidations();
+
+          if (this.checkValidation===true) {
+            alert("Data Validation Sucessfull....\nPutting data to EW CUSTOMER TABLE")
+            const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
             this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD UPDATED SUCCESSFUILY');
@@ -765,10 +888,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             } else {
               if (res.code === 400) {
                 alert('ERROR OCCOURED IN PROCEESS');
-                this.saiEwForm.reset();
+                window.location.reload();
               }
             }
           });
+
+        }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
         }
 
         resetMast() {
@@ -815,7 +940,156 @@ getInvItemId($event) {
     }
     return matches;
   };
-  
-  
 
+   CheckDataValidations(){
+       
+     
+        const formValue: IExtendedWarranty = this.saiEwForm.value;
+       
+        // alert('ewSchemeId ='+formValue.ewSchemeId);  
+        // alert('ewStartDate ='+formValue.ewStartDate );  
+        // let date: Date = new Date();
+        // this.ewEndDate.setDate(this.ewStartDate.getDate() + 365);
+        // let datePipe: DatePipe = new DatePipe('en-US');
+        // console.log(this.pipe.transform(this.ewEndDate, 'dd-MM-y'));
+
+        // alert("delivery date :" +this.deliveryDate);
+
+        
+
+        if(formValue.variant===undefined || formValue.variant===null ) {
+            this.checkValidation=false;
+            alert ("REGNO/MODEL/VARIANT: Should not be null value");
+            return; 
+         }
+
+         if(formValue.deliveryDate===undefined || formValue.deliveryDate===null ) {
+          this.checkValidation=false;
+          alert ("SALE DATE: Should not be null value");
+          return; 
+       }
+
+         if(formValue.custId===undefined || formValue.custId===null) {
+          this.checkValidation=false;
+          alert ("CUSTOMER NO: Should not be null value");
+          return; 
+       }
+
+        if (formValue.kmsEwSale <=0 || formValue.kmsEwSale===undefined || formValue.kmsEwSale===null )
+        {
+            this.checkValidation=false;  
+            alert ("MILEAGE: Should be above Zero");
+            return;
+         } 
+
+         if (formValue.soldByEmpId===undefined || formValue.soldByEmpId===null)
+         {
+            this.checkValidation=false; 
+            alert ("SOLD BY: Please Select SoldBy Employee....");
+             return;
+          } 
+        
+          if (formValue.ewSchemeId===undefined || formValue.ewSchemeId===null)
+          {
+              this.checkValidation=false;
+              alert ("EW SCHEME: Please Select EW Scheme....");
+              return;
+           } 
+
+           if (formValue.itemId===undefined || formValue.itemId===null)
+           {
+              this.checkValidation=false;   
+              alert ("EW ITEM : Please Select EW ITEM CODE....");
+               return;
+            } 
+
+            if (formValue.ewBookletNo===undefined || formValue.ewBookletNo===null || formValue.ewBookletNo.trim()==='')
+            {
+                this.checkValidation=false;  
+                alert ("EW BOOKLETNO : Please Select EW BOOKLETNO....");
+                return;
+             } 
+
+            if (formValue.ewInsurerId===undefined || formValue.ewInsurerId===null)
+            {
+                this.checkValidation=false;
+                alert ("EW INSURANCE: Please Select ewInsurer....");
+                return;
+             } 
+
+             if (formValue.ewStartDate===undefined || formValue.ewStartDate===null || formValue.ewStartDate < formValue.ewSaleDate )
+             {
+                 this.checkValidation=false;
+                 alert ("EW START DATE: should not be null / grater than EW Sales date...");
+                 return;
+              } 
+
+              if (formValue.ewEndDate===undefined || formValue.ewEndDate===null || formValue.ewEndDate<=formValue.ewStartDate)
+              {
+                  this.checkValidation=false;  
+                  alert ("EW END DATE: should not be null / grater than Start Date");
+                  return;
+               } 
+
+               
+
+               if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
+               {
+                   this.checkValidation=false;  
+                   alert ("RECEIPT AMT: Should be above Zero");
+                   return;
+                } 
+
+
+               if (formValue.payType===undefined || formValue.payType===null)
+               {
+                  this.checkValidation=false;   
+                  alert ("PAY MODE: Please Select payment Type....");
+                   return;
+                } 
+
+                if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null)
+                {
+                  this.checkValidation=false;  
+                  alert ("PAY METHOD: Please Select Receipt Method....");
+                  
+                  return;
+                 } 
+
+                 if (formValue.payType !==null) {
+                   if (formValue.payType != 'CASH') {
+
+                    if (formValue.bankName===undefined || formValue.bankName===null || formValue.bankName.trim()==='')
+                    {
+                        this.checkValidation=false;  
+                        alert ("BANK : Please Enter Bank Name....");
+                        return;
+                     } 
+
+                     if (formValue.bankBranch===undefined || formValue.bankBranch===null || formValue.bankBranch.trim()==='')
+                     {
+                         this.checkValidation=false;  
+                         alert ("BANK BRANCH : Please Enter Bank Branch....");
+                         return;
+                      } 
+
+                      if (formValue.checkNo===undefined || formValue.checkNo===null || formValue.checkNo.trim()==='')
+                      {
+                          this.checkValidation=false;  
+                          alert ("CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...");
+                          return;
+                       } 
+
+                       if (formValue.checkDate===undefined || formValue.checkDate===null)
+                       {
+                           this.checkValidation=false;  
+                           alert ("CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....");
+                           return;
+                        } 
+                   }
+                  
+                  }
+                  this.checkValidation=true;
+      }
+ 
 }

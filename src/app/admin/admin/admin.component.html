@@ -68,6 +68,7 @@
           <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxCategoryLine']">Tax Category Line Master</a> </li> -->
           <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxType']">Tax Type Master</a> </li>
           <li> <a class="dropdown-item" [routerLink]="['/admin/master/jaiTaxRatesMaster']">Tax Rates Master</a> </li>
+          <li> <a class="dropdown-item" [routerLink]="['/admin/master/TaxThresholdSetup']">Tax Threshold Setup</a> </li>
               </ul>
             </li>
           </ul>
@@ -99,12 +100,19 @@
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Avg Cost Upadte</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Workshop Issue</a></li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Workshop Issue</a></li> -->
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a></li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a></li> -->
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li> -->
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/OnHandDetails']">Stock Details</a></li>
+            <li class="dropdown-submnu"><a class="dropdown-item dropdown-toggle" href="#">Stock Consumption</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Workshop Issue</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']" [queryParams]=" {type1: 'IC'}">Internal Consumption</a></li>
+            </ul>
+            </li>
           </ul>
         </li>
         <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>

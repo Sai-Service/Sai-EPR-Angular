@@ -52,7 +52,7 @@
 
                                     <td> 
                                     <select  formControlName="priceListType" id="priceListType"  [(ngModel)]="priceListType" class="form-control" (ngModelChange)='onPLTSelected($event)'>
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  PriceTypeList" [ngValue]="sc.code">
                                             {{sc.cmnTypeId}}-{{sc.code}}
                                         </option>
@@ -68,7 +68,7 @@
 
                                     <td> 
                                         <select disabled formControlName="priceListType" id="priceListType"  [(ngModel)]="priceListType" class="form-control" (ngModelChange)='onPLTSelected($event)'>
-                                            <option>--Select--</option>
+                                            <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  PriceTypeList" [ngValue]="sc.code">
                                                 {{sc.cmnTypeId}}-{{sc.code}}
                                             </option>
@@ -107,7 +107,7 @@
                                   <ng-template #thenBlock112>
                                          <td>  
                                             <select formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
-                                                <option>--Select--</option>
+                                                <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
                                                 {{sc.cmnTypeId}}-{{sc.code}}
                                                 </option>
@@ -117,7 +117,7 @@
                                     <ng-template #elseBlock112>
                                         <td>  
                                             <select disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
-                                                <option>--Select--</option>
+                                                <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
                                                 {{sc.cmnTypeId}}-{{sc.code}}
                                                 </option>
@@ -140,7 +140,7 @@
 
                                          <td>  
                                             <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
-                                            <option>--Select--</option>
+                                            <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                             {{sc.ouId}}-{{sc.ouName}}
                                             </option>
@@ -151,7 +151,7 @@
                                         <ng-template #elseBlock114>
                                             <td>  
                                                 <select  disabled formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
-                                                <option>--Select--</option>
+                                                <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                 {{sc.ouId}}-{{sc.ouName}}
                                                 </option>
@@ -165,7 +165,7 @@
                                     <ng-template #elseBlockShowOu> 
                                         <td>  
                                             <select  disabled  formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
-                                            <option>--Select--</option>
+                                            <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                             {{sc.ouId}}-{{sc.ouName}}
                                             </option>
@@ -186,11 +186,11 @@
                                     </td>
 
                                     <td>
-                                        <select formControlName="status" id="status" class="form-control"  
+                                        <select  formControlName="status" id="status" class="form-control"  
                                         [ngModel]="status" (ngModelChange)='onOptionsSelectedStatus($event)'>
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  statusList">
-                                            {{sc.codeDesc}}
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  statusList" [ngValue]="sc.code">
+                                            {{sc.code}}
                                         </option>
                                         </select>
                                     </td>
@@ -203,7 +203,7 @@
                                         </td>
                 
                                     <td>
-                                        <input   type="date"   id="startDate"  formControlName="startDate"  class="form-control"
+                                        <input   type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"
                                             max="{{minDate | date:'yyyy-MM-dd'}}">
                                     </td>
                             
@@ -215,7 +215,7 @@
                                             Inactive&nbsp;Date:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled type="text" formControlName="endDate" class="form-control"
+                                            <input disabled type="text" formControlName="endDate" [ngModel]="endDate" class="form-control"
                                                 [ngModel]="endDate | date:'dd/MM/yyyy'">
                                         </td>
                             
@@ -228,7 +228,7 @@
                                    
                                         <td>  
                                             <select formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control">
-                                                <option>--Select--</option>
+                                                <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  PriceSubTypeList" [ngValue]="sc.code"  >
                                                 {{sc.code}}
                                                 </option>
@@ -239,7 +239,7 @@
                                     <ng-template #elseBlock113>
                                         <td>
                                             <select disabled formControlName="priceSubType" id="priceSubType" [(ngModel)]="priceSubType" class="form-control">
-                                            <option>--Select--</option>
+                                            <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  PriceSubTypeList" [ngValue]="sc.code"  >
                                             {{sc.code}}
                                             </option>
@@ -360,7 +360,7 @@
                                                     <input style="width: 150px;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  >
                                                 </td>
                                                 <td>
-                                                    <input style="text-align: right;width: 150px;"  type="text" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
+                                                    <input style="text-align: right;width: 150px;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
                                                 </td>
                                                 <!-- <td>
                                                     <input   type="date" formControlName="startDate"  class="form-control" placeholder="Start Date "  >
@@ -464,7 +464,7 @@
                             </ng-template>
                             <ng-template #elseBlock1>
                                         <td>
-                                            <button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!priceListMasterForm">Update Item</button>
+                                            <button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()"[disabled]="!priceListMasterForm">Update Item</button>
                                         </td>
                                         <td>
                                             <button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()"[disabled]="!priceListMasterForm">Update Header</button>
@@ -621,7 +621,7 @@
                                                     <td style="width:10rem;text-align: right;">{{com.newValue}}</td> 
                                                     <td style="width:10rem;text-align: right;">{{com.oldValue}}</td>
                                                     <!-- <td> this.pipe.transform({{com.lastUpdatedDate}},'dd-MM-y')</td> -->
-                                                    <td>{{com.lastUpdatedDate | date:'dd-MM-y hh:mm:ss'}}</td>
+                                                    <td style="width:10rem;text-align: center;">{{com.lastUpdatedDate | date:'dd-MM-y hh:mm:ss'}}</td>
                                                     <!-- this.pipe.transform(this.now, 'dd-MM-y'); -->
                                                     <!-- <td><button class="btn btn-info" (click)="Select(com.priceListHeaderId)">Select</button></td>    -->
                                             </tr>

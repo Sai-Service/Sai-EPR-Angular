@@ -587,6 +587,11 @@ getItemCodePach(segment): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/bySegment/${segment}`);
 }
 
+GetCustomerSiteDetails(mCustomerId,mOuId): Observable<any> {
+  // alert("customerId ,OuId :" +mCustomerId +" ,"+mOuId);
+  return this.http.get(this.ServerUrl +`/Customer/custsite?customerId=${mCustomerId}&ouId=${mOuId}`);
+}
+
 ////////////////////////////////Supplier Master///////////////////////////
 
 // cityList(): Observable<any> {
@@ -1194,7 +1199,10 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
 //////////////////////Tax Category Master //////////////////////
 geActDetails(taxTypeCode): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
+ }
 
+ geActDetails(mtaxTypeId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
  }
 
 getTaxCategorySearch(): Observable<any> {
@@ -1226,14 +1234,14 @@ UpdateTaxCategoryMasterById(TaxCategoryMasterRecord,taxCategoryId) {
 }
 ///////////////////////JAI TAX TYPE MASTER ///////////////////////
 getTaxTypeSearch(): Observable<any> {
-  return this.http.get(this.ServerUrl + '/jaiTaxType');
+  return this.http.get(this.ServerUrl + '/taxType');
  }
 
  public jaiTaxTypeMasterSubmit(JaiTaxTypeMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/jaiTaxType';
+  const url = this.ServerUrl + '/taxType';
   return this.http.post(url, JaiTaxTypeMasterRecord, options);
 }
 
@@ -1241,7 +1249,7 @@ UpdateJaiTaxTypeMasterById(JaiTaxTypeMasterRecord,taxTypeId) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/jaiTaxType/${taxTypeId}`);
+  const url = (this.ServerUrl + `/taxType/${taxTypeId}`);
   return this.http.put(url, JaiTaxTypeMasterRecord, options);
 }
 
@@ -1368,6 +1376,7 @@ UpdateJaiTaxCategoryLineMasterById(JaiTaxCategoryLineMasterRecord) {
 //////////////////////////////
 regimNameList(regimeId): Observable<any>
 {
+  // alert("Regime Id: "+regimeId);
   return this.http.get(this.ServerUrl +`/jairegime/${regimeId}`);
 }
 
@@ -1848,8 +1857,11 @@ OrderCategoryList(): Observable<any> {
      } 
 
     getEWSchemeDetails(mSchemeId): Observable<any> {
-      // alert(mSchemeId );
+      
+      if(mSchemeId>0) {
+        // alert(mSchemeId );
       return this.http.get(this.ServerUrl + `/EwScheme/${mSchemeId}`);
+    }
     } 
 
     variantDetailsList(mVariant): Observable<any> {
@@ -1875,9 +1887,16 @@ OrderCategoryList(): Observable<any> {
 
 
     getEWCustomerSearch(): Observable<any> {
-      return this.http.get(this.ServerUrl + '/ewmaster');
+           return this.http.get(this.ServerUrl + `/ewmaster`);
    }
 
+   getEWCustomerSearchByEWNo(mEWNo): Observable<any> {
+     return this.http.get(this.ServerUrl + `/ewmaster/${mEWNo}`);
+  } 
+
+  getEWStatusVehcile(mRegno): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`);
+ } 
 
    public SaiEwCustomerSubmit(EwCustomerMasterRecord) {
     const options = {
@@ -1976,10 +1995,14 @@ public taxThresholdSetupSubmit(ThresholdSetupRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/PackageMst';
+  const url = this.ServerUrl + '/jaiApTdsHdr';
   return this.http.post(url, ThresholdSetupRecord, options);
 }
-    
+
+getThresholdSetup(): Observable<any> {
+  return this.http.get(this.ServerUrl + '/jaiApTdsHdr');
+
+} 
 
 // //////////////////   Miscell Transaction //////////////////////////
 
@@ -2067,7 +2090,7 @@ miscellaneousUpdate(comId,cyclelinerecord){
   const options={
     headers:this.headers
   };
-  const url=(this.ServerUrl+`/cycleline`);
+  const url=(this.ServerUrl+`/cycleline/${comId}`);
   return this.http.put(url,cyclelinerecord,options);
 }
 

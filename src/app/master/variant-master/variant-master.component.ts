@@ -10,7 +10,28 @@ import { InteractionModeRegistry } from 'chart.js';
 import { now } from 'jquery';
 
 interface IVariantMaster {
-  variant: string;
+  mainModel:string;
+  variantId:number;
+  variant:string;
+  varDescription:string;
+  status:string;
+  chasPrefix:string;
+  engPrefix:string;
+  fuelType:string;
+  variantClass:string;
+  vehicleType:string;
+  cubicCapacity:string;
+  seating:string;
+  unladenWeight:string;
+  grossWeight:string;
+  fittedWith:string;
+  serviceModel:string;
+  mfgYearPrint:string;
+  bharatStageNorms:string;
+  cylinder:string;
+  startDate:Date;
+  endDate:string;
+
 
 }
 
@@ -59,7 +80,7 @@ mainModel:string;
 variantId:number;
 variant:string;
 varDescription:string;
-status:string;
+public status = "Active";
 chasPrefix:string;
 engPrefix:string;
 fuelType:string;
@@ -74,9 +95,11 @@ serviceModel:string;
 mfgYearPrint:string;
 bharatStageNorms:string;
 cylinder:string;
-
+startDate:Date;
+endDate:Date;
+// startDate = new Date();
   
-
+  checkValidation=false;
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
@@ -127,6 +150,8 @@ cylinder:string;
       mfgYearPrint:[],
       bharatStageNorms:[],
       cylinder:[],
+      startDate:[],
+      endDate:[],
 
      
 
@@ -188,6 +213,19 @@ cylinder:string;
           );
         }
 
+        onOptionsSelected(event: any) {
+          this.Status1 = this.variantMasterForm.get('status').value;
+          // alert(this.Status1);
+          if (this.Status1 === 'Inactive') {
+            this.displayInactive = false;
+            this.endDate = new Date();
+          }
+          else if (this.Status1 === 'Active') {
+            this.variantMasterForm.get('endDate').reset();
+            this.displayInactive=true;
+          }
+        }
+
 
         searchMast() {
           this.service.getVariantList()
@@ -235,8 +273,13 @@ cylinder:string;
 
 
         newMast() {
-          alert ("Posting data  to VARIANT TABLE......")
-          // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
+
+
+          this.CheckDataValidations();
+
+        if (this.checkValidation===true) {
+          alert("Data Validation Sucessfull....\nPosting data  to VARIANT TABLE")
+
           const formValue: IVariantMaster =this.transeData(this.variantMasterForm.value);
           // console.log(formValue);
           this.service.VariantMasterSubmit(formValue).subscribe((res: any) => {
@@ -253,12 +296,17 @@ cylinder:string;
               }
             }
           });
+        }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
         }
   
         updateMast() {
-          alert ("Putting data  to EW SCHEME......")
+
+          this.CheckDataValidations();
+
+          if (this.checkValidation===true) {
+          alert("Data Validation Sucessfull....\nPutting data to ORDER TYPE MASTER  TABLE")
+
           const formValue: IVariantMaster =this.transeData(this.variantMasterForm.value);
-          
             this.service.UpdateVariantMaster(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD UPDATED SUCCESSFUILY');
@@ -270,6 +318,7 @@ cylinder:string;
               }
             }
           });
+        }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
         }
 
         resetMast() {
@@ -278,6 +327,157 @@ cylinder:string;
       
         closeMast() {
           this.router.navigate(['admin']);
+        }
+
+        // ------------------------------------VALIDATIONS------------------------------------
+
+        CheckDataValidations(){
+    
+          const formValue: IVariantMaster = this.variantMasterForm.value;
+  
+          // alert("ou id : "+formValue.ouId);
+  
+          if (formValue.mainModel===undefined || formValue.mainModel===null )
+          {
+            this.checkValidation=false; 
+            alert ("MODEL : Should not be null....");
+            return;
+          } 
+  
+          if (formValue.variant===undefined || formValue.variant===null || formValue.variant.trim()==='')
+          {
+            this.checkValidation=false; 
+            alert ("VARIANT : Should not be null....");
+            return;
+          } 
+  
+          if (formValue.varDescription===undefined || formValue.varDescription===null || formValue.varDescription.trim()==='' )
+          {
+            this.checkValidation=false; 
+            alert ("VARIANT DESCRIPTION : Should not be null....");
+            return;
+          } 
+  
+         
+           if (formValue.chasPrefix===undefined || formValue.chasPrefix===null || formValue.chasPrefix.trim()==='')
+          {
+             this.checkValidation=false; 
+             alert ("CHASSIS PREFIX: Should not be null....");
+              return;
+           } 
+  
+            if (formValue.engPrefix===undefined || formValue.engPrefix===null || formValue.engPrefix.trim()==='')
+            {
+                this.checkValidation=false; 
+                alert ("ENGINE PREFIX : Should not be null....");
+                return;
+              } 
+  
+              if (formValue.fuelType===undefined || formValue.fuelType===null)
+              {
+                  this.checkValidation=false; 
+                  alert ("ENGINE TYPE: Should not be null....");
+                  return;
+                } 
+  
+                
+              if (formValue.variantClass===undefined || formValue.variantClass===null )
+              {
+                  this.checkValidation=false; 
+                  alert ("VEHICLE CLASS: Should not be null....");
+                  return;
+                } 
+  
+                if (formValue.vehicleType===undefined || formValue.vehicleType===null)
+                {
+                   this.checkValidation=false; 
+                   alert ("VEHICLE TYPE: Should not be null....");
+                    return;
+                 } 
+  
+                 if (formValue.cubicCapacity===undefined || formValue.cubicCapacity===null || formValue.cubicCapacity.trim()==='')
+                 {
+                    this.checkValidation=false; 
+                    alert ("CUBIC CAPACITY: Should not be null....");
+                     return;
+                  } 
+  
+                  if(formValue.seating===undefined || formValue.seating===null || formValue.seating.trim()==='' ) 
+                  {
+                      this.checkValidation=false;
+                      alert ("SEATING: Should not be null value");
+                      return; 
+                    }
+
+                if(formValue.unladenWeight===undefined || formValue.unladenWeight===null || formValue.unladenWeight.trim()==='') 
+                {
+                    this.checkValidation=false;
+                    alert ("UNLADEN WEIGHT: Should not be null value");
+                    return; 
+                  }
+
+                if(formValue.grossWeight===undefined || formValue.grossWeight===null || formValue.grossWeight.trim()==='' ) 
+                {
+                    this.checkValidation=false;
+                    alert ("GROSS WEIGHT: Should not be null value");
+                    return; 
+                  }
+
+              if(formValue.serviceModel===undefined || formValue.serviceModel===null ) 
+              {
+                  this.checkValidation=false;
+                  alert ("SERVICE MODEL: Should not be null value");
+                  return; 
+                }
+
+              if(formValue.mfgYearPrint===undefined || formValue.mfgYearPrint===null  || formValue.mfgYearPrint.trim()==='') 
+              {
+                  this.checkValidation=false;
+                  alert ("MFG YEAR: Should not be null value");
+                  return; 
+                }
+    
+              if(formValue.cylinder===undefined || formValue.cylinder===null || formValue.cylinder.trim()==='') 
+              {
+                  this.checkValidation=false;
+                  alert ("CYLINDER: Should not be null value");
+                  return; 
+                }
+
+                
+              if(formValue.bharatStageNorms===undefined || formValue.bharatStageNorms===null || formValue.bharatStageNorms.trim()==='' ) 
+              {
+                  this.checkValidation=false;
+                  alert ("BS NORMS: Should not be null value");
+                  return; 
+                }
+    
+                // alert("status :" +formValue.status);
+                if(formValue.status===undefined || formValue.status===null ) 
+                {
+                    this.checkValidation=false;
+                    alert ("STATUS: Should not be null value");
+                    return; 
+                  }
+
+                  if(formValue.startDate===undefined || formValue.startDate===null ) 
+                  {
+                      this.checkValidation=false;
+                      alert ("START DATE: Should not be null value");
+                      return; 
+                    }
+         
+                    if(formValue.status==='Inactive' ) {
+                      if(formValue.endDate===undefined || formValue.endDate===null ) 
+                      {
+                          this.checkValidation=false;
+                          alert ("END DATE: Should not be null value");
+                          return; 
+                        } 
+                      }
+
+                  this.checkValidation=true;
+  
         }
 
 

@@ -50,11 +50,24 @@
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Setup Details</legend>
                     <table class="center">
+
+                        <tr>
+                            <td  style="width: 15%" class="LabelFontStyle"> Setup&nbsp;Name&nbsp;: </td>
+      
+                            <td> <input  type="text"  formControlName="thresholdSetupName" formControlName="thresholdSetupName"  [(ngModel)]="thresholdSetupName" class="form-control" ></td> 
+                            
+                            <td  style="width: 15%" class="LabelFontStyle"> Setup&nbsp;Description&nbsp;: </td>
+                            <td> <input  type="text"  formControlName="description" formControlName="description"  [(ngModel)]="description" class="form-control"></td> 
+      
+                            <td  style="width: 15%" class="LabelFontStyle"> Section&nbsp;Type&nbsp;: </td>
+  
+                            <td> <input  type="text"  formControlName="sectionType" formControlName="sectionType"  [(ngModel)]="sectionType" class="form-control" ></td> 
+                      </tr>
                               
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle1">Regime&nbsp;Name:&nbsp;</td>
                         <td>
-                        <select  formControlName="regimeCode" [(ngModel)]="regimeId" id="regimeId" class="form-control" >
+                        <select  formControlName="regimeId" [(ngModel)]="regimeId" id="regimeId" class="form-control" >
                             <!-- (ngModelChange)='onOptionSelected($event)' -->
                             <option>--Select--</option>
                             <option *ngFor="let sc of regimeIdList" [ngValue]="sc.regimeId" >
@@ -68,7 +81,7 @@
                         <td style="width: 15%" class="LabelFontStyle1">Vendor&nbsp;Type:&nbsp;</td>
                         
                         <td>
-                        <select formControlName="vendorType" id="vendorType" [(ngModel)]="vendorType" class="form-control" >
+                        <select formControlName="vendorTypeLookupCode" id="vendorTypeLookupCode" [(ngModel)]="vendorTypeLookupCode" class="form-control" >
                             <option>--Select--</option>
                             <option *ngFor="let ts of tdsVendorList" [ngValue]="ts.code" >
                                 {{ts.code}}
@@ -76,10 +89,11 @@
                         </select>
                     </td>
 
-                    </tr>
+                  </tr>
 
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle1">Section&nbsp;Code:&nbsp;</td>
+
+                      <td style="width: 15%" class="LabelFontStyle1">Section&nbsp;Code:&nbsp;</td>
                         
                        <td>
                         <select formControlName="sectionCode" id="sectionCode" [(ngModel)]="sectionCode" class="form-control" (ngModelChange)='onOptionSelectedSectionCode($event)'>
@@ -96,6 +110,8 @@
                             <input disabled type="text" formControlName="sectionDesc"  [(ngModel)]="sectionDesc"   class="form-control" placeholder="sectionDesc" > 
                         </td> 
                     </tr>
+
+                   
 
                     <tr>
                       <td  style="width: 15%" class="LabelFontStyle"> Exception&nbsp;Setup&nbsp;: </td>
@@ -121,7 +137,7 @@
                    <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Threshold Types</legend>
                     <div class="center">
-                     <div class="center" formArrayName="thresholdTypeLines">
+                     <div class="center" formArrayName="jaiApThreshSlabs">
 
                         <div class="grid_scroll">
 
@@ -129,11 +145,11 @@
                                       cellspacing="0" cellpadding="4" rules="all" class="center">
                                       <thead>
                                         <tr class="GridHeader">
-                                              <th style="width:15rem"  scope="col">Threshold Type</th>
-                                              <th style="width:10rem" scope="col">From Amount</th>
-                                              <th style="width:10rem" scope="col">To Amount</th>
-                                              <th style="width:10rem" scope="col">Start Date</th>
-                                              <th style="width:10rem" scope="col">End Date</th>
+                                              <th style="width:9rem"  scope="col">Threshold Type</th>
+                                              <th style="width:8rem" scope="col">From Amount</th>
+                                              <th style="width:8rem" scope="col">To Amount</th>
+                                              <th style="width:8rem" scope="col">Start Date</th>
+                                              <th style="width:8rem" scope="col">End Date</th>
                                               <th style="width:3rem" scope="col">Add+</th>
                                               <th style="width:3rem" scope="col">Del-</th>
                                           </tr>
@@ -142,47 +158,43 @@
                                     <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
                                         
                                         <input type="text" hidden formControlName="thresholdTypeId">
+                                        <input type="text" hidden formControlName="thresholdSlabId">
+                                        
                                         
                                         <td>
-                                        <select style="width:18rem" formControlName="thresholdType" id="thresholdType" [(ngModel)]="thresholdType" class="form-control" >
+                                        <select style="width:18rem" formControlName="thresholdType" id="thresholdType"  class="form-control" (ngModelChange)='onThresholdTypeSelected($event,i)' >
                                             <option>--Select--</option>
                                             <option *ngFor="let ts of thresholdTypeList" [ngValue]="ts.code" >
                                                 {{ts.code}}
                                             </option>
                                         </select>
-                                    </td>
-
-
-                                        
-                                        <td>
-                                            <input  style="width: 10rem;" type="number" formControlName="fromAmt"  class="form-control" placeholder=" "  >
-                                        </td>
-                                        <td>
-                                            <input style="width: 10rem;"  type="number" formControlName="toAmt"  class="form-control" placeholder=""  >
-                                        </td>
-                                        <td>
-                                            <input style="width: 10rem;"  type="date" formControlName="startDate"  class="form-control" placeholder=""  >
-                                        </td>
-                                        <td>
-                                            <input style="width: 10rem;"    type="date" formControlName="endDate"  class="form-control" placeholder=""  >
-                                        </td>
-                                        
-                                        <td>
-                                            <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
-                                            class="fa fa-plus"></i></button>
                                         </td>
 
-                                        <td>
-                                                <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
-                                                class="fa fa-trash"></i></button>
-                                        </td>
-
+                                        <div *ngIf="showLineInputCol; then thenBlockThreshLine else  elseBlockThreshLine"></div>
+                                        <ng-template #thenBlockThreshLine> 
+                                            <td><input  style="width: 13rem;" type="number" formControlName="fromAmount"  class="form-control" placeholder=" "  ></td>
+                                            <td> <input style="width: 13rem;"  type="number" formControlName="toAmount"  class="form-control" placeholder=""  > </td>
+                                            <td><input style="width: 13rem;"  type="date" formControlName="fromDate"  class="form-control" placeholder=""  ></td>
+                                            <td><input style="width: 13rem;"    type="date" formControlName="toDate"  class="form-control" placeholder=""  ></td>
+                                            <td><button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                            <td><button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button> </td>
+                                          </ng-template>
+                                        <ng-template #elseBlockThreshLine>
+                                            <td><input  disabled style="width: 13rem;" type="number" formControlName="fromAmount"  class="form-control" placeholder=" "  ></td>
+                                            <td> <input disabled style="width: 13rem;"  type="number" formControlName="toAmount"  class="form-control" placeholder=""  > </td>
+                                            <td><input  disabled style="width: 13rem;"  type="date" formControlName="fromDate"  class="form-control" placeholder=""  ></td>
+                                            <td><input  disabled style="width: 13rem;"    type="date" formControlName="toDate"  class="form-control" placeholder=""  ></td>
+                                            <td><button disabled type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                                            <td><button disabled type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button> </td>
+                                        </ng-template>
+                                
                                       </tr>
                             </table>
                         </div>
                     </div>
                     </div>
                     </fieldset>
+                    
                 <!-- </td>
                 <td> -->
 
@@ -192,7 +204,7 @@
 
                 <div class="center">
                     <!-- <br> -->
-                   <div class="center" formArrayName="thresholdTaxLines">
+                   <div class="center" formArrayName="jaiApThreshTaxes">
 
                         <div class="grid_scroll_1">
 
@@ -201,7 +213,8 @@
                                       <thead>
                                         <tr class="GridHeader">
                                               <!-- <th  scope="col">Threshold</th> -->
-                                              <th style="width:9rem"  scope="col">Operating Unit</th>
+                                              <th style="width:9rem"  scope="col">Threshold Type</th>
+                                              <th style="width:13rem"  scope="col">Operating Unit</th>
                                               <th style="width:24rem" scope="col">Tax Category</th>
                                                <th style="width:3rem" scope="col">Add+</th>
                                               <th style="width:3rem" scope="col">Del-</th>
@@ -210,13 +223,23 @@
 
                                     <tr *ngFor="let group of lineDetailsArrayTax().controls; let i= index" [formGroupName]="i">
                                         
-                                        <input type="text" hidden formControlName="thresholdTypeId">
+                                        <input type="text" hidden formControlName="thresholdTaxId">
+                                        
                                         
                                         <td>
-                                         
-                                        <select style="width:11rem" formControlName="ouId" id="ouId" class="form-control"  >
-                                            <!-- (ngModelChange)='onOuIdSelected($event,i)' -->
-                                            <option>--Select--</option>
+                                            <select  style="width:18rem" formControlName="thresholdTypeTax" id="thresholdTypeTax"  class="form-control"  (ngModelChange)='onTaxThreshTypeSelected($event,i)' >
+                                                <option>--Select--</option>
+                                                <option *ngFor="let ts of thresholdTypeList" [ngValue]="ts.code" >
+                                                    {{ts.code}}
+                                                </option>
+                                            </select>
+                                        </td>
+
+                                        <div *ngIf="showTaxLine; then thenBlockTaxLine else  elseBlockTaxLine"></div>
+                                        <ng-template #thenBlockTaxLine> 
+                                        <td> 
+                                        <select style="width:13rem" style="width:11rem" formControlName="ouId" id="ouId" class="form-control"  >
+                                          <option>--Select--</option>
                                             <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                 {{sc.ouName}}
                                             </option>
@@ -224,13 +247,34 @@
                                         </td>
 
                                         <td>                 
-                                        <select style="width:25rem" formControlName="taxCategoryId" id="taxCategoryId" [(ngModel)]="taxCategoryId" class="form-control" >
+                                        <select style="width:25rem" formControlName="taxCategoryId" id="taxCategoryId" class="form-control" >
                                             <option>--Select--</option>
                                             <option *ngFor="let ts of tdsTaxCategoryList" [ngValue]="ts.taxCategoryId" >
                                                 {{ts.taxCategoryName}}
                                             </option>
                                         </select>
                                     </td> 
+                                    </ng-template>
+
+                                    <ng-template #elseBlockTaxLine> 
+                                        <td> 
+                                        <select disabled style="width:13rem" style="width:11rem" formControlName="ouId" id="ouId" class="form-control"  >
+                                          <option>--Select--</option>
+                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                                {{sc.ouName}}
+                                            </option>
+                                        </select>
+                                        </td>
+
+                                        <td>                 
+                                        <select disabled style="width:25rem" formControlName="taxCategoryId" id="taxCategoryId" class="form-control" >
+                                            <option>--Select--</option>
+                                            <option *ngFor="let ts of tdsTaxCategoryList" [ngValue]="ts.taxCategoryId" >
+                                                {{ts.taxCategoryName}}
+                                            </option>
+                                        </select>
+                                    </td> 
+                                    </ng-template>
                                         
                                        
                                         <td>
@@ -380,7 +424,7 @@
                                         <td>
                                             <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                                                     </td> -->
-        <!-- ====================Reset Dialog ======================== -->
+                                <!-- ====================Reset Dialog ======================== -->
 
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
@@ -411,7 +455,7 @@
                                     </div>
                                 </div>
 
-                         <!-- =====================Close Dialog Box====================== -->
+                                 <!-- =====================Close Dialog Box====================== -->
                             <td>
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
                             </td>
@@ -446,26 +490,36 @@
                             </tr>
                         </table>
                         <!-- ==================================================== -->
-
-
-
-
-
-
                 </form>
             </div>
         </div>
     </div>
+</div>
 
+<br>
 
-
-
-
-
-
-
-
-
-
-
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+   <tbody>
+        <tr class="GridHeader">
+            <th style="width:6rem" scope="col">Setup Id</th>
+            <th style="width:10rem" scope="col">Section Code</th>
+            <th style="width:10rem" scope="col">Section Type</th>
+            <th style="width:15rem" scope="col">Vendor Type</th>
+            <th style="width:10rem" scope="col">Regime Id</th>
+           
+        <th style="width:6rem" scope="col">Select</th>
+    </tr>
+   </tbody>
+   <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+    <td>{{com.thresholdHdrId}}</td>
+    <td>{{com.sectionType}}</td>
+    <td>{{com.sectionCode}}</td>
+    <td>{{com.vendorTypeLookupCode}}</td>
+    <td>{{com.regimeId}}</td>  
+    <td><button class="btn btn-secondary" (click)="Select(com.thresholdHdrId)">Select</button></td>   
+   </tr>
+    </table>
+</div>
 </div>
