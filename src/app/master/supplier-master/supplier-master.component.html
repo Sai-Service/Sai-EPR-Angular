@@ -376,13 +376,13 @@
                                 <input disabled formControlName="panNo" value={{panNo}} [(ngModel)]='panNo' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Enter PAN no" >
-                            <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
                                 <div *ngIf="f.panNo.errors.required">Enter PAN no </div>
                                 <div *ngIf="f.panNo.errors?.maxLength">Enter PAN no
                                 </div>
                             </div>
                             <span *ngIf="!supplierMasterForm.get('panNo').valid && supplierMasterForm.get('panNo').touched">Please
-                                PAN no </span>
+                                PAN no </span> -->
                             </td>
                         </tr>
                         <tr>
@@ -391,13 +391,26 @@
                                 <input formControlName="tanNo" value={{tanNo}} [(ngModel)]='tanNo' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
                                 placeholder="Enter TAN no">
-                            <div *ngIf="submitted && f. tanNo.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && f. tanNo.errors" class="invalid-feedback">
                                 <div *ngIf="f.tanNo.errors.required">Enter TAN no </div>
                                 <div *ngIf="f.tanNo.errors?.maxLength">Enter TAN no
                                 </div>
                             </div>
                             <span *ngIf="!supplierMasterForm.get('tanNo').valid && supplierMasterForm.get('tanNo').touched">Please
-                                TAN no </span>
+                                TAN no </span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">Email&nbsp;ID&nbsp;:&nbsp;</td>
+                            <td>
+                                <input formControlName="emailId" value={{emailId}} [(ngModel)]='emailId' class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                                placeholder="Enter emailId" >
+                            <div *ngIf="submitted && f. emailId.errors" class="invalid-feedback">
+                                <div *ngIf="f.emailId.errors.required">Enter email Id </div>
+                                <div *ngIf="f.emailId.errors?.maxLength">Enter email Id
+                                </div>
+                            </div>
+                            <span *ngIf="!supplierMasterForm.get('emailId').valid && supplierMasterForm.get('emailId').touched">Please
+                                Enter email Id </span>
                             </td>
                         </tr>
                         <tr>
@@ -409,7 +422,7 @@
                         <tr>
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register"
-                                     (click)="newsupplierMast()">New supp</button>
+                                [disabled]="!supplierMasterForm.valid"   (click)="newsupplierMast()" >New supp</button>
                             </td>
                             <!-- [disabled]="!supplierMasterForm.valid"  -->
                             <td>
@@ -621,7 +634,7 @@
                                 Enter mobile2 </span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Email&nbsp;ID&nbsp;:&nbsp;</td>
-                            <td>
+                            <!-- <td>
                                 <input formControlName="emailId" value={{emailId}} [(ngModel)]='emailId' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
                                 placeholder="Enter emailId" >
@@ -632,7 +645,7 @@
                             </div>
                             <span *ngIf="!supplierMasterForm.get('emailId').valid && supplierMasterForm.get('emailId').touched">Please
                                 Enter email Id </span>
-                            </td>
+                            </td> -->
                             <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
                             <td>
                                 <select formControlName="sstatus" id="sstatus"  [ngModel]="sstatus" (ngModelChange)='onOptionsSelected($event)' class="form-control">

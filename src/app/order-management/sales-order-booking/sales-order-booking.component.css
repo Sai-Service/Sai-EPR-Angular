@@ -67,3 +67,37 @@ fieldset {
         background: rgb(208,208,208);
         color: black;
       }
+
+
+
+      .LabelFontStyle1:before{
+        content:"*";
+        color:rgb(252, 29, 29);
+      }
+
+      .LabelFontStyle {
+        font-family: Verdana,Sans-serif, Arial, Helvetica;
+        font-weight: normal;
+        color: Black;
+        font-size: 11px;
+        text-align: right;
+        vertical-align: middle;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border-color: Gray;
+        height: 15px;
+      }
+      
+      .LabelFontStyle1 {
+        font-family: Verdana,Sans-serif, Arial, Helvetica;
+        font-weight: normal;
+        color: Black;
+        font-size: 11px;
+        text-align: right;
+        vertical-align: middle;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border-color: Gray;
+        height: 15px;
+      }
+

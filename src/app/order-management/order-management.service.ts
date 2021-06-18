@@ -112,7 +112,20 @@ export class OrderManagementService {
     return this.http.post(url, AccLineRecord1, options);
   }
   
+
   // **************** counter Sale order Save post *****************************/////
+
+//////// pick ticket invoice post ********************** /////
+
+
+public pickTicketInvoiceFun(pickTicketInvDels) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/orderHeader/postAccSPPickTckt';
+  return this.http.post(url, pickTicketInvDels, options);
+}
+
 
   // accountNoSearchFn(accountNo, ouId): Observable<any> {
   //   return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
@@ -136,6 +149,20 @@ export class OrderManagementService {
   accountNoSearchFn(accountNo,ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
+
+  contactNoSearchFn(mobile1, ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/contactNo?mobile1=${mobile1}&ouId=${ouId}`);
+  }
+
+  othRefNoSearchFn(othRefNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrderInfo/${othRefNo}`);
+  }
+
+
+  custNameSearchFn(custName, ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&ouId=${ouId}`);
+  }
+
 
   VariantSearchFn(mainModel): Observable<any> {
     return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
@@ -246,8 +273,8 @@ export class OrderManagementService {
 
 
   // ***************************** Allotment Form ****************************
-  allotmentSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/orderHeader/Allotment`);
+  allotmentSearch(orgId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/Allotment/${orgId}`);
   }
 
   allotmentVehicleSearch(model, color, variant, locId): Observable<any> {
