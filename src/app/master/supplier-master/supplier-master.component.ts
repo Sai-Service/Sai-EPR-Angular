@@ -49,6 +49,7 @@ interface IsupplierMaster {
   smobile2: string;
   endDate: Date;
   sstatus: string;
+  emplId:number;
   // aadharNo:string;
 }
 
@@ -111,6 +112,7 @@ export class SupplierMasterComponent implements OnInit {
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;
+  emplId: number;
   public cityList: Array<string>[];
   public pinCodeList: Array<string>[];
   public stateList: Array<string>[];
@@ -142,7 +144,7 @@ export class SupplierMasterComponent implements OnInit {
       emailId: [''],
       contactPerson: [''],
       taxCategoryName: ['', Validators.required],
-       ticketNo: ['', Validators.required],
+      //  ticketNo: ['', Validators.required],
        creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       remarks: [''],
@@ -168,6 +170,7 @@ export class SupplierMasterComponent implements OnInit {
       endDate: [],
       sstatus: ['', [Validators.nullValidator]],
       status: ['', [Validators.nullValidator]],
+      emplId:[],
       // aadharNo:[],
 
       // address1E: ['', [Validators.required]],
@@ -185,6 +188,8 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
+    // this.emplId = sessionStorage.getEmplId('emplId');
+    // console.log(this.emplId);
     this.service.cityList()
       .subscribe(
         data => {
@@ -269,7 +274,7 @@ export class SupplierMasterComponent implements OnInit {
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert('Supplier Master Details Validation Error. Please Enter Validate Data !!!');
           this.supplierMasterForm.reset();
         }
       }
@@ -515,22 +520,25 @@ alert(suppSiteId);
           }
         );
       }
-      onOptionGstno(event:any,contno)
+      onOptionGstno(event:any,tanNo)
       {
         // alert(event);
         var gstno=event.target.value;
         // alert(gstno);
-        if(gstno.length==15)
+        if(gstno.length==15 && gstno!='GSTUNREGISTERED')
         {
           
           const gstNo1 = gstno.substr(3,10);
           this.panNo = gstNo1;
+          tanNo.focus();
         }
         else 
         {
           // this.gstNo='GSTUNREGISTERED';
+          if(gstno.length==0 ) {
           this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
-          contno.focus();
+        }
+         // panNo.focus();
         }
         return;
 

@@ -1196,7 +1196,7 @@ geActDetails(taxTypeCode): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
  }
 
- geActDetails(mtaxTypeId): Observable<any> {
+ geActDetails1(mtaxTypeId): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
  }
 

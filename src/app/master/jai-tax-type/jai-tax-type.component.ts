@@ -1173,7 +1173,7 @@ export class JaiTaxTypeComponent implements OnInit {
           var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
           alert('taxTypeId='+taxTypeId);
           
-          this.service.geActDetails(taxTypeId)
+          this.service.geActDetails1(taxTypeId)
           .subscribe(
             data => {
               this.actDetails = data;
