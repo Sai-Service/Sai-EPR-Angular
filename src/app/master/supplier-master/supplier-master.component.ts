@@ -129,24 +129,32 @@ export class SupplierMasterComponent implements OnInit {
       name: ['', [Validators.required]],
       address1: ['', [Validators.required]],
       address2: ['', [Validators.required]],
-      address3: ['', [Validators.required]],
-      address4: [''],
+      address3: [''],
+      address4:[],
       city: ['', [Validators.required]],
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      emailId: ['', [Validators.required, Validators.email]],
-      contactPerson: [''],
-      taxCategoryName: ['', Validators.required],
+      contactPerson:[],
+      // taxCategoryName: ['', Validators.required],
+      taxCategoryName:[],
       ticketNo: ['', Validators.required],
+      // ticketNo:[],
       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      // creditDays:[],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      // creditLimit:[],
       remarks: [''],
+      emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
-      gstNo: [],
-      // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
+      // state:[],
+      // gstNo: [],
+      gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      // panNo:[],
       tanNo: [''],
+      // pinCode:[],
+      // ouId:[],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
       ouId: ['', [Validators.required]],
       ExeAddress: [],
@@ -507,4 +515,26 @@ alert(suppSiteId);
           }
         );
       }
+      onOptionGstno(event:any,contno)
+      {
+        // alert(event);
+        var gstno=event.target.value;
+        // alert(gstno);
+        if(gstno.length==15)
+        {
+          
+          const gstNo1 = gstno.substr(3,10);
+          this.panNo = gstNo1;
+        }
+        else 
+        {
+          // this.gstNo='GSTUNREGISTERED';
+          this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
+          contno.focus();
+        }
+        return;
+
+      }
+
+      
 }

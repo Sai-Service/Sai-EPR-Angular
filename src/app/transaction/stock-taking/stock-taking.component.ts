@@ -8,6 +8,7 @@ import { MasterService } from 'src/app/master/master.service';
 
 interface IStockaking
 {
+  compileId1: number;
   compileName:String;
   compileDate:Date;
   compNo:string;
@@ -107,6 +108,8 @@ export class StockTakingComponent implements OnInit {
   content: number;
   title: string;
   acccodedesc: any;
+  displayprocess:boolean=true;
+  compileId1:number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm=fb.group({
@@ -130,7 +133,7 @@ export class StockTakingComponent implements OnInit {
       lookupValueDesc3:[''],
       lookupValueDesc4:[''],
       lookupValueDesc5:[''],
-      codeCombinationId:['',Validators.required],
+      codeCombinationId:[''],
       compileStatus:[''],
       totalCompileItems:[''],
       totalItemValue:[''],
@@ -140,7 +143,7 @@ export class StockTakingComponent implements OnInit {
     RackNo:[''],
     Row:[''],
     RowNo:[''],
-    trans:[''],
+    trans:['Adjustment'],
       cycleLinesList:this.fb.array([]),
     })
    }
@@ -149,7 +152,7 @@ export class StockTakingComponent implements OnInit {
  }
  newcycleLinesList(): FormGroup{
   return this.fb.group({
-    compileId:[''],
+    compileId1:[''],
     compileLineId:[''],
     LinNo:[''],
     invItemId:[''],
@@ -175,6 +178,13 @@ export class StockTakingComponent implements OnInit {
   addnewcycleLinesList(){
 
     this.cycleLinesList().push(this.newcycleLinesList());
+    var len = this.cycleLinesList().length;
+  var patch = this.StockTakingForm.get('cycleLinesList') as FormArray;
+  (patch.controls[len - 1]).patchValue(
+    {
+      srlNo: len,
+    }
+  );
    }
    removenewcycleLinesList(trxLineIndex){
     this.cycleLinesList().removeAt(trxLineIndex);
@@ -184,7 +194,9 @@ export class StockTakingComponent implements OnInit {
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    this.approvedBy=(sessionStorage.getItem('name'));
     this.addnewcycleLinesList();
+    this.trans='Adjustment';
     this.service.subInvCode().subscribe(
       data => {this.subInvCode = data;
          console.log(data);
@@ -248,6 +260,13 @@ export class StockTakingComponent implements OnInit {
             console.log(this.ItemIdList);
 
        });
+       var patch = this.StockTakingForm.get('cycleLinesList') as  FormArray
+
+       (patch.controls[0]).patchValue(
+      {
+        srlNo: 1,
+      }
+       );
 
   }
   StockTaking(StockTakingForm:any){}
@@ -399,7 +418,7 @@ export class StockTakingComponent implements OnInit {
             if(this.getItemDetail.description !=undefined){
               trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description});
               trxLnArr1.controls[i].patchValue({uom:this.getItemDetail.uom});
-              trxLnArr1.controls[i].patchValue({entryStatusCode:"Manual"});
+              trxLnArr1.controls[i].patchValue({entryStatusCode:2});
               trxLnArr1.controls[i].patchValue({subInventory:subcode})
               trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
             }
@@ -517,15 +536,19 @@ okLocator(i)
         window.location.reload();
       }
       UpdateMiscData(){
-        const formValue:IStockaking=this.StockTakingForm.get('cycleLinesList').value
+        
+      // ( (this.StockTakingForm.get('cycleLinesList'))as FormArray).controls[0].patchValue({'compileId1':comId})
+        var formValue:IStockaking=this.StockTakingForm.get('cycleLinesList').value
         var comId=this.StockTakingForm.get('compileId').value;
+        alert(comId+'ID');
+        // formValue.compileId1=comId;
         this.service.miscellaneousUpdate(comId,formValue).subscribe
         ((res:any) => {
            if(res.code===200)
           {
             // this.compileName=obj;
             alert("Record Updated Successfully");
-            window.location.reload();
+            // window.location.reload();
           }
           else
           {
@@ -540,11 +563,12 @@ okLocator(i)
   Approval()
   {
     const formValue:IStockaking=this.transData(this.StockTakingForm.value);
+    // debugger;
     this.service.approve(formValue).subscribe((res:any)=>{
       if(res.code===200)
       {
         alert("Cycle Count Approve Successfully");
-        window.location.reload();
+        // window.location.reload();
       }
       else
       {
@@ -578,7 +602,8 @@ okLocator(i)
      this.service.miscellaneousSubmit(formValue).subscribe
      ((res:any) => {
        var obj=res.obj.compileName;
-       this.compileId=res.obj.compileId
+       this.compileId=res.obj.compileId;
+       this.StockTakingForm.patchValue({'compileId':res.obj.compileId})
        sessionStorage.setItem('compileName', obj);
        if(res.code===200)
        {
@@ -616,6 +641,42 @@ okLocator(i)
 
      var compno=this.StockTakingForm.get('compNo').value;
      var appflag=this.StockTakingForm.get('trans').value;
+     this.service.getSearchViewBycompNo(compno).subscribe
+         (data=>{
+           if(data.code===400)
+           {
+              alert("Can not View data");
+           }
+           if(data.code===200)
+           {
+     //       // this.lstcomment=data.obj;
+               let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
+               var len = this.cycleLinesList().length;
+               for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
+                 var trxlist:FormGroup=this.newcycleLinesList();
+                 this.cycleLinesList().push(trxlist);
+
+             }
+                   this.StockTakingForm.patchValue(data.obj);
+                  //  this.StockTakingForm.disable();
+                   this.StockTakingForm.get('cycleLinesList').disable();
+                   this.StockTakingForm.get('subInventory').disable();
+                   this.StockTakingForm.get('compileDate').disable();
+                   this.StockTakingForm.get('compileType').disable();
+                   this.StockTakingForm.get('reason').disable();
+                   this.StockTakingForm.get('segmentName').disable();
+                   this.StockTakingForm.get('approvedBy').disable();
+                  //  this.displayprocess=false;
+                   
+                 }
+         })
+       
+   }
+   viewdata(compNo)
+   {
+
+     var compno=this.StockTakingForm.get('compileName').value;
+     var appflag=this.StockTakingForm.get('trans').value;
      // var adjFlag=this.miscellaneousForm.get('Adjustment').value;
      alert(appflag+'flag');
      // alert(adjFlag+'flag');
@@ -631,6 +692,9 @@ okLocator(i)
               if(data.code===200)
               {
      //       this.lstcomment=data.obj;
+                this.cycleLinesList().clear();
+                this.addnewcycleLinesList();
+                 console.log(data.obj);
                  this.StockTakingForm.patchValue(data.obj);
               }
            })
@@ -648,47 +712,71 @@ okLocator(i)
            if(data.code===200)
            {
      //       // this.lstcomment=data.obj;
-     let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
-     var len = this.cycleLinesList().length;
-     for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
-       var trxlist:FormGroup=this.newcycleLinesList();
-       this.cycleLinesList().push(trxlist);
+               let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
+               var len = this.cycleLinesList().length;
+               for(let i=0; i<data.obj.cycleLinesList.length-len; i++)
+               {
+                   var trxlist:FormGroup=this.newcycleLinesList();
+                   this.cycleLinesList().push(trxlist);
 
-     }
+                }
 
 
-     this.StockTakingForm.patchValue(data.obj);
-     for(let i=0; i<this.cycleLinesList().length; i++){
-       alert(data.obj.cycleLinesList[i].segment+'segment');
-     this.StockTakingForm.patchValue({'srlNo':i+1})
-     control.controls[i].patchValue({srlNo:i+1  })
-     this.StockTakingForm.patchValue({'segment':data.obj.cycleLinesList[i].segment});
-     this.StockTakingForm.patchValue({'subInventory':data.obj.cycleLinesList[i].subInventory});
-     }
+                this.StockTakingForm.patchValue(data.obj);
+                for(let i=0; i<this.cycleLinesList().length; i++)
+                {
+                      alert(data.obj.cycleLinesList[i].segment+'segment');
+                      // this.StockTakingForm.patchValue({'srlNo':i+1})
+                      // control.controls[i].patchValue({srlNo:i+1  })
+                      this.StockTakingForm.patchValue({'segment':data.obj.cycleLinesList[i].segment});
+                      this.StockTakingForm.patchValue({'subInventory':data.obj.cycleLinesList[i].subInventory});
+                }
      // this.miscellaneousForm.disable();
-       }
+            }
         })
        }
-
-
-
-
+       this.displayButton=false;
    }
 
    onSelectReason(event){
-    alert(event);
+    // alert(event);
     // var reasname=this.miscellaneousForm.get('reason').value;
     // this.service.reasonaccCode(this.locId,reasname).subscribe(
       var reasonArr  = event.split('-');
-      alert(reasonArr.length);
+      // alert(reasonArr.length);
       this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
       
       data => {
         this.acccodedesc = data;
         // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
         this.segmentName=this.acccodedesc.segmentName;
-  
+        // this.codeCombinationId=this.acccodedesc.codeCombinationId;
+        this.StockTakingForm.patchValue({codeCombinationId:this.acccodedesc.codeCombinationId})
       }
     );
   }  
+
+  validate(i:number,qty1)
+  {//alert("Validate");
+    var trxLnArr=this.StockTakingForm.get('cycleLinesList').value;
+    var trxLnArr1=this.StockTakingForm.get('cycleLinesList') as FormArray
+    let avalqty=trxLnArr[i].avlqty;
+    let qty=trxLnArr[i].physicalQty;  
+   //alert(avalqty+'avalqty');
+   //alert(trxLnArr[i].physicalQty +' qty');
+    if(qty>=0)
+    {
+      alert("You can not enter more than available quantity");
+      trxLnArr1.controls[i].patchValue({physicalQty:''});
+      qty1.focus();
+    }
+    if(qty<=0)
+    {
+      alert("Please enter quantity more than zero");
+      trxLnArr1.controls[i].patchValue({physicalQty:''});
+      qty1.focus();
+    }
+    
+  }
+
 }

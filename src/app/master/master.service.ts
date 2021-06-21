@@ -131,7 +131,12 @@ export class MasterService {
 
   taxCategoryList(): Observable<any> {
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
-    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
+    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
+  }
+
+  createOrderTypeListFn(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/AccOrderType');
   }
 
   taxCategoryListForSALES(): Observable<any> {
@@ -1192,9 +1197,9 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
   return this.http.put(url, taxAccountMasterRecord, options);
 }
 //////////////////////Tax Category Master //////////////////////
-geActDetails(taxTypeCode): Observable<any> {
-  return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
- }
+// geActDetails(taxTypeCode): Observable<any> {
+//   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
+//  }
 
  geActDetails1(mtaxTypeId): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
@@ -2095,7 +2100,7 @@ miscellaneousUpdate(comId,cyclelinerecord){
   const options={
     headers:this.headers
   };
-  const url=(this.ServerUrl+`/cycleline`);
+  const url=(this.ServerUrl+`/cycleline/${comId}`);
   return this.http.put(url,cyclelinerecord,options);
 }
 
