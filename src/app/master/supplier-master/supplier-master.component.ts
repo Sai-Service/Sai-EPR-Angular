@@ -437,7 +437,8 @@ alert(suppSiteId);
 
   }
   SearchTaxCat(ouId) {
-    // alert(locId);
+    // alert( "ou id :" +ouId);
+    if(ouId != null) {
     this.service.getTaxCat(ouId)
       .subscribe(
         data => {
@@ -446,6 +447,7 @@ alert(suppSiteId);
           // this.allFunction(locId);
         }
       );
+    } 
   }
   onOptionsSelected(event: any) {
     this.Status1 = this.supplierMasterForm.get('sstatus').value;

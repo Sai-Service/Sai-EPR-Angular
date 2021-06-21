@@ -560,6 +560,7 @@
                                     <td>
                                         <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!saiEwForm">Save</button>
                                     </td>
+
                                 <!-- </ng-template>
                                 <ng-template #elseBlockValidate>
                                     <td>
@@ -576,12 +577,12 @@
                                   </div>
                                 </ng-template>
                                 <ng-template #elseBlockSaveSatat>
-                                    <!-- <div class="alert warning">
+                                     <div class="alert warning">
                                         <span class="closebtn">&times;</span>  
                                         <strong>Warning!</strong> Rcord Not added.Please check
                                       </div> -->
 
-                                </ng-template> -->
+                                <!-- </ng-template>  -->
 
                                  
                                 <td>
@@ -752,6 +753,7 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
         <tbody>
                 <tr class="GridHeader">
+                <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
                 <th style="width:5rem" scope="col">EW&nbsp;No&nbsp;</th>
                 <th style="width:5rem" scope="col"> Type&nbsp;</th>
                 <th style="width:5rem" scope="col"> Scheme&nbsp;</th>
@@ -765,8 +767,8 @@
                 <th style="width:5rem" scope="col">Select</th>
             </tr>
         </tbody>
-        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-                <td>{{com.ewId}}</td>
+        <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
+                <td style="text-align: center;">{{i+1}}</td>
                 <td>{{com.ewType}}</td>
                 <td>{{com.ewSchemeId}}</td>   
                 <td>{{com.vehRegNo}}</td>   

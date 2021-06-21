@@ -38,7 +38,7 @@
                               <td> 
                                    
                                     <select formControlName="regimeCode" [(ngModel)]="regimeId" id="regimeId" class="form-control" (ngModelChange)='onRegimeSelected($event)' >
-                                    <option>--Select--</option>
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of regimeIdList" [ngValue]="sc.regimeId" >
                                         {{sc.regimeId}}-{{sc.regimeCode}}
                                     </option>
@@ -55,18 +55,18 @@
                                  <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Type&nbsp;Code&nbsp;:</td>
                             
                                 <td>
-                                    <select formControlName="taxTypeCode" id="taxTypeId" [(ngModel)]="taxTypeId" class="form-control" (ngModelChange)='onTaxCocdeSelected($event)'>
-                                            <option>--Select--</option>
+                                    <select formControlName="taxTypeId" id="taxTypeId" [(ngModel)]="taxTypeId" class="form-control" (ngModelChange)='onTaxCocdeSelected($event)'>
+                                            <option disabled>--Select--</option>
                                             <option *ngFor="let sc of taxTypeIdList" [ngValue]="sc.taxTypeId" >
                                                 {{sc.taxTypeId}}-{{sc.taxTypeCode}}
                                             </option>
                                     </select>
                                 </td>
 
-                                <div *ngIf="taxCodeDisp; then thenBlockTaxCode"></div>
+                                <!-- <div *ngIf="taxCodeDisp; then thenBlockTaxCode"></div>
                                  <ng-template #thenBlockTaxCode>       
                                         <input hidden formControlName="taxTypeId" [(ngModel)]="taxTypeId" >
-                                 </ng-template>
+                                 </ng-template> -->
                
                         </tr>
 
@@ -292,7 +292,7 @@
                                     <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
                                           cellspacing="0" cellpadding="4" rules="all" class="center">
                                           <thead>
-                                              <tr>
+                                            <tr class="GridHeader">
                                                 <th scope="col">Ledger</th>
                                                 <th scope="col">Operating Unit</th>
                                                 <th scope="col">Inventory Org</th>
@@ -583,32 +583,34 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
         <tr class="GridHeader">
-        <th style="width:5rem" scope="col">Tax Rate Id</th>
+        <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
+        <!-- <th style="width:5rem" scope="col">Tax Rate Id</th> -->
         <th style="width:15rem" scope="col">Tax Rate Code</th>
         <th style="width:15rem" scope="col">Tax Rate Name</th>
         <th style="width:5rem" scope="col">Tax Rate Typee</th>
         <th style="width:10rem" scope="col">Regime Name</th>
-        <th style="width:10rem" scope="col">Tax Type Name</th>
+        <th style="width:10rem" scope="col">Tax Type Code</th>
         <th style="width:12rem" scope="col">Start Date</th>
         <th style="width:10rem" scope="col">Status</th>
         <th style="width:6rem" scope="col">Select</th>
+        </tr>
+    </tbody>
+    <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
+        <td style="text-align: center;">{{i+1}}</td>
+        <!-- <td>{{com.taxRateId}}</td> -->
+        <td>{{com.taxRateCode}}</td>
+        <td>{{com.taxRateName}}</td>   
+        <td>{{com.taxRateType}}</td> 
+        <td>{{com.taxTypeId.regimeId.regimeName}}</td>   
+        <td>{{com.taxTypeId.taxTypeCode}}</td> 
+        <!-- <td>{{com.regimeId.regimeCode}}</td>    -->
+        <!-- <td>{{com.regimeId.regimeName}}</td>  -->
+        <!-- <td>{{com.taxPointBasis}}</td>  -->
+        <td>{{com.startDate}}</td>
+        <td>{{com.status}}</td>
+        <td><button class="btn btn-secondary" (click)="Select(com.taxRateId)">Select</button></td>   
     </tr>
-   </tbody>
-   <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-    <td>{{com.taxRateId}}</td>
-    <td>{{com.taxRateCode}}</td>
-    <td>{{com.taxRateName}}</td>   
-    <td>{{com.taxRateType}}</td> 
-    <td>{{com.taxTypeId.regimeId.regimeName}}</td>   
-    <td>{{com.taxTypeId.taxTypeName}}</td> 
-    <!-- <td>{{com.regimeId.regimeCode}}</td>    -->
-    <!-- <td>{{com.regimeId.regimeName}}</td>  -->
-    <!-- <td>{{com.taxPointBasis}}</td>  -->
-    <td>{{com.startDate}}</td>
-    <td>{{com.status}}</td>
-    <td><button class="btn btn-secondary" (click)="Select(com.taxRateId)">Select</button></td>   
-   </tr>
-    </table>
+        </table>
 </div>
 </div>
 
