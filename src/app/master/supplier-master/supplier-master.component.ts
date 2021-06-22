@@ -155,7 +155,8 @@ export class SupplierMasterComponent implements OnInit {
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
       tanNo: [''],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      ouId: ['', [Validators.required]],
+      // ouId: ['', [Validators.required]],
+      ouId:[],
       ExeAddress: [],
       saddress1: [],
       saddress2: [],
@@ -188,7 +189,7 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
-    // this.emplId = sessionStorage.getEmplId('emplId');
+     this.emplId =Number(sessionStorage.getItem('emplId'));
     // console.log(this.emplId);
     this.service.cityList()
       .subscribe(

@@ -20,7 +20,7 @@ fo<div class="center">
                                         <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                                             Supplier&nbsp;Code&nbsp;:&nbsp;</td>
                                         <td>
-                                            <input formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
+                                            <input type = "number" formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
                                             [ngClass]="{ 'is-invalid': submitted && f.suppNo.errors }"
                                             placeholder="Enter supplier No" >
                                         <div *ngIf="submitted && f. suppNo.errors" class="invalid-feedback">
@@ -28,10 +28,11 @@ fo<div class="center">
                                             <div *ngIf="f.suppNo.errors?.maxLength">Enter supplier No
                                             </div>
                                         </div>
-                                        <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
-                                            Enter supplier No </span>        
+                                        <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please Enter Valid supplier Code  </span>     
+                                           <!-- <span *ngIf="supplierMasterForm.suppNo.$touched && supplierMasterForm.suppNo.$error.required">Supplier Code is required.</span>   -->
                                         </td>
                                         <td>
+                                            
                                             <button type="submit" class="btn-primary" (click)="searchBySuppCode(suppNo)" style="width: 2rem;"><i class="fa fa-search"></i></button>
                                         </td>
                                     </tr>
