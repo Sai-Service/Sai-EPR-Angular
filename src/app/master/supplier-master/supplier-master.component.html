@@ -408,7 +408,7 @@ fo<div class="center">
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register"
                                 [disabled]="!supplierMasterForm.valid" (click)="newsupplierMast()">New supp</button>
-                                 <!--TEST  -->
+                                 
                             </td>
                             
                             <td>
@@ -620,7 +620,7 @@ fo<div class="center">
                                 Enter mobile2 </span>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Email&nbsp;ID&nbsp;:&nbsp;</td>
-                            <!-- <td>
+                            <td>
                                 <input formControlName="emailId" value={{emailId}} [(ngModel)]='emailId' class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
                                 placeholder="Enter emailId" >
@@ -630,8 +630,8 @@ fo<div class="center">
                                 </div>
                             </div>
                             <span *ngIf="!supplierMasterForm.get('emailId').valid && supplierMasterForm.get('emailId').touched">Please
-                                Enter email Id </span> -->
-                            <!-- </td> -->
+                                Enter email Id </span> 
+                            </td>
                             <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
                             <td>
                                 <select formControlName="sstatus" id="sstatus"  [ngModel]="sstatus" (ngModelChange)='onOptionsSelected($event)' class="form-control">
