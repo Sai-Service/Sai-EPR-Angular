@@ -8,10 +8,11 @@ import { PaymentReceiptComponent } from './payment-receipt/payment-receipt.compo
 import { AllotmentComponent } from './allotment/allotment.component';
 import { DeAllotmentComponent } from './de-allotment/de-allotment.component';
 import { CounterSaleComponent } from './counter-sale/counter-sale.component';
+import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 
 
 @NgModule({
-  declarations: [SalesOrderBookingComponent, PaymentReceiptComponent, AllotmentComponent, DeAllotmentComponent, CounterSaleComponent],
+  declarations: [SalesOrderBookingComponent, PaymentReceiptComponent, AllotmentComponent, DeAllotmentComponent, CounterSaleComponent, SalesOrderFormComponent],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

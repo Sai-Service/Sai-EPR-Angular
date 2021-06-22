@@ -43,7 +43,7 @@ interface IcustomerMaster {
   scity: string;
   // spinCd: string;
   sstate: string;
-  smobile1: number;
+  smobile1: string;
   smobile2: number;
   smobile3: number;
   semailId: string;

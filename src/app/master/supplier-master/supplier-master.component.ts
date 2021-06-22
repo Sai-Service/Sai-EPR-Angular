@@ -147,13 +147,18 @@ export class SupplierMasterComponent implements OnInit {
       //  ticketNo: ['', Validators.required],
        creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      // creditLimit:[],
       remarks: [''],
+      //emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
       gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       //gstNo: [],
       // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      // panNo:[],
       tanNo: [''],
+      // pinCode:[],
+      // ouId:[],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
       // ouId: ['', [Validators.required]],
       ouId:[],
@@ -459,7 +464,7 @@ alert(suppSiteId);
           // this.allFunction(locId);
         }
       );
-    }
+    } 
   }
   onOptionsSelected(event: any) {
     this.Status1 = this.supplierMasterForm.get('sstatus').value;

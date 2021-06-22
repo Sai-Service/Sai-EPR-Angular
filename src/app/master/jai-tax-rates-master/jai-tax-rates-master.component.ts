@@ -134,7 +134,7 @@ export class JaiTaxRatesMasterComponent implements OnInit {
       taxTypeCode: ['', [Validators.required]],
       taxTypeName: ['', [Validators.required]],
       taxRateId:[''],
-      taxTypeId: ['', [Validators.required]],
+      taxTypeId: [],
       regimeId: ['', [Validators.required]],
       regimeCode:[''],
       inclusiveFlag: ['', [Validators.required]],
@@ -372,7 +372,7 @@ RemoveRow2(index) {
   }
 
   onTaxCocdeSelected(taxTypeId: any) {
-    if(taxTypeId===!null){
+    if(taxTypeId !=null){
     this.service.taxTypeNameList(taxTypeId)
       .subscribe(
         data => {
@@ -388,7 +388,7 @@ RemoveRow2(index) {
 
   onRegimeSelected(regimeId: any) {
     // alert(regimeId);
-    if(regimeId===!null){
+    if(regimeId >0){
     this.service.regimNameList(regimeId)
       .subscribe(
         data => {
@@ -587,17 +587,20 @@ RemoveRow2(index) {
     this.ouCodeDisp=false;
     let select = this.lstcomments.find(d => d.taxRateId === taxRateId);
     if (select) {
-     
-      this.orgId =select.orgId
-      this.taxTypeId = select.taxTypeId.taxTypeId;
-      // alert('TaxRateid=' + taxRateId+ '  Taxtypeid=' + this.taxTypeId + ' Ou id =' +this.orgId  );
-      
+
       this.jaiTaxRateMasterForm.patchValue(select);
-       this.taxRateId = select.taxRateId;
+     
+      this.taxTypeId = select.taxTypeId.taxTypeId;
+      //  alert('TaxRateid=' + taxRateId+ '  Taxtypeid=' + this.taxTypeId + ' Ou id =' +this.orgId  );
+     
+     
+      this.taxRateId = select.taxRateId;
+      this.orgId =select.orgId
       this.displayButton = false;
       this.display = false;
     }
   }
+
 
 
   ////////////////////////// Reset Button module

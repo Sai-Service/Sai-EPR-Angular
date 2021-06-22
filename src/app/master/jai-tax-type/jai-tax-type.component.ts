@@ -1222,7 +1222,7 @@ export class JaiTaxTypeComponent implements OnInit {
   
      onOptionSelected(regimeId: any) {
       //  alert("Regime ID :" + regimeId);
-      if(regimeId != null){
+      if(regimeId != null || regimeId > 0){
      
       this.service.regimNameList(regimeId)
         .subscribe(
