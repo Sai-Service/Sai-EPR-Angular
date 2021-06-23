@@ -28,6 +28,7 @@ export class AllotmentComponent implements OnInit {
   allotmentForm: FormGroup;
   ouName:string;
   locId:number;
+  orgId:number;
   orderNumber:number;
   segment:string;
   selectOrderNumber:string;
@@ -56,9 +57,11 @@ export class AllotmentComponent implements OnInit {
   ngOnInit(): void {
     this.ouName=sessionStorage.getItem('ouName');
     this.locId=Number(sessionStorage.getItem('locId'));
+    this.orgId=Number(sessionStorage.getItem('ouId'));
 
+console.log(this.orgId);
 
-    this.orderManagementService.allotmentSearch()
+    this.orderManagementService.allotmentSearch(this.orgId)
     .subscribe(
       data => {
         this.allotmentsearchlist = data;

@@ -49,6 +49,7 @@ interface IsupplierMaster {
   smobile2: string;
   endDate: Date;
   sstatus: string;
+  emplId:number;
   // aadharNo:string;
 }
 
@@ -59,7 +60,7 @@ interface IsupplierMaster {
   styleUrls: ['./supplier-master.component.css']
 })
 export class SupplierMasterComponent implements OnInit {
-
+  
   supplierMasterForm: FormGroup;
   suppId: number;
   suppNo: number;
@@ -111,6 +112,7 @@ export class SupplierMasterComponent implements OnInit {
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;
+  emplId: number;
   public cityList: Array<string>[];
   public pinCodeList: Array<string>[];
   public stateList: Array<string>[];
@@ -127,28 +129,39 @@ export class SupplierMasterComponent implements OnInit {
       suppId: [],
       suppNo: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       name: ['', [Validators.required]],
-      address1: ['', [Validators.required]],
-      address2: ['', [Validators.required]],
-      address3: ['', [Validators.required]],
-      address4: [''],
+      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address3: ['',[Validators.maxLength(50)]],
+      address4: ['',[Validators.maxLength(50)]],
+      //address2: ['', [Validators.required]],
+      //address3: ['', [Validators.required]],
+      //address4: [''],
       city: ['', [Validators.required]],
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      emailId: ['', [Validators.required, Validators.email]],
+      // emailId: ['', [Validators.required, Validators.email]],
+      emailId: [''],
       contactPerson: [''],
       taxCategoryName: ['', Validators.required],
-      ticketNo: ['', Validators.required],
-      creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      //  ticketNo: ['', Validators.required],
+       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      // creditLimit:[],
       remarks: [''],
+      //emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
-      gstNo: [],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      //gstNo: [],
       // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      // panNo:[],
       tanNo: [''],
+      // pinCode:[],
+      // ouId:[],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      ouId: ['', [Validators.required]],
+      // ouId: ['', [Validators.required]],
+      ouId:[],
       ExeAddress: [],
       saddress1: [],
       saddress2: [],
@@ -163,6 +176,7 @@ export class SupplierMasterComponent implements OnInit {
       endDate: [],
       sstatus: ['', [Validators.nullValidator]],
       status: ['', [Validators.nullValidator]],
+      emplId:[],
       // aadharNo:[],
 
       // address1E: ['', [Validators.required]],
@@ -180,6 +194,8 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
+     this.emplId =Number(sessionStorage.getItem('emplId'));
+    // console.log(this.emplId);
     this.service.cityList()
       .subscribe(
         data => {
@@ -264,7 +280,7 @@ export class SupplierMasterComponent implements OnInit {
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert('Supplier Master Details Validation Error. Please Enter Validate Data !!!');
           this.supplierMasterForm.reset();
         }
       }
@@ -418,6 +434,7 @@ alert(suppSiteId);
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
           this.city = this.lstcomments.city
+          this.displayInactive = true;
         }
       );
   }
@@ -437,7 +454,8 @@ alert(suppSiteId);
 
   }
   SearchTaxCat(ouId) {
-    // alert(locId);
+     // alert(ouId);
+    if (ouId > 0 ) {
     this.service.getTaxCat(ouId)
       .subscribe(
         data => {
@@ -446,6 +464,7 @@ alert(suppSiteId);
           // this.allFunction(locId);
         }
       );
+    } 
   }
   onOptionsSelected(event: any) {
     this.Status1 = this.supplierMasterForm.get('sstatus').value;
@@ -456,6 +475,7 @@ alert(suppSiteId);
     }
     else if (this.Status1 === 'Active') {
       this.supplierMasterForm.get('endDate').reset();
+      this.displayInactive = true;
     }
   }   
   onOptionsSelectedSupp(event: any) {
@@ -467,6 +487,7 @@ alert(suppSiteId);
     }
     else if (this.Status1 === 'Active') {
       this.supplierMasterForm.get('endDate').reset();
+      this.displayInactive = true;
     }
   } 
 
@@ -505,4 +526,29 @@ alert(suppSiteId);
           }
         );
       }
+      onOptionGstno(event:any,tanNo)
+      {
+        // alert(event);
+        var gstno=event.target.value;
+        // alert(gstno);
+        if(gstno.length==15 && gstno!='GSTUNREGISTERED')
+        {
+          
+          const gstNo1 = gstno.substr(3,10);
+          this.panNo = gstNo1;
+          tanNo.focus();
+        }
+        else 
+        {
+          // this.gstNo='GSTUNREGISTERED';
+          if(gstno.length==0 ) {
+          this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
+        }
+         // panNo.focus();
+        }
+        return;
+
+      }
+
+      
 }

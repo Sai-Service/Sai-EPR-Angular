@@ -1023,6 +1023,14 @@ viewAccounting(receiptNo:any){
   poInvoiceCreation(segment1:any){
     // alert(this.segment1);
     this.service.poinvCre(segment1).subscribe((res: any) => {
+      if(res.code===200){
+      alert(res.message);
+    }
+    else{
+      if(res.code===400){
+        alert(res.message);
+      }
+    }
     })
   }
 

@@ -43,7 +43,7 @@ const routes: Routes = [
   {path:'locatioMaster', component:LocationMasterComponent},
   {path:'fndCmmonLookup', component:FNDCommonLookupComponent},
   {path:'ItemCategory',component:ItemCategortComponent},
-  {path:'suplierMaster', component:SupplierMasterComponent},
+  {path:'SupplierMaster', component:SupplierMasterComponent},
   {path:'LocatorMaster', component:LocatorMasterComponent},
   {path:'Dashboard',component:DashboardComponent},
   {path:'ItemMaster', component:ItemMasterComponent},

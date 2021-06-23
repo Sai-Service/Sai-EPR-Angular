@@ -527,11 +527,6 @@ export class SalesOrderBookingComponent implements OnInit {
             // this.displaycategory=false;
           }
           if (this.lstgetOrderLineDetails.length === 0) {
-            // this.displaycategory = true;
-            // this.displaypricingQty = true;
-            // this.displaytaxCategoryName = true;
-            // this.displayorderedItem = true;
-            // this.displaysegment = true;
             this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
           }
           else {

@@ -60,13 +60,13 @@
                         <table class="center">
                             <tr>
 
-                                <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Number:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;Number:&nbsp;</td>
                                     
                                 <td>
                                     <input   type="text"  formControlName="packageNumber"  id="packageNumber" [(ngModel)]="packageNumber" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Description:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;Description:&nbsp;</td>
                                 
                                 <td>
                                     <input  style="width: 270%;"  type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
@@ -76,11 +76,11 @@
                                 <tr>
                                
 
-                                <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Category:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;Category:&nbsp;</td>
                                     
                                 <td>  
                                     <select    formControlName="packageCategory" id="packageCategory" [(ngModel)]="packageCategory" class="form-control">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  McpPackageCategoryList" [ngValue]="sc.code">
                                             <!-- {{sc.cmnTypeId}}- -->
                                             {{sc.code}}
@@ -89,11 +89,11 @@
                                 </td>
 
                                 
-                                <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Type:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;Type:&nbsp;</td>
                                         
                                 <td>  
                                     <select    formControlName="packageType" id="packageType" [(ngModel)]="packageType" class="form-control">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  McpPackageTypeList" [ngValue]="sc.code">
                                             <!-- {{sc.cmnTypeId}}- -->
                                             {{sc.code}}
@@ -101,11 +101,11 @@
                                     </select>
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Fuel&nbsp;Type:&nbsp;</td>
                                     
                                 <td>  
                                     <select   formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control">
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
                                             <!-- {{sc.cmnTypeId}}- -->
                                             {{sc.code}}
@@ -119,52 +119,52 @@
                            
                             <tr>
 
-                                <td style="width: 15%" class="LabelFontStyle">From&nbsp;Days:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">From&nbsp;Days:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="fromDays"  id="fromDays" [(ngModel)]="fromDays" class="form-control" >
+                                    <input   type="number"  formControlName="fromDays"  id="fromDays" [(ngModel)]="fromDays" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">To&nbsp;Days:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">To&nbsp;Days:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="toDays"  id="toDays" [(ngModel)]="toDays" class="form-control" >
+                                    <input   type="number"  formControlName="toDays"  id="toDays" [(ngModel)]="toDays" class="form-control" >
                                 </td>
 
                                                            
                             
 
-                                <td style="width: 15%" class="LabelFontStyle">From&nbsp;KM:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">From&nbsp;KM:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="fromKms"  id="fromKms" [(ngModel)]="fromKms" class="form-control" >
+                                    <input   type="number"  formControlName="fromKms"  id="fromKms" [(ngModel)]="fromKms" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">To&nbsp;KMS:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">To&nbsp;KMS:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="toKms"  id="toKms" [(ngModel)]="toKms" class="form-control" >
+                                    <input   type="number"  formControlName="toKms"  id="toKms" [(ngModel)]="toKms" class="form-control" >
                                 </td>
                             </tr>
                                 <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;Period:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Period:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="validPeriod"  id="validPeriod" [(ngModel)]="validPeriod" class="form-control" >
+                                    <input   type="number"  formControlName="validPeriod"  id="validPeriod" [(ngModel)]="validPeriod" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;KM:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;KM:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="validKm"  id="validKm" [(ngModel)]="validKm" class="form-control" >
+                                    <input   type="number"  formControlName="validKm"  id="validKm" [(ngModel)]="validKm" class="form-control" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Start&nbsp;Date:&nbsp;</td>
                                         
                                 <td>
                                     <input   type="date"  formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control" >
                                 </td>
-                                <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">End&nbsp;Date:&nbsp;</td>
                                         
                                 <td>
                                     <input   type="date"  formControlName="endDate"  id="endDate" [(ngModel)]="endDate" class="form-control" >
@@ -198,10 +198,10 @@
                                                       <!-- <th style="width:10rem" scope="col">PkgNo</th> -->
                                                       <!-- <th style="width:10rem" scope="col">Fuel Type</th> -->
                                                       <th style="width:10rem" scope="col">Item Code</th>
-                                                      <!-- <th style="width:10rem" scope="col">Item Id</th> -->
+                                                      <th style="width:10rem" scope="col">Item Id</th>
                                                       <th style="width:10rem" scope="col">Item Description</th>
                                                       <th style="width:10rem" scope="col">Item Type</th>
-                                                      <th style="width:10rem" scope="col">Quantity</th>
+                                                      <th style="width:7rem" scope="col">Quantity</th>
                                                       <th style="width:3rem" scope="col">Add+</th>
                                                       <th style="width:3rem" scope="col">Del-</th>
                                                   </tr>
@@ -224,18 +224,19 @@
                                              
                                                 <datalist id="dynamicUserIds1">
                                                     <option *ngFor="let mc of mcpItemList"  [ngValue]="mc.itemId">
-                                                        {{mc.itemNumber}}</option>
+                                                        {{mc.itemNumber}}
+                                                    </option>
                                                 </datalist>
                                                 </td> 
 
-                                                  <!-- <td>
-                                                    <input disabled  type="text" formControlName="itemId"  class="form-control" placeholder="mcp Item Id "  >
-                                                </td> -->
+                                                  <td>
+                                                    <input disabled style="width: 100px;"  type="text" formControlName="itemId"  class="form-control" placeholder="mcp Item Id "  >
+                                                </td>
 
                                                 
                                            
                                                 <td>
-                                                    <input disabled style="width: 450px;" type="text" formControlName="itemDesc"  class="form-control" placeholder="Item Description "  >
+                                                    <input disabled style="width: 400px;" type="text" formControlName="itemDesc"  class="form-control" placeholder="Item Description "  >
                                                 </td>
 
 
@@ -244,7 +245,7 @@
                                                 </td>
                                                 
                                                 <td>
-                                                    <input   style="width: 150px;text-align: right;" type="number" formControlName="quantity"  class="form-control" (change)="validateQty(i)"  placeholder="quantity "  >
+                                                    <input   style="width: 100px;text-align: right;" type="number" formControlName="quantity"  class="form-control" (change)="validateQty(i)"  placeholder="quantity "  >
                                                 </td>
                                                
                                                 <td>
@@ -276,7 +277,7 @@
                                 </td>
                                 
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                    <!-- <button type="button" class="btn btn-info" (click)="searchMast()">Search</button> -->
                                 </td>
 
                                     <!-- ====================Reset Dialog ======================== -->
@@ -349,7 +350,7 @@
                                                 <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpPackageMasterForm">Update</button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                                <!-- <button type="button" class="btn btn-info" (click)="searchMast()">Search</button> -->
                                             </td>
                                             <!-- <td>
                                                 <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
@@ -422,22 +423,63 @@
                                 </tr>
                             </table>
                             <!-- ==================================================== -->
+                            <br>
+                            <table class="center" style="width: 100%; background-color: #FFE4B5; ">
+                            
+                                 
+                                <tr>
 
+                                    <!-- <td></td><td></td> -->
 
+                                    <td style="width: 15%;font-weight: bold" class="LabelFontStyle">Search&nbsp;By:&nbsp;</td>
 
+                                    <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Type:&nbsp;</td>
+                                    <td>  
+                                        <select    formControlName="searchByPkgType" id="searchByPkgType" [(ngModel)]="searchByPkgType" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  McpPackageTypeList" [ngValue]="sc.code">
+                                                  {{sc.code}}
+                                            </option>Search
 
+                                        </select>
+                                    </td> 
+    
+                                                                      
+                                    <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                                    <td>  
+                                        <select   formControlName="searchByFuelType" id="searchByFuelType" [(ngModel)]="searchByFuelType" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
+                                                <!-- {{sc.cmnTypeId}}- -->
+                                                {{sc.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+                
+                
+                                                  
+                                    <td colspan="8" style="text-align: left; width: 100%;">
+                                        <button type="submit"  (click)="SearchByPkgFuelType(searchByPkgType,searchByFuelType)" class="btn btn-primary"><i
+                                                class="fa fa-search"></i></button> 
+                
+                                </tr>
+                  
+                             </table>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <br>
+
 <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
         <tbody>
                 <tr class="GridHeader">
-                <th style="width:5rem" scope="col">Package&nbsp;Id&nbsp;</th>    
+                <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>    
+                <!-- <th style="width:5rem" scope="col">Package&nbsp;Id&nbsp;</th>     -->
                 <th style="width:5rem" scope="col">Package&nbsp;Number&nbsp;</th>
                 <th style="width:15rem" scope="col"> Package&nbsp;Desc</th>
                 <th style="width:6rem" scope="col"> Package&nbsp;Type</th>
@@ -447,8 +489,9 @@
                 <th style="width:6rem" scope="col">Select</th>
             </tr>
         </tbody>
-        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-                <td>{{com.packageId}}</td>
+        <tr *ngFor="let com of lstcomments let i= index" class="ItemStyle" style="text-decoration:none;" >
+                <td style="text-align: center;">{{i+1}}</td>
+                <!-- <td style="text-align: right;">{{com.packageId}}</td> -->
                 <td>{{com.packageNumber}}</td>
                 <td>{{com.packageDesc}}</td>   
                 <td>{{com.packageCategory}}</td>   

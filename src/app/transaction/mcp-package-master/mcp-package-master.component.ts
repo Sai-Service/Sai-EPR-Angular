@@ -14,6 +14,24 @@ import { trigger } from '@angular/animations';
 interface IMcpPkgMaster {
   quantity:number;
   packageId:number;
+
+  packageNumber:string;
+  packageType:string;
+  packageDesc:string;
+  packageCategory:string;
+  fuelType:string;
+  startDate:Date;
+  endDate:Date;
+  fromDays:number;
+  toDays:number;
+  fromKms:number;
+  toKms:number;
+  validPeriod:number;
+  validKm:number;
+  itemNumber:string;
+
+   searchByPkgType:string;
+   searchByFuelType:string;
    
   }
 
@@ -53,18 +71,19 @@ export class McpPackageMasterComponent implements OnInit {
           packageId:number;
   
           itemId : number;  
+          itemNumber:string;
           itemDescription : string ;
           itemName :string;
           segmentName:string;
           priceDesc:string;
           segment :string;
 
-          packageNumber:number;
+          packageNumber:string;
           packageType:string;
           packageDesc:string;
           packageCategory:string;
           fuelType:string;
-          startDate:Date;
+          public startDate;
           endDate:Date;
           fromDays:number;
           toDays:number;
@@ -80,12 +99,19 @@ export class McpPackageMasterComponent implements OnInit {
           display1=true;
 
           //////////////////////////////////
+          headerValidation=false;
+          lineValidation=false;
+          duplicateLineItem=false;
           displayInactive = true;
           Status1: any;
           inactiveDate: Date;
           display = true;
           displayButton = true;
           //////////////////////////////////
+
+          searchByPkgType:string;
+          searchByFuelType:string;
+          srlNo:number=0;
 
      
           // public codeCombinationId=2079;
@@ -114,7 +140,7 @@ export class McpPackageMasterComponent implements OnInit {
             packageDesc:[],
             packageCategory:[],
             fuelType:[],
-            startDate:[],
+            startDate:[new Date()],
             endDate:[],
             fromDays:[],
             toDays:[],
@@ -122,6 +148,9 @@ export class McpPackageMasterComponent implements OnInit {
             toKms:[],
             validPeriod:[],
             validKm:[],
+
+            searchByPkgType:[],
+            searchByFuelType:[],
 
             ssPackageItemDtlsList: this.fb.array([this.lineDetailsGroup()])   
 
@@ -260,39 +289,56 @@ export class McpPackageMasterComponent implements OnInit {
 
  //======================================================================
  onOptionmcpItemIdSelected(itemId :any, index) {
- 
-  //  alert('item function-'+itemId +" index ="+index);
-  
+   
     let selectedValue = this.mcpItemList.find(v => v.itemNumber == itemId);
     if( selectedValue != undefined){
-    // alert('Item Id :' +selectedValue.itemId);
-    // return;
-
+ 
     console.log(selectedValue);
     
     var arrayControl = this.mcpPackageMasterForm.get('ssPackageItemDtlsList').value
     var patch = this.mcpPackageMasterForm.get('ssPackageItemDtlsList') as FormArray;
+    // var lineItemNumberCurr=arrayControl[index].itemNumber;
+
+    this.CheckForDuplicateLineItem(selectedValue.itemId,index)
+
     
-    this.itemId = selectedValue.itemId;
+    
 
-    (patch.controls[index]).patchValue(
-      {
-        itemDesc: selectedValue.itemName,
-        itemType: selectedValue.itemType,
-        itemId: selectedValue.itemId,
-        // itemNumber:selectedValue.itemNumber,
+    if(this.duplicateLineItem ==false) {
+
+          this.itemId = selectedValue.itemId;
+          (patch.controls[index]).patchValue(
+            {
+              itemDesc: selectedValue.itemName,
+              itemType: selectedValue.itemType,
+              itemId: selectedValue.itemId,
+              // itemNumber:selectedValue.itemNumber,
+            });
+      
+            } 
       }
-    );
-
   }
-}
-// ======================================================================
 
-addRow() {
-  // alert('addrow index '+index);
-  this.lineDetailsArray().push(this.lineDetailsGroup());
-  
+  // ======================================================================
+
+ addRow(index) {
+
+  // alert("Addrow duplicate item status :"+this.duplicateLineItem);
+  if(this.duplicateLineItem ===false) {
+   
+  this.CheckLineValidations(index);
+
+  if (this.lineValidation) 
+    {
+    
+        this.lineDetailsArray().push(this.lineDetailsGroup());
+      
+    }
+  } else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed..." + this.duplicateLineItem);
 }
+}
+
+
 
 RemoveRow(index) {
   if (index===0){
@@ -314,6 +360,32 @@ searchMast() {
       }
     );
    }
+
+   SearchByPkgFuelType(pType:any,fType:any){
+    // alert ("Package Type : "+pType+ " Fuel Type : "+fType);
+    const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
+    if (formValue.searchByPkgType===undefined || formValue.searchByPkgType===null)
+    {
+        alert ("PACKAGE TYPE: Select Package Type");
+        return;
+     } 
+     if (formValue.searchByFuelType===undefined || formValue.searchByFuelType===null)
+     {
+         alert ("FUEL TYPE: Select Fuel Type");
+         return;
+      } 
+
+        this.service.getMcpPackageSearchNew(pType ,fType)
+        .subscribe(
+        data => {
+          this.lstcomments = data;
+          alert("Records Found : "+ this.lstcomments.length);
+          console.log(this.lstcomments);
+
+        } ); 
+         
+       }
+     
 
    Select1(packageId: number) {
        
@@ -395,22 +467,47 @@ searchMast() {
   }
   
     newMast() {
+      
+          this.checkHeaderValidations();
 
-      // alert ("Posting data  to PL mater......")
-      // const formValue: IPriceList =this.priceListMasterForm.value;
-      const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
-      this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
-          this.mcpPackageMasterForm.reset();
-        } else {
-          if (res.code === 400) {
-            alert('ERROR WHILE INSERTING');
-            this.mcpPackageMasterForm.reset();
-          }
-        }
-      });
-    }
+          if (this.headerValidation==true ) { alert("Header Validation Sucessfull...") }
+          else { alert("Header Validation Failed... Please Check");  return;   }
+
+          this.lineValidation=false;
+          var pkgLineArr = this.mcpPackageMasterForm.get('ssPackageItemDtlsList').value;
+          var len1=pkgLineArr.length;
+          
+          for (let i = 0; i < len1 ; i++) 
+            {
+              this.CheckLineValidations(i);
+            }
+
+            if(this.lineValidation===false ) { 
+              alert("Line Validation Failed... \nPlease check all  line data fileds are updated properly..\nCheck for Duplicate Line Items..")
+              return;
+            }
+          
+        
+          alert("Heder Validation : "+this.headerValidation +"\nLine Validation : "+this.lineValidation);
+          
+          if (this.headerValidation  && this.lineValidation ) 
+          {
+            alert("Data Validation Sucessfull....\nPosting data  to MCP Package Master")
+
+            const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
+            this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('RECORD INSERTED SUCCESSFUILY');
+                this.mcpPackageMasterForm.reset();
+              } else {
+                if (res.code === 400) {
+                  alert('ERROR WHILE INSERTING');
+                  this.mcpPackageMasterForm.reset();
+                }
+              }
+            });
+          }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
+    } 
 
     //  ------------------------Line updattion..........................
     updateMastLine() {
@@ -432,8 +529,12 @@ searchMast() {
 
     //  ------------------------Header updattion..........................
     updateMast() {
-      alert ("Putting data  to MCP PACKAGE header.part .....")
-      // const formValue: IPriceList = this.priceListMasterForm.value;
+      
+      this.checkHeaderValidations()
+
+      if (this.headerValidation===true) {
+        alert("Data Validation Sucessfull....\nPutting data  to MCP PACKAGE MASTER TABLE")
+     
       const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
       this.service.UpdateMcpPackageMaster(formValue, formValue.packageId).subscribe((res: any) => {
         if (res.code === 200) {
@@ -446,10 +547,176 @@ searchMast() {
           }
         }
       });
-    };
+    }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+    }
 
   // ============================================================
+   
+      // ------------------------------------VALIDATIONS-----------------------------------------
+      
+      checkHeaderValidations()  {
+        const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
 
+        if (formValue.packageNumber===undefined || formValue.packageNumber===null || formValue.packageNumber.trim()==='')
+        {
+           this.headerValidation=false; 
+           alert ("PACKAGE NUMBER : Should not be null....");
+           
+            return;
+         } 
+
+         if (formValue.packageDesc===undefined || formValue.packageDesc===null || formValue.packageDesc.trim()==='')
+         {
+            this.headerValidation=false; 
+            alert ("PACKAGE DESCRIPTION : Should not be null....");
+           
+             return;
+          } 
+
+        if (formValue.packageCategory===undefined || formValue.packageCategory===null)
+        {
+            alert ("PACKAGE CATEGORY: Select Package Type");
+            return;
+         } 
+
+        if (formValue.packageType===undefined || formValue.packageType===null)
+        {
+            this.headerValidation=false;   
+            alert ("PACKAGE TYPE: Select Package Type");
+            return;
+         } 
+         if (formValue.fuelType===undefined || formValue.fuelType===null)
+         {
+            this.headerValidation=false;  
+            alert ("FUEL TYPE: Select Fuel Type");
+             return;
+          } 
+
+         
+
+          if (formValue.fromDays < 0  || formValue.fromDays===undefined || formValue.fromDays===null )
+          {
+              this.headerValidation=false;  
+              alert ("FROM DAYS: Should not be below Zero");
+              return;
+          } 
+
+          if (formValue.toDays < 0 || formValue.toDays <= formValue.fromDays || formValue.toDays===undefined || formValue.toDays===null )
+          {
+              this.headerValidation=false;  
+              alert ("TO DAYS: Should be above FROM DAYS");
+              return;
+          } 
+
+          if (formValue.fromKms < 0 || formValue.fromKms===undefined || formValue.fromKms===null )
+          {
+              this.headerValidation=false;  
+              alert ("FROM KM: Should not be below Zero");
+              return;
+          } 
+
+          if (formValue.toKms < 0 || formValue.toKms <= formValue.fromKms  || formValue.toKms===undefined || formValue.toKms===null )
+          {
+              this.headerValidation=false;  
+              alert ("TO KM: Should be above FROM KMS");
+              return;
+          } 
+
+          if (formValue.validPeriod <=0 || formValue.validPeriod===undefined || formValue.validPeriod===null )
+          {
+              this.headerValidation=false;  
+              alert ("VALID PERIOD: Should  be above Zero");
+              return;
+          } 
+
+          if (formValue.validKm <= 0 || formValue.validKm===undefined || formValue.validKm===null )
+          {
+              this.headerValidation=false;  
+              alert ("VALID KM: Should  be above Zero");
+              return;
+          } 
+          if(formValue.startDate===undefined || formValue.startDate===null ) 
+          {
+              this.headerValidation=false;
+              alert ("START DATE: Should not be null value");
+              
+              return; 
+           }
+
+           if(formValue.endDate===undefined || formValue.endDate===null || formValue.endDate<=formValue.startDate ) 
+           {
+               this.headerValidation=false;
+               alert ("END DATE: Should not be null value/grater than Start Date.");
+               return; 
+            }
+          this.headerValidation=true;
+      }
+
+      CheckLineValidations(i) {
+
+        // alert('addrow index '+i);
+      
+        var prcLineArr1 = this.mcpPackageMasterForm.get('ssPackageItemDtlsList').value;
+        var lineValue1=prcLineArr1[i].itemId;
+        var lineValue2=prcLineArr1[i].quantity;
+        var lineValue3=prcLineArr1[i].itemNumber;
+      
+      
+        // alert("Line Value :"+lineValue1);
+         var j=i+1;
+        if(lineValue1===undefined || lineValue1===null || lineValue1<0 ){
+          alert("Line-"+j+ " ITEM ID/CODE :  Should not be null value/ Select valid item from the list");
+          this.lineValidation=false;
+          return;
+        } 
+
+        if(lineValue3===undefined || lineValue3===null || lineValue3==='' ){
+          alert("Line-"+j+ " ITEM CODE :  Should not be null value/ Select valid item from the list");
+          this.lineValidation=false;
+          return;
+        } 
+      
+        if(lineValue2===undefined || lineValue2===null || lineValue2<=0){
+          alert("Line-"+j+ " QUANTITY :  Should  be grater than Zero");
+          this.lineValidation=false;
+          return;
+        } 
+        
+        if(this.duplicateLineItem===true) {this.lineValidation=false;}else{this.lineValidation=true;}
+        
+      
+        }
+
+
+
+        CheckForDuplicateLineItem(mItemId,mIndex){
+          var pkgLineArr = this.mcpPackageMasterForm.get('ssPackageItemDtlsList').value;
+          var patch = this.mcpPackageMasterForm.get('ssPackageItemDtlsList') as FormArray;
+          var len1=pkgLineArr.length;
+          // alert("line item array length :"+len1 + "," +mItemId);
+        
+          for (let i = 0; i < len1 ; i++) 
+            {
+              // alert("inside for loop");
+              var lineItemId=pkgLineArr[i].itemId;
+               if(mIndex != i) {
+               if (lineItemId===mItemId) { 
+                 this.duplicateLineItem=true; 
+                //  patch.controls[mIndex].patchValue({itemNumber:oldItem})
+                
+                 alert(lineItemId+" DUPLICATE line item. Please check  item  in Line - " +(i+1));
+                //  this.lineDetailsArray().removeAt(len1);
+                // alert("curr line item Id :"+lineItemId  + " Selected item Id :" +mItemId);
+                 break;
+                }
+
+                }else{this.duplicateLineItem=false;}
+
+                 this.duplicateLineItem=false;
+            }
+          
+
+        }
 
 
 

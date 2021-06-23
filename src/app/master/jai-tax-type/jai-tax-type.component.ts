@@ -1166,7 +1166,7 @@ export class JaiTaxTypeComponent implements OnInit {
     var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
     alert('taxTypeId=' + taxTypeId);
 
-    this.service.geActDetails(taxTypeId)
+    this.service.geActDetails1(taxTypeId)
       .subscribe(
         data => {
           this.actDetails = data;
@@ -1210,14 +1210,74 @@ export class JaiTaxTypeComponent implements OnInit {
   //     this.jaiTaxtypeMasterForm.get('endDate').reset();
   //   }
   // }
+        // onOpUnitSelected(opUnit){
+        //   // alert('ouId id =' +opUnit);
+        //     if (opUnit > 0) {
+        //       this.showOpUnit=true;
+        //         this.service.getLocationSearch1(opUnit)
+        //         .subscribe(
+        //           data => {
+        //             this.locIdList2 = data;
+        //             console.log(this.locIdList2);
+  
+                    
+        //           }
+        //         );
+        //     }
+        //     else {
+        //       this.showOpUnit=false;
+        //     }
+      
+        //     if(opUnit==='--Select--'){
+        //       // alert('testing...')
+        //       this.jaiTaxtypeMasterForm.get('locationId').reset()
+        //     }
+        //   }
+  
+  
+        // loadActDetails(){
+        //   this.lineDetailsArray.clear();
+        //   // var taxTypeCode = this.jaiTaxtypeMasterForm.get('taxTypeCode').value;
+        //   var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
+        //   alert('taxTypeId='+taxTypeId);
+          
+        //   this.service.geActDetails1(taxTypeId)
+        //   .subscribe(
+        //     data => {
+        //       this.actDetails = data;
+        //       console.log(this.actDetails);
+        //       let cont=this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+            
+        //       var actLines:FormGroup=this.lineDetailsGroup();
 
+        //       var length1=this.actDetails.accountList.length-1;
+        
+        //       alert(length1);
 
+        //       this.lineDetailsArray.removeAt(length1);
+        //       for (let i=0; i<length1;i++) {
+        //       cont.push(actLines);}
 
+        //       this.jaiTaxtypeMasterForm.get('actLines').patchValue(this.actDetails.accountList);
+        //       // this.jaiTaxtypeMasterForm.get('actLines').patchValue({ledgerId:this.actDetails.accountList[0].ledgerId,
+        //       //   ledgerName:this.actDetails.accountList[0].ledgerName});
+        //     }
+        //   );
+  
+        //   }
 
-  onOptionSelected(regimeId: any) {
-  alert( regimeId);
-    if (regimeId != undefined) {
+          
+        //   ontaxTypeCodeSelected(event: any) {
+        //   var  regimeCode = this.jaiTaxtypeMasterForm.get('regimeCode').value;
+        //   // alert(regimeCode)
+        //     if(event === 'Discount' && regimeCode==3){this.locationDissplay= true;}
+        //     if(event === 'Select'  && regimeCode==3){this.locationDissplay= false;}
+        //   }
 
+     onOptionSelected(regimeId: any) {
+      //  alert("Regime ID :" + regimeId);
+      if(regimeId != null || regimeId > 0){
+     
       this.service.regimNameList(regimeId)
         .subscribe(
           data => {
@@ -1269,6 +1329,7 @@ export class JaiTaxTypeComponent implements OnInit {
       );
     // alert ('Location id/Code/Name='+locId+'/'+this.locCode+'/'+this.locName);
   }
+
 
   onLookupSelected1(mlookupValue: any, mlookupType: string, mAccountType: string) {
     // alert('LookupValue: '+mlookupValue+ ' Type : '+mlookupType +" Account Type: "+mAccountType);
