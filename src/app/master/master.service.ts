@@ -131,8 +131,8 @@ export class MasterService {
 
   taxCategoryList(): Observable<any> {
     // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
-    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
+    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
+    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
   }
 
   createOrderTypeListFn(): Observable<any> {

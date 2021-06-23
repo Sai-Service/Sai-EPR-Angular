@@ -169,6 +169,8 @@
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
             Order&nbsp;Header&nbsp;Details&nbsp;</legend>
+            <div *ngIf="displayorderHedaerDetails; then thenorderHedaerDetails; else elseorderHedaerDetails"></div>
+            <ng-template #thenorderHedaerDetails>
         <table class="center" style="width: 100%;">
             <tr>
                 <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
@@ -181,8 +183,9 @@
                     Order&nbsp;Type&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <select formControlName="transactionTypeName" id="transactionTypeName" class="form-control" style="width: 160px;"
-                    (ngModelChange)='onOptionsSelectedlncategoryType($event)' >
+                    
+                    <!-- (ngModelChange)='onOptionsSelectedlncategoryType' -->
+                    <select formControlName="transactionTypeName" id="transactionTypeName" class="form-control" style="width: 160px;">
                     <option>--Select--</option>
                     <option *ngFor="let orderType of orderTypeList">
                         {{orderType.transactionTypeName}}
@@ -193,13 +196,8 @@
                     Create&nbsp;Order&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <!-- <select class="form-control" formControlName="createOrderType" [(ngModel)]='createOrderType'
-                        value={{createOrderType}} style="width: 160px;" (ngModelChange)="onOptionsSelectedTL($event)">
-                        <option>--Select--</option>
-                        <option value="Pick Ticket">Pick Ticket</option>
-                        <option value="Direct Invoice">Direct Invoice</option>
-                        <option value="Sales Order">Sales Order</option>
-                    </select> -->
+                    <div *ngIf="displaycreateOrderType; then thencreateOrderType; else elsecreateOrderType"></div>
+            <ng-template #thencreateOrderType>
                     <select formControlName="createOrderType" id="createOrderType" class="form-control"
                     style="width: 160px;"   (ngModelChange)="onOptionsSelectedTL($event)">
                     <option>--Select--</option>
@@ -207,12 +205,16 @@
                         {{cot.code}}
                     </option>
                 </select>
-                </td>
+            </ng-template>
+            <ng-template #elsecreateOrderType>
+            <input disabled type="text" formControlName="createOrderType" [(ngModel)]='createOrderType' value={{createOrderType}}  class="form-control" style="width: 160px;" >
+            </ng-template>      
+        </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Reference&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input type="text" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}} (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;">
+                    <input type="text" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}} (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;" >
                 </td>
               
                
@@ -223,7 +225,7 @@
                 </td>
                 <td>
                     <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType' value={{paymentType}}  class="form-control" style="width: 160px;">
-                    <input  disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId' value={{paymentTermId}}
+                    <input hidden disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId' value={{paymentTermId}}
                     class="form-control" style="width: 160px;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle1">
@@ -312,7 +314,7 @@
                     Order&nbsp;Date&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input  type="date" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}}
+                    <input disabled type="date" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}}
                         class="form-control" [ngModel]="orderedDate | date:'yyyy-MM-dd'" style="width: 160px;text-align: right;font-weight: bold;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -338,17 +340,160 @@
                 </td>
             </tr>
         </table>
+            </ng-template>
+            <ng-template #elseorderHedaerDetails>
+                <table class="center" style="width: 100%;">
+                    <tr>
+                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                            Order&nbsp;Number&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 160px;font-weight: bold;">
+                        </td>
+                        <td style="width: 18%" class="LabelFontStyle1">
+                            Order&nbsp;Type&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <!-- (ngModelChange)='onOptionsSelectedlncategoryType' -->
+                            <select disabled formControlName="transactionTypeName" id="transactionTypeName" class="form-control" style="width: 160px;">
+                            <option>--Select--</option>
+                            <option *ngFor="let orderType of orderTypeList">
+                                {{orderType.transactionTypeName}}
+                            </option>
+                        </select>
+                        </td>
+                        <td style="width: 25%" class="LabelFontStyle1">
+                            Create&nbsp;Order&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                           
+                        <input disabled type="text" formControlName="createOrderType" [(ngModel)]='createOrderType' value={{createOrderType}}  class="form-control" style="width: 160px;" >
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Reference&nbsp;No&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}} (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;" >
+                        </td>                       
+                    </tr>
+                    <tr>
+                        <td style="width: 35%" class="LabelFontStyle1">
+                            Payment&nbsp;Term&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="paymentType" [(ngModel)]='paymentType' value={{paymentType}}  class="form-control" style="width: 160px;">
+                            <input  hidden disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId' value={{paymentTermId}}
+                            class="form-control" style="width: 160px;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle1">
+                            Price&nbsp;List&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <select disabled formControlName="priceListName" id="priceListName" class="form-control"
+                                style="width: 160px;"   (ngModelChange)="onOptionsSelectedPriceListID($event)">
+                                <option>--Select--</option>
+                                <option *ngFor="let pl of priceListNameList">
+                                    {{pl.priceListName}}
+                                </option>
+                            </select>
+        
+                            <input hidden disabled type="text" formControlName="priceListId" [(ngModel)]='priceListId' value={{priceListId}}
+                                class="form-control" style="width: 160px;">
+                        </td>
+                        <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
+                            <ng-template #thensalesRepName>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Issue&nbsp;By&nbsp;:&nbsp;
+                                </td>  
+                                <td>
+                                    <input disabled type="text" formControlName="issuedBy" [(ngModel)]='issuedBy' value={{issuedBy}}
+                                    class="form-control" style="width: 160px;">
+                                </td> 
+                            </ng-template>
+                            <ng-template #elsesalesRepName>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Sales&nbsp;Person&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <!-- <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
+                            <ng-template #thensalesRepName>
+                            <select formControlName="salesRepName" id="salesRepName" class="form-control"
+                                (ngModelChange)="onOptionsSelectedTL($event)" style="width: 160px;">
+                                <option>--Select--</option>
+                                <option *ngFor="let pt of salesRepNameList" [(ngModel)]='salesRepName'>
+                                    {{pt.ticketNo}}
+                                </option>
+                            </select>
+                            </ng-template>
+                            <ng-template #elsesalesRepName> -->
+                                <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName' value={{salesRepName}}
+                                class="form-control" style="width: 160px;">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                TL&nbsp;Name&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}
+                                    class="form-control" style="width: 160px;">
+                            </td>
+                        </ng-template>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                            Order&nbsp;Status&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled  type="text" class="form-control" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode' value={{flowStatusCode}} style="width: 160px;font-weight: bold;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Remark&nbsp;:&nbsp;
+                        </td>
+                        <td colspan="3">
+                            <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}
+                                class="form-control" style="width: 100%;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Invoice&nbsp;Number&nbsp;:&nbsp;
+                        </td>
+                        <td >
+                            <input disabled type="text" formControlName="InvoiceNumber" [(ngModel)]='InvoiceNumber' value={{InvoiceNumber}}
+                                class="form-control" style="width: 100%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                            Order&nbsp;Date&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="date" formControlName="orderedDate" [(ngModel)]='orderedDate' value={{orderedDate}}
+                                class="form-control" [ngModel]="orderedDate | date:'yyyy-MM-dd'" style="width: 160px;text-align: right;font-weight: bold;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Subtotal&nbsp;Amount&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="subtotal" [(ngModel)]='subtotal' value={{subtotal}}
+                                class="form-control" style="width: 160px;text-align: right;">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Tax&nbsp;Amount&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
+                                class="form-control" style="width: 160px;text-align: right;">
+                        </td>
+                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                            Total&nbsp;Amount&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt' value={{totAmt}}
+                                class="form-control" style="width: 160px;font-weight: bold;">
+                        </td>
+                    </tr>
+                </table>
+            </ng-template>
     </fieldset>
-    <!-- <fieldset class="RFS">
-        <table class="center">
-            <tr>
-                <td>
-                    <button type="submit" class="btn btn-primary" id="register" (click)="CreateFreshOrder()"
-                        style="width: 120px;">Create Order</button>
-                </td>
-            </tr>
-        </table>
-    </fieldset> -->
+    
     <!-- Line & Txa details ....... -->
     <div class="grid_scroll">
     <fieldset class="RFS">
@@ -439,23 +584,51 @@
                                     [formGroupName]="i" class="auto-style5">
                                     <tr>
                                         <td>
-                                            <input type="number" formControlName="lineNumber" class="form-control"
-                                                style="height: 20px;width: 40px;">
+                                            <!-- <a [value]="i+1" data-toggle="collapse"
+                                            href="#panel1006+{{i}}" role="button"
+                                            aria-expanded="true"
+                                            aria-controls="panel1006+{{i}}"
+                                            (click)="taxDetails('insert', i, taxCategoryId)">
+                                            {{i+1}}
+                                        </a> -->
+                                            <!-- <input type="number" formControlName="lineNumber" class="form-control"
+                                                style="height: 20px;width: 40px;"> -->
+                                                <a [value]="i+1" class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab"  (click)="taxDetails('insert', i, taxCategoryId)">
+                                                    {{i+1}}
+                                                </a>
                                         </td>
                                         <td>
-                                            <input disabled type="text" formControlName="invType" value="invType"
-                                            [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;">
+                                            <!-- <input disabled type="text" formControlName="invType" value="invType"
+                                            [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
+                                            <select formControlName="invType" id="invType"
+                                            (ngModelChange)='onOptionsSelectedCategory($event, i)'
+                                            class="form-control"
+                                            style="width: 100px;height: 25px;font-size: 10px;">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let cate of  categoryList" [value]="cate.type">
+                                                {{cate.type}}
+                                            </option>
+                                        </select>
                                         </td>
                                         <td>
+                                            <!-- <div *ngIf="displaysegment; then thensegment; else elsesegment">
+                                        </div>
+                                        <ng-template #thensegment> -->
                                             <select formControlName="segment" id="segment"  
                                                     (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                     class="form-control"
                                                     style="width: 100px;height: 25px;font-size: 10px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  invItemList1" [value]="sc.segment">
-                                                        {{sc.segment}}
+                                                    <option *ngFor="let item of  invItemList1" [value]="item.segment">
+                                                        {{item.segment}}
                                                     </option>
                                                 </select>
+                                        <!-- </ng-template>
+                                        <ng-template #elsesegment>
+                                            <input disabled type="text" formControlName="segment"
+                                                value="segment" [ngValue]="segment" class="form-control"
+                                                style="height: 20px;width: 160px;">
+                                        </ng-template> -->
                                                 <input hidden type="number" formControlName="itemId">
                                         </td>
                                         <td>
@@ -480,7 +653,7 @@
                                                     (change)="onKey(i)" class="form-control"
                                                     style="width: 150px;height: 25px;font-size: 10px;">
                                                     <option>--Select--</option>
-                                                    <option *ngFor="let sc of  taxCategoryList"  >
+                                                    <option *ngFor="let sc of  taxCategoryList"   [value]="sc.taxCategoryName">
                                                         {{sc.taxCategoryName}}
                                                     </option>
                                                 </select>
@@ -496,12 +669,11 @@
                                                     class="form-control" style="height: 20px;width: 160px;">
                                         </td>
                                         <td>
-                                            <!-- baseAmt -->
+                                          
                                             <input disabled type="number" formControlName="baseAmt"  [(ngModel)]='baseAmt'class="form-control"
                                                 (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </td>
                                         <td>
-                                            <!-- taxAmt -->
                                             <input disabled type="number" formControlName="taxAmt" class="form-control"
                                                 style="height: 20px;width: 70px;">
                                         </td>
@@ -777,15 +949,63 @@
     </div>
 
     <fieldset class="RFS">
+        <div *ngIf="displaycounterSaleAllButtons; then thencounterSaleAllButtons; else elsecounterSaleAllButtons"></div>
+        <ng-template #thencounterSaleAllButtons>
         <table class="center">
             <tr>
                 <td>
-                    <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketInvoiceFunction()">Pick Ticket To Invoice</button>
+                    <div *ngIf="displaypickTicketInvoice; then thenpickTicketInvoice; else elsepickTicketInvoice"></div>
+                    <ng-template #thenpickTicketInvoice>
+                    </ng-template>
+                    <ng-template #elsepickTicketInvoice>
+                        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pickTicketToInv">
+  Pick Ticket To Invoice
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="pickTicketToInv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="center">
+            <tr>
+                <td>
+                    <button  type="submit" class="btn btn-primary" id="register" (click)="downloadPickTicket()" style="width: 10rem;">Download Pre Invoice</button>
+                    </td>
+                <td>
+                <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketInvoiceFunction()" style="width: 10rem;">Pick Ticket To Invoice</button>
+                </td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+        </ng-template>
+                </td>
+                <td>
+                    <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate"></div>
+                    <ng-template #thenpickTicketUpdate>
+                    </ng-template>
+                    <ng-template #elsepickTicketUpdate>
+                    <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketupdateFunction()" style="width: 10rem;">Update</button>
+        </ng-template>
                 </td>
                 <td>
                     <div *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave"></div>
                     <ng-template #thencounterSaleOrderSave>
-                    <button type="submit" class="btn btn-primary" id="register" (click)="counterSaleOrderSave()">Save</button>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="counterSaleOrderSave()">Create Order</button>
                     </ng-template>
                     <ng-template #elsecounterSaleOrderSave>
                         <button disabled type="submit" class="btn btn-primary" id="register" (click)="counterSaleOrderSave()">Save</button>
@@ -807,6 +1027,20 @@
                 </td>
             </tr>
         </table>
+        </ng-template>
+        <ng-template #elsecounterSaleAllButtons>
+            <table class="center">
+                <tr>
+                   
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </ng-template>
     </fieldset>
 
 

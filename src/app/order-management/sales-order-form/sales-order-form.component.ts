@@ -488,7 +488,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.orderManagementService.accountNoSearchFn(accountNo, this.ouId)
       .subscribe(
         data => {
-          this.accountNoSearch = data;
+          this.accountNoSearch = data.obj;
           console.log(this.accountNoSearch);
           this.SalesOrderBookingForm.patchValue(this.accountNoSearch);
         }
@@ -692,7 +692,7 @@ OrderBooked() {
 
 
 OrderFind(orderNumber) {
-  // alert(orderNumber);
+  alert(orderNumber);
   this.currentOpration='orderSearch';
   this.emplId = Number(sessionStorage.getItem('emplId'))
   this.orderlineDetailsArray().clear();
@@ -705,8 +705,10 @@ OrderFind(orderNumber) {
 
         let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-        if (this.lstgetOrderLineDetails.length === 0) {
+        alert(this.lstgetOrderLineDetails.length)
+        if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length ===0 ) {
           this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
+          this.TaxDetailsArray().push(this.TaxDetailsGroup());
           this.displayLineTaxDetails=true;
         }
         else{
@@ -714,14 +716,17 @@ OrderFind(orderNumber) {
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
       }
-      for (let j = 0; j <= this.lstgetOrderTaxDetails.length-1 ; j++) {        
-        var orderTaxLinesList: FormGroup=this.TaxDetailsGroup();
-        control1.push(orderTaxLinesList);
-    }
+    //   for (let j = 0; j <= this.lstgetOrderTaxDetails.length -1; j++) {        
+    //     var orderTaxLinesList: FormGroup=this.TaxDetailsGroup();
+    //     control1.push(orderTaxLinesList);
+    // }
   }
         this.SalesOrderBookingForm.patchValue(data.obj);
         //  this.SalesOrderBookingForm.get('variant').setValue(data.obj.variant);
         this.salesRepName=data.obj.salesRepName;
+        if (this.flowStatusCode='BOOKED'){
+          this.displayLineTaxDetails=false;
+        }
       }
     )
    
