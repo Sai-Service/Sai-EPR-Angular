@@ -1,4 +1,4 @@
-fo<div class="center">
+<div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
@@ -11,7 +11,7 @@ fo<div class="center">
             <div class="center" style="width: 100%;">
                 <form [formGroup]="supplierMasterForm" (ngSubmit)="supplierMaster(supplierMasterForm.value)">
                     <div id="Panel1" class="auto-style103">
-                        <table class="center"
+                    <table class="center"
                         style="width: 100%; background-color: #FFE4B5;">
                         <tr>
                             <td>
@@ -32,7 +32,6 @@ fo<div class="center">
                                            <!-- <span *ngIf="supplierMasterForm.suppNo.$touched && supplierMasterForm.suppNo.$error.required">Supplier Code is required.</span>   -->
                                         </td>
                                         <td>
-                                            
                                             <button type="submit" class="btn-primary" (click)="searchBySuppCode(suppNo)" style="width: 2rem;"><i class="fa fa-search"></i></button>
                                         </td>
                                     </tr>
@@ -193,7 +192,7 @@ fo<div class="center">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                         <td>
-                            <select formControlName="status" id="status"  [ngModel]="status" (ngModelChange)='onOptionsSelectedSupp($event)' class="form-control">
+                            <select formControlName="status" id="status"  [ngModel]="status" DI class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of statusList">
                                     {{sc.codeDesc}}
@@ -305,7 +304,7 @@ fo<div class="center">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="taxCategoryName" id="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control">
+                                <select formControlName="taxCategoryName" id="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control" >
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  taxCategoryList" [ngValue]="sc.taxCategoryList">
                                         {{sc.taxCategoryName}}
@@ -315,46 +314,29 @@ fo<div class="center">
 
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;Applicable&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="msmeYN" id="msmeYN"  [ngModel]="msmeYN"  class="form-control">
+                                <select formControlName="msmeYN" id="msmeYN"  [ngModel]="msmeYN" (ngModelChange)='onMSMESelected($event)' class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of YesNoList">
+                                    <option *ngFor="let sc of YesNoList" [ngValue] ="sc.code"> 
                                         {{sc.code}}
                                     </option>
                                 </select>
                             </td>
-                            <!-- <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;No&nbsp;:&nbsp;</td>
-                            <td>
-                                <input formControlName="msmeNo" value={{msmeNo}} [(ngModel)]='msmeNo' class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"  
-                                placeholder="Enter MSME No"  >
-                                
-                                
-                            <div *ngIf="submitted && f. MSME No.errors" class="invalid-feedback">
-                                <div *ngIf="f.MSME No.errors?.maxLength">Enter MSME no
-                                </div>
-                            </div>
-                            <span *ngIf="!supplierMasterForm.get('msmeNo').valid && supplierMasterForm.get('msmeNo').touched"  >Please
-                                MSME No </span>
-                            </td> -->
-
-
-                            <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Ticket&nbsp;No&nbsp;:&nbsp;</td>
-                            <td>
-                                <input hidden formControlName="ticketNo" value={{ticketNo}} [(ngModel)]='ticketNo' class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.ticketNo.errors }"
-                                placeholder="Enter employee ticket no" >
-                            <div *ngIf="submitted && f. ticketNo.errors" class="invalid-feedback">
-                                <div *ngIf="f.ticketNo.errors?.maxLength">Enter employee ticket no
-                                </div>
-                            </div> -->
-                            <!-- <span *ngIf="!supplierMasterForm.get('ticketNo').valid && supplierMasterForm.get('ticketNo').touched">Please
-                                employee ticket no </span>
-                            </td> -->
+                            <div *ngIf="displayMsmeNo;then showMsmeY;else showMsmeN"></div>
+                                  <ng-template #showMsmeY>
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input formControlName="msmeNo"  [(ngModel)]='msmeNo' class="form-control"
+                                        placeholder="Enter MSME No"  >
+                                    </td> 
+                                </ng-template>
+                                 <ng-template #showMsmeN>
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input disabled formControlName="msmeNo"  [(ngModel)]='msmeNo' class="form-control"
+                                        placeholder="Enter MSME No">
+                                    </td> 
+                                </ng-template> 
                         </tr>
-                        <tr>
-                            
-                        </tr>
-                        <!-- Dinesh Dhuri -->
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                             <td>

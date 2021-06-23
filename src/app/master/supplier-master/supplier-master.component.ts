@@ -50,6 +50,7 @@ interface IsupplierMaster {
   endDate: Date;
   sstatus: string;
   emplId:number;
+  //displayMsmeNo:
   // aadharNo:string;
 }
 
@@ -86,9 +87,10 @@ export class SupplierMasterComponent implements OnInit {
   gstNo: string;
   panNo: string;
   tanNo: string;
-  msmeYN: string;
+  msmeYN='N';
   msmeNo: string
-  status:string;
+  displayMsmeNo = false;
+  public status='Active';
   supplierSiteMasterList:any[];
   lstcomments: any;
   lstcomments2: any[];
@@ -544,6 +546,15 @@ alert(suppSiteId);
         return;
 
       }
-
       
+      onMSMESelected(msmeYN : any){
+        alert(msmeYN);
+          if (msmeYN === 'Y') {   
+            this.displayMsmeNo = true;
+          }
+          else {
+            this.displayMsmeNo = false;
+          }
+        }
+     
 }
