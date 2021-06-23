@@ -362,7 +362,8 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
         <tbody>
                 <tr class="GridHeader">
-                <th style="width:5rem" scope="col">Item&nbsp;Id&nbsp;</th>    
+                <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                <!-- <th style="width:5rem" scope="col">Item&nbsp;Id&nbsp;</th>     -->
                 <th style="width:5rem" scope="col">Item&nbsp;Number&nbsp;</th>
                 <th style="width:15rem" scope="col"> Item&nbsp;Name</th>
                 <th style="width:6rem" scope="col"> Item&nbsp;Type</th>
@@ -371,8 +372,9 @@
                 <th style="width:6rem" scope="col">Select</th>
             </tr>
         </tbody>
-        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-                <td>{{com.itemId}}</td>
+        <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
+                <td style="text-align: center;">{{i+1}}</td>
+                <!-- <td style="text-align: right;">{{com.itemId}}</td> -->
                 <td>{{com.itemNumber}}</td>
                 <td>{{com.itemName}}</td>   
                 <td>{{com.itemType}}</td>   

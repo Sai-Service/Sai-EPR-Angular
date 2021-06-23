@@ -255,7 +255,7 @@ export class McpItemMasterComponent implements OnInit {
             {
                this.checkValidation=false; 
                alert ("ITEM NO : Should not be null....");
-               this.isAlert=true;
+              //  this.isAlert=true;
                 return;
              } 
 

@@ -1173,7 +1173,7 @@ export class JaiTaxTypeComponent implements OnInit {
           var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
           alert('taxTypeId='+taxTypeId);
           
-          this.service.geActDetails(taxTypeId)
+          this.service.geActDetails1(taxTypeId)
           .subscribe(
             data => {
               this.actDetails = data;
@@ -1222,7 +1222,7 @@ export class JaiTaxTypeComponent implements OnInit {
   
      onOptionSelected(regimeId: any) {
       //  alert("Regime ID :" + regimeId);
-      if(regimeId != null){
+      if(regimeId != null || regimeId > 0){
      
       this.service.regimNameList(regimeId)
         .subscribe(

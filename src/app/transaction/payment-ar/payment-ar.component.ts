@@ -535,6 +535,7 @@ export class PaymentArComponent implements OnInit {
          }
         );
       }
+      
 
       Select (receiptNumber: any) {
         // alert ("Invoice Number,Receipt Number : " +receiptNumber +" ,"+trxNumber);
@@ -907,7 +908,7 @@ export class PaymentArComponent implements OnInit {
 
 
       CustAccountNoSearch(accountNo){
-        // alert("CustAccountNoSearch:"+accountNo);
+        alert("CustAccountNoSearch:"+accountNo);
        if(accountNo<=0)
         {
           this.custName=null;
@@ -917,8 +918,8 @@ export class PaymentArComponent implements OnInit {
           this.service.custAccountNoSearch(accountNo,this.ouId)
         .subscribe(
           data => {
-            this.accountNoSearch = data;  
-           
+            this.accountNoSearch = data.obj;  
+
             if(this.accountNoSearch===null)
             {
               this.custName=null;
@@ -926,6 +927,10 @@ export class PaymentArComponent implements OnInit {
             }
             else 
             {
+              
+                //  this.paymentArForm.patchValue(this.accountNoSearch.custName);
+                //  this.custName = this.accountNoSearch.custName;
+                 
                  console.log(this.accountNoSearch);
                  this.paymentArForm.patchValue({
                  custName: this.accountNoSearch.custName,
@@ -933,7 +938,7 @@ export class PaymentArComponent implements OnInit {
                  billToSiteId :this.accountNoSearch.billToLocId,
             });
           }
-
+        
           }
         );
         }
