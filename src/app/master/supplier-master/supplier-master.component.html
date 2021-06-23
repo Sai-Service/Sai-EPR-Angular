@@ -311,8 +311,33 @@ fo<div class="center">
                                         {{sc.taxCategoryName}}
                                     </option>
                                 </select>
-                               
                             </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;Applicable&nbsp;:&nbsp;</td>
+                            <td>
+                                <select formControlName="msmeYN" id="msmeYN"  [ngModel]="msmeYN"  class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of YesNoList">
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                            </td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;No&nbsp;:&nbsp;</td>
+                            <td>
+                                <input formControlName="msmeNo" value={{msmeNo}} [(ngModel)]='msmeNo' class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"  
+                                placeholder="Enter MSME No"  >
+                                
+                                
+                            <div *ngIf="submitted && f. MSME No.errors" class="invalid-feedback">
+                                <div *ngIf="f.MSME No.errors?.maxLength">Enter MSME no
+                                </div>
+                            </div>
+                            <span *ngIf="!supplierMasterForm.get('msmeNo').valid && supplierMasterForm.get('msmeNo').touched"  >Please
+                                MSME No </span>
+                            </td> -->
+
+
                             <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Ticket&nbsp;No&nbsp;:&nbsp;</td>
                             <td>
                                 <input hidden formControlName="ticketNo" value={{ticketNo}} [(ngModel)]='ticketNo' class="form-control"

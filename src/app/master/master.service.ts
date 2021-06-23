@@ -130,8 +130,6 @@ export class MasterService {
   }
 
   taxCategoryList(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
   }
 
@@ -140,7 +138,6 @@ export class MasterService {
   }
 
   taxCategoryListForSALES(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
   }
 
