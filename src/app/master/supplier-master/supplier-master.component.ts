@@ -86,6 +86,8 @@ export class SupplierMasterComponent implements OnInit {
   gstNo: string;
   panNo: string;
   tanNo: string;
+  msmeYN: string;
+  msmeNo: string
   status:string;
   supplierSiteMasterList:any[];
   lstcomments: any;
@@ -123,6 +125,7 @@ export class SupplierMasterComponent implements OnInit {
   public lstcommentsTax: any[];
   // public cityList: Array<string>[];
   public cityList1: any;
+  public YesNoList: Array<string> = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -133,9 +136,6 @@ export class SupplierMasterComponent implements OnInit {
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],
       address4: ['',[Validators.maxLength(50)]],
-      //address2: ['', [Validators.required]],
-      //address3: ['', [Validators.required]],
-      //address4: [''],
       city: ['', [Validators.required]],
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
@@ -145,20 +145,17 @@ export class SupplierMasterComponent implements OnInit {
       contactPerson: [''],
       taxCategoryName: ['', Validators.required],
       //  ticketNo: ['', Validators.required],
-       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       // creditLimit:[],
       remarks: [''],
       //emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
       gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
-      //gstNo: [],
-      // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
-      // panNo:[],
       tanNo: [''],
-      // pinCode:[],
-      // ouId:[],
+      msmeYN: [],
+      msmeNo: [],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
       // ouId: ['', [Validators.required]],
       ouId:[],
@@ -177,15 +174,6 @@ export class SupplierMasterComponent implements OnInit {
       sstatus: ['', [Validators.nullValidator]],
       status: ['', [Validators.nullValidator]],
       emplId:[],
-      // aadharNo:[],
-
-      // address1E: ['', [Validators.required]],
-      // address2E: ['', [Validators.required]],
-      // address3E: ['', [Validators.required]],
-      // address4E: [],
-      // cityE: ['', [Validators.required]],
-      // pinCodeE: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      // stateE: ['', [Validators.required]],
     });
   }
 
@@ -194,8 +182,7 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
-     this.emplId =Number(sessionStorage.getItem('emplId'));
-    // console.log(this.emplId);
+    this.emplId =Number(sessionStorage.getItem('emplId'));
     this.service.cityList()
       .subscribe(
         data => {
@@ -208,6 +195,14 @@ export class SupplierMasterComponent implements OnInit {
         data => {
           this.statusList = data;
           console.log(this.statusList);
+        }
+      );
+
+      this.service.YesNoList()
+      .subscribe(
+        data => {
+          this.YesNoList = data;
+          console.log(this.YesNoList);
         }
       );
     
