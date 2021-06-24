@@ -465,10 +465,10 @@ export class PoInvoiceComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
+      ouId: ['',[Validators.required]],
       emplId:[],
-      ouId: [],
       ouName: [],
-      invTypeLookupCode: [],
+      invTypeLookupCode: ['',[Validators.required]],
       segment1: [],
       name: ['',[Validators.required]],
       suppInvNo: [],
@@ -708,36 +708,6 @@ export class PoInvoiceComponent implements OnInit {
         }
       );
   }
-//   validateAllFormFields(formGroup: FormGroup) {
-//     alert('InValid')         //{1}
-//   Object.keys(formGroup.controls).forEach(field => {  //{2}
-//     const control = formGroup.get(field);             //{3}
-//     if (control instanceof FormControl) {             //{4}
-//       control.markAsTouched({ onlySelf: true });
-//     } else if (control instanceof FormGroup) {        //{5}
-//       this.validateAllFormFields(control);            //{6}
-//     }
-//   });
-// }
-
-// isFieldValid(index,field: string) {
-// // //  alert( this.poInvoiceForm.get(obj).value)
-// //   // var objarr=this.poInvoiceForm.get('obj').value;
-// // alert("In field func")
-//   return (
-// //     (!this.poInvoiceForm.get(field).valid && this.poInvoiceForm.get(field).touched) ||
-// //     (this.poInvoiceForm.get(field).untouched && this.formSumitAttempt)
-//        (!(<FormArray>this.poInvoiceForm.get('obj')).at(index).get(field).valid &&(<FormArray>this.poInvoiceForm.get('obj')).at(index).get(field).touched)||
-//        ((<FormArray>this.poInvoiceForm.get('obj')).at(index).get(field).untouched && this.formSumitAttempt)
-//   );
-// }
-
-// displayFieldCss(i,field: string) {
-//   return {
-//     'has-error': this.isFieldValid(i,field),
-//     'has-feedback': this.isFieldValid(i,field)
-//   };
-// }
 
 HeaderValidation(typecode) {
   
@@ -749,7 +719,7 @@ HeaderValidation(typecode) {
   });
   // alert('Please enter valid detail');
   // this.lineTypeLookupCode.focus();
-  typecode.focus();
+  // typecode.focus();
 }
 
 getGroupControl(index, fieldName) {

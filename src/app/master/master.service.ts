@@ -974,6 +974,14 @@ public addDiscount(totTaxAmt: number, taxTypeName: string) {
 //   });
 // }
 
+public completeInvoice(invoiceno) 
+{
+  const option={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+`/arInv/invComplete/${invoiceno}`;
+  return this.http.put(url,option);
+}
 ////////////Stock Transfer////////
 public stockTransferSubmit(stockTransferRecord)
 {
@@ -1038,8 +1046,11 @@ transType():Observable<any>{
 getsearchByJob(jobno):Observable<any>{
  return this.http.get(this.ServerUrl+`/mtrlIssue/repair?repairNo=${jobno}`)
 }
-subInvCode():Observable<any>{
-  return this.http.get(this.ServerUrl +'/subInvMst')
+subInvCode(deptId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
+}
+subInvCode1():Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
 }
 issueByList(locId,deptId,divisionId):Observable<any>{
 return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
@@ -1058,6 +1069,16 @@ getSearchByTrans(reqNo):Observable<any>{
 getItemDetail(itemid):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/${itemid}`)
 }
+////////////WorkShop Return/////////////////
+transTypereturn():Observable<any>{
+  return this.http.get(this.ServerUrl +'/mtlTrxTypes/IPOReturn');
+  }
+issueReturn(locId1):Observable<any>{
+   return this.http.get(this.ServerUrl +`/mtrlIssue/wipjob?locId=${locId1}`);
+    }
+returnBillableType(repno):Observable<any>{
+      return this.http.get(this.ServerUrl+`/mtrlIssue/jobBillable?repairNo=${repno}`);
+    }   
 /////////Subinventory/////////////
 public saveSubinventory(subInvRecord)
 {

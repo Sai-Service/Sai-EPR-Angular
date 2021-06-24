@@ -295,7 +295,7 @@ console.log(this.route1.queryParams+'hell');
 
 
 
-        this.service.subInvCode().subscribe(
+        this.service.subInvCode(this.deptId).subscribe(
           data => {this.subInvCode = data;
              console.log(data);
             // alert('subInventoryCode');

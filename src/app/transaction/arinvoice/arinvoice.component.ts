@@ -36,7 +36,10 @@ interface IArInvoice {
   extendedAmount: number;
   glDate: Date;
   accountDesc: string;
+  billcontactNo:number;
+  shipcontactNo:number;
   // invoiceAmount:number;
+  emplId:number;
 }
 @Component({
   selector: 'app-arinvoice',
@@ -90,7 +93,7 @@ export class ARInvoiceComponent implements OnInit {
   taxAmount: number;
 
   public distributioArr: any;
-  public paymentTermList: Array<string> = [];
+  public paymentTermList: any[];
   public locIdList: Array<string> = [];
   public locIdListModel: Array<string> = [];
   public sourceList: Array<string> = [];
@@ -116,7 +119,10 @@ export class ARInvoiceComponent implements OnInit {
 
   public taxarr = new Map<number, any>();
   public distarr = new Map<number, any>();
-
+  billcontactNo:number;
+  shipcontactNo:number;
+  paymentTerm:string;
+  emplId:number;
 
   activeTab = 'home-md';
 
@@ -171,6 +177,9 @@ export class ARInvoiceComponent implements OnInit {
       lookupValueDesc5: [],
       ouId: [],
       status: [],
+      billcontactNo:[],
+      shipcontactNo:[],
+      emplId:[],
       invLines: this.fb.array([this.lineDetailsGroup()]),
       invDisLines: this.fb.array([this.distLineDetails()]),
       taxLines: this.fb.array([this.TaxDetailsGroup()])
@@ -328,6 +337,7 @@ export class ARInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.ouId = Number(sessionStorage.getItem('ouId'));
+    this.emplId=Number(sessionStorage.getItem('emplId'));;
     this.transactionService.paymentTermListFn()
       .subscribe(
         data => {
@@ -419,8 +429,11 @@ export class ARInvoiceComponent implements OnInit {
 
   arInvoice(arInvoiceForm) { }
   searchByInvoiceNo(trxNumber1) {
-    this.arInvoiceForm.reset();
-    // this.TaxDetailsArray().clear();
+    //  this.arInvoiceForm.reset();
+    // this.router.navigate(['ARInvoice']);
+    //  this.TaxDetailsArray().reset();
+    //  window.location.reload();
+    this.TaxDetailsArray().clear();
     // this.arInvoiceForm.get('invLines').clear();
     this.lineDistributionArray().clear();
     this.transactionService.searchByInvoiceNoAR(trxNumber1)
@@ -440,7 +453,8 @@ export class ARInvoiceComponent implements OnInit {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
           }
-          for (let i = 0; i < data.taxLines.length - len; i++) {
+          // for (let i = 0; i < data.taxLines.length - len; i++) {
+          for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
             this.arInvoiceForm.get('taxLines').patchValue(data.taxLines);
@@ -725,6 +739,22 @@ export class ARInvoiceComponent implements OnInit {
     
     let jsonData=this.arInvoiceForm.value;
     jsonData.ouId = this.ouId;
+    var arrayControl = this.arInvoiceForm.get('invLines').value;
+    var patch = this.arInvoiceForm.get('invLines') as FormArray;
+    this.basicAmt = 0;
+    this.taxRecoverable = 0;
+    this.extendedAmount = 0;
+
+    for (var i = 0; i < arrayControl.length; i++) {
+      this.basicAmt = this.basicAmt + arrayControl[i].basicAmt;
+      this.taxRecoverable = this.taxRecoverable + arrayControl[i].taxRecoverable;
+    }
+    this.extendedAmount = (this.basicAmt + this.taxRecoverable);
+    this.arInvoiceForm.patchValue({ invoiceAmount: this.extendedAmount })
+    jsonData.invoiceAmount = this.extendedAmount;
+    jsonData.taxAmount = this.taxRecoverable;
+    jsonData.taxableAmount = this.basicAmt;
+
     var taxStr = [];
      for (let taxlinval of this.taxarr.values()) {  
       // console.log("Map Values= " +JSON.stringify(value));  
@@ -1117,6 +1147,33 @@ export class ARInvoiceComponent implements OnInit {
     this.sum = this.sum + baseAmount;
     // alert(this.sum)
   }
+ 
+  completeInvoice()
+  {
+    var invno= this.arInvoiceForm.get('trxNumber').value;
+    // const formValue: IArInvoice = this.transData(this.arInvoiceForm.value);
+    this.service.completeInvoice(invno).subscribe(
+      (res: any) => {
+          if (res.code === 200) {
+            alert('RECORD POSTED SUCCESSFULLY');
+            this.arInvoiceForm.disable();
+            this.TaxDetailsArray().disable();
+            this.arInvoiceForm.get('invLines').disable();
+            this.lineDistributionArray().disable();
+            
+             // window.location.reload();
+          } else {
+            if (res.code === 400) {
+              alert('Code already present in the data base');
+              // this.CompanyMasterForm.reset();
+              // window.location.reload();
+            }
+          }
+        });
+        
+      
+  }
+
   addDiscount(i) {
     // const formValue: IpostPO = this.poMasterDtoForm.value;
     // formValue.polineNum = this.poLineTax;
@@ -1180,6 +1237,7 @@ export class ARInvoiceComponent implements OnInit {
         data => {
           this.accountNoSearch = data;
           console.log(this.accountNoSearch);
+          let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentTerm);
           this.arInvoiceForm.patchValue({
             billToCustName: this.accountNoSearch.custName,
             billToCustAdd: this.accountNoSearch.billToAddress,
@@ -1190,7 +1248,14 @@ export class ARInvoiceComponent implements OnInit {
             shipToSiteId: this.accountNoSearch.shipToLocId,
             billToSiteId: this.accountNoSearch.billToLocId,
             billToCustId: this.accountNoSearch.customerId,
+            billcontactNo:this.accountNoSearch.contactNo,
+            shipcontactNo:this.accountNoSearch.contactNo,
+            // paymentTerm:this.accountNoSearch.paymentTerm,
+            paymentTerm:selectedValue.lookupValueId,
           });
+         
+
+          
         }
       );
   }

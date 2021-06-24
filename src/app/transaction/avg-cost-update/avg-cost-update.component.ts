@@ -228,7 +228,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
     //  alert("ouid= "+ this.ouId);
 
-    this.service.subInvCode().subscribe(
+    this.service.subInvCode1().subscribe(
       data => {this.subInvCode = data;
     });
 

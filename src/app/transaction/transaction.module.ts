@@ -29,6 +29,7 @@ import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
 import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
+import { WorkShopReturnComponent } from './work-shop-return/work-shop-return.component';
 
 
 
@@ -61,6 +62,8 @@ import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.compo
     OnHandDetailsComponent,
     
     AccountEnquiryComponent,
+    
+    WorkShopReturnComponent,
   ],
   
   imports: [

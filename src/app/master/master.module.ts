@@ -35,6 +35,7 @@ import { OrderTypeMasterComponent } from './order-type-master/order-type-master.
 import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.component';
 import { VariantMasterComponent } from './variant-master/variant-master.component';
 import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
+import{SubinventoryMasterComponent}from './subinventory-master/subinventory-master.component';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -67,6 +68,7 @@ import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-
     OrderTypeMasterComponent, 
     WsVehicleMasterComponent, 
     VariantMasterComponent, 
+    SubinventoryMasterComponent,
     TaxThresholdSetupComponent],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
