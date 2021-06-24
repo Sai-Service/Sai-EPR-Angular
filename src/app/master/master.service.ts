@@ -1047,7 +1047,10 @@ getsearchByJob(jobno):Observable<any>{
  return this.http.get(this.ServerUrl+`/mtrlIssue/repair?repairNo=${jobno}`)
 }
 subInvCode(deptId):Observable<any>{
-  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`)
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
+}
+subInvCode1():Observable<any>{
+  return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
 }
 issueByList(locId,deptId,divisionId):Observable<any>{
 return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
