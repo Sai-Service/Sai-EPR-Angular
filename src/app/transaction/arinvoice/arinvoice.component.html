@@ -86,7 +86,7 @@
         </legend>
     <tr>
         <input hidden type="text" [(ngModel)]="ouId" formControlName="ouId">
-        <td style="width: 15%" class="LabelFontStyle">&nbsp;Source&nbsp;:</td>
+        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Source&nbsp;:</td>
         <td>
             <!-- <input type="text" class="form-control" formControlName="source"> -->
             <select 
@@ -97,7 +97,7 @@
                                     </option>
             </select>
         </td>   
-        <td style="width: 15%" class="LabelFontStyle">&nbsp;Class&nbsp;:</td>
+        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Class&nbsp;:</td>
         <td>
             <!-- <input type="text"  class="form-control"> -->
             <select 
@@ -118,7 +118,7 @@
         </td> 
         </tr>
         <tr> 
-            <td style="width: 15%" class="LabelFontStyle">&nbsp;Type&nbsp;:</td>
+            <td style="width: 15%" class="LabelFontStyle1">&nbsp;Type&nbsp;:</td>
             <td>
                 <!-- <input type="text" formControlName="invType" class="form-control"> -->
                 <select 
@@ -159,6 +159,7 @@
             <td>
                 <input type="text" disabled formControlName="charges" [(ngModel)]="charges" class="form-control">
             </td>
+            <input hidden formControlName="emplId"[(ngModel)]="emplId">
         </tr>  
         <tr>
             <td style="width: 15%" class="LabelFontStyle">&nbsp;DMS&nbsp;Order&nbsp;No&nbsp;:</td>
@@ -198,7 +199,7 @@
         </tr>
         <tr>
             
-            <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;Name&nbsp;:</td>
+            <td style="width: 15%" class="LabelFontStyle1">&nbsp;Location&nbsp;Name&nbsp;:</td>
             <td>
                 <select formControlName="locId" id="locId" class="form-control">
                     <option>--Select--</option>
@@ -253,7 +254,7 @@
             </td>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Contact&nbsp;:</td>
             <td>
-                <input type="text" disabled class="form-control">
+                <input type="text" disabled class="form-control" formControlName="shipcontactNo">
             </td>
         </tr>
             </fieldset>
@@ -263,7 +264,7 @@
                     style="font-size: 10px;color: black;">&nbsp;Bill&nbsp;To&nbsp;
                 </legend>
                 <tr>
-                    <td style="width: 15%"  class="LabelFontStyle">&nbsp;Customer&nbsp;Account&nbsp;:</td>
+                    <td style="width: 15%"  class="LabelFontStyle1">&nbsp;Customer&nbsp;Account&nbsp;:</td>
             <td>
                 <input type="number" style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control">
             </td>
@@ -278,7 +279,7 @@
             </td>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Contact&nbsp;:</td>
             <td>
-                <input type="text" disabled class="form-control">
+                <input type="text" disabled class="form-control" formControlName="billcontactNo">
             </td>
         </tr>
             </fieldset>
@@ -331,7 +332,7 @@
                             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Payment&nbsp;Term&nbsp;:</td>
                             <td>
                                 <!-- <input type="text"  class="form-control"> -->
-                                <select formControlName="paymentTerm" id="locId" class="form-control">
+                                <select formControlName="paymentTerm"  class="form-control"[(ngModel)]="paymentTerm">
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  paymentTermList" [ngValue]="sc.lookupValueId" >
                                         {{sc.lookupValue}}
@@ -376,7 +377,7 @@
                                     cellspacing="0" cellpadding="4" rules="all" class="center"> -->
                                     <thead>
                                         <tr class="GridHeader">
-                                            <th scope="col">Distribution</th>
+                                            <!-- <th scope="col">Distribution</th> -->
                                             <th scope="col">No.</th>
                                             <!-- <th scope="col">Item Type</th> -->
                                             <th scope="col">Inventory Item</th>
@@ -400,16 +401,16 @@
                                     [formGroupName]="i" class="auto-style5">
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            <!-- <td>
                                                 <button type="button" href="#contact-tab-md" class="btn btn-primary" (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)">Distribution</button> 
                                                 <!-- <li class="nav-item waves-effect waves-light">
                                                     <a (click)="onOptionTaxCatSelected(i,taxCategoryId,null,basicAmt)" class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md" aria-selected="false">Distribution</a>
                                                   </li> -->
                                            
-                                            </td>
+                                            <!-- </td> --> 
         <input type="text" hidden formControlName="taxCategoryId">
         <!-- (click)="taxDetails('insert', i, taxCategoryId)" -->
-                                                <td><input type="number" style="width: 2rem;" class="form-control" formControlName="lineNum"></td>
+                                                <td><input disabled type="number" style="width: 2rem;" class="form-control" formControlName="lineNum"></td>
                                                 <td>
                                                     <!-- <select formControlName="invItemId" id="invItemId"
                                                         (ngModelChange)='onOptioninvItemIdSelected(i)'
@@ -424,7 +425,7 @@
                                                         (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                         list="dynmicUserIds1" class="form-control" (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                         <!--  -->
-                                                    <datalist id="dynmicUserIds1">
+                                                    <datalist id="dynmicUserIds1" autocomplete="off">
                                                         <option *ngFor="let item of invItemList"
                                                             [ngValue]="item.itemId">{{item.segment}}
                                                         </option>
@@ -483,7 +484,7 @@
                                                                 (ngModelChange)='onOptionTaxCatSelected(i,null, $event,basicAmt)'
                                                                 class="form-control">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList">
+                                                                <option *ngFor="let sc of  taxCategoryList" [value]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
@@ -863,7 +864,7 @@
                                     <!-- <input hidden type="text" formControlName="invDistributionId"> -->
                                     <td><input class="form-control"  type="number" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"></td>
                                     <td>
-                                        <input formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
+                                        <input disabled formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
                                     </td>
                                     <!-- <td> -->
                                         <input type="number" hidden formControlName="custTrxLineId"  class="form-control" style="width: 100px;height: 25px;">
@@ -916,7 +917,7 @@
                 <table class="center">
                     <tr>
                         <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
-                        <td> <button type="button" class="btn btn-primary"  style="width: 8rem;">Complete</button></td>
+                        <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>
                         <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
                         <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->
                         <td>

@@ -134,7 +134,8 @@ export class OrderManagementService {
 
 
   accountNoSearchFn(accountNo,ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   VariantSearchFn(mainModel): Observable<any> {
