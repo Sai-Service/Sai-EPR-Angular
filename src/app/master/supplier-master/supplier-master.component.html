@@ -109,6 +109,8 @@
                                 <div *ngIf="f.address1.errors.required">Enter address </div>
                                 <div *ngIf="f.address1.errors?.maxLength">Enter address
                                 </div>
+                                <div *ngIf="f.address1.errors?.minLength">Enter address
+                                </div>
                             </div>
                             <span *ngIf="!supplierMasterForm.get('address1').valid && supplierMasterForm.get('address1').touched">Please
                                 Enter address </span>
@@ -120,8 +122,8 @@
                                 placeholder="Enter address" >
                             <div *ngIf="submitted && f. address2.errors" class="invalid-feedback">
                                 <div *ngIf="f.address2.errors.required">Enter address </div>
-                                <div *ngIf="f.address2.errors?.maxLength">Enter address
-                                </div>
+                                <div *ngIf="f.address2.errors?.maxLength">Enter address </div>
+                                <div *ngIf="f.address1.errors?.minLength">Enter address </div>
                             </div>
                             <span *ngIf="!supplierMasterForm.get('address2').valid && supplierMasterForm.get('address2').touched">Please
                                 Enter address </span>
@@ -222,8 +224,7 @@
                                 placeholder="Enter mobile1" >
                             <div *ngIf="submitted && f. mobile1.errors" class="invalid-feedback">
                                 <div *ngIf="f.mobile1.errors.required">Enter mobile1 </div>
-                                <div *ngIf="f.mobile1.errors?.maxLength">Enter mobile1
-                                </div>
+                                <div *ngIf="f.mobile1.errors?.maxLength">Enter mobile1</div>
                             </div>
                             <span *ngIf="!supplierMasterForm.get('mobile1').valid && supplierMasterForm.get('mobile1').touched">Please
                                 Enter mobile1 </span>
@@ -395,11 +396,10 @@
                                     placeholder="Enter Contact Person number" #contno >
                                 <div *ngIf="submitted && f. contactNo.errors" class="invalid-feedback">
                                     <div *ngIf="f.contactNo.errors.required">Enter Contact person number </div>
-                                    <div *ngIf="f.contactNo.errors?.maxLength">Enter Contact person number
-                                    </div>
+                                    <div *ngIf="f.contactNo.errors?.maxLength">Enter Contact person number </div>
+                                    <div *ngIf="f.contactNo.errors?.minLength">Enter Contact person number </div>
                                 </div>
-                                <span *ngIf="!supplierMasterForm.get('contactNo').valid && supplierMasterForm.get('contactNo').touched">Please
-                                    Contact person number </span>
+                                <span *ngIf="!supplierMasterForm.get('contactNo').valid && supplierMasterForm.get('contactNo').touched">Please  Contact person number </span>
                                 </td>
                         </tr>
 
@@ -662,58 +662,7 @@
                                 </td>
                             </ng-template>
                         </tr>
-                        <!-- <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;:&nbsp;</td>
-                            <td>
-                                <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  taxCategoryList">
-                                        {{sc.taxCategoryName}}
-                                    </option>
-                                </select>
-                                <div *ngIf="submitted && f. taxCategory.errors" class="invalid-feedback">
-                                    <div *ngIf="f.taxCategoryName.errors.required">Enter tax category </div>
-                                    <div *ngIf="f.taxCategoryName.errors?.maxLength">Enter tax category
-                                    </div>
-                                </div>
-                                <span
-                                    *ngIf="!supplierMasterForm.get('taxCategoryName').valid && supplierMasterForm.get('taxCategoryName').touched">Please
-                                    Enter tax category </span>
-                            </td> 
- <td>
-                                            <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control" >
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of  taxCategoryList">
-                                                    {{sc.taxCategoryList}}
-                                                </option>
-                                            </select>
-                                            <div *ngIf="submitted && f. taxCategoryName.errors" class="invalid-feedback">
-                                                <div *ngIf="f.taxCategoryName.errors.required">Enter tax category </div>
-                                                <div *ngIf="f.taxCategoryName.errors?.maxLength">Enter tax category
-                                                </div>
-                                            </div>
-                                            <span
-                                                *ngIf="!supplierMasterForm.get('taxCategoryName').valid && supplierMasterForm.get('taxCategoryName').touched">Please
-                                                Enter tax category </span>
-                                        </td> 
-
-                        </tr> -->
-                          <!-- <tr> 
-                                            <td style="width: 15%" class="LabelFontStyle">Employee&nbsp;Ticket&nbsp;No&nbsp;:&nbsp;</td>
-                                            <td>
-                                                <input formControlName="eTicketNo" value={{eTicketNo}} class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.eTicketNo.errors }"
-                                                placeholder="Enter employee ticket no" >
-                                            <div *ngIf="submitted && f. eTicketNo.errors" class="invalid-feedback">
-                                                <div *ngIf="f.eTicketNo.errors.required">Enter employee ticket no </div>
-                                                <div *ngIf="f.eTicketNo.errors?.maxLength">Enter employee ticket no
-                                                </div>
-                                            </div>
-                                            <span
-                                                *ngIf="!supplierMasterForm.get('eTicketNo').valid && supplierMasterForm.get('eTicketNo').touched">Please
-                                                employee ticket no </span>
-                                        </td>
-                                        </tr> -->
+                      
                     </table>
                     <table class="center">
                         <tr>
