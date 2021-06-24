@@ -458,7 +458,7 @@ searchMast() {
     delete val.locName;
     delete val.ouName;
     delete val.locId;
-    // delete val.ouId;
+    delete val.ouId;
     delete val.deptId;
     delete val.emplId;
     delete val.orgId;
@@ -495,8 +495,13 @@ searchMast() {
             alert("Data Validation Sucessfull....\nPosting data  to MCP Package Master")
 
             const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
+            var pkId = formValue.packageNumber;
+            alert(pkId.substr(4, pkId.length));
+            formValue.packageId = Number (pkId.substr(4, pkId.length)); 
             this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
+
+                
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.mcpPackageMasterForm.reset();
               } else {
