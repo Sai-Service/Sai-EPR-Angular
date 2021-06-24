@@ -213,9 +213,19 @@
                                                 <td>
                                                 <input  style="width: 100px;"  type="text" formControlName="locatorId" [(ngModel)]="locatorId" class="form-control" placeholder="locatorId "  >
                                                 </td>
-                                                <td>
+
+                                                <!-- <td>
                                                 <input  style="width: 70px;" type="text" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode"  class="form-control" placeholder="subInventoryCode "  >
+                                                </td> -->
+                                                <td>
+                                                    <select style="width: 100px;" class="form-control" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
+                                                    <option disabled>--Select--</option>
+                                                    <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">
+                                                        {{subCode.subInventoryCode}}
+                                                    </option>
+                                                    </select>
                                                 </td>
+
                                                 <td>
                                                     <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
                                                     class="fa fa-plus"></i></button>
@@ -479,7 +489,7 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
         <tr class="GridHeader">
-            <!-- <th style="width:10rem" scope="col">Srl#</th> -->
+            <th style="width:10rem" scope="col">Srl&nbsp;No</th>
             <th style="width:10rem" scope="col">TransactionId</th>
             <th style="width:10rem" scope="col">Date</th>
             <th style="width:6rem" scope="col">ItemId/Code</th>
@@ -491,9 +501,9 @@
            <!-- <th style="width:6rem" scope="col">Select</th> -->
     </tr>
    </tbody>
-            <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+            <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
             
-                <!-- <td>{{com.srlNo}}</td> -->
+                <td>{{i+1}}</td>
                 <td style="text-align: right;">{{com.transactionId}}</td>
                 <td>{{com.creationDate}}</td>
                 <td>{{com.itemId}}/{{segment}}</td>

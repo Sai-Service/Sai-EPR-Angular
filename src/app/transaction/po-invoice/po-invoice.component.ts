@@ -53,6 +53,7 @@ interface IpoInvoice {
   lineNumber: number;
   lineTypeLookupCode: string;
   hsnSacCode: string;
+  emplId:number;
 }
 
 
@@ -64,7 +65,7 @@ interface IpoInvoice {
 export class PoInvoiceComponent implements OnInit {
   // public start: Date = new Date ("10/07/2017"); 
   // public end: Date = new Date ("11/25/2017");
-
+  emplId: number;
   @ViewChild('dateRangePicker', { static: true })
   dateRangePicker: DateRangePickerComponent;
   indexVal: number;
@@ -283,8 +284,11 @@ export class PoInvoiceComponent implements OnInit {
   displayError: boolean;
   formSumitAttempt: boolean;
   hsnsaclist: any;
+  
+
   constructor(private fb: FormBuilder, private transactionService: TransactionService, private service: MasterService, private router: Router,) {
     this.poInvoiceForm = fb.group({
+      emplId:[],
       ouId: [''],
       suppNo: [''],
       suppId: [''],
@@ -298,13 +302,6 @@ export class PoInvoiceComponent implements OnInit {
       invTransferStatus: [],
       distLineNumber: [],
       description: [],
-      // ouId:[],
-      // ouName:[''],
-      // suppInvDate:[''],
-      // termsDate:[''],
-      // termsId:[''],
-      // glDate:[''],
-      // currency:[''],
       segment11: [],
       segment2: [],
       segment3: [],
@@ -469,6 +466,7 @@ export class PoInvoiceComponent implements OnInit {
   lineDetailsGroup() {
     return this.fb.group({
       ouId: ['',[Validators.required]],
+      emplId:[],
       ouName: [],
       invTypeLookupCode: ['',[Validators.required]],
       segment1: [],
@@ -534,6 +532,7 @@ export class PoInvoiceComponent implements OnInit {
     this.INVStatus='Never Validated';
     this.paymentMethod1 = 69;
     this.ouId = Number(sessionStorage.getItem('ouId'));
+    this.emplId = Number(sessionStorage.getItem('emplId'));
 
     this.service.getLocationSearch1(this.ouId)
       .subscribe(
@@ -1046,6 +1045,7 @@ getGroupControl(index, fieldName) {
     // let manInvObj=new ManualInvoiceObj();
     let jsonData = this.poInvoiceForm.value.obj[0];
     jsonData.ouId = this.ouId;
+    jsonData.emplId = this.emplId;
     // jsonData.suppId=this.suppId;
     jsonData.amtAppToDisc = 0
     jsonData.accPayCodeCombId = 2079

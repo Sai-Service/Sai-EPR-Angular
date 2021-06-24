@@ -85,7 +85,8 @@ export class AvgCostUpdateComponent implements OnInit {
   
   public DivisionIDList : Array<string>=[];
   public itemIdList : Array<string>=[];
-
+  
+  public subInvCode:any[];
   public itemNameList: any;
   public priceListNameList: any;
 
@@ -226,6 +227,10 @@ export class AvgCostUpdateComponent implements OnInit {
       // console.log(this.ouId);
 
     //  alert("ouid= "+ this.ouId);
+
+    this.service.subInvCode().subscribe(
+      data => {this.subInvCode = data;
+    });
 
      this.service.invItemList1()
       .subscribe(
@@ -750,11 +755,11 @@ export class AvgCostUpdateComponent implements OnInit {
 
     // alert('CheckLineValidations index '+i);
   
-    var prcLineArr1 = this.avgCostUpdateForm.get('priceListDetailList').value;
-    var lineValue1=prcLineArr1[i].itemId;
-    var lineValue2=prcLineArr1[i].actualCost;
-    var lineValue3=prcLineArr1[i].locatorId;
-    var lineValue4=prcLineArr1[i].subInventoryCode;
+    var pkgLineArr = this.avgCostUpdateForm.get('priceListDetailList').value;
+    var lineValue1=pkgLineArr[i].itemId;
+    var lineValue2=pkgLineArr[i].actualCost;
+    var lineValue3=pkgLineArr[i].locatorId;
+    var lineValue4=pkgLineArr[i].subInventoryCode;
     
   
     // alert("Line Value :"+lineValue1);

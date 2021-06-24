@@ -130,12 +130,14 @@ export class MasterService {
   }
 
   taxCategoryList(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
-    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
+    return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/PURCHASE');
+  }
+
+  createOrderTypeListFn(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/AccOrderType');
   }
 
   taxCategoryListForSALES(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate');  /JaiTaxCatg/taxCate/Purchase
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
   }
 
@@ -1214,7 +1216,7 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
 //   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
 //  }
 
- geActDetails(mtaxTypeId): Observable<any> {
+ geActDetails1(mtaxTypeId): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
  }
 
@@ -1301,8 +1303,9 @@ priceDescList(priceListId): Observable<any>
 }
 taxTypeNameList(taxTypeId): Observable<any>
 {
+   if(taxTypeId>0) {
   return this.http.get(this.ServerUrl +`/taxType/${taxTypeId}`);
-}
+}}
 
 locationNameList(locCode): Observable<any>
 {
@@ -1389,8 +1392,10 @@ UpdateJaiTaxCategoryLineMasterById(JaiTaxCategoryLineMasterRecord) {
 //////////////////////////////
 regimNameList(regimeId): Observable<any>
 {
-  // alert("Regime Id: "+regimeId);
-  return this.http.get(this.ServerUrl +`/jairegime/${regimeId}`);
+  alert("Regime Id: "+regimeId);
+  if ( regimeId>0 ) {
+  return this.http.get(this.ServerUrl +`/jairegime/${regimeId}`); 
+  }
 }
 
 
@@ -1694,7 +1699,7 @@ OrderCategoryList(): Observable<any> {
 
 
  ReceiptTypeArList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/type/arReceiptType');
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/ArReceiptType');
   // cmnLookup/type/ReceiptStatus
 }
 
@@ -1726,7 +1731,7 @@ OrderCategoryList(): Observable<any> {
   ////////////////////////// ///////////////////////////////////////
 
   custAccountNoSearch(accountNo,ouId): Observable<any> {
-    // alert("ms >>account no:"+accountNo+","+ouId);
+    alert("ms >>account no:"+accountNo+","+ouId);
     // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
@@ -1949,10 +1954,17 @@ OrderCategoryList(): Observable<any> {
 
   getMcpItemSearch(): Observable<any> {
     return this.http.get(this.ServerUrl + '/McpItemMst');
- }
+  }
 
  getMcpPackageSearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/PackageMst');
+}
+
+getMcpPackageSearchNew(mPkgType,mFuelType): Observable<any> 
+{
+  // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}`);
+  
 }
 
 

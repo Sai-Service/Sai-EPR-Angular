@@ -750,7 +750,9 @@ taxCategorySale:[],
   }
 
   onOptionsSelectedVariant(mainModel){
-   if(mainModel===!null){
+  //   alert(mainModel);
+   if(mainModel !=undefined){
+    //  alert(mainModel);
     this.orderManagementService.VariantSearchFn(mainModel)
     .subscribe(
       data => {
@@ -764,7 +766,7 @@ taxCategorySale:[],
 
   onOptionsSelectedColor(variant){
     // alert(variant)
-   if(variant===!null){
+  //  if(variant !=undefined){
     this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
@@ -773,8 +775,8 @@ taxCategorySale:[],
         this.onKey(0);
       }
     );
-   }
-   else{}
+  //  }
+  //  else{}
   }
 
 

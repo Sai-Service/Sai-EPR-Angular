@@ -39,7 +39,13 @@
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supplier Master</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/master/suplierMaster']">Supplier Master</a>  </li>
+                <li>
+                  <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li>
+               
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">GlCodeCombination</a>
+              <ul class="dropdown-menu">
                 <li><a class="dropdown-item" [routerLink]="['/admin/master/GlCodeCombination']">GlCodeCombination Master</a></li>
               </ul>
             </li>
@@ -129,6 +135,7 @@
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
               
             </ul>  
             </li>   

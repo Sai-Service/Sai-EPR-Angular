@@ -19,9 +19,9 @@ interface IcustomerMaster {
   city: string;
   pinCd: number;
   state: string;
-  mobile1: number;
-  mobile2: number;
-  mobile3: number;
+  mobile1: string;
+  mobile2: string;
+  mobile3: string;
   emailId: string;
   emailId1: string;
   contactPerson: string;
@@ -43,7 +43,7 @@ interface IcustomerMaster {
   scity: string;
   // spinCd: string;
   sstate: string;
-  smobile1: number;
+  smobile1: string;
   smobile2: number;
   smobile3: number;
   semailId: string;
@@ -82,9 +82,9 @@ export class CustomerMasterComponent implements OnInit {
   city: string;
   pinCd: number;
   state: string;
-  mobile1: number;
-  mobile2: number;
-  mobile3: number;
+  mobile1: string;
+  mobile2: string;
+  mobile3: string;
   emailId: string;
   emailId1: string;
   contactPerson: string;
@@ -105,9 +105,9 @@ export class CustomerMasterComponent implements OnInit {
   scity: string;
   // spinCd: string;
   sstate: string;
-  smobile1: number;
-  smobile2: number;
-  smobile3: number;
+  smobile1: string;
+  smobile2: string;
+  smobile3: string;
   semailId: string;
   semailId1: string;
   sstartDate: Date;
