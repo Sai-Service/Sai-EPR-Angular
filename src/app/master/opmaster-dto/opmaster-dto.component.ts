@@ -1650,17 +1650,7 @@ export class OPMasterDtoComponent implements OnInit {
       });
       // }
     } else {
-      // this.hideArray[i] = false;
-      // if(i === 0 && this.hideArray[i]=== false){
-      //   this.hideArray[i] = false;
-      // }else{
-      // // this.hideArray[i] = false;
-      // this.hideArray[i] = !displayTaxPanel;
-      // }
-      // this.poLineTax = i;
-      // this.displaytaxDisscountButton = false;
-      // this.displayTaxDetailForm = false;
-
+     
       var itemId = this.ItemDetailsList.itemId;
       var taxCategoryId = taxCategoryId;
       this.taxCatId = taxCategoryId;

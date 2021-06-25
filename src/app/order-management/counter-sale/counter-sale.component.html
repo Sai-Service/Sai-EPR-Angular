@@ -584,19 +584,20 @@
                                     [formGroupName]="i" class="auto-style5">
                                     <tr>
                                         <td>
-                                            <!-- <a [value]="i+1" data-toggle="collapse"
-                                            href="#panel1006+{{i}}" role="button"
-                                            aria-expanded="true"
-                                            aria-controls="panel1006+{{i}}"
-                                            (click)="taxDetails('insert', i, taxCategoryId)">
-                                            {{i+1}}
-                                        </a> -->
-                                            <!-- <input type="number" formControlName="lineNumber" class="form-control"
-                                                style="height: 20px;width: 40px;"> -->
-                                                <a [value]="i+1" class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab"  (click)="taxDetails('insert', i, taxCategoryId)">
+                                            <div  *ngIf="displayCounterSaleLine[i]; then thenBlockPoLine; else elseBlockPoLine"></div>
+                                            <ng-template #thenBlockPoLine>  
+                                            <a [value]="i+1" class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab"  (click)="taxDetails('insert', i, taxCategoryId)">
                                                     {{i+1}}
                                                 </a>
+                                            </ng-template>
+                                            <ng-template #elseBlockPoLine>
+                                                <a [value]="i+1" class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab"   (click)="taxDetails('Search', i, taxCategoryId)">
+                                                    {{i+1}}
+                                                </a> 
+                                            </ng-template>
                                         </td>
+                                        <div *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
+                                        <ng-template #thensegmentInvType>
                                         <td>
                                             <!-- <input disabled type="text" formControlName="invType" value="invType"
                                             [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
@@ -637,10 +638,31 @@
                                                 style="height: 20px;width: 160px;">
                                         </td>
                                         <td>
-                                                <input  type="text" formControlName="pricingQty" class="form-control"
+                                            <input  type="text" formControlName="pricingQty" class="form-control"
+                                                (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                       
+                                    </td>
+                                        </ng-template>
+                                        <ng-template #elsesegmentInvType>
+                                            <td>
+                                                <input disabled type="text" formControlName="invType" value="invType" [ngValue]="invType" class="form-control" style="height: 20px;width: 160px;">
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="segment" value="segment" [ngValue]="segment" class="form-control" style="height: 20px;width: 160px;"> 
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="orderedItem"
+                                                    value="orderedItem" [ngValue]="orderedItem" class="form-control"
+                                                    style="height: 20px;width: 160px;">
+                                            </td>
+                                            <td>
+                                                <input disabled  type="text" formControlName="pricingQty" class="form-control"
                                                     (change)="onKey(i)" style="height: 20px;width: 70px;">
                                            
                                         </td>
+                                        </ng-template>
+                                       
+                                       
                                         <td>
                                             <input disabled type="text" formControlName="unitSellingPrice" class="form-control"
                                                 style="height: 20px;width: 90px;" (change)="onKey(i)">
@@ -660,7 +682,7 @@
                                                 <!-- [ngValue]="sc.taxCategoryId" -->
                                             </ng-template>
                                             <ng-template #elsetaxCategoryName>
-                                                <input  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
+                                                <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
                                             </ng-template>
                                                 <input hidden type="number" formControlName="taxCategoryId"
                                                     [(ngModel)]='taxCategoryId' class="form-control"
@@ -695,11 +717,11 @@
                                         <td>
                                             <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow"></div>
                                             <ng-template #thenaddRow>
-                                            <button type="submit" class="btn btn-primary" (click)="addRow()"
+                                            <button type="submit" class="btn btn-primary" (click)="addRow(i)"
                                                 style="width: min-content;"><i class="fa fa-plus"></i></button>
                                             </ng-template>
                                             <ng-template #elseaddRow>
-                                                <button disabled type="submit" class="btn btn-primary" (click)="addRow()"
+                                                <button disabled type="submit" class="btn btn-primary" (click)="addRow(i)"
                                                 style="width: min-content;"><i class="fa fa-plus"></i></button>
                                             </ng-template>
                                         </td>
@@ -924,11 +946,11 @@
                                             </ng-template>
                                         </tr>
                                         <tr>
-                                            <input hidden type="text" formControlName="invLineItemId"
+                                            <!-- <input hidden type="text" formControlName="itemId"
                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                             <input hidden type="text" class="form-control"
                                                 formControlName="invLineNo"
-                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"> -->
                                         </tr>
                                     </ng-container>
                                 </ng-container>
