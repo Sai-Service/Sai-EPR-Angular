@@ -1,5 +1,5 @@
 <form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)">
-    <input  type="number" class="form-control" formControlName="emplId"  [(ngModel)]='emplId' style="width: 40px;">
+    <input hidden  type="number" class="form-control" formControlName="emplId"  [(ngModel)]='emplId' style="width: 40px;">
     <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
     <input hidden class="form-control" formControlName="locId" [(ngModel)]='locId'>
     <input hidden class="form-control" formControlName="locationId" [(ngModel)]='locationId'>
@@ -970,11 +970,10 @@
                     </ng-template>
                     <ng-template #elsepickTicketInvoice>
                         <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pickTicketToInv" data-dismiss="modal">
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pickTicketToInv" data-dismiss="modal" style="width: 10rem;">
   Pick Ticket To Invoice
   </button>
   
-  <!-- Modal -->
   <div class="modal fade" id="pickTicketToInv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -989,7 +988,7 @@
             <tr>
                 <td>
                     <button  type="submit" class="btn btn-primary" id="register" (click)="downloadPickTicket()" style="width: 10rem;">Download Pre Invoice</button>
-                    </td>
+                </td>
                 <td>
                 <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketInvoiceFunction()" style="width: 10rem;">Pick Ticket To Invoice</button>
                 </td>
@@ -998,12 +997,27 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
-  </div>
-        </ng-template>
+  </div> -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-agreement" (click)="downloadPickTicket()">
+    Preview
+  </button>
+  <div class="modal fade" id="modal-agreement">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketInvoiceFunction()" style="width: 10rem;">Pick Ticket To Invoice</button>
+          <object type="application/pdf" data="/assets/download.pdf" width="100%" height="500" style="height: 85vh;">No Support</object>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+         </ng-template>
                 </td>
                 <td>
                     <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate"></div>

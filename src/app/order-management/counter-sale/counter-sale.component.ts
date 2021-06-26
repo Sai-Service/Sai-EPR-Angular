@@ -13,7 +13,14 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
-// import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
+
+
+const MIME_TYPES = {
+  pdf: 'application/pdf',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
+};
 
 
 interface ISalesBookingForm {
@@ -641,7 +648,14 @@ if (this.lstgetOrderLineDetails[i].flowStatusCode != null){
 transeData(val) 
 {}
 
-downloadPickTicket(){}
+downloadPickTicket(){
+  const fileName = '/assets/download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.orderManagementService.downloadCSPreINV(this.orderNumber)
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+  });
+}
 
 pickTicketupdateFunction(){
   const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
@@ -927,8 +941,9 @@ onOptionsSelectedDescription(segment: any, k) {
         let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         for(let i=0; i <data.length; i++){
           var taxCatNm : string = data[i].taxCategoryName;
+          alert(taxCatNm);
           if(taxCatNm.includes('Sale')){
-            // alert('sale');
+            alert('sale' + '-'+k);
             (controlinv.controls[k]).patchValue({
               itemId: data[i].itemId,                
               orderedItem: data[i].description,
@@ -938,11 +953,11 @@ onOptionsSelectedDescription(segment: any, k) {
               unitSellingPrice:data[i].priceValue,
               });
           }
-          const hsnSacCode1 = data[i].hsnSacCode.substr(0, 8);
-         if (this.hsnSacCode ===null || hsnSacCode1.length <8){
-           alert('please confirm HSN/SAC Code!');
-         return;
-         }
+        //   const hsnSacCode1 = data[i].hsnSacCode.substr(0, 8);
+        //  if (this.hsnSacCode ===null || hsnSacCode1.length <8){
+        //    alert('please confirm HSN/SAC Code!');
+        //  return;
+        //  }f
         }
     }
     );
