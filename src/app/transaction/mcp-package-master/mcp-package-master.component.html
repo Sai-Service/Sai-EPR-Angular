@@ -455,13 +455,32 @@
                                             </option>
                                         </select>
                                     </td>
-                
+
+
+                                    <td style="width: 15%" class="LabelFontStyle">Package&nbsp;No:&nbsp;</td>
+                                    <td>
+                                            <input   type="text" formControlName="searchByPkgNumber" [(ngModel)]="searchByPkgNumber"   class="form-control" placeholder="Enter Package no here" >
+                                    </td>
+
+                                    <!-- <td>  
+                                        <select   formControlName="searchByPkgNumber" id="searchByPkgNumber" [(ngModel)]="searchByPkgNumber" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  McpPackageList" [ngValue]="sc.packageNumber">
+                                               {{sc.packageNumber}}
+                                            </option>
+                                        </select>
+                                    </td> -->
+
                 
                                                   
                                     <td colspan="8" style="text-align: left; width: 100%;">
                                         <button type="submit"  (click)="SearchByPkgFuelType(searchByPkgType,searchByFuelType)" class="btn btn-primary"><i
                                                 class="fa fa-search"></i></button> 
                 
+                                        <!-- <td colspan="8" style="text-align: left; width: 100%;">
+                                            <button type="submit"  (click)="SearchByPkgNoFuelType(searchByPkgNumber,searchByFuelType)" class="btn btn-primary"><i
+                                                    class="fa fa-search"></i></button> 
+                                         -->
                                 </tr>
                   
                              </table>

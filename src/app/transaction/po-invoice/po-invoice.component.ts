@@ -180,6 +180,8 @@ export class PoInvoiceComponent implements OnInit {
   remitToBankAccountNo: string;
   debitMemoReason: string;
   remitToSuppSite: string;
+  public tdsSectionList: Array<string> = [];
+  public tdsTaxCategoryList: Array<string> = [];
   
   displayinvoiceLine: Array<boolean> = [];
   hideArray: Array<boolean> = [];
@@ -320,7 +322,10 @@ export class PoInvoiceComponent implements OnInit {
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
       distribution: this.fb.array([this.distLineDetails()]),
-      taxLines: this.fb.array([this.TaxDetailsGroup()])
+      taxLines: this.fb.array([this.TaxDetailsGroup()]),
+      tdsLines: this.fb.array([this.tdsLineDetails()]),
+      tdsTaxLines: this.fb.array([this.tdsTaxDetailsGroup()]),
+
     });
     // this.poInvoiceForm.get('paymentMethod').patchValue('CHEQUE');
   }
@@ -391,10 +396,36 @@ export class PoInvoiceComponent implements OnInit {
     });
   }
 
+  tdsTaxDetailsGroup() {
+    return this.fb.group({
+      totTaxAmt: [],
+      lineNumber: [],
+      taxName: [],
+      taxTypeName: [],
+      precedence1: [],
+      precedence2: [],
+      precedence3: [],
+      precedence4: [],
+      precedence5: [],
+      precedence6: [],
+      precedence7: [],
+      precedence8: [],
+      precedence9: [],
+      precedence10: [],
+      totTaxPer: [],
+      invLineItemId: [],
+      invLineNo: [],
+    });
+  }
+
 
   TaxDetailsArray(): FormArray {
     // return this.lineDetailsArray.controls[].get('taxAmounts') as FormArray
     return <FormArray>this.poInvoiceForm.get('taxLines')
+  }
+
+  tdsTaxDetailsArray(): FormArray {
+    return <FormArray>this.poInvoiceForm.get('tdsTaxLines')
   }
 
 
@@ -526,6 +557,26 @@ export class PoInvoiceComponent implements OnInit {
   //   return <FormArray>this.poInvoiceForm.get('poLines')
   // }
 
+    tdsLineDetails() {
+      return this.fb.group({
+     
+      tdslineNumber: [],
+      tdsDistNumber: [],
+      tdsAccountCode: [],
+      tdsAmount: [],
+      tdsDescription: [],
+      tdsSectioncode: [],
+      taxCategoryId: [],
+      tdsSelectFlag: [],
+      
+    })
+  }
+
+  TdsDetailsArray(): FormArray {
+    return <FormArray>this.poInvoiceForm.get('tdsLines')
+  }
+
+
 
   get g() { return this.poInvoiceForm.controls; }
 
@@ -651,11 +702,28 @@ export class PoInvoiceComponent implements OnInit {
             console.log(this.InterBrancList);
           }
         );
+
         this.service.hsnSacCodeList()
         .subscribe(
           data=>{
             this.hsnsaclist=data;
 
+          }
+        );
+
+        this.service.tdsSectionList()
+        .subscribe(
+          data => {
+            this.tdsSectionList = data;
+            console.log(this.tdsSectionList);
+          }
+        );
+
+        this.service.tdsTaxCategoryList()
+        .subscribe(
+          data => {
+            this.tdsTaxCategoryList = data;
+            console.log(this.tdsTaxCategoryList);
           }
         );
 
@@ -1973,4 +2041,15 @@ getGroupControl(index, fieldName) {
     );
 
   }
+
+      tdsSelectFlag1(e,index) {
+
+        var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
+        var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
+        var len1=tdsLineArr.length;
+        // for (let i = 0; i < len1 ; i++)  {}
+
+        if ( e.target.checked) {alert("Checked...");} else {alert("Unchecked...");}
+      }
+
 }

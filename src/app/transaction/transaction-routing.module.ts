@@ -24,6 +24,7 @@ import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.compo
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 
+
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
   {path:'MoveOrder',component:MoveOrderComponent},

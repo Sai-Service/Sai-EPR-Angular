@@ -32,6 +32,7 @@ import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.compo
 
 
 
+
 @NgModule({
   declarations: [
     PoInvoiceComponent,
@@ -61,6 +62,10 @@ import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.compo
     OnHandDetailsComponent,
     
     AccountEnquiryComponent,
+    
+  
+    
+    
   ],
   
   imports: [
