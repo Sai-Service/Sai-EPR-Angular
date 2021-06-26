@@ -45,7 +45,7 @@
               Issue Type:
             </td>
             <td>
-              <select class="form-control" formControlName="transactionTypeId">
+              <select class="form-control" formControlName="transactionTypeId" [(ngModel)]="transactionTypeId">
                 <option>--Select--</option>
                 <option *ngFor="let tt of transType"[ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
               </select>
@@ -251,7 +251,7 @@
                 Issue Type:
               </td>
               <td>
-                <input disabled type="text" class="form-control" formControlName="transactionTypeName">
+                <input disabled type="text" class="form-control" formControlName="transactionTypeId">
                   <!-- <option>--Select--</option>
                   <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
                 </select> -->

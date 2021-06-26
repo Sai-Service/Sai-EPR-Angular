@@ -64,6 +64,9 @@
             <option>--Select--</option>
             <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
           </select>
+          <span
+                *ngIf="getGroupControl('compileType').touched && getGroupControl('compileType').invalid">Valid Transaction Type
+               </span>
         </td>
        </ng-template>
        <ng-template #elsestock1>
@@ -78,6 +81,9 @@
             </td>
             <td>
               <input type="date" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
+              <span
+                *ngIf="getGroupControl('compileDate').touched && getGroupControl('compileDate').invalid">Valid Transaction Type
+               </span>
             </td>
       <td style="width: 15%" class="LabelFontStyle">
         Transaction Type:
@@ -88,6 +94,9 @@
           <option>--Select--</option>
           <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
         </select>
+        <span
+        *ngIf="getGroupControl('compileType').touched && getGroupControl('compileType').invalid">Valid Transaction Type
+       </span>
       </td>
      </ng-template>
       </tr>
@@ -96,10 +105,14 @@
           Subinventory:
         </td>
         <td>
-          <select class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
+            <input type="text" class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
+          <!-- <select class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
             <option>--Select--</option>
             <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
-            </select>
+            <!-- </select>  -->
+            <span
+            *ngIf="getGroupControl('subInventory').touched && getGroupControl('subInventory').invalid">Valid Transaction Type
+           </span>
         </td>
         <td style="width: 15%" class="LabelFontStyle">
             Reason:
@@ -109,6 +122,9 @@
               <option>--Select--</option>
               <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
               </select>
+              <span
+              *ngIf="getGroupControl('reason').touched && getGroupControl('reason').invalid">Valid Transaction Type
+             </span>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
               Account Code:
@@ -121,7 +137,9 @@
                 <input formControlName="segmentName" value={{segmentName}}
                                                                     class="form-control"
                                                                     [(ngModel)]="segmentName"   >
-       
+                                                                    <span
+                                                                    *ngIf="getGroupControl('segmentName').touched && getGroupControl('segmentName').invalid">Valid Transaction Type
+                                                                   </span>
               </td>
         
       </tr>
@@ -227,6 +245,9 @@
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                     </option>
                    </datalist>
+                   <span
+                   *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
+                  </span>
               </td>
                             <input hidden type="number" formControlName="itemId">
                             <input hidden type="number" formControlName="invItemId">
@@ -234,10 +255,10 @@
               <!-- <td> -->
                 <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
               <!-- </td> -->
-              <td><input type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-              <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
+              <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+              <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
               <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
-              <td><input class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
+              <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
                 <!-- <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
                 </select> -->
@@ -260,6 +281,9 @@
                 <input hidden formControlName="locatorId">
                 <input hidden formControlName="id">
               </select>
+              <span
+              *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid" class="error">Valid Item
+             </span>
             </td>
               </ng-template>
               <ng-template #elseBlock>
@@ -268,13 +292,20 @@
               formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)"
               class="form-control" style="height: 20px;width: 100px;">
                   <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
+                  <span
+              *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid" class="error">Valid Item
+             </span>
                 </td>
                 </ng-template>
                <!-- </td> -->
                <input hidden type="number" formControlName="onHandQty">
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="avlqty" ></td>
-              <input hidden  type="text"  formControlName="resveQty">
-              <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty></td>
+              <input hidden  type="number"  formControlName="resveQty">
+              <td><input type="number" class="form-control" style="height: 20px;width: 50px;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
+                <span
+              *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
+             </span>
+              </td>
               <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
               <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
             </tr>

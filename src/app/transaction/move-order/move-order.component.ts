@@ -48,6 +48,7 @@ export class MoveOrderComponent implements OnInit {
   public issueByList:Array<string>=[];
   public workshopIssue:any[];
   public lstcomment1:any[];
+  // displaytransactionTypeName=true;
   repairNo:string;
   locId:number;
   divId:number;
@@ -100,10 +101,10 @@ export class MoveOrderComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
    this.moveOrderForm=fb.group({
-    requestNumber:['',[Validators.required]],
+    requestNumber:[],
     transactionTypeId:['',[Validators.required]],
     repairNo:['',[Validators.required]],
-    headerStatus:['',[Validators.required]],
+    headerStatus:[],
     transactionTypeName:[],
     creationDate:[],
     issueBy:['',[Validators.required]],
@@ -133,7 +134,7 @@ export class MoveOrderComponent implements OnInit {
     return this.fb.group({
       lineNumber:[''],
       invItemId:['',[Validators.required]],
-      frmSubInvCode:[''],
+      // frmSubInvCode:[''],
       frmLocatorId:['',[Validators.required]],
       uom:[''],
       segmentName:[],
@@ -239,7 +240,14 @@ transdata(val)
 }
 newmoveOrder()
 {
-  // if (this.moveOrderForm.valid) {
+    // alert(this.moveOrderForm.valid+'status');
+    // (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
+    //   (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+    //       control.valid;
+    //       console.log(control.value+'---'+control.valid);
+    //   }) 
+    // });
+  if (this.moveOrderForm.valid) {
  var trans=this.transType.find(d=>d.transactionTypeId===this.moveOrderForm.get('transactionTypeId').value);
 //  alert(trans.transactionTypeName+'tra');
  console.log(trans);
@@ -249,6 +257,7 @@ newmoveOrder()
   this.service.moveOrderSubmit(formValue).subscribe((res:any)=>{
     var obj = res.obj;
         sessionStorage.setItem('requestNumber', obj);
+        this.moveOrderForm.patchValue({transactionTypeId:trans.transactionTypeName})
     if(res.code===200)
     {
       // this.moveOrderForm.patchValue({requestNumber:res.obj});
@@ -262,6 +271,7 @@ newmoveOrder()
       // this.moveOrderForm.patchValue({frmSubInvCode:subCode});
       this.displayButton=false;
       this.moveOrderForm.disable();
+      // this.displaytransactionTypeName=false;
       
       // this.moveOrderForm.reset();
     }
@@ -273,13 +283,13 @@ newmoveOrder()
       }
     }
   })
-// }
-// else{
+}
+else{
   
-//     alert('else');
-//     this.HeaderValidation();
+    alert('else');
+    this.HeaderValidation();
   
-// }
+}
 }
 
 reservePos(i)
@@ -379,7 +389,7 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
       trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
       trxLnArr2.controls[i].patchValue({uom:this.getItemDetail.uom});
       trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
-      trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
+      // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
     }
     );
     this.service.getreserqty(itemid,this.locId).subscribe
@@ -536,7 +546,7 @@ validate(i:number,qty1)
     // alert('nam'+fieldName);
     // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
     return(this.moveOrderForm.get(fieldName));
-  }
+  }Header
    
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);
