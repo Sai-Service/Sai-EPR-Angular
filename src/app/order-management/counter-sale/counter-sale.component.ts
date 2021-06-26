@@ -71,6 +71,7 @@ interface AccOrderLinesPost1 {
   adhocISL: number;
   invType: string;
   locId:number;
+  hsnSacCode:string;
 }
 
 
@@ -124,9 +125,12 @@ export class CounterSaleComponent implements OnInit {
   // divisionName: string;
   submitted = false;
   poLineTax: number;
+  hsnSacCode:string;
   displayorderHedaerDetails=true;
   displaypickTicketUpdate=true;
   displaysegmentInvType:Array<boolean>=[];
+  displayRemoveRow:Array<boolean>=[];
+  displayLineflowStatusCode:Array<boolean>=[];
   // displaysegmentInvType=true;
   displaycounterSaleAllButtons=true;
   displaypickTicketInvoice=true;
@@ -223,9 +227,9 @@ orderNumber:number;
   displaycustAccountNo=true;
   displaycounterSaleOrderSave=true;
   displayaddRow=true;
-  displayRemoveRow=true;
+  // displayRemoveRow=true;
   displaysalesRepName=true;
-  displaytaxCategoryName=true;
+  // displaytaxCategoryName=true;
   displaycreateCustomer=true;
   displayCounterSaleLine: Array<boolean> = [];
 
@@ -495,6 +499,8 @@ orderNumber:number;
 
 
 this.displaysegmentInvType[0]=true;
+this.displayRemoveRow[0]=true;
+this.displayLineflowStatusCode[0]=true;
   }
 
 
@@ -520,7 +526,7 @@ this.displaysegmentInvType[0]=true;
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.displaycustAccountNo=false;
-    this.displaysegment=false;
+    // this.displaysegment=false;
     this.displaycreateOrderType=false;
    
     // this.displaysegmentInvType[0]=false;
@@ -537,6 +543,8 @@ this.displaysegmentInvType[0]=true;
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
           this.displaysegmentInvType[i]=false;
+          // this.displaysegmentInvType[i]=false;
+          this.displayLineflowStatusCode[i]=true;
       }
       for (let j = 0; j <= this.lstgetOrderTaxDetails.length-1 ; j++) {        
         var orderTaxLinesList: FormGroup=this.TaxDetailsGroup();
@@ -561,15 +569,14 @@ this.displaysegmentInvType[0]=true;
   //  alert('*** Condition ***')
   this.CounterSaleOrderBookingForm.get('custName').disable();
   this.CounterSaleOrderBookingForm.get('mobile1').disable();
-  
     this.displayorderHedaerDetails=false;
     this.displaycounterSaleOrderSave=false;
     this.displaypickTicketInvoice=false;
     this.displaypickTicketUpdate=false;
     this.displaycounterSaleOrderSave=false;
-    // this.displaysegmentInvType=false;
-    this.displaytaxCategoryName=false;
-    this.displayRemoveRow=false;
+    for (let j=0; this.allDatastore.oeOrderLinesAllList[j].length;j++){
+      this.displayLineflowStatusCode[j]=false;
+    }
   }
   else   if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice' || this.allDatastore.createOrderType === 'Sales Order') {
     // alert('Pick to Invoice');
@@ -577,7 +584,7 @@ this.displaysegmentInvType[0]=true;
     this.displaycounterSaleOrderSave=false;
     this.displaycounterSaleAllButtons=false;
     this.displayaddRow=false;
-    this.displayRemoveRow=false;
+    // this.displayRemoveRow=false;
     this.displaypickTicketUpdate=false;
     // this.displaysalesRepName=false;
     // this.displaytaxCategoryName=false;
@@ -587,9 +594,9 @@ this.displaysegmentInvType[0]=true;
     this.CounterSaleOrderBookingForm.enable();
     this.displaycounterSaleOrderSave=true;
     this.displayaddRow=true;
-    this.displayRemoveRow=true;
+    // this.displayRemoveRow=true;
     this.displaysalesRepName=true;
-    this.displaytaxCategoryName=true;
+    // this.displaytaxCategoryName=true;
       this.CounterSaleOrderBookingForm.get('custName').disable();
     this.CounterSaleOrderBookingForm.get('mobile1').disable();
     this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
@@ -615,6 +622,7 @@ pickTicketupdateFunction(){
   this.orderManagementService.UpdateCounterSaleInv(formValue).subscribe((res: any) => {
   if (res.code === 200) {
     alert(res.message);
+    this.OrderFind(this.orderNumber);
     // window.location.reload();
   } else {
     if (res.code === 400) {
@@ -710,7 +718,6 @@ onOptionsSelectedCategory(orderType){
       this.orderedItem=data.description;
       console.log(this.invItemList1);   
     }
-    
   );
 }
 
@@ -905,7 +912,11 @@ onOptionsSelectedDescription(segment: any, k) {
               unitSellingPrice:data[i].priceValue,
               });
           }
-          // alert(this.orderedItem);
+          const hsnSacCode1 = data[i].hsnSacCode.substr(0, 8);
+         if (this.hsnSacCode ===null || hsnSacCode1.length <8){
+           alert('please confirm HSN/SAC Code!');
+         return;
+         }
         }
     }
     );
@@ -1008,6 +1019,8 @@ counterSaleOrderSave(){
 
 addRow(){
   this.displaysegmentInvType.push(true);
+  this.displayRemoveRow.push(true);
+  this.displayLineflowStatusCode.push(true);
   this.orderlineDetailsArray().push(this. orderlineDetailsGroup());
   var len=this.orderlineDetailsArray().length;
   alert(len);
@@ -1019,6 +1032,8 @@ addRow(){
  );
 //  if (this.segment !=null){
   this.displaysegmentInvType.push(true);
+  this.displayRemoveRow.push(true);
+  this.displayLineflowStatusCode.push(true);
 // }
   }
 
