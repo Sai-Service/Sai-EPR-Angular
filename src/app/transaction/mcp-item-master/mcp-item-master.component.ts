@@ -191,7 +191,11 @@ export class McpItemMasterComponent implements OnInit {
             // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
             const formValue: IMcpitemMaster =this.transeData(this.mcpItemMasterForm.value);
             // debugger;
-           
+            var mcpItmId = formValue.itemNumber;
+            alert(mcpItmId);
+            alert(mcpItmId.length);
+            alert(mcpItmId.substr(3, mcpItmId.length));
+            formValue.itemId = Number (mcpItmId.substr(3,mcpItmId.length)); 
             this.service.McpItemMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');

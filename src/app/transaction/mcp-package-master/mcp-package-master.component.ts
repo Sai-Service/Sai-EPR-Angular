@@ -496,8 +496,8 @@ searchMast() {
 
             const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
             var pkId = formValue.packageNumber;
-            alert(pkId.substr(4, pkId.length));
-            formValue.packageId = Number (pkId.substr(4, pkId.length)); 
+            alert(pkId.substr(3, pkId.length));
+            formValue.packageId = Number (pkId.substr(3, pkId.length)); 
             this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
 
