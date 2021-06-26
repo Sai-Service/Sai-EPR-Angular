@@ -70,7 +70,7 @@ interface Imiscellaneous
 export class MiscellaneousTransactionComponent implements OnInit {
   miscellaneousForm:FormGroup;
   public ItemIdList:any[];
-  public subInvCode:any[];
+  public subInvCode:any;
   compNo:string;
   onHandQty:number;
   id:number;
@@ -298,6 +298,7 @@ console.log(this.route1.queryParams+'hell');
         this.service.subInvCode(this.deptId).subscribe(
           data => {this.subInvCode = data;
              console.log(data);
+             this.subInventory=this.subInvCode.subInventoryCode;
             // alert('subInventoryCode');
            });
            this.service.BranchList()
@@ -469,7 +470,7 @@ this.router.navigate(['admin']);
     var compId= this.miscellaneousForm.get('compileId').value;
     var compileType1=this.miscellaneousForm.get('compileType').value;
     var subcode=this.miscellaneousForm.get('subInventory').value;
-    let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
+    // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     //  alert(select2.subInventoryId+'Subcode');
     // alert(compId);
     // alert(compLnId+'CompileLineId')
@@ -495,7 +496,7 @@ this.router.navigate(['admin']);
         this.resrveqty=data;
         trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
       });
-      this.service.getfrmSubLoc(Number(sessionStorage.getItem('locId')),select1.itemId,select2.subInventoryId).subscribe(
+      this.service.getfrmSubLoc(Number(sessionStorage.getItem('locId')),select1.itemId,this.subInvCode.subInventoryId).subscribe(
         data =>{
           //  this.getfrmSubLoc = data;
           var getfrmSubLoc =data;
@@ -550,11 +551,11 @@ this.router.navigate(['admin']);
   //alert(locId+'locatorID');
   var subcode=trxLnArr[i].subInventory;
   //alert(subcode);
-  let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
+  // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
   //alert(select2.subInventoryId+'Id')
   //alert(event);
   // var onHand1:number;
-    this.service.getonhandqty(Number(sessionStorage.getItem('locId')),select2.subInventoryId,locId,itemid).subscribe
+    this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
     (data =>{ 
       this.onhand = data;
       console.log(this.onhand);
@@ -588,11 +589,11 @@ this.router.navigate(['admin']);
     var itemid=trxLnArr[i].invItemId;
     var locId=trxLnArr[i].locatorId;
     var subcode=this.miscellaneousForm.get('subInventory').value;
-    let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
+    // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     let selloc=this.getfrmSubLoc.find(d=>d.segmentName===event);
     // alert(selloc.locatorId+'Id')
 
-      this.service.getonhandqty(Number(sessionStorage.getItem('locId')),select2.subInventoryId,selloc.locatorId,itemid).subscribe
+      this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,selloc.locatorId,itemid).subscribe
       (data =>{ this.onhand = data
         trxLnArr1.controls[i].patchValue({systemQty:this.onhand.onHandQty});
       });
@@ -929,6 +930,7 @@ this.router.navigate(['admin']);
 
       saveMisc()
       {
+        if (this.miscellaneousForm.valid) {
         this.displayButton=true;
         const formValue:Imiscellaneous=this.miscellaneousForm.value;
         this.service.miscSubmit(formValue).subscribe
@@ -961,6 +963,13 @@ this.router.navigate(['admin']);
           }
         })
       }
+      else{
+  
+        alert('else');
+        this.HeaderValidation();
+      
+    }
+      }
 
      
       onSelectReason(event){
@@ -980,5 +989,38 @@ this.router.navigate(['admin']);
         );
       }  
       
+      HeaderValidation() {
+        var isValid:boolean=false;
+      Object.keys(this.miscellaneousForm.controls).forEach(
+        (key) => { 
+          const control=this.miscellaneousForm.controls[key] as FormControl|FormArray|FormGroup
+          
+          if(control instanceof FormControl){
+            control.markAsTouched();
+          }
+          else if (control instanceof FormArray){
+              
+      (<FormArray>this.miscellaneousForm.get('cycleLinesList')).controls.forEach((group: FormGroup) => {
+        (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+            control.markAsTouched();
+        }) 
+      });
+          }
+          else if  (control instanceof FormGroup){}
+           
+      }) ;
     
+      }
+      
+      
+      
+      getGroupControl(fieldName) {
+        return(this.miscellaneousForm.get(fieldName));
+      }Header
+       
+      getGroupControllinewise(index,fieldName) {
+        // alert('nam'+fieldName);
+        return (<FormArray>this.miscellaneousForm.get('cycleLinesList')).at(index).get(fieldName);
+        
+      }
 }
