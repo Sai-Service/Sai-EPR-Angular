@@ -209,7 +209,7 @@
 
                                             <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
 
-                                                <input type="text" hidden formControlName="packageDtlsId">
+                                                <!-- <input type="text" hidden formControlName="packageDtlsId"> -->
                                                 <input hidden  type="text" formControlName="packageNumber" [(ngModel)]="packageNumber" class="form-control" >
                                                 <input hidden  type="text" formControlName="fuelType" [(ngModel)]="fuelType" class="form-control" >
                                                 <input hidden  type="text" formControlName="ouId" [(ngModel)]="ouId" class="form-control" >

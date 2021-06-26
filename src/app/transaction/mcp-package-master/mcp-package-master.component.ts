@@ -498,7 +498,7 @@ RemoveRow(index) {
     delete val.locName;
     delete val.ouName;
     delete val.locId;
-    // delete val.ouId;
+    delete val.ouId;
     delete val.deptId;
     delete val.emplId;
     delete val.orgId;
@@ -535,8 +535,13 @@ RemoveRow(index) {
             alert("Data Validation Sucessfull....\nPosting data  to MCP Package Master")
 
             const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
+            var pkId = formValue.packageNumber;
+            alert(pkId.substr(3, pkId.length));
+            formValue.packageId = Number (pkId.substr(3, pkId.length)); 
             this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
+
+                
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.mcpPackageMasterForm.reset();
               } else {

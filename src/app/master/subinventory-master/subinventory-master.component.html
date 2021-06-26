@@ -22,6 +22,9 @@
                                             <option>--Select--</option>
                                             <option  *ngFor="let  divId of DivisionList"[ngValue]="divId.divisionId">{{divId.divisionCode}}--{{divId.divisionName}}</option>
                                         </select>
+                                        <span
+                                        *ngIf="getGroupControl('divisionId').touched && getGroupControl('divisionId').invalid">Valid name
+                                                    </span>
                                     </td >
                                     <td style="width: 18%" class="LabelFontStyle">
                                             Department:
@@ -29,14 +32,20 @@
                                     <td>
                                          <select formControlName="deptId" class="form-control">
                                           <option>--Select--</option>
-                                          <option *ngFor="let  dptId of DepartmentIdList" [ngValue]="dptId.deptId">{{dptId.code}}</option>
+                                          <option *ngFor="let  dptId of DepartmentIdList" [ngValue]="dptId.cmnTypeId">{{dptId.code}}</option>
                                          </select>
+                                         <span
+                                        *ngIf="getGroupControl('deptId').touched && getGroupControl('deptId').invalid">Valid dept
+                                                    </span>
                                     </td>
                                     <td style="width: 18%" class="LabelFontStyle">
                                             subInventoryCode:
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" formControlName="subInventoryCode">
+                                        <input type="text" class="form-control" formControlName="subInventoryCode"  data-placement="top" title="Tooltip on top" >
+                                        <span
+                                        *ngIf="getGroupControl('subInventoryCode').touched && getGroupControl('subInventoryCode').invalid" >Valid name
+                                                    </span>
                                     </td>
                                 </tr>
                                 <tr>

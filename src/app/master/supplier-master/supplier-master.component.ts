@@ -49,6 +49,8 @@ interface IsupplierMaster {
   smobile2: string;
   endDate: Date;
   sstatus: string;
+  emplId:number;
+  //displayMsmeNo:
   // aadharNo:string;
 }
 
@@ -59,7 +61,7 @@ interface IsupplierMaster {
   styleUrls: ['./supplier-master.component.css']
 })
 export class SupplierMasterComponent implements OnInit {
-
+  
   supplierMasterForm: FormGroup;
   suppId: number;
   suppNo: number;
@@ -85,7 +87,10 @@ export class SupplierMasterComponent implements OnInit {
   gstNo: string;
   panNo: string;
   tanNo: string;
-  status:string;
+  msmeYN='N';
+  msmeNo: string
+  displayMsmeNo = false;
+  public status='Active';
   supplierSiteMasterList:any[];
   lstcomments: any;
   lstcomments2: any[];
@@ -112,6 +117,7 @@ export class SupplierMasterComponent implements OnInit {
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;
+  emplId: number;
   public cityList: Array<string>[];
   public pinCodeList: Array<string>[];
   public stateList: Array<string>[];
@@ -122,65 +128,80 @@ export class SupplierMasterComponent implements OnInit {
   public lstcommentsTax: any[];
   // public cityList: Array<string>[];
   public cityList1: any;
+  public YesNoList: Array<string> = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
       suppNo: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      name: ['', [Validators.required]],
-      address1: ['', [Validators.required]],
-      address2: ['', [Validators.required]],
-      address3: [''],
-      address4:[],
+      name: ['',[Validators.required]],
+      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address3: ['',[Validators.maxLength(50)]],
+      address4: ['',[Validators.maxLength(50)]],
       city: ['', [Validators.required]],
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      contactPerson:[],
-      // taxCategoryName: ['', Validators.required],
-      taxCategoryName:[],
-      ticketNo: ['', Validators.required],
-      // ticketNo:[],
+      // emailId: ['', [Validators.required, Validators.email]],
+      //emailId: [''],
+      //contactPerson: [''],
+      contactPerson: ['',[Validators.required,Validators.pattern('[a-zA-Z /-]*')]],
+      //taxCategoryName: ['', Validators.required],
+      taxCategoryName: [''],
+      //  ticketNo: ['', Validators.required],
       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      // creditDays:[],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       // creditLimit:[],
       remarks: [''],
       emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
-      // state:[],
-      // gstNo: [],
-      gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
-      // panNo:[],
       tanNo: [''],
-      // pinCode:[],
-      // ouId:[],
+      msmeYN: [],
+      msmeNo: [],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      ouId: ['', [Validators.required]],
+      status: ['', [Validators.nullValidator]],
+      // Duplicate Fields Comments start
+      // contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
+      // // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
+      // // ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      // mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength,Validators.maxLength(10)]],
+      // mobile2: ['',[Validators.pattern('[0-9]*'), Validators.minLength,Validators.minLength(10),Validators.maxLength(10)]],
+      // emailId: ['',[Validators.email]],
+      
+      // taxCategoryName: [],
+      //  creditDays: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+      // creditLimit: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+      // remarks:[],
+      // state: ['',[Validators.required]],
+      // gstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      // panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"), Validators.maxLength(10)]],
+      // tanNo: [], --End
+      ouId:['',[Validators.required]],
       ExeAddress: [],
       saddress1: [],
       saddress2: [],
       saddress3: [],
       saddress4: [],
       scity: [],
-      pinCd: [],
+      pinCd: ['',[Validators.pattern('[0-9]*'),Validators.minLength(6),Validators.maxLength(6)]],
       sstate: [],
       smobile1: [],
       smobile2: [],
       suppSiteId: [],
       endDate: [],
-      sstatus: ['', [Validators.nullValidator]],
-      status: ['', [Validators.nullValidator]],
-      // aadharNo:[],
-
-      // address1E: ['', [Validators.required]],
-      // address2E: ['', [Validators.required]],
-      // address3E: ['', [Validators.required]],
-      // address4E: [],
-      // cityE: ['', [Validators.required]],
-      // pinCodeE: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      // stateE: ['', [Validators.required]],
+      sstatus: [],
+      emplId:[],
+      aadharNo:[],
+      address1E:[],
+      address2E: [],
+      address3E:[],
+      address4E: [],
+      cityE: [],
+      pinCodeE: ['',[Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
+      stateE: [],
     });
   }
 
@@ -189,6 +210,7 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
+    this.emplId =Number(sessionStorage.getItem('emplId'));
     this.service.cityList()
       .subscribe(
         data => {
@@ -201,6 +223,14 @@ export class SupplierMasterComponent implements OnInit {
         data => {
           this.statusList = data;
           console.log(this.statusList);
+        }
+      );
+
+      this.service.YesNoList()
+      .subscribe(
+        data => {
+          this.YesNoList = data;
+          console.log(this.YesNoList);
         }
       );
     
@@ -273,7 +303,7 @@ export class SupplierMasterComponent implements OnInit {
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert('Supplier Master Details Validation Error. Please Enter Validate Data !!!');
           this.supplierMasterForm.reset();
         }
       }
@@ -427,6 +457,7 @@ alert(suppSiteId);
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
           this.city = this.lstcomments.city
+          this.displayInactive = true;
         }
       );
   }
@@ -446,8 +477,8 @@ alert(suppSiteId);
 
   }
   SearchTaxCat(ouId) {
-    // alert( "ou id :" +ouId);
-    if(ouId != null) {
+     // alert(ouId);
+    if (ouId > 0 ) {
     this.service.getTaxCat(ouId)
       .subscribe(
         data => {
@@ -467,6 +498,7 @@ alert(suppSiteId);
     }
     else if (this.Status1 === 'Active') {
       this.supplierMasterForm.get('endDate').reset();
+      this.displayInactive = true;
     }
   }   
   onOptionsSelectedSupp(event: any) {
@@ -478,6 +510,7 @@ alert(suppSiteId);
     }
     else if (this.Status1 === 'Active') {
       this.supplierMasterForm.get('endDate').reset();
+      this.displayInactive = true;
     }
   } 
 
@@ -516,26 +549,38 @@ alert(suppSiteId);
           }
         );
       }
-      onOptionGstno(event:any,contno)
+      onOptionGstno(event:any,tanNo)
       {
         // alert(event);
         var gstno=event.target.value;
         // alert(gstno);
-        if(gstno.length==15)
+        if(gstno.length==15 && gstno!='GSTUNREGISTERED')
         {
           
-          const gstNo1 = gstno.substr(3,10);
+          const gstNo1 = gstno.substr(2,10);
           this.panNo = gstNo1;
+          tanNo.focus();
         }
         else 
         {
           // this.gstNo='GSTUNREGISTERED';
+          if(gstno.length==0 ) {
           this.supplierMasterForm.patchValue({'gstNo':'GSTUNREGISTERED'});
-          contno.focus();
+        }
+         // panNo.focus();
         }
         return;
 
       }
-
       
+      onMSMESelected(msmeYN : any){
+        alert(msmeYN);
+          if (msmeYN === 'Y') {   
+            this.displayMsmeNo = true;
+          }
+          else {
+            this.displayMsmeNo = false;
+          }
+        }
+     
 }

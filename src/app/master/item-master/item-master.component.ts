@@ -734,7 +734,7 @@ taxCategorySale:[],
             data1 = this.taxCategoryListS;
           });
 
-        this.service.taxCategoryListHSN(this.hsnGstPer,'Purchase')
+        this.service.taxCategoryListHSN(this.hsnGstPer,'PURCHASE')
         .subscribe(
           data1 => {
             this.taxCategoryListP = data1;

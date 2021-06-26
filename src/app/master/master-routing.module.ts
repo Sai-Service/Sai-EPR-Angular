@@ -31,6 +31,8 @@ import { OrderTypeMasterComponent } from './order-type-master/order-type-master.
 import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.component';
 import { VariantMasterComponent } from './variant-master/variant-master.component';
 import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
+import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
+
 
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
@@ -43,7 +45,7 @@ const routes: Routes = [
   {path:'locatioMaster', component:LocationMasterComponent},
   {path:'fndCmmonLookup', component:FNDCommonLookupComponent},
   {path:'ItemCategory',component:ItemCategortComponent},
-  {path:'suplierMaster', component:SupplierMasterComponent},
+  {path:'SupplierMaster', component:SupplierMasterComponent},
   {path:'LocatorMaster', component:LocatorMasterComponent},
   {path:'Dashboard',component:DashboardComponent},
   {path:'ItemMaster', component:ItemMasterComponent},
@@ -69,6 +71,7 @@ const routes: Routes = [
   {path:'VariantMaster', component:VariantMasterComponent },
   {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
   {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
+  {path:'SubinventoryMaster',component:SubinventoryMasterComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

@@ -20,8 +20,8 @@ interface IcustomerMaster {
   pinCd: number;
   state: string;
   mobile1: string;
-  mobile2: number;
-  mobile3: number;
+  mobile2: string;
+  mobile3: string;
   emailId: string;
   emailId1: string;
   contactPerson: string;
@@ -83,8 +83,8 @@ export class CustomerMasterComponent implements OnInit {
   pinCd: number;
   state: string;
   mobile1: string;
-  mobile2: number;
-  mobile3: number;
+  mobile2: string;
+  mobile3: string;
   emailId: string;
   emailId1: string;
   contactPerson: string;
@@ -106,8 +106,8 @@ export class CustomerMasterComponent implements OnInit {
   // spinCd: string;
   sstate: string;
   smobile1: string;
-  smobile2: number;
-  smobile3: number;
+  smobile2: string;
+  smobile3: string;
   semailId: string;
   semailId1: string;
   sstartDate: Date;

@@ -56,6 +56,15 @@ export class OrderManagementService {
   counterSaleOrderSearch(orderNumber): Observable<any> {
     return this.http.get(this.ServerUrl +`/orderHeader/ACSP/${orderNumber}`);
   }
+
+
+  UpdateCounterSaleInv(UpdateCounterSaleInvRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/orderHeader/pickTicketLineUpdate`);
+    return this.http.put(url, UpdateCounterSaleInvRecord, options);
+  }
   
   public  countersaleReadyForInvFn(orderNumber){
     const options = {
@@ -147,7 +156,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
   accountNoSearchFn(accountNo,ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   contactNoSearchFn(mobile1, ouId): Observable<any> {

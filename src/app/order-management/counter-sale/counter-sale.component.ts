@@ -13,6 +13,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
+// import { saveAs } from 'file-saver';
 
 
 interface ISalesBookingForm {
@@ -71,6 +72,7 @@ interface AccOrderLinesPost1 {
   adhocISL: number;
   invType: string;
   locId:number;
+  hsnSacCode:string;
 }
 
 
@@ -120,9 +122,23 @@ interface IcustomerMaster {
 })
 export class CounterSaleComponent implements OnInit {
   CounterSaleOrderBookingForm: FormGroup;
+  public currentCS: string;
+  public op:string;
   // divisionName: string;
   submitted = false;
+  poLineTax: number;
+  hsnSacCode:string;
+  displayorderHedaerDetails=true;
+  displaypickTicketUpdate=true;
+  displaysegmentInvType:Array<boolean>=[];
+  displayRemoveRow:Array<boolean>=[];
+  displayLineflowStatusCode:Array<boolean>=[];
+  // displaysegmentInvType=true;
+  displaycounterSaleAllButtons=true;
+  displaypickTicketInvoice=true;
+  displaycreateOrderType=true;
   selectedLine = 0;
+  categoryList: any[];
   orderedDate = new Date();
   diss: number ;
   InvoiceNumber:number;
@@ -197,8 +213,10 @@ orderNumber:number;
   lstgetOrderTaxDetails: any[];
   newCustomerButton=true;
   PaymentButton=true;
+  displaysegment=true;
   lstInvLineDeatails1: any[];
   createOrderTypeList:any;
+  allDatastore:any;
   displayorderLineDetailsPart = true;
   public payTermDescList: any;
   public orderTypeList:any;
@@ -211,17 +229,18 @@ orderNumber:number;
   displaycustAccountNo=true;
   displaycounterSaleOrderSave=true;
   displayaddRow=true;
-  displayRemoveRow=true;
+  // displayRemoveRow=true;
   displaysalesRepName=true;
-  displaytaxCategoryName=true;
+  // displaytaxCategoryName=true;
   displaycreateCustomer=true;
+  displayCounterSaleLine: Array<boolean> = [];
 
-  @ViewChild("myinput") myInputField: ElementRef;
-  @ViewChild("suppCode1") suppCode1: ElementRef;
+  // @ViewChild("myinput") myInputField: ElementRef;
+  // @ViewChild("suppCode1") suppCode1: ElementRef;
 
-  ngAfterViewInit() {
-    // this.myInputField.nativeElement.focus();
-  }
+  // ngAfterViewInit() {
+  //   // this.myInputField.nativeElement.focus();
+  // }
 
 
 // customer Master 
@@ -262,9 +281,17 @@ orderNumber:number;
   divisionName: string;
 
 
+  @ViewChild("myinput") myInputField: ElementRef;
+  @ViewChild("othRefNo") othRefNo1: ElementRef;
+  ngAfterViewInit() {
+    // this.myInputField.nativeElement.focus();
+  }
+
+
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId:[''],
+      InvoiceNumber:[''],
       headerId: [''],
       ouId: [''],
       issuedBy:[''],
@@ -325,7 +352,7 @@ orderNumber:number;
       pricingQty:[''],
       unitSellingPrice: [''],
       taxCategoryName: [''],
-      baseAmt:[''],
+      baseAmt:[],
       taxAmt:[''],
       totAmt:[''],
       flowStatusCode:[''],
@@ -370,7 +397,7 @@ orderNumber:number;
       recoverableFlag: [],
       selfAssesedFlag: [],
       inclusiveFlag: [],
-      invLineItemId: [],
+      itemId: [],
       invLineNo: [],
     });
   }
@@ -381,6 +408,9 @@ orderNumber:number;
 
   
   ngOnInit(): void {
+    // this.currentCS = 'insert';
+    this.op = 'insert';
+    this.displaypickTicketInvoice=true;
     // this.divisionName = sessionStorage.getItem('divisionName');
     this.dept=Number(sessionStorage.getItem('deptId'));
     this.ouName = (sessionStorage.getItem('ouName'));
@@ -408,6 +438,16 @@ orderNumber:number;
         this.taxCategoryList = data1;
         console.log(this.taxCategoryList);
         data1 = this.taxCategoryList;
+      }
+    );
+
+
+    this.orderManagementService.categoryList()
+    .subscribe(
+      data1 => {
+        this.categoryList = data1;
+        console.log(this.categoryList);
+        data1 = this.categoryList;
       }
     );
 
@@ -461,7 +501,15 @@ orderNumber:number;
     );
 
 
-
+this.displaysegmentInvType[0]=true;
+// this.displayRemoveRow[0]=true;
+this.displayLineflowStatusCode[0]=true;
+for ( let i=0;this.lstgetOrderLineDetails.length;i++){
+this.displayCounterSaleLine[i]=true;
+if (this.lstgetOrderLineDetails[i].flowStatusCode != null){
+  this.displayRemoveRow[i]=true;
+}
+}
   }
 
 
@@ -481,22 +529,32 @@ orderNumber:number;
 
 
   OrderFind(orderNumber){
-    alert(orderNumber)
+    // alert(orderNumber+'Hi')
+    this.op = 'Search';
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.displaycustAccountNo=false;
+    // this.displaysegment=false;
+    this.displaycreateOrderType=false;
+   
+    // this.displaysegmentInvType[0]=false;
     this.orderManagementService.counterSaleOrderSearch(orderNumber)
     .subscribe(
       data => {
         this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
         this.lstgetOrderTaxDetails = data.obj.taxAmounts;
+        this.allDatastore=data.obj;
         // console.log(this.lstgetOrderLineDetails[0].taxAmounts);
         let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
         for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
+          this.displaysegmentInvType[i]=false;
+          // this.displaysegmentInvType[i]=false;
+          this.displayLineflowStatusCode.push(true);
+          this.displayCounterSaleLine.push(false);
       }
       for (let j = 0; j <= this.lstgetOrderTaxDetails.length-1 ; j++) {        
         var orderTaxLinesList: FormGroup=this.TaxDetailsGroup();
@@ -505,39 +563,102 @@ orderNumber:number;
     this.CounterSaleOrderBookingForm.patchValue(data.obj);
     this.salesRepName=data.obj.salesRepName;
     this.createOrderType=data.obj.createOrderType;
-    // this.taxCategoryName=data.obj.
+    this.priceListName=data.obj.priceListName;
+    this.transactionTypeName=data.obj.transactionTypeName;
+    // for (let k=0; k<this.lstgetOrderLineDetails.length; k++){
+    //   let selectTaxCate = this.taxCategoryList.find(d => d.taxCategoryName === this.lstgetOrderLineDetails[k].taxCategoryName);
+    //   this.CounterSaleOrderBookingForm.patchValue({taxCategoryName:selectTaxCate.taxCategoryName})
+    //   let selectInvType = this.categoryList.find(d => d.type === data.obj.oeOrderLinesAllList[k].invType);
+    //   this.CounterSaleOrderBookingForm.patchValue({invType:selectInvType.invType});
+    //   var curInvType=selectInvType.invType;
+
+    // }
+    
+    for (let k=0; k<this.lstgetOrderLineDetails.length; k++){
+      // alert(this.lstgetOrderLineDetails[k].baseAmt);
+      this.CounterSaleOrderBookingForm.patchValue({baseAmt:this.lstgetOrderLineDetails[k].baseAmt});
+    }
     this.CounterSaleOrderBookingForm.patchValue({orderedDate:data.obj.orderedDate});
+    this.CounterSaleOrderBookingForm.get('orderedDate').disable();
     this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
-    if (data.obj.flowStatusCode === 'CLOSED') {
-      this.CounterSaleOrderBookingForm.disable();
-      this.displaycounterSaleOrderSave=false;
-      this.displayaddRow=false;
-      this.displayRemoveRow=false;
+
+    
+
+  if(this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED'){
+  //  alert('*** Condition ***')
+  this.CounterSaleOrderBookingForm.get('custName').disable();
+  this.CounterSaleOrderBookingForm.get('mobile1').disable();
+    this.displayorderHedaerDetails=false;
+    this.displaycounterSaleOrderSave=false;
+    this.displaypickTicketInvoice=false;
+    this.displaypickTicketUpdate=false;
+    this.displaycounterSaleOrderSave=false;
+    for (let i=0; this.allDatastore.oeOrderLinesAllList.length;i++){
+     if (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode==='BOOKED'){
+      this.displayLineflowStatusCode[i]=false;
+    }
+    else  if
+      (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode==='CANCELLED' && this.allDatastore.oeOrderLinesAllList[i].flowStatusCode==='Invoiced'){
+        this.displayLineflowStatusCode[i]=true;
+      }
+    }
+
+  }
+  else   if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice' || this.allDatastore.createOrderType === 'Sales Order') {
+    // alert('Pick to Invoice');
+    this.displaycounterSaleOrderSave=false;
+    this.displaycounterSaleOrderSave=false;
+    this.displaycounterSaleAllButtons=false;
+    this.displayaddRow=false;
+    // this.displayRemoveRow=false;
+    this.displaypickTicketUpdate=false;
+    // this.displaysalesRepName=false;
+    // this.displaytaxCategoryName=false;
+    this.CounterSaleOrderBookingForm.disable();
+  }
+  else{
+    this.CounterSaleOrderBookingForm.enable();
+    this.displaycounterSaleOrderSave=true;
+    this.displayaddRow=true;
+    // this.displayRemoveRow=true;
+    this.displaysalesRepName=true;
+    // this.displaytaxCategoryName=true;
+      this.CounterSaleOrderBookingForm.get('custName').disable();
+    this.CounterSaleOrderBookingForm.get('mobile1').disable();
+    this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+    this.CounterSaleOrderBookingForm.get('custAddress').disable();
+    if (this.createOrderType==='Sales Order'){
       this.displaysalesRepName=false;
-      this.displaytaxCategoryName=false;
     }
     else{
-      this.CounterSaleOrderBookingForm.enable();
-      this.displaycounterSaleOrderSave=true;
-      this.displayaddRow=true;
-      this.displayRemoveRow=true;
       this.displaysalesRepName=true;
-      this.displaytaxCategoryName=true;
-        this.CounterSaleOrderBookingForm.get('custName').disable();
-      this.CounterSaleOrderBookingForm.get('mobile1').disable();
-      this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-      this.CounterSaleOrderBookingForm.get('custAddress').disable();
-      if (this.createOrderType==='Sales Order'){
-        this.displaysalesRepName=false;
-      }
-      else{
-        this.displaysalesRepName=true;
-      }
     }
-  });
-  // this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
-  
+  }
+});
+
 }
+
+transeData(val) 
+{}
+
+downloadPickTicket(){}
+
+pickTicketupdateFunction(){
+  const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
+  this.orderManagementService.UpdateCounterSaleInv(formValue).subscribe((res: any) => {
+  if (res.code === 200) {
+    alert(res.message);
+    this.OrderFind(this.orderNumber);
+    // window.location.reload();
+  } else {
+    if (res.code === 400) {
+      alert(res.message);
+      this.CounterSaleOrderBookingForm.reset();
+    }
+  }
+});
+}
+
 
 
   onOptionsSelectedCustomerType(SelectCustType:any){
@@ -580,7 +701,7 @@ refresh() {
 
 
 onOptionsSelectedTL(createOrderType) {
-  alert(createOrderType);
+  // alert(createOrderType);
    if (createOrderType==='Pick Ticket'){
     // Sales Order
     this.displaysalesRepName=true;
@@ -602,20 +723,29 @@ onOptionsSelectedPriceListID(priceListName) {
 }
 
 
-onOptionsSelectedlncategoryType(orderType){
-alert(orderType);
-this.invType='SS_SPARES';
-alert(this.invType);
-this.CounterSaleOrderBookingForm.patchValue({invType: 'SS_SPARES'});
-this.orderManagementService.getItemByCatType(this.invType,1 )
-      .subscribe(
-        data => {
-          this.invItemList1=data;
-          this.orderedItem=data.description;
-        }
-      );
-}
+// onOptionsSelectedlncategoryType(){
+//   this.service.taxCategoryListForSALES()
+//   .subscribe(
+//     data1 => {
+//       this.taxCategoryList = data1;
+//       console.log(this.taxCategoryList);
+//       data1 = this.taxCategoryList;
+//     }
+//   );
+    
+// }
 
+onOptionsSelectedCategory(orderType){
+  alert(orderType);
+  this.orderManagementService.getItemByCatType(orderType,1 )
+  .subscribe(
+    data => {
+      this.invItemList1=data;
+      this.orderedItem=data.description;
+      console.log(this.invItemList1);   
+    }
+  );
+}
 
 accountNoSearch(custAccountNo){
   this.orderManagementService.accountNoSearchFn(custAccountNo, this.ouId)
@@ -647,11 +777,16 @@ othRefNoSearch(othRefNo){
   .subscribe(
     data => {
       this.othRefNoSearchFnData = data.obj;
-      this.othRefNo=data.obj.orderNumber;
+      this.othRefNo=data.obj.orderNumber1;
+      this.salesRepName=data.obj.salesRepName1;
+      this.tlName=data.obj.tlName1;
       this.CounterSaleOrderBookingForm.patchValue(this.othRefNoSearchFnData);
+      if (this.custAccountNo !=this.othRefNoSearchFnData.custAccountNo1){
+        alert('Sales Order Customer & Counter Sale Order Customer Not Match')
+        }
+          else{}
     })
 
-  
 }
 
 
@@ -773,15 +908,15 @@ onKey(index) {
 
 
 onOptionsSelectedDescription(segment: any, k) {
-  // alert(segment +'*****');
-  // let select = this.invItemList1.find(d => d.SEGMENT === segment);
-  // if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' || this.CounterSaleOrderBookingForm.get('createOrderType').value === ''){
-  //   alert('Please Enter Reference Number First !');
-  //   this.CounterSaleOrderBookingForm.get('segment').disable();
-  //   this.CounterSaleOrderBookingForm.get('segment').setValue('--Select--');
-  //   (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
-  // }
-  // else{
+  if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined ){
+    alert('Please Enter Reference Number First !');
+    this.CounterSaleOrderBookingForm.get('segment').disable();
+    this.orderlineDetailsArray().get('segment').disable();
+    (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
+
+  }
+  
+  else{
   let select = this.invItemList1.find(d => d.segment === segment);
   this.CounterSaleOrderBookingForm.patchValue({itemId:select.itemId})
   this.itemId = select.itemId;
@@ -803,18 +938,22 @@ onOptionsSelectedDescription(segment: any, k) {
               unitSellingPrice:data[i].priceValue,
               });
           }
-          // alert(this.orderedItem);
+          const hsnSacCode1 = data[i].hsnSacCode.substr(0, 8);
+         if (this.hsnSacCode ===null || hsnSacCode1.length <8){
+           alert('please confirm HSN/SAC Code!');
+         return;
+         }
         }
     }
     );
-  // }
+  }
 }
 
 
-onOptionTaxCatSelected(taxCategory, i) {
+onOptionTaxCatSelected(taxCategoryName, i) {
 //  alert('******** ITEM *******');
-  var taxCategoryName = taxCategory.taxCategoryName;
-  var taxCategoryId = taxCategoryId;
+  // var taxCategoryName = taxCategory.taxCategoryName;
+  // var taxCategoryId = taxCategoryId;
   this.indexVal = i;
   var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
 
@@ -826,10 +965,11 @@ onOptionTaxCatSelected(taxCategory, i) {
 console.log(this.taxCategoryId);
 
   let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
-  var disAm = 0;
-  this.transactionService.getTaxDetails(taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
+  var diss = 0;
+  if (this.baseAmt !=undefined){
+  this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
     .subscribe(
-      data  => {
+      (data: any[])  => {
         this.lstInvLineDeatails1 = data;
         console.log(this.lstInvLineDeatails1);
         let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -842,6 +982,7 @@ console.log(this.taxCategoryId);
         this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
       }
     )
+  }
 }
 
 
@@ -864,6 +1005,8 @@ pickTicketInvoiceFunction(){
       this.InvoiceNumber = res.obj;
       console.log(this.orderNumber);
       alert(res.message);
+      this.OrderFind(this.orderNumber);
+      this.CounterSaleOrderBookingForm.disable();
       // this.orderNumber = res.obj;
       // this.orderNumber=this.CounterSaleOrderBookingForm.get('orderNumber').value;
       // console.log(this.orderNumber);
@@ -889,7 +1032,7 @@ counterSaleOrderSave(){
       console.log(this.orderNumber);
       alert(res.message);
       this.orderNumber = res.obj;
-      this.orderNumber=this.CounterSaleOrderBookingForm.get('orderNumber').value;
+      // this.orderNumber=this.CounterSaleOrderBookingForm.get('orderNumber').value;
       console.log(this.orderNumber);
       this.OrderFind(this.orderNumber);
     } else {
@@ -901,7 +1044,12 @@ counterSaleOrderSave(){
   });
 }
 
+
 addRow(){
+  this.displaysegmentInvType.push(true);
+  this.displayRemoveRow.push(true);
+  this.displayCounterSaleLine.push(true);
+  this.displayLineflowStatusCode.push(true);
   this.orderlineDetailsArray().push(this. orderlineDetailsGroup());
   var len=this.orderlineDetailsArray().length;
   alert(len);
@@ -911,6 +1059,11 @@ addRow(){
     lineNumber: len,
    }
  );
+//  if (this.segment !=null){
+  this.displaysegmentInvType.push(true);
+  this.displayRemoveRow.push(true);
+  this.displayCounterSaleLine.push(true);
+  this.displayLineflowStatusCode.push(true);
   }
 
   RemoveRow(OrderLineIndex){
@@ -929,7 +1082,7 @@ addRow(){
     var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
     // var diss = arrayControltaxAmounts[0].taxAmt;
     var diss = 0;
-    this.baseAmt =0;
+    // this.baseAmt =0;
     this.segment=this.invItemList1.find(d => d.segment === this.segment);
     this.itemId;
     alert(this.itemId);
@@ -974,8 +1127,133 @@ addRow(){
   }
 
 
+  taxDetails(op, i, taxCategoryId) {
+    // alert('hi'+' ' +op+'-' +i);
+    // alert(this.displayCounterSaleLine[i]);
+    if (op === 'Search' ) {
+      // alert('Serach Of item Category')
+      // .controls[i].get('taxAmounts')
+      let taxControl = this.TaxDetailsArray() as FormArray
+     if (taxControl !=undefined){
+      taxControl.clear();
+    }
+        var taxItems: any[] = this.allDatastore.taxAmounts;
+        var k=Number(i)+1
+
+      taxItems.forEach(x => {
+        // alert(x.invLineNo +'--'+k);
+        if (x.invLineNo===k){
+        console.log('in patch' + taxItems);
+        console.log(x.totTaxAmt);
+        taxControl.push(this.fb.group({
+          totTaxAmt: x.totTaxAmt,
+          lineNumber: x.lineNumber,
+          taxRateName: x.taxRateName,
+          taxTypeName: x.taxTypeName,
+          taxPointBasis: x.taxPointBasis,
+          precedence1: x.precedence1,
+          precedence2: x.precedence2,
+          precedence3: x.precedence3,
+          precedence4: x.precedence4,
+          precedence5: x.precedence5,
+          precedence6: x.precedence6,
+          precedence7: x.precedence7,
+          precedence8: x.precedence8,
+          precedence9: x.precedence9,
+          precedence10: x.precedence10,
+          currencyCode: x.currencyCode,
+          totTaxPer: x.totTaxPer,
+          recoverableFlag: x.recoverableFlag,
+          selfAssesedFlag: x.selfAssesedFlag,
+          inclusiveFlag: x.inclusiveFlag,
+
+        }));
+      }});
+    }
+    else{
+      alert('Hi');
+    this.poLineTax = i;
+    var itemId = this.invItemList1[i].itemId;
+      var taxCategoryId = taxCategoryId;
+      this.taxCategoryId = taxCategoryId;
+      // var diss = 0;
+      var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value
+      var diss = arrayControl[i].diss1;
+      var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
+      // this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmount)
+      //   .subscribe(
+      //     (data: any[]) => {
+      //       this.taxCalforItem = data;
+
+      //       console.log(this.taxCalforItem);
+      //       this.patchResultList(i, this.taxCalforItem);
+
+      //     }
+      //   );
+      // }
+      this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
+      .subscribe(
+        (data: any[]) => {
+          this.taxCalforItem = data;
+          
+          var sum = 0;
+         
+          for (i = 0; i < this.taxCalforItem.length; i++) {
+
+            if (this.taxCalforItem[i].totTaxPer != 0) {
+              sum = sum + this.taxCalforItem[i].totTaxAmt
+            }
+          }
+         
+          this.TaxDetailsArray().clear()
+          for (let i = 0; i < this.taxCalforItem.length; i++) {
+            var invLnGrp: FormGroup = this.TaxDetailsGroup();
+            this.TaxDetailsArray().push(invLnGrp);
+            this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(this.taxCalforItem);
+          }
+         
+        });
+      }
+    }
+
+
+    patchResultList(i, taxCalforItem) {
+
+      let control = this.TaxDetailsArray().controls[i].get('taxAmounts') as FormArray
+      control.clear();
+      taxCalforItem.forEach(x => {
+        console.log('in patch' + taxCalforItem);
+        console.log(x.taxRateName);
+        control.push(this.fb.group({
+          totTaxAmt: x.totTaxAmt,
+          lineNumber: x.lineNumber,
+          taxRateName: x.taxRateName,
+          taxTypeName: x.taxTypeName,
+          taxPointBasis: x.taxPointBasis,
+          precedence1: x.precedence1,
+          precedence2: x.precedence2,
+          precedence3: x.precedence3,
+          precedence4: x.precedence4,
+          precedence5: x.precedence5,
+          precedence6: x.precedence6,
+          precedence7: x.precedence7,
+          precedence8: x.precedence8,
+          precedence9: x.precedence9,
+          precedence10: x.precedence10,
+          currencyCode: x.currencyCode,
+          totTaxPer: x.totTaxPer,
+          recoverableFlag: x.recoverableFlag,
+          selfAssesedFlag: x.selfAssesedFlag,
+          inclusiveFlag: x.inclusiveFlag,
+        }));
+      });
+      console.log(control);
+    }
+
+
+  }
 
   
-}
+
 
 

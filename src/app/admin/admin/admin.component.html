@@ -34,12 +34,18 @@
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemCategory']">Item Category master</a></li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a>  </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/LocatorMaster']">Locator Master</a> </li> 
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/Subinventory']">Subinventory</a> </li> 
+                <li> <a class="dropdown-item" [routerLink]="['/admin/master/SubinventoryMaster']">Subinventory</a> </li> 
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supplier Master</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/master/suplierMaster']">Supplier Master</a>  </li>
+                <li>
+                  <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li>
+               
+              </ul>
+            </li>
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">GlCodeCombination</a>
+              <ul class="dropdown-menu">
                 <li><a class="dropdown-item" [routerLink]="['/admin/master/GlCodeCombination']">GlCodeCombination Master</a></li>
               </ul>
             </li>
@@ -108,6 +114,7 @@
             <li class="dropdown-submnu"><a class="dropdown-item dropdown-toggle" href="#">Stock Consumption</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Workshop Issue</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/WorkshopReturn']">Workshop Return</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']" [queryParams]=" {type1: 'IC'}">Internal Consumption</a></li>
             </ul>

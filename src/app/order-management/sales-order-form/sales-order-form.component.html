@@ -879,8 +879,6 @@
                                                             {{sc.type}}
                                                         </option>
                                                     </select>
-                                                        <!--  (ngModelChange)='onOptionsSelectedCategory($event, i)' <input disabled type="text" formControlName="invType" value="invType"
-                                                        [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
                                                     </td>
                                                     <td>
                                                         <select formControlName="segment" id="segment"  
@@ -909,8 +907,6 @@
                                                             style="height: 20px;width: 90px;" (change)="onKey(i)">
                                                     </td>
                                                     <td>
-                                                        <div *ngIf="displaytaxCategoryName; then thentaxCategoryName; else elsetaxCategoryName"></div>
-                                                        <ng-template #thentaxCategoryName>
                                                             <select formControlName="taxCategoryName" id="taxCategoryName"
                                                                 (ngModelChange)='onOptionTaxCatSelected($event,i)'
                                                                 (change)="onKey(i)" class="form-control"
@@ -920,11 +916,6 @@
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                            <!-- [ngValue]="sc.taxCategoryId" -->
-                                                        </ng-template>
-                                                        <ng-template #elsetaxCategoryName>
-                                                            <input  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
-                                                        </ng-template>
                                                             <input hidden type="number" formControlName="taxCategoryId"
                                                                 [(ngModel)]='taxCategoryId' class="form-control"
                                                                 style="height: 20px;width: 160px;">

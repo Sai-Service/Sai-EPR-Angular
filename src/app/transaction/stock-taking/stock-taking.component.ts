@@ -197,7 +197,7 @@ export class StockTakingComponent implements OnInit {
     this.approvedBy=(sessionStorage.getItem('name'));
     this.addnewcycleLinesList();
     this.trans='Adjustment';
-    this.service.subInvCode().subscribe(
+    this.service.subInvCode(this.deptId).subscribe(
       data => {this.subInvCode = data;
          console.log(data);
         // alert('subInventoryCode');
@@ -780,3 +780,30 @@ okLocator(i)
   }
 
 }
+
+// search(compNo)
+//    {alert(compNo);
+//      var compno=this.StockTakingForm.get('compNo').value;
+//      alert(compno);
+//      var appflag=this.StockTakingForm.get('trans').value;
+//      this.service.getSearchViewBycompNo(compno).subscribe
+//          (data=>{
+//            if(data.code===400)
+//            {
+//               alert("Can not View data");
+//            }
+//            if(data.code===200)
+//            {
+//      //       // this.lstcomment=data.obj;
+//                let control =this.StockTakingForm.get('cycleLinesList') as FormArray;
+//                var len = this.cycleLinesList().length;
+//                for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
+//                  var trxlist:FormGroup=this.newcycleLinesList();
+//                  this.cycleLinesList().push(trxlist);
+//              }
+//                    this.StockTakingForm.patchValue(data.obj);
+//                    this.StockTakingForm.disable();
+//                  }
+//          })
+//    }
+//   }
