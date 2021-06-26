@@ -1336,12 +1336,17 @@ tdsVendorList(): Observable<any> {
 }
 
 tdsSectionList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_SECTION');
+  // return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_SECTION');
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/JAI_TDS_SECTION');
+
+  
 
 }
 
 tdsTaxCategoryList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+  // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+   return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/TDS');
+ 
 
 }
 
@@ -1916,6 +1921,7 @@ OrderCategoryList(): Observable<any> {
   } 
 
   getEWStatusVehcile(mRegno): Observable<any> {
+    // alert("ms>>"+mRegno);
     return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`);
  } 
 
@@ -1963,10 +1969,16 @@ OrderCategoryList(): Observable<any> {
   return this.http.get(this.ServerUrl + '/PackageMst');
 }
 
-getMcpPackageSearchNew(mPkgType,mFuelType): Observable<any> 
+getMcpPackageSearchNew1(mPkgType,mFuelType): Observable<any> 
 {
   // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
    return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}`);
+  
+}
+
+getMcpPackageSearchNew2(mPkgNo,mFuelType): Observable<any> 
+{
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgNoAndFuelType?packageNumber=${mPkgNo}&fuelType=${mFuelType}`);
   
 }
 

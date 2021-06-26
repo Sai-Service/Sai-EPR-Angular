@@ -576,6 +576,10 @@
                <li class="nav-item">
                 <a class="nav-link waves-light" data-toggle="tab" href="#panel10099" role="tab">Distribution</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link waves-light" data-toggle="tab" href="#panel10008" role="tab">TDS</a>
+              </li>
+
              <!-- <li class="nav-item">
                   <a class="nav-link waves-light" data-toggle="tab" href="#panel1003" role="tab">View Payments</a>
                 </li> -->
@@ -725,6 +729,8 @@
                 </table>
                 </div>
               </div>
+
+
               <!--/.Panel 1-->
               <!--Panel 2-->
               <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
@@ -1022,6 +1028,7 @@
               
               <!--/.Panel 2-->
               <div class="tab-pane fade" id="panel1006" role="tabpanel">
+
                   <label>Tax Details of Invoice Line No : {{activeLineNo}}</label>
                 <!-- <div id="Panel1" class="auto-style103"> -->
                     <div class="grid_scroll">
@@ -1295,6 +1302,283 @@
                     </div>
                 <!-- </div> -->
             </div>
+
+            <div class="tab-pane fade" id="panel10008" role="tabpanel">
+                <div class="grid_scroll_1">
+                <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr class="GridHeader">
+                            <th scope="col" style="width: 40px;">Line No</th>
+                            <th scope="col" style="width: 40px;">Dist No</th>
+                            <th scope="col" style="width: 230px;">Account</th>
+                            <th scope="col" style="width: 100px;">Amount</th>
+                            <th scope="col" style="width: 200px;">Deescription</th>
+                            <th scope="col" style="width: 200px;">Section Code</th>
+                            <th scope="col" style="width: 200px;">Tax Category</th>
+                            <th scope="col" style="width: 200px;">Select</th>
+
+                            <!-- <th scope="col">Description</th> -->
+                          </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container  class="center" formArrayName="tdsLines">
+                            <ng-container   *ngFor="let group of TdsDetailsArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+                        <tr class="ItemStyle" style="text-decoration:none;">
+                            
+                            <!-- <input hidden type="text" formControlName="invDistributionId"> -->
+                            <input  type="text" formControlName="tdslineNumber" class="form-control" style="width: 40px;height: 25px;">
+
+                            <td>
+                                <input formControlName="distLineNumber" class="form-control" style="width: 40px;height: 25px;">
+                            </td>
+
+                            <!-- <td>
+                                <input formControlName="tdsDistNumber" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 100px;height: 25px;">
+                            </td> -->
+
+                            <td>
+                            <input formControlName="tdsAccountCode"  class="form-control"  style="width: 260px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input formControlName="tdsAmount"  class="form-control" style="width: 120px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                            </td>
+
+                                                      
+                            <td>
+                                <input  disabled formControlName="tdsDescription"  class="form-control"  style="width: 200px;height: 25px;text-align: right;">
+                            </td>
+                            <td>
+                                <select style="width: 200px;height: 25px;" formControlName="tdsSectionCode" id="tdsSectionCode" [(ngModel)]="tdsSectionCode" class="form-control" (ngModelChange)='onOptionSelectedSectionCode($event)'>
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.lookupValueDesc" >
+                                        {{ts.lookupValueDesc}}
+                                    </option>
+                                </select>
+                                </td>
+                            <!-- <td>
+                                <input formControlName="tdsTaxCategory"  class="form-control"  style="width: 210px;height: 25px;">
+                            </td> -->
+
+                            <td>                 
+                                <select style="width: 210px;height: 25px;" formControlName="taxCategoryId" id="taxCategoryId" class="form-control" >
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let ts of tdsTaxCategoryList" [ngValue]="ts.taxCategoryId" >
+                                        {{ts.taxCategoryName}}
+                                    </option>
+                                </select>
+                            </td> 
+
+                            <td><input type="checkbox"  name="tdsSelectFlag" value="tdsSelectFlag"  [(ngModel)]="tdsSelectFlag"  (change)="tdsSelectFlag1($event,k)"> </td>
+                           
+                            <!-- <td>
+                            <button type="submit" class="btn btn-primary"
+                                                            (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
+                                                                class="fa fa-trash"></i></button>
+                  
+                          </td> -->
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                    </tbody>
+                </table>
+                </div>
+            
+
+
+              <!-- display tds panel -->
+
+              <div class="grid_scroll_1">
+                <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr class="GridHeader"> 
+                            <th scope="col" style="width: 40px;">SL. NO.</th>
+                            <th scope="col" >Tax Name</th>
+                            <th scope="col">Tax Type</th>
+                           
+                            <th scope="col">
+                                <table style="width: 100%;">
+                                    <tr style="border-bottom: solid 1px Gray;">
+                                        <td colspan="10" style="text-align: center;">
+                                            Precedence</td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            1</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            2</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            3</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            4</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            5</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            6</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            7</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            8</td>
+                                        <td
+                                            style="width: 2rem; border-right: solid 1px Gray;">
+                                            9</td>
+                                        <td style="width: 2rem;">
+                                            10</td>
+                                    </tr>
+                                </table>
+                            </th>
+                            <th scope="col">Tax Rate</th>
+                            <th scope="col">Tax Amount</th>
+                            
+                            
+                        </tr>   
+                    </thead>
+                    <tbody>
+                        <ng-container  class="center" formArrayName="tdsTaxLines">
+                            <!-- <ng-container   *ngFor="let group of invLineDetailsArray().controls; let k= index" [formGroupName]="k" class="auto-style5">     -->
+                                <ng-container *ngFor="let taxDet of tdsTaxDetailsArray().controls; let j= index"
+                                [formGroupName]="j"  class="auto-style5">
+                              <tr class="ItemStyle" style="text-decoration:none;">
+                                <td> <input disabled formControlName="lineNumber"
+                                    class="form-control" style="width: 40px;height: 25px;font-size: 10px;">
+                            </td>
+                            <td> <input  disabled type="text" style="width: 23rem;height: 25px;font-size: 10px;"
+                                    formControlName="taxName" class="form-control">
+                            </td>
+                            <td> <input disabled type="text" style="width: 12rem;height: 25px;font-size: 10px;"
+                                    formControlName="taxTypeName" class="form-control">
+                            </td>
+                            <!-- <td> <input disabled type="text" 
+                                    formControlName="taxPointBasis" class="form-control"
+                                    style="width: 5rem; text-align: center;margin-left: 6px; height: 25px;font-size: 10px;">
+                            </td> -->
+                            <td>
+                                <table  style="width: 100%;">
+                                    <tr>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled  
+                                                formControlName="precedence1"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence2"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>   
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence3"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence4"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence5"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence6"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence7"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence8"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                        <td style=" border-right: solid 1px Gray;">
+                                            <input disabled
+                                                formControlName="precedence9"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;"
+                                                class="form-control">
+                                        </td>
+                                        <td> <input disabled
+                                                formControlName="precedence10"
+                                                class="form-control"
+                                                style="width: 2rem; text-align: right; height: 25px;font-size: 10px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <!-- <td> <input disabled type="text"
+                                    formControlName="currencyCode" style="width: 3rem; height: 25px;font-size: 10px;"
+                                    class="form-control">
+                            </td> -->
+                            <td> <input disabled formControlName="totTaxPer"
+                                    style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
+                                    class="form-control">
+                            </td>
+                           
+                            <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
+                            </div>
+                            <ng-template #thenBlock>
+                                <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                        class="form-control" 
+                                        style="width: 6rem; text-align: right; height: 25px;font-size: 10px;"
+                                        class="form-control">
+                                </td>
+                                </ng-template>
+                    <ng-template #elseBlock>
+                        <td><input disabled type="number"
+                                formControlName="totTaxAmt"
+                                class="form-control"
+                                style="width: 6rem; text-align: right; height: 25px;font-size: 10px;">
+                        </td>
+                    </ng-template>
+                
+                <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.recoverableFlag.value === 'Y'; then thenBlockRecFlag; else elseBlockRecFlag">
+            </div>
+                             
+                
+               
+                        </tr>
+                        <tr>
+                            <input hidden type="text" formControlName="invLineItemId" style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                            <input hidden type="text" class="form-control" formControlName="invLineNo"  style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                            <!-- <td>
+                              <button type="button" class="btn btn-primary" data-dismiss="modal"
+                              (click)="lineWiseApDistribution(content)">Find</button>
+                            </td> -->
+                        </tr>
+                        </ng-container>
+                        </ng-container>
+                    </tbody>
+
+                </table>
+                
+            </div>
+             
+            </div>
+
+             
+
+
               <!--Panel 3-->
               <div class="tab-pane fade" id="panel1003" role="tabpanel">
                 <img class="img-fluid z-depth-1 rounded mb-3" alt="sample image" src="https://mdbootstrap.com/img/Photos/Others/intro1.jpg">

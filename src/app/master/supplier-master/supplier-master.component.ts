@@ -113,6 +113,7 @@ export class SupplierMasterComponent implements OnInit {
   endDate: Date;
   sstatus: string;
   displayInactive = true;
+
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;

@@ -29,10 +29,11 @@ import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 // import { App } from './app';
 
 import { from } from 'rxjs';
-import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
+// import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
 import { DeActivateGuard } from './de-activate.guard';
+// import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 
 
 
@@ -41,9 +42,10 @@ import { DeActivateGuard } from './de-activate.guard';
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFouundComponent,
+ 
     DashboardComponent,
     PoReceiptFormComponent,
+   
 
 
 

@@ -144,9 +144,10 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   
   now = Date.now();
   ewSaleDate = this.pipe.transform(this.now, 'y-MM-dd');
-
-  ewStartDate :Date
-  ewEndDate:Date
+  // ewStartDate = this.pipe.transform(this.now, 'y-MM-dd');
+  // ewEndDate = this.pipe.transform(this.now, 'y-MM-dd');
+  ewStartDate :string;
+  ewEndDate:string;
 
   receiptNumber:number;
   payType:string;
@@ -237,7 +238,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       ewDiscAmt:[],
       ewTotalAmt:[],
 
-      ewSaleDate:['',Validators.required],
+      ewSaleDate:[],
       ewStartDate:[],
       ewEndDate:[],
 
@@ -414,7 +415,20 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           //  alert(this.lstEwSchemeDetails.schemeAmount+","+this.lstEwSchemeDetails.premiumPeriod);
 
            this.GetEWitemList(this.ewType, this.variant,this.ewPeriod)
-         });
+
+           var saleDate1=new Date(this.deliveryDate);
+           var ew2;
+           var ew3;
+           var yPeriod =this.ewPeriod;
+         
+           ew2=this.addDays(saleDate1,730);
+           this.ewStartDate=this.pipe.transform(ew2, 'y-MM-dd');
+
+           var ewStDate=new Date(this.ewStartDate);
+           ew3=this.addDays(ewStDate,yPeriod*365);
+          //  alert("EW2 : "+ew2 + "   EW3: "+ew3);
+           this.ewEndDate=this.pipe.transform(ew3, 'y-MM-dd');
+          });
         } else {}
 
         }
@@ -542,16 +556,20 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
         getEwStatus(mRegNo:any) {
-          // alert ("Reg No:"+mRegNo);
+          // alert ("Reg No.....:"+mRegNo);
            this.service.getEWStatusVehcile(mRegNo)
           .subscribe(
             data => {
-              this.EwStatusDetails = data;
-              // alert ("this.EwStatusDetails :"  +this.EwStatusDetails);
-
-              if (this.EwStatusDetails !=null) {
-              console.log(this.EwStatusDetails);
-              this.saiEwForm.patchValue({
+              this.EwStatusDetails = data
+              // alert("this.EwStatusDetails :"+this.EwStatusDetails);
+              if (this.EwStatusDetails===null) 
+              {
+                this.isEwActive=false; 
+              } 
+              else
+              {
+                console.log(this.EwStatusDetails);
+                this.saiEwForm.patchValue({
                 ewId:this.EwStatusDetails.ewId,
                 ewInvoiceNo:this.EwStatusDetails.ewInvoiceNo,
                 ewBookletNo:this.EwStatusDetails.ewBookletNo,
@@ -560,16 +578,19 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 ewEndDate:this.EwStatusDetails.ewEndDate,
                 ewPeriod:this.EwStatusDetails.ewPeriod,
               });   
-              this.isEwActive=true;
-              alert("Extended Warranty is Active for the Vehicle : "+mRegNo +
-              "\nEW Contract No  : "+this.ewId +
-              "\nEW Invoice No  : "+this.ewInvoiceNo +
-              "\nEW BookletNo  : "+this.ewBookletNo +
-              "\nEW Start Date - End Date : "+this.ewStartDate+ " to "+this.ewEndDate+
-              "\nEW Term     : "+this.ewPeriod)
-              this.resetMast();
-              return;
-            } else { this.isEwActive=false;}
+                this.isEwActive=true;
+                alert("Extended Warranty is Active for the Vehicle : "+mRegNo +
+                "\nEW Contract No  : "+this.ewId +
+                "\nEW Invoice No  : "+this.ewInvoiceNo +
+                "\nEW BookletNo  : "+this.ewBookletNo +
+                "\nEW Start Date - End Date : "+this.pipe.transform(this.ewStartDate, 'dd-MM-y')+ " to "+this.pipe.transform(this.ewEndDate,'dd-MM-y')+
+                "\nEW Term     : "+this.ewPeriod)
+                this.resetMast();
+                return;
+                // this.pipe.transform(this.now, 'y-MM-dd');
+            } 
+              
+            
          
         }); }
 
@@ -941,22 +962,16 @@ getInvItemId($event) {
     return matches;
   };
 
+    addDays(date1: Date, days1: number): Date {
+      date1.setDate(date1.getDate() + days1);
+      return date1;
+  }
+
    CheckDataValidations(){
        
      
         const formValue: IExtendedWarranty = this.saiEwForm.value;
        
-        // alert('ewSchemeId ='+formValue.ewSchemeId);  
-        // alert('ewStartDate ='+formValue.ewStartDate );  
-        // let date: Date = new Date();
-        // this.ewEndDate.setDate(this.ewStartDate.getDate() + 365);
-        // let datePipe: DatePipe = new DatePipe('en-US');
-        // console.log(this.pipe.transform(this.ewEndDate, 'dd-MM-y'));
-
-        // alert("delivery date :" +this.deliveryDate);
-
-        
-
         if(formValue.variant===undefined || formValue.variant===null ) {
             this.checkValidation=false;
             alert ("REGNO/MODEL/VARIANT: Should not be null value");
@@ -995,8 +1010,8 @@ getInvItemId($event) {
               alert ("EW SCHEME: Please Select EW Scheme....");
               return;
            } 
-
-           if (formValue.itemId===undefined || formValue.itemId===null)
+          //  alert("item code :" +formValue.itemId);
+           if (formValue.itemId===undefined || formValue.itemId===null || formValue.itemId<=0 )
            {
               this.checkValidation=false;   
               alert ("EW ITEM : Please Select EW ITEM CODE....");
@@ -1047,6 +1062,7 @@ getInvItemId($event) {
                   alert ("PAY MODE: Please Select payment Type....");
                    return;
                 } 
+                alert( "receiptMethodId : "+formValue.receiptMethodId);
 
                 if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null)
                 {

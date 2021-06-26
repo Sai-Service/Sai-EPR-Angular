@@ -25,6 +25,7 @@ import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.compon
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import{WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
 
+
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
   {path:'MoveOrder',component:MoveOrderComponent},
