@@ -203,6 +203,7 @@ export class McpItemMappingComponent implements OnInit {
           }
 
           onOptionsSelectedModel(mainModel){
+              alert(mainModel)
             if(mainModel===!null){
             this.orderManagementService.VariantSearchFn(mainModel)
             .subscribe(

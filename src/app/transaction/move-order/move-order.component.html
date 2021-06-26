@@ -41,14 +41,17 @@
           <td>
               <input  disabled type="text" class="form-control" formControlName="creationDate"  [(ngModel)]="creationDate" >
             </td>
-          <td style="width: 15%" class="LabelFontStyle">
+          <td style="width: 15%" class="LabelFontStyle1">
               Issue Type:
             </td>
             <td>
-              <select class="form-control" formControlName="transactionTypeId">
+              <select class="form-control" formControlName="transactionTypeId" [(ngModel)]="transactionTypeId">
                 <option>--Select--</option>
                 <option *ngFor="let tt of transType"[ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
               </select>
+              <span
+                *ngIf="getGroupControl('transactionTypeId').touched && getGroupControl('transactionTypeId').invalid">Valid Transaction Type
+               </span>
             </td>
         </tr>
         <tr>
@@ -58,7 +61,7 @@
           <td>
             <input type="text" class="form-control" formControlName="description" [disabled]="isDisabled" required>
           </td>
-          <td style="width: 15%" class="LabelFontStyle">
+          <td style="width: 15%" class="LabelFontStyle1">
               JobCard Number:
             </td>
             <td>
@@ -67,8 +70,11 @@
                   <option>--Select--</option>
                   <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}</option>
                 </select>
+                <span
+                *ngIf="getGroupControl('repairNo').touched && getGroupControl('repairNo').invalid">Valid RepairNo
+               </span>
             </td>
-            <td style="width: 15%" class="LabelFontStyle">
+            <td style="width: 15%" class="LabelFontStyle1">
               Billable Type:
             </td>
             <td>
@@ -77,6 +83,9 @@
                     <option>--Select--</option>
                     <option *ngFor="let bill of Billabletype">{{bill.billableTyName}}</option>
                   </select>
+                  <span
+                *ngIf="getGroupControl('billable').touched && getGroupControl('billable').invalid">Valid Billable
+               </span>
               </td>
           </tr>
             <tr>
@@ -84,19 +93,21 @@
                     From Subinventory:
                   </td>
                   <td>
-                    <select class="form-control" formControlName="frmSubInvCode">
+                      <input type="text" class="form-control" formControlName="frmSubInvCode" [(ngModel)]="frmSubInvCode">
+                    <!-- <select class="form-control" formControlName="frmSubInvCode">
                       <option>--Select--</option>
                       <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">{{subCode.subInventoryCode}}</option>
-                    </select>
+                    </select> -->
                   </td>
                   <td style="width: 15%" class="LabelFontStyle">
                     To Subinventory:
                   </td>
                   <td>
-                    <select type="text" class="form-control" formControlName="toSubInvCode">
+                         <input type="text" class="form-control" formControlName="toSubInvCode" [(ngModel)]="toSubInvCode">
+                    <!-- <select type="text" class="form-control" formControlName="toSubInvCode">
                       <option>--Select--</option>
                       <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
-                    </select>
+                    </select> -->
         
                   </td>
                      <!-- <td> -->
@@ -120,7 +131,7 @@
               <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
             </td>
         
-          <td style="width: 15%" class="LabelFontStyle">
+          <td style="width: 15%" class="LabelFontStyle1">
             Issue To:
           </td>
           <td>
@@ -128,6 +139,9 @@
                 <option>--Select--</option>
                 <option *ngFor="let ib of issueByList" [ngValue]='ib.emplId'>{{ib.fullName}}</option>
                 </select>
+                <span
+                *ngIf="getGroupControl('issueTo').touched && getGroupControl('issueTo').invalid" class="error">Valid IssueTo
+               </span>
             </td>
           <td style="width: 15%" class="LabelFontStyle">
             Status:
@@ -180,6 +194,9 @@
                   <option>--Select--</option>
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}--{{invId.DESCRIPTION}}</option>
                 </select>
+                <span
+                *ngIf="getGroupControllinewise(trxLineIndex,'invItemId').touched && getGroupControllinewise(trxLineIndex,'invItemId').invalid" class="error">Valid Item
+               </span>
                 </td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                 <!-- <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="frmSubInvCode"></td> -->
@@ -188,13 +205,19 @@
                   <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId" >{{locId.segmentName}}--{{locId.onHandQty}}</option>
                   <input hidden formControlName="frmLocatorId">
                 </select>
+                <span
+                *ngIf="getGroupControllinewise(trxLineIndex,'frmLocatorId').touched && getGroupControllinewise(trxLineIndex,'frmLocatorId').invalid" class="error">Valid Item
+               </span>
                 </td>
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                 <input hidden  type="text"  formControlName="resveQty">
                 <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty ></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="quantity" (change)="validate(trxLineIndex,qty)" #qty >
+                  <span
+                  *ngIf="getGroupControllinewise(trxLineIndex,'quantity').touched && getGroupControllinewise(trxLineIndex,'quantity').invalid" class="error">Valid Item
+                 </span></td>
                 <td><input type="text" class="form-control" style="height: 20px;" formControlName="reason"></td>
                 <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)" ></button></td>
                 <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
@@ -228,7 +251,7 @@
                 Issue Type:
               </td>
               <td>
-                <input disabled type="text" class="form-control" formControlName="transactionTypeName">
+                <input disabled type="text" class="form-control" formControlName="transactionTypeId">
                   <!-- <option>--Select--</option>
                   <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeName}}</option>
                 </select> -->
@@ -275,7 +298,7 @@
                       To Subinventory:
                     </td>
                     <td>
-                      <input disabled type="text" class="form-control" formControlName="toSubInvCode">
+                      <input disabled type="text" class="form-control" formControlName="toSubInvCode"  value={{toSubInvCode}}>
                         <!-- <option>--Select--</option>
                         <option *ngFor="let subCode of subInvCode">{{subCode.subInventoryCode}}</option>
                       </select> -->

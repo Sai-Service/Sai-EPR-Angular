@@ -28,6 +28,7 @@
         <tr class="GridHeader">
             <th scope="col">No.</th>
             <th scope="col">OU</th>
+            <th scope="col">Location</th>
             <th scope="col">Type</th>
             <th scope="col">PO No</th>
             <th scope="col">Trading Partner</th>
@@ -99,7 +100,21 @@
                     <option>--Select--</option>
                     <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">{{sc.ouName}}</option>
                     </select>
+                    <span
+                    *ngIf="getGroupControl(i, 'obj','ouId').touched && getGroupControl(i,'obj', 'ouId').invalid">Valid name
+                                </span>
                 </ng-template>
+            </td>
+            <td>
+                <select formControlName="locationId" id="locationId" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
+                    <option>--Select--</option> 
+                    <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" > 
+                        {{sc.locId}}-{{sc.locCode}}
+                    </option>
+                </select>
+                <span
+                *ngIf="getGroupControl(i, 'obj','locationId').touched && getGroupControl(i,'obj', 'locationId').invalid">Valid name
+                            </span>
             </td>
             <td>
                 <div *ngIf="displaypoType; then thenpoType; else elsepoType"></div>
@@ -115,6 +130,9 @@
                         {{sc.codeDesc}}
                     </option>
                 </select>
+                <span
+                    *ngIf="getGroupControl(i,'obj', 'invTypeLookupCode').touched && getGroupControl(i,'obj', 'invTypeLookupCode').invalid">Valid name
+                                </span>
                 </ng-template>
             </td>
             <td>
@@ -143,7 +161,7 @@
                     </option>
                 </select>
                 <span
-                *ngIf="getGroupControl(i, 'name').touched && getGroupControl(i, 'name').invalid">Valid name
+                *ngIf="getGroupControl(i,'obj', 'name').touched && getGroupControl(i,'obj', 'name').invalid">Valid name
                             </span>
                 <!-- <app-field-error-display [displayError]="isFieldValid(i,'name')" errorMsg="Please Enter Supplier Name">
                 </app-field-error-display>  -->
@@ -185,7 +203,7 @@
                 </option>
             </select>
             <span
-            *ngIf="getGroupControl(i, 'supplierSiteId').touched && getGroupControl(i, 'supplierSiteId').invalid">Valid SiteName
+            *ngIf="getGroupControl(i,'obj', 'supplierSiteId').touched && getGroupControl(i, 'obj','supplierSiteId').invalid">Valid SiteName
                         </span>
             </ng-template>
             </td>
@@ -194,13 +212,13 @@
                 min="{{minDate | date:'yyyy-MM-dd'}}"
                 style="width: 120px;height: 25px;font-size: 10px;">
                 <span
-                *ngIf="getGroupControl(i, 'invoiceDate').touched && getGroupControl(i, 'invoiceDate').invalid">Valid date
+                *ngIf="getGroupControl(i,'obj', 'invoiceDate').touched && getGroupControl(i,'obj', 'invoiceDate').invalid">Valid date
                             </span>
             </td>
             <td>
                 <input type="text" class="form-control" formControlName="invoiceNum" value={{invoiceNum}} style="width: 120px;height: 25px;font-size: 10px;">
                 <span
-                *ngIf="getGroupControl(i, 'invoiceNum').touched && getGroupControl(i, 'invoiceNum').invalid">Valid Number
+                *ngIf="getGroupControl(i,'obj', 'invoiceNum').touched && getGroupControl(i,'obj', 'invoiceNum').invalid">Valid Number
                             </span>
             </td>
             <td>
@@ -209,7 +227,7 @@
             <td>
                 <input  type="number" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;"(change)="prepaymentData($event)" #amt>
                 <span
-                *ngIf="getGroupControl(i, 'invoiceAmt').touched && getGroupControl(i, 'invoiceAmt').invalid">Valid Amount
+                *ngIf="getGroupControl(i,'obj', 'invoiceAmt').touched && getGroupControl(i,'obj', 'invoiceAmt').invalid">Valid Amount
                             </span>
             </td>
             <td>
@@ -272,6 +290,9 @@
                         {{sc.lookupValue}}
                     </option>
                 </select>
+                <span
+                    *ngIf="getGroupControl(i,'obj', 'paymentMethod').touched && getGroupControl(i,'obj', 'paymentMethod').invalid">Valid name
+                                </span>
             </td>
             <td>
                 <input type="text" class="form-control" formControlName="payGroup" value={{payGroup}}  style="width: 120px;height: 25px;font-size: 10px;">
@@ -575,7 +596,7 @@
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
-                            <th scope="col">Invoice Line</th>
+                            <th scope="col">Inv Line No</th>
                             <th scope="col">No.</th>
                             <th scope="col">Type</th>
                             <th scope="col">Amount</th>
@@ -605,15 +626,21 @@
                             <ng-container   *ngFor="let group of lineDistributionArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                         <tr class="ItemStyle" style="text-decoration:none;">
                             <input hidden type="text" formControlName="invDistributionId">
-                            <input  type="text" formControlName="invoiceLineNum">
+                            <input  type="text" formControlName="invoiceLineNum" style="width: 40px;height: 25px;"class="form-control">
                             <td>
                                 <input formControlName="distLineNumber" class="form-control" style="width: 40px;height: 25px;">
                             </td>
                             <td>
                                 <input formControlName="lineTypeLookupCode" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 100px;height: 25px;">
+                                <span
+                                *ngIf="getGroupControl(k,'distribution', 'lineTypeLookupCode').touched && getGroupControl(k,'distribution', 'lineTypeLookupCode').invalid">Valid Number
+                                            </span>
                             </td>
                             <td>
                                 <input formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                                <span
+                                *ngIf="getGroupControl(k,'distribution', 'lineTypeLookupCode').touched && getGroupControl(k,'distribution', 'lineTypeLookupCode').invalid">Valid Number
+                                            </span>
                             </td>
                             <td>
                                 <input type="text" disabled formControlName="accountingDate" [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control"  style="width: 140px;height: 25px;">
@@ -623,14 +650,22 @@
                                 <ng-template #thendispAccountCode>
                                 <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;">
                                 <input formControlName="distCodeCombSeg"  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
+                                <span
+                                *ngIf="getGroupControl(k,'distribution', 'distCodeCombSeg').touched && getGroupControl(k,'distribution', 'distCodeCombSeg').invalid">Valid Number
+                                            </span>
                            </ng-template>
                            <ng-template #elsedispAccountCode>
                             <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;" >
                             <input formControlName="distCodeCombSeg" disabled  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
+
                            </ng-template>
+                         
                             </td>
                             <td>
                                 <input formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
+                                <span
+                           *ngIf="getGroupControl(k,'distribution', 'baseAmount').touched && getGroupControl(k,'distribution', 'baseAmount').invalid">Valid Number
+                                       </span>
                             </td>
                             <td>
                                 <input formControlName="description"  class="form-control"  style="width: 160px;height: 25px;">
@@ -774,11 +809,14 @@
                                       </td>
                                       <td>
                                           <!-- <input type="text" class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;" (keydown.shift.arrowdown)="addRow(k)" (keydown.arrowup)="distribution1(k)">   -->
-                                        <select class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;" (keydown.shift.arrowdown)="addRow(k)" (keydown.arrowup)="distribution1(k)"(change)="HeaderValidation(typecode)" #typecode >
+                                        <select class="form-control" formControlName="lineTypeLookupCode" value={{lineTypeLookupCode}} style="width: 100px;height: 25px;font-size: 10px;" (keydown.shift.arrowdown)="addRow(k)" (keydown.arrowup)="distribution1(k)"(change)="HeaderValidation()" #typecode >
                                         <option value="ITEM">ITEM</option>
                                         <option value="OTHER">OTHER</option>
                                         <option value="MISCELLANEOUS">MISCELLANEOUS</option>
                                         </select>
+                                        <span
+                                        *ngIf="getGroupControl(k,'invLines', 'lineTypeLookupCode').touched && getGroupControl(k,'invLines', 'lineTypeLookupCode').invalid">Valid Number
+                                                    </span>
                                           <!-- <select formControlName="lineTypeLookupCode" id="lineTypeLookupCode"   (keydown.shift.arrowdown)="addRow(k)"
                                           class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
                                           <option>--Select--</option>
@@ -834,6 +872,9 @@
                                     <td>
                                         <!-- filed not available in json -->
                                         <input type="number" class="form-control" formControlName="amount" value={{amount}} style="width: 80px;height: 25px;font-size: 10px;text-align: right;">  
+                                        <span
+                                        *ngIf="getGroupControl(k,'invLines', 'amount').touched && getGroupControl(k,'invLines', 'amount').invalid">Valid Number
+                                                    </span>
                                     </td>
                                     <input hidden type="text" formControlName="taxCategoryId" >
                                     <td>
@@ -847,12 +888,16 @@
                                                             </select>
                                     </td>
                                     <td>
-                                        <select formControlName="locId" id="locId" class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
+                                            <input disabled formControlName="locId" id="locId" class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
+                                        <!-- <select formControlName="locId" id="locId" class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                             <option>--Select--</option> 
                                             <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" > 
                                                 {{sc.locId}}-{{sc.locCode}}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <span
+                                        *ngIf="getGroupControl(k,'invLines', 'locId').touched && getGroupControl(k,'invLines', 'locId').invalid">Valid Number
+                                                    </span>
                                     </td>
                                     <td>
                                         <!-- <input  type="text" formControlName="hsnSacCode" id="hsnSacCode"  style="width: 4rem;" class="form-control" style="width: 100px;height: 25px;font-size: 10px;"> -->
@@ -1266,7 +1311,7 @@
         <table class="center" style="width: 30%;">
         <tr>
             <td>
-                <button type="submit" class="btn btn-primary" id="register"(click)="HeaderValidation(null)">Clear</button>
+                <button type="submit" class="btn btn-primary" id="register"(click)="refresh()">Clear</button>
             </td>
             <td>
                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>

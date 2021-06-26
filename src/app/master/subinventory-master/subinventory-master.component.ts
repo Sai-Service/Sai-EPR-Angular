@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, RequiredValidator, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators , FormArray } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { Alert } from 'selenium-webdriver';
 
 interface ISubinventory
 {
@@ -41,9 +42,9 @@ subInventoryId:number;
 
 constructor(private service: MasterService, private fb: FormBuilder, private router: Router) { 
   this.SubinventoryMasterForm=fb.group({
-    divisionId:[''],
-    deptId:[''],
-    subInventoryCode:[''],
+    divisionId:['',[Validators.required]],
+    deptId:['',[Validators.required]],
+    subInventoryCode:['',[Validators.required]],
     description:[''],
     startdate:[''],
     status:[''],
@@ -90,6 +91,9 @@ closeMast() {
 
 SaveMast()
 {
+  // this.onSubmit();
+  if (this.SubinventoryMasterForm.valid) {
+  // alert('IF');
   const formValue:ISubinventory=this.SubinventoryMasterForm.value;
   this.service.saveSubinventory(formValue).subscribe((res:any)=>{
     if (res.code === 200) {
@@ -102,6 +106,11 @@ SaveMast()
       }
     }
   });
+}
+else{
+  alert('else');
+  this.HeaderValidation();
+}
 }
 SearchMast()
 {
@@ -138,5 +147,32 @@ Select(subInventoryCode: string) {
     this.displayButton = false;
     this.display = false;
   }
+}
+HeaderValidation() {
+  var isValid:boolean=false;
+Object.keys(this.SubinventoryMasterForm.controls).forEach(
+  (key) => { 
+    const control=this.SubinventoryMasterForm.controls[key] as FormControl
+    control.markAsTouched();
+    isValid=this.hasRequiredField(control);
+    
+}) 
+return isValid;
+ 
+}
+public hasRequiredField = (abstractControl: AbstractControl): boolean => {
+  if (abstractControl.validator) {
+    const validator = abstractControl.validator({}as AbstractControl);
+    if (validator && validator.required) {
+      return true;
+    }
+  }
+  return false;
+}
+
+getGroupControl(fieldName) {
+  // alert('nam'+fieldName);
+  // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
+  return(this.SubinventoryMasterForm.get(fieldName));
 }
 }

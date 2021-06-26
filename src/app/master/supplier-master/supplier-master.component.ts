@@ -50,6 +50,7 @@ interface IsupplierMaster {
   endDate: Date;
   sstatus: string;
   emplId:number;
+  //displayMsmeNo:
   // aadharNo:string;
 }
 
@@ -86,7 +87,10 @@ export class SupplierMasterComponent implements OnInit {
   gstNo: string;
   panNo: string;
   tanNo: string;
-  status:string;
+  msmeYN='N';
+  msmeNo: string
+  displayMsmeNo = false;
+  public status='Active';
   supplierSiteMasterList:any[];
   lstcomments: any;
   lstcomments2: any[];
@@ -123,6 +127,7 @@ export class SupplierMasterComponent implements OnInit {
   public lstcommentsTax: any[];
   // public cityList: Array<string>[];
   public cityList1: any;
+  public YesNoList: Array<string> = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -132,25 +137,47 @@ export class SupplierMasterComponent implements OnInit {
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],
-      address4:['',[Validators.maxLength(50)]],
-      city:['', [Validators.required]],
+      address4: ['',[Validators.maxLength(50)]],
+      city: ['', [Validators.required]],
+      contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      // emailId: ['', [Validators.required, Validators.email]],
+      //emailId: [''],
+      //contactPerson: [''],
+      contactPerson: ['',[Validators.required,Validators.pattern('[a-zA-Z /-]*')]],
+      //taxCategoryName: ['', Validators.required],
+      taxCategoryName: [''],
+      //  ticketNo: ['', Validators.required],
+      creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      // creditLimit:[],
+      remarks: [''],
+      emailId: ['', [Validators.email]],
+      state: ['', [Validators.required]],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
+      tanNo: [''],
+      msmeYN: [],
+      msmeNo: [],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
       status: ['', [Validators.nullValidator]],
-      contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
-      // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
-      // ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength,Validators.maxLength(10)]],
-      mobile2: ['',[Validators.pattern('[0-9]*'), Validators.minLength,Validators.minLength(10),Validators.maxLength(10)]],
-      emailId: ['',[Validators.email]],
-      contactPerson: ['',[Validators.required,Validators.pattern('[a-zA-Z /-]*')]],
-      taxCategoryName: [],
-       creditDays: ['',[Validators.required,Validators.pattern('[0-9]*')]],
-      creditLimit: ['',[Validators.required,Validators.pattern('[0-9]*')]],
-      remarks:[],
-      state: ['',[Validators.required]],
-      gstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
-      panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"), Validators.maxLength(10)]],
-      tanNo: [],
+      // Duplicate Fields Comments start
+      // contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
+      // // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
+      // // ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      // mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength,Validators.maxLength(10)]],
+      // mobile2: ['',[Validators.pattern('[0-9]*'), Validators.minLength,Validators.minLength(10),Validators.maxLength(10)]],
+      // emailId: ['',[Validators.email]],
+      
+      // taxCategoryName: [],
+      //  creditDays: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+      // creditLimit: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+      // remarks:[],
+      // state: ['',[Validators.required]],
+      // gstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      // panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"), Validators.maxLength(10)]],
+      // tanNo: [], --End
       ouId:['',[Validators.required]],
       ExeAddress: [],
       saddress1: [],
@@ -182,8 +209,7 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
-     this.emplId =Number(sessionStorage.getItem('emplId'));
-    // console.log(this.emplId);
+    this.emplId =Number(sessionStorage.getItem('emplId'));
     this.service.cityList()
       .subscribe(
         data => {
@@ -196,6 +222,14 @@ export class SupplierMasterComponent implements OnInit {
         data => {
           this.statusList = data;
           console.log(this.statusList);
+        }
+      );
+
+      this.service.YesNoList()
+      .subscribe(
+        data => {
+          this.YesNoList = data;
+          console.log(this.YesNoList);
         }
       );
     
@@ -537,6 +571,15 @@ alert(suppSiteId);
         return;
 
       }
-
       
+      onMSMESelected(msmeYN : any){
+        alert(msmeYN);
+          if (msmeYN === 'Y') {   
+            this.displayMsmeNo = true;
+          }
+          else {
+            this.displayMsmeNo = false;
+          }
+        }
+     
 }

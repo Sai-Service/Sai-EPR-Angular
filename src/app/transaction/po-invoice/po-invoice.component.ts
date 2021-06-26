@@ -401,16 +401,16 @@ export class PoInvoiceComponent implements OnInit {
       invDistributionId: [],
       invoiceLineNum: [],
       distLineNumber: [],
-      amount: [],
+      amount: ['',[Validators.required]],
       accountingDate: [],
-      baseAmount: [],
+      baseAmount: ['',[Validators.required]],
       poSegment: [],
       distCodeCombId: [],
-      distCodeCombSeg: [],
+      distCodeCombSeg: ['',[Validators.required]],
       poChargeAc: [],
       poChargeDesc: [],
       poChargeCode: [],
-      lineTypeLookupCode: [],
+      lineTypeLookupCode: ['',[Validators.required]],
       description: [],
       invTransferStatus: [],
       poChargeAcCode: [],
@@ -428,9 +428,9 @@ export class PoInvoiceComponent implements OnInit {
       itemId: [],
       invoiceId: [],
       lineNumber: [],
-      lineTypeLookupCode: [],
+      lineTypeLookupCode: ['',[Validators.required]],
       segment1: [],
-      amount: [],
+      amount: ['',[Validators.required]],
       poNumber: [],
       poLineId: [],
       matchType: [],
@@ -448,7 +448,7 @@ export class PoInvoiceComponent implements OnInit {
       taxCategoryName: [],
       taxCategoryId: [],
       hsnSacCode: [],
-      locId: [],
+      locId: ['',[Validators.required]],
     })
   }
 
@@ -465,17 +465,18 @@ export class PoInvoiceComponent implements OnInit {
 
   lineDetailsGroup() {
     return this.fb.group({
+      ouId: ['',[Validators.required]],
+      locationId:['',[Validators.required]],
       emplId:[],
-      ouId: [],
       ouName: [],
-      invTypeLookupCode: [],
+      invTypeLookupCode: ['',[Validators.required]],
       segment1: [],
       name: ['',[Validators.required]],
       suppInvNo: [],
-      suppId: ['',[Validators.required]],
-      suppInvDate: ['',[Validators.required]],
+      suppId: [],
+      suppInvDate: [],
       suppNo: [],
-      siteName: ['',[Validators.required]],
+      siteName: [],
       taxAmt: [],
       invoiceNum: ['',[Validators.required]],
       invoiceAmt: ['',[Validators.required]],
@@ -488,7 +489,7 @@ export class PoInvoiceComponent implements OnInit {
       distributionSet: [],
       matchAction: [],
       terms: [],
-      paymentMethod: [],
+      paymentMethod: ['',[Validators.required]],
       payGroup: [],
       prepayType: [],
       settlementDate: [],
@@ -708,38 +709,8 @@ export class PoInvoiceComponent implements OnInit {
         }
       );
   }
-//   validateAllFormFields(formGroup: FormGroup) {
-//     alert('InValid')         //{1}
-//   Object.keys(formGroup.controls).forEach(field => {  //{2}
-//     const control = formGroup.get(field);             //{3}
-//     if (control instanceof FormControl) {             //{4}
-//       control.markAsTouched({ onlySelf: true });
-//     } else if (control instanceof FormGroup) {        //{5}
-//       this.validateAllFormFields(control);            //{6}
-//     }
-//   });
-// }
 
-// isFieldValid(index,field: string) {
-// // //  alert( this.poInvoiceForm.get(obj).value)
-// //   // var objarr=this.poInvoiceForm.get('obj').value;
-// // alert("In field func")
-//   return (
-// //     (!this.poInvoiceForm.get(field).valid && this.poInvoiceForm.get(field).touched) ||
-// //     (this.poInvoiceForm.get(field).untouched && this.formSumitAttempt)
-//        (!(<FormArray>this.poInvoiceForm.get('obj')).at(index).get(field).valid &&(<FormArray>this.poInvoiceForm.get('obj')).at(index).get(field).touched)||
-//        ((<FormArray>this.poInvoiceForm.get('obj')).at(index).get(field).untouched && this.formSumitAttempt)
-//   );
-// }
-
-// displayFieldCss(i,field: string) {
-//   return {
-//     'has-error': this.isFieldValid(i,field),
-//     'has-feedback': this.isFieldValid(i,field)
-//   };
-// }
-
-HeaderValidation(typecode) {
+HeaderValidation() {
   
 
   (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
@@ -747,22 +718,37 @@ HeaderValidation(typecode) {
         control.markAsTouched();
     }) 
   });
+      
+      (<FormArray>this.poInvoiceForm.get('invLines')).controls.forEach((group: FormGroup) => {
+    (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+        control.markAsTouched();
+    }) 
+  });
+  (<FormArray>this.poInvoiceForm.get('distribution')).controls.forEach((group: FormGroup) => {
+    (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+        control.markAsTouched();
+    }) 
+  });
   // alert('Please enter valid detail');
   // this.lineTypeLookupCode.focus();
-  typecode.focus();
+  // typecode.focus();
 }
 
-getGroupControl(index, fieldName) {
+getGroupControl(index,arrayname, fieldName) {
   // alert('nam'+fieldName);
-  return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
-}
+  // if(this.poInvoiceForm.get('obj')==false)
+  // {
+  return (<FormArray>this.poInvoiceForm.get(arrayname)).at(index).get(fieldName);
+//   }
+//   return (<FormArray>this.poInvoiceForm.get('invLines')).at(index).get(fieldName);
+// }
 // HeaderValidation(){
 //   this.formSumitAttempt = true;
 //     if (this.poInvoiceForm.valid) {
 //             console.log('form submitted');
 //     }
 //   }
-
+}
   transData(val) {
     return val;
   }
@@ -1071,6 +1057,14 @@ getGroupControl(index, fieldName) {
 
 
   apInvoiceSave() {
+    // alert(this.poInvoiceForm.valid+'status');
+    // (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
+    //   (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+    //       control.valid;
+    //       console.log(control.value+'---'+control.valid);
+    //   }) 
+    // });
+    if (this.poInvoiceForm.valid) {
     this.displayValidateButton = false;
     // let manInvObj=new ManualInvoiceObj();
     let jsonData = this.poInvoiceForm.value.obj[0];
@@ -1127,6 +1121,11 @@ getGroupControl(index, fieldName) {
         }
       }
     });
+  }
+  else{
+    alert('else');
+    this.HeaderValidation();
+  }
   }
 
   close() {
@@ -1223,6 +1222,7 @@ getGroupControl(index, fieldName) {
       }
 
     }
+    this.poInvoiceForm.get('invLines').patchValue({locId:arrayControl[0].locationId});
   }
 
   distribution() {
@@ -1400,6 +1400,7 @@ getGroupControl(index, fieldName) {
     this.indexVal = k;
     // const amount=this.lineDetailsArray().controls[k].get('amount').value;
     var arrayControl = this.poInvoiceForm.get('invLines').value;
+    var objarray=this.poInvoiceForm.get('obj').value;
 
     var amount = arrayControl[k].amount;
     // alert(amount);
@@ -1410,6 +1411,7 @@ getGroupControl(index, fieldName) {
     // alert(controlinv.length+'existing line');
     var existlinecnt=controlinv.length;
     (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId });
+    (controlinv.controls[k]).patchValue({locId:objarray[0].locationId});
     var disAm = 0;
   
     this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
@@ -1433,6 +1435,7 @@ getGroupControl(index, fieldName) {
             controlinv.controls[z].patchValue(data.miscLines[j - 1]);
             var ln = Number(this.indexVal+1+"."+j);
             (controlinv.controls[z]).patchValue({ lineNumber: ln });
+            controlinv.controls[z].patchValue({locId:objarray[0].locationId});
           }
           
           var segment = (arrayControl[k].segment)
@@ -1465,6 +1468,7 @@ getGroupControl(index, fieldName) {
           this.taxarr.set(this.invLineNo,this.poInvoiceForm.get('taxLines').value);
           alert(this.taxarr.size+'afterArray');
           //////////////Distribution////////////////
+          this.lineDistributionArray().clear();
           let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
           var controlPatchDist = this.poInvoiceForm.get('distribution').value;
           var x1 = Number((this.lineDistributionArray().length));

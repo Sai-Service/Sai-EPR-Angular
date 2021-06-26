@@ -11,7 +11,7 @@
             <div class="center" style="width: 100%;">
                 <form [formGroup]="supplierMasterForm" (ngSubmit)="supplierMaster(supplierMasterForm.value)">
                     <div id="Panel1" class="auto-style103">
-                        <table class="center"
+                    <table class="center"
                         style="width: 100%; background-color: #FFE4B5;">
                         <tr>
                             <td>
@@ -32,7 +32,6 @@
                                            <!-- <span *ngIf="supplierMasterForm.suppNo.$touched && supplierMasterForm.suppNo.$error.required">Supplier Code is required.</span>   -->
                                         </td>
                                         <td>
-                                            
                                             <button type="submit" class="btn-primary" (click)="searchBySuppCode(suppNo)" style="width: 2rem;"><i class="fa fa-search"></i></button>
                                         </td>
                                     </tr>
@@ -195,7 +194,7 @@
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                         <td>
-                            <select formControlName="status" id="status"  [ngModel]="status" (ngModelChange)='onOptionsSelectedSupp($event)' class="form-control">
+                            <select formControlName="status" id="status"  [ngModel]="status" DI class="form-control">
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of statusList">
                                     {{sc.codeDesc}}
@@ -306,22 +305,39 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
                             <td>
-                                <select formControlName="taxCategoryName" id="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control">
+                                <select formControlName="taxCategoryName" id="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control" >
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  taxCategoryList" [ngValue]="sc.taxCategoryList">
                                         {{sc.taxCategoryName}}
                                     </option>
                                 </select>
-                                <!-- <div *ngIf="submitted && f. taxCategoryName.errors" class="invalid-feedback">
-                                    <div *ngIf="f.taxCategoryName.errors.required">Select Tax Category 1</div>
-                                </div>
-                                <span *ngIf="!supplierMasterForm.get('taxCategoryName').valid && supplierMasterForm.get('taxCategoryName').touched">Select Tax Category 2 </span> -->
                             </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;Applicable&nbsp;:&nbsp;</td>
+                            <td>
+                                <select formControlName="msmeYN" id="msmeYN"  [ngModel]="msmeYN" (ngModelChange)='onMSMESelected($event)' class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of YesNoList" [ngValue] ="sc.code"> 
+                                        {{sc.code}}
+                                    </option>
+                                </select>
+                            </td>
+                            <div *ngIf="displayMsmeNo;then showMsmeY;else showMsmeN"></div>
+                                  <ng-template #showMsmeY>
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input formControlName="msmeNo"  [(ngModel)]='msmeNo' class="form-control"
+                                        placeholder="Enter MSME No"  >
+                                    </td> 
+                                </ng-template>
+                                 <ng-template #showMsmeN>
+                                    <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input disabled formControlName="msmeNo"  [(ngModel)]='msmeNo' class="form-control"
+                                        placeholder="Enter MSME No">
+                                    </td> 
+                                </ng-template> 
                         </tr>
-                        <tr>
-                            
-                        </tr>
-                        <!-- Dinesh Dhuri -->
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                             <td>
