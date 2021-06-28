@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +65,19 @@ export class OrderManagementService {
     const url = (this.ServerUrl + `/orderHeader/pickTicketLineUpdate`);
     return this.http.put(url, UpdateCounterSaleInvRecord, options);
   }
+
+    
+  downloadCSPreINV(orderNumber) {
+    // const REQUEST_URI = `http://localhost:8081/report/download/CHeadDateWise.xlsx?userId=${userId}&dept=${dept}&fDate=${fDate}&tDate=${tDate}`;
+    // ////////////Prod URL
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   
   public  countersaleReadyForInvFn(orderNumber){
     const options = {
@@ -157,6 +170,7 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
   accountNoSearchFn(accountNo,ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   contactNoSearchFn(mobile1, ouId): Observable<any> {

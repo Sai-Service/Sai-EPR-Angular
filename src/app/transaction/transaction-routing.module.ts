@@ -23,6 +23,8 @@ import { JournalVoucherComponent } from './journal-voucher/journal-voucher.compo
 import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
+import{WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
+
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -49,6 +51,7 @@ const routes: Routes = [
  {path:'OnHandDetails',component:OnHandDetailsComponent},
  {path:'AvgCostUpadte',component:AvgCostUpdateComponent},
  {path:'StockTaking',component:StockTakingComponent},
+ {path:'WorkshopReturn',component:WorkShopReturnComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

@@ -50,6 +50,7 @@ interface IsupplierMaster {
   endDate: Date;
   sstatus: string;
   emplId:number;
+  //displayMsmeNo:
   // aadharNo:string;
 }
 
@@ -86,7 +87,10 @@ export class SupplierMasterComponent implements OnInit {
   gstNo: string;
   panNo: string;
   tanNo: string;
-  status:string;
+  msmeYN='N';
+  msmeNo: string
+  displayMsmeNo = false;
+  public status='Active';
   supplierSiteMasterList:any[];
   lstcomments: any;
   lstcomments2: any[];
@@ -109,6 +113,7 @@ export class SupplierMasterComponent implements OnInit {
   endDate: Date;
   sstatus: string;
   displayInactive = true;
+
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;
@@ -123,69 +128,80 @@ export class SupplierMasterComponent implements OnInit {
   public lstcommentsTax: any[];
   // public cityList: Array<string>[];
   public cityList1: any;
+  public YesNoList: Array<string> = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
       suppNo: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      name: ['', [Validators.required]],
+      name: ['',[Validators.required]],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],
       address4: ['',[Validators.maxLength(50)]],
-      //address2: ['', [Validators.required]],
-      //address3: ['', [Validators.required]],
-      //address4: [''],
       city: ['', [Validators.required]],
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       // emailId: ['', [Validators.required, Validators.email]],
-      emailId: [''],
-      contactPerson: [''],
-      taxCategoryName: ['', Validators.required],
+      //emailId: [''],
+      //contactPerson: [''],
+      contactPerson: ['',[Validators.required,Validators.pattern('[a-zA-Z /-]*')]],
+      //taxCategoryName: ['', Validators.required],
+      taxCategoryName: [''],
       //  ticketNo: ['', Validators.required],
-       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       // creditLimit:[],
       remarks: [''],
-      //emailId: ['', [Validators.email]],
+      emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
       gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
-      //gstNo: [],
-      // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
-      // panNo:[],
       tanNo: [''],
-      // pinCode:[],
-      // ouId:[],
+      msmeYN: [],
+      msmeNo: [],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      // ouId: ['', [Validators.required]],
-      ouId:[],
+      status: ['', [Validators.nullValidator]],
+      // Duplicate Fields Comments start
+      // contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
+      // // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
+      // // ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      // mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength,Validators.maxLength(10)]],
+      // mobile2: ['',[Validators.pattern('[0-9]*'), Validators.minLength,Validators.minLength(10),Validators.maxLength(10)]],
+      // emailId: ['',[Validators.email]],
+      
+      // taxCategoryName: [],
+      //  creditDays: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+      // creditLimit: ['',[Validators.required,Validators.pattern('[0-9]*')]],
+      // remarks:[],
+      // state: ['',[Validators.required]],
+      // gstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      // panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"), Validators.maxLength(10)]],
+      // tanNo: [], --End
+      ouId:['',[Validators.required]],
       ExeAddress: [],
       saddress1: [],
       saddress2: [],
       saddress3: [],
       saddress4: [],
       scity: [],
-      pinCd: [],
+      pinCd: ['',[Validators.pattern('[0-9]*'),Validators.minLength(6),Validators.maxLength(6)]],
       sstate: [],
       smobile1: [],
       smobile2: [],
       suppSiteId: [],
       endDate: [],
-      sstatus: ['', [Validators.nullValidator]],
-      status: ['', [Validators.nullValidator]],
+      sstatus: [],
       emplId:[],
-      // aadharNo:[],
-
-      // address1E: ['', [Validators.required]],
-      // address2E: ['', [Validators.required]],
-      // address3E: ['', [Validators.required]],
-      // address4E: [],
-      // cityE: ['', [Validators.required]],
-      // pinCodeE: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
-      // stateE: ['', [Validators.required]],
+      aadharNo:[],
+      address1E:[],
+      address2E: [],
+      address3E:[],
+      address4E: [],
+      cityE: [],
+      pinCodeE: ['',[Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
+      stateE: [],
     });
   }
 
@@ -194,8 +210,7 @@ export class SupplierMasterComponent implements OnInit {
   ngOnInit(): void {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
-     this.emplId =Number(sessionStorage.getItem('emplId'));
-    // console.log(this.emplId);
+    this.emplId =Number(sessionStorage.getItem('emplId'));
     this.service.cityList()
       .subscribe(
         data => {
@@ -208,6 +223,14 @@ export class SupplierMasterComponent implements OnInit {
         data => {
           this.statusList = data;
           console.log(this.statusList);
+        }
+      );
+
+      this.service.YesNoList()
+      .subscribe(
+        data => {
+          this.YesNoList = data;
+          console.log(this.YesNoList);
         }
       );
     
@@ -534,7 +557,7 @@ alert(suppSiteId);
         if(gstno.length==15 && gstno!='GSTUNREGISTERED')
         {
           
-          const gstNo1 = gstno.substr(3,10);
+          const gstNo1 = gstno.substr(2,10);
           this.panNo = gstNo1;
           tanNo.focus();
         }
@@ -549,6 +572,15 @@ alert(suppSiteId);
         return;
 
       }
-
       
+      onMSMESelected(msmeYN : any){
+        alert(msmeYN);
+          if (msmeYN === 'Y') {   
+            this.displayMsmeNo = true;
+          }
+          else {
+            this.displayMsmeNo = false;
+          }
+        }
+     
 }

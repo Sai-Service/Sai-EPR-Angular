@@ -30,6 +30,7 @@ interface IMcpPkgMaster {
   validKm:number;
   itemNumber:string;
 
+   searchByPkgNumber:string;
    searchByPkgType:string;
    searchByFuelType:string;
    
@@ -49,6 +50,7 @@ export class McpPackageMasterComponent implements OnInit {
           public FuelTypeList       :Array<string> = [];
           public McpPackageTypeList :Array<string> = [];
           public McpPackageCategoryList :Array<string> = [];
+          public McpPackageList:Array<string> = [];
           
 
 
@@ -108,7 +110,7 @@ export class McpPackageMasterComponent implements OnInit {
           display = true;
           displayButton = true;
           //////////////////////////////////
-
+          searchByPkgNumber:string;
           searchByPkgType:string;
           searchByFuelType:string;
           srlNo:number=0;
@@ -149,6 +151,7 @@ export class McpPackageMasterComponent implements OnInit {
             validPeriod:[],
             validKm:[],
 
+            searchByPkgNumber:[],
             searchByPkgType:[],
             searchByFuelType:[],
 
@@ -239,11 +242,17 @@ export class McpPackageMasterComponent implements OnInit {
             
           }
         );
-  
 
+        
+          // this.service.mcpPkgNumberList()
+          //   .subscribe(
+          //     data => {
+          //       this.McpPackageList = data;
+          //       console.log(this.McpPackageList);
+          //     }
+          //   );
   
-
-          }
+      }
 
 
      // ===============================================================================
@@ -351,15 +360,16 @@ RemoveRow(index) {
 }
 
 
-searchMast() {
-  this.service.getMcpPackageSearch()
-    .subscribe(
-      data => {
-        this.lstcomments = data;
-        console.log(this.lstcomments);
-      }
-    );
-   }
+// searchMast() {
+//   this.service.getMcpPackageSearch()
+//     .subscribe(
+//       data => {
+//         this.lstcomments = data;
+//         console.log(this.lstcomments);
+//       }
+//     );
+//    }
+
 
    SearchByPkgFuelType(pType:any,fType:any){
     // alert ("Package Type : "+pType+ " Fuel Type : "+fType);
@@ -375,7 +385,7 @@ searchMast() {
          return;
       } 
 
-        this.service.getMcpPackageSearchNew(pType ,fType)
+        this.service.getMcpPackageSearchNew1(pType ,fType)
         .subscribe(
         data => {
           this.lstcomments = data;
@@ -385,6 +395,36 @@ searchMast() {
         } ); 
          
        }
+
+
+       SearchByPkgNoFuelType(pkgNo:any,fType:any){
+        alert ("Package No : "+pkgNo+ " Fuel Type : "+fType);
+        const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
+       
+         if (formValue.searchByFuelType===undefined || formValue.searchByFuelType===null)
+         {
+             alert ("FUEL TYPE: Select Fuel Type");
+             return;
+         } 
+
+         if (formValue.searchByPkgNumber===undefined || formValue.searchByPkgNumber===null)
+         {
+             alert ("PACKAGE NUMBER: Enter Correct Package Number");
+             return;
+         } 
+
+    
+            this.service.getMcpPackageSearchNew2(pkgNo ,fType)
+            .subscribe(
+            data => {
+              this.lstcomments = data;
+              alert("Records Found : "+ this.lstcomments.length);
+              console.log(this.lstcomments);
+    
+            } ); 
+             
+           }
+
      
 
    Select1(packageId: number) {
@@ -458,7 +498,7 @@ searchMast() {
     delete val.locName;
     delete val.ouName;
     delete val.locId;
-    // delete val.ouId;
+    delete val.ouId;
     delete val.deptId;
     delete val.emplId;
     delete val.orgId;
@@ -495,8 +535,13 @@ searchMast() {
             alert("Data Validation Sucessfull....\nPosting data  to MCP Package Master")
 
             const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
+            var pkId = formValue.packageNumber;
+            alert(pkId.substr(3, pkId.length));
+            formValue.packageId = Number (pkId.substr(3, pkId.length)); 
             this.service.McpPackageMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
+
+                
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.mcpPackageMasterForm.reset();
               } else {

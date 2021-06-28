@@ -84,7 +84,7 @@
                         </td>
 
                         <td>
-                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="itemId"  id="itemId" [(ngModel)]="itemId" class="form-control">
+                            <input  disabled  style="width:50px ;"  type="text" formControlName="itemId"  id="itemId" [(ngModel)]="itemId" class="form-control">
                         </td>
 
                         <td>
@@ -148,7 +148,7 @@
                           <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
 
                     <td>
-                        <input disabled  type="text"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
+                        <input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
@@ -332,9 +332,9 @@
                             <td>  
                                 <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
                                 <option disabled>--Select--</option>
-                                <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.itemId">
+                                <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
                                 <!-- {{sc.itemId}}- -->
-                                {{sc.SEGMENT}}
+                                 {{sc.ITEMID}}-{{sc.SEGMENT}}
                                 </option>
                                 </select>
                             </td>
@@ -374,19 +374,19 @@
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
     
                             <td>
-                                <input disabled  type="text" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate" class="form-control" >
+                                <input disabled  type="Date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate" class="form-control" >
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
     
                             <td>
-                                <input   type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" >
+                                <input disabled  type="date"  formControlName="ewStartDate"  id="ewStartDate" [(ngModel)]="ewStartDate" class="form-control" >
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;End&nbsp;Date:&nbsp;</td>
     
                             <td>
-                                <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
+                                <input disabled  type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
                             </td>
                
                             <td   style="width: 15%" class="LabelFontStyle">Premium&nbsp;Amt:&nbsp;</td>
