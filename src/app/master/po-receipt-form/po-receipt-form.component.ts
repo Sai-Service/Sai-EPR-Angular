@@ -203,7 +203,7 @@ export class PoReceiptFormComponent implements OnInit {
       recDate:[''],
       Comments:['',Validators.required],
       suppInvDate:[''],
-  suppInvNo:[''],
+      suppInvNo:[''],
       gstDocNo:[''],
       ewayBillNo:[''],
       docDate:[''],

@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
-import { now } from 'jquery';
+// import { now } from 'jquery';
 
 interface IVariantMaster {
   mainModel:string;
@@ -41,8 +41,9 @@ interface IVariantMaster {
   styleUrls: ['./variant-master.component.css']
 })
 export class VariantMasterComponent implements OnInit {
-
   variantMasterForm: FormGroup;
+
+  pipe = new DatePipe('en-US');
 
  
   public OUIdList           :Array<string> = [];
@@ -52,7 +53,7 @@ export class VariantMasterComponent implements OnInit {
   
   
    
-  pipe = new DatePipe('en-US');
+  
 
   lstcomments: any[];
   
@@ -95,7 +96,8 @@ serviceModel:string;
 mfgYearPrint:string;
 bharatStageNorms:string;
 cylinder:string;
-startDate:Date;
+// startDate:Date;
+startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 endDate:Date;
 // startDate = new Date();
   
