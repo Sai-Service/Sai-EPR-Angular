@@ -1305,6 +1305,7 @@
 
             <div class="tab-pane fade" id="panel10008" role="tabpanel">
                 <div class="grid_scroll_1">
+                    <button class="btn btn-primary" (click)="showTdsLines(27)">Show Tds </button>
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
@@ -1326,30 +1327,31 @@
                         <tr class="ItemStyle" style="text-decoration:none;">
                             
                             <!-- <input hidden type="text" formControlName="invDistributionId"> -->
-                            <input  type="text" formControlName="tdslineNumber" class="form-control" style="width: 40px;height: 25px;">
+                            <!-- <input  type="text" formControlName="tdslineNumber" class="form-control" style="width: 40px;height: 25px;"> -->
+                            
 
                             <td>
-                                <input formControlName="distLineNumber" class="form-control" style="width: 40px;height: 25px;">
-                            </td>
-
-                            <!-- <td>
-                                <input formControlName="tdsDistNumber" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 100px;height: 25px;">
-                            </td> -->
-
-                            <td>
-                            <input formControlName="tdsAccountCode"  class="form-control"  style="width: 260px;height: 25px;">
+                                <input disabled formControlName="invoiceLineNum" class="form-control" style="width: 30px;height: 25px;">
                             </td>
 
                             <td>
-                                <input formControlName="tdsAmount"  class="form-control" style="width: 120px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                                <input disabled formControlName="distLineNumber" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
+                            </td>
+                            
+                            <td>
+                            <input disabled formControlName="distCodeCombSeg"  class="form-control"  style="width: 220px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input disabled formControlName="baseAmount"  class="form-control" style="width: 120px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
                             </td>
 
                                                       
                             <td>
-                                <input  disabled formControlName="tdsDescription"  class="form-control"  style="width: 200px;height: 25px;text-align: right;">
+                                <input  disabled formControlName="accDesc"  class="form-control"  style="width: 200px;height: 25px;text-align: right;">
                             </td>
                             <td>
-                                <select style="width: 200px;height: 25px;" formControlName="tdsSectionCode" id="tdsSectionCode" [(ngModel)]="tdsSectionCode" class="form-control" (ngModelChange)='onOptionSelectedSectionCode($event)'>
+                                <select style="width: 200px;height: 25px;" formControlName="tdsSectionCode" id="tdsSectionCode"  class="form-control">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.lookupValueDesc" >
                                         {{ts.lookupValueDesc}}
@@ -1361,7 +1363,7 @@
                             </td> -->
 
                             <td>                 
-                                <select style="width: 210px;height: 25px;" formControlName="taxCategoryId" id="taxCategoryId" class="form-control" >
+                                <select style="width: 210px;height: 25px;" formControlName="taxCategoryId" id="taxCategoryId" class="form-control" (ngModelChange)='onTaxCatgSelected($event,k)' >
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let ts of tdsTaxCategoryList" [ngValue]="ts.taxCategoryId" >
                                         {{ts.taxCategoryName}}
@@ -1370,7 +1372,10 @@
                             </td> 
 
                             <td><input type="checkbox"  name="tdsSelectFlag" value="tdsSelectFlag"  [(ngModel)]="tdsSelectFlag"  (change)="tdsSelectFlag1($event,k)"> </td>
-                           
+                           <td>
+                            <input hidden style="width: 50px;height: 25px;" formControlName="distCodeCombId"  class="form-control" >
+                            </td>
+
                             <!-- <td>
                             <button type="submit" class="btn btn-primary"
                                                             (click)="RemoveDistributionRow(k)" style="width: min-content;"><i
@@ -1451,7 +1456,7 @@
                                     class="form-control" style="width: 40px;height: 25px;font-size: 10px;">
                             </td>
                             <td> <input  disabled type="text" style="width: 23rem;height: 25px;font-size: 10px;"
-                                    formControlName="taxName" class="form-control">
+                                    formControlName="taxRateName" class="form-control">
                             </td>
                             <td> <input disabled type="text" style="width: 12rem;height: 25px;font-size: 10px;"
                                     formControlName="taxTypeName" class="form-control">

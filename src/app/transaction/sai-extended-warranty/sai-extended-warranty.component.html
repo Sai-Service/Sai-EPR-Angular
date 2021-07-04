@@ -91,17 +91,97 @@
                             <input  disabled  style="width:50px ;"  type="text" formControlName="customerSiteId"  id="customerSiteId" [(ngModel)]="customerSiteId" class="form-control">
                         </td>
 
-                        
+                        <td>
+                            <input  disabled  style="width:50px ;"  type="text" formControlName="lastRunKms"  id="lastRunKms" [(ngModel)]="lastRunKms" class="form-control">
+                        </td>
                             
                         </tr>
                     </table>
 
                     <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle|Customer Details</legend>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Vehicle Details</legend>
                     <table class="center">
                           
                     <tr>
+
+                        <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+
+                        <div *ngIf="displayButton; then pYes; else pNo"></div>
+                        <ng-template #pYes>
+                        <td> 
+                            <select  formControlName="paytmentSource" id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control" (ngModelChange)="onSourceSelected(paytmentSource)">
+                                <!-- <option value=""></option> -->
+                                <option value="SERVICE">SERVICE</option>
+                                <option value="SALES">SALES</option>
+                           </select>
+                        </td>
+                        </ng-template>
+
+                        <ng-template #pNo>
+                        <td> 
+                            <select disabled  formControlName="paytmentSource" id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control" (ngModelChange)="onSourceSelected(paytmentSource)">
+                                <option value="SERVICE">SERVICE</option>
+                                <option value="SALES">SALES</option>
+                            </select>
+                        </td>
+                      </ng-template>
+
+                    <div *ngIf="displayButton; then thenBlock905; else elseBlock905"></div>
+                    <ng-template #thenBlock905>
+                      
+                        
+                        <div *ngIf="showOrderInputLine; then ordBlockYes; else ordBlockNo"></div>
+                       
+                        <ng-template #ordBlockYes>
+                        <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Number:&nbsp;</td>
+                            <td>
+                                <table>
+                                    <tr>
+                                      <td>
+                                        <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" placeholder="Enter Order No & click click on button right ." >
+                                      </td>
+
+                                      <td colspan="8" style="text-align: left; width: 100%;height: 26px;">
+                                        <button type="submit" class="btn btn-primary" (click)="GetOrderDetails(orderNumber)" >...</button>
+                                      </td>
+
+                                        <!-- <td colspan="8" style="text-align: left; width: 100%;">
+                                        <button type="submit"  (click)= "GetOrderDetails()" class="btn btn-primary"><i
+                                        class="fa fa-search" data-toggle="modal" data-target="#exampleModal3"></i></button>
+                                        </td> -->
+                                   </tr>
+                                </table>
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
+                            <td>
+                             <input disabled style="font-weight: bold;" type="text"
+                                formControlName="vehRegNo"
+                                [(ngModel)]="vehRegNo"
+                                (change)="serchByRegNo(vehRegNo)"
+                                (keyup)="getUserIdsFirstWay($event)"
+                                id="userIdFirstWay"
+                                list="dynmicUserIds"
+                                class="form-control" />
+    
+                                <datalist id="dynmicUserIds">
+                                    <option
+                                        *ngFor="let item of VehRegNoList"
+                                        [ngValue]="item.regNo">
+                                        {{item.regNo}}
+                                    </option>
+                                </datalist>
+    
+                            </td> 
+
+                        </ng-template>
+                        <ng-template #ordBlockNo>
+                            <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Number:&nbsp;</td>
+                           <td>
+                                <input disabled  type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" >
+                            </td>
+
                             <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
                             <td>
@@ -113,7 +193,7 @@
                                 id="userIdFirstWay"
                                 list="dynmicUserIds"
                                 class="form-control" />
-
+    
                                 <datalist id="dynmicUserIds">
                                     <option
                                         *ngFor="let item of VehRegNoList"
@@ -121,46 +201,69 @@
                                         {{item.regNo}}
                                     </option>
                                 </datalist>
-
+    
                             </td> 
+                        </ng-template>
+                    </ng-template>
+                    <ng-template #elseBlock905>
 
-                            <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Number:&nbsp;</td>
+                         <td>
+                                <input disabled  type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
     
                             <td>
-                            <input disabled style="font-weight: bold;" type="text"
-                            formControlName="vehicleId"
-                            [(ngModel)]="vehicleId"
-                            (change)="serchByVin(vehicleId)"
-                            (keyup)="getUserIdsFirstWayVin($event)"
-                            id="userIdFirstWay"
-                            list="dynmicUserIds1"
-                            class="form-control" />
+                             <input disabled style="font-weight: bold;" type="text"
+                                formControlName="vehRegNo"
+                                [(ngModel)]="vehRegNo"
+                                (change)="serchByRegNo(vehRegNo)"
+                                (keyup)="getUserIdsFirstWay($event)"
+                                id="userIdFirstWay"
+                                list="dynmicUserIds"
+                                class="form-control" />
+    
+                                <datalist id="dynmicUserIds">
+                                    <option
+                                        *ngFor="let item of VehRegNoList"
+                                        [ngValue]="item.regNo">
+                                        {{item.regNo}}
+                                    </option>
+                                </datalist>
+    
+                            </td> 
 
-                            <datalist id="dynmicUserIds1">
-                                <option
-                                    *ngFor="let item of VehVinList"
-                                    [ngValue]="item.vin">
-                                    {{item.vin}}
-                                </option>
-                            </datalist>
-                          </td>
 
-                          <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+                    </ng-template>
 
-                    <td>
-                        <input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
-                    </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
+                        
+                        <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
+    
+                        <td>
+                        <input disabled style="font-weight: bold;" type="text"
+                        formControlName="vehicleId"
+                        [(ngModel)]="vehicleId"
+                        (change)="serchByVin(vehicleId)"
+                        (keyup)="getUserIdsFirstWayVin($event)"
+                        id="userIdFirstWay"
+                        list="dynmicUserIds1"
+                        class="form-control" />
 
-                    <td>
-                        <input disabled  type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
-                    </td>
-                            
-                          
-                            
-                           
-                    </tr>
+                        <datalist id="dynmicUserIds1">
+                            <option
+                                *ngFor="let item of VehVinList"
+                                [ngValue]="item.vin">
+                                {{item.vin}}
+                            </option>
+                        </datalist>
+                      </td>
+
+                       </tr>
+
+
+                       
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Item:&nbsp;</td>
     
@@ -200,54 +303,116 @@
                     <td>
                         <input disabled  type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" class="form-control" >
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
 
+                    <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
+
+                    <td>
+                        <input disabled  type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
+                    </td>
+            
+                    </tr>
+
+                    <tr>
+                      <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
                     <td>
                         <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
+                    <!-- <td style="width: 15%" class="LabelFontStyle">Last&nbsp;Run&nbsp;Kms:&nbsp;</td>
 
+                    <td>
+                        <input disabled  type="text"  formControlName="lastRunKms"  id="lastRunKms" [(ngModel)]="lastRunKms" class="form-control" >
+                    </td> -->
+
+                    <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
+                    
+                    <div *ngIf="displayButton; then thenBlock901; else elseBlock901"></div>
+                    <ng-template #thenBlock901>
+                        <td>
+                            <input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
+                        </td>
+                    </ng-template>
+                    <ng-template #elseBlock901>
+                        <td>
+                            <input disabled  type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
+                        </td>
+                    </ng-template>
+
+
+                    </tr>
+                    </table>
+                    </fieldset>
+
+
+                    
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Customer Details</legend>
+                    <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Type:&nbsp;</td>
+
+                    <td>
+                        <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
                     
                     <td>
                         <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
                     </td>
+
                     
+                   
+
+                    <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+
+                    <td>
+                        <input   type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" >
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
+
+                    <td>
+                        <input disabled   type="text"  formControlName="custPhone"  id="custPhone" [(ngModel)]="custPhone" class="form-control" >
+                    </td>
 
                     </tr>
 
                     <tr>
 
-                   
-                        <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
-    
-                        <td>
-                            <input   type="number"  formControlName="kmsEwSale"  id="kmsEwSale" [(ngModel)]="kmsEwSale" class="form-control" (change)='onEnterKms(kmsEwSale)' >
-                        </td>
-
-                        <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
 
                         <td>
-                            <select type="text" class="form-control" formControlName="soldByEmpId">
-                            <option disabled>--Select--</option>
-                            <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
-                            {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
-                            </option>
-                            </select>
+                            <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
                         </td>
+                       
 
-                        <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
-
-                        <td>
-                            <input   type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" >
-                        </td>
-
-                    
-                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Address:&nbsp;</td>
 
                     <td>
-                        <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                        <input disabled  style="width: 445%;"  type="text"  formControlName="customerSiteAddress"  id="customerSiteAddress" [(ngModel)]="customerSiteAddress" class="form-control" >
                     </td>
+                    </tr>
+                    <tr>
+
+                    
+                    <td style="width: 15%" class="LabelFontStyle">GST&nbsp;Number:&nbsp;</td>
+
+                    <td>
+                        <input disabled    type="text"  formControlName="CustomerGstNo"  id="CustomerGstNo" [(ngModel)]="CustomerGstNo" class="form-control" >
+                    </td>
+                    
+                    <td style="width: 15%" class="LabelFontStyle">PAN&nbsp;:&nbsp;</td>
+
+                    <td>
+                        <input disabled    type="text"  formControlName="customerPanNo"  id="customerPanNo" [(ngModel)]="customerPanNo" class="form-control" >
+                    </td>
+
+                    
             
                     </tr>
 
@@ -260,7 +425,7 @@
 
                         <tr>
 
-                            <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Contract&nbsp;No:&nbsp;</td>
+                          <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Contract&nbsp;No:&nbsp;</td>
 
                             <td>
                                 <input  disabled  style="font-weight: bold;"  type="text" formControlName="ewId"  id="ewId" [(ngModel)]="ewId" class="form-control">
@@ -284,7 +449,7 @@
                             </td> -->
 
                            
-                            <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td> -->
 
                           <!-- <td>  
                               <select disabled  formControlName="paytmentSource" id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control" >
@@ -294,12 +459,25 @@
                                   </option>
                               </select>
                           </td> -->
-                            <td>
+                            <!-- <td>
                                 <input  disabled   type="text" formControlName="paytmentSource"  id="paytmentSource" [(ngModel)]="paytmentSource" class="form-control">
+                            </td> -->
+
+                            <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+
+                            <td>
+                                <select type="text" class="form-control" formControlName="soldByEmpId">
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
+                                {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
+                                </option>
+                                </select>
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Scheme:&nbsp;</td>
     
+                            <div *ngIf="displayButton; then thenBlock902; else elseBlock902"></div>
+                            <ng-template #thenBlock902>
                             <td>  
                                 <select  formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  >
                                     <option disabled>--Select--</option>
@@ -308,6 +486,19 @@
                                     </option>
                                 </select>
                             </td>
+                            </ng-template>
+
+                            <ng-template #elseBlock902>
+                                <td>  
+                                    <select disabled formControlName="ewSchemeId" id="ewSchemeId" [(ngModel)]="ewSchemeId" class="form-control" (ngModelChange)="GetSchemeDetails($event)"  >
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of EwSchemeItemList" [ngValue] ="sc.ewSchemeId" >
+                                            {{sc.ewSchemeNo}}
+                                        </option>
+                                    </select>
+                                </td>
+                                </ng-template>
+
 
 
                         </tr>
@@ -329,6 +520,9 @@
                 
                             </td>  -->
 
+                            <div *ngIf="displayButton; then thenBlock903; else elseBlock903"></div>
+                            <ng-template #thenBlock903>
+
                             <td>  
                                 <select   formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
                                 <option disabled>--Select--</option>
@@ -338,6 +532,20 @@
                                 </option>
                                 </select>
                             </td>
+                            </ng-template>
+                            <ng-template #elseBlock903>
+
+                                <td>  
+                                    <select disabled  formControlName="itemId" id="itemId" [(ngModel)]="itemId"  class="form-control">
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  invItemListEw" [ngValue]="sc.ITEMID">
+                                    <!-- {{sc.itemId}}- -->
+                                     {{sc.ITEMID}}-{{sc.SEGMENT}}
+                                    </option>
+                                    </select>
+                                </td>
+                                </ng-template>
+
    
                             <!-- <td>
                                 <input  style="font-weight: bold;text-align: right;"   type="text" formControlName="ewItemCode"  id="ewItemCode"  [(ngModel)]="ewItemCode" class="form-control" placeholder="EW item Code">
@@ -414,33 +622,72 @@
                             <td>
                                 <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="receiptNumber"  id="receiptNumber"  [(ngModel)]="receiptNumber" class="form-control" placeholder="">
                             </td>
+       
+                            <div *ngIf="displayButton; then thenBlock904; else elseBlock904"></div>
+                            <ng-template #thenBlock904>
 
                             <td   style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
 
                             <td>
-                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" placeholder="Receipt Amount">
+                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt"   class="form-control" (change)="validateAmt(paymentAmt)" placeholder="Receipt Amount">
                             </td>
-                        <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
 
-                        <td>  
-                            <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
-                                <option disabled>--Select--</option>
-                                <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
-                                    {{sc.lookupValue}} 
-                                </option>
-                            </select>
-                        </td>
+
+                           <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
+
+                            <td>  
+                                <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                        {{sc.lookupValue}} 
+                                    </option>
+                                </select>
+                            </td>
                         
-                        <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
-                        <td>  
-                            <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
-                                <option disabled>--Select--</option>
-                                <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
-                                    {{sc.receiptMethodId}}-{{sc.methodName}} 
-                                </option>
-                            </select>
+                            <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
+                            <td>  
+                                <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
+                                        {{sc.receiptMethodId}}-{{sc.methodName}} 
+                                    </option>
+                                </select>
 
-                        </td>
+                            </td>
+                        </ng-template>
+
+                        <ng-template #elseBlock904>
+
+                            <td   style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
+
+                            <td>
+                                <input disabled style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt"   class="form-control" (change)="validateAmt(paymentAmt)" placeholder="Receipt Amount">
+                            </td>
+
+
+                           <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
+
+                            <td>  
+                                <select disabled formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                        {{sc.lookupValue}} 
+                                    </option>
+                                </select>
+                            </td>
+                        
+                            <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
+                            <td>  
+                                <select disabled formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
+                                        {{sc.receiptMethodId}}-{{sc.methodName}} 
+                                    </option>
+                                </select>
+
+                            </td>
+                        </ng-template>
+
                     </tr>
 
                     <tr>
@@ -513,26 +760,46 @@
 
                 <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">EW Cancellation Details</legend>
-                <table class="center">
+                <table class="center" style="width: 100;" style="width: 100%;">
+                    <!-- <table class="center" style="width: 100;" style="width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;"> -->
 
                     <tr>
                     <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Reason:&nbsp;</td>
-                     <td>  
-                        <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control">
-                            <option disabled>--Select--</option>
-                            <option *ngFor="let sc of  EwTypeList" [ngValue]="sc.code">
-                                {{sc.code}}
+                     
+                    <div *ngIf="displayReason; then thenBlockReason; else elseBlockReason"></div>
+                    <ng-template #thenBlockReason>
+                    <td>  
+                        <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
+                                {{sc.codeDesc}}
                             </option>
                         </select>
                      </td>
+                    </ng-template>
+
+                    <ng-template #elseBlockReason>
+                        <td>  
+                            <select  disabled  formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
+                                    {{sc.codeDesc}}
+                                </option>
+                            </select>
+                         </td>
+                        </ng-template>
+
+
               
-                    <!-- <td>
-                        <input  disabled  type="text" formControlName="ewCancelReason"  id="ewCancelReason"  [(ngModel)] ="ewCancelReason"  class="form-control"  placeholder="Cancellation Reason">
-                    </td> -->
 
                     <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Date:&nbsp;</td>
                     <td>
-                        <input  disabled  type="text" formControlName="ewCancelDate"  id="ewCancelDate"  [(ngModel)] ="ewCancelDate"  class="form-control"  placeholder="Cancellation Date">
+                        <input  disabled  type="date" formControlName="ewCancelDate"  id="ewCancelDate"  [(ngModel)] ="ewCancelDate"  class="form-control"  placeholder="Cancellation Date">
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">Claim&nbsp;Status:&nbsp;</td>
+                    <td>
+                        <input  disabled  type="text" formControlName="ewClaimStatus1"  id="ewClaimStatus1"  [(ngModel)] ="ewClaimStatus1"  class="form-control"  >
                     </td>
 
 
@@ -662,9 +929,9 @@
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                             </td>
 
-                                            <td>
+                                            <!-- <td>
                                                 <button type="button" class="btn btn-info" (click)="cancelEW()">Cancel</button>
-                                            </td>
+                                            </td> -->
                                             <!-- <td>
                                                 <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                                             </td>
@@ -756,7 +1023,7 @@
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
                 <th style="width:5rem" scope="col">EW&nbsp;No&nbsp;</th>
                 <th style="width:5rem" scope="col"> Type&nbsp;</th>
-                <th style="width:5rem" scope="col"> Scheme&nbsp;</th>
+                <!-- <th style="width:5rem" scope="col"> Scheme&nbsp;</th> -->
                 <th style="width:6rem" scope="col"> Vehicle&nbsp;No</th>
                 <th style="width:20rem" scope="col">Customer&nbsp;Name</th>
                 <th style="width:10rem" scope="col">Source&nbsp;</th>
@@ -764,13 +1031,15 @@
                 <th style="width:8rem" scope="col">Sale&nbsp;Date&nbsp;</th>
                 <th style="width:8rem" scope="col">EW&nbsp;Start&nbsp;Date</th>
                 <th style="width:8rem" scope="col">EW&nbsp;End&nbsp;Date</th>
+                <th style="width:8rem" scope="col">EW&nbsp;Cancel&nbsp;Date</th>
                 <th style="width:5rem" scope="col">Select</th>
             </tr>
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
+                <td>{{com.ewId}}</td>
                 <td>{{com.ewType}}</td>
-                <td>{{com.ewSchemeId}}</td>   
+                <!-- <td>{{com.ewSchemeId}}</td>    -->
                 <td>{{com.vehRegNo}}</td>   
                 <td>{{com.custName}}</td>
                 <td>{{com.paytmentSource}}</td>
@@ -778,6 +1047,7 @@
                 <td>{{com.ewSaleDate | date:'dd-MM-y'}}</td>
                 <td>{{com.ewStartDate | date:'dd-MM-y'}}</td>
                 <td>{{com.ewEndDate | date:'dd-MM-y'}}</td>
+                <td>{{com.ewCancelDate | date:'dd-MM-y'}}</td>      
                 <td><button class="btn btn-info" (click)="Select(com.ewId)">Select</button></td>   
         </tr>
     </table>

@@ -22,8 +22,10 @@ interface IEwScheme {
   ewSchemeDesc:string;
   ewInsId : number;
   schemeStartDate:Date;
+  
   schemeEndDate:Date;
   schemeKms:number;
+  validKms:number;
   schemeAmount:number;
 
   
@@ -37,6 +39,8 @@ interface IEwScheme {
 
 export class SaiEwSchemeMasterComponent implements OnInit {
         saiEwSchemeMasterForm : FormGroup;
+        
+        pipe = new DatePipe('en-US');
 
         public OUIdList           : Array<string> = [];
         public mainModelList      :Array<string>  = [];
@@ -89,11 +93,13 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         ewInsId : number;
         ewInsurerSiteId:number;
       
-        schemeStartDate:Date;
+        // schemeStartDate:Date;
+        schemeStartDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         schemeEndDate:Date;
       
         premiumPeriod:number;
         schemeKms:number;
+        validKms:number;
         schemeAmount:number;
 
         fromSlab:string;
@@ -143,6 +149,7 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           
             premiumPeriod:[],
             schemeKms:[],
+            validKms:[],
             schemeAmount:[],
             addEw:[],
 
@@ -515,6 +522,13 @@ export class SaiEwSchemeMasterComponent implements OnInit {
                      alert ("SCHEME KM LIMIT: Should be above Zero");
                      return;
                   } 
+
+                  if (formValue.validKms <=0 || formValue.validKms===undefined || formValue.validKms===null || formValue.validKms<formValue.schemeKms )
+                  {
+                      this.checkValidation=false;  
+                      alert ("VALID KM LIMIT: Should be above Zero/Should not be below SCHEME LIMINT KMS");
+                      return;
+                   } 
   
                  if (formValue.schemeAmount===undefined || formValue.schemeAmount===null || formValue.schemeAmount<=0)
                  {

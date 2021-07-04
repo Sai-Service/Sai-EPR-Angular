@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { now } from 'jquery';
+// import { now } from 'jquery';
 
 
 interface IMcpitemMaster {
@@ -33,6 +33,9 @@ interface IMcpitemMaster {
 
 export class McpItemMasterComponent implements OnInit {
   mcpItemMasterForm : FormGroup;
+
+  pipe = new DatePipe('en-US');
+
 
         public OUIdList           : Array<string> = [];
         public ItemTypeList1       :Array<string> = [];
@@ -59,10 +62,12 @@ export class McpItemMasterComponent implements OnInit {
         itemType:string;
         discount:number;
         // startDate:Date;
+        startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         endDate:Date;
-       
-        pipe = new DatePipe('en-US');
-        startDate = Date.now();
+            
+    // startDate = Date.now();
+        
+
        
         // receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
         

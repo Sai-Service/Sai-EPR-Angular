@@ -42,8 +42,10 @@ interface IMcpPkgMaster {
   styleUrls: ['./mcp-package-master.component.css']
 })
 export class McpPackageMasterComponent implements OnInit {
-
   mcpPackageMasterForm : FormGroup;
+
+  pipe = new DatePipe('en-US');
+
 
           public OUIdList           : Array<string> = [];
           public ItemTypeList1      :Array<string> = [];
@@ -85,7 +87,8 @@ export class McpPackageMasterComponent implements OnInit {
           packageDesc:string;
           packageCategory:string;
           fuelType:string;
-          public startDate;
+          // public startDate;
+          startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
           endDate:Date;
           fromDays:number;
           toDays:number;

@@ -135,7 +135,7 @@
 
                                 <td colspan="8" style="text-align: left; width: 100%;">
                                     <button type="submit"  (click)= "SearchCustomerAll()" class="btn btn-primary"><i
-                                            class="fa fa-search" data-toggle="modal" data-target="#exampleModal3"></i></button> 
+                                            class="fa fa-search" data-toggle="modal" data-target="#exampleModal3"></i></button>
 
                                 <!-- <button type="button" class="btn btn-primary"  (click)=SearchCustomerAll() 
                                     data-toggle="modal" data-target="#exampleModal3">...</button>
@@ -239,12 +239,12 @@
                                                 <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                                             </div>
                                          
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                            </tr>
-                            </table>
+                                </td>
+                                </tr>
+                                </table>
                             </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
@@ -331,7 +331,7 @@
                                             <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
         
                                             <td>
-                                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" placeholder="Receipt Amount">
+                                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" placeholder="Receipt Amount">
                                             </td>
                                            
                                         

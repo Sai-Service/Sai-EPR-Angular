@@ -3,6 +3,8 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { DatePipe } from '@angular/common';
+
 
 interface IpostPO {
   taxCategoryLineId: number;
@@ -17,6 +19,7 @@ interface IpostPO {
   // precedence 3 to 20
   recordTypeCode: string;
   startDate: Date;
+ 
   endDate: Date;
   status: string;
 }
@@ -28,6 +31,9 @@ interface IpostPO {
 })
 export class JaiTaxCategoryLineComponent implements OnInit {
   jaiTaxCategoryLineMasterForm: FormGroup;
+
+  pipe = new DatePipe('en-US');
+
   taxCategoryLineId: number;
   taxCategoryId: number; // lov
   lineNumber: number;
@@ -39,7 +45,8 @@ export class JaiTaxCategoryLineComponent implements OnInit {
   precedence3: number;
   // precedence 3 to 20
   recordTypeCode: string;
-  startDate: Date;
+  // startDate: Date;
+  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   endDate: Date;
 
   public statusList: Array<string> = [];

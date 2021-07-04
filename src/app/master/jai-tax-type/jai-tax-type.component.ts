@@ -5,6 +5,8 @@ import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from '../master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 interface IJaiTaxtype {
 
@@ -62,6 +64,7 @@ interface IJaiTaxtype {
 export class JaiTaxTypeComponent implements OnInit {
   jaiTaxtypeMasterForm: FormGroup;
 
+  pipe = new DatePipe('en-US');
 
   loginName: string;
   loginArray: string;
@@ -98,7 +101,9 @@ export class JaiTaxTypeComponent implements OnInit {
   taxTypeCode: string;
   taxPointBasis: string;
 
-  startDate: Date;
+  // startDate :Date;
+  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   endDate: Date;
   recoverableFlag: string;
   offsetFlag: string;
@@ -134,17 +139,8 @@ export class JaiTaxTypeComponent implements OnInit {
 
   // locDescreption : string;
 
-
-
-  lookupValueDesc: string;
-  lookupValueDesc1: string;
-  lookupValueDesc2: string;
-  lookupValueDesc3: string;
-  lookupValueDesc4: string;
-  lookupValueDesc5: string;
-
   lookupValueDesc6: any[];
-  lookupValueDescB1: string;
+  lookupValueDesc1: string;
   checked: boolean;
   // public ledger = 'SS LEDGER';
   locationId: string;
@@ -1066,19 +1062,6 @@ export class JaiTaxTypeComponent implements OnInit {
   }
 
 
-  onOptionsSelectedStatus(event: any) {
-    this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
-    // alert(this.Status1);
-    if (this.Status1 === 'Inactive') {
-      this.displayInactive = false;
-      this.endDate = new Date();
-    }
-    else if (this.Status1 === 'Active') {
-      this.jaiTaxtypeMasterForm.get('endDate').reset();
-      this.displayInactive = true;
-      this.startDate = new Date()
-    }
-  }
 
   onOuIdSelected1(ouId: any, index) {
     // alert('ouId id =' +ouId + 'index ='+ index);
@@ -1098,10 +1081,20 @@ export class JaiTaxTypeComponent implements OnInit {
       this.showOrg = false;
     }
 
-    if (ouId === '--Select--') {
-      // alert('testing...')
-      this.lineDetailsArray.controls[index].get('locId').reset();
+  }
+  onOptionsSelectedStatus(event: any) {
+    this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
+    // alert(this.Status1);
+    if (this.Status1 === 'Inactive') {
+      this.displayInactive = false;
+      this.endDate = new Date();
     }
+    else if (this.Status1 === 'Active') {
+      this.jaiTaxtypeMasterForm.get('endDate').reset();
+      this.displayInactive = true;
+      this.startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+    }
+
   }
 
   onOuIdSelected(ouId: any, index) {
@@ -1210,81 +1203,81 @@ export class JaiTaxTypeComponent implements OnInit {
   //     this.jaiTaxtypeMasterForm.get('endDate').reset();
   //   }
   // }
-        // onOpUnitSelected(opUnit){
-        //   // alert('ouId id =' +opUnit);
-        //     if (opUnit > 0) {
-        //       this.showOpUnit=true;
-        //         this.service.getLocationSearch1(opUnit)
-        //         .subscribe(
-        //           data => {
-        //             this.locIdList2 = data;
-        //             console.log(this.locIdList2);
-  
-                    
-        //           }
-        //         );
-        //     }
-        //     else {
-        //       this.showOpUnit=false;
-        //     }
-      
-        //     if(opUnit==='--Select--'){
-        //       // alert('testing...')
-        //       this.jaiTaxtypeMasterForm.get('locationId').reset()
-        //     }
-        //   }
-  
-  
-        // loadActDetails(){
-        //   this.lineDetailsArray.clear();
-        //   // var taxTypeCode = this.jaiTaxtypeMasterForm.get('taxTypeCode').value;
-        //   var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
-        //   alert('taxTypeId='+taxTypeId);
-          
-        //   this.service.geActDetails1(taxTypeId)
-        //   .subscribe(
-        //     data => {
-        //       this.actDetails = data;
-        //       console.log(this.actDetails);
-        //       let cont=this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
-            
-        //       var actLines:FormGroup=this.lineDetailsGroup();
+  // onOpUnitSelected(opUnit){
+  //   // alert('ouId id =' +opUnit);
+  //     if (opUnit > 0) {
+  //       this.showOpUnit=true;
+  //         this.service.getLocationSearch1(opUnit)
+  //         .subscribe(
+  //           data => {
+  //             this.locIdList2 = data;
+  //             console.log(this.locIdList2);
 
-        //       var length1=this.actDetails.accountList.length-1;
-        
-        //       alert(length1);
 
-        //       this.lineDetailsArray.removeAt(length1);
-        //       for (let i=0; i<length1;i++) {
-        //       cont.push(actLines);}
+  //           }
+  //         );
+  //     }
+  //     else {
+  //       this.showOpUnit=false;
+  //     }
 
-        //       this.jaiTaxtypeMasterForm.get('actLines').patchValue(this.actDetails.accountList);
-        //       // this.jaiTaxtypeMasterForm.get('actLines').patchValue({ledgerId:this.actDetails.accountList[0].ledgerId,
-        //       //   ledgerName:this.actDetails.accountList[0].ledgerName});
-        //     }
-        //   );
-  
-        //   }
+  //     if(opUnit==='--Select--'){
+  //       // alert('testing...')
+  //       this.jaiTaxtypeMasterForm.get('locationId').reset()
+  //     }
+  //   }
 
-          
-        //   ontaxTypeCodeSelected(event: any) {
-        //   var  regimeCode = this.jaiTaxtypeMasterForm.get('regimeCode').value;
-        //   // alert(regimeCode)
-        //     if(event === 'Discount' && regimeCode==3){this.locationDissplay= true;}
-        //     if(event === 'Select'  && regimeCode==3){this.locationDissplay= false;}
-        //   }
 
-     onOptionSelected(regimeId: any) {
-      //  alert("Regime ID :" + regimeId);
-      if(regimeId != null || regimeId > 0){
-     
+  // loadActDetails(){
+  //   this.lineDetailsArray.clear();
+  //   // var taxTypeCode = this.jaiTaxtypeMasterForm.get('taxTypeCode').value;
+  //   var taxTypeId = this.jaiTaxtypeMasterForm.get('taxTypeId').value;
+  //   alert('taxTypeId='+taxTypeId);
+
+  //   this.service.geActDetails1(taxTypeId)
+  //   .subscribe(
+  //     data => {
+  //       this.actDetails = data;
+  //       console.log(this.actDetails);
+  //       let cont=this.jaiTaxtypeMasterForm.get('actLines') as FormArray;
+
+  //       var actLines:FormGroup=this.lineDetailsGroup();
+
+  //       var length1=this.actDetails.accountList.length-1;
+
+  //       alert(length1);
+
+  //       this.lineDetailsArray.removeAt(length1);
+  //       for (let i=0; i<length1;i++) {
+  //       cont.push(actLines);}
+
+  //       this.jaiTaxtypeMasterForm.get('actLines').patchValue(this.actDetails.accountList);
+  //       // this.jaiTaxtypeMasterForm.get('actLines').patchValue({ledgerId:this.actDetails.accountList[0].ledgerId,
+  //       //   ledgerName:this.actDetails.accountList[0].ledgerName});
+  //     }
+  //   );
+
+  //   }
+
+
+  //   ontaxTypeCodeSelected(event: any) {
+  //   var  regimeCode = this.jaiTaxtypeMasterForm.get('regimeCode').value;
+  //   // alert(regimeCode)
+  //     if(event === 'Discount' && regimeCode==3){this.locationDissplay= true;}
+  //     if(event === 'Select'  && regimeCode==3){this.locationDissplay= false;}
+  //   }
+
+  onOptionSelected(regimeId: any) {
+    //  alert("Regime ID :" + regimeId);
+    if (regimeId != null || regimeId > 0) {
+
       this.service.regimNameList(regimeId)
         .subscribe(
           data => {
             this.regimNameList = data;
             console.log(this.regimNameList);
             var regVal = this.regimNameList.
-            this.jaiTaxtypeMasterForm.patchValue(this.regimNameList.regimeName);
+              this.jaiTaxtypeMasterForm.patchValue(this.regimNameList.regimeName);
             this.regimeName = this.regimNameList.regimeName;
 
           }

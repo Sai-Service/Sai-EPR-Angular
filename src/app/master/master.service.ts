@@ -1829,6 +1829,11 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl +'/cmnLookup/type/EWType');
     } 
 
+    EwCancelReasonList(): Observable<any> {
+      return this.http.get(this.ServerUrl +'/cmnLookup/type/EW CANCEL REASON');
+    } 
+
+
     ModelVariantList(): Observable<any> {
       return this.http.get(this.ServerUrl +'/cmnLookup/type/Variant');
     } 
@@ -1919,10 +1924,36 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/ewmaster/${mEWNo}`);
   } 
 
+  getVehicleOrderDetails(mOrderNumber): Observable<any> {
+    // alert("ms order number>>"+mOrderNumber);
+    return this.http.get(this.ServerUrl + `/orderHeader/EwOrder/${mOrderNumber}`);
+    } 
+  
+
   getEWStatusVehcile(mRegno): Observable<any> {
     // alert("ms>>"+mRegno);
     return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`);
  } 
+
+ getLastRunKms(mRegno): Observable<any> {
+  // alert("ms>>"+mRegno);
+  return this.http.get(this.ServerUrl + `/jobCard/lastKms?regNo=${mRegno}`);
+ 
+} 
+
+// EwClaimedCheck(mRegno): Observable<any> {
+//   alert("ms>>"+mRegno);
+//   return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
+//    // http://localhost:8081/jobCard/ewjobNo?regNo=MH12EM6011&billableTyName=Extended Warranty
+ 
+// } 
+EwClaimedCheck(mRegno): Observable<any> {
+  // alert("ms>>"+mRegno);
+  return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
+ 
+} 
+
+ 
 
    public SaiEwCustomerSubmit(EwCustomerMasterRecord) {
     const options = {
@@ -2132,6 +2163,31 @@ miscellaneousUpdate(comId,cyclelinerecord){
   const url=(this.ServerUrl+`/cycleline/${comId}`);
   return this.http.put(url,cyclelinerecord,options);
 }
+
+
+/////////////////////////////// PO INVOICE -TDS LINE /////////////////////////
+getTdsDetails(mInvoiceId): Observable<any> {
+  // alert("MS>> "+mInvoiceId);
+  return this.http.get(this.ServerUrl+`/apInv/apTdsDis?invId=${mInvoiceId}`);
+  // http://localhost:8081/apInv/apTdsDis?invId=27
+}
+
+getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId): Observable<any> {
+   return this.http.get(this.ServerUrl+`/poHdr/potaxcal?itemId=${mItemId}&baseAmt=${mBaseAmt}&taxCateId=${mTaxCatId}`);
+  // http://localhost:8081/poHdr/potaxcal?itemId=1&baseAmt=1000&taxCateId=14071   
+}
+
+getPOReceiptSearchByRcptNo(mReceiptNo): Observable<any> {
+  return this.http.get(this.ServerUrl+`/rcvShipment/receiptNoWise/${mReceiptNo}`)
+}
+
+getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
+  return this.http.get(this.ServerUrl+`/rcvShipment/findByPONumber/${mPoNumber}`)
+}
+
+
+
+
 
     //////////////////////////EXTENDED WARRANTY/////////////////////////////
 
