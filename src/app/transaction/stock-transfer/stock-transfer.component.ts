@@ -61,7 +61,7 @@ export class StockTransferComponent implements OnInit {
   public onhand1:any;
   public ItemIdList: Array<string> = [];
   transactionTypeId:number=27;
-  public subInvCode: any[];
+  public subInvCode: any;
   public issueByList: Array<string> = [];
   public locIdList: any[];
   onHandId:number;
@@ -195,20 +195,21 @@ export class StockTransferComponent implements OnInit {
       
     )
 
-    this.service.ItemIdListDept(this.deptName).subscribe(
-      data => {
-        this.ItemIdList = data;
-        // console.log(this.invItemId);
-      });
+    
 
     this.service.subInvCode(this.deptId).subscribe(
       data => {
         this.subInvCode = data;
         console.log(this.subInventoryId);
+        this.subInventoryCode=this.subInvCode.subInventoryCode;
         // alert('subInventoryCode');
       });
 
-   
+      this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
+        data => {
+          this.ItemIdList = data;
+          // console.log(this.invItemId);
+        });
 
     this.service.locationIdList().subscribe
       (data => {
@@ -244,7 +245,7 @@ export class StockTransferComponent implements OnInit {
   onOptionItemDetails(event: any, i) {
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
-    let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
+    // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
    // alert(subcode1.subInventoryId);
     var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
     var itemid = trxLnArr[i].itemId;
@@ -266,7 +267,7 @@ export class StockTransferComponent implements OnInit {
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
           });
-      this.service.getfrmSubLoc(this.locId, itemid, subcode1.subInventoryId).subscribe(
+      this.service.getfrmSubLoc(this.locId, itemid, this.subInvCode.subInventoryId).subscribe(
         data => {
           this.getfrmSubLoc = data;
           console.log(data);
@@ -295,7 +296,7 @@ export class StockTransferComponent implements OnInit {
             }
     
         });
-        this.service.getreserqty(itemid,this.locId).subscribe
+        this.service.getreserqty( this.locId,itemid).subscribe
         (data=>{
           this.resrveqty=data;
           trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
@@ -307,21 +308,22 @@ export class StockTransferComponent implements OnInit {
   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].itemId;
   var locId=trxLnArr[i].frmLocator;
+  var onhandid=trxLnArr[i].id;
   // trxLnArr1.controls[i].patchValue({locatorId:locId});
  alert(locId+'locatorID');
   var subcode=this.stockTranferForm.get('subInventoryCode').value;
  // alert(subcode);
-  let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
+  // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
  // alert(select2.subInventoryId+'Id')
-  this.service.getonhandqty(Number(sessionStorage.getItem('locId')),select2.subInventoryId,locId,itemid).subscribe
+ this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
     (data =>{ 
       this.onhand1 = data;
       console.log(this.onhand1);
       alert(this.onHandId);
       alert(this.onhand1);
-      trxLnArr1.controls[i].patchValue({onHandQty:data.obj.onHandQty});
+      trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
-    let onHand=data.obj.onHandQty;
+    let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
   //alert(onHand+'OnHand');
   //alert(reserve+'reserve');

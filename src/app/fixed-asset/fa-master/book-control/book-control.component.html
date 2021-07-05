@@ -1,0 +1,430 @@
+<div class="center">
+        <form [formGroup]="BookControlForm" (ngSubmit)="bookControl(BookControlForm.value)">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader"> &nbsp;Book&nbsp;Controls&nbsp;</td>
+                <table style="width: 100%; background-color: #a4d3e9;">
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Mehod&nbsp;Type&nbsp;:</td>
+                            <td>
+                                <input type="text"  class="form-control" formControlName="booktyp" id="booktyp" name="booktyp" [(ngModel)]="booktyp">
+                            </td>
+                            <td colspan="8" style="text-align: left; width: 100%;">
+                                <button type="submit" class="btn btn-primary" (click)="search(booktyp)"><i class="fa fa-search"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+            </tr>
+        </table>
+    
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                    <!-- <form [formGroup]="BookControlForm" (ngSubmit)="bookControl(BookControlForm.value)"> -->
+                        <table class="center" >
+                          <tr>
+                            <!-- <fieldset> -->
+                                <table class="center"><tr>
+                                <td style="width: 15%" class="LabelFontStyle">Book&nbsp;:</td>
+                            <td   style="border: none;color: black;">
+                                <input type="text" class="form-control">
+                            </td>
+                          
+                            <td style="width: 15%" class="LabelFontStyle">Class&nbsp;:</td>
+                       
+                            <td>  
+                            <select class="form-control">
+                                <option>--Select--</option>
+                                <option></option>
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:</td>
+                            
+                            <td>  
+                               <input type="text" class="form-control">
+                            </td>
+                              <td style="width: 15%" class="LabelFontStyle">Associated&nbsp;Corporate&nbsp;Book&nbsp;:</td>
+                                <td>  
+                                        <input type="text"   class="form-control">
+                                </td>
+                            </tr></table>
+                            <!-- </fieldset>        -->
+
+                        </tr>
+                    <tr>
+                            <fieldset class="RFS">
+                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                    style="font-size: 10px;color: black;">
+                                    <b> Calender&nbsp;</b>
+                                </legend>
+                                <table>
+                                    <tr>
+                                        <td style="width: 15%"class="LabelFontStyle">
+                                            Ledger&nbsp;:
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control" formControlName="setOfBooksId">
+                                        </td>
+                                        <td style="width: 15%"class="LabelFontStyle">
+                                                Depriciation&nbsp;Calender&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="deprnCalendar">
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Fiscal&nbsp;Year&nbsp;Name&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="fiscalYearName">
+                                                </td>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Prorate&nbsp;Calender&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="fiscalYearName">
+                                                    </td>
+                                    </tr>
+                                    <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Current&nbsp;Period&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Current&nbsp;Fiscal&nbsp;Year&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="currentFiscalYear">
+                                                    </td>
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                        Divide&nbsp;Depriciation&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" >
+                                                    </td>
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                        Last&nbsp;Run&nbsp;Date&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="lastDeprnRunDate" >
+                                                    </td>
+                                    </tr>
+                                </table>
+                            </fieldset>
+                    </tr>
+
+                    <tr>
+                        <fieldset class="RFS">
+                                <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                style="font-size: 10px;color: black;">
+                                <b> Accounting&nbsp;Rule&nbsp;</b>
+                            </legend>
+                            <table>
+                                <tr>
+                                    <td style="width: 15%"class="LabelFontStyle">
+                                        Capital&nbsp;Gain&nbsp;Threshold&nbsp;Years:
+                                    </td>
+                                    <td >
+                                        <input type="number" class="form-control" formControlName="capitalGainThreshold">
+                                    </td>
+                                    <td style="width: 15%"class="LabelFontStyle">
+                                            Months&nbsp;:
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control">
+                                        </td>
+                                         <!-- <td>
+                                             <table style="width: 100%;">
+                                            <tr> -->
+                                                    <td    style="width: 280px;text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <input type="checkbox" class="form-check-input" formControlName="amortizeFlag" >
+                                                            <label   class="LabelFontStyle"> Allow Amortized Changes</label>
+                                                        </td>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <td  style="width: 180px;text-align: right;" >
+                                                                    <input type="checkbox" class="form-check-input" formControlName="allowMassChanges" >
+                                                                    <label   class="LabelFontStyle"> Allow Mass Changes</label>
+                                                                </td>
+                                            <!-- </tr>
+                                            </table>
+                                         </td> -->
+                                </tr>
+                                <tr>
+                                       <td  colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="checkbox" class="form-check-input" formControlName="allowCostSignChangeFlag" >
+                                                        <label   class="LabelFontStyle"> Allow Cost Sign Changes</label>
+                                                    </td>
+                                                    <td  colspan="2">
+                                                                <input type="checkbox" class="form-check-input" formControlName="revalDeprnReserveFlag" >
+                                                                <label   class="LabelFontStyle"> Revalue Accumulated Depriciation</label>
+                                                            </td>
+                                                            <td  colspan="2">
+                                                                   <input type="checkbox" class="form-check-input" formControlName="revalYtdDeprnFlag" >
+                                                                        <label   class="LabelFontStyle"> Revalue YTD Depriciation</label>
+                                                                    </td>
+                                                                    <td  style="width:240px;text-align: right;">
+                                                                                <input type="checkbox" class="form-check-input" formControlName="retireRevalReserveFlag" >
+                                                                                <label   class="LabelFontStyle" > Retire Revaluation Reserve</label>
+                                                                            </td>
+                                </tr>
+                                <tr>
+                                        <td  colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="checkbox" class="form-check-input" formControlName="amortizeRevalReserveFlag" >
+                                                        <label   class="LabelFontStyle"> Amortize Revaluation Reserve</label>
+                                                    </td>
+                                                    <td  colspan="2">
+                                                            <input type="checkbox" class="form-check-input" formControlName="defaultRevalFullyRsvdFlag" >
+                                                            <label   class="LabelFontStyle"> Revalue  Fully Reserved Assets</label>
+                                                        </td>
+                                                        <td  colspan="2">
+                                                                    <input type="checkbox" class="form-check-input" formControlName="allowCipMemberFlag" >
+                                                                    <label   class="LabelFontStyle"> Allow  CIP Members in Group Assets</label>
+                                                                </td>
+                                </tr>
+                                <tr>
+                                        <td  colspan="2" >
+                                                <input  style="margin-left: 2px;" type="checkbox" class="form-check-input" formControlName="allowMemberTrackingFlag" >
+                                               &nbsp;  &nbsp;  <label   class="LabelFontStyle"> Allow  Member Asset Tracking</label>
+                                            </td>
+                                        <td  colspan="3" >
+                                                <input type="checkbox" class="form-check-input" formControlName="allowCipDepGroupFlag" style="text-align: right;">
+                                                <label   class="LabelFontStyle" style="width: 100%;text-align: left;"> Allow  CIP Depriciation in Group Assets</label>
+                                            </td>
+                                           
+                                </tr>
+                            </table>
+                        </fieldset>
+                </tr>
+                <tr>
+                        <fieldset class="RFS">
+                                <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                style="font-size: 10px;color: black;">
+                                <b> Natural&nbsp;Account&nbsp;</b>
+                            </legend>
+                            <fieldset>
+                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                    style="font-size: 10px;color: black;">
+                                    <b> Retirement&nbsp;Accounts&nbsp;</b>
+                                    </legend>
+                                    <table>
+                                        <tr>
+                                            <td></td>
+                                            <td class="LabLabelFontStyle"  style="text-align: center;">Gain</td>
+                                            <td class="LabLabelFontStyle"  style="text-align: center;">Loss</td>
+                                            <td class="LabLabelFontStyle"  style="text-align: center;">Clearing</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="LabLabelFontStyle"  style="text-align: center;">Proceeds of Sales</td>
+                                            <td><input type="text" class="form-control" fromControlName="proceedsOfSaleGainAcct"></td>
+                                            <td><input type="text" class="form-control" formControlName="proceedsOfSaleLossAcct"></td>
+                                            <td><input type="text" class="form-control" formControlName="proceedsOfSaleClearingAcct"></td>
+                                        </tr>
+                                        <tr>
+                                                <td class="LabLabelFontStyle"  style="text-align: center;">Cost of Removal</td>
+                                                <td><input type="text" class="form-control" fromControlName="costOfRemovalGainAcct"></td>
+                                                <td><input type="text" class="form-control"fromControlName="costOfRemovalLossAcct"></td>
+                                                <td><input type="text" class="form-control"fromControlName="costOfRemovalClearingAcct"></td>
+                                            </tr>
+                                            <tr>
+                                                    <td class="LabLabelFontStyle"  style="text-align: center; font-size: 12px">Net Book Value Retired</td>
+                                                    <td><input type="text" class="form-control" formControlName="nbvRetiredGainAcct"></td>
+                                                    <td><input type="text" class="form-control" formControlName="nbvRetiredLossAcct"></td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td class="LabLabelFontStyle"  style="text-align: center;font-size: 12px;">Reval Reserve Retired</td>
+                                                            <td><input type="text" class="form-control" formControlName="revalRsvRetiredGainAcct"></td>
+                                                            <td><input type="text" class="form-control" formControlName="revalRsvRetiredLossAcct"></td>
+                                                            </tr>
+                                    </table>
+                            </fieldset>
+                            <br>
+                            <table>
+                                <tr>
+                                        <td style="width: 15%"class="LabelFontStyle">
+                                                Deferred&nbsp;Depriciation&nbsp;Reserve:
+                                            </td>
+                                            <td >
+                                                <input type="number" class="form-control" formControlName="deferredDeprnReserveAcct">
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Deferred&nbsp;Depriciation&nbsp;Expense:
+                                                </td>
+                                                <td >
+                                                    <input type="number" class="form-control" formControlName="deferredDeprnExpenseAcct">
+                                                </td>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Depriciation&nbsp;Adjustment:
+                                                    </td>
+                                                    <td >
+                                                        <input type="number" class="form-control" formControlName="deprnAdjustmentAcct">
+                                                    </td>
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                            Account&nbsp;Generator&nbsp;defaults:
+                                                        </td>
+                                                        <td >
+                                                            <input type="number" class="form-control" formControlName="accountingFlexStructure">
+                                                        </td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                </tr>
+                       </table>
+                            
+                         <br>
+
+                             
+                        
+                         
+                        <!-- ===================================Buttons======================================== -->
+                        <!-- <br> -->
+                        <table class="center">
+                            <tr>
+                                 <td>
+                                        <button type="button" class="btn btn-info">Search</button>
+                                    </td>
+                                    <td>
+                                            <button type="button" class="btn btn-info">Formula</button>
+                                        </td>
+                                       <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Rate</button>
+                                                    </td>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="myModal1" role="dialog">
+                                                            <div class="modal-dialog modal-lg">
+                                                              <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <label style="text-align: center;margin-left: 7rem;">Depriciation Rates</label>
+                                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <!-- <table class="center" style="width: 100%;"> -->
+                                                                        <div class="grid_scroll">
+    
+                                                                                <table style="width: fit-content; border: solid 1px Gray" class="auto-style4"
+                                                                                          cellspacing="0" cellpadding="4" rules="all" class="center">
+                                                                                          <thead>
+                                                                                            <tr class="GridHeader">
+                                                                                                  <!-- <th scope="col">No.</th> -->
+                                                                                                  <th scope="col">Basic %</th>
+                                                                                                  <th scope="col">Adjusting %</th>
+                                                                                                  <th scope="col">Adjusted %</th>
+                                                                                                  <th scope="col">Add+</th>
+                                                                                                  <th scope="col">Del-</th>
+                                                                                            </tr>
+                                                                                          </thead>
+                                                                                  
+                                                                                        <tr>
+                                                                                            
+                                                                                          <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                                                                            <td>
+                                                                                                <input type="number"  class="form-control"  style="width: 80px;">
+                                                                                            </td> 
+                                                                                            <td>
+                                                                                                <input  style="width: 80px;" type="number"  class="form-control">
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input style="width: 80px;"  type="number"   class="form-control">
+                                                                                            </td>
+                                                                                         <td>
+                                                                                                <button type="submit" class="btn btn-info"  style="width: min-content;"><i
+                                                                                                class="fa fa-plus"></i></button>
+                                                                                            </td>
+                                            
+                                                                                            <td>
+                                                                                                    <button type="submit" class="btn btn-info" style="width: min-content;"><i
+                                                                                                    class="fa fa-trash"></i></button>
+                                                                                            </td>
+                                            
+                                                                                          </tr>
+                                                                                          
+                                                                                </table>
+                                                                            </div>
+                                                                  <!-- </table> -->
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div> 
+                                                
+                      
+                     <!-- ====================Reset Dialog ======================== -->
+    
+                        <td>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                        </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+    
+                            <!-- =====================Close Dialog Box====================== -->
+                            <td>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                            </td>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                            Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                        </label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <table class="center">
+                                            <tr>
+                                                <td>
+                                                <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                </td>
+                                                <td>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+    
+                    </tr>
+                    </table>
+                    <br>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    
+                            
+    
+    
+    
+   

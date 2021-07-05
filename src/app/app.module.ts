@@ -16,6 +16,7 @@ import {TransactionModule } from './transaction/transaction.module';
 import { BankModule} from './bank/bank.module';
 import { OrderManagementModule} from './order-management/order-management.module';
 import { ServiceModule } from './service/service.module';
+import{faMasterModule} from './fixed-asset/famaster.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +34,7 @@ import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.compon
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
 import { DeActivateGuard } from './de-activate.guard';
+import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
 
 
 
@@ -44,6 +46,7 @@ import { DeActivateGuard } from './de-activate.guard';
     PageNotFouundComponent,
     DashboardComponent,
     PoReceiptFormComponent,
+    FaCommanMasterComponent,
 
 
 
@@ -67,7 +70,8 @@ import { DeActivateGuard } from './de-activate.guard';
     TransactionModule,
     BankModule,
     OrderManagementModule,
-    ServiceModule
+    ServiceModule,
+    faMasterModule
     // DaterangepickerModule
     // NgbModule.forRoot(),
   ],
