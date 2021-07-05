@@ -194,9 +194,9 @@
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                         <td>
-                            <select formControlName="status" id="status"  [ngModel]="status" DI class="form-control">
+                            <select formControlName="status" id="status"  [ngModel]="status" DI class="form-control" (ngModelChange)='onOptionsSelectedSupp($event)'>
                                 <option>--Select--</option>
-                                <option *ngFor="let sc of statusList">
+                                <option *ngFor="let sc of statusList" [ngValue]="sc.code">
                                     {{sc.codeDesc}}
                                 </option>
                             </select>

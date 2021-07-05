@@ -28,6 +28,7 @@
     "angular-datetimerangepicker": "^2.4.0",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "file-saver": "^2.0.5",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "ng-sidebar": "^9.4.2",

@@ -99,7 +99,7 @@
                         <select formControlName="sectionCode" id="sectionCode" [(ngModel)]="sectionCode" class="form-control" (ngModelChange)='onOptionSelectedSectionCode($event)'>
                             <option>--Select--</option>
                             <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.code" >
-                                {{ts.code}}
+                                {{ts.lookupValueDesc}}
                             </option>
                         </select>
                         </td>

@@ -113,6 +113,7 @@ export class SupplierMasterComponent implements OnInit {
   endDate: Date;
   sstatus: string;
   displayInactive = true;
+
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;
@@ -502,7 +503,7 @@ alert(suppSiteId);
   }   
   onOptionsSelectedSupp(event: any) {
     this.Status1 = this.supplierMasterForm.get('status').value;
-    // alert(this.Status1);
+    alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
       this.endDate = new Date();

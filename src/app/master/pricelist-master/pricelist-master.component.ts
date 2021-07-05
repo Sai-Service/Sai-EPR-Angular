@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
-import { now } from 'jquery';
+// import { now } from 'jquery';
 // import { saveAs } from 'file-saver';
 
 const MIME_TYPES = {
@@ -55,7 +55,10 @@ interface IPriceList {
 export class PricelistMasterComponent implements OnInit {
   priceListMasterForm: FormGroup;
 
- resMsg : string;
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+
+   resMsg : string;
 
    
  
@@ -82,12 +85,11 @@ export class PricelistMasterComponent implements OnInit {
   searchBy : string;
   searchValue : string;
 
-  startDate:Date;
+  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   endDate:Date;
   
   
-  pipe = new DatePipe('en-US');
-  now = Date.now();
+  
   // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
 
   // startDate= Date.now();

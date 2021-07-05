@@ -30,11 +30,12 @@ import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 // import { App } from './app';
 
 import { from } from 'rxjs';
-import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
+// import { PageNotFouundComponent } from './page-not-fouund/page-not-fouund.component';
 import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
 import { DeActivateGuard } from './de-activate.guard';
 import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
+// import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 
 
 
@@ -43,7 +44,7 @@ import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-maste
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFouundComponent,
+ 
     DashboardComponent,
     PoReceiptFormComponent,
     FaCommanMasterComponent,

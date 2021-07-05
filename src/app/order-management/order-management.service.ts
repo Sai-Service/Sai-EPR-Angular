@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class OrderManagementService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  ServerUrl = 'http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  // ServerUrl = 'http://localhost:8081';
+  ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
 
   constructor(private http: HttpClient) {
@@ -65,7 +65,42 @@ export class OrderManagementService {
     const url = (this.ServerUrl + `/orderHeader/pickTicketLineUpdate`);
     return this.http.put(url, UpdateCounterSaleInvRecord, options);
   }
+
+    
+  downloadCSPreINV(orderNumber) {
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
+    // local
+    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  downloadCSINV(InvoiceNumber){
+    const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
+    // local
+   
+    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
   
+  downloadVehicleINV(InvoiceNumber){
+    const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/salesTaxInv/${InvoiceNumber}`;  
+    // local
+    // const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   public  countersaleReadyForInvFn(orderNumber){
     const options = {
       headers: this.headers
@@ -156,8 +191,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
   accountNoSearchFn(accountNo,ouId): Observable<any> {
-    // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
-    return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   contactNoSearchFn(mobile1, ouId): Observable<any> {
@@ -306,6 +341,23 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     };
     const url = this.ServerUrl + '/orderHeader/allotment/';
     return this.http.post(url, allotedChassisArray, options);
+  }
+
+
+  UpdateTaxCategoryLineWise(TaxCategoryupdate,) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/orderHeader/vehTaxCtgUpdate`);
+    return this.http.put(url, TaxCategoryupdate, options);
+  }
+
+  UpdateSalesUpdateLine(UpdateSaleUpdateRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/orderHeader/salesOrderOtherLineSave`);
+    return this.http.put(url, UpdateSaleUpdateRecord, options);
   }
 
 }

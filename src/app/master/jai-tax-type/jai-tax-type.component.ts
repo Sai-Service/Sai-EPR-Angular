@@ -5,6 +5,8 @@ import { Validators , FormArray } from '@angular/forms';
 import { MasterService } from '../master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 interface IJaiTaxtype{
   
@@ -62,6 +64,7 @@ interface IJaiTaxtype{
 export class JaiTaxTypeComponent implements OnInit {
     jaiTaxtypeMasterForm:FormGroup;
 
+    pipe = new DatePipe('en-US');
 
       loginName:string;
       loginArray:string;
@@ -98,7 +101,9 @@ export class JaiTaxTypeComponent implements OnInit {
     taxTypeCode: string;
     taxPointBasis: string;
 
-    startDate :Date;
+    // startDate :Date;
+    startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
     endDate:Date;
     recoverableFlag: string;
     offsetFlag: string;
@@ -1083,7 +1088,7 @@ export class JaiTaxTypeComponent implements OnInit {
       else if (this.Status1 === 'Active') {
         this.jaiTaxtypeMasterForm.get('endDate').reset();
         this.displayInactive=true;
-        this.startDate = new Date()
+        this.startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       }
     }
   

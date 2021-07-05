@@ -3,6 +3,8 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { DatePipe } from '@angular/common';
+
 
 interface IJaiTaxRate{
   ouName  : string;
@@ -38,6 +40,9 @@ interface IJaiTaxRate{
 })
 export class JaiTaxRatesMasterComponent implements OnInit {
   jaiTaxRateMasterForm:FormGroup;
+
+  pipe = new DatePipe('en-US');
+
   public minDate = new Date();
   ouName  : string;
   taxRateId : number;
@@ -54,7 +59,8 @@ export class JaiTaxRatesMasterComponent implements OnInit {
   recoveryPercentage : number;
   orgId: number;
   taxRate : number
-  startDate:Date;
+  // startDate:Date;
+  startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   endDate:Date;
   regimCodeDisp=true;
   taxCodeDisp=true
@@ -367,7 +373,9 @@ RemoveRow2(index) {
     else if (this.Status1 === 'Active') {
       this.jaiTaxRateMasterForm.get('endDate').reset();
       this.displayInactive=true;
-      this.startDate = new Date()
+      // this.startDate = new Date()
+      this.startDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+
     }
   }
 

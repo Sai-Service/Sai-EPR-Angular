@@ -1235,9 +1235,9 @@ export class ARInvoiceComponent implements OnInit {
     this.orderManagementService.accountNoSearchFn(accountNo, this.ouId)
       .subscribe(
         data => {
-          this.accountNoSearch = data;
+          this.accountNoSearch = data.obj;
           console.log(this.accountNoSearch);
-          let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentTerm);
+          let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
           this.arInvoiceForm.patchValue({
             billToCustName: this.accountNoSearch.custName,
             billToCustAdd: this.accountNoSearch.billToAddress,

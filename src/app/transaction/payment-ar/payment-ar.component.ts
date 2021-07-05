@@ -40,6 +40,7 @@ checkDate:string;
 export class PaymentArComponent implements OnInit {
   paymentArForm : FormGroup;
   applyRcptFlag1 :boolean
+  pipe = new DatePipe('en-US');
 
   // public DivisionIDList : Array<string>=[];
   // public OUIdList: Array<string> = [];
@@ -68,7 +69,8 @@ export class PaymentArComponent implements OnInit {
   deptId:number; 
 
   checkNo : string;
-  checkDate: Date;
+  // checkDate: Date;
+  checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   bankName : string;
   bankBranch : string;
   paymentAmt : number;
@@ -97,11 +99,10 @@ export class PaymentArComponent implements OnInit {
   custSiteAddress : string 
   mobileNo:string;
   
-  glDate:Date;
-  pipe = new DatePipe('en-US');
+  // glDate:Date;
+  glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   now = Date.now();
   receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-  // glDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   trxdate= this.pipe.transform(this.now, 'dd-MM-y');
   reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
   
@@ -386,6 +387,15 @@ export class PaymentArComponent implements OnInit {
 
 
       }
+
+       validateAmt(rcptAmt :any) {
+           
+            if(rcptAmt ===null ||rcptAmt ===undefined || rcptAmt<=0 ) {
+              alert("RECEIPT AMOUNT :  Should be above Zero.");
+              this.paymentAmt=null;
+             return;}
+
+          }
 
       onOuIdSelected(ouId : any ){
         // alert('ouId id =' +ouId );

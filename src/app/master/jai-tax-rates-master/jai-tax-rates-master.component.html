@@ -167,7 +167,7 @@
                                         </td>
                 
                                         <td>
-                                            <input   type="date"  id="startDate"  formControlName="startDate" 
+                                            <input   type="date"  id="startDate"  formControlName="startDate" [ngModel]="startDate"
                                                 max="{{minDate | date:'yyyy-MM-dd'}}"  style="width: 200px;"  >
                                         </td>
                                         

@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { now } from 'jquery';
+// import { now } from 'jquery';
 
 
 interface IMcpitemMaster {
@@ -33,6 +33,9 @@ interface IMcpitemMaster {
 
 export class McpItemMasterComponent implements OnInit {
   mcpItemMasterForm : FormGroup;
+
+  pipe = new DatePipe('en-US');
+
 
         public OUIdList           : Array<string> = [];
         public ItemTypeList1       :Array<string> = [];
@@ -59,10 +62,12 @@ export class McpItemMasterComponent implements OnInit {
         itemType:string;
         discount:number;
         // startDate:Date;
+        startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         endDate:Date;
-       
-        pipe = new DatePipe('en-US');
-        startDate = Date.now();
+            
+    // startDate = Date.now();
+        
+
        
         // receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
         
@@ -191,7 +196,11 @@ export class McpItemMasterComponent implements OnInit {
             // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
             const formValue: IMcpitemMaster =this.transeData(this.mcpItemMasterForm.value);
             // debugger;
-           
+            var mcpItmId = formValue.itemNumber;
+            alert(mcpItmId);
+            alert(mcpItmId.length);
+            alert(mcpItmId.substr(3, mcpItmId.length));
+            formValue.itemId = Number (mcpItmId.substr(3,mcpItmId.length)); 
             this.service.McpItemMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
