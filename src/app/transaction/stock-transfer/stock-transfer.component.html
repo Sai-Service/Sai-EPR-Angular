@@ -60,10 +60,12 @@
         </tr>
         <tr>
           <td style="width: 15%" class="LabelFontStyle1">SubInventory</td>
-            <td><select class="form-control"  formControlName="subInventoryCode" >
+            <!-- <td><select class="form-control"  formControlName="subInventoryCode" >
                 <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
-                </select>
+                </select> -->
+                <td>
+                    <input type="text" class="form-control"  formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
                 <span  *ngIf="!stockTranferForm.get('subInventoryCode').valid && stockTranferForm.get('subInventoryCode').touched">Please
                     select Organization Name </span>
               </td>

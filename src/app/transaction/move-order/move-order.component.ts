@@ -43,7 +43,7 @@ interface ImoveOrder{
 })
 export class MoveOrderComponent implements OnInit {
   moveOrderForm:FormGroup;
-  public transType:any[];
+  public transType:any;
   public subInvCode:any;
   public issueByList:Array<string>=[];
   public workshopIssue:any[];
@@ -53,6 +53,7 @@ export class MoveOrderComponent implements OnInit {
   locId:number;
   divId:number;
   transactionTypeName:string;
+  transactionTypeId:number;
   resrveqty:any[];
   frmSubInvCode:string;
   deptId:number;
@@ -64,8 +65,9 @@ export class MoveOrderComponent implements OnInit {
   billable:string;
   issueTo:string;
   issueBy:string;
-  public ItemIdList:Array<string>=[];
-  public getfrmSubLoc:Array<string>=[];
+  public ItemIdList:any=[];
+  // public getfrmSubLoc:Array<string>=[];
+  getfrmSubLoc:any[];
   public headerStatus:string='OPEN';
   invItemId:number;
   subInventoryId:number;
@@ -81,6 +83,8 @@ export class MoveOrderComponent implements OnInit {
   itemId:number;
   onHandQty:number;
   requestNumber:string;
+  frmLocatorId:number;
+  deptName:string;
   reqNo:string;
   name:string;
   lstcomment:any;
@@ -88,6 +92,8 @@ export class MoveOrderComponent implements OnInit {
   disabled=true;
   display = true;
  displayButton= true;
+ displaySegment=true;
+ displayLocator=true;
  getItemDetail:any;
  description:string;
  uom:string;
@@ -120,6 +126,8 @@ export class MoveOrderComponent implements OnInit {
     reqNo:[''],
     JobNo:[''],
     issueTo:['',[Validators.required]],
+    deptName:[],
+    // subInventoryId:[],
     trxLinesList:this.fb.array([]),
 
 
@@ -182,7 +190,7 @@ export class MoveOrderComponent implements OnInit {
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.issueBy=(sessionStorage.getItem('name'));
-    
+    this.deptName=(sessionStorage.getItem('deptName'));
     
     // alert(this.issueBy);
     console.log(this.divisionId);
@@ -191,26 +199,25 @@ export class MoveOrderComponent implements OnInit {
     
     this.service.transType().subscribe(
       data =>{ this.transType = data;
+        console.log(this.transType);
+        this.transactionTypeId=this.transType[0].transactionTypeId;
+
        } );
        
 
     this.service.subInvCode(this.deptId).subscribe(
       data => {this.subInvCode = data;
-        // console.log(this.subInventoryId);
+        console.log(this.subInventoryId);
         // alert('subInventoryCode');
         this.frmSubInvCode=this.subInvCode.subInventoryCode;
     
        });
 
-    this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
-      (data => {this.issueByList = data;
-          console.log(this.issueByList);
-        });
-
-    this.service.ItemIdList().subscribe(
-      data =>{ this.ItemIdList = data;
-        console.log(this.invItemId);
-        });
+    
+    // this.service.ItemIdList().subscribe(
+    //   data =>{ this.ItemIdList = data;
+    //     console.log(this.invItemId);
+    //     });
    this.service.WorkShopIssue(this.locId).subscribe(
      data=>{
       this.workshopIssue=data;
@@ -222,6 +229,11 @@ export class MoveOrderComponent implements OnInit {
       this.Billabletype=data;
     }
    )
+   this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
+      (data => {this.issueByList = data;
+          console.log(this.issueByList);
+        });
+        
    this.addnewtrxLinesList(-1);
    var patch = this.moveOrderForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
@@ -240,15 +252,16 @@ transdata(val)
 }
 newmoveOrder()
 {
-    // alert(this.moveOrderForm.valid+'status');
-    // (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
-    //   (<any>Object).values(group.controls).forEach((control: FormControl) => { 
-    //       control.valid;
-    //       console.log(control.value+'---'+control.valid);
-    //   }) 
-    // });
-  if (this.moveOrderForm.valid) {
+  //   alert(this.moveOrderForm.valid+'status');
+  //   (<FormArray>this.moveOrderForm.get('trxLinesList')).controls.forEach((group: FormGroup) => {
+  //     (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+  //         control.valid;
+  //         console.log(control.value+'---'+control.valid);
+  //     }) 
+  //   });
+  // if (this.moveOrderForm.valid) {
  var trans=this.transType.find(d=>d.transactionTypeId===this.moveOrderForm.get('transactionTypeId').value);
+//  var loc=this.getfrmSubLoc.find(d=>d.locatorId===this.moveOrderForm.get('frmLocatorId').value);
 //  alert(trans.transactionTypeName+'tra');
  console.log(trans);
   const formValue:ImoveOrder=this.moveOrderForm.value;
@@ -260,16 +273,24 @@ newmoveOrder()
         this.moveOrderForm.patchValue({transactionTypeId:trans.transactionTypeName})
     if(res.code===200)
     {
+      // this.trxLinesList().clear();
       // this.moveOrderForm.patchValue({requestNumber:res.obj});
       this.requestNumber=obj.requestNumber;
       this.headerStatus=obj.headerStatus;
       this.frmSubInvCode=obj.frmSubInvCode;
-      this.transactionTypeName=trans.transactionTypeName;
+      this.transactionTypeId=trans.transactionTypeName;
       this.subInventoryCode=subCode.subInventoryCode;
       alert("Record inserted Successfully");
       // this.display=false;
-      // this.moveOrderForm.patchValue({frmSubInvCode:subCode});
-      this.displayButton=false;
+      this.moveOrderForm.patchValue({frmSubInvCode:subCode});
+     
+      for (let i = 1; i < res.obj.trxLinesList.length-1 ; i++) {
+        var trxList:FormGroup=this.newtrxLinesList();
+        this.trxLinesList().push(trxList);
+
+      }
+      // this.moveOrderForm.get('trxLinesList').patchValue({fromLocator:'obj.fromLocator'})
+      // this.displayButton=false;
       this.moveOrderForm.disable();
       // this.displaytransactionTypeName=false;
       
@@ -283,13 +304,13 @@ newmoveOrder()
       }
     }
   })
-}
-else{
+// }
+// else{
   
-    alert('else');
-    this.HeaderValidation();
+//     alert('else');
+//     this.HeaderValidation();
   
-}
+// }
 }
 
 reservePos(i)
@@ -329,7 +350,14 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   );
 }
 
-
+onChangeItem()
+{
+  this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
+    data => {
+      this.ItemIdList = data;
+      // console.log(this.invItemId);
+    });
+}
  onOptionSelectedSubInv(event:any,i)
  {
   // alert('2');
@@ -392,7 +420,7 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
       // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
     }
     );
-    this.service.getreserqty(itemid,this.locId).subscribe
+    this.service.getreserqty(this.locId,itemid).subscribe
     (data=>{
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
@@ -403,10 +431,11 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
 AvailQty(event:any,i:number) 
 {
 
-  
+
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].invItemId;
   var locId=trxLnArr[i].frmLocatorId;
+  var onhandid=trxLnArr[i].id;
   // trxLnArr1.controls[i].patchValue({locatorId:locId});
   // alert(locId+'locatorID');
   var subcode=this.moveOrderForm.get('frmSubInvCode').value;
@@ -414,13 +443,13 @@ AvailQty(event:any,i:number)
   // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode.subInventoryCode);
   // alert(select2.subInventoryId+'Id')
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
-    (data =>{ 
+      (data =>{ 
       this.onhand1 = data;
       console.log(this.onhand1);
       var trxLnArr1=this.moveOrderForm.get('trxLinesList')as FormArray;
-      trxLnArr1.controls[i].patchValue({onHandQty:data.obj.onHandQty});
+      trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
     // var trxLnArr=this.moveOrderForm.get('trxLinesList').value;
-  let onHand=data.obj.onHandQty;
+  let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
   // alert(onHand+'OnHand');
   // alert(reserve+'reserve');
@@ -461,6 +490,7 @@ validate(i:number,qty1)
     var reqNo=(this.moveOrderForm.get('reqNo').value);
     // alert(reqNo);
   //  this.moveOrderForm.reset();
+  var control = this.moveOrderForm.get('trxLinesList') as FormArray;
    this.service.getSearchByTrans(reqNo).subscribe
    (data =>
     {
@@ -480,7 +510,17 @@ validate(i:number,qty1)
         });
         this.moveOrderForm.patchValue(data.obj);
         this.moveOrderForm.patchValue(data.obj.trxLinesList);
+        this.moveOrderForm.disable();
+        // for(var i=0;i<data.obj.trxLinesList.length;i++)
+        // {
+        // var select1=this.ItemIdList.find(d=>d.itemId===data.obj.trxLinesList[i].invItemId)
+        // this.moveOrderForm.get('trxLinesList').patchValue({invItemId:select1.SEGMENT})
+        // // (control.controls[i]).patchValue({ invItemId: select1.SEGMENT });
+        // }
+        
         this.displayButton=false;
+        this.displaySegment=false;
+        this.displayLocator=false;
        this.display=false;
       }
     }
@@ -546,7 +586,7 @@ validate(i:number,qty1)
     // alert('nam'+fieldName);
     // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
     return(this.moveOrderForm.get(fieldName));
-  }Header
+  }
    
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);

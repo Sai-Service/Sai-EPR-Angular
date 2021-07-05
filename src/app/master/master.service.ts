@@ -996,9 +996,9 @@ getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
 }
-ItemIdListDept(deptname):Observable<any>
+ItemIdListDept(deptname,locId,subId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent/${deptname}`)
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?dept=${deptname}&locationId=${locId}&subInventoryId=${subId}`)
 }
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
@@ -1079,6 +1079,15 @@ issueReturn(locId1):Observable<any>{
 returnBillableType(repno):Observable<any>{
       return this.http.get(this.ServerUrl+`/mtrlIssue/jobBillable?repairNo=${repno}`);
     }   
+    itemLst(jobno,typ):Observable<any>{
+      return this.http.get(this.ServerUrl+`/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}`);
+    }   
+    getsubInv(subId):Observable<any>{
+      return this.http.get(this.ServerUrl+`/subInvMst/subinvname/${subId}`);
+    }
+    getretfrmSubLoc(locId,itemId,subId,jobno):Observable<any>{
+      return this.http.get(this.ServerUrl+`/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
+    }
 /////////Subinventory/////////////
 public saveSubinventory(subInvRecord)
 {
@@ -2117,6 +2126,10 @@ getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
 }
+// getonhandqty(locatorId):Observable<any>
+// {
+//   return this.http.get(this.ServerUrl+`/onhandqty/locator?id=${locatorId}`)
+// }
 miscellaneousSubmit(miscRecord):Observable<any>
 {
   const options ={
