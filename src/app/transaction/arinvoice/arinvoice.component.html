@@ -334,7 +334,7 @@
                                 <!-- <input type="text"  class="form-control"> -->
                                 <select formControlName="paymentTerm"  class="form-control"[(ngModel)]="paymentTerm">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  paymentTermList" [ngValue]="sc.lookupValueId" >
+                                    <option *ngFor="let sc of  paymentTermList" [ngValue]="sc.lookupValueId" [Value]="sc.lookupValueId" >
                                         {{sc.lookupValue}}
                                     </option>
                                 </select>
