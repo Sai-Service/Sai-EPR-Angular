@@ -1,0 +1,270 @@
+<div class="center">
+        <form [formGroup]="depriciationMethodForm" (ngSubmit)="DepriciationMethod(depriciationMethodForm.value)">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader"> &nbsp;Depriciation&nbsp;Method&nbsp;</td>
+
+                <table style="width: 100%; background-color: #a4d3e9;">
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Mehod&nbsp;Type&nbsp;:</td>
+                            <td>
+                                <input type="text"  class="form-control" formControlName="methodtyp" id="methodtyp" name="methodtyp" #methodtyp>
+                            </td>
+                            <td colspan="8" style="text-align: left; width: 100%;">
+                                <button type="submit" class="btn btn-primary" (click)="search(methodtyp)"><i class="fa fa-search"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+            </tr>
+        </table>
+    
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                    <!-- <form [formGroup]="depriciationMethodForm" (ngSubmit)="DepriciationMethod(depriciationMethodForm.value)"> -->
+                        <div class="center" formArrayName="faRateLst">
+                        <table class="center" >
+    
+                                      
+                            <tr>
+    
+                                <td style="width: 15%" class="LabelFontStyle">Mehod&nbsp;:</td>
+                            <td   style="border: none;color: black;">
+                                <input type="text" class="form-control" formControlName="methodCode">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:</td>
+                            
+                            <td>  
+                                <input type="text"   class="form-control" formControlName="name">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">Mehod&nbsp;Type&nbsp;:</td>
+                            
+                            <td>  
+                                <select  class="form-control" formControlName="rateSourceRule">
+                                    <option>--Select--</option>
+                                    <option></option>
+                                    </select>
+                            </td>
+                         
+                        </tr>
+                        <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Calculation&nbsp;Basis&nbsp;:</td>
+                            
+                                <td>  
+                                    <select  class="form-control" formControlName="deprnBasisRule">
+                                        <option>--Select--</option>
+                                        <option></option>
+                                        </select>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">Depriciable&nbsp;Basis&nbsp;Rule:</td>
+                            
+                                <td>  
+                                    <input type="text"   class="form-control">
+                                </td>
+                                <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" class="form-check-input" formControlName="depreciateLastyearFlag" >
+                                        <label  class="LabelFontStyle">Depriciate in Year Retired</label>
+                                
+                               </td>
+                        </tr>
+                        <tr>
+                               <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" class="form-check-input" formControlName="excludeSalvageValueFlag" >
+                                    <label  class="LabelFontStyle">Exclude Salvage value</label>
+                            
+                           </td>
+                           <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" class="form-check-input" formControlName="stlMethodFlag" >
+                                <label  class="LabelFontStyle">Straight Line Method</label>
+                           </td>
+                           <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" class="form-check-input" formControlName="polishAdjCalcBasisFlag" >
+                                <label   class="LabelFontStyle">Polish Adjustment Calculation Basis</label>
+                           </td>
+                        </tr>
+                        <!-- ============================================================= -->      
+                        <ng-container *ngFor="let faMthLsts of faMthLst().controls; let i=index" [formGroupName]="i">   
+                        <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Life&nbsp;Years&nbsp;:</td>
+                            
+                                    <td>  
+                                        <input type="number"   class="form-control">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Months&nbsp;:</td>
+                            
+                                    <td>  
+                                        <input type="number"   class="form-control">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Prorate&nbsp;Periods&nbsp;Per&nbsp;Year&nbsp;:</td>
+                            
+                                    <td>  
+                                        <input type="number"   class="form-control">
+                                    </td>
+                            </tr>
+                        </ng-container>
+                     </table>
+                        </div>  
+                         <br>
+
+                             
+                        
+                         
+                        <!-- ===================================Buttons======================================== -->
+                        <!-- <br> -->
+                        <table class="center">
+                            <tr>
+                                 <td>
+                                        <button type="button" class="btn btn-info">Search</button>
+                                    </td>
+                                    <td>
+                                            <button type="button" class="btn btn-info">Formula</button>
+                                        </td>
+                                       <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Rate</button>
+                                                    </td>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="myModal1" role="dialog">
+                                                            <div class="modal-dialog modal-lg">
+                                                              <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <label style="text-align: center;margin-left: 7rem;">Depriciation Rates</label>
+                                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <!-- <table class="center" style="width: 100%;"> -->
+                                                                        <div class="center" formArrayName="faRateLst">
+                                                                        <div class="grid_scroll">
+                                                                                
+                                                                                <table style="width: fit-content; border: solid 1px Gray" class="auto-style4"
+                                                                                          cellspacing="0" cellpadding="4" rules="all" class="center">
+                                                                                          <thead>
+                                                                                            <tr class="GridHeader">
+                                                                                                  <!-- <th scope="col">No.</th> -->
+                                                                                                  <th scope="col">Basic %</th>
+                                                                                                  <th scope="col">Adjusting %</th>
+                                                                                                  <th scope="col">Adjusted %</th>
+                                                                                                  <th scope="col">Add+</th>
+                                                                                                  <th scope="col">Del-</th>
+                                                                                            </tr>
+                                                                                          </thead>
+                                                                                          <ng-container *ngFor="let faRateLsts of faRateLst().controls; let k=index" [formGroupName]="k">
+                                                                                        <tr>
+                                                                                            
+                                                                                          <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                                                                            <td>
+                                                                                                <input type="number"  class="form-control"  style="width: 80px;" formControlName="basicRate">
+                                                                                            </td> 
+                                                                                            <td>
+                                                                                                <input  style="width: 80px;" type="number"  class="form-control" formControlName="adjustingRate">
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <input style="width: 80px;"  type="number"   class="form-control" formControlName="adjustedRate">
+                                                                                            </td>
+                                                                                         <td>
+                                                                                                <button type="submit" class="btn btn-info"  style="width: min-content;" (click)="addnewfaRateLst()"><i
+                                                                                                class="fa fa-plus"></i></button>
+                                                                                            </td>
+                                            
+                                                                                            <td>
+                                                                                                    <button type="submit" class="btn btn-info" style="width: min-content;" (click)="removenewfaRateLst(k)"><i
+                                                                                                    class="fa fa-trash"></i></button>
+                                                                                            </td>
+                                            
+                                                                                          </tr>
+                                                                                          </ng-container>  
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                  <!-- </table> -->
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div> 
+                                                
+                      
+                     <!-- ====================Reset Dialog ======================== -->
+    
+                        <td>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                        </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+    
+                            <!-- =====================Close Dialog Box====================== -->
+                            <td>
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                            </td>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                            Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                        </label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <table class="center">
+                                            <tr>
+                                                <td>
+                                                <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                </td>
+                                                <td>
+                                                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+    
+                    </tr>
+                    </table>
+                    <br>
+                         
+                    
+    
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+    
+                            
+    
+    
+    
+   

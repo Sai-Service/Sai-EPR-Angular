@@ -1,0 +1,286 @@
+<form [formGroup]="reversalOrderForm" (ngSubmit)="reversalOrder(reversalOrderForm.value)">
+    <input hidden type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId' style="width: 40px;">
+    <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
+    <input hidden type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
+    <input hidden class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
+    <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
+    <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+    <input hidden class="form-control" formControlName="locationId" [(ngModel)]='locationId'>
+    <table style="width: 100%;background-color: rgb(255, 255, 255);">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Sales&nbsp;Order&nbsp;Booking&nbsp;
+            </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;Order&nbsp;No&nbsp;&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                    value={{orderNumber}}>
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="grid_scroll">
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                        Customer
+                        Details&nbsp;/&nbsp;
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                            style="width: 8rem;color: white;">
+                            Additional&nbsp;Details
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="center" style="width: 100%;">
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    Contact&nbsp;No&nbsp;:&nbsp;
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" style="width: 150px;">
+                                                </td>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    GSTN&nbsp;No&nbsp;:&nbsp;
+                                                </td>
+                                                <td>
+                                                    <input disabled type="text" class="form-control" formControlName="gstNo"
+                                                        [(ngModel)]='gstNo' value={{gstNo}} style="width: 150px;">
+                                                </td>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    GSTN&nbsp;No&nbsp;:&nbsp;
+                                                </td>
+                                                <td>
+                                                    <input disabled type="text" class="form-control" formControlName="panNo"
+                                                        [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    DMS&nbsp;INS&nbsp;:&nbsp;
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" style="width: 150px;">
+                                                </td>
+                                                <td style="width: 15%" class="LabelFontStyle">
+                                                    DMS&nbsp;Transaction&nbsp;No&nbsp;:&nbsp;
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" style="width: 150px;">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Ok</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </legend>
+                    <div class="grid_scroll">
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                            <td>
+                                <table class="center">
+                                    <tr>
+                                        <td style="width: 25%" class="LabelFontStyle1">
+                                            Customer&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                       
+                                        <td>
+                                                <input type="text" class="form-control" formControlName="accountNo"
+                                                [(ngModel)]='accountNo' value={{accountNo}}
+                                                (keydown.tab)="accountNoSearch(accountNo)" style="width: 170px;">
+                                            </td>
+                                      
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Customer&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" class="form-control" formControlName="custName"
+                                                [(ngModel)]='custName' value={{custName}} style="width: 170px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="center">
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Biil&nbsp;To&nbsp;Address&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" class="form-control" formControlName="custAddress"
+                                                [(ngModel)]='custAddress' value={{custAddress}} style="width: 170px;">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <!-- custAddress -->
+                                            <input disabled type="text" class="form-control" formControlName="billToAddress"
+                                                [(ngModel)]='custAddress' value={{billToAddress}} style="width: 170px;">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Lessee&nbsp;Account&nbsp;No:&nbsp;
+                                        </td>
+                                        <td>
+                                            <!-- <textarea  class="form-control"></textarea> -->
+                                            <input type="text" class="form-control" style="width: 170px;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            <!-- Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp; -->
+                                        </td>
+                                        <td>
+                                            <!-- <textarea  class="form-control"></textarea> -->
+                                            <input disabled type="text" class="form-control" style="width: 170px;">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            <!-- Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp; -->
+                                        </td>
+                                        <td>
+                                            <!-- <textarea  class="form-control"></textarea> -->
+                                            <input disabled type="text" class="form-control" style="width: 170px;">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Lessee&nbsp;Address&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <!-- <textarea  class="form-control"></textarea> -->
+                                            <input type="text" class="form-control" style="width: 170px;">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </fieldset>
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                        Order Details</legend>
+                        <table class="center" style="width: 100%;">
+                            <tr>
+                                <td style="width: 22%;font-weight: bold;" class="LabelFontStyle">
+                                    Order&nbsp;No&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="orderNumber"
+                                        [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 170px;font-weight: bold;">
+                                </td>
+                                <td style="width: 22%" class="LabelFontStyle">
+                                   Order&nbsp;Date&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="orderedDate"
+                                        value={{orderedDate}} [ngModel]="orderedDate | date:'yyyy-MM-dd'" style="width: 170px;">
+                                </td>
+                                <td style="width: 22%" class="LabelFontStyle">
+                                   Order&nbsp;Type&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="transactionTypeName"
+                                    [(ngModel)]='transactionTypeName' value={{transactionTypeName}} style="width: 170px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Status&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" formControlName="flowStatusCode" [(ngModel)]='flowStatusCode'
+                                        value={{flowStatusCode}} class="form-control" style="width: 170px;">
+        
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Payment&nbsp;Term&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="payTermDesc"
+                                    [(ngModel)]='payTermDesc' value={{payTermDesc}} style="width: 170px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Sales&nbsp;Person&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" class="form-control" formControlName="salesRepName"
+                                    [(ngModel)]='salesRepName' value={{salesRepName}} style="width: 170px;">
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    TL&nbsp;Name&nbsp;:&nbsp;
+                                </td>
+                                <td>
+        
+                                    <input disabled type="text" formControlName="tlName" [(ngModel)]='tlName' value={{tlName}}
+                                        class="form-control" style="width: 170px;">
+        
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Remark&nbsp;:&nbsp;
+                                </td>
+                                <td>
+        
+                                    <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}
+                                        class="form-control" style="width: 170px;">
+        
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">
+                                    Price&nbsp;List&nbsp;:&nbsp;
+                               </td>
+                               <td>
+                                       <input disabled type="text" class="form-control" formControlName="priceListName"
+                                       [(ngModel)]='priceListName' value={{priceListName}} style="width: 170px;">
+                               </td>
+                                <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                                    Subtotal&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" formControlName="subtotal" [(ngModel)]='subtotal'
+                                        value={{subtotal}} class="form-control" style="width: 170px;text-align: right;">
+                                </td>
+                                <td style="width: 15%;font-weight: bold;" class="LabelFontStyle" >
+                                    Tax&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
+                                        class="form-control" style="width: 170px;text-align: right;font-weight: bold;">
+                                </td>
+                                <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                                    Total&nbsp;:&nbsp;
+                                </td>
+                                <td>
+                                    <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt' value={{totAmt}}
+                                        class="form-control" style="width: 170px;font-weight: bold;">
+                                </td>
+                            </tr>
+                        </table>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</form>

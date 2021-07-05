@@ -350,7 +350,14 @@ export class PoInvoiceComponent implements OnInit {
     this.taxarr.delete(trxLineIndex);
     this.distarr.delete(trxLineIndex);
   }
-
+getLocation(k)
+{
+  var arrayControl=this.poInvoiceForm.get('obj').value;
+  var patch1=this.poInvoiceForm.get('invLines') as FormArray;
+  var location=arrayControl[0].locationId;
+  alert(location);
+ patch1.controls[k].patchValue({locId:location});
+}
   addRowDistribution(k) {
     this.lineDistributionArray().push(this.distLineDetails());
     var len = this.lineDistributionArray().length;

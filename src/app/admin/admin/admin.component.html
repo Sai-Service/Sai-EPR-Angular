@@ -81,6 +81,25 @@
         </li>
       </ul>
     </li>
+    <li class="nav-item-dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            FA
+          </a> 
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/FACommonMaster']">FA Common Master</a></li>      
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/FiscalYear']">Fiscal Year</a></li>      
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/FACalender']">Calender</a></li>      
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/ProrateConvention']">Prorate Convention</a></li>      
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/DepriciationMethod']">Depriciation Method</a></li>      
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/BookControl']">Book Control</a></li>   
+                    <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/AssetCategories']">AssetCategories</a></li>   
+                </ul>
+              </li>
+          </ul>
+    </li>
+
  <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Transactions
@@ -131,11 +150,12 @@
           </li>    -->
           <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Order Management</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/salesOrderBooking']">Sales Order Booking</a></li>
+              <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/salesOrderBooking']">Sales Order Booking</a></li> -->
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
               
             </ul>  
             </li>   

@@ -32,6 +32,7 @@ interface IPaymentRcpt {
       // customerName:string;
       // methodType:string;
       payType:string;
+      deptName:string;
   }
 
 
@@ -51,6 +52,7 @@ export class PaymentReceiptComponent implements OnInit  {
     public PaymentModeList : Array<string> = [];
     public ReceiptMethodList: Array<string> = [];
     lstcomments: any[];
+    lstcomments1:any;
   
     ouId :number;  
     deptId:number; 
@@ -70,6 +72,7 @@ export class PaymentReceiptComponent implements OnInit  {
      orderNumber:number;
      emplId:number;
      custName:string;
+     deptName:string;
     // paymentCollection: string;
 
     
@@ -140,6 +143,7 @@ export class PaymentReceiptComponent implements OnInit  {
       receiptMethodId :[],
       // paymentCollection: [],
       searchValue :[],
+      deptName:[],
       searchBy :[],
       comment: ['', [Validators.required]],
       cancelReason:[],
@@ -178,7 +182,8 @@ export class PaymentReceiptComponent implements OnInit  {
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
-    this.deptId=Number(sessionStorage.getItem('dept'))
+    this.deptId=Number(sessionStorage.getItem('dept'));
+    this.deptName=(sessionStorage.getItem('deptName'));
     // this.locName=(sessionStorage.getItem('locName'));
 
     this.emplId= Number(sessionStorage.getItem('emplId'));
@@ -243,8 +248,10 @@ export class PaymentReceiptComponent implements OnInit  {
       .subscribe(
       data => {
         this.lstcomments = data.obj.oePayList;
+        // this.lstcomments1=data.obj.orderNumber;
         this.custName=data.obj.custName;
         this.customerId=data.obj.customerId;
+        this.orderNumber=data.obj.orderNumber;
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
         console.log(this.lstcomments);
@@ -344,6 +351,7 @@ export class PaymentReceiptComponent implements OnInit  {
            
       this.paymentReceiptForm.patchValue(select);
       this.receiptNumber = select.receiptNumber;
+      // this.orderNumber=this.lstcomments1;
       this.displayButton = false;
       this.display = false;
       

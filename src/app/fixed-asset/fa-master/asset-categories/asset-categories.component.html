@@ -1,0 +1,600 @@
+<div class="center">
+    <form [formGroup]="AssetCategoriesForm" (ngSubmit)="AssetCategories(AssetCategoriesForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader"> &nbsp;Asset&nbsp;Categories&nbsp;</td>
+            <table style="width: 100%; background-color: #a4d3e9;">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Category&nbsp;:</td>
+                        <td>
+                            <input type="text"  class="form-control" formControlName="catName" id="catName" name="catName" [(ngModel)]="catName">
+                        </td>
+                        <td colspan="8" style="text-align: left; width: 100%;">
+                            <button type="submit" class="btn btn-primary" (click)="search(catName)"><i class="fa fa-search"></i></button>
+                        </td>
+                    </tr>
+                </table>
+        </tr>
+    </table>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <!-- <form [formGroup]="BookControlForm" (ngSubmit)="bookControl(BookControlForm.value)"> -->
+                    <table class="center" >
+                      <tr>
+                        <fieldset>
+                            <table class="center">
+                                <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Category&nbsp;:</td>
+                        <td   style="border: none;color: black;">
+                            <input type="text" class="form-control" formControlName="categoryName">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:</td>
+                        
+                        <td>  
+                           <input type="text" class="form-control" >
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">Category&nbsp;Type&nbsp;:</td>
+                   
+                        <td>  
+                        <select class="form-control" formControlName="categoryType">
+                            <option>--Select--</option>
+                            <option></option>
+                        </select>
+                        </td>
+                    </tr>
+                    <tr>
+                      
+                          <td style="width: 15%" class="LabelFontStyle">Ownership&nbsp;:</td>
+                            <td>  
+                                   <select class="form-control" formControlName="ownedLeased">
+                                        <option>--Select--</option>
+                                        <option></option>
+                                    </select>
+                                 </td>
+                                 
+                          <td style="width: 15%" class="LabelFontStyle">Property&nbsp;Type&nbsp;:</td>
+                          <td>  
+                                 <select class="form-control" >
+                                      <option>--Select--</option>
+                                      <option></option>
+                                  </select>
+                               </td>
+                               <td style="width: 15%" class="LabelFontStyle">Property&nbsp;class&nbsp;:</td>
+                          <td>  
+                                 <input type="text" class="form-control" >
+                                      </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td colspan="2" >
+                                <input type="checkbox" class="form-check-input" formControlName="enabledFlag" >
+                                <label   class="LabelFontStyle">Enabled</label>
+                            </td>
+                            <td colspan="2" >
+                                        <input type="checkbox" class="form-check-input" formControlName="capitalizeFlag">
+                                        <label   class="LabelFontStyle">Capitalize</label>
+                                    </td>
+                                    <td colspan="2">
+                                           <input type="checkbox" class="form-check-input" formControlName="inventorial">
+                                                <label   class="LabelFontStyle">In Physical Inventory</label>
+                                            </td>
+                        </tr>
+                            </table>
+                        </fieldset>
+                      </tr>
+                        <tr>
+                            <fieldset class="RFS">
+                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                    style="font-size: 10px;color: black;">
+                                    <b> Calender&nbsp;</b>
+                                </legend>
+                                <table>
+                                    <tr>
+                                        <td style="width: 15%"class="LabelFontStyle">
+                                            Book&nbsp;:
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control" formControlName="bookTypeCode">
+                                        </td>
+                                        <td style="width: 15%"class="LabelFontStyle">
+                                                Asset&nbsp;Cost&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="assetCostAcct">
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Asset&nbsp;Clearing&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="assetClearingAcct">
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Depriciation&nbsp;Expense&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="deprnExpenseAcct">
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Accumulated&nbsp;Depriciation&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="deprnExpenseAcct">
+                                            </td>
+                                            
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Bonus&nbsp;Expense&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="bonusDeprnExpenceAcct">
+                                                </td>
+                                                
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Bonus&nbsp;Reserve&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="bonusDeprnReserveAcct">
+                                                </td>
+                                                
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Revaluation&nbsp;Reserve&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="revalReserveAcct">
+                                                </td>
+
+                                    </tr>
+                                    <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Revaluation&nbsp;Amortizattion&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control" formControlName="revalAmortizationAcct">
+                                            </td>
+                                            
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    CIP&nbsp;Cost&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="cipCostAcct">
+                                                </td>
+                                                
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    CIP&nbsp;Clearing&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="cipClearingAcct">
+                                                </td>
+                                                
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Impairment&nbsp;Expense&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control">
+                                                </td>
+
+                                    </tr>
+                                    <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Accumulated&nbsp;Impairment&nbsp;:
+                                            </td>
+                                            <td >
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Unplanned&nbsp;Depriciation&nbsp;Expense&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="unplanExpenseAcct">
+                                                </td>
+                                                
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Alternate&nbsp;Asset&nbsp;Cost&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control">
+                                                </td>
+                                                
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    Write-Off&nbsp;Expense&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control">
+                                                </td>
+
+                                    </tr>
+                                </table>
+                            </fieldset>
+                        </tr>
+                        <tr>
+                                <fieldset class="RFS">
+                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                        style="font-size: 10px;color: black;">
+                                        <b> Default&nbsp;Rule</b>
+                                    </legend>
+                                    <table>
+                                        <tr>
+                                                <table class="center">
+                                                    <tr>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                Placed&nbsp;in&nbsp;Service:
+                                            </td>
+                                            <td >
+                                                <input type="date" class="form-control" formControlName="startDate">
+                                            </td>
+                                            <td style="width: 15%"class="LabelFontStyle">
+                                                    End&nbsp;Date&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="endDate">
+                                                </td>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                    Prorate&nbsp;Convention&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="prorateConventionCode">
+                                                </td>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                    Retirement&nbsp;Convention&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="retirementProrateConvention">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                    Default&nbsp;Salvage&nbsp;Value&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="number" class="form-control" formControlName="percentSalvageValue">
+                                                </td>
+                                                
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Ceiling&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="ceilingName">
+                                                    </td>
+                                                    
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Price&nbsp;Index&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control">
+                                                    </table>
+                                            </tr>
+                                        <tr>
+                                            <fieldset class="RFS">
+                                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                    style="font-size: 10px;color: black;">
+                                                    <b>  Depriciate</b></legend>
+                                                 <td style="width: 15%"class="LabelFontStyle">
+                                                    Method&nbsp;:
+                                                </td>
+                                                <td >
+                                                    <input type="text" class="form-control" formControlName="deprnMethod">
+                                                </td>
+                                                
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Basic&nbsp;Rate&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="basicRate">
+                                                    </td>
+                                                    
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Adjusted&nbsp;Rate&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="adjustedRate">
+                                                    </td>
+                                                    
+                                                <td style="width: 15%"class="LabelFontStyle">
+                                                        Bonus&nbsp;Rule&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="bonusRule">
+                                                    </td>
+                                                </fieldset>
+                                        </tr>
+                                        <tr>
+                                                <fieldset class="RFS">
+                                                        <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                        style="font-size: 10px;color: black;">
+                                                        <b>Default Subcomponent Life</b></legend>
+                                                     <td style="width: 15%"class="LabelFontStyle">
+                                                        Rule&nbsp;:
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" formControlName="subcomponentLifeRule">
+                                                    </td>
+                                                    
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                            Minimum&nbsp;Years&nbsp;:
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control" formControlName="basicRate">
+                                                        </td>
+                                                        
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                            Month&nbsp;:
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control" formControlName="adjustedRate">
+                                                        </td>
+                                                        
+                                                    <td style="width: 15%"class="LabelFontStyle">
+                                                            Bonus&nbsp;Rule&nbsp;:
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control" formControlName="bonusRule">
+                                                        </td>
+                                                    </fieldset>
+                                            </tr>
+                                            <tr>
+                                                    <fieldset class="RFS">
+                                                            <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                            style="font-size: 10px;color: black;">
+                                                            <b>Straight Line For Retirement</b></legend>
+                                                         <td style="width: 15%"class="LabelFontStyle">
+                                                            Method&nbsp;:
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control" >
+                                                        </td>
+                                                        
+                                                        <td style="width: 15%"class="LabelFontStyle">
+                                                                Life&nbsp;Years&nbsp;:
+                                                            </td>
+                                                            <td >
+                                                                <input type="text" class="form-control">
+                                                            </td>
+                                                            
+                                                        <td style="width: 15%"class="LabelFontStyle">
+                                                                Month&nbsp;:
+                                                            </td>
+                                                            <td >
+                                                                <input type="text" class="form-control">
+                                                            </td>
+                                                        </fieldset>
+                                                </tr>
+                                                <tr>
+                                                        <fieldset class="RFS">
+                                                                <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                style="font-size: 10px;color: black;">
+                                                                <b>Group Asset Options</b></legend>
+                                                             <td style="width: 15%"class="LabelFontStyle">
+                                                                Recognize&nbsp;Gain&nbsp;Loss&nbsp;:
+                                                            </td>
+                                                            <td >
+                                                                <select class="form-control" formControlName="recongnizeGainLoss">
+                                                                    <option>--Select--</option>
+                                                                    <option></option>
+                                                                </select>
+                                                            </td>
+                                                            
+                                                            <td style="width: 15%"class="LabelFontStyle">
+                                                                    Terminal&nbsp;Gain&nbsp;Loss&nbsp;:
+                                                                </td>
+                                                                <td >
+                                                                        <select class="form-control" formControlName="terminalGainLoss">
+                                                                                <option>--Select--</option>
+                                                                                <option></option>
+                                                                            </select>
+                                                                </td>
+                                                                
+                                                                <td  >
+                                                                        <input type="checkbox" class="form-check-input" >
+                                                                        <label   class="LabelFontStyle">Recapture Excess Reserve</label>
+                                                                    </td>
+                                                                
+                                                             
+                                                                    <td  >
+                                                                            <input type="checkbox" class="form-check-input" >
+                                                                            <label   class="LabelFontStyle">Limit Net Proceeds to Cost</label>
+                                                                        </td>
+                                                            </fieldset>
+                                                    </tr>
+                                                    <tr>
+                                                            <fieldset class="RFS">
+                                                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                    style="font-size: 10px;color: black;">
+                                                                    <b>Tracking Options</b></legend>
+                                                                 <td style="width: 15%"class="LabelFontStyle">
+                                                                    Tracking&nbsp;Mehod&nbsp;:
+                                                                </td>
+                                                                <td >
+                                                                    <select class="form-control" formControlName="recongnizeGainLoss">
+                                                                        <option>--Select--</option>
+                                                                        <option></option>
+                                                                    </select>
+                                                                </td>
+                                                                
+                                                                <td style="width: 15%"class="LabelFontStyle">
+                                                                        Terminal&nbsp;Gain&nbsp;Loss&nbsp;:
+                                                                    </td>
+                                                                    <td >
+                                                                            <select class="form-control" formControlName="terminalGainLoss">
+                                                                                    <option>--Select--</option>
+                                                                                    <option></option>
+                                                                                </select>
+                                                                    </td>
+                                                                    
+                                                                    <td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                          <input type="checkbox" class="form-check-input" >
+                                                                            <label   class="LabelFontStyle">Recapture Excess Reserve</label>
+                                                                        </td>
+                                                                    
+                                                                 
+                                                                        <td  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                                <input type="checkbox" class="form-check-input" >
+                                                                                <label   class="LabelFontStyle">Limit Net Proceeds to Cost</label>
+                                                                            </td>
+                                                                </fieldset>
+                                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </tr>
+                    </table>
+                        <!-- </fieldset>        -->
+
+                   
+                        
+                     <br>
+
+                         
+                    
+                     
+                    <!-- ===================================Buttons======================================== -->
+                    <!-- <br> -->
+                    <table class="center">
+                        <tr>
+                             <td>
+                                    <button type="button" class="btn btn-info">Search</button>
+                                </td>
+                                <td>
+                                        <button type="button" class="btn btn-info">Formula</button>
+                                    </td>
+                                   <td>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Rate</button>
+                                                </td>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal1" role="dialog">
+                                                        <div class="modal-dialog modal-lg">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <label style="text-align: center;margin-left: 7rem;">Depriciation Rates</label>
+                                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                              <!-- <table class="center" style="width: 100%;"> -->
+                                                                    <div class="grid_scroll">
+
+                                                                            <table style="width: fit-content; border: solid 1px Gray" class="auto-style4"
+                                                                                      cellspacing="0" cellpadding="4" rules="all" class="center">
+                                                                                      <thead>
+                                                                                        <tr class="GridHeader">
+                                                                                              <!-- <th scope="col">No.</th> -->
+                                                                                              <th scope="col">Basic %</th>
+                                                                                              <th scope="col">Adjusting %</th>
+                                                                                              <th scope="col">Adjusted %</th>
+                                                                                              <th scope="col">Add+</th>
+                                                                                              <th scope="col">Del-</th>
+                                                                                        </tr>
+                                                                                      </thead>
+                                                                              
+                                                                                    <tr>
+                                                                                        
+                                                                                      <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                                                                        <td>
+                                                                                            <input type="number"  class="form-control"  style="width: 80px;">
+                                                                                        </td> 
+                                                                                        <td>
+                                                                                            <input  style="width: 80px;" type="number"  class="form-control">
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input style="width: 80px;"  type="number"   class="form-control">
+                                                                                        </td>
+                                                                                     <td>
+                                                                                            <button type="submit" class="btn btn-info"  style="width: min-content;"><i
+                                                                                            class="fa fa-plus"></i></button>
+                                                                                        </td>
+                                        
+                                                                                        <td>
+                                                                                                <button type="submit" class="btn btn-info" style="width: min-content;"><i
+                                                                                                class="fa fa-trash"></i></button>
+                                                                                        </td>
+                                        
+                                                                                      </tr>
+                                                                                      
+                                                                            </table>
+                                                                        </div>
+                                                              <!-- </table> -->
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div> 
+                                            
+                  
+                 <!-- ====================Reset Dialog ======================== -->
+
+                    <td>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                    </td>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                            </label>
+                        </div>
+                        <div class="modal-footer">
+                            <table class="center">
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                        <!-- =====================Close Dialog Box====================== -->
+                        <td>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                        </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                    </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                            </td>
+                                            <td>
+                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                </tr>
+                </table>
+                <br>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+                        
+
+
+
