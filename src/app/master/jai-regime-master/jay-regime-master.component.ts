@@ -4,6 +4,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { DatePipe } from '@angular/common';
  
 interface IJaiRegime{
 
@@ -25,6 +26,8 @@ regimeId:number;
 export class JaiRegimeMasterComponent implements OnInit {
   jaiRegimeMasterForm: FormGroup;
 
+  pipe = new DatePipe('en-US');
+
   loginName:string;
   loginArray:string;
   name:string;
@@ -42,11 +45,13 @@ export class JaiRegimeMasterComponent implements OnInit {
   regimeCode:string;
   regimeName:string;
   regimeType:string;
-  startDate:Date;
+  // startDate:Date;
   endDate:Date;
   regimeId:number;
   submitted = false;
   public status ="Active"; 
+  now = Date.now();
+  startDate = this.pipe.transform(this.now, 'y-MM-dd');
 
 
   checkValidation=false;

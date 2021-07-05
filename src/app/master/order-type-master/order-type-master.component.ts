@@ -5,6 +5,7 @@ import { Validators , FormArray } from '@angular/forms';
 import { MasterService } from '../master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 interface IOrderType {
 
@@ -34,6 +35,7 @@ interface IOrderType {
 })
 export class OrderTypeMasterComponent implements OnInit {
   orderTypeMasterForm : FormGroup;
+  pipe = new DatePipe('en-US');
    
     public DivisionIDList : Array<string>=[];
     public OUIdList: Array<string> = [];
@@ -81,7 +83,10 @@ export class OrderTypeMasterComponent implements OnInit {
     displayButton = true;
     showOrg=false;
 
-    startDate:Date;
+    // startDate:Date;
+    // now = Date.now();
+    startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
     endDate:Date;
 
     get f() { return this.orderTypeMasterForm.controls; }
