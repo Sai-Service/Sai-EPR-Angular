@@ -102,8 +102,8 @@
                         </td>  
 
                         <td>
-                        <input disabled formControlName="poNumber" [(ngModel)]='poNumber'
-                                                value={{poNumber}} class="form-control"
+                        <input disabled formControlName="segment1" [(ngModel)]='segment1'
+                                                value={{segment1}} class="form-control"
                                                 placeholder="" >
                         </td>
 
@@ -122,8 +122,8 @@
                         </td>  
 
                         <td>
-                        <input disabled formControlName="receiptNumber" [(ngModel)]='receiptNumber'
-                                                value={{receiptNumber}} class="form-control"
+                        <input disabled formControlName="receiptNo" [(ngModel)]='receiptNo'
+                                                value={{receiptNo}} class="form-control"
                                                 placeholder="" >
                         </td>
 
@@ -155,12 +155,12 @@
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Supplier&nbsp;:&nbsp;
+                                &nbsp;Supplier&nbsp;No:&nbsp;
                             </td>  
     
                             <td>
-                            <input  type ="text" disabled formControlName="supNumber" [(ngModel)]='supNumber'
-                                                    value={{supNumber}} class="form-control"
+                            <input  type ="text" disabled formControlName="suppNo" [(ngModel)]='suppNo'
+                                                    value={{suppNo}} class="form-control"
                                                     placeholder="" >
                             </td>
 
@@ -217,7 +217,7 @@
 
                     <div class="center">
                         <!-- <br> -->
-                       <div class="center" formArrayName="PoReceiptLines">
+                       <div class="center" formArrayName="rcvLines">
   
                             <div class="grid_scroll">
 
@@ -231,7 +231,7 @@
                                                   <th style="width:7rem" scope="col"> Return Qty</th>
                                                   <th style="width:7rem" scope="col"> Received Qty</th>
                                                   <th style="width:7rem" scope="col"> Return To</th>
-                                                  <th style="width:7rem" scope="col"> Supplier Name</th>
+                                                  <!-- <th style="width:7rem" scope="col"> Supplier Name</th> -->
                                                   <th style="width:7rem" scope="col"> Select</th>
                                                   <!-- <th style="width:3rem" scope="col">Add+</th>
                                                   <th style="width:3rem" scope="col">Del-</th> -->
@@ -241,26 +241,27 @@
                                         <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
 
                                             <td>
-                                                <input disabled style="width: 200px;"  type="text" formControlName="itemId"  class="form-control" placeholder=""  >
+                                                <input disabled style="width: 200px;"  type="text" formControlName="itemName"  class="form-control" placeholder=""  >
                                             </td>
+
                                             <td>
                                                 <input disabled style="width: 250px;" type="text" formControlName="itemDesc"  class="form-control" placeholder=""  >
                                             </td>
                                             <td>
-                                                <input   style="width: 100px;text-align: right;" type="number" formControlName="returnQty"  class="form-control" (change)="validateQty(i)" placeholder="Return Qty"  >
+                                                <input   style="width: 100px;text-align: right;" type="number" formControlName="qtyReturn"  class="form-control" (change)="validateQty(i)" placeholder="Return Qty"  >
                                             </td>
                                             
                                             <td>
-                                                <input disabled  style="width: 100px;text-align: right;" type="number" formControlName="receivedQty"  class="form-control"  placeholder=""  >
+                                                <input disabled  style="width: 100px;text-align: right;" type="number" formControlName="qtyReceived"  class="form-control"  placeholder=""  >
                                             </td>
 
                                             <td>
-                                                <input disabled  style="width: 150px;text-align: right;" type="text" formControlName="returnTo"  class="form-control"  placeholder=""  >
+                                                <input disabled  style="width: 150px;text-align: left;" type="text" formControlName="returnTo" [ngModel]= "returnTo" class="form-control"  placeholder=""  >
                                             </td>
 
-                                            <td>
+                                            <!-- <td>
                                                 <input disabled  style="width: 350px;text-align: right;" type="text" formControlName="supplier"  class="form-control"  placeholder=""  >
-                                            </td>
+                                            </td> -->
 
                                             <td style="text-align: center;"><input type="checkbox"  name="selectFlag" value="selectFlag"    (change)="SelectFlag1($event,i)"> </td>
                                           
@@ -535,10 +536,10 @@
                 <!-- <th style="width:10rem"  scope="col">Order&nbsp;Type</th>    -->
                 <th style="width:5rem"  scope="col">Receipt&nbsp;Number&nbsp;</th>
                 <th style="width:10rem" scope="col">Receipt&nbsp;Date</th>
-                <!-- <th style="width:10rem" scope="col">PO&nbsp;Number</th> -->
+                <th style="width:10rem" scope="col">PO&nbsp;Number</th>
                 <!-- <th style="width:10rem" scope="col">PO&nbsp;Date</th> -->
                 <th style="width:10rem" scope="col">Amount&nbsp;</th>
-                <!-- <th style="width:20rem" scope="col">Supplier&nbsp;</th> -->
+                <th style="width:20rem" scope="col">Supplier&nbsp;</th>
                 <th style="width:6rem" scope="col">Select</th>
             </tr>
         </tbody>
@@ -546,8 +547,9 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{com.receiptNo}}</td>
                 <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>   
+                <td style="text-align: center;">{{com.segment1}}</td>   
                 <td style="text-align: center;">{{com.totAmt}}</td>   
-                <!-- <td>{{com.supplierName}}</td>  -->
+                <td style="text-align: center;">{{com.suppNo}}-{{com.supplierName}}</td> 
                <td><button class="btn btn-info" (click)="Select(com.receiptNo)">Select</button></td>   
         </tr> 
     </table>

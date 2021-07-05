@@ -13,7 +13,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 
 
 const MIME_TYPES = {
@@ -653,7 +653,7 @@ downloadPickTicket(){
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
   this.orderManagementService.downloadCSPreINV(this.orderNumber)
   .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+    // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
   });
 }
 
