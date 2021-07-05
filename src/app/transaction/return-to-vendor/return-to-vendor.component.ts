@@ -23,7 +23,7 @@ export class ReturnToVendorComponent implements OnInit {
   pipe = new DatePipe('en-US');
   public DepartmentList: Array<string> = [];
 
-  lstcomments: any[];
+  lstcomments:  Array<any> = [];
 
       loginName:string;
       loginArray:string;
@@ -45,22 +45,27 @@ export class ReturnToVendorComponent implements OnInit {
       searchByreceiptNo=1000155;
 
             poNumber:number;
+            segment1:number;
             poDate:number;
-            receiptNumber:Date;
+            receiptNo:Date;
             receiptDate:Date;
             orderType:string;
-            supNumber:string;
+            suppNo:string;
             supInvNumber:string;
             supinvDate:Date;
             baseAmount:number;
             taxAmt:number;
             totalAmt:number
+            returnTo='Supplier'
 
             displayButton = true;
             rtnLineValidation=true;
 
             frmDate= this.pipe.transform(Date.now(), 'y-MM-dd');
             toDate= this.pipe.transform(Date.now(), 'y-MM-dd');
+
+            display1=true;
+            display = true;
 
    constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.returntoVendorForm = fb.group({ 
@@ -80,11 +85,12 @@ export class ReturnToVendorComponent implements OnInit {
          
 
             poNumber:[],
+            segment1:[],
             poDate:[],
             receiptNumber:[],
             receiptDate:[],
             orderType:[],
-            supNumber:[],
+            suppNo:[],
             supInvNumber:[],
             supinvDate:[],
             baseAmount:[],
@@ -95,7 +101,7 @@ export class ReturnToVendorComponent implements OnInit {
             toDate:[],
 
 
-            PoReceiptLines: this.fb.array([this.lineDetailsGroup()]), 
+            rcvLines: this.fb.array([this.lineDetailsGroup()]), 
 
           });
         }
@@ -104,18 +110,19 @@ export class ReturnToVendorComponent implements OnInit {
           return this.fb.group({
             poLineId:[],
             poHeaderId:[],
-            receivedQty: [],
-            returnQty:[],
-            itemId:[],
+            invItemId:[],
+            itemName:[],
             itemDesc:[],
+            qtyReceived: [],
+            qtyReturn:[],
             returnTo:[],
-            supplier:[],
+            // supplier:[],
             selectFlag:[],
           });
         }
 
         lineDetailsArray() :FormArray{
-          return <FormArray>this.returntoVendorForm .get('PoReceiptLines')
+          return <FormArray>this.returntoVendorForm .get('rcvLines')
         }
 
 
@@ -144,26 +151,23 @@ export class ReturnToVendorComponent implements OnInit {
               this.DepartmentList = data;
               console.log(this.DepartmentList);
             }
-          );
-
-
-        }
+          ); }
 
 
         SearchByRcptNumber(mRcptNumber:any) {
-
-          alert("WIP-RCPT:"+mRcptNumber );
+          // alert("SearchByRcptNumber>>WIP-RCPT:"+mRcptNumber );
           this.service.getPOReceiptSearchByRcptNo(mRcptNumber)
           .subscribe(
            data => {
-            this.lstcomments = data;
+            this.lstcomments.push(data);
             console.log(this.lstcomments);
+            // data.totalAmt=100;
+            // this.returntoVendorForm.get('lstcomments').patchValue({totAmt:data.totalAmt})
+            // alert("lenght:" +this.lstcomments.length);
          }
         );
-
-        alert("lenght:" +this.lstcomments.length);
-      
       }
+
 
         SearchByPONumber(mPoNumber)   {
           alert("WIP-PO: "+mPoNumber);
@@ -177,11 +181,13 @@ export class ReturnToVendorComponent implements OnInit {
       
          }
 
+         
+
 
         validateQty(index: any){
    
-          var qtyLineArr = this.returntoVendorForm.get('PoReceiptLines').value;
-          var lineQty = qtyLineArr[index].returnQty;
+          var qtyLineArr = this.returntoVendorForm.get('rcvLines').value;
+          var lineQty = qtyLineArr[index].qtyReturn;
           
           // alert("qty validation-index ,qnty >> " +index +","+lineQty);
       
@@ -189,8 +195,8 @@ export class ReturnToVendorComponent implements OnInit {
           {
              alert ("Invalid Quantity.Quantity should be above 0")
       
-             var patch = this.returntoVendorForm.get('PoReceiptLines') as FormArray;
-             patch.controls[index].patchValue({returnQty:''})
+             var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
+             patch.controls[index].patchValue({qtyReturn:''})
           }
         }
 
@@ -200,16 +206,18 @@ export class ReturnToVendorComponent implements OnInit {
 
          if ( e.target.checked) {
 
-         var patch = this.returntoVendorForm.get('PoReceiptLines') as FormArray;
-         var rtnLineArr = this.returntoVendorForm.get('PoReceiptLines').value;
+         var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
+         var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
          var len1=rtnLineArr.length;
          for (let i = 0; i < len1 ; i++)  {
 
-           var rtnQty =rtnLineArr[index].returnQty;
-           var itmId =rtnLineArr[index].itemId;
+          var rcdQty =rtnLineArr[index].qtyReceived;
+          var rtnQty =rtnLineArr[index].qtyReturn;
+          var itmId =rtnLineArr[index].itemId;
 
-           if(rtnQty ===null ||rtnQty ===undefined || rtnQty<=0 ) {
-            alert("Line-"+(index+1)+ "RETURN QTY :  Should be above Zero.");
+            alert("Rtn qty :" + rtnQty);
+           if(rtnQty ===null ||rtnQty ===undefined || rtnQty<=0 || rtnQty>rcdQty ) {
+            alert("Line-"+(index+1)+ "RETURN QTY :  Should be above Zero And should not be above Received Qty .");
             this.rtnLineValidation=false;
             e.target.checked=false;
             return;}
@@ -223,5 +231,41 @@ export class ReturnToVendorComponent implements OnInit {
       closeMast() {
         this.router.navigate(['admin']);
       }
+
+      Select(rcptNo: any) {
+
+        // alert("Select >> :"+rcptNo);
+        this.returntoVendorForm.reset();
+        this.display1= false;
+        let select = this.lstcomments.find(d => d.receiptNo === rcptNo);
+       
+        for(let i=0; i<this.lineDetailsArray.length; i++){ 
+          this.lineDetailsArray().removeAt(i);
+        }
+    
+        // alert("rcvLines LENGTH: "+ select.rcvLines.length);
+        if(select.rcvLines.length>0){
+    
+           this.lineDetailsArray().clear();
+    
+          if (select) {
+              var control = this.returntoVendorForm.get('rcvLines') as FormArray;
+             
+              for (let i=0; i<select.rcvLines.length;i++) 
+                {
+                 var rcvLines:FormGroup=this.lineDetailsGroup();
+                  control.push(rcvLines);
+                }
+              }
+        }
+          this.receiptNo = select.receiptNo;
+          this.displayButton = false;
+          this.display = false;
+          // this.showItemSearch=true;
+          this.returntoVendorForm.patchValue(select);
+        }
+
+
+
  
 }

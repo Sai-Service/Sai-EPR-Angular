@@ -579,7 +579,7 @@
                                         <ng-template #thensegmentInvType>
                                         <td>
                                             <select formControlName="invType" id="invType"
-                                            (ngModelChange)='onOptionsSelectedCategory($event, i)'
+                                            (ngModelChange)='onOptionsSelectedCategory($event)'
                                             class="form-control"
                                             style="width: 160px;height: 25px;font-size: 10px;">
                                             <option>--Select--</option>
@@ -589,7 +589,7 @@
                                         </select>
                                         </td>
                                         <td>
-                                            <select formControlName="segment" id="segment"  
+                                            <select formControlName="segment" id="segment+i"   
                                                     (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                     class="form-control"
                                                     style="width: 160px;height: 25px;font-size: 10px;">

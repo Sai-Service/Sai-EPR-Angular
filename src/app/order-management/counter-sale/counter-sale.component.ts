@@ -13,7 +13,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 
 
 const MIME_TYPES = {
@@ -253,6 +253,10 @@ orderNumber:number;
 // customer Master 
 // custType: string;
   // customerId:number;
+
+
+
+  
   title: string;
   customerId1: number;
   fName: string;
@@ -282,6 +286,7 @@ orderNumber:number;
   tanNo: string;
   divisionName: string;
 
+  public itemMap=new Map <string,any[]>();
 
   @ViewChild("myinput") myInputField: ElementRef;
   @ViewChild("othRefNo") othRefNo1: ElementRef;
@@ -704,16 +709,7 @@ downloadPickTicket(){
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
   this.orderManagementService.downloadCSPreINV(this.orderNumber)
   .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-  });
-}
-
-downloadInvoice(){
-  const fileName = 'download.pdf';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.orderManagementService.downloadCSINV(this.orderNumber)
-  .subscribe(data => {
-    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
   });
 }
 
@@ -810,15 +806,20 @@ onOptionsSelectedPriceListID(priceListName) {
 // }
 
 onOptionsSelectedCategory(orderType){
-  alert(orderType);
+  // alert(orderType);
+  var mapVal=this.itemMap.get(orderType);
+  if (mapVal===undefined){
   this.orderManagementService.getItemByCatType(orderType,1 )
   .subscribe(
     data => {
       this.invItemList1=data;
       this.orderedItem=data.description;
-      console.log(this.invItemList1);   
+      // this.itemMap.set(orderType,this.invItemList1);
+      // console.log(this.invItemList1);   
     }
   );
+}
+ 
 }
 
 accountNoSearch(custAccountNo){
@@ -1385,17 +1386,17 @@ onOptionsSelectedCity (city: any){
       // this.country = 'INDIA';
     }
   );
-  this.cityList1.ouId=106;
-  if (this.ouId != 106){
-    alert(this.ouId)
-    alert('This Is IGST Customer')
-  }
-else{
-  var ouId1=104;
-  if(this.ouId===ouId1){
-  alert('This Is SGST Customer')
-}
-}
+//   this.cityList1.ouId=106;
+//   if (this.ouId != 106){
+//     alert(this.ouId)
+//     alert('This Is IGST Customer')
+//   }
+// else{
+//   var ouId1=104;
+//   if(this.ouId===ouId1){
+//   alert('This Is SGST Customer')
+// }
+// }
 }
 transDataWithSite(val) {}
 

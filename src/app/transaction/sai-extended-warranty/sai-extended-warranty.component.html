@@ -765,20 +765,50 @@
 
                     <tr>
                     <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Reason:&nbsp;</td>
+
+
+                      
+                    <div *ngIf="ewCancelledFlag; then thenBlock909; else elseBlock909"></div>
+                     <ng-template #thenBlock909>
+                    
+                            <td>  
+                                <select  disabled  formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
+                                    <option >--Select--</option>
+                                    <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
+                                        {{sc.codeDesc}}
+                                    </option>
+                                </select>
+                             </td>
+                        </ng-template>
                      
-                    <div *ngIf="displayReason; then thenBlockReason; else elseBlockReason"></div>
-                    <ng-template #thenBlockReason>
-                    <td>  
-                        <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
-                                {{sc.codeDesc}}
-                            </option>
-                        </select>
-                     </td>
+                    <ng-template #elseBlock909>
+                   
+                        <div *ngIf="displayReason; then thenBlockReason; else elseBlockReason"></div>
+                        <ng-template #thenBlockReason>
+                        <td>  
+                            <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
+                                <option disabled>--Select--</option>
+                                <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
+                                    {{sc.codeDesc}}
+                                </option>
+                            </select>
+                        </td>
+                        </ng-template>
+
+
+                       <ng-template #elseBlockReason>
+                            <td>  
+                                <select  disabled  formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
+                                    <option >--Select--</option>
+                                    <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
+                                        {{sc.codeDesc}}
+                                    </option>
+                                </select>
+                            </td>
+                        </ng-template>
                     </ng-template>
 
-                    <ng-template #elseBlockReason>
+                   <!--  <ng-template #elseBlock909>
                         <td>  
                             <select  disabled  formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
                                 <option>--Select--</option>
@@ -787,7 +817,8 @@
                                 </option>
                             </select>
                          </td>
-                        </ng-template>
+
+                    </ng-template> -->
 
 
               

@@ -10,8 +10,8 @@ export class OrderManagementService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  // ServerUrl = 'http://localhost:8081';
-  ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl = 'http://localhost:8081';
+  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
 
   constructor(private http: HttpClient) {
@@ -68,9 +68,9 @@ export class OrderManagementService {
 
     
   downloadCSPreINV(orderNumber) {
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -79,10 +79,10 @@ export class OrderManagementService {
   }
 
   downloadCSINV(InvoiceNumber){
-    const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
+    // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
     // local
    
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -91,9 +91,9 @@ export class OrderManagementService {
   }
   
   downloadVehicleINV(InvoiceNumber){
-    const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/salesTaxInv/${InvoiceNumber}`;  
+    // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/salesTaxInv/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -359,5 +359,32 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     const url = (this.ServerUrl + `/orderHeader/salesOrderOtherLineSave`);
     return this.http.put(url, UpdateSaleUpdateRecord, options);
   }
+
+
+// Sales Gate Pass Service
+
+getGatepassSearch(orderNumber): Observable<any> {
+  return this.http.get(this.ServerUrl + `/salesGatePass/${orderNumber}`);
+}
+
+// public orderNoPost(orderNumber) {
+//   const options = {
+//     headers: this.headers
+//   };
+//   const url = this.ServerUrl + `/salesGatePass/postSlGatepass/${orderNumber}`;
+//   return this.http.post(url, orderNumber, options);
+// }
+
+
+orderNoPost(orderNumber,emplId) {
+  const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+    .set('emplId', emplId)
+
+  const REQUEST_URI = this.ServerUrl + `/salesGatePass/postSlGatepass?orderNumber=${orderNumber}&emplId=${emplId}`;
+  return this.http.post(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
 
 }
