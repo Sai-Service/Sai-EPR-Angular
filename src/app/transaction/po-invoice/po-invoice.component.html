@@ -294,9 +294,22 @@
                     *ngIf="getGroupControl(i,'obj', 'paymentMethod').touched && getGroupControl(i,'obj', 'paymentMethod').invalid">Valid name
                                 </span>
             </td>
-            <td>
+
+            <!-- <td>
                 <input type="text" class="form-control" formControlName="payGroup" value={{payGroup}}  style="width: 120px;height: 25px;font-size: 10px;">
-            </td>
+            </td> -->
+
+               <td>
+                <select formControlName="payGroup" id="payGroup" value={{payGroup}} class="form-control" style="width: 120px;height: 25px;font-size: 10px;" >
+                    <!-- (ngModelChange)='onOptionSelectedSectionCode($event)' -->
+                    <option disabled>--Select--</option>
+                    <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.code" >
+                        {{ts.lookupValueDesc}}
+                    </option>
+                </select>
+                </td>
+
+
             <td>
                 <!-- <input type="text" class="form-control" formControlName="prepayType" value={{prepayType}} style="width: 120px;height: 25px;font-size: 10px;"> -->
             
