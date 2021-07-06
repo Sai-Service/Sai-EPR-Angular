@@ -1231,7 +1231,6 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
  geActDetails1(mtaxTypeId): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
  }
-
 getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
  }

@@ -371,7 +371,7 @@
                                                             <td >
                                                                 <select formControlName="ledgerId" id="ledgerId" class="form-control" (ngModelChange)='onLedgerSelected($event,i)' >
                                                                     <option>--Select--</option>
-                                                                    <option *ngFor="let sc of  LedgerList" [ngValue]="sc.ledgerId">
+                                                                    <option *ngFor="let sc of  LedgerList" [value]="sc.Id">
                                                                         {{sc.name}}
                                                                     </option>
                                                                 </select>
@@ -985,7 +985,7 @@
                                         <div *ngIf="displayButton; then thenBlockOu; else elseBlockOu"></div>
                                         <ng-template #thenBlockOu>
                                         
-                                            <select  disabled formControlName="opUnit" id="opUnit" [(ngModel)]="opUnit" class="form-control" (ngModelChange)='onOpUnitSelected($event)' >
+                                            <select  disabled formControlName="opUnit" id="opUnit" [(ngModel)]="opUnit" class="form-control" (ngModelChange)='onOpUnitSelected($event, i)' >
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                     {{sc.ouName}}
@@ -996,7 +996,7 @@
 
                                          <ng-template #elseBlockOu>
                                         
-                                            <select   formControlName="opUnit" id="opUnit" [(ngModel)]="opUnit" class="form-control" (ngModelChange)='onOpUnitSelected($event)' >
+                                            <select   formControlName="opUnit" id="opUnit" [(ngModel)]="opUnit" class="form-control" (ngModelChange)='onOpUnitSelected($event, i)' >
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                                     {{sc.ouName}}
@@ -1057,8 +1057,7 @@
                         <!-- <div class="w-100"></div> -->
                         <!-- <br> -->
                         <!-- ------------------------------------------------bUTTON START---------------------- -->
-                        
-
+                    
                         <table class="center">
                         <tr>
 

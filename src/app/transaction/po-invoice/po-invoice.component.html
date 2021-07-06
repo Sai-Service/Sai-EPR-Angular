@@ -294,9 +294,22 @@
                     *ngIf="getGroupControl(i,'obj', 'paymentMethod').touched && getGroupControl(i,'obj', 'paymentMethod').invalid">Valid name
                                 </span>
             </td>
-            <td>
+
+            <!-- <td>
                 <input type="text" class="form-control" formControlName="payGroup" value={{payGroup}}  style="width: 120px;height: 25px;font-size: 10px;">
-            </td>
+            </td> -->
+
+               <td>
+                <select formControlName="payGroup" id="payGroup" value={{payGroup}} class="form-control" style="width: 120px;height: 25px;font-size: 10px;" >
+                    <!-- (ngModelChange)='onOptionSelectedSectionCode($event)' -->
+                    <option disabled>--Select--</option>
+                    <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.code" >
+                        {{ts.lookupValueDesc}}
+                    </option>
+                </select>
+                </td>
+
+
             <td>
                 <!-- <input type="text" class="form-control" formControlName="prepayType" value={{prepayType}} style="width: 120px;height: 25px;font-size: 10px;"> -->
             
@@ -641,7 +654,7 @@
                                             </span>
                             </td>
                             <td>
-                                <input formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                                <input type="number" formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
                                 <span
                                 *ngIf="getGroupControl(k,'distribution', 'lineTypeLookupCode').touched && getGroupControl(k,'distribution', 'lineTypeLookupCode').invalid">Valid Number
                                             </span>
@@ -666,7 +679,7 @@
                          
                             </td>
                             <td>
-                                <input formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
+                                <input type="number" formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                 <span
                            *ngIf="getGroupControl(k,'distribution', 'baseAmount').touched && getGroupControl(k,'distribution', 'baseAmount').invalid">Valid Number
                                        </span>
