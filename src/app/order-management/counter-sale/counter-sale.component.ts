@@ -430,7 +430,7 @@ orderNumber:number;
     this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locationId=Number(sessionStorage.getItem('locId'));
-
+    this.invType ='SS_SPARES';
     this.service.payTermDescList()
     .subscribe(
       data => {
@@ -748,17 +748,32 @@ onOptionsSelectedPriceListID(priceListName) {
 //   );
     
 // }
+public itemMap2= new Map<number, any[]>();
+public itemMap= new Map<string, any[]>();
 
-onOptionsSelectedCategory(orderType){
-  alert(orderType);
+onOptionsSelectedCategory(orderType :string, lnNo :number) {
+
+alert(lnNo+"**")
+ var lineArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+ this.invType = orderType;
+ if(this.itemMap.has(orderType)){
+   var itemsList = this.itemMap.get(orderType);
+   this.itemMap2.set(lnNo , this.itemMap.get(orderType) );
+ }else{
+  
   this.orderManagementService.getItemByCatType(orderType,1 )
   .subscribe(
     data => {
-      this.invItemList1=data;
+      //this.invItemList1=data;
       this.orderedItem=data.description;
-      console.log(this.invItemList1);   
-    }
+      this.itemMap.set(orderType , data );
+      this.itemMap2.set(lnNo , this.itemMap.get(orderType) );
+    }   
   );
+ }
+ this.invItemList1 = this.itemMap.get(orderType);
+ 
+
 }
 
 accountNoSearch(custAccountNo){
@@ -931,14 +946,17 @@ onOptionsSelectedDescription(segment: any, k) {
   }
   
   else{
-  let select = this.invItemList1.find(d => d.segment === segment);
+  //let select = this.invItemList1.find(d => d.segment === segment);
+  let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  var itemType = (controlinv.controls[k]).get('invType').value;
+  let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
   this.CounterSaleOrderBookingForm.patchValue({itemId:select.itemId})
   this.itemId = select.itemId;
   this.orderManagementService.addonDescList(segment)
     .subscribe(
       data => {
         this.addonDescList = data;
-        let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+      
         for(let i=0; i <data.length; i++){
           var taxCatNm : string = data[i].taxCategoryName;
           alert(taxCatNm);

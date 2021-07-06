@@ -140,7 +140,11 @@ export class JaiTaxTypeComponent implements OnInit {
   // locDescreption : string;
 
   lookupValueDesc6: any[];
+  
   lookupValueDesc1: string;
+  lookupValueDesc2: string;
+  lookupValueDesc3: string;
+  lookupValueDesc4: string;
   checked: boolean;
   // public ledger = 'SS LEDGER';
   locationId: string;
