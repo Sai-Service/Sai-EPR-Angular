@@ -149,6 +149,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   billToSiteId:number;
   custPhone:string;
   customerType:string;
+  custTaxCategoryName:string;
   
 
   ewPeriod:number;
@@ -259,6 +260,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       billToSiteId:[],
       custPhone:[],
       customerType:[],
+      custTaxCategoryName:[],
       // dealerCode:[],
       ewPeriod:[],
 
@@ -444,7 +446,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         if(this.cancelledFlag===false && reasonCode !=null && reasonCode != '--Select--'  ) {
           this.ewCancelDate = this.pipe.transform(this.now, 'y-MM-dd');
           this.ewCancelFlag=true; 
-          alert("WARNIG!!! You are going to cancel this Extended Warranty.Please Check and Continue..")
+          alert("WARNIG!!! You are going to cancel this Extended Warranty ?.\nIf NO Please leave the Reason Code blank and Continue.")
         }
 
           if(reasonCode === '--Select--'  ) {
@@ -837,9 +839,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         data1 => {
           this.CustomerSiteDetails = data1;
 
-          if (this.CustomerSiteDetails===null) 
+          if (this.CustomerSiteDetails===null ) 
              {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
-          else {
+          else if (this.CustomerSiteDetails.taxCategoryName===null)
+             {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
+          else{
              console.log(this.CustomerSiteDetails);
              this.saiEwForm.patchValue({
               customerSiteId:this.CustomerSiteDetails.customerSiteId,
@@ -854,9 +858,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             customerPanNo:this.CustomerSiteDetails.panNo,
             custPhone:this.CustomerSiteDetails.mobile1,
             customerType:this.CustomerSiteDetails.customerId.custType,
-
+            custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
              
-        });}  });  }
+        });
+
+        }  });  }
+
 
          ////////////////// not in use//////////////////     
         CustAccountNoSearchSite(accountNo){
