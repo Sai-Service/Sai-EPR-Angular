@@ -546,16 +546,26 @@ getLocation(k)
 
     tdsLineDetails() {
       return this.fb.group({
-     
+      
+
       invoiceLineNum: [],
-      distLineNumber: [],
-      distCodeCombId: [],
       distCodeCombSeg: [],
       baseAmount: [],
       accDesc: [],
       tdsSectionCode: [],
-      taxCategoryId: [],
       tdsSelectFlag:[],
+
+      wthldInvTaxId:[],
+      invoiceId:[],
+      invoiceDistId:[],
+      distLineNumber: [],
+      distCodeCombId: [],
+      actualSectionCode:[],
+      taxAmount:[],
+      taxCategoryId:[],
+      thresHoldHdrId:[],
+      thresHoldTypeId:[],
+
 
       
     })
@@ -615,6 +625,14 @@ getLocation(k)
         data => {
           this.OUIdList = data;
           console.log(this.OUIdList);
+        }
+      );
+
+      this.service.tdsSectionList()
+      .subscribe(
+        data => {
+          this.tdsSectionList = data;
+          console.log(this.tdsSectionList);
         }
       );
 
@@ -2135,7 +2153,33 @@ getGroupControl(index,arrayname, fieldName) {
 
   }
 
-      SaveTdsDetails() {alert("SAVE TDS DETAILS.....WIP")} 
+      
+      
+      
+      
+      
+      
+
+      SaveTdsDetails() {
+        alert("SAVE TDS DETAILS.....WIP")
+
+        // const formValue: IpoInvoice =this.transeData(this.poInvoiceForm.value);
+        const formValue: IpoInvoice =(this.poInvoiceForm.value);
+        this.transactionService.PoInvoiceTdsDataSubmit(formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('RECORD INSERTED SUCCESSFULLY');
+            this.poInvoiceForm.reset();
+          } else {
+            if (res.code === 400) {
+              alert('ERROR WHILE INSERTING');
+              this.poInvoiceForm.reset();
+            }
+          }
+        });
+  
+  
+      }
+
 
       showTdsLines(mInvId:any){ 
         // alert ("Tds lines...wip.inv id :"+mInvId);
@@ -2190,6 +2234,7 @@ getGroupControl(index,arrayname, fieldName) {
             var baseAmount =tdsLineArr[index].baseAmount;
             var taxCatId =tdsLineArr[index].taxCategoryId;
             var tdsSectionCd=tdsLineArr[index].tdsSectionCode;
+            
 
             if(tdsSectionCd ===null ||tdsSectionCd ===undefined) {
               alert("Line-"+(index+1)+ " SECTION CODE :  Should not be null.");
@@ -2210,14 +2255,15 @@ getGroupControl(index,arrayname, fieldName) {
             }
             
            if (this.tdsLineValidation===true) {
-            this.showTdsTaxLines(1,baseAmount,taxCatId);}
+            this.showTdsTaxLines(1,baseAmount,taxCatId,tdsSectionCd);}
+
           }
           } else { this.tdsTaxDetailsArray().reset();    this.displayTdsButton=false;  }    
         
         }
 
 
-        showTdsTaxLines(mItemId:any,mBaseAmt:any,mTaxCatId:any){ 
+        showTdsTaxLines(mItemId:any,mBaseAmt:any,mTaxCatId:any,mtdsSection:any){ 
           // alert ("Tds lines...wip.inv id :"+mInvId);
           this.service.getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId)
           .subscribe(
