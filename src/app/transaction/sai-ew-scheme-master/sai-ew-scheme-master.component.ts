@@ -25,7 +25,9 @@ interface IEwScheme {
   
   schemeEndDate:Date;
   schemeKms:number;
-  validKms:number;
+  validFromKms:number;
+  validToKms:number;
+  
   schemeAmount:number;
 
   
@@ -99,7 +101,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
       
         premiumPeriod:number;
         schemeKms:number;
-        validKms:number;
+        validFromKms:number;
+        validToKms:number;
         schemeAmount:number;
 
         fromSlab:string;
@@ -149,7 +152,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           
             premiumPeriod:[],
             schemeKms:[],
-            validKms:[],
+            validFromKms:[],
+            validToKms:[],
             schemeAmount:[],
             addEw:[],
 
@@ -523,12 +527,19 @@ export class SaiEwSchemeMasterComponent implements OnInit {
                      return;
                   } 
 
-                  if (formValue.validKms <=0 || formValue.validKms===undefined || formValue.validKms===null || formValue.validKms<formValue.schemeKms )
+                  if (formValue.validFromKms <=0 || formValue.validFromKms===undefined || formValue.validFromKms===null || formValue.validFromKms>formValue.validToKms)
                   {
                       this.checkValidation=false;  
-                      alert ("VALID KM LIMIT: Should be above Zero/Should not be below SCHEME LIMINT KMS");
+                      alert ("VALID FROM KM : Should be above Zero/Should not be above VALID TO KMS");
                       return;
                    } 
+
+                   if (formValue.validToKms <=0 || formValue.validToKms===undefined || formValue.validToKms===null || formValue.validToKms<formValue.validFromKms )
+                   {
+                       this.checkValidation=false;  
+                       alert ("VALID TO KM: Should be above Zero/Should not be below VALID FROM KMS");
+                       return;
+                    } 
   
                  if (formValue.schemeAmount===undefined || formValue.schemeAmount===null || formValue.schemeAmount<=0)
                  {

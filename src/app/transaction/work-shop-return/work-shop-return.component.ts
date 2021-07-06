@@ -72,6 +72,7 @@ reqNo:string;
   public headerStatus:string='OPEN';
   invItemId:number;
   subInventoryId:number;
+  transactionTypeId:number;
   subInventoryCode:string;
   locData =[ {
     "locatorId": 999,
@@ -98,6 +99,7 @@ reqNo:string;
  pipe = new DatePipe('en-US');
  now=new Date();
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+  subInvdetail: any;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) { 
@@ -136,7 +138,6 @@ reqNo:string;
       return this.fb.group({
         lineNumber:[''],
         invItemId:[''],
-        frmSubInvCode:[''],
         frmLocatorId:[''],
         uom:[''],
         segmentName:[],
@@ -166,10 +167,19 @@ reqNo:string;
     // alert(this.issueBy);
     console.log(this.divisionId);
     this.frmSubInvCode='WIP';
- 
+    if(this.frmSubInvCode==='WIP')
+    {
+      alert('Hello');
+      this.service.getsubInv(this.frmSubInvCode).subscribe(
+        data=>{
+          this.subInvdetail=data;
+        }
+      );
+    }
     
     this.service.transTypereturn().subscribe(
       data =>{ this.transType = data;
+        this.transactionTypeId=this.transType[0].transactionTypeId;
        } );
 
     this.service.subInvCode(this.deptId).subscribe(
@@ -184,10 +194,10 @@ reqNo:string;
           console.log(this.issueByList);
         });
 
-    this.service.ItemIdList().subscribe(
-      data =>{ this.ItemIdList = data;
-        console.log(this.invItemId);
-        });
+    // this.service.ItemIdList().subscribe(
+    //   data =>{ this.ItemIdList = data;
+    //     console.log(this.invItemId);
+    //     });
    this.service.issueReturn(this.locId).subscribe(
      data=>{
       this.issueReturn=data;
@@ -233,6 +243,16 @@ onSelectjob(event)
     }
    )
 }
+onSelectType(event)
+{
+  var jobno=this.WorkshopReturnForm.get('repairNo').value;
+  alert(jobno+'job'+event);
+  this.service.itemLst(jobno,event).subscribe(
+    data=>{
+      this.ItemIdList=data;
+    }
+  )
+}
 
 search(reqNo)
 {
@@ -272,8 +292,8 @@ newmoveOrder()
 //  alert(trans.transactionTypeName+'tra');
  console.log(trans);
   const formValue:IworkshopReturn=this.WorkshopReturnForm.value;
-  var subCode=this.WorkshopReturnForm.get('frmSubInvCode').value;
-  formValue.frmSubInvCode = subCode.subInventoryCode;
+  // var subCode=this.WorkshopReturnForm.get('frmSubInvCode').value;
+  // formValue.frmSubInvCode = subCode.subInventoryCode;
   this.service.moveOrderSubmit(formValue).subscribe((res:any)=>{
     var obj = res.obj;
         sessionStorage.setItem('requestNumber', obj);
@@ -283,11 +303,16 @@ newmoveOrder()
       this.requestNumber=obj.requestNumber;
       this.headerStatus=obj.headerStatus;
       this.frmSubInvCode=obj.frmSubInvCode;
-      this.transactionTypeName=trans.transactionTypeName;
-      this.subInventoryCode=subCode.subInventoryCode;
+      this.transactionTypeId=trans.transactionTypeName;
+      // this.subInventoryCode=subCode.subInventoryCode;
       alert("Record inserted Successfully");
       // this.display=false;
       // this.moveOrderForm.patchValue({frmSubInvCode:subCode});
+      for (let i = 0; i < res.obj.trxLinesList.length-1 ; i++) {
+        var trxList:FormGroup=this.newtrxLinesList();
+        this.trxLinesList().push(trxList);
+
+      }
       this.displayButton=false;
       this.WorkshopReturnForm.disable();
       
@@ -311,4 +336,106 @@ closeReurn()
   {
     window.location.reload();
   }
+  onOptionSelectedSubInv(event:any,i)
+ {
+  // alert('2');
+  // alert(subCode.subInventoryId);
+  // alert('LocID'+this.locId);
+  // var subCode=this.moveOrderForm.get('frmSubInvCode').value;
+  // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
+  // alert(this.subInvCode.subInventoryId+'ID');
+  var subInv=this.subInvdetail.subInventoryId;
+  alert(subInv+'sub');
+  
+
+  let locId1=this.WorkshopReturnForm.get('locId');
+  var jobno=this.WorkshopReturnForm.get('repairNo').value;
+  var trxLnArr1 = this.WorkshopReturnForm.get('trxLinesList').value;
+  var trxLnArr2 = this.WorkshopReturnForm.get('trxLinesList') as FormArray;
+  var itemid=trxLnArr1[i].invItemId;
+  alert (itemid);
+  // var frmSubCode=trxLnArr1[i].frmSubInvCode;
+  // alert("FromSub"+frmSubCode);
+  // alert(select1);
+  // alert(trxLnArr1.get +"item");
+
+    // alert('Item'+itemid);
+  // var subInv=this.subInvCode.subInventoryId;
+    this.service.getretfrmSubLoc(this.locId,itemid,subInv,jobno).subscribe(
+      data =>{
+        //  this.getfrmSubLoc = data;
+        console.log(data);
+        var getfrmSubLoc =data;
+        //   // alert(getfrmSubLoc.segmentName+'SegmentName')
+  
+  
+          // alert(i +'i');
+          this.locData[i] = data;
+          if(getfrmSubLoc.length==1)
+          {
+          // this.displayLocator[i]=false;
+          trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc[0].segmentName});
+          trxLnArr2.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
+          trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
+          trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
+          trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
+          }
+          else
+          {
+           // this.getfrmSubLoc=data;;
+         //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
+         trxLnArr2.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
+         trxLnArr2.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
+         trxLnArr2.controls[i].patchValue({id:getfrmSubLoc[0].id});
+          }
+  
+      });
+  
+
+    this.service.getItemDetail(itemid).subscribe
+    (data => {this.getItemDetail = data;
+      // alert("this.getItemDetail.description" + this.getItemDetail.description);
+      trxLnArr2.controls[i].patchValue({description: this.getItemDetail.description});
+      trxLnArr2.controls[i].patchValue({uom:this.getItemDetail.uom});
+      trxLnArr2.controls[i].patchValue({segment:this.getItemDetail.segment});
+      // trxLnArr1.controls[i].patchValue({frmSubInvCode:this.subInvCode.subInventoryCode});
+    }
+    );
+    
+ }
+
+ AvailQty(event:any,i:number) 
+ {
+   alert(event);
+   var trxLnArr1=this.WorkshopReturnForm.get('trxLinesList')as FormArray;
+   var trxLnArr = this.WorkshopReturnForm.get('trxLinesList').value;
+   var itemid=trxLnArr[i].invItemId;
+   var locId=trxLnArr[i].frmLocatorId;
+   var onhandid=trxLnArr[i].id;
+   // trxLnArr1.controls[i].patchValue({locatorId:locId});
+  alert(locId+'locatorID');
+  //  var subcode=this.WorkshopReturnForm.get('subInventoryCode').value;
+   var subInv=this.subInvdetail.subInventoryId;
+  // alert(subcode);
+   // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
+  // alert(select2.subInventoryId+'Id')
+  this.service.getonhandqty(Number(sessionStorage.getItem('locId')),subInv,locId,itemid).subscribe
+     (data =>{ 
+       this.onhand1 = data;
+       console.log(this.onhand1);
+      //  alert(this.onHandId);
+       alert(this.onhand1);
+       trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
+     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
+     let onHand=data.obj;
+   let reserve=trxLnArr[i].resveQty;
+   //alert(onHand+'OnHand');
+   //alert(reserve+'reserve');
+   let avlqty1=0;
+   avlqty1= onHand-reserve;
+   // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
+   trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
+     })
+   
+ }
 }

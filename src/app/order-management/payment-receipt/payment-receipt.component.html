@@ -31,11 +31,11 @@
                             class="form-control" [(ngModel)]="ouId" >
                             </td>
                            
-                            <!-- <td>
-                                <input type="text" disabled formControlName="ouName"
-                                    class="form-control" [(ngModel)]="ouName" placeholder="">
+                            <td>
+                                <input type="text"  formControlName="deptName"
+                                    class="form-control" [(ngModel)]="deptName" placeholder="">
                             </td>
-                             -->
+                            
                            
 
                             <!-- <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td> -->
@@ -513,7 +513,7 @@
             <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
                 <!-- <td>{{com.oePayList.srlno}}</td> -->
 
-                <td>{{com.orderNumber}}</td>
+                <td>{{orderNumber}}</td>
                 <td>{{com.srlNo}}</td>
                 <td>{{com.receiptNumber}}</td>
                 <td>{{com.receiptDate}}</td>

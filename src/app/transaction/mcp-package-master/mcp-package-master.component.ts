@@ -101,7 +101,7 @@ export class McpPackageMasterComponent implements OnInit {
           userList2: any[] = [];
           lastkeydown1: number = 0;
           showItemSearch=false;
-          display1=true;
+          
 
           //////////////////////////////////
           headerValidation=false;
@@ -110,6 +110,7 @@ export class McpPackageMasterComponent implements OnInit {
           displayInactive = true;
           Status1: any;
           inactiveDate: Date;
+          display1=true;
           display = true;
           displayButton = true;
           //////////////////////////////////

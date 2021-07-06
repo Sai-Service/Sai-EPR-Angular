@@ -208,6 +208,7 @@ export class PoInvoiceComponent implements OnInit {
   INVStatus:string='Never Validated';
   poChargeDesc:string= 'Unprocessed';
   dispStatus=true;
+  displayTdsButton=false;
   disDeleteButton=true;
   dispAccountCode=true;
   displayAddNewLine=true;
@@ -349,7 +350,14 @@ export class PoInvoiceComponent implements OnInit {
     this.taxarr.delete(trxLineIndex);
     this.distarr.delete(trxLineIndex);
   }
-
+getLocation(k)
+{
+  var arrayControl=this.poInvoiceForm.get('obj').value;
+  var patch1=this.poInvoiceForm.get('invLines') as FormArray;
+  var location=arrayControl[0].locationId;
+  alert(location);
+ patch1.controls[k].patchValue({locId:location});
+}
   addRowDistribution(k) {
     this.lineDistributionArray().push(this.distLineDetails());
     var len = this.lineDistributionArray().length;
@@ -2052,10 +2060,11 @@ getGroupControl(index,arrayname, fieldName) {
 
   }
 
-    
+      SaveTdsDetails() {alert("SAVE TDS DETAILS.....WIP")} 
 
       showTdsLines(mInvId:any){ 
         // alert ("Tds lines...wip.inv id :"+mInvId);
+       
         this.service.getTdsDetails(mInvId)
         .subscribe(
           data => {
@@ -2085,6 +2094,7 @@ getGroupControl(index,arrayname, fieldName) {
 
       }
 
+
       onTaxCatgSelected(taxCatId : any ,index){
         // alert('ledger id =' +taxCatId + "  index ="+index);
           // if (taxCatId > 0) {alert("yes");}  else { alert("no"); }        
@@ -2092,9 +2102,11 @@ getGroupControl(index,arrayname, fieldName) {
 
 
         tdsSelectFlag1(e,index) {
+        
            this.tdsLineValidation=true;
           // if ( e.target.checked) {alert("Checked...");} else {alert("Unchecked...");}
           if ( e.target.checked) {
+          this.displayTdsButton=true;
           var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
           var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
           var len1=tdsLineArr.length;
@@ -2125,7 +2137,7 @@ getGroupControl(index,arrayname, fieldName) {
            if (this.tdsLineValidation===true) {
             this.showTdsTaxLines(1,baseAmount,taxCatId);}
           }
-          } else { this.tdsTaxDetailsArray().reset();    }    
+          } else { this.tdsTaxDetailsArray().reset();    this.displayTdsButton=false;  }    
         
         }
 
