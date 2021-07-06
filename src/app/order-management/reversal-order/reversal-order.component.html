@@ -45,9 +45,113 @@
     </table>
     <div class="center" style="width: 100%;">
         <div class="form-bg">
+            <!-- <div class="grid_scroll"> -->
+               <table class="center" style="width: 100%;">
+                <tr>
+                    <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                        Order&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="text" class="form-control" style="width: 170px;font-weight: bold;">
+                        <!-- <input disabled type="text" class="form-control" formControlName="orderNumber"
+                                [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 170px;font-weight: bold;"> -->
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Order&nbsp;Date&nbsp;:&nbsp;
+                     </td>
+                     <td>
+                        <input disabled type="text" class="form-control" style="width: 170px;font-weight: bold;">
+                     </td>
+                     <td style="width: 15%" class="LabelFontStyle">
+                        Order&nbsp;Status&nbsp;:&nbsp;
+                     </td>
+                     <td>
+                        <input disabled type="text" class="form-control" style="width: 170px;font-weight: bold;">
+                     </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Invoice&nbsp;Number&nbsp;:&nbsp;
+                     </td>
+                     <td>
+                        <input disabled type="text" class="form-control" style="width: 170px;font-weight: bold;">
+                     </td> 
+                     <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                     </td>
+                     <td>
+                        <input disabled type="text" class="form-control" style="width: 170px;font-weight: bold;">
+                     </td> 
+                     <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Name&nbsp;:&nbsp;
+                     </td>
+                     <td>
+                        <input disabled type="text" class="form-control" style="width: 170px;font-weight: bold;">
+                     </td> 
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Address&nbsp;:&nbsp;
+                     </td> 
+                     <td colspan="5">
+                        <input disabled type="text" class="form-control" style="width: 96%;font-weight: bold;">
+                     </td> 
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Address&nbsp;:&nbsp;
+                     </td> 
+                     <td>
+                         <select class="form-control" style="width: 170px;">
+                             <option value="--Select--" >--Select--</option>
+                         </select>
+                     </td>
+                </tr>
+               </table>
+            <!-- </div> -->
             <div class="grid_scroll">
-               
+                <fieldset class="RFS" style="height: 400px;">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> Line Details</legend>
+                    <table class="GridFont" cellspacing="0" cellpadding="4" border="0" style="width:100%;border-collapse:collapse;">
+                        <thead>
+                            <tr class="GridHeader">
+                                <th scope="col">Select</th>
+                                <th scope="col">Invoice no</th>
+                                <th scope="col">Item code</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Tax Category</th>
+                                <th scope="col">Base Amount</th>
+                                <th scope="col">Tax Amount</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">HSN/ SAC code</th>
+                                <th scope="col">Line Status</th>
+                                <th scope="col">Credit / Debit Memo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </fieldset>
             </div>
+            <fieldset class="RFS">
+                <table class="center">
+                    <tr>
+                        <td>
+                            <button type="submit" (click)="Reverse()" class="btn btn-primary">Reverse</button>
+                        </td>
+                        <td>
+                            <button type="submit" (click)="Clear()" class="btn btn-primary">Clear</button>
+                        </td>
+                        <td>
+                            <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                        </td>
+                      
+                    </tr>
+                </table>
+            </fieldset>
         </div>
     </div>
 </form>
