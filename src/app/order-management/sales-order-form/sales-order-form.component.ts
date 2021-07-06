@@ -337,7 +337,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.displayLineTaxDetails=true;
     this.currentOpration='NewOrder';
     this.displaysegmentInvType[0]=true;
-    this.displayLineflowStatusCode[0]=true;
+    // this.displayLineflowStatusCode[0]=true;
     this.displayRemoveRow[0]=true;
     this.displayTaxCategoryupdate[0]=true;
     this.displaytaxCategoryName[0]=true;
@@ -807,8 +807,8 @@ OrderFind(orderNumber) {
           control.push(oeOrderLinesAllList1);
           this.displaysegmentInvType[i]=false;
           this.displayCounterSaleLine.push(false);
-          // this.displayLineflowStatusCode[i]=true;
-          if (this.lstgetOrderLineDetails[i].flowStatusCode==='Invoiced' || this.lstgetOrderLineDetails[i].flowStatusCode==='BOOKED'|| this.lstgetOrderLineDetails[i].flowStatusCode==='CANCELLED'){
+          // this.displayLineflowStatusCode[i]=false;
+          if (this.lstgetOrderLineDetails[i].flowStatusCode==='Invoiced' || this.lstgetOrderLineDetails[i].flowStatusCode==='CANCELLED'){
             this.displayLineflowStatusCode[i]=true;
             this.displayRemoveRow[i]=false;
             this.displayTaxCategoryupdate[i]=true;  

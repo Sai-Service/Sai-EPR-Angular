@@ -253,6 +253,10 @@ orderNumber:number;
 // customer Master 
 // custType: string;
   // customerId:number;
+
+
+
+  
   title: string;
   customerId1: number;
   fName: string;
@@ -282,6 +286,7 @@ orderNumber:number;
   tanNo: string;
   divisionName: string;
 
+  public itemMap=new Map <string,any[]>();
 
   @ViewChild("myinput") myInputField: ElementRef;
   @ViewChild("othRefNo") othRefNo1: ElementRef;
@@ -455,7 +460,7 @@ orderNumber:number;
     this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locationId=Number(sessionStorage.getItem('locId'));
-
+    this.invType ='SS_SPARES';
     this.service.payTermDescList()
     .subscribe(
       data => {
@@ -709,7 +714,7 @@ downloadPickTicket(){
 }
 
 pickTicketupdateFunction(){
-  const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
+  const formValue: ISalesBookingForm =this.CounterSaleOrderBookingForm.value;
   this.orderManagementService.UpdateCounterSaleInv(formValue).subscribe((res: any) => {
   if (res.code === 200) {
     alert(res.message);
@@ -799,16 +804,26 @@ onOptionsSelectedPriceListID(priceListName) {
 //   );
     
 // }
+public itemMap2= new Map<number, any[]>();
 
-onOptionsSelectedCategory(orderType){
-  alert(orderType);
-  this.orderManagementService.getItemByCatType(orderType,1 )
+
+onOptionsSelectedCategory(orderType :string, lnNo :number) {
+ this.invType = orderType;
+ if(this.itemMap.has(orderType)){
+   var itemsList = this.itemMap.get(orderType);
+   this.itemMap2.set(lnNo , this.itemMap.get(orderType) );
+ }else{
+  
+
+ }
+ this.invItemList1 = this.itemMap.get(orderType);
+   this.orderManagementService.getItemByCatType(orderType,1 )
   .subscribe(
     data => {
-      this.invItemList1=data;
-      this.orderedItem=data.description;
-      console.log(this.invItemList1);   
-    }
+            this.orderedItem=data.description;
+      this.itemMap.set(orderType , data );
+      this.itemMap2.set(lnNo , this.itemMap.get(orderType) );
+    }   
   );
 }
 
@@ -1001,14 +1016,17 @@ onOptionsSelectedDescription(segment: any, k) {
   }
   
   else{
-  let select = this.invItemList1.find(d => d.segment === segment);
+  //let select = this.invItemList1.find(d => d.segment === segment);
+  let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  var itemType = (controlinv.controls[k]).get('invType').value;
+  let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
   this.CounterSaleOrderBookingForm.patchValue({itemId:select.itemId})
   this.itemId = select.itemId;
   this.orderManagementService.addonDescList(segment)
     .subscribe(
       data => {
         this.addonDescList = data;
-        let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+      
         for(let i=0; i <data.length; i++){
           var taxCatNm : string = data[i].taxCategoryName;
           alert(taxCatNm);
@@ -1376,17 +1394,17 @@ onOptionsSelectedCity (city: any){
       // this.country = 'INDIA';
     }
   );
-  this.cityList1.ouId=106;
-  if (this.ouId != 106){
-    alert(this.ouId)
-    alert('This Is IGST Customer')
-  }
-else{
-  var ouId1=104;
-  if(this.ouId===ouId1){
-  alert('This Is SGST Customer')
-}
-}
+//   this.cityList1.ouId=106;
+//   if (this.ouId != 106){
+//     alert(this.ouId)
+//     alert('This Is IGST Customer')
+//   }
+// else{
+//   var ouId1=104;
+//   if(this.ouId===ouId1){
+//   alert('This Is SGST Customer')
+// }
+// }
 }
 transDataWithSite(val) {}
 

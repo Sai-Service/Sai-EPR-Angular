@@ -654,7 +654,7 @@
                                             </span>
                             </td>
                             <td>
-                                <input formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                                <input type="number" formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
                                 <span
                                 *ngIf="getGroupControl(k,'distribution', 'lineTypeLookupCode').touched && getGroupControl(k,'distribution', 'lineTypeLookupCode').invalid">Valid Number
                                             </span>
@@ -679,7 +679,7 @@
                          
                             </td>
                             <td>
-                                <input formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
+                                <input type="number" formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                 <span
                            *ngIf="getGroupControl(k,'distribution', 'baseAmount').touched && getGroupControl(k,'distribution', 'baseAmount').invalid">Valid Number
                                        </span>
