@@ -30,6 +30,7 @@ interface IMcpPkgMaster {
   validKm:number;
   itemNumber:string;
 
+   searchByPkgNumber:string;
    searchByPkgType:string;
    searchByFuelType:string;
    
@@ -41,14 +42,17 @@ interface IMcpPkgMaster {
   styleUrls: ['./mcp-package-master.component.css']
 })
 export class McpPackageMasterComponent implements OnInit {
-
   mcpPackageMasterForm : FormGroup;
+
+  pipe = new DatePipe('en-US');
+
 
           public OUIdList           : Array<string> = [];
           public ItemTypeList1      :Array<string> = [];
           public FuelTypeList       :Array<string> = [];
           public McpPackageTypeList :Array<string> = [];
           public McpPackageCategoryList :Array<string> = [];
+          public McpPackageList:Array<string> = [];
           
 
 
@@ -83,7 +87,8 @@ export class McpPackageMasterComponent implements OnInit {
           packageDesc:string;
           packageCategory:string;
           fuelType:string;
-          public startDate;
+          // public startDate;
+          startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
           endDate:Date;
           fromDays:number;
           toDays:number;
@@ -96,7 +101,7 @@ export class McpPackageMasterComponent implements OnInit {
           userList2: any[] = [];
           lastkeydown1: number = 0;
           showItemSearch=false;
-          display1=true;
+          
 
           //////////////////////////////////
           headerValidation=false;
@@ -105,10 +110,11 @@ export class McpPackageMasterComponent implements OnInit {
           displayInactive = true;
           Status1: any;
           inactiveDate: Date;
+          display1=true;
           display = true;
           displayButton = true;
           //////////////////////////////////
-
+          searchByPkgNumber:string;
           searchByPkgType:string;
           searchByFuelType:string;
           srlNo:number=0;
@@ -149,6 +155,7 @@ export class McpPackageMasterComponent implements OnInit {
             validPeriod:[],
             validKm:[],
 
+            searchByPkgNumber:[],
             searchByPkgType:[],
             searchByFuelType:[],
 
@@ -239,11 +246,17 @@ export class McpPackageMasterComponent implements OnInit {
             
           }
         );
-  
 
+        
+          // this.service.mcpPkgNumberList()
+          //   .subscribe(
+          //     data => {
+          //       this.McpPackageList = data;
+          //       console.log(this.McpPackageList);
+          //     }
+          //   );
   
-
-          }
+      }
 
 
      // ===============================================================================
@@ -351,15 +364,16 @@ RemoveRow(index) {
 }
 
 
-searchMast() {
-  this.service.getMcpPackageSearch()
-    .subscribe(
-      data => {
-        this.lstcomments = data;
-        console.log(this.lstcomments);
-      }
-    );
-   }
+// searchMast() {
+//   this.service.getMcpPackageSearch()
+//     .subscribe(
+//       data => {
+//         this.lstcomments = data;
+//         console.log(this.lstcomments);
+//       }
+//     );
+//    }
+
 
    SearchByPkgFuelType(pType:any,fType:any){
     // alert ("Package Type : "+pType+ " Fuel Type : "+fType);
@@ -375,7 +389,7 @@ searchMast() {
          return;
       } 
 
-        this.service.getMcpPackageSearchNew(pType ,fType)
+        this.service.getMcpPackageSearchNew1(pType ,fType)
         .subscribe(
         data => {
           this.lstcomments = data;
@@ -385,6 +399,36 @@ searchMast() {
         } ); 
          
        }
+
+
+       SearchByPkgNoFuelType(pkgNo:any,fType:any){
+        alert ("Package No : "+pkgNo+ " Fuel Type : "+fType);
+        const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
+       
+         if (formValue.searchByFuelType===undefined || formValue.searchByFuelType===null)
+         {
+             alert ("FUEL TYPE: Select Fuel Type");
+             return;
+         } 
+
+         if (formValue.searchByPkgNumber===undefined || formValue.searchByPkgNumber===null)
+         {
+             alert ("PACKAGE NUMBER: Enter Correct Package Number");
+             return;
+         } 
+
+    
+            this.service.getMcpPackageSearchNew2(pkgNo ,fType)
+            .subscribe(
+            data => {
+              this.lstcomments = data;
+              alert("Records Found : "+ this.lstcomments.length);
+              console.log(this.lstcomments);
+    
+            } ); 
+             
+           }
+
      
 
    Select1(packageId: number) {

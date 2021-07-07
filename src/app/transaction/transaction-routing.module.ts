@@ -23,7 +23,9 @@ import { JournalVoucherComponent } from './journal-voucher/journal-voucher.compo
 import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
-import{WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
+import {WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
+import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
+import { InterStateComponent } from './inter-state/inter-state.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -51,6 +53,8 @@ const routes: Routes = [
  {path:'AvgCostUpadte',component:AvgCostUpdateComponent},
  {path:'StockTaking',component:StockTakingComponent},
  {path:'WorkshopReturn',component:WorkShopReturnComponent},
+ {path:'ReturnToVendor',component:ReturnToVendorComponent},
+ {path:'InterState',component:InterStateComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

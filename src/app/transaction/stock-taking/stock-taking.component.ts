@@ -97,7 +97,7 @@ export class StockTakingComponent implements OnInit {
   locatorId:number;
   divisionId:number;
   description:string;
-    public subInvCode:any[];
+ subInvCode:any;
   displayheader:boolean=true;
   getItemDetail:any;
   Floor:string;
@@ -110,6 +110,7 @@ export class StockTakingComponent implements OnInit {
   acccodedesc: any;
   displayprocess:boolean=true;
   compileId1:number;
+  currentop:string='process';
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm=fb.group({
@@ -200,6 +201,7 @@ export class StockTakingComponent implements OnInit {
     this.service.subInvCode(this.deptId).subscribe(
       data => {this.subInvCode = data;
          console.log(data);
+         this.subInventory=this.subInvCode.subInventoryCode;
         // alert('subInventoryCode');
        });
     this.service.ReasonList().subscribe(
@@ -369,14 +371,16 @@ export class StockTakingComponent implements OnInit {
     );
 
       }
-      postAdjustment(e)
+      postAdjustment(e,compNo)
       {
+        alert(e.target.checked+'Radio');
         if(e.target.checked){
           this.Adjustment='Y'
         }
         else{
           this.Adjustment='N';
         }
+        this.viewdata(compNo,e.target.value);
       }
       getInvItemId($event)
   {
@@ -407,8 +411,12 @@ export class StockTakingComponent implements OnInit {
     var compId= this.StockTakingForm.get('compileId').value;
     var compileType1=this.StockTakingForm.get('compileType').value;
     var subcode=this.StockTakingForm.get('subInventory').value;
-    let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
+    // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     this.displayheader=true;
+    alert('hi'+ this.currentop );
+    if(this.currentop==='search')
+    {
+      
       this.service.getsearchByCompId(compId,select1.itemId).subscribe(
         data=>{
           if(data.code===400)
@@ -431,7 +439,8 @@ export class StockTakingComponent implements OnInit {
           }
           if(data.code===200)
           {
-            trxLnArr1.controls[i].patchValue({'compileLineId':data.obj[0].compileLineId,'uom':data.obj[0].uom,'itemUnitCost':data.obj[0].itemUnitCost,'description':data.obj[0].description,'LocatorSegment':data.obj[0].LocatorSegment,'systemQty':data.obj[0].systemQty,'entryStatusCode':data.obj[0].entryStatusCode})
+            alert('hello');
+            // trxLnArr1.controls[i].patchValue({'compileLineId':data.obj[0].compileLineId,'uom':data.obj[0].uom,'itemUnitCost':data.obj[0].itemUnitCost,'description':data.obj[0].description,'LocatorSegment':data.obj[0].LocatorSegment,'systemQty':data.obj[0].systemQty,'entryStatusCode':data.obj[0].entryStatusCode})
             if(data.obj.length>1)
             {
               for(let j=1;j<data.obj.length;j++)
@@ -440,9 +449,13 @@ export class StockTakingComponent implements OnInit {
                 this.cycleLinesList().push(trxlist);
                  trxLnArr1.controls[i+j].patchValue(data.obj[j]);
                }
+               
             }
+            this.currentop='process';
           }
         });
+      }
+
 }
 OpenLocator(i)
 {
@@ -562,6 +575,7 @@ okLocator(i)
   }
   Approval()
   {
+    this.currentop='Approval';
     const formValue:IStockaking=this.transData(this.StockTakingForm.value);
     // debugger;
     this.service.approve(formValue).subscribe((res:any)=>{
@@ -598,6 +612,7 @@ okLocator(i)
    }
    process()
    {
+     this.currentop='process';
      const formValue:IStockaking=this.transData(this.StockTakingForm.value);
      this.service.miscellaneousSubmit(formValue).subscribe
      ((res:any) => {
@@ -672,15 +687,15 @@ okLocator(i)
          })
        
    }
-   viewdata(compNo)
+   viewdata(compNo,tranVal)
    {
 
      var compno=this.StockTakingForm.get('compileName').value;
-     var appflag=this.StockTakingForm.get('trans').value;
+    //  var appflag=this.StockTakingForm.get('trans').value;
      // var adjFlag=this.miscellaneousForm.get('Adjustment').value;
-     alert(appflag+'flag');
+     alert(tranVal+'flag');
      // alert(adjFlag+'flag');
-      if('Adjustment'===appflag)
+      if('Adjustment'===tranVal)
       {
          this.service.getSearchByNo(compno)
          .subscribe( data =>
@@ -699,7 +714,7 @@ okLocator(i)
               }
            })
        }
-       else if('Approve'===appflag)
+       else if('Approve'===tranVal)
        {
          this.service.getSearchBycompNo(compno)
          .subscribe( data =>

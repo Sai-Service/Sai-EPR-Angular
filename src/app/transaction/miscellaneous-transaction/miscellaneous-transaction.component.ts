@@ -549,17 +549,18 @@ this.router.navigate(['admin']);
   var locId=trxLnArr[i].LocatorSegment;
   trxLnArr1.controls[i].patchValue({locatorId:locId});
   //alert(locId+'locatorID');
+  var onhandid=trxLnArr[i].id;
   var subcode=trxLnArr[i].subInventory;
   //alert(subcode);
   // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
   //alert(select2.subInventoryId+'Id')
   //alert(event);
   // var onHand1:number;
-    this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
+  this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
     (data =>{ 
       this.onhand = data;
       console.log(this.onhand);
-      trxLnArr1.controls[i].patchValue({onHandQty:data.obj.onHandQty});
+      trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
       // onHand1=data.obj.onHandQty;
 
       
@@ -567,7 +568,8 @@ this.router.navigate(['admin']);
       // alert(onHand1+'OnHand');
       // alert(reserve+'reserve');
       let avlqty1=0;
-      avlqty1= data.obj.onHandQty-reserve;
+      alert(data.obj+'qty');
+      avlqty1= data.obj-reserve;
       trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
       trxLnArr1.controls[i].patchValue({resveQty: reserve});
 
@@ -588,12 +590,13 @@ this.router.navigate(['admin']);
     var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
     var itemid=trxLnArr[i].invItemId;
     var locId=trxLnArr[i].locatorId;
+    var onhandid=trxLnArr[i].id;
     var subcode=this.miscellaneousForm.get('subInventory').value;
     // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     let selloc=this.getfrmSubLoc.find(d=>d.segmentName===event);
     // alert(selloc.locatorId+'Id')
 
-      this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,selloc.locatorId,itemid).subscribe
+    this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
       (data =>{ this.onhand = data
         trxLnArr1.controls[i].patchValue({systemQty:this.onhand.onHandQty});
       });
@@ -930,7 +933,7 @@ this.router.navigate(['admin']);
 
       saveMisc()
       {
-        if (this.miscellaneousForm.valid) {
+        // if (this.miscellaneousForm.valid) {
         this.displayButton=true;
         const formValue:Imiscellaneous=this.miscellaneousForm.value;
         this.service.miscSubmit(formValue).subscribe
@@ -962,13 +965,13 @@ this.router.navigate(['admin']);
             }
           }
         })
-      }
-      else{
+    //   }
+    //   else{
   
-        alert('else');
-        this.HeaderValidation();
+    //     alert('else');
+    //     this.HeaderValidation();
       
-    }
+    // }
       }
 
      

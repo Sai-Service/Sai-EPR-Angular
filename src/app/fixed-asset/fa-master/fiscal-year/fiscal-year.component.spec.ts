@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageNotFouundComponent } from './page-not-fouund.component';
+import { FiscalYearComponent } from './fiscal-year.component';
 
-describe('PageNotFouundComponent', () => {
-  let component: PageNotFouundComponent;
-  let fixture: ComponentFixture<PageNotFouundComponent>;
+describe('FiscalYearComponent', () => {
+  let component: FiscalYearComponent;
+  let fixture: ComponentFixture<FiscalYearComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageNotFouundComponent ]
+      declarations: [ FiscalYearComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PageNotFouundComponent);
+    fixture = TestBed.createComponent(FiscalYearComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

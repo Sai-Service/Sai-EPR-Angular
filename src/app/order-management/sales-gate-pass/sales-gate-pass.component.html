@@ -1,0 +1,50 @@
+<form [formGroup]="SalesGatepassForm" (ngSubmit)="SalesGatepass(SalesGatepassForm.value)" >
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Sales&nbsp;Gate&nbsp;Pass&nbsp;
+            </td>
+        </tr>
+    </table>
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 14px;color: black;font-weight: bold;">
+           Gate Pass Generation</legend>
+    <table class="center" style="width: 100%;">
+        <tr>
+          <td>
+              <table> 
+                  <tr>
+                    <td style="font-weight: bold;"> Order&nbsp;No&nbsp;:&nbsp;  </td>
+                    <td><input type="text" class="form-control" formControlName="orderNumber"  [(ngModel)]="orderNumber"> </td>
+                    <td>
+                        <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber)">Generate&nbsp;Gatepass</button>
+                    </td>
+        
+                  </tr>
+              </table>
+          </td>
+        </tr>
+    </table>
+    </fieldset>
+    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+        <tr>
+          <td >
+              <table class="center">
+                  <tr>
+                    <td  style="background-color: #FFE4B5;">
+                        &nbsp;Order&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td style="background-color: #FFE4B5;">
+                        <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                            value={{orderNumber}}>
+                    </td>
+                    <td style="background-color: #FFE4B5;">
+                        <button type="button" class="btn-primary" (click)="gatePassOrderNo(orderNumber)"><i class="fa fa-search"
+                                aria-hidden="true"></i></button>
+                    </td>
+                  </tr>
+              </table>
+          </td>
+        </tr>
+    </table>
+</form>

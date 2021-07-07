@@ -996,9 +996,9 @@ getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
 }
-ItemIdListDept(deptname):Observable<any>
+ItemIdListDept(deptname,locId,subId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent/${deptname}`)
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?dept=${deptname}&locationId=${locId}&subInventoryId=${subId}`)
 }
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
@@ -1079,6 +1079,15 @@ issueReturn(locId1):Observable<any>{
 returnBillableType(repno):Observable<any>{
       return this.http.get(this.ServerUrl+`/mtrlIssue/jobBillable?repairNo=${repno}`);
     }   
+    itemLst(jobno,typ):Observable<any>{
+      return this.http.get(this.ServerUrl+`/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}`);
+    }   
+    getsubInv(subId):Observable<any>{
+      return this.http.get(this.ServerUrl+`/subInvMst/subinvname/${subId}`);
+    }
+    getretfrmSubLoc(locId,itemId,subId,jobno):Observable<any>{
+      return this.http.get(this.ServerUrl+`/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
+    }
 /////////Subinventory/////////////
 public saveSubinventory(subInvRecord)
 {
@@ -1222,7 +1231,6 @@ UpdatetaxAccountMasterById(taxAccountMasterRecord) {
  geActDetails1(mtaxTypeId): Observable<any> {
   return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
  }
-
 getTaxCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/JaiTaxCatg');
  }
@@ -1336,12 +1344,17 @@ tdsVendorList(): Observable<any> {
 }
 
 tdsSectionList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_SECTION');
+  // return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_SECTION');
+  return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/JAI_TDS_SECTION');
+
+  
 
 }
 
 tdsTaxCategoryList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+  // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
+   return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/TDS');
+ 
 
 }
 
@@ -1825,6 +1838,11 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl +'/cmnLookup/type/EWType');
     } 
 
+    EwCancelReasonList(): Observable<any> {
+      return this.http.get(this.ServerUrl +'/cmnLookup/type/EW CANCEL REASON');
+    } 
+
+
     ModelVariantList(): Observable<any> {
       return this.http.get(this.ServerUrl +'/cmnLookup/type/Variant');
     } 
@@ -1915,9 +1933,36 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/ewmaster/${mEWNo}`);
   } 
 
+  getVehicleOrderDetails(mOrderNumber): Observable<any> {
+    // alert("ms order number>>"+mOrderNumber);
+    return this.http.get(this.ServerUrl + `/orderHeader/EwOrder/${mOrderNumber}`);
+    } 
+  
+
   getEWStatusVehcile(mRegno): Observable<any> {
+    // alert("ms>>"+mRegno);
     return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`);
  } 
+
+ getLastRunKms(mRegno): Observable<any> {
+  // alert("ms>>"+mRegno);
+  return this.http.get(this.ServerUrl + `/jobCard/lastKms?regNo=${mRegno}`);
+ 
+} 
+
+// EwClaimedCheck(mRegno): Observable<any> {
+//   alert("ms>>"+mRegno);
+//   return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
+//    // http://localhost:8081/jobCard/ewjobNo?regNo=MH12EM6011&billableTyName=Extended Warranty
+ 
+// } 
+EwClaimedCheck(mRegno): Observable<any> {
+  // alert("ms>>"+mRegno);
+  return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
+ 
+} 
+
+ 
 
    public SaiEwCustomerSubmit(EwCustomerMasterRecord) {
     const options = {
@@ -1963,10 +2008,16 @@ OrderCategoryList(): Observable<any> {
   return this.http.get(this.ServerUrl + '/PackageMst');
 }
 
-getMcpPackageSearchNew(mPkgType,mFuelType): Observable<any> 
+getMcpPackageSearchNew1(mPkgType,mFuelType): Observable<any> 
 {
   // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
    return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}`);
+  
+}
+
+getMcpPackageSearchNew2(mPkgNo,mFuelType): Observable<any> 
+{
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgNoAndFuelType?packageNumber=${mPkgNo}&fuelType=${mFuelType}`);
   
 }
 
@@ -2074,6 +2125,10 @@ getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
 }
+// getonhandqty(locatorId):Observable<any>
+// {
+//   return this.http.get(this.ServerUrl+`/onhandqty/locator?id=${locatorId}`)
+// }
 miscellaneousSubmit(miscRecord):Observable<any>
 {
   const options ={
@@ -2121,6 +2176,31 @@ miscellaneousUpdate(comId,cyclelinerecord){
   const url=(this.ServerUrl+`/cycleline/${comId}`);
   return this.http.put(url,cyclelinerecord,options);
 }
+
+
+/////////////////////////////// PO INVOICE -TDS LINE /////////////////////////
+getTdsDetails(mInvoiceId): Observable<any> {
+  // alert("MS>> "+mInvoiceId);
+  return this.http.get(this.ServerUrl+`/apInv/apTdsDis?invId=${mInvoiceId}`);
+  // http://localhost:8081/apInv/apTdsDis?invId=27
+}
+
+getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId): Observable<any> {
+   return this.http.get(this.ServerUrl+`/poHdr/potaxcal?itemId=${mItemId}&baseAmt=${mBaseAmt}&taxCateId=${mTaxCatId}`);
+  // http://localhost:8081/poHdr/potaxcal?itemId=1&baseAmt=1000&taxCateId=14071   
+}
+
+getPOReceiptSearchByRcptNo(mReceiptNo): Observable<any> {
+  return this.http.get(this.ServerUrl+`/rcvShipment/receiptNoWise/${mReceiptNo}`)
+}
+
+getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
+  return this.http.get(this.ServerUrl+`/rcvShipment/findByPONumber/${mPoNumber}`)
+}
+
+
+
+
 
     //////////////////////////EXTENDED WARRANTY/////////////////////////////
 

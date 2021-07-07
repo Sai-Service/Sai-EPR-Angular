@@ -30,6 +30,10 @@ import { JournalVoucherComponent } from './journal-voucher/journal-voucher.compo
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
 import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
 import { WorkShopReturnComponent } from './work-shop-return/work-shop-return.component';
+import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
+import { InterStateComponent } from './inter-state/inter-state.component';
+
+
 
 
 
@@ -54,16 +58,15 @@ import { WorkShopReturnComponent } from './work-shop-return/work-shop-return.com
     McpEnquiryComponent, 
     McpEnrollmentComponent, 
     McpCancellationComponent, 
-  
     StockTakingComponent,
-   JournalVoucherComponent,
+    JournalVoucherComponent,
     AvgCostUpdateComponent,
- 
     OnHandDetailsComponent,
-    
     AccountEnquiryComponent,
-    
     WorkShopReturnComponent,
+    ReturnToVendorComponent,
+    InterStateComponent,
+   
   ],
   
   imports: [

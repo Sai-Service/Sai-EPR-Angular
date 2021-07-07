@@ -22,8 +22,12 @@ interface IEwScheme {
   ewSchemeDesc:string;
   ewInsId : number;
   schemeStartDate:Date;
+  
   schemeEndDate:Date;
   schemeKms:number;
+  validFromKms:number;
+  validToKms:number;
+  
   schemeAmount:number;
 
   
@@ -37,6 +41,8 @@ interface IEwScheme {
 
 export class SaiEwSchemeMasterComponent implements OnInit {
         saiEwSchemeMasterForm : FormGroup;
+        
+        pipe = new DatePipe('en-US');
 
         public OUIdList           : Array<string> = [];
         public mainModelList      :Array<string>  = [];
@@ -89,11 +95,14 @@ export class SaiEwSchemeMasterComponent implements OnInit {
         ewInsId : number;
         ewInsurerSiteId:number;
       
-        schemeStartDate:Date;
+        // schemeStartDate:Date;
+        schemeStartDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         schemeEndDate:Date;
       
         premiumPeriod:number;
         schemeKms:number;
+        validFromKms:number;
+        validToKms:number;
         schemeAmount:number;
 
         fromSlab:string;
@@ -143,6 +152,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           
             premiumPeriod:[],
             schemeKms:[],
+            validFromKms:[],
+            validToKms:[],
             schemeAmount:[],
             addEw:[],
 
@@ -515,6 +526,20 @@ export class SaiEwSchemeMasterComponent implements OnInit {
                      alert ("SCHEME KM LIMIT: Should be above Zero");
                      return;
                   } 
+
+                  if (formValue.validFromKms <=0 || formValue.validFromKms===undefined || formValue.validFromKms===null || formValue.validFromKms>formValue.validToKms)
+                  {
+                      this.checkValidation=false;  
+                      alert ("VALID FROM KM : Should be above Zero/Should not be above VALID TO KMS");
+                      return;
+                   } 
+
+                   if (formValue.validToKms <=0 || formValue.validToKms===undefined || formValue.validToKms===null || formValue.validToKms<formValue.validFromKms )
+                   {
+                       this.checkValidation=false;  
+                       alert ("VALID TO KM: Should be above Zero/Should not be below VALID FROM KMS");
+                       return;
+                    } 
   
                  if (formValue.schemeAmount===undefined || formValue.schemeAmount===null || formValue.schemeAmount<=0)
                  {

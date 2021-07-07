@@ -88,7 +88,14 @@ UpdateValidate(invoiceNum) {
   getTaxDetails(taxCategoryId,invItemId, disAm,amount): Observable<any> {
     return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
   }
-
+  
+    public PoInvoiceTdsDataSubmit(poTdsRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/apInv/insertTdsDtls';
+      return this.http.post(url, poTdsRecord, options);
+    }
 //=======================================Payment Componanat==============================
 getsearchByPayment(suppNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp/${suppNo}`);

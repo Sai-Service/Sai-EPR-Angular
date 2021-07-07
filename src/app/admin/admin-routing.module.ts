@@ -27,6 +27,10 @@ const routes: Routes = [
         path: 'service',
         loadChildren: () => import('../service/service.module').then(mod => mod.ServiceModule)
       },
+      {
+        path: 'FixedAsset',
+        loadChildren: () => import('../fixed-asset/famaster.module').then(mod => mod.faMasterModule)
+      },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
 ];

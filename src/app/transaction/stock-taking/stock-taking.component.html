@@ -327,11 +327,11 @@
                    <table>
              <tr>
                  <td>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" class="form-check-input" formControlName="trans" id =Adjustment  value="Adjustment" [(ngModel)]="Adjustment" (change)="postAdjustment($event)" (click)="viewdata(compNo)">
+                        <input type="radio" class="form-check-input" formControlName="trans" id =Adjustment  value="Adjustment" [(ngModel)]="Adjustment" (click)="postAdjustment($event,compNo)">
                         <label for ="Adjustment"  class="LabelFontStyle">Adjustment</label>
                  </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <td>
-                        <input type="radio" class="form-check-input" formControlName="trans" id =Approve  value="Approve" [(ngModel)]="Approve" (change)="postAdjustment($event)" (click)="viewdata(compNo)">
+                        <input type="radio" class="form-check-input" formControlName="trans" id =Approve  value="Approve" [(ngModel)]="Approve" (click)="postAdjustment($event,compNo)">
                         <label for ="Approve" style="width: 15%" class="LabelFontStyle">Approve</label>
                  </td>
                     
