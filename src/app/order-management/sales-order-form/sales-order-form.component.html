@@ -1111,6 +1111,9 @@
                                                             {{sc.taxCategoryName}}
                                                         </option>
                                                     </select>
+                                                    <input hidden type="number" formControlName="taxCategoryId"
+                                                    [(ngModel)]='taxCategoryId' class="form-control"
+                                                    style="height: 20px;width: 160px;">
                                                         </ng-template>
                                                         
                                                     <ng-template #elsetaxCategoryName>
@@ -1344,8 +1347,9 @@
                                                         *ngIf="SalesOrderBookingForm.controls['taxAmounts'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                                                     </div>
                                                     <ng-template #thenBlock>
+                                                        <!-- (change)="validateNum(i,j)" -->
                                                         <td><input type="number" formControlName="totTaxAmt"
-                                                                (change)="validateNum(i,j)" class="form-control"
+                                                                 class="form-control"
                                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
                                                                 class="form-control">
                                                         </td>
@@ -1397,8 +1401,8 @@
                                                 </tr>
                                                 <tr>
                                                     <!-- <input hidden type="text" formControlName="itemId"
-                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"> -->
-                                                    <!-- <input hidden type="text" class="form-control"
+                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
+                                                    <input hidden type="text" class="form-control"
                                                         formControlName="invLineNo"
                                                         style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"> -->
                                                 </tr>
@@ -1407,10 +1411,10 @@
                                     </tbody>
         
                                 </table>
-                                <!-- <button type="button" class="btn btn-primary"
+                                <button type="button" class="btn btn-primary"
                                     (click)="addDiscount(selectedLine)"
                                     style="width: 8rem; border: solid 1px Gray">Apply
-                                    Discount</button> -->
+                                    Discount</button>
                             </div>
                         </div>
                        

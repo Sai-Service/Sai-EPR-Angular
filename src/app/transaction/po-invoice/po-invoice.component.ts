@@ -1829,11 +1829,6 @@ getGroupControl(index,arrayname, fieldName) {
     var invLineNo = controlinv1[i].invLineNo;
     var invLineItemId = controlinv1[i].invLineItemId;
     this.activeLineNo=invLineNo;
-    // alert("invLineItemId " + invLineItemId + " " + "invLineNo " + invLineNo);
-    // controlinv.controls[i].patchValue({
-    //   invLineItemId: invLineItemId,
-    //   invLineNo:invLineNo
-    // });
     var arrayControl = this.poInvoiceForm.get('invLines').value;
     var patch = this.poInvoiceForm.get('invLines') as FormArray;
     var patchDistributionAmt = this.poInvoiceForm.get('distribution') as FormArray;
