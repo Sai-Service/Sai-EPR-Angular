@@ -412,6 +412,11 @@
                         <input disabled    type="text"  formControlName="customerPanNo"  id="customerPanNo" [(ngModel)]="customerPanNo" class="form-control" >
                     </td>
 
+                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+
+                    <td>
+                        <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                    </td>
                     
             
                     </tr>
@@ -768,7 +773,7 @@
 
 
                       
-                    <div *ngIf="ewCancelledFlag; then thenBlock909; else elseBlock909"></div>
+                    <div *ngIf="cancelledFlag; then thenBlock909; else elseBlock909"></div>
                      <ng-template #thenBlock909>
                     
                             <td>  
@@ -1068,17 +1073,17 @@
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.ewId}}</td>
+                <td >{{com.ewId}}</td>
                 <td>{{com.ewType}}</td>
                 <td>{{com.paytmentSource}}</td>
                 <td>{{com.orderNo}}</td>   
                 <td>{{com.vehRegNo}}</td>   
                 <td>{{com.custName}}</td>
-                <td>{{com.ewPeriod}}</td>
-                <td>{{com.ewSaleDate | date:'dd-MM-y'}}</td>
-                <td>{{com.ewStartDate | date:'dd-MM-y'}}</td>
-                <td>{{com.ewEndDate | date:'dd-MM-y'}}</td>
-                <td>{{com.ewCancelDate | date:'dd-MM-y'}}</td>      
+                <td style="text-align: center;">{{com.ewPeriod}}</td>
+                <td style="text-align: center;">{{com.ewSaleDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewStartDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewEndDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewCancelDate | date:'dd-MM-y'}}</td>      
                 <td><button class="btn btn-info" (click)="Select(com.ewId)">Select</button></td>   
         </tr>
     </table>
