@@ -582,9 +582,6 @@ getLocation(k)
       thresHoldHdrId:[],
       thresHoldTypeId:[],
 
-    
-
-      
     })
   }
 
@@ -1073,6 +1070,9 @@ getGroupControl(index,arrayname, fieldName) {
             this.TaxDetailsArray().push(invLnGrp);
             
           }
+
+
+          
           this.poInvoiceForm.get('invLines').patchValue(data.invLines);
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
@@ -1144,13 +1144,10 @@ getGroupControl(index,arrayname, fieldName) {
             this.poInvoiceForm.get('taxLines').disable();
           }
         }
-
-
-
-       
-     
-       
       )
+
+
+      this.showTdsLines();
   }
 
 
@@ -2202,7 +2199,7 @@ getGroupControl(index,arrayname, fieldName) {
         // alert ("Tds lines...wip.inv id :"+mInvId);
        var arraybase=this.poInvoiceForm.get('obj').value;
        var invId=arraybase[0].invoiceId;
-       alert("invoice Id :"+invId);
+      //  alert("invoice Id :"+invId);
  
         this.service.getTdsDetails(invId)
         .subscribe(
@@ -2225,14 +2222,7 @@ getGroupControl(index,arrayname, fieldName) {
 
           });
 
-       
          
-          // var tdsTaxArr = this.poInvoiceForm.get('tdsLines').value;
-          // var invdtsId=tdsTaxArr[0].invDistributionId;
-          // alert(invdtsId);
-          // var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
-          // patch.controls[0].patchValue({invoiceDistId:invdtsId});
-
    
       }
 

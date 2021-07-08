@@ -11,7 +11,9 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { trigger } from '@angular/animations';
 
 
-interface IRtnToVendor { }
+interface IRtnToVendor {
+  searchReceiptNo:number;
+ }
 
 @Component({
   selector: 'app-return-to-vendor',
@@ -22,8 +24,10 @@ export class ReturnToVendorComponent implements OnInit {
   returntoVendorForm : FormGroup;
   pipe = new DatePipe('en-US');
   public DepartmentList: Array<string> = [];
-
-  lstcomments:  Array<any> = [];
+  lstReceiptLines: any;
+  lstcomments: any;
+  getPoReceiptDetails:  Array<any> = [];
+  public locIdList: Array<string> = [];
 
       loginName:string;
       loginArray:string;
@@ -37,20 +41,20 @@ export class ReturnToVendorComponent implements OnInit {
     // emplId :number;
       public emplId =6;
 
-      // searchByreceiptNo: number;
+      searchReceiptNo: number;
       // searchBypoNumber:number;
 
       
       searchBypoNumber=2181211101212100;
-      searchByreceiptNo=1000155;
+      // searchByreceiptNo=1000155;
 
             poNumber:number;
             segment1:number;
             poDate:number;
-            receiptNo:Date;
+            receiptNo:number;
             receiptDate:Date;
             orderType:string;
-            suppNo:string;
+            suppName:string;
             supInvNumber:string;
             supinvDate:Date;
             baseAmount:number;
@@ -66,6 +70,7 @@ export class ReturnToVendorComponent implements OnInit {
 
             display1=true;
             display = true;
+            displaySaveButton =false;
 
    constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.returntoVendorForm = fb.group({ 
@@ -80,17 +85,17 @@ export class ReturnToVendorComponent implements OnInit {
             emplId:[''],
             orgId:[''],
 
-            searchByreceiptNo:[],
+            searchReceiptNo:[],
             searchBypoNumber:[],
          
 
             poNumber:[],
             segment1:[],
             poDate:[],
-            receiptNumber:[],
+            receiptNo:[],
             receiptDate:[],
             orderType:[],
-            suppNo:[],
+            suppName:[],
             supInvNumber:[],
             supinvDate:[],
             baseAmount:[],
@@ -145,6 +150,14 @@ export class ReturnToVendorComponent implements OnInit {
           console.log(this.loginArray);
           console.log(this.locId);
 
+           this.service.getLocationSearch()
+            .subscribe(
+              data => {
+                this.locIdList = data;
+                console.log(this.locIdList);
+              }
+            );
+
           this.service.DepartmentList()
           .subscribe(
             data => {
@@ -154,19 +167,23 @@ export class ReturnToVendorComponent implements OnInit {
           ); }
 
 
-        SearchByRcptNumber(mRcptNumber:any) {
-          // alert("SearchByRcptNumber>>WIP-RCPT:"+mRcptNumber );
-          this.service.getPOReceiptSearchByRcptNo(mRcptNumber)
-          .subscribe(
-           data => {
-            this.lstcomments.push(data);
-            console.log(this.lstcomments);
-            // data.totalAmt=100;
-            // this.returntoVendorForm.get('lstcomments').patchValue({totAmt:data.totalAmt})
-            // alert("lenght:" +this.lstcomments.length);
-         }
-        );
-      }
+
+       SearchByRcptNumber1(mRcptNumber)   {
+        alert("WIP-RCPTNUMBER: "+mRcptNumber);
+        this.service.getPOReceiptSearchByRcptNo(mRcptNumber)
+        .subscribe(
+          data => {
+           this.lstcomments = data.obj;
+           console.log(this.lstcomments);
+
+           alert(data.obj.suppId);
+        }
+       );
+    
+       }
+
+         
+     
 
 
         SearchByPONumber(mPoNumber)   {
@@ -244,7 +261,7 @@ export class ReturnToVendorComponent implements OnInit {
         }
     
         // alert("rcvLines LENGTH: "+ select.rcvLines.length);
-        if(select.rcvLines.length>0){
+        if(select.rcvLines1.length>0){
     
            this.lineDetailsArray().clear();
     
@@ -265,6 +282,70 @@ export class ReturnToVendorComponent implements OnInit {
           this.returntoVendorForm.patchValue(select);
         }
 
+        
+        SearchByRcptNumberxxx(mRcptNumber:any) {
+          alert("SearchByRcptNumber>>WIP-RCPT:"+mRcptNumber );
+          this.service.getPOReceiptSearchByRcptNo(mRcptNumber)
+          .subscribe(
+           data => {
+            //  this.getPoReceiptDetails = data;
+            this.getPoReceiptDetails.push(data);
+            console.log(this.getPoReceiptDetails);
+            // data.totalAmt=100;
+            // this.returntoVendorForm.get('lstcomments').patchValue({totAmt:data.totalAmt})
+            // alert("lenght:" +this.lstcomments.length);
+
+            this.returntoVendorForm.patchValue({
+              segment1:data.segment1 ,
+              receiptNo:data.receiptNo,
+              receiptDate:data.receiptDate,
+              suppName:data.supplierName, });
+                        
+         });
+       
+        //  var control = this.returntoVendorForm.get('rcvLines') as FormArray;
+        //  var rcvLines:FormGroup=this.lineDetailsGroup();
+        //  control.push(rcvLines);
+           
+   
+       }
+
+
+       SearchByRcptNumber(mRcptNumber:any){
+          // this.lineDetailsArray.clear();
+          this.displaySaveButton =false;
+          // alert(segment1);
+          alert("REceipt number:"+mRcptNumber);
+          this.returntoVendorForm.reset();
+         
+          this.service.getsearchByReceiptNo(mRcptNumber)
+            .subscribe(
+              data => {
+                this.lstReceiptLines = data;
+                console.log(this.returntoVendorForm.value);
+                alert("this.lstReceiptLines.length ="+this.lstReceiptLines.length);
+
+                let control = this.returntoVendorForm.get('rcvLines') as FormArray;
+                var rcvLines:FormGroup=this.lineDetailsGroup();
+                var length1=this.lstReceiptLines.rcvLines.length-1;
+                alert("this.lstReceiptLines.length ="+this.lstReceiptLines.length);
+
+                this.lineDetailsArray().removeAt(length1);
+               
+
+                var len=this.lineDetailsArray.length;
+            
+                for ( var i=0;i<this.lstReceiptLines.rcvLines.length-len;i++){
+                  control.push(rcvLines);
+                }
+            
+                this.returntoVendorForm.get('rcvLines').patchValue(this.lstReceiptLines.rcvLines);
+                this.returntoVendorForm.patchValue(this.lstReceiptLines);
+               
+            }
+            
+            );  
+        }
 
 
  
