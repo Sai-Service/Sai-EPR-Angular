@@ -1,16 +1,40 @@
+
+  <form [formGroup]="returntoVendorForm" (ngSubmit)="returntoVendor(returntoVendorForm.value)">
+
 <div class="center">
     <table style="width: 100%;background-color: white;">
-        <tr>
+        <!-- <tr>
             <td class="PageHeader">
                 &nbsp;&nbsp;RETURN&nbsp;TO&nbsp;VENDOR&nbsp;
             </td>
+        </tr> -->
+
+
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;RETURN&nbsp;TO&nbsp;VENDOR&nbsp;
+            </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;PO&nbsp;Receipt&nbsp;No:&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input type='number' class="form-control" formControlName="searchReceiptNo" [(ngModel)]='searchReceiptNo' 
+                                     value={{searchReceiptNo}} style="text-align: left;">
+                   
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="SearchByRcptNumber(searchReceiptNo)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
+
+
         </tr>
     </table>
 
     <div class="center" style="width: 100%;">
         <div class="form-bg">
             <div class="center" style="width: 100%;">
-                <form [formGroup]="returntoVendorForm" (ngSubmit)="returntoVendor(returntoVendorForm.value)">
+                <!-- <form [formGroup]="returntoVendorForm" (ngSubmit)="returntoVendor(returntoVendorForm.value)"> -->
 
                      <table class="center">
                         <tr>
@@ -31,11 +55,16 @@
                                     <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
                                 </td>
 
+                               
                                 <td >
                                     <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
                                     class="form-control" [(ngModel)]="deptId" placeholder="">
 
                                 </td>
+
+                               
+
+
 
                                 <td >
                                     <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
@@ -79,20 +108,40 @@
                                 &nbsp;Location&nbsp;:&nbsp;
                             </td>  
 
-                            <td>
+                            <!-- <td>
                             <input disabled formControlName="locId" [(ngModel)]='locId'
                                                     value={{locId}} class="form-control"
                                                     placeholder="" >
-                            </td>
+                            </td> -->
+
+                            <td>
+                            <select  disabled formControlName="locId" id="locId" class="form-control" >
+                               <option disabled>--Select--</option>
+                                <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
+                                <!-- {{sc.locId}}- -->
+                                {{sc.locCode}}-{{sc.locName}}
+                                </option>
+                            </select>
+                           </td>
 
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Dept&nbsp;:&nbsp;
                             </td>  
-
+                            <!-- 
                             <td>
                             <input disabled formControlName="deptId" [(ngModel)]='deptId'
                                                     value={{deptId}} class="form-control"
                                                     placeholder="" >
+                            </td> -->
+
+
+                            <td>  
+                                <select disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
+                                    {{sc.cmnTypeId}}-{{sc.code}}
+                                    </option>
+                                </select>
                             </td>
 
                         </tr>
@@ -159,8 +208,8 @@
                             </td>  
     
                             <td>
-                            <input  type ="text" disabled formControlName="suppNo" [(ngModel)]='suppNo'
-                                                    value={{suppNo}} class="form-control"
+                            <input  type ="text" disabled formControlName="suppName" [(ngModel)]='suppName'
+                                                    value={{suppName}} class="form-control"
                                                     placeholder="" >
                             </td>
 
@@ -447,18 +496,7 @@
                     <table class="center" style="width: 100;" style="width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
                         <tr>
 
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Deptartment&nbsp;:&nbsp;
-                            </td>   -->
-
-                            <!-- <td>  
-                                <select formControlName="searchByDept" id="searchByDept" [(ngModel)]="searchByDept" class="form-control">
-                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
-                                        {{sc.cmnTypeId}}-{{sc.code}}
-                                    </option>
-                                </select>
-                            </td> -->
+                          
 
 
                             <td style="width: 15%" class="LabelFontStyle">
@@ -476,22 +514,8 @@
                                             class="fa fa-search"></i></button> 
 
                                 </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;PO&nbsp;Receipt&nbsp;No:&nbsp;:&nbsp;
-                            </td>  
-                            <td>
-                            <input formControlName="searchByreceiptNo" [(ngModel)]='searchByreceiptNo'
-                                                    class="form-control"
-                                                    placeholder="Enter Receipt No" style="width: 200px;" >
-                            </td>
-
-                            <td colspan="8" style="text-align: left; width: 100%;">
-                                <button type="submit"  (click)="SearchByRcptNumber(searchByreceiptNo)" class="btn btn-primary"><i
-                                        class="fa fa-search"></i></button> 
-                            </td>
                             
-                             <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                             <!-- <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                                 &nbsp;Date:&nbsp;
                             </td>  
 
@@ -508,7 +532,7 @@
                             </td>  
                             <td>
                                 <input type ="date"  formControlName="toDate" [(ngModel)]='toDate'class="form-control">
-                            </td>
+                            </td> -->
 
                             
 
@@ -519,12 +543,12 @@
 
 
                     <!-- ========================================== -->
-                </form>
+               
             </div>
         </div>
     </div>
 </div>
-
+</form>
 <br>
 
 <div class="container1">
@@ -534,11 +558,13 @@
                 <tr class="GridHeader">
                 <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
                 <!-- <th style="width:10rem"  scope="col">Order&nbsp;Type</th>    -->
-                <th style="width:5rem"  scope="col">Receipt&nbsp;Number&nbsp;</th>
+                <th style="width:5rem"  scope="col">Receipt&nbsp;No&nbsp;</th>
                 <th style="width:10rem" scope="col">Receipt&nbsp;Date</th>
-                <th style="width:10rem" scope="col">PO&nbsp;Number</th>
-                <!-- <th style="width:10rem" scope="col">PO&nbsp;Date</th> -->
-                <th style="width:10rem" scope="col">Amount&nbsp;</th>
+                <th style="width:10rem" scope="col">PO&nbsp;No</th>
+                <th style="width:10rem" scope="col">PO&nbsp;Date</th>
+                <th style="width:10rem" scope="col">Taxable&nbsp;Amt&nbsp;</th>
+                <th style="width:10rem" scope="col">Tax&nbsp;Amt&nbsp;</th>
+                <th style="width:10rem" scope="col">Total&nbsp;Amt&nbsp;</th>
                 <th style="width:20rem" scope="col">Supplier&nbsp;</th>
                 <th style="width:6rem" scope="col">Select</th>
             </tr>
@@ -547,9 +573,12 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{com.receiptNo}}</td>
                 <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>   
-                <td style="text-align: center;">{{com.segment1}}</td>   
-                <td style="text-align: center;">{{com.totAmt}}</td>   
-                <td style="text-align: center;">{{com.suppNo}}-{{com.supplierName}}</td> 
+                <td style="text-align: center;">{{com.segment1 }}</td>  
+                <td style="text-align: center;">{{com.poDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.baseAmount}}</td> 
+                <td style="text-align: center;">{{com.taxAmt}}</td>  
+                <td style="text-align: center;">{{com.totAmt}}</td>  
+                <td style="text-align: center;">{{com.supplierName}}</td> 
                <td><button class="btn btn-info" (click)="Select(com.receiptNo)">Select</button></td>   
         </tr> 
     </table>

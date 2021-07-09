@@ -2238,6 +2238,8 @@ getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId): Observable<any> {
 
 getPOReceiptSearchByRcptNo(mReceiptNo): Observable<any> {
   return this.http.get(this.ServerUrl+`/rcvShipment/receiptNoWise/${mReceiptNo}`)
+  // return this.http.get(this.ServerUrl+`/rcvShipment/findByReceiptNum/${mReceiptNo}`)
+  // http://localhost:8081/rcvShipment/findByReceiptNum/1000155
 }
 
 getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
