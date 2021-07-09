@@ -926,6 +926,19 @@
                 <ng-template #elseLineTaxDetails>         
             <div class="grid_scroll1">
                 <fieldset class="RFS" style="height: 300px;">
+                   <table>
+                       <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            TDS&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <select formControlName="tcs" id="tcs" class="form-control" style="width: 170px;"  (change)="onKey(i)">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                            </select>
+                        </td>
+                       </tr>
+                   </table>
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Line & Tax Details</legend>
                     <div class="classic-tabs">
                         <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
@@ -1088,16 +1101,6 @@
                                                         <input disabled type="number" formControlName="unitSellingPrice" class="form-control"
                                                             style="height: 20px;width: 90px;" (change)="onKey(i)">
                                                     </td>
-                                                    <!-- <td>
-                                                        
-                                                        <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
-                                                    
-                                                        <input hidden type="number" formControlName="taxCategoryId"
-                                                            [(ngModel)]='taxCategoryId' class="form-control"
-                                                            style="height: 20px;width: 160px;">
-                                                        <input hidden type="number" formControlName="orgId" [(ngModel)]='orgId'
-                                                            class="form-control" style="height: 20px;width: 160px;">
-                                                </td> -->
                                                     </ng-template>
                                                     <td>
                                                         <div *ngIf="displaytaxCategoryName[i]; then thentaxCategoryName; else elsetaxCategoryName"> </div>

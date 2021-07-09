@@ -559,8 +559,6 @@ getLocation(k)
 
     tdsLineDetails() {
       return this.fb.group({
-      
-
       invoiceLineNum: [],
       distCodeCombSeg: [],
       baseAmount: [],
@@ -2168,15 +2166,12 @@ getGroupControl(index,arrayname, fieldName) {
 
       SaveTdsDetails() {
         alert("SAVE TDS DETAILS.....WIP")
-        var tdsLines= this.poInvoiceForm.get('tdsLines')
+        var tdsLines= this.poInvoiceForm.get('tdsLines').value;
+        console.log();
+        
         var req = new Array();
-        // var accLines = this.poInvoiceForm.get('invLines').value;
-        var accArr1 = tdsLines;
-    
-        req.push(accArr1); 
-      
-        // const formValue: IpoInvoice =this.transeData(this.poInvoiceForm.value);
-        // const formValue: IpoInvoice =(this.poInvoiceForm.value);
+        // var accArr1 = tdsLines;
+        req.push(tdsLines); 
         this.transactionService.PoInvoiceTdsDataSubmit(req).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFULLY');

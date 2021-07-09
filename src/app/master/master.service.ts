@@ -142,6 +142,21 @@ export class MasterService {
   }
 
  
+  taxCategoryListForSALESwithstatetcs(customerId,loginOuId1,itemId,custOuId,deptName,tcs): Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('customerId', customerId)
+    .set('loginOuId1', loginOuId1)
+    .set('itemId', itemId)
+    .set('custOuId', custOuId)
+    .set('deptName',deptName)
+    .set('tcs',tcs)
+    const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
+  }
+
+
   taxCategoryListHSN(mPer,mType): Observable<any> {
     // alert("MTYPE= "+mType + "  MPER= " + mPer);
     return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateGstPer?taxCatType=${mType}&gstPer=${mPer}`);
