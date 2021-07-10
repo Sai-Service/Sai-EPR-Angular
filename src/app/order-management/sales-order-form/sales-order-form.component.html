@@ -1042,7 +1042,7 @@
                                                     <div *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
                                                     <ng-template #thensegmentInvType>
                                                     <td>
-                                                        <select formControlName="invType" id="invType"
+                                                        <select formControlName="invType" id="invType{{i}}"
                                                         (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                                         class="form-control"
                                                         style="width: 160px;height: 25px;font-size: 10px;">
@@ -1053,13 +1053,13 @@
                                                     </select>
                                                     </td>
                                                     <td>
-                                                        <select formControlName="segment" id="segment"  
+                                                        <select formControlName="segment"  id="segment{{i}}"   
                                                                 (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                                 class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let item of  invItemList1" [value]="item.segment">
-                                                                    {{item.segment}}
+                                                                <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
+                                                                    {{item.value.segment}}
                                                                 </option>
                                                             </select>
                                                             <input hidden type="number" formControlName="itemId">
@@ -1147,7 +1147,7 @@
                                                     <td>
                                                        
                                                         <input disabled type="text" formControlName="hsnSacCode" class="form-control"
-                                                            style="height: 20px;width: 70px;">
+                                                            style="height: 20px;width: 70px;text-align: left;">
                                                     </td>
                                                     <td>
                                                         <div *ngIf="displayLineflowStatusCode[i]; then thenLineflowStatusCode; else elseLineflowStatusCode"> </div>
