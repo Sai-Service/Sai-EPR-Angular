@@ -54,12 +54,38 @@ export class SalesGatePassComponent implements OnInit {
   excessAmt:number
   lstcomments:any;
   emplId:number;
+  invoiceNo:number;
+  invoiceDt:Date;
+  custName:string;
+  custAdd:string;
+  contactNo:number;
+  contactPerson:string;
+  salesExeName:string;
+ 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private orderManagementService: OrderManagementService) {
     this.SalesGatepassForm = fb.group({
       gatepassNo: [''],
       orderNumber:[''],
       emplId:[''],
+      segment:[],
+      vin:[],
+      modelVarClr:[],
+      deliveryLoc:[],
+      serviceLoc:[],
+      dateOfDelv:[],
+      invoiceNo:[],
+      invoiceDt:[],
+      vehicleNo:[],
+      dmsSob:[],
+      remark:[],
+      custName:[],
+      custAdd:[],
+      contactNo:[],
+      contactPerson:[],
+  salesExeName:[],
+  balOutstandAmt:[],
+  excessAmt:[],
       })   
      }
   ngOnInit(): void {
@@ -81,12 +107,18 @@ export class SalesGatePassComponent implements OnInit {
         this.deliveryLoc=this.lstcomments.deliveryLoc;
         this.serviceLoc=this.lstcomments.serviceLoc;
         this.orderNumber=this.lstcomments.orderNumber;
-        this.trxNumber=this.lstcomments.trxNumber;
-        this.trxDate=this.lstcomments.trxDate;
+        this.invoiceNo=this.lstcomments.invoiceNo;
+        this.invoiceDt=this.lstcomments.invoiceDt;
         this.dmsSob=this.lstcomments.dmsSob;
         this.remark=this.lstcomments.remark;
         this.balOutstandAmt=this.lstcomments.balOutstandAmt;
         this.excessAmt=this.lstcomments.excessAmt;
+        this.custName=this.lstcomments.custName;
+        this.custAdd=this.lstcomments.custAdd;
+        this.contactNo=this.lstcomments.contactNo;
+        this.salesExeName=this.lstcomments.salesExeName;
+        this.contactPerson=this.lstcomments.contactPerson;
+        this.gatepassNo=this.lstcomments.gatepassNo;
       }
       
     );
@@ -114,6 +146,7 @@ export class SalesGatePassComponent implements OnInit {
         this.remark=this.lstcomments.remark;
         this.balOutstandAmt=this.lstcomments.balOutstandAmt;
         this.excessAmt=this.lstcomments.excessAmt;
+        this.SalesGatepassForm.patchValue(this.lstcomments);
       }
       
     );
@@ -145,8 +178,8 @@ export class SalesGatePassComponent implements OnInit {
     window.location.reload();
   }
 
-  // closeMast() {
-  //   this.router.navigate(['admin']);
-  // }
+  Close() {
+    this.router.navigate(['admin']);
+  }
 
 }
