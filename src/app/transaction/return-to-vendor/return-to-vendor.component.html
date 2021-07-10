@@ -55,22 +55,32 @@
                                     <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
                                 </td>
 
-                               
-                                <td >
-                                    <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
-                                    class="form-control" [(ngModel)]="deptId" placeholder="">
+                            
+                            <td >
+                                <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                                class="form-control" [(ngModel)]="deptId" placeholder="">
 
-                                </td>
+                            </td>
 
-                               
+                            <input hidden   formControlName="poStatus"  class="form-control">
+                            <input hidden   formControlName="shipHeaderId" class="form-control">
+                            <input hidden   formControlName="suppId" class="form-control">
+                            <input hidden   formControlName="shipmentNo" class="form-control">
+                            <input hidden   formControlName="billToLocId" class="form-control"> 
+                            <input hidden   formControlName="shipmentDate" class="form-control"> 
+                            <input hidden   formControlName="shipToLocId" class="form-control">
+                            <input hidden   formControlName="ewayBillNo" class="form-control">
+                            <input hidden   formControlName="ewayBillDate" class="form-control"> 
+                            <input hidden   formControlName="gstDocNo" class="form-control"> 
+                            <input hidden   formControlName="gstDocDate" class="form-control">
+                            <input hidden   formControlName="apInvNum" class="form-control"> 
+                            <input hidden   formControlName="apInvDate" class="form-control"> 
 
+                            <td >
+                                <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
+                                class="form-control" [(ngModel)]="emplId" placeholder="">
 
-
-                                <td >
-                                    <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
-                                    class="form-control" [(ngModel)]="emplId" placeholder="">
-
-                                </td>
+                            </td>
                         </tr>
                     </table>
 
@@ -80,6 +90,8 @@
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Receipt Header Details</legend>
                     <table class="center" style="width: 100;" style="width: 100%;">
                         <tr>
+                            
+                                
 
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Division&nbsp;:&nbsp;
@@ -194,22 +206,22 @@
                         <tr>
 
                             <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Order&nbsp;Type:&nbsp;
-                            </td>  
-    
-                            <td>
-                            <input  type ="text" disabled formControlName="orderType" [(ngModel)]='orderType'
-                                                    value={{orderType}} class="form-control"
-                                                    placeholder="" >
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Supplier&nbsp;No:&nbsp;
                             </td>  
     
                             <td>
-                            <input  type ="text" disabled formControlName="suppName" [(ngModel)]='suppName'
-                                                    value={{suppName}} class="form-control"
+                            <input  type ="text" disabled formControlName="suppNo" [(ngModel)]='suppNo'
+                                                    value={{suppNo}} class="form-control"
+                                                    placeholder="" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Supplier&nbsp;Name:&nbsp;
+                            </td>  
+    
+                            <td>
+                            <input  type ="text" disabled formControlName="supplierName" [(ngModel)]='supplierName'
+                                                    value={{supplierName}} class="form-control"
                                                     placeholder="" >
                             </td>
 
@@ -218,8 +230,8 @@
                             </td>  
     
                             <td>
-                            <input  type ="text" disabled formControlName="supInvNumber" [(ngModel)]='supInvNumber'
-                                                    value={{supInvNumber}} class="form-control"
+                            <input  type ="text" disabled formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                    value={{suppInvNo}} class="form-control"
                                                     placeholder="" >
                             </td>
 
@@ -228,8 +240,8 @@
                             </td>  
     
                             <td>
-                            <input  type ="date" disabled formControlName="supinvDate" [(ngModel)]='supinvDate'
-                                                    value={{supinvDate}} class="form-control"
+                            <input  type ="date" disabled formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                                    value={{suppInvDate}} class="form-control"
                                                     placeholder="" >
                             </td>
 
@@ -254,74 +266,160 @@
                                     class="form-control" >
                             </td>
 
-
-
                         </tr>
                     </table>
                     </fieldset>
 
-                    <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">LINE ITEM DETAILS</legend>
-                       
+                    <div class="grid_scroll">
+                        <fieldset class="RFS" style="background-color: white;">
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Receipt Lines Details</legend>
+                            
+                            <table class="auto-style4" class="GridFont" cellspacing="0"
+                            cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
+                            style="border-color:#959595;width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr class="GridHeader">
+                                    <!-- <th scope="col">Tax Details</th> -->
+                                    <th scope="col">Select</th>
+                                    <th scope="col" style="width: 5rem;">Qty Received</th>
+                                    <th scope="col" style="width: 5rem;">Qty Return</th>
+                                    <th scope="col">Destination Type</th>
+                                    <th scope="col">Inv. Item</th>
+                                    <th scope="col">Inv. Category</th>
+                                    <th scope="col">Item Description</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Sub-Inventory</th>
+                                    <th scope="col">Locator</th>
+                                    <th scope="col">UOM</th>
+                                    <th scope="col">Tax Category</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Base Amount</th>
+                                    <th scope="col">Tax Percentage</th>
+                                    <th scope="col">Tax& Amount</th>
+                                    <th scope="col">HSN/SAC code</th>
+                                    <th scope="col">Tax Total Amount</th>
+                                    <!-- <th scope="col">PO&nbsp;Charge&nbsp;Account</th> -->
+                                </tr>
+                            </thead>
 
-                    <div class="center">
-                        <!-- <br> -->
-                       <div class="center" formArrayName="rcvLines">
-  
-                            <div class="grid_scroll">
+                            <tbody>
+                                <ng-container class="center" formArrayName="poLines">
+                                    <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"; [formGroupName]="i" class="auto-style5">
 
-                                <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
-                                          cellspacing="0" cellpadding="4" rules="all" class="center">
-                                          <thead>
-                                            <tr class="GridHeader">
-                                                 
-                                                  <th style="width:10rem" scope="col">Item Code</th>
-                                                  <th style="width:10rem" scope="col">Item Description</th>
-                                                  <th style="width:7rem" scope="col"> Return Qty</th>
-                                                  <th style="width:7rem" scope="col"> Received Qty</th>
-                                                  <th style="width:7rem" scope="col"> Return To</th>
-                                                  <!-- <th style="width:7rem" scope="col"> Supplier Name</th> -->
-                                                  <th style="width:7rem" scope="col"> Select</th>
-                                                  <!-- <th style="width:3rem" scope="col">Add+</th>
-                                                  <th style="width:3rem" scope="col">Del-</th> -->
-                                              </tr>
-                                          </thead>
+                                        <!-- <div *ngIf="disabledLine; then thenBlockLine; else elseBlockLine"></div>
+                                        <ng-template #thenBlockLine> -->
+                                        <tr>
+                                            <input hidden type="text" disabled formControlName="poHeaderId" class="form-control"> 
+                                            <input hidden type="text" disabled formControlName="poLineId" class="form-control"> 
+                                            <input hidden type="text" disabled formControlName="polineNum" class="form-control"> 
+                                            <input hidden type="text" disabled formControlName="locatorId" class="form-control"> 
+                                            <input hidden type="text" disabled formControlName="invItemId" class="form-control"> 
+                                            <input hidden type="text" disabled formControlName="subInventoryId" class="form-control"> 
+                                         <td>
+                                                <div *ngIf="recFagDiss; then thenBlock; else elseBlock"></div>
+                                                <ng-template #thenBlock>
+                                                    <input style="text-align: center;width: 3rem;" type="checkbox"  name="selectFlag" formControlName="selectFlag" ([ngModel])="selectFlag" (change)="LineSelectFlag($event,i)">
+                                                </ng-template>
+                                                <ng-template #elseBlock>
+                                                    <input  style="text-align: center;width: 3rem;" type="checkbox" checked   id="selectFlag" [formControl]="selectFlag"   value="selectFlag"  (change)="selectFlag=$event.target.checked?'Y':'N'">
+                                                </ng-template>
+                                        </td>
+                              
+                                            <td> 
+                                             <input disabled type="number"
+                                                    formControlName="qtyReceived"  
+                                                    class="form-control" style="height: 25px;width: 80px;" >
+                                           </td>
 
-                                        <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
-
-                                            <td>
-                                                <input disabled style="width: 200px;"  type="text" formControlName="itemName"  class="form-control" placeholder=""  >
-                                            </td>
-
-                                            <td>
-                                                <input disabled style="width: 250px;" type="text" formControlName="itemDesc"  class="form-control" placeholder=""  >
-                                            </td>
-                                            <td>
-                                                <input   style="width: 100px;text-align: right;" type="number" formControlName="qtyReturn"  class="form-control" (change)="validateQty(i)" placeholder="Return Qty"  >
-                                            </td>
                                             
-                                            <td>
-                                                <input disabled  style="width: 100px;text-align: right;" type="number" formControlName="qtyReceived"  class="form-control"  placeholder=""  >
-                                            </td>
 
-                                            <td>
-                                                <input disabled  style="width: 150px;text-align: left;" type="text" formControlName="returnTo" [ngModel]= "returnTo" class="form-control"  placeholder=""  >
-                                            </td>
+                                            <input  type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 80px;background-color: yellow;" (change)="validateQty(i)" >
 
-                                            <!-- <td>
-                                                <input disabled  style="width: 350px;text-align: right;" type="text" formControlName="supplier"  class="form-control"  placeholder=""  >
-                                            </td> -->
+                                            <td> <input disabled type="text"
+                                                formControlName="itemType"
+                                                class="form-control" style="height: 25px;width: 100px;">
+                                        </td>
+                                        <td> <input disabled type="text"
+                                                formControlName="itemName"
+                                                class="form-control" style="height: 25px;width: 200px;">
+                                        </td>
+                                        <td> <input disabled type="text"
+                                                formControlName="ctgDescription"
+                                                class="form-control" style="height: 25px;width: 100px;">
+                                        </td>
+                                        <td> <input disabled type="text"
+                                                formControlName="itemDesc"
+                                                class="form-control" style="height: 25px;">
+                                        </td>
+                                        <td>
+                                            <input type="text" disabled formControlName="locId" class="form-control"
+                                            [(ngModel)]='locId' style="height: 25px;width: 60px;">
+                                        </td>
+                                        <td> <input disabled type="text"
+                                                formControlName="subInvDesc"
+                                                class="form-control" style="height: 25px;width:60px;">
+                                        </td>
 
-                                            <td style="text-align: center;"><input type="checkbox"  name="selectFlag" value="selectFlag"    (change)="SelectFlag1($event,i)"> </td>
-                                          
+                                        <!-- <td> 
+                                            <input disabled type="text" formControlName="locatorDesc"  class="form-control" style="height: 20px;width:80px;">
+                                        </td> -->
 
-                                          </tr>
-                                </table>
-                            </div>
-                       </div>
+                                        <td>
+                                            <select style="width: 120px;height: 25px;" formControlName="locatorDesc" id="locatorDesc"  class="form-control">
+                                                <option disabled>--Select--</option>
+                                                <option *ngFor="let lc of  ItemLocatorList" [ngValue]="lc.segmentName" >
+                                                    {{lc.segmentName}}  Qty:{{lc.onHandQty}}
+                                                </option>
+                                            </select>
+                                        </td>
+
+
+                                        <td> <input disabled type="text"
+                                                formControlName="uom" class="form-control"
+                                                style="height: 25px;width: 40px;"></td>
+                                        <td> <input disabled type="text"
+                                                formControlName="taxCategoryName"
+                                                class="form-control" style="height: 25px;">
+                                        </td>
+                                        <td> <input disabled type="text"
+                                                formControlName="unitPrice"
+                                                class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                        </td>
+                                        <td> <input disabled type="text"
+                                                formControlName="baseAmount"
+                                                class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                        </td>
+
+                                        <td>  <input disabled type="text"
+                                            formControlName="taxPercentage" 
+                                            class="form-control" style="height: 25px;width: 50px;">
+                                    </td>
+                                    <td> <input disabled type="text"
+                                            formControlName="taxAmount"
+                                            class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                    </td>
+                                    <td> <input disabled type="text"
+                                            formControlName="sacCode"
+                                            class="form-control" style="height: 25px;width: 80px;">
+                                    </td>
+                                    <td> <input disabled type="text"
+                                            formControlName="totAmount"
+                                            class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                    </td>
+
+
+                            
+                                                </tr>
+                                        <!-- </ng-template> -->
+                               
+                                    </ng-container>
+                                </ng-container>
+                            </tbody>
+
+                         
+                        </table>      
+                        </fieldset>
                     </div>
-
-                    </fieldset>
 
 
 
@@ -332,7 +430,7 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!returntoVendorForm">Save</button>
+                                    <button type="button" class="btn btn-info" (click)="rtvSave()" [disabled]="!returntoVendorForm">Save</button>
                                 </td>
                                 
                                 <td>

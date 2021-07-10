@@ -1517,6 +1517,15 @@ getsearchByReceiptNo(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
 }
 
+public PoReceiptReturnSubmit(PoReceiptRtnrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/rtvPost';
+  // http://localhost:8081/rcvShipment/rtvPost
+  return this.http.post(url, PoReceiptRtnrRecord, options);
+}
+
 
 
 public poDateWiseFind(content) {
@@ -1601,6 +1610,17 @@ public poSaveSubmit(poRecord) {
   };
   const url = this.ServerUrl + '/rcvShipment';
   return this.http.post(url, poRecord, options);
+  
+}
+
+//////////////////////////////////RTV///////////////////////////////////////////////////////////
+
+public rtvSaveSubmit(rtvRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/rtvPost';
+  return this.http.post(url, rtvRecord, options);
 }
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

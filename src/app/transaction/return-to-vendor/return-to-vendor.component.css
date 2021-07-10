@@ -21,6 +21,18 @@
     height: 250px;
 
 }
+.grid_scroll{
+  overflow: auto;
+   height: 250px; 
+  width: 100%;
+}
+
+/* input.ng-invalid{
+  background-color:yellow;
+}
+input.ng-valid{
+  background-color:white; 
+} */
 
 
   .form-control {
