@@ -149,6 +149,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   billToSiteId:number;
   custPhone:string;
   customerType:string;
+  custTaxCategoryName:string;
   
 
   ewPeriod:number;
@@ -259,6 +260,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       billToSiteId:[],
       custPhone:[],
       customerType:[],
+      custTaxCategoryName:[],
       // dealerCode:[],
       ewPeriod:[],
 
@@ -437,17 +439,21 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       }
 
       onReasonSelected(reasonCode : any){
-        // alert("Reason Selected :" + reasonCode);}
-        if(this.displayButton && this.cancelledFlag==false) {
-        if(reasonCode==='--Select--') {
-          this.ewCancelDate=null; 
-          this.ewCancelReason=null;this.ewCancelFlag=false;return;}
-        if(reasonCode !=null) { 
+        // alert( "Cance Flag: "+ this.cancelledFlag + " Reaseon Code : "+reasonCode);
+        // alert(reasonCode);
+    
+       
+        if(this.cancelledFlag===false && reasonCode !=null && reasonCode != '--Select--'  ) {
           this.ewCancelDate = this.pipe.transform(this.now, 'y-MM-dd');
           this.ewCancelFlag=true; 
-        alert ("WARNING!!! You are going to Cancel this Extended Warranty Transaction?\nIf NO Please leave Reason blank.")
-        } 
-      } 
+          alert("WARNIG!!! You are going to cancel this Extended Warranty ?.\nIf NO Please leave the Reason Code blank and Continue.")
+        }
+
+          if(reasonCode === '--Select--'  ) {
+            this.ewCancelDate = null;
+            this.ewCancelFlag=false; }
+        
+  
       }
 
 
@@ -460,6 +466,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         onEnterKms(mKms : any)
         {
+        
+          // alert("Last Run Km :" + this.lastRunKms);
+          if(this.lastRunKms===null) {this.lastRunKms=0; 
+            // alert("Last Run Km :" + this.lastRunKms);
+          }
 
          if(mKms>0 && this.variant !=null && mKms >= this.lastRunKms ) 
          { this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,mKms);} 
@@ -621,9 +632,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             data => {
               this.ewReceiptDeails = data;
               console.log(this.ewReceiptDeails);
+              if(this.ewReceiptDeails !=null) {
               
               this.saiEwForm.patchValue({
                 receiptNumber: this.ewReceiptDeails.receiptNumber,
+                // paymentAmt: this.ewReceiptDeails.amount,
                 payType: this.ewReceiptDeails.payType,
                 receiptMethodId: this.ewReceiptDeails.receiptMethodId,
                 bankName: this.ewReceiptDeails.bankName,
@@ -633,7 +646,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
                 
 
-              });
+              }); } else { alert("Receipt Details not found....");}
               // alert("pay type ="+this.ewReceiptDeails.payType);
               // alert("BANK ="+this.ewReceiptDeails.bankName);
             }
@@ -644,16 +657,16 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         
 
         GetLastRunKmsSearch(mRegNo){
-
+           var z=0;
           this.service.getLastRunKms(mRegNo)
           .subscribe(
             data => {
               this.getLastRunKmsVeh = data;
               console.log(this.getLastRunKmsVeh);
+             
               this.saiEwForm.patchValue({
-                  lastRunKms: this.getLastRunKmsVeh.lastRunKms,
-              });
-
+                  lastRunKms: this.getLastRunKmsVeh.lastRunKms, });
+            
             } );}
             
         
@@ -722,7 +735,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           .subscribe(
             data => {
               this.EwStatusDetails = data
-              alert("this.EwStatusDetails :"+this.EwStatusDetails);
+              // alert("this.EwStatusDetails :"+this.EwStatusDetails);
               if (this.EwStatusDetails===null) 
               {
                 this.isEwActive=false; 
@@ -826,9 +839,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         data1 => {
           this.CustomerSiteDetails = data1;
 
-          if (this.CustomerSiteDetails===null) 
+          if (this.CustomerSiteDetails===null ) 
              {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
-          else {
+          else if (this.CustomerSiteDetails.taxCategoryName===null)
+             {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
+          else{
              console.log(this.CustomerSiteDetails);
              this.saiEwForm.patchValue({
               customerSiteId:this.CustomerSiteDetails.customerSiteId,
@@ -843,9 +858,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             customerPanNo:this.CustomerSiteDetails.panNo,
             custPhone:this.CustomerSiteDetails.mobile1,
             customerType:this.CustomerSiteDetails.customerId.custType,
-
+            custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
              
-        });}  });  }
+        });
+
+        }  });  }
+
 
          ////////////////// not in use//////////////////     
         CustAccountNoSearchSite(accountNo){
@@ -1022,12 +1040,13 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             data => {
               this.vehicleSaleOrderDetails = data.obj;
               console.log(this.vehicleSaleOrderDetails);
+              
 
-              // if (this.vehicleSaleOrderDetails===null) 
-              // {
-              //   alert("Order Number Not Found....")
-              //   return;
-              // } 
+              if (this.vehicleSaleOrderDetails===null) 
+              {
+                alert("Order Number : [" + mOrderNumber+ "]  Not Found/doesnot Exist....")
+                return;
+              } 
 
               this.saiEwForm.patchValue({
                 vehRegNo: this.vehicleSaleOrderDetails.regNo,
@@ -1078,7 +1097,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
    
          cancelEWValidation(){
           const formValue: IExtendedWarranty = this.saiEwForm.value;
-          
+          this.ewCancelDate = this.pipe.transform(this.now, 'y-MM-dd');
+                   
           if (formValue.ewCancelReason===undefined || formValue.ewCancelReason===null)
             {
                 this.checkValidation=false;
@@ -1093,10 +1113,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                  return;
               } 
 
-             }
+             
+              // this.ewCancelFlag=true; 
+              // this.updateMast();
 
-          
-         
+             }
 
       
         searchMast() {
@@ -1113,20 +1134,22 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
         Select(ewId: number) {
-          this.displayButton = false;
-          this.showCancelDetails=true;
+         
           this.saiEwForm.reset();
          
           let select = this.lstcomments.find(d => d.ewId === ewId);
           if (select) {
              this.ewId = select.ewId;
+             this.displayButton = false;
+            this.showCancelDetails=true;
             if (this.displayButton===false) {
               this.ewCancelDate=select.ewCancelDate;
               this.ewCancelReason=select.ewCancelReason;   }
-              if(this.ewCancelDate !=null ) {this.cancelledFlag=true;}
 
+              // alert("CancelDate :" + this.ewCancelDate);
+              if(this.ewCancelDate !=null ) {this.cancelledFlag=true;}else {this.cancelledFlag=false;}
 
-            this.saiEwForm.patchValue(select);
+              this.saiEwForm.patchValue(select);
             // this.ewId = select.ewId;
              this.GetVehicleRegInfomation(this.vehRegNo);
              this.GetVariantDeatils(this.variant);
@@ -1138,7 +1161,10 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             this.getDiffDays(this.deliveryDate,this.ewSaleDate);
             this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,this.kmsEwSale);
             this.getEwClaimStatus(this.vehRegNo);
+
+            
          }
+
          
         }
 
@@ -1226,6 +1252,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
         }
+
 
         resetMast() {
           window.location.reload();

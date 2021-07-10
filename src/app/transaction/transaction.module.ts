@@ -31,6 +31,7 @@ import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.compon
 import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
 import { WorkShopReturnComponent } from './work-shop-return/work-shop-return.component';
 import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
+import { InterStateComponent } from './inter-state/inter-state.component';
 
 
 
@@ -64,6 +65,7 @@ import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.com
     AccountEnquiryComponent,
     WorkShopReturnComponent,
     ReturnToVendorComponent,
+    InterStateComponent,
    
   ],
   

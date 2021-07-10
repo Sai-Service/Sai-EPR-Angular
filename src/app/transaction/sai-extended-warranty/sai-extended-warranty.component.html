@@ -412,6 +412,11 @@
                         <input disabled    type="text"  formControlName="customerPanNo"  id="customerPanNo" [(ngModel)]="customerPanNo" class="form-control" >
                     </td>
 
+                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+
+                    <td>
+                        <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                    </td>
                     
             
                     </tr>
@@ -768,7 +773,7 @@
 
 
                       
-                    <div *ngIf="ewCancelledFlag; then thenBlock909; else elseBlock909"></div>
+                    <div *ngIf="cancelledFlag; then thenBlock909; else elseBlock909"></div>
                      <ng-template #thenBlock909>
                     
                             <td>  
@@ -787,7 +792,7 @@
                         <ng-template #thenBlockReason>
                         <td>  
                             <select   formControlName="ewCancelReason" id="ewCancelReason" [(ngModel)]="ewCancelReason" class="form-control" style="width: 220px;" (ngModelChange)="onReasonSelected(ewCancelReason)">
-                                <option disabled>--Select--</option>
+                                <option>--Select--</option>
                                 <option *ngFor="let sc of  ewCancelReasonList" [ngValue]="sc.code">
                                     {{sc.codeDesc}}
                                 </option>
@@ -960,7 +965,7 @@
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                             </td>
 
-                                            <!-- <td>
+                                             <!-- <td>
                                                 <button type="button" class="btn btn-info" (click)="cancelEW()">Cancel</button>
                                             </td> -->
                                             <!-- <td>
@@ -1053,11 +1058,11 @@
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
                 <th style="width:5rem" scope="col">EW&nbsp;No&nbsp;</th>
-                <th style="width:5rem" scope="col"> Type&nbsp;</th>
-                <!-- <th style="width:5rem" scope="col"> Scheme&nbsp;</th> -->
-                <th style="width:6rem" scope="col"> Vehicle&nbsp;No</th>
-                <th style="width:20rem" scope="col">Customer&nbsp;Name</th>
                 <th style="width:10rem" scope="col">Source&nbsp;</th>
+                <th style="width:5rem" scope="col"> Type&nbsp;</th>
+                <th style="width:7rem" scope="col"> Order&nbsp;No&nbsp;</th>
+                <th style="width:6rem" scope="col"> Vehicle&nbsp;No</th>
+                <th style="width:18rem" scope="col">Customer&nbsp;Name</th>
                 <th style="width:5rem" scope="col">EW&nbsp;Period&nbsp;</th>
                 <th style="width:8rem" scope="col">Sale&nbsp;Date&nbsp;</th>
                 <th style="width:8rem" scope="col">EW&nbsp;Start&nbsp;Date</th>
@@ -1068,17 +1073,17 @@
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.ewId}}</td>
+                <td >{{com.ewId}}</td>
                 <td>{{com.ewType}}</td>
-                <!-- <td>{{com.ewSchemeId}}</td>    -->
+                <td>{{com.paytmentSource}}</td>
+                <td>{{com.orderNo}}</td>   
                 <td>{{com.vehRegNo}}</td>   
                 <td>{{com.custName}}</td>
-                <td>{{com.paytmentSource}}</td>
-                <td>{{com.ewPeriod}}</td>
-                <td>{{com.ewSaleDate | date:'dd-MM-y'}}</td>
-                <td>{{com.ewStartDate | date:'dd-MM-y'}}</td>
-                <td>{{com.ewEndDate | date:'dd-MM-y'}}</td>
-                <td>{{com.ewCancelDate | date:'dd-MM-y'}}</td>      
+                <td style="text-align: center;">{{com.ewPeriod}}</td>
+                <td style="text-align: center;">{{com.ewSaleDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewStartDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewEndDate | date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.ewCancelDate | date:'dd-MM-y'}}</td>      
                 <td><button class="btn btn-info" (click)="Select(com.ewId)">Select</button></td>   
         </tr>
     </table>
