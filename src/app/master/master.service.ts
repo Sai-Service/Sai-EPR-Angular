@@ -1919,6 +1919,12 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`);
     } 
 
+    
+    getWsVehRegDetails(mRegNumber): Observable<any> {
+      // alert(mRegNumber );
+      return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
+    } 
+
     getVehVinDetails(mVin): Observable<any> {
       // alert("master >> " +mVin );
       return this.http.get(this.ServerUrl + `/VehAddInfo/VinInfo/${mVin}`);

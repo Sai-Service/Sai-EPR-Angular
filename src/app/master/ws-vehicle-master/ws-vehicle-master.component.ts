@@ -103,7 +103,7 @@ export class WsVehicleMasterComponent implements OnInit {
   inscompanySite:string;
 
   ewStatus:string;
-  ewBookletNo:string;
+  // ewBookletNo:string;
   ewInsurerId : number;
   ewInsurerSite:number;
   ewEndDate: Date;
@@ -202,7 +202,7 @@ export class WsVehicleMasterComponent implements OnInit {
       ewId:[],
       ewSchemeId:[],
       // ewDate:[],
-      ewBookletNo:[],
+      // ewBookletNo:[],
 
       itemId:[],
       itemDesc:[],
