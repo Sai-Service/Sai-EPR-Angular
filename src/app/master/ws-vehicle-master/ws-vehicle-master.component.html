@@ -56,12 +56,12 @@
                     <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
 
                     <td>
-                        <input type="text" formControlName="vehRegNo"  [(ngModel)]="vehRegNo"   class="form-control" placeholder="Enter Veh Reg no" > 
+                        <input type="text" formControlName="regNo"  [(ngModel)]="regNo"   class="form-control" placeholder="Enter Veh Reg no" > 
                     </td> 
 
                     <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
                     <td>
-                        <input type="text" formControlName="vehicleId"  [(ngModel)]="vehicleId"   class="form-control" placeholder="Enter VIN" > 
+                        <input type="text" formControlName="vin"  [(ngModel)]="vin"   class="form-control" placeholder="Enter VIN" > 
                     </td> 
 
                     <td style="width: 15%" class="LabelFontStyle1">Item&nbsp;Id:&nbsp;</td>
@@ -91,13 +91,13 @@
                     <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
     
                     <td>
-                        <input   type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
+                        <input   type="text"  formControlName="variantCode"  id="variantCode" [(ngModel)]="variantCode" class="form-control" >
                     </td>
 
                     <td style="width: 15%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="colourCode"  id="colourCode" [(ngModel)]="colourCode" class="form-control" >
+                        <input   type="text"  formControlName="colorCode"  id="colorCode" [(ngModel)]="colorCode" class="form-control" >
                     </td>
                 </tr>
                
@@ -182,7 +182,7 @@
                     <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
 
                     <td>
-                        <input   type="text"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
+                        <input   type="text"  formControlName="vehicleDelvDate"  id="vehicleDelvDate" [(ngModel)]="vehicleDelvDate" class="form-control" >
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;No:&nbsp;</td>
 
@@ -200,7 +200,7 @@
                     <td style="width: 15%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Expiry:&nbsp;</td>
 
                     <td>
-                        <input disabled  type="text"  formControlName="oemWrExpDate"  id="oemWrExpDate" [(ngModel)]="oemWrExpDate" class="form-control" >
+                        <input disabled  type="text"  formControlName="oemWarrentyEndDate"  id="oemWarrentyEndDate" [(ngModel)]="oemWarrentyEndDate" class="form-control" >
                     </td>
                     
                     <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name:&nbsp;</td>
@@ -239,7 +239,7 @@
                 <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;Expiry:&nbsp;</td>
 
                 <td>
-                    <input   type="date"  formControlName="policyExpDate"  id="policyExpDate" [(ngModel)]="policyExpDate" class="form-control" >
+                    <input   type="date"  formControlName="insuDate"  id="insuDate" [(ngModel)]="insuDate" class="form-control" >
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
 
@@ -267,7 +267,7 @@
                 <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input   type="text"  formControlName="ewBookletno"  id="ewBookletno" [(ngModel)]="ewBookletno" class="form-control" >
+                    <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" >
                 </td>
 
                 
@@ -283,7 +283,7 @@
                 <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
 
                 <td>
-                    <input   type="text"  formControlName="ewExpiryDate"  id="ewExpiryDate" [(ngModel)]="ewExpiryDate" class="form-control" >
+                    <input   type="text"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
                 </td>
 
                 <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Balance&nbsp;Days:&nbsp;</td>
@@ -294,7 +294,7 @@
                 <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
 
                 <td>
-                    <input style="width: 272%;"   type="text"  formControlName="ewInsurerSiteId"  id="ewInsurerSiteId" [(ngModel)]="ewInsurerSiteId" class="form-control" >
+                    <input style="width: 272%;"   type="text"  formControlName="ewInsurerSite"  id="ewInsurerSite" [(ngModel)]="ewInsurerSite" class="form-control" >
                 </td>
 
              </tr>
@@ -303,19 +303,19 @@
                 <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Status:&nbsp;</td>
 
                 <td>
-                    <input    type="text"  formControlName="mcpStatus"  id="mcpStatus" [(ngModel)]="mcpStatus" class="form-control" >
+                    <input    type="text"  formControlName="mcpYN"  id="mcpYN" [(ngModel)]="mcpYN" class="form-control" >
                 </td>
 
                 <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input     type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" >
+                    <input     type="text"  formControlName="mcpPackage"  id="mcpPackage" [(ngModel)]="mcpPackage" class="form-control" >
                 </td>
 
                 <td  class="LabelFontStyle">MCP&nbsp;Expiry:&nbsp;</td>
 
                 <td>
-                    <input   type="date"  formControlName="mcpExpDate"  id="mcpExpDate" [(ngModel)]="mcpExpDate" class="form-control" >
+                    <input   type="date"  formControlName="validity"  id="validity" [(ngModel)]="validity" class="form-control" >
                 </td>
 
             </tr>
@@ -325,13 +325,13 @@
                 <td style="width: 15%" class="LabelFontStyle">CNG&nbsp;Cylinder&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input    type="text"  formControlName="cngCyldNo"  id="cngCyldNo" [(ngModel)]="cngCyldNo" class="form-control" >
+                    <input    type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" [(ngModel)]="cngCylinderNo" class="form-control" >
                 </td>
 
                 <td style="width: 15%" class="LabelFontStyle">CNG&nbsp;Kit&nbsp;No:&nbsp;</td>
 
                 <td>
-                    <input     type="text"  formControlName="cngKit"  id="cngKit" [(ngModel)]="cngKit" class="form-control" >
+                    <input     type="text"  formControlName="cngKitNumber"  id="cngKitNumber" [(ngModel)]="cngKitNumber" class="form-control" >
                 </td>
 
                 <td  class="LabelFontStyle">CNG&nbsp;Expiry:&nbsp;</td>

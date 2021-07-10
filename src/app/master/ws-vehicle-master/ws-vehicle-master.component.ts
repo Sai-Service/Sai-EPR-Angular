@@ -69,20 +69,21 @@ export class WsVehicleMasterComponent implements OnInit {
 
   ///////////////////////////
  
-  regNo: string;
+  ewregNo: string;
   ewId:number;
   ewSchemeId:number;
   ewBookletNo:string;
 
   ///////////////////////////////////////////////////
-  vehRegNo:string;
-  vehicleId:string;
+  regNo:string;
+  vin:string;
   ewItemCode:string;
   itemId:number;
   itemDesc:string;
   itemCatg:string;
-  colourCode:string;
+  colorCode:string;
   mainModel:string;
+ 
   rfId:string;
   govtVehicleYn:string;
   vipYn:string;
@@ -92,28 +93,29 @@ export class WsVehicleMasterComponent implements OnInit {
   dealerSite:string;
   deliveryDate:string;
 
-  oemWrExpDate:Date;
+  oemWarrentyEndDate:Date;
   dlrInvoiceNo:string;
   dmsInvoiceNo:string;
 
-  policyExpDate:string;
+  insuDate:string;
   policyNo:string;
   insCompanyName:string;
   inscompanySite:string;
 
   ewStatus:string;
-  ewBookletno:string;
+  ewBookletNo:string;
   ewInsurerId : number;
-  ewInsurerSiteId:number;
-  ewExpiryDate: Date;
+  ewInsurerSite:number;
+  ewEndDate: Date;
   ewBalanceDays:number;
 
   mcpNo:string;
-  mcpExpDate:string;
-  mcpStatus:string;
-
-  cngCyldNo:string;
-  cngKit:string;
+  validity:string;
+  mcpYN:string;
+  mcpPackage:string;
+  
+  cngCylinderNo:string;
+  cngKitNumber:string;
   cngExpDate:string;
 
 
@@ -122,9 +124,10 @@ export class WsVehicleMasterComponent implements OnInit {
 
   fuelType :string;
   variant:string ;
-  variantDesc:string;
+  variantCode:string;
   chassisNo:string;
   engineNo:string;
+  vehicleDelvDate : Date;
   serviceModel:string;
  
   kmReading:string;
@@ -140,7 +143,7 @@ export class WsVehicleMasterComponent implements OnInit {
   paytmentSource:string;
   
 
-  ewSchemeAmt:number;
+  ewAmt:number;
   ewDiscAmt:number;
   ewTotalAmt:number;
 
@@ -152,8 +155,6 @@ export class WsVehicleMasterComponent implements OnInit {
   ewSaleDate = this.pipe.transform(this.now, 'y-MM-dd');
 
   ewStartDate :Date
-  ewEndDate:Date
-
   payType:number;
   receiptMethodId:number;
   paymentAmt:number;
@@ -203,12 +204,10 @@ export class WsVehicleMasterComponent implements OnInit {
       // ewDate:[],
       ewBookletNo:[],
 
-      vehRegNo:[],
-      vehicleId:[],
       itemId:[],
       itemDesc:[],
       itemCatg:[],
-      colourCode:[],
+      colorCode:[],
       mainModel:[],
       rfId:[],
       govtVehicleYn:[],
@@ -218,22 +217,24 @@ export class WsVehicleMasterComponent implements OnInit {
       dealerName:[],
       dealerSite:[],
       deliveryDate:[],
+      vehicleDelvDate:[],
 
-      oemWrExpDate:[],
+      oemWarrentyEndDate:[],
       dlrInvoiceNo:[],
       dmsInvoiceNo:[],
 
-      policyExpDate:[],
+      insuDate:[],
       policyNo:[],
       insCompanyName:[],
       inscompanySite:[],
 
       mcpNo:[],
-      mcpExpDate:[],
-      mcpStatus:[],
+      mcpPackage:[],
+      validity:[],
+      mcpYN:[],
 
-      cngCyldNo:[],
-      cngKit:[],
+      cngCylinderNo:[],
+      cngKitNumber:[],
       cngExpDate:[],
     
     
@@ -242,6 +243,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
       fuelType :[],
       variant:[],
+      variantCode:[],
       variantDesc:[],
 
       chassisNo:[],
@@ -264,21 +266,21 @@ export class WsVehicleMasterComponent implements OnInit {
 
       ewType:[],
       ewStatus:[],
-      ewBookletno:[],
+      ewBookletNo:[],
       ewInsurerId : [],
-      ewInsurerSiteId:[],
-      ewExpiryDate: [],
+      ewInsurerSite:[],
+      ewEndDate: [],
       ewBalanceDays:[],
 
       // itemId: [],
 
-      ewSchemeAmt:[],
+      ewAmt:[],
       ewDiscAmt:[],
       ewTotalAmt:[],
 
       ewSaleDate:[],
       ewStartDate:[],
-      ewEndDate:[],
+     
 
       payType:[],
       receiptMethodId:[],
@@ -401,27 +403,30 @@ export class WsVehicleMasterComponent implements OnInit {
 
         // ========================================================
        
-        // searchMast() {
-        //   this.service.getEWCustomerSearch()
-        //     .subscribe(
-        //       data => {
-        //         this.lstcomments = data;
-        //         console.log(this.lstcomments);
-        //       }
-        //     );
-        //    }
+        searchMast(regNo: string ){
+          regNo = 'MH12EM6011';
+          
+          this.service.getWsVehRegDetails(regNo)
+            .subscribe(
+              data => {
+                this.lstcomments = data.obj;
+                console.log(this.lstcomments);
+                this.wsVehicleMasterForm.patchValue(data.obj);
+              }
+            );
+           }
 
 
 
 
 
-        transeData(val) 
+        transeData(formValue) 
         {
  
-          delete val.regNo;
+         // delete formValue.regNo;
          
 
-          return val;
+          return formValue;
         }
 
 
