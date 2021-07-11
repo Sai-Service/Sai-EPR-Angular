@@ -507,7 +507,7 @@ checkIfAllSelected() {
           // for (var i=0;i<=length1;i++){
           //   control.push(poLines);
           // }
-var len=this.lineDetailsArray.length;
+          var len=this.lineDetailsArray.length;
           for ( var i=0;i<this.lstcompolines.rcvLines.length-len;i++){
             control.push(poLines);
           }
