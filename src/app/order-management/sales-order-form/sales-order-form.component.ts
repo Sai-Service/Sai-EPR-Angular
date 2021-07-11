@@ -207,9 +207,10 @@ export class SalesOrderFormComponent implements OnInit {
   currentOpration:string;
   displayVehicleDetails=true;
   displayCreateOrderButton=false;
-  displayLineTaxDetails=false;
+  displayLineTaxDetails=true;
   displaySalesLines=true;
   displayAdditonalDetails=true;
+ 
 
 
   displaysegmentInvType:Array<boolean>=[];
@@ -261,6 +262,7 @@ export class SalesOrderFormComponent implements OnInit {
       billToAddress: [''],
       gstNo: [''],
       panNo: [''],
+      tcs:[''],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       // taxAmounts: this.fb.array([this.TaxDetailsArray()])
       taxAmounts: this.fb.array([this.TaxDetailsGroup()])
@@ -305,7 +307,7 @@ export class SalesOrderFormComponent implements OnInit {
   orderlineDetailsGroup() {
     return this.fb.group({
       lineNumber:[''],
-      // segment:[''],
+      tcs:[''],
       itemId:[],
       orderedItem: [''],
       pricingQty:[''],
@@ -802,20 +804,22 @@ OrderFind(orderNumber) {
 
         let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-        alert(this.lstgetOrderLineDetails.length)
-        if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length ===0 ) {
+        alert(this.lstgetOrderTaxDetails.length)
+        if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length===0) {
           this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
           this.TaxDetailsArray().push(this.TaxDetailsGroup());
           this.displayLineTaxDetails=true;
-          
+          alert( this.displayLineTaxDetails);
         }
         else{
         for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
+          this.displayLineTaxDetails=false;
           this.displaysegmentInvType[i]=false;
           this.displayCounterSaleLine.push(false);
-          // this.displayLineflowStatusCode[i]=false;
+          this.displayLineflowStatusCode[i]=false;
+          this.displaytaxCategoryName[i]=true;
           if (this.lstgetOrderLineDetails[i].flowStatusCode==='Invoiced' || this.lstgetOrderLineDetails[i].flowStatusCode==='CANCELLED'){
             this.displayLineflowStatusCode[i]=true;
             this.displayRemoveRow[i]=false;
@@ -834,6 +838,7 @@ OrderFind(orderNumber) {
             this.displaytaxCategoryName[i]=true;
             this.displayCounterSaleLine[i]=false;
             this.displaytaxCategoryName[i]=true;
+            // this.displayLineTaxDetails=false;
           }
       }
   }
@@ -846,18 +851,18 @@ OrderFind(orderNumber) {
        var itemId= this.lstgetOrderLineDetails[i].itemId;
       }
      
-        this.service.taxCategoryListForSALESwithstatetcs(this.customerId,Number(sessionStorage.getItem('ouId')),itemId,this.custOuId,this.deptName,this.tcs)
-         .subscribe(
-          data1 => {
-         this.taxCategoryList = data1;
-        console.log(this.taxCategoryList);
-        data1 = this.taxCategoryList;
-      }
-    );
+    //     this.service.taxCategoryListForSALESwithstatetcs(this.customerId,Number(sessionStorage.getItem('ouId')),itemId,this.custOuId,this.deptName,this.tcs)
+    //      .subscribe(
+    //       data1 => {
+    //      this.taxCategoryList = data1;
+    //     console.log(this.taxCategoryList);
+    //     data1 = this.taxCategoryList;
+    //   }
+    // );
         
-        if (this.flowStatusCode='BOOKED'){
-          this.displayLineTaxDetails=false;
-        }
+        // if (this.flowStatusCode='BOOKED'){
+        //   this.displayLineTaxDetails=false;
+        // }
       }
     )
    
