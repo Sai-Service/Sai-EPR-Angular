@@ -13,6 +13,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
+import { escapeRegExp } from '@angular/compiler/src/util';
 // import { saveAs } from 'file-saver';
 
 
@@ -352,7 +353,7 @@ orderNumber:number;
       mName:[''],
       lName:[],
       customerId1: [''],
-      address1:[''],
+      address1:['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address2:[''],
       address3:[''],
       address4:[''],
@@ -585,30 +586,24 @@ if (this.lstgetOrderLineDetails[i].flowStatusCode != null){
 
 
   OrderFind(orderNumber){
-    // alert(orderNumber+'Hi')
     this.op = 'Search';
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.displaycustAccountNo=false;
-    // this.displaysegment=false;
     this.displaycreateOrderType=false;
-   
-    // this.displaysegmentInvType[0]=false;
     this.orderManagementService.counterSaleOrderSearch(orderNumber)
     .subscribe(
       data => {
         this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
         this.lstgetOrderTaxDetails = data.obj.taxAmounts;
         this.allDatastore=data.obj;
-        // console.log(this.lstgetOrderLineDetails[0].taxAmounts);
         let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
         for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
           this.displaysegmentInvType[i]=false;
-          // this.displaysegmentInvType[i]=false;
           this.displayLineflowStatusCode.push(true);
           this.displayCounterSaleLine.push(false);
       }
@@ -621,17 +616,7 @@ if (this.lstgetOrderLineDetails[i].flowStatusCode != null){
     this.createOrderType=data.obj.createOrderType;
     this.priceListName=data.obj.priceListName;
     this.transactionTypeName=data.obj.transactionTypeName;
-    // for (let k=0; k<this.lstgetOrderLineDetails.length; k++){
-    //   let selectTaxCate = this.taxCategoryList.find(d => d.taxCategoryName === this.lstgetOrderLineDetails[k].taxCategoryName);
-    //   this.CounterSaleOrderBookingForm.patchValue({taxCategoryName:selectTaxCate.taxCategoryName})
-    //   let selectInvType = this.categoryList.find(d => d.type === data.obj.oeOrderLinesAllList[k].invType);
-    //   this.CounterSaleOrderBookingForm.patchValue({invType:selectInvType.invType});
-    //   var curInvType=selectInvType.invType;
-
-    // }
-    
     for (let k=0; k<this.lstgetOrderLineDetails.length; k++){
-      // alert(this.lstgetOrderLineDetails[k].baseAmt);
       this.CounterSaleOrderBookingForm.patchValue({baseAmt:this.lstgetOrderLineDetails[k].baseAmt});
     }
     this.CounterSaleOrderBookingForm.patchValue({orderedDate:data.obj.orderedDate});
@@ -641,7 +626,6 @@ if (this.lstgetOrderLineDetails[i].flowStatusCode != null){
     
 
   if(this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED'){
-  //  alert('*** Condition ***')
   this.CounterSaleOrderBookingForm.get('custName').disable();
   this.CounterSaleOrderBookingForm.get('mobile1').disable();
     this.displayorderHedaerDetails=false;
@@ -879,9 +863,9 @@ contactNoSearch(mobile1){
       this.contactNoSearchData = data.obj;
       console.log(this.contactNoSearchData);
       this.CounterSaleOrderBookingForm.patchValue(this.contactNoSearchData);
-      this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-      this.CounterSaleOrderBookingForm.get('custName').disable();
-      this.CounterSaleOrderBookingForm.get('mobile1').disable();
+      // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+      // this.CounterSaleOrderBookingForm.get('custName').disable();
+      // this.CounterSaleOrderBookingForm.get('mobile1').disable();
       this.custAddress=data.obj.billToAddress;
       this.custAccountNo=data.obj.accountNo;
     }
@@ -889,9 +873,9 @@ contactNoSearch(mobile1){
       if(data.code===400){
         alert(data.message);
       this.displaycreateCustomer=false;
-      this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-        this.CounterSaleOrderBookingForm.get('custName').disable();
-        this.CounterSaleOrderBookingForm.get('mobile1').disable();
+      // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+        // this.CounterSaleOrderBookingForm.get('custName').disable();
+        // this.CounterSaleOrderBookingForm.get('mobile1').disable();
       }
     }
     //   for (let i=0; i <= this.contactNoSearchData.length ; i++){
@@ -1408,6 +1392,9 @@ onOptionsSelectedCity (city: any){
 }
 transDataWithSite(val) {}
 
+
+
+
 newMast() {
   // const formValue: CustomerCreationInterface = this.transDataWithSite(this.CounterSaleOrderBookingForm.value);
   const formValue: CustomerCreationInterface = this.transData(this.CounterSaleOrderBookingForm.value);
@@ -1415,6 +1402,16 @@ newMast() {
   this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);
+      if (this.custAccountNo!=null){
+      this.accountNoSearch1(this.custAccountNo);
+    }
+     else if (this.mobile1 !=null){
+       this.contactNoSearch(this.mobile1);
+    }
+    else{
+      this.custNameSearch(this.custName);
+    }
+     
       // this.CounterSaleOrderBookingForm.reset();
     } else {
       if (res.code === 400) {
@@ -1452,7 +1449,9 @@ accountNoSearch1(custAccountNo){
   
 }
 
-
+// getGroupControl(index,arrayname, fieldName) {
+//   return (<FormArray>this.CounterSaleOrderBookingForm.get(arrayname)).at(index).get(fieldName);
+// }
 }
 
   
