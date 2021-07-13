@@ -117,7 +117,18 @@ export class ReversalOrderComponent implements OnInit {
 
   reversalOrder(reversalOrderForm: any) {}
 
-  OrderFind(orderNumber){}
+ 
 
   accountNoSearch(accountNo){}
+
+  Reverse(){}
+  close() {
+    this.router.navigate(['admin']);
+  }
+
+  Clear() {
+    window.location.reload();
+  }
+
+  OrderFind(orderNumber){}
 }

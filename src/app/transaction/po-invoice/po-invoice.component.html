@@ -76,7 +76,7 @@
     </thead>
     <tbody>
         <ng-container  class="center" formArrayName="obj">
-            <input hidden formControlName="invoiceId"[(ngModel)]="invoiceId">
+            <!-- <input hidden formControlName="invoiceId"[(ngModel)]="invoiceId"> -->
             <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">    
         <tr class="ItemStyle" style="text-decoration:none;">
             <td>
@@ -1319,7 +1319,7 @@
 
             <div class="tab-pane fade" id="panel10008" role="tabpanel">
                 <div class="grid_scroll_1">
-                    <button class="btn btn-primary" (click)="showTdsLines(27)" style="width: 150px;">Show Tds details </button>
+                    <!-- <button class="btn btn-primary" (click)="showTdsLines()" style="width: 150px;">Show Tds details </button> -->
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
@@ -1330,6 +1330,7 @@
                             <th scope="col" style="width: 200px;">Deescription</th>
                             <th scope="col" style="width: 200px;">Section Code</th>
                             <th scope="col" style="width: 200px;">Tax Category</th>
+                            <th scope="col" style="width: 200px;">Tax Amount</th>
                             <th scope="col" style="width: 200px;">Select</th>
 
                             <!-- <th scope="col">Description</th> -->
@@ -1353,11 +1354,11 @@
                             </td>
                             
                             <td>
-                            <input disabled formControlName="distCodeCombSeg"  class="form-control"  style="width: 220px;height: 25px;">
+                            <input disabled formControlName="distCodeCombSeg"  class="form-control"  style="width: 200px;height: 25px;">
                             </td>
 
                             <td>
-                                <input disabled formControlName="baseAmount"  class="form-control" style="width: 120px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                                <input disabled formControlName="baseAmount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
                             </td>
 
                                                       
@@ -1365,7 +1366,7 @@
                                 <input  disabled formControlName="accDesc"  class="form-control"  style="width: 200px;height: 25px;text-align: right;">
                             </td>
                             <td>
-                                <select style="width: 200px;height: 25px;" formControlName="tdsSectionCode" id="tdsSectionCode"  class="form-control">
+                                <select style="width: 190px;height: 25px;" formControlName="actualSectionCode" id="actualSectionCode"  class="form-control">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let ts of tdsSectionList" [ngValue]="ts.lookupValueDesc" >
                                         {{ts.lookupValueDesc}}
@@ -1385,10 +1386,37 @@
                                 </select>
                             </td> 
 
+                            <td>
+                                <input disabled formControlName="taxAmount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" >
+                            </td>
+
                             <td><input type="checkbox"  name="tdsSelectFlag" value="tdsSelectFlag"  [(ngModel)]="tdsSelectFlag"  (change)="tdsSelectFlag1($event,k)"> </td>
                            <td>
                             <input hidden style="width: 50px;height: 25px;" formControlName="distCodeCombId"  class="form-control" >
                             </td>
+
+                            <td>
+                                <input  formControlName="invoiceId" [(ngModel)]="invoiceId" class="form-control" style="width: 40px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input type="number" formControlName="invoiceDistId"  class="form-control" style="width: 40px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input  formControlName="distCodeCombId" class="form-control" style="width: 50px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input  formControlName="thresHoldHdrId" [(ngModel)]="thresHoldHdrId"  class="form-control" style="width: 50px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input  formControlName="thresHoldTypeId" [(ngModel)]="thresHoldTypeId" class="form-control" style="width: 50px;height: 25px;">
+                            </td>
+
+     
+
 
                             <!-- <td>
                             <button type="submit" class="btn btn-primary"

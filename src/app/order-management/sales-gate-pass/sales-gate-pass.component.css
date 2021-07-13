@@ -64,11 +64,21 @@ fieldset {
     }
 
     input[type="text"]:disabled {
-        background: rgb(208,208,208);
+        /* background: rgb(208,208,208); */
         color: black;
       }
 
+      input[type="number"]:disabled {
+        /* background: rgb(208,208,208); */
+        color: black;
+        background-color: white;
+      }
 
+      input[type="date"]:disabled {
+        /* background: rgb(208,208,208); */
+        color: black;
+        background-color: white;
+      }
 
       .LabelFontStyle1:before{
         content:"*";
@@ -87,6 +97,10 @@ fieldset {
         border-color: Gray;
         height: 15px;
       }
+
+      .form-control{
+        border: white;
+      }
       
       .LabelFontStyle1 {
         font-family: Verdana,Sans-serif, Arial, Helvetica;
@@ -101,3 +115,4 @@ fieldset {
         height: 15px;
       }
 
+      input[type="text"][disabled]{background-color:white}

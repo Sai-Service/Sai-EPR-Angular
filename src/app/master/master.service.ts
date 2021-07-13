@@ -145,6 +145,22 @@ export class MasterService {
   }
 
 
+ 
+  taxCategoryListForSALESwithstatetcs(customerId,loginOuId1,itemId,custOuId,deptName,tcs): Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('customerId', customerId)
+    .set('loginOuId1', loginOuId1)
+    .set('itemId', itemId)
+    .set('custOuId', custOuId)
+    .set('deptName',deptName)
+    .set('tcs',tcs)
+    const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
+  }
+
+
   taxCategoryListHSN(mPer,mType): Observable<any> {
     // alert("MTYPE= "+mType + "  MPER= " + mPer);
     return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateGstPer?taxCatType=${mType}&gstPer=${mPer}`);
@@ -506,6 +522,19 @@ payTermDescList(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/PayTerms`);
 }
 
+// taxCategoryListForSALES1(){}
+
+
+taxCategoryListForSALES1(orderNumber, segment) {
+  const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+    .set('segment', segment)
+
+  const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
+  return this.http.put(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
 
 
 salesRepNameList(ouId,locId,dept): Observable<any> {
@@ -922,6 +951,24 @@ taxCalforItem(itemId,taxCatId,diss,baseAmount) {
 
   });
 }
+
+
+taxCalforItemwithMulDisc(itemId,taxCatId,baseAmount,diss1,diss2,diss3,diss4,diss5) {
+  const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
+  .set('baseAmt', baseAmount)
+  .set('taxCateId', taxCatId)
+  .set('disAmt1', diss1)
+  .set('disAmt2', diss2)
+  .set('disAmt3', diss3)
+  .set('disAmt4', diss4)
+  .set('disAmt5', diss5)
+  const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
 taxCalforItem1( ouId, locId, baseAmount, taxCategoryId, diss ){
   const REQUEST_PARAMS = new HttpParams().set('ouId', ouId)
   .set('locId', locId)
@@ -1528,6 +1575,15 @@ getsearchByReceiptNo(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
 }
 
+public PoReceiptReturnSubmit(PoReceiptRtnrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/rtvPost';
+  // http://localhost:8081/rcvShipment/rtvPost
+  return this.http.post(url, PoReceiptRtnrRecord, options);
+}
+
 
 
 public poDateWiseFind(content) {
@@ -1612,6 +1668,17 @@ public poSaveSubmit(poRecord) {
   };
   const url = this.ServerUrl + '/rcvShipment';
   return this.http.post(url, poRecord, options);
+  
+}
+
+//////////////////////////////////RTV///////////////////////////////////////////////////////////
+
+public rtvSaveSubmit(rtvRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/rcvShipment/rtvPost';
+  return this.http.post(url, rtvRecord, options);
 }
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -1930,6 +1997,12 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`);
     }
 
+    
+    getWsVehRegDetails(mRegNumber): Observable<any> {
+      // alert(mRegNumber );
+      return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
+    } 
+
     getVehVinDetails(mVin): Observable<any> {
       // alert("master >> " +mVin );
       return this.http.get(this.ServerUrl + `/VehAddInfo/VinInfo/${mVin}`);
@@ -2203,6 +2276,8 @@ getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId): Observable<any> {
 
 getPOReceiptSearchByRcptNo(mReceiptNo): Observable<any> {
   return this.http.get(this.ServerUrl+`/rcvShipment/receiptNoWise/${mReceiptNo}`)
+  // return this.http.get(this.ServerUrl+`/rcvShipment/findByReceiptNum/${mReceiptNo}`)
+  // http://localhost:8081/rcvShipment/findByReceiptNum/1000155
 }
 
 getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
