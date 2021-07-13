@@ -37,6 +37,53 @@ export class FixedAssetService {
 
   /////////////////Book Control/////////////////////
   public getBookControl(booktyp): Observable<any> {
-    return this.http.get(this.ServerUrl + `//faBookCtrl/bookTypeWise/${booktyp}`);
+    return this.http.get(this.ServerUrl + `/faBookCtrl/bookTypeWise/${booktyp}`);
   }
+  ////////////////Categories////////////////
+ public getAssetCategories(catName): Observable<any> {
+    return this.http.get(this.ServerUrl + `/faCate/categoryWise/${catName}`);
+  }
+  ////////////Addition/////////
+  public getAssetSearch(assNumber): Observable<any> {
+    return this.http.get(this.ServerUrl + `/faAddtion/${assNumber}`);
+  }
+  public MainCatList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Assets_Major');
+  }
+  public MinorCatList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Assets_Minor');
+  }
+  public categoryExist(category): Observable<any> {
+    return this.http.get(this.ServerUrl + `/faCate/categoryName/${category}`);
+  }
+  public keyExist(key): Observable<any> {
+    return this.http.get(this.ServerUrl + `/FAasset/AssetKey/${key}`);
+  }
+  public locationExist(locname): Observable<any> {
+    return this.http.get(this.ServerUrl + `/faLoc/locationName/${locname}`);
+  }
+  public companyCodeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Company');
+  }
+  public ownershipList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/faLookup/type/OWNERSHIP');
+  }
+  public boughtList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/faLookup/type/BOUGHT');
+  }
+  public assTypeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/faLookup/type/ASSET%20TYPE');
+  }
+  public assAddPost(assAddValue)
+{
+  const options={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+`/faAddtion`;
+  return this.http.post(url,assAddValue,options);
 }
+public AmtCalc(cost,catId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/faAddtion/recovCost?cost=${cost}&catId=${catId}`);
+}
+}
+  

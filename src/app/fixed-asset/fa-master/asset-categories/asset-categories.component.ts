@@ -51,6 +51,7 @@ bonusRule:string;
 subcomponentLifeRule:string;
 recongnizeGainLoss:string;
 terminalGainLoss:string;
+  lstcomment: any;
 
   constructor(private fb: FormBuilder, private router: Router, private fixedAssetservice:FixedAssetService) {
     this.AssetCategoriesForm=fb.group({
@@ -94,5 +95,19 @@ terminalGainLoss:string;
 
  
   closeMast() {  this.router.navigate(['admin']);  }
-  search(catName){}
+  
+  search(catName){
+    alert(catName+'ty');
+    this.fixedAssetservice.getAssetCategories(catName).subscribe
+    (data =>
+     {
+       console.log(data);
+       this.lstcomment=data;
+       console.log(this.lstcomment);
+       this.AssetCategoriesForm.patchValue(this.lstcomment);
+       this.AssetCategoriesForm.disable()  ;
+     
+     }
+     );
+  }
 }

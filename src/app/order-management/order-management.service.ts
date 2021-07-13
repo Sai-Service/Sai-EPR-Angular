@@ -124,7 +124,9 @@ export class OrderManagementService {
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
-
+  ItemDescList(segment,ouId):Observable<any>{
+    return this.http.get(this.ServerUrl+`/JaiTaxCatg/IgstTaxCtg?itemId=${segment}&ouId=${ouId}`)
+  }
   priceListNameList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist`);
   }
