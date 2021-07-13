@@ -8,6 +8,7 @@ import{DepriciationMethodComponent} from './fa-master/depriciation-method/depric
 import { CalendarComponent } from 'ngx-daterange';
 import { BookControlComponent } from './fa-master/book-control/book-control.component';
 import { AssetCategoriesComponent } from './fa-master/asset-categories/asset-categories.component';
+import { AssetAdditionComponent } from './fa-transaction/asset-addition/asset-addition.component';
 
 const routes: Routes = [
   {path:'FACommonMaster',component:FaCommanMasterComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:'DepriciationMethod',component:DepriciationMethodComponent},
   {path:'BookControl',component:BookControlComponent},
   {path:'AssetCategories',component:AssetCategoriesComponent},
+  {path:'AssetAddition',component:AssetAdditionComponent},
     // {path:'FACalender',component:facal}
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];

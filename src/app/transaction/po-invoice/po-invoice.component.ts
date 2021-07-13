@@ -522,6 +522,7 @@ getLocation(k)
       supplierSiteId: ['',[Validators.required]],
       accPayCodeCombId: [],
       amtAppToDisc: [],
+      invoiceId:[],
     })
   }
 
@@ -2183,8 +2184,9 @@ getGroupControl(index,arrayname, fieldName) {
 
       showTdsLines(mInvId:any){ 
         // alert ("Tds lines...wip.inv id :"+mInvId);
-       
-        this.service.getTdsDetails(mInvId)
+       var arraybase=this.poInvoiceForm.get('obj').value;
+       var invId=arraybase[0].invoiceId;
+        this.service.getTdsDetails(invId)
         .subscribe(
           data => {
             this.lstTdsLineDetails = data;

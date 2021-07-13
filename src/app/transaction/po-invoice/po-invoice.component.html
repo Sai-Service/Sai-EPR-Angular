@@ -76,6 +76,7 @@
     </thead>
     <tbody>
         <ng-container  class="center" formArrayName="obj">
+            <input hidden formControlName="invoiceId"[(ngModel)]="invoiceId">
             <ng-container   *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" class="auto-style5">    
         <tr class="ItemStyle" style="text-decoration:none;">
             <td>
