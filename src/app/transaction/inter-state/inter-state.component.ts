@@ -295,6 +295,8 @@ taxCategoryId:number;
     }
     return matches;
   };
+
+
   addRow(i){
     if(i>-1)
     {
@@ -507,7 +509,7 @@ taxCategoryId:number;
           });
           
       }
-      AvailQty(event:any,i)
+   AvailQty(event:any,i)
 {
   var trxLnArr =this.InterStateForm.get('oeOrderLinesAllList').value;
   var itemid=trxLnArr[i].itemId;

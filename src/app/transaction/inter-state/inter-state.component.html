@@ -265,7 +265,8 @@
 
                                           </td>
                                           <input hidden formControlName="invType">
-                                          <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptionsSelectedDescription($event,i)" />
+                                          <td>
+                                              <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptionsSelectedDescription($event,i)" />
                                               <datalist id="dynmicUserIds1">
                                                 <option *ngFor="let item of ItemIdList">{{item.SEGMENT}}
                                                   </option>
