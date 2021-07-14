@@ -2173,6 +2173,10 @@ TransactionType():Observable<any>
 {
   return this.http.get(this.ServerUrl +'/mtlTrxTypes/9');
 }
+TransactionTypemisc():Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/mtlTrxTypes/stockAdj/9`);
+}
 ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
@@ -2394,7 +2398,6 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     //   const url = this.ServerUrl + '/arCashReceipts/ArReceipt';
     //   return this.http.post(url, ArReceiptRecord, options);
     // }
-
 
     // ReceiptMethodList(mPaytype ,mLocId,mStatus): Observable<any> {
     //   // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);

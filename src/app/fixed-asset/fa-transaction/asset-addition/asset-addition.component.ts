@@ -67,7 +67,7 @@ property12451250Code:string;
 ownedLeased:string;
 newUsed:string;
 assNumber:number;
-  lstcomment: any;
+  lstcomment: any=null;
   costToClear:number;
   originalCost:number;
   netBookValue:number;
@@ -90,7 +90,7 @@ assNumber:number;
   public BranchList:Array<string>=[];
   public locIdList:Array<string>=[];
   public CompanyList:Array<string>=[];
-  
+  public Saltyp:any[];
   public MajorCat:any[];
   branch: any;
   lookupValueDesc1:string;
@@ -117,7 +117,7 @@ assNumber:number;
   amortlife:string;
   employeeName:string;
   employeeNo:number;
-  expenseAcc:string;
+  segmentName:string;
   locationName:string;
   codeCombinationId:number;
   locationId:number;
@@ -136,6 +136,7 @@ assNumber:number;
   public NaturalAccountList:Array<string>=[];
   unitsAssigned:number;
   depreciateFlag:string
+  lstDepriciation: any[];
 
 constructor(private fb: FormBuilder, private router: Router, private fixedAssetservice:FixedAssetService,private service: MasterService) {
   this.AssetAdditionForm=fb.group({ 
@@ -208,7 +209,7 @@ newfaDisHisLst():FormGroup{
   return this.fb.group({
     employeeName:[],
     employeeNo:[],
-    expenseAcc:[],
+    segmentName:[],
     locationName:[],
     unitsAssigned:[],
     codeCombinationId:[],
@@ -245,6 +246,13 @@ assetAddition(AssetAdditionForm:any){}
     .subscribe(
       data => {
         this.MajorCat = data;
+        console.log(this.MajorCat);
+      }
+    );
+    this.fixedAssetservice.salTypeList()
+    .subscribe(
+      data => {
+        this.Saltyp = data;
         console.log(this.MajorCat);
       }
     );
@@ -481,8 +489,11 @@ var segment = temp1[0];}
        {
          console.log(data);
          this.lstcomment=data;
+         this.lstDepriciation=data.faDprnLst
          console.log(this.lstcomment);
          this.AssetAdditionForm.patchValue(this.lstcomment);
+        //  console.log(this.lstcomment.bookTypeCode);
+        //  for(let i=0;i< this.lstDepriciation.length)
         //  this.AssetAdditionForm.patchValue({ownedLeased:this.lstcomment.ownedLeased});
          this.AssetAdditionForm.disable()  ;
        
@@ -497,7 +508,7 @@ var segment = temp1[0];}
     var natacc1 =this.AssetAdditionForm.get('segment4').value.split('--');
     // alert(natacc1[0]);
     var natacc=natacc1[0];
-    Code[i].expenseAcc=this.AssetAdditionForm.get('segment11').value+'.'+
+    Code[i].segmentName=this.AssetAdditionForm.get('segment11').value+'.'+
                         this.AssetAdditionForm.get('segment2').value+'.'+
                         this.AssetAdditionForm.get('segment3').value+'.'+
                     //  this.JournalVoucherForm.get('segment4').value+'.'+
@@ -505,9 +516,9 @@ var segment = temp1[0];}
                         this.AssetAdditionForm.get('segment5').value;
 
     // alert(this.segmentName);
-    var segmentName=Code[i].expenseAcc;
+    var segmentName=Code[i].segmentName;
     // alert(segmentName+"before patch");
-    patch.controls[i].patchValue({'expenseAcc':segmentName});
+    patch.controls[i].patchValue({'segmentName':segmentName});
     // alert(segmentName+"after patch");
     this.service.segmentNameList(segmentName)
     .subscribe(
@@ -525,7 +536,7 @@ var segment = temp1[0];}
           }
         } else if (this.segmentNameList.code === 400) {
           // var arraycontrol =this.JournalVoucherForm.get('glLines').value;
-          patch.controls[i].patchValue({expenseAcc : ''});
+          patch.controls[i].patchValue({segmentName : ''});
           // alert(this.segmentNameList.message);
 
         }
@@ -708,7 +719,8 @@ var segment = temp1[0];}
         this.fixedAssetservice.AmtCalc(cost,assetKeyId).subscribe(
           data=>{
          
-            this.AssetAdditionForm.patchValue({recoverableCost:data.recovCost,salvageAmt:data.salAmt,originalCost:data.cost})
+            this.AssetAdditionForm.patchValue({recoverableCost:data.recovCost,salvageAmt:data.salAmt,originalCost:cost,
+              netBookValue:data.netBookValue,accDeprc:data.accDeprc,ytdDeprc:data.ytdDeprc})
           }
         )       
       }

@@ -74,6 +74,9 @@ export class FixedAssetService {
   public assTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/faLookup/type/ASSET%20TYPE');
   }
+  public salTypeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/faLookup/type/SALVALTYPE');
+  }
   public assAddPost(assAddValue)
 {
   const options={
