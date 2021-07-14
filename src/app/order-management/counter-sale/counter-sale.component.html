@@ -100,6 +100,7 @@
                 </div>
             </div>
         </legend>
+       
         <table class="center" style="width: 100%;">
             <div *ngIf="displaycreateCustomer; then thencreateCustomer; else elsecreateCustomer"></div>
                 <ng-template #thencreateCustomer>
@@ -141,16 +142,6 @@
                     <input disabled type="text" class="form-control" formControlName="custAddress"
                         [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;">
                 </td>
-            </tr>
-            <tr>
-                <!-- <td>
-                <div *ngIf="displaycreateCustomer; then thencreateCustomer; else elsecreateCustomer"></div>
-                <ng-template #thencreateCustomer>
-                </ng-template>
-                <ng-template #elsecreateCustomer>
-                    <button class="btn btn-primary" style="width: 8rem;" [routerLink]="['/customerMaster']">Create Customer</button>
-                </ng-template>
-            </td> -->
             </tr>
                 </ng-template>  
               <tr>
@@ -1103,14 +1094,11 @@
                             <option value="Orgnization">Orgnization</option>
                         </select>
                         <div *ngIf="submitted && f. custType.errors" class="invalid-feedback">
-                            <div *ngIf="f.custType.errors.required">classCodeType must be a valid</div>
-                            <div *ngIf="f.custType.errors?.pattern">orgId must be a valid for 3 digit
-                            </div>
+                            <!-- <div *ngIf="f.custType.errors.required">classCodeType must be a valid</div> -->
                             <div *ngIf="f.custType.errors?.maxLength">classCodeType Name must be a valid
                             </div>
                         </div>
-                        <span
-                            *ngIf="!CounterSaleOrderBookingForm.get('custType').valid && CounterSaleOrderBookingForm.get('custType').touched">Please
+                        <span *ngIf="!CounterSaleOrderBookingForm.get('custType').valid && CounterSaleOrderBookingForm.get('custType').touched">Please
                             Enter classCodeType</span>
                     </td>
                 </tr>
@@ -1580,7 +1568,8 @@
                             *ngIf="!CounterSaleOrderBookingForm.get('location').valid && CounterSaleOrderBookingForm.get('location').touched">Please
                             Enter location </span>
                     </td>
-                    <td></td>
+                    <td style="width: 15%" class="LabelFontStyle1">
+                        Payment&nbsp;Term&nbsp;Type&nbsp;:&nbsp;</td>
                     <td>
                         <select formControlName="paymentType" id="paymentType" class="form-control" [ngModel]="paymentType">
                         <option>--Select--</option>
@@ -1588,14 +1577,15 @@
                             {{sc.codeDesc}}
                         </option>
                     </select>
+                    
                     <!-- <input formControlName="cmnTypeId" value={{cmnTypeId}} class="form-control"> -->
                     </td>
                 </tr>
             </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="accountNoSearch1(custAccountNo)">Close</button>
-          <button type="submit" class="btn btn-primary" id="register"  (click)="newMast()" >New Cust</button>
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="accountNoSearch1(custAccountNo)">Close</button> -->
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="newMast()" >New Cust</button>
         </div>
       </div>
     </div>
