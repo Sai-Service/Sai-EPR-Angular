@@ -578,8 +578,8 @@
                                             class="form-control"
                                             style="width: 160px;height: 25px;font-size: 10px;">
                                             <option>--Select--</option>
-                                            <option *ngFor="let cate of  categoryList" [value]="cate.type">
-                                                {{cate.type}}
+                                            <option *ngFor="let cate of  categoryList" [value]="cate.itemType">
+                                                {{cate.itemType}}
                                             </option>
                                         </select>
                                         </td>
@@ -1633,7 +1633,7 @@
     </div>
     <div class="modal-body">
       <pdf-viewer
-      src="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
+      src="C:\Users\jyoti\Downloads\download (34).pdf"
       [rotation]="0"
         [fit-to-page]="true"
         [original-size]="true"
@@ -1646,4 +1646,4 @@
     </div>
   </ng-template>
 
-  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch</button> -->

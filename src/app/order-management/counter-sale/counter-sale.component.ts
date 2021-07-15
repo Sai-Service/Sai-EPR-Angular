@@ -107,10 +107,18 @@ interface CustomerCreationInterface {
 @Component({
   selector: 'app-counter-sale',
   templateUrl: './counter-sale.component.html',
-  styleUrls: ['./counter-sale.component.css']
+  styleUrls: ['./counter-sale.component.css'],
+
+  template: `
+  <pdf-viewer [src]="pdfSrc"
+              [render-text]="true"
+              style="display: block;"
+  ></pdf-viewer>
+  `
 })
 export class CounterSaleComponent implements OnInit {
   CounterSaleOrderBookingForm: FormGroup;
+  
   // Customer Form
   locData =[ {
     "locatorId": 999,
@@ -729,15 +737,32 @@ downloadPickTicket(){
   });
 }
 
+
+open() {
+  this.orderManagementService.downloadCSPreINV(this.orderNumber).subscribe(data => {
+    // this.closeResult = `Closed with: ${result}`;
+  }, (reason) => {
+    // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  });
+}
+
+// downloadCSINV(){
+//   const fileName = 'download.pdf';
+//   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+//   this.orderManagementService.downloadCSINV(this.orderNumber)
+//   .subscribe(data => {
+//     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+//   });
+// }
+
 downloadCSINV(){
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.orderManagementService.downloadCSPreINV(this.orderNumber)
+  this.orderManagementService.downloadCSINV(this.orderNumber)
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
   });
 }
-
 
 
 pickTicketupdateFunction(){

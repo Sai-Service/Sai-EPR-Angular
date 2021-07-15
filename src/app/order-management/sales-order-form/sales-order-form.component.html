@@ -228,14 +228,16 @@
                             Payment&nbsp;Term&nbsp;:&nbsp;
                         </td>
                         <td>
-                            <select formControlName="payTermDesc" id="payTermDesc" class="form-control"
+                            <!-- <select formControlName="payTermDesc" id="payTermDesc" class="form-control"
                                 style="width: 170px;">
                                 <option>--Select--</option>
                                 <option *ngFor="let pt of payTermDescList">
                                     {{pt.codeDesc}}
                                 </option>
-                            </select>
-
+                            </select> [(ngModel)]='paymentType'-->
+                            <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 160px;">
+                            <input  hidden disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId' value={{paymentTermId}}
+                            class="form-control" style="width: 160px;">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Sales&nbsp;Person&nbsp;:&nbsp;
@@ -1047,8 +1049,8 @@
                                                         class="form-control"
                                                         style="width: 160px;height: 25px;font-size: 10px;">
                                                         <option>--Select--</option>
-                                                        <option *ngFor="let cate of  categoryList" [value]="cate.type">
-                                                            {{cate.type}}
+                                                        <option *ngFor="let cate of  categoryList" [value]="cate.itemType">
+                                                            {{cate.itemType}}
                                                         </option>
                                                     </select>
                                                     </td>
@@ -1451,6 +1453,11 @@
                             <td>
                                 <button type="button" class="btn btn-primary"  (click)="downloadInvoice()">
                                    Download Invoice
+                                  </button>
+                               </td>
+                               <td>
+                                <button type="button" class="btn btn-primary"  (click)="downloadAddonInvoice()">
+                                   Download Addon Invoice
                                   </button>
                                </td>
                             <!-- </ng-template> -->
