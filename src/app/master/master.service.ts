@@ -519,7 +519,7 @@ transactionTypeNameList(deptId,locId,ouId): Observable<any> {
 }
 
 payTermDescList(): Observable<any> {
-  return this.http.get(this.ServerUrl +`/cmnLookup/type/PayTerms`);
+  return this.http.get(this.ServerUrl +`/fndAcctLookup/lookupTypeWise/PaymentTerms`);
 }
 
 // taxCategoryListForSALES1(){}

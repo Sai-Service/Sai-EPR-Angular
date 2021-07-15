@@ -536,6 +536,8 @@
                                 <th scope="col" style="width: 40px;">Type Category</th>
                                 <th scope="col" style="width: 160px;">Item code</th>
                                 <th scope="col" style="width: 160px;">Description</th>
+                                <th scope="col" style="width: 160px;">Locator</th>
+                                <th scope="col" style="width: 160px;">Available QTY</th>
                                 <th scope="col" style="width: 70px;">Qty</th>
                                 <th scope="col" style="width: 90px;">Unit Price</th>
                                 <th scope="col" style="width: 160px;">Tax Category</th>
@@ -582,7 +584,7 @@
                                         </select>
                                         </td>
                                         <td>
-                                            <select formControlName="segment" id="segment{{i}}"  
+                                            <!-- <select formControlName="segment" id="segment{{i}}"  
                                                     (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                     class="form-control"
                                                     style="width: 160px;height: 25px;font-size: 10px;">
@@ -590,7 +592,14 @@
                                                     <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
                                                         {{item.value.segment}}
                                                     </option>
-                                                </select>
+                                                </select> -->
+                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
+                                                <datalist id="dynmicUserIds1">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
+                                                        {{item.value.segment}}
+                                                    </option>
+                                                </datalist>
                                                 <input hidden type="number" formControlName="itemId">
                                         </td>
                                         <td>
@@ -598,6 +607,21 @@
                                                 value="orderedItem" [ngValue]="orderedItem" class="form-control"
                                                 style="height: 20px;width: 160px;">
                                         </td>
+                                        <td>
+                                            <select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,i)'>
+                                            <option>--Select--</option>
+                                            <option *ngFor="let locId of  locData[i]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                                            <input hidden formControlName="frmLocatorId">
+                                          </select>
+                                          </td>
+                                          <input hidden formControlName="onHandQty">
+                                          <input hidden formControlName="id">
+                                          <input hidden  type="text"  formControlName="resveQty">
+                                          <td>
+                                            <input disabled  type="number" formControlName="Avalqty"  [ngValue]="Avalqty" class="form-control"
+                                                 style="height: 20px;width: 70px;">
+
+                                    </td>
                                         <td>
                                             <input  type="text" formControlName="pricingQty" class="form-control"
                                                 (change)="onKey(i)" style="height: 20px;width: 70px;">
@@ -630,6 +654,14 @@
                                                 <input disabled type="text" formControlName="orderedItem"
                                                     value="orderedItem" [ngValue]="orderedItem" class="form-control"
                                                     style="height: 20px;width: 160px;">
+                                            </td>
+                                            <td>
+                                                <input disabled   formControlName="frmLocatorName"  [ngValue]="frmLocatorName" class="form-control"
+                                                style="height: 20px;width: 70px;">
+                                            </td>
+                                            <td>
+                                                <input disabled  type="number" formControlName="Avalqty"  [ngValue]="Avalqty" class="form-control"
+                                                 style="height: 20px;width: 70px;">
                                             </td>
                                             <td>
                                                 <input disabled  type="text" formControlName="pricingQty" class="form-control"
@@ -1042,7 +1074,7 @@
             <table class="center">
                 <tr>
                    <td>
-                    <button type="button" class="btn btn-primary"  (click)="downloadInvoice()">
+                    <button type="button" class="btn btn-primary"  (click)="downloadCSINV()">
                        Download Invoice
                       </button>
                    </td>
@@ -1590,8 +1622,28 @@
       </div>
     </div>
   </div>
-
-
-
-
 </form>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <pdf-viewer
+      src="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
+      [rotation]="0"
+        [fit-to-page]="true"
+        [original-size]="true"
+        [show-all]="true"
+        style="display: block;"
+    ></pdf-viewer>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
