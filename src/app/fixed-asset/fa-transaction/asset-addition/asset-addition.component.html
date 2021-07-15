@@ -31,7 +31,7 @@
                                     <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Asset&nbsp;Number&nbsp;:</td>
                             <td   style="border: none;color: black;">
-                                <input type="text" class="form-control" formControlName="assetNumber">
+                                <input disabled type="text" class="form-control" formControlName="assetNumber">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:</td>
                             
@@ -159,7 +159,7 @@
                               <td>  
                                      <table><tr><td>
                                             <input type="text" disabled  data-target="#myModal2" class="form-control" formControlName="assetkey" [(ngModel)]="assetkey">
-                                            <input  type="number" class="form-control" formControlName="assetKeyCcid">
+                                            <input hidden type="number" class="form-control" formControlName="assetKeyCcid">
                                             </td>
                                             <td>
                                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="width:1rem ; text-align: right;"(click)="openkeycombination()">..</button>
@@ -220,6 +220,27 @@
                                                             <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"  style="border:none;"> -->
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                            <td style="width: 15%" class="LabelFontStyle">
+                                                                Cost&nbsp;Center&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select formControlName="segment3" id="segment3" class="form-control"
+                                                                    [(ngModel)]="segment3"
+                                                                    (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  CostCenterList" [ngValue]="sc.lookupValue">
+                                                                        {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" style="width: 150px; background-color: white; border: none;"
+                                                                    formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
+                                                                    class="form-control" disabled>
+                                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
+                                                            </td>
+                                                        </tr>
                                                    </table>
                                                 <div class="modal-footer">
                                                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="keyConcatenate()" >&times;</button>
@@ -238,9 +259,9 @@
 
                                    <td style="width: 15%" class="LabelFontStyle">Asset&nbsp;Type&nbsp;:</td>
                               <td>  
-                                     <select class="form-control" formControlName="assetType" >
-                                         <option>--Select--</option>
-                                         <option *ngFor="let sc of assetTypeList">{{sc.lookupCode}}</option>
+                                     <select class="form-control" formControlName="assetType" [(ngModel)]="assetType">
+                                         <option disabled>--Select--</option>
+                                         <option *ngFor="let sc of assetTypeList" [selected]="sc.lookupCode===CAPITALIZED">{{sc.lookupCode}}</option>
                                      </select>
                                           </td>
                                           <td style="width: 15%" class="LabelFontStyle">Unit&nbsp;:</td>
@@ -294,7 +315,14 @@
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Vendor&nbsp;:</td>
                                   <td>  
-                                 <input type="text" class="form-control" formControlName="manufacturerName" >
+                                 <!-- <input type="text"  formControlName="manufacturerName" > -->
+                                 <input type="text" class="form-control" (keyup)="getSuppData($event)" formControlName="manufacturerName" id="SuppDataFirstWay" list="dynmicUserIds1" class="form-control" style="width: 150px;" />
+                                 <datalist id="dynmicUserIds1">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  suppList" >
+                                {{sc.name}}
+                                </option>
+                                </datalist> 
                                    </td>
                             </tr>
                                 </table>
@@ -506,37 +534,51 @@
                                                                         <input type="number"  class="form-control"  style="width: 150px;" formControlName="unitsAssigned">
                                                                     </td> 
                                                                     <td>
-                                                                        <input  style="width: 150px;" type="text"  class="form-control" formControlName="employeeName">
+                                                                        <!-- <input  style="width: 150px;" type="text"  class="form-control" formControlName="employeeName"> -->
+                                                                    <input type="text" (keyup)="getEmplData($event)" formControlName="employeeName" id="EmpDataFirstWay" list="dynmicUserIds2" class="form-control" style="width: 150px;" />
+                                                                     <datalist id="dynmicUserIds2">
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  emplList" >
+                                                                    {{sc.fullName}}
+                                                                    </option>
+                                                                    </datalist> 
                                                                     </td>
                                                                     <td>
-                                                                        <input style="width: 150px;"  type="text"   class="form-control" formControlName="employeeNo">
+                                                                      <input type="text" (keyup)="getEmplData($event)" formControlName="employeeNo" id="EmpDataFirstWay" list="dynmicUserIds3" class="form-control" style="width: 150px;" />
+                                                                     <datalist id="dynmicUserIds3">
+                                                                    <option>--Select--</option>
+                                                                    <option *ngFor="let sc of  emplList" >
+                                                                    {{sc.ticketNo}}
+                                                                    </option>
+                                                                    </datalist> 
+                                                                    
                                                                     </td>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <input  data-target="#myModal3" style="height: 20px;width: 250px;" type="text"  class="form-control" formControlName="segmentName">
-                                                                                    <input type="number" formControlName="codeCombinationId">
-                                                                        </td>
-                                                                        <td>
-                                                                               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3" style="width:1rem ; text-align: right;"(click)="openCombination(assLineIndex)">..</button>
-                                                                               </td>
-                                                                        </tr></table>
-                                                                       
-                                                                    </td>
-                                                                    <td>
+                                                                     <td>
                                                                             <table>
                                                                                     <tr>
                                                                                         <td>
                                                                                             <input data-target="#myModal4" style="width: 70px;" type="text"  class="form-control" formControlName="locationName" >
-                                                                                            <input type="number" formControlName="locationId">
+                                                                                            <input hidden type="number" formControlName="locationId">
                                                                                 </td>
                                                                                 <td>
                                                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal4" style="width:1rem ; text-align: right;"(click)="openlocationCombination(assLineIndex)">..</button>
                                                                                        </td>
                                                                                 </tr></table>
                                                                         
-                                                                    </td>                                                                    
+                                                                    </td> 
+                                                                    <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <input  data-target="#myModal3" style="height: 20px;width: 250px;" type="text"  class="form-control" formControlName="segmentName">
+                                                                                        <input hidden type="number" formControlName="codeCombinationId">
+                                                                            </td>
+                                                                            <td>
+                                                                                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3" style="width:1rem ; text-align: right;"(click)="openCombination(assLineIndex)">..</button>
+                                                                                   </td>
+                                                                            </tr></table>
+                                                                           
+                                                                        </td>                                                                   
                                                                     <td>
                                                                         <button type="submit" class="btn btn-info"  style="width: min-content;" (click)="addnewfaDisHisLst()"><i
                                                                         class="fa fa-plus"></i></button>
@@ -578,7 +620,7 @@
                                             <button type="button" class="btn btn-info" (click)="assAddSave()">Save</button>
                                         </td>
                                         <td>
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter5">View Financial Information</button>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter5" style="width: fit-content;">View Financial Information</button>
                                         </td>
                                             <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
@@ -710,7 +752,7 @@
                                                                     <li class="nav-item"></li>
                                                                     <li class="nav-item"></li>
                                                                </ul>
-                                                                <div class="tab-content rounded-bottom">
+                                                                <div class="tab-conng stent rounded-bottom">
                                                                     <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
                                                                         <div class="grid_scroll">
                                                                                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
@@ -955,21 +997,16 @@
                                 Natural&nbsp;Account&nbsp;:
                             </td>
                             <td>
-                                <!-- <select formControlName="segment4" id="segment4" class="form-control"
-                                    [(ngModel)]="segment4"
-                                    (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  NaturalAccountList">
-                                        {{sc.lookupValue}}--{{sc.lookupValueDesc}}
-                                    </option>
-                                </select> -->
-                                 <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds1" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/>
-                                 <datalist id="dynmicUserIds1">
+                                 <input type="number" formControlName="segment4" id="segment4" class="form-control" [(ngModel)]="segment4">
+                                    
+                                   
+                                 <!-- <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds1" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/> -->
+                                 <!-- <datalist id="dynmicUserIds1">
                                       <option>--Select--</option>
                                     <option *ngFor="let sc of  NaturalAccountList" >
                                         {{sc.lookupValue}}--{{sc.lookupValueDesc}}
                                     </option>
-                                 </datalist>
+                                 </datalist> --> 
                             </td>
                             <td>
                                 <input type="text" style="width: 150px; background-color: white; border: none;"
