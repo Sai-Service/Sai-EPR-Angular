@@ -130,10 +130,14 @@ assNumber:number;
    segment5:string;
    userList2: any[] = [];
   lastkeydown1: number = 0;
+  userList3: any[] = [];
+  lastkeydown2: number = 0;
   public InterBrancList:Array<string>=[];
   
   public CostCenterList:Array<string>=[];
   public NaturalAccountList:Array<string>=[];
+  public emplList:Array<string>=[];
+  public suppList:Array<string>=[];
   unitsAssigned:number;
   depreciateFlag:string
   lstDepriciation: any[];
@@ -306,6 +310,16 @@ assetAddition(AssetAdditionForm:any){}
         console.log(this.CostCenterList);
       }
     );
+    this.service.empIdListFn().subscribe(
+      data=>{
+        this.emplList=data;
+      }
+    )
+    this.service.supplierCodeList().subscribe(
+      data=>{
+        this.suppList=data;
+      }
+    )
   this.service.NaturalAccountList()
     .subscribe(
       data => {
@@ -359,7 +373,7 @@ var segment = temp1[0];}
     {
    
       let SegmentName1=this.AssetAdditionForm.get('attributeCategoryCode').value;
-      alert(SegmentName1);
+      // alert(SegmentName1);
       
       if(SegmentName1===null)
       {this.AssetAdditionForm.get('segment11').reset();
@@ -390,7 +404,7 @@ var segment = temp1[0];}
                        this.AssetAdditionForm.get('subCode').value;
                     
 
-      alert(this.attributeCategoryCode);
+      // alert(this.attributeCategoryCode);
 
       this.fixedAssetservice.categoryExist(this.attributeCategoryCode)
       .subscribe(
@@ -398,18 +412,21 @@ var segment = temp1[0];}
           console.log(data.obj);
           this.segmentNameList = data.obj;
           console.log(this.segmentNameList);
-          alert(data.obj.length);
+          // alert(data.obj.length);
           if (data.code === 200) {
             // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
             if (this.segmentNameList.length === 0) {
               alert('Invalid Code Combination');
             } else {
-              alert('else Loop');
+              // alert('else Loop');
               console.log(this.segmentNameList);
               // this.assetCategoryId = Number(data.obj.categoryId)
               this.AssetAdditionForm.patchValue({assetCategoryId:data.obj.categoryId});
               this.AssetAdditionForm.patchValue({method:data.obj.deprnMethod,ownedLeased:data.obj.ownedLeased,inventorial:data.obj.inventorial,
-                bookTypeCode:data.obj.bookTypeCode,prorateConc:data.obj.prorateConventionCode,depreciateFlag:data.obj.depreciateFlag})
+                bookTypeCode:data.obj.bookTypeCode,prorateConc:data.obj.prorateConventionCode,depreciateFlag:data.obj.depreciateFlag,
+                salValType:data.obj.salValType,saleValPer:data.obj.percent});
+                this.segment4=this.segmentNameList.deprnExpenseAcct;
+                // alert(this.segment4+'seg');
               // this.method=this.segmentNameList.deprnMethod;
               
             }
@@ -424,14 +441,12 @@ var segment = temp1[0];}
     }
     openkeycombination(){
       let keyName1=this.AssetAdditionForm.get('assetkey').value;
-      alert(keyName1);
+      // alert(keyName1);
       
       if(keyName1===null)
       {this.AssetAdditionForm.get('locationCode').reset();
       this.AssetAdditionForm.get('companyCode').reset();
-      
-      
-
+      this.AssetAdditionForm.get('segment3').reset();
       this.AssetAdditionForm.get('lookupValueDesc4').reset();
       this.AssetAdditionForm.get('lookupValueDesc5').reset();
           }
@@ -441,6 +456,7 @@ var segment = temp1[0];}
       // alert(temp[0]);
       this.companyCode = temp[0];
       this.locationCode = temp[1];
+      this.segment3=temp[2];
            
     }
       // this.showModal = true;
@@ -448,10 +464,10 @@ var segment = temp1[0];}
     }
     keyConcatenate(){
       this.assetkey=this.AssetAdditionForm.get('companyCode').value+'.'+
-      this.AssetAdditionForm.get('locationCode').value;
+      this.AssetAdditionForm.get('locationCode').value+'.'+this.AssetAdditionForm.get('segment3').value;
                                            
 
-      alert(this.assetkey);
+      // alert(this.assetkey);
 
       this.fixedAssetservice.keyExist(this.assetkey)
       .subscribe(
@@ -483,7 +499,7 @@ var segment = temp1[0];}
   closeMast() {  this.router.navigate(['admin']);  }
 
   search(assNumber){
-      alert(assNumber+'ty');
+      // alert(assNumber+'ty');
       this.fixedAssetservice.getAssetSearch(assNumber).subscribe
       (data =>
        {
@@ -505,9 +521,11 @@ var segment = temp1[0];}
   {
     var Code=this.AssetAdditionForm.get('faDisHisLst').value;
     var patch =this.AssetAdditionForm.get('faDisHisLst') as FormArray;
-    var natacc1 =this.AssetAdditionForm.get('segment4').value.split('--');
+    // patch.controls[i].patchValue({segment4:this.segmentNameList.deprnExpenseAcct});
+    // alert(this.segment4);
+    var natacc =this.AssetAdditionForm.get('segment4').value;
     // alert(natacc1[0]);
-    var natacc=natacc1[0];
+    // var natacc=natacc1[0];
     Code[i].segmentName=this.AssetAdditionForm.get('segment11').value+'.'+
                         this.AssetAdditionForm.get('segment2').value+'.'+
                         this.AssetAdditionForm.get('segment3').value+'.'+
@@ -558,18 +576,18 @@ var segment = temp1[0];}
 
   openCombination(i)
   {
-    var natacc1 =this.AssetAdditionForm.get('segment4').value.split('--');
+    var natacc =this.AssetAdditionForm.get('segment4').value;
     // alert(natacc1[0]);
-    var natacc=natacc1[0];
+    // var natacc=natacc1[0];
 
-    let SegmentName1=this.faDisHisLst().controls[i].get('expenseAcc').value;
+    let SegmentName1=this.faDisHisLst().controls[i].get('segmentName').value;
 
     if(SegmentName1===null)
     {
       this.AssetAdditionForm.get('segment11').reset();
     this.AssetAdditionForm.get('segment2').reset();
     this.AssetAdditionForm.get('segment3').reset();
-    this.AssetAdditionForm.get('segment4').reset();
+    // this.AssetAdditionForm.get('segment4').reset();
     this.AssetAdditionForm.get('segment5').reset();
 
     this.AssetAdditionForm.get('lookupValueDesc1').reset();
@@ -670,13 +688,13 @@ var segment = temp1[0];}
 
 
   }
-  getNaturalAccount($event)
+  getEmplData($event)
   {
-    let userId=(<HTMLInputElement>document.getElementById('NaturalAccountFirstWay')).value;
+    let userId=(<HTMLInputElement>document.getElementById('EmpDataFirstWay')).value;
    this.userList2=[];
    if (userId.length > 2) {
     if ($event.timeStamp - this.lastkeydown1 > 200) {
-      this.userList2 = this.searchFromArray1(this.NaturalAccountList, userId);
+      this.userList2 = this.searchFromArray2(this.emplList, userId);
     }
   }
   }
@@ -690,6 +708,26 @@ var segment = temp1[0];}
     }
     return matches;
   };
+  searchFromArray2(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+  getSuppData($event)
+  {
+    let userId=(<HTMLInputElement>document.getElementById('SuppDataFirstWay')).value;
+   this.userList3=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown2 > 200) {
+      this.userList3 = this.searchFromArray1(this.suppList, userId);
+    }
+  }
+  }
+
   assAddSave()
   {
          const formValue:IAssetAddition=this.AssetAdditionForm.value;
@@ -698,6 +736,8 @@ var segment = temp1[0];}
         {
           alert("Asset Addition Done Successfully");
           console.log(res.obj);
+          
+          this.AssetAdditionForm.patchValue({'assetNumber':res.obj})
           this.AssetAdditionForm.disable();
         }
         else
@@ -711,9 +751,10 @@ var segment = temp1[0];}
      })
     }
 
+
     costCalculation(event:any)
     {
-        alert(event.target.value);
+        // alert(event.target.value);
         var cost=event.target.value;
           var assetKeyId=this.AssetAdditionForm.get('assetCategoryId').value
         this.fixedAssetservice.AmtCalc(cost,assetKeyId).subscribe(

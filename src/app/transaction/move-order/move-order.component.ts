@@ -252,14 +252,20 @@ transdata(val)
 }
 newmoveOrder()
 {
-  //   alert(this.moveOrderForm.valid+'status');
-  //   (<FormArray>this.moveOrderForm.get('trxLinesList')).controls.forEach((group: FormGroup) => {
-  //     (<any>Object).values(group.controls).forEach((control: FormControl) => { 
-  //         control.valid;
-  //         console.log(control.value+'---'+control.valid);
-  //     }) 
-  //   });
-  // if (this.moveOrderForm.valid) {
+    // alert(this.moveOrderForm.valid+'status');
+    // alert(this.trxLinesList().status);
+    // (<FormArray>this.moveOrderForm.get('trxLinesList')).controls.forEach((group: FormGroup) => {
+    //   (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+    //       if(control.valid){
+    //       console.log(control.value+'---'+control.valid);
+    //       }else{
+    //         // debugger;
+    //         console.log('invalid ---' +control.value);
+    //       }
+    //   }) 
+    //   console.log('*******'  );
+    // }); 
+  if (this.moveOrderForm.valid) {
  var trans=this.transType.find(d=>d.transactionTypeId===this.moveOrderForm.get('transactionTypeId').value);
 //  var loc=this.getfrmSubLoc.find(d=>d.locatorId===this.moveOrderForm.get('frmLocatorId').value);
 //  alert(trans.transactionTypeName+'tra');
@@ -304,13 +310,13 @@ newmoveOrder()
       }
     }
   })
-// }
-// else{
+}
+else{
   
-//     alert('else');
-//     this.HeaderValidation();
+    alert('else');
+    this.HeaderValidation();
   
-// }
+}
 }
 
 reservePos(i)
@@ -329,7 +335,8 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
       variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
       // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
       variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].quantity, Validators.required));
-      variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
+      // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
+      variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
       variantFormGroup.addControl('transactionNumber', new FormControl(jobno1, Validators.required));
    
   // var reserveinfo=formValue[0];

@@ -32,7 +32,7 @@ export class InterStateComponent implements OnInit {
 InterStateForm:FormGroup;
 InterStateNo:number;
 orderNumber:number;
-transactionTypeName:number;
+transactionTypeName:string;
 public orderTypeList:any;
 public priceListNameList: any;
 createOrderTypeList:any=[];

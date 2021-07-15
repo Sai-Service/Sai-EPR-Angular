@@ -57,7 +57,7 @@ export class FixedAssetService {
     return this.http.get(this.ServerUrl + `/faCate/categoryName/${category}`);
   }
   public keyExist(key): Observable<any> {
-    return this.http.get(this.ServerUrl + `/FAasset/AssetKey/${key}`);
+    return this.http.get(this.ServerUrl + `/faLoc/assetKey/${key}`);
   }
   public locationExist(locname): Observable<any> {
     return this.http.get(this.ServerUrl + `/faLoc/locationName/${locname}`);
