@@ -105,6 +105,7 @@ export class SalesOrderFormComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   public op:string;
   invLineNo:number;
+  paymentTermId:number;
   deptName:string;
   custOuId:number;
   loginOuId1:number;
@@ -207,9 +208,11 @@ export class SalesOrderFormComponent implements OnInit {
   currentOpration:string;
   displayVehicleDetails=true;
   displayCreateOrderButton=false;
-  displayLineTaxDetails=false;
+  displayLineTaxDetails=true;
   displaySalesLines=true;
   displayAdditonalDetails=true;
+  // payTermDesc:string;
+ 
 
 
   displaysegmentInvType:Array<boolean>=[];
@@ -223,7 +226,10 @@ export class SalesOrderFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
+      // payTermDesc:[],
       ouName: [''],
+      // paymentType:[''],
+      paymentTermId:[],
       locCode: [''],
       locId:[''],
       locationId:[''],
@@ -261,6 +267,7 @@ export class SalesOrderFormComponent implements OnInit {
       billToAddress: [''],
       gstNo: [''],
       panNo: [''],
+      tcs:[''],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       // taxAmounts: this.fb.array([this.TaxDetailsArray()])
       taxAmounts: this.fb.array([this.TaxDetailsGroup()])
@@ -305,7 +312,7 @@ export class SalesOrderFormComponent implements OnInit {
   orderlineDetailsGroup() {
     return this.fb.group({
       lineNumber:[''],
-      // segment:[''],
+      tcs:[''],
       itemId:[],
       orderedItem: [''],
       pricingQty:[''],
@@ -350,7 +357,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.displaysegmentInvType[0]=true;
     this.displayLineflowStatusCode[0]=true;
     this.displayRemoveRow[0]=true;
-    this.displayTaxCategoryupdate[0]=true;
+    // this.displayTaxCategoryupdate[0]=true;
     this.displaytaxCategoryName[0]=true;
     // this.displayCounterSaleLine[0]=true;
     // for ( let i=0;this.lstgetOrderLineDetails[i].length;i++){
@@ -564,6 +571,8 @@ export class SalesOrderFormComponent implements OnInit {
           this.accountNoSearch = data.obj;
           console.log(this.accountNoSearch);
           this.SalesOrderBookingForm.patchValue(this.accountNoSearch);
+          this.paymentTermId=data.obj.termId;
+          this.payTermDesc=data.obj.paymentType;
         }
       );
   }
@@ -716,7 +725,7 @@ alert('***patch disc Lines *****')
     this.displayLineflowStatusCode.push(false);
      this.displayCounterSaleLine.push(true);
     this.displaytaxCategoryName.push(true);
-    this.displayTaxCategoryupdate.push(true);
+    // this.displayTaxCategoryupdate.push(true);
     }
   
     // RemoveRow(OrderLineIndex){
@@ -802,20 +811,22 @@ OrderFind(orderNumber) {
 
         let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-        alert(this.lstgetOrderLineDetails.length)
-        if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length ===0 ) {
+        alert(this.lstgetOrderTaxDetails.length)
+        if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length===0) {
           this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
           this.TaxDetailsArray().push(this.TaxDetailsGroup());
           this.displayLineTaxDetails=true;
-          
+          alert( this.displayLineTaxDetails);
         }
         else{
         for (let i = 0; i <= this.lstgetOrderLineDetails.length - 1; i++) {
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
+          this.displayLineTaxDetails=false;
           this.displaysegmentInvType[i]=false;
           this.displayCounterSaleLine.push(false);
-          // this.displayLineflowStatusCode[i]=false;
+          this.displayLineflowStatusCode[i]=false;
+          this.displaytaxCategoryName[i]=true;
           if (this.lstgetOrderLineDetails[i].flowStatusCode==='Invoiced' || this.lstgetOrderLineDetails[i].flowStatusCode==='CANCELLED'){
             this.displayLineflowStatusCode[i]=true;
             this.displayRemoveRow[i]=false;
@@ -834,6 +845,7 @@ OrderFind(orderNumber) {
             this.displaytaxCategoryName[i]=true;
             this.displayCounterSaleLine[i]=false;
             this.displaytaxCategoryName[i]=true;
+            // this.displayLineTaxDetails=false;
           }
       }
   }
@@ -846,18 +858,18 @@ OrderFind(orderNumber) {
        var itemId= this.lstgetOrderLineDetails[i].itemId;
       }
      
-        this.service.taxCategoryListForSALESwithstatetcs(this.customerId,Number(sessionStorage.getItem('ouId')),itemId,this.custOuId,this.deptName,this.tcs)
-         .subscribe(
-          data1 => {
-         this.taxCategoryList = data1;
-        console.log(this.taxCategoryList);
-        data1 = this.taxCategoryList;
-      }
-    );
+    //     this.service.taxCategoryListForSALESwithstatetcs(this.customerId,Number(sessionStorage.getItem('ouId')),itemId,this.custOuId,this.deptName,this.tcs)
+    //      .subscribe(
+    //       data1 => {
+    //      this.taxCategoryList = data1;
+    //     console.log(this.taxCategoryList);
+    //     data1 = this.taxCategoryList;
+    //   }
+    // );
         
-        if (this.flowStatusCode='BOOKED'){
-          this.displayLineTaxDetails=false;
-        }
+        // if (this.flowStatusCode='BOOKED'){
+        //   this.displayLineTaxDetails=false;
+        // }
       }
     )
    
@@ -954,7 +966,7 @@ onOptionTaxCatSelected(taxCategoryName, i) {
     this.orderManagementService.UpdateSalesUpdateLine(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);
-      // this.OrderFind(this.orderNumber);
+      this.OrderFind(this.orderNumber);
       // window.location.reload();
     } else {
       if (res.code === 400) {
@@ -970,6 +982,16 @@ onOptionTaxCatSelected(taxCategoryName, i) {
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.downloadVehicleINV(this.orderNumber)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    });
+  }
+
+
+  downloadAddonInvoice(){
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.downloadAddonINV(this.orderNumber)
     .subscribe(data => {
       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     });

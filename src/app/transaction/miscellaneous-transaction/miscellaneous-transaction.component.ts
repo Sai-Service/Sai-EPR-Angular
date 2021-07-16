@@ -335,7 +335,7 @@ console.log(this.route1.queryParams+'hell');
           console.log(this.locIdList);
         }
       );
-      this.service.TransactionType().subscribe(
+      this.service.TransactionTypemisc().subscribe(
         data=>{
           this.transType=data;
         }
@@ -965,7 +965,7 @@ this.router.navigate(['admin']);
             }
           }
         })
-    //   }
+      // }
     //   else{
   
     //     alert('else');
