@@ -126,7 +126,9 @@ export class CustomerMasterComponent implements OnInit {
   lstcomments: any;
   searchByAccount: any;
   displayButton = true;
-  public minDate = new Date();
+  public minDate = new Date()  ;
+  public minDateBirth   = new Date().setFullYear(new Date().getFullYear() -18);
+  public minDateWedding = new Date().setFullYear(new Date().getFullYear() -21);
   public cityList1: any;
 
   public custTypeList: Array<string>[];
@@ -222,6 +224,7 @@ export class CustomerMasterComponent implements OnInit {
    this.ouId = (sessionStorage.getItem('ouId'));
    console.log(this.ouId);
    this.weddingDate = new Date();
+//   this.minDate = new Date();
   //  this.ouId = Number(sessionStorage.getItem('ouId'));
     // this.searchByAccount = [];
     // this.searchByAccount.customerSiteMasterList = [];
