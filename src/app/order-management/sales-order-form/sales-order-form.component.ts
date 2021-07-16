@@ -105,6 +105,7 @@ export class SalesOrderFormComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   public op:string;
   invLineNo:number;
+  paymentTermId:number;
   deptName:string;
   custOuId:number;
   loginOuId1:number;
@@ -210,6 +211,7 @@ export class SalesOrderFormComponent implements OnInit {
   displayLineTaxDetails=true;
   displaySalesLines=true;
   displayAdditonalDetails=true;
+  // payTermDesc:string;
  
 
 
@@ -224,7 +226,10 @@ export class SalesOrderFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
+      // payTermDesc:[],
       ouName: [''],
+      // paymentType:[''],
+      paymentTermId:[],
       locCode: [''],
       locId:[''],
       locationId:[''],
@@ -352,7 +357,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.displaysegmentInvType[0]=true;
     this.displayLineflowStatusCode[0]=true;
     this.displayRemoveRow[0]=true;
-    this.displayTaxCategoryupdate[0]=true;
+    // this.displayTaxCategoryupdate[0]=true;
     this.displaytaxCategoryName[0]=true;
     // this.displayCounterSaleLine[0]=true;
     // for ( let i=0;this.lstgetOrderLineDetails[i].length;i++){
@@ -566,6 +571,8 @@ export class SalesOrderFormComponent implements OnInit {
           this.accountNoSearch = data.obj;
           console.log(this.accountNoSearch);
           this.SalesOrderBookingForm.patchValue(this.accountNoSearch);
+          this.paymentTermId=data.obj.termId;
+          this.payTermDesc=data.obj.paymentType;
         }
       );
   }
@@ -718,7 +725,7 @@ alert('***patch disc Lines *****')
     this.displayLineflowStatusCode.push(false);
      this.displayCounterSaleLine.push(true);
     this.displaytaxCategoryName.push(true);
-    this.displayTaxCategoryupdate.push(true);
+    // this.displayTaxCategoryupdate.push(true);
     }
   
     // RemoveRow(OrderLineIndex){
@@ -959,7 +966,7 @@ onOptionTaxCatSelected(taxCategoryName, i) {
     this.orderManagementService.UpdateSalesUpdateLine(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);
-      // this.OrderFind(this.orderNumber);
+      this.OrderFind(this.orderNumber);
       // window.location.reload();
     } else {
       if (res.code === 400) {
@@ -975,6 +982,16 @@ onOptionTaxCatSelected(taxCategoryName, i) {
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.downloadVehicleINV(this.orderNumber)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    });
+  }
+
+
+  downloadAddonInvoice(){
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.downloadAddonINV(this.orderNumber)
     .subscribe(data => {
       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     });

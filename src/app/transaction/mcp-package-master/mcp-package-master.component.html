@@ -435,8 +435,9 @@
 
                                     <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Type:&nbsp;</td>
                                     <td>  
-                                        <select    formControlName="searchByPkgType" id="searchByPkgType" [(ngModel)]="searchByPkgType" class="form-control">
-                                            <option disabled>--Select--</option>
+                                        <select    formControlName="searchByPkgType" id="searchByPkgType" [(ngModel)]="searchByPkgType" class="form-control"
+                                        (ngModelChange)="onSelectionPkgType($event)">
+                                            <option>--Select--</option>
                                             <option *ngFor="let sc of  McpPackageTypeList" [ngValue]="sc.code">
                                                   {{sc.code}}
                                             </option>Search
@@ -456,11 +457,20 @@
                                         </select>
                                     </td>
 
-
                                     <td style="width: 15%" class="LabelFontStyle">Package&nbsp;No:&nbsp;</td>
-                                    <td>
+                                    <div *ngIf="showPkgNumber; then thenBlockpkgNo; else elseBlockpkgNo"></div>
+                                    <ng-template #thenBlockpkgNo>
+                                          <td>
                                             <input   type="text" formControlName="searchByPkgNumber" [(ngModel)]="searchByPkgNumber"   class="form-control" placeholder="Enter Package no here" >
+                                          </td>
+                                    </ng-template>
+                                    <ng-template #elseBlockpkgNo>
+                                    <td>
+                                        <input disabled  type="text" formControlName="searchByPkgNumber" [(ngModel)]="searchByPkgNumber"   class="form-control" placeholder="Enter Package no here" >
                                     </td>
+                                    </ng-template>
+
+
 
                                     <!-- <td>  
                                         <select   formControlName="searchByPkgNumber" id="searchByPkgNumber" [(ngModel)]="searchByPkgNumber" class="form-control">
@@ -474,7 +484,7 @@
                 
                                                   
                                     <td colspan="8" style="text-align: left; width: 100%;">
-                                        <button type="submit"  (click)="SearchByPkgFuelType(searchByPkgType,searchByFuelType)" class="btn btn-primary"><i
+                                        <button type="submit"  (click)="mcpSearchBy(searchByPkgType,searchByFuelType,searchByPkgNumber)" class="btn btn-primary"><i
                                                 class="fa fa-search"></i></button> 
                 
                                         <!-- <td colspan="8" style="text-align: left; width: 100%;">

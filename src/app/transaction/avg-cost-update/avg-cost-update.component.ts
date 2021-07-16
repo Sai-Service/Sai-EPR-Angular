@@ -438,6 +438,8 @@ export class AvgCostUpdateComponent implements OnInit {
             variantFormGroup.addControl('createdBy', new FormControl(createdBy, Validators.required));
           }
           console.log(variants.value);
+
+          
           this.service.AvgCostUpdateSubmit(variants.value).subscribe((res: any) => {
           
             if (res.code === 200) {
