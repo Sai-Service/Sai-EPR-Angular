@@ -592,8 +592,14 @@
         <table class="center">
             <tr>
                 <td>
-      <button type="submit" class="btn btn-primary" id="register" (click)="IntterstateSaleOrderSave()">Create Order</button>
+      <button type="submit" class="btn btn-primary" id="register" (click)="IntterstateSaleOrderSave()" style="width: 8rem;">Create Order</button>
                 </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="refresh()" style="width: 4rem;">Reset</button>
+                              </td>
+                              <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="close()" style="width: 4rem;">Close</button>
+                                          </td>
             </tr>
             </table>
       </fieldset>

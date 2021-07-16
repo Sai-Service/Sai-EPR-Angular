@@ -79,9 +79,8 @@ export class OrderManagementService {
   }
 
   downloadCSINV(InvoiceNumber){
-    // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
+    // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
     // local
-   
     const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
@@ -107,6 +106,18 @@ export class OrderManagementService {
     // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/salesTaxInv/${InvoiceNumber}`;  
     // local
     const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+  downloadGatePass(InvoiceNumber){
+    // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//salesGatePass/print/${InvoiceNumber}`;  
+    // local
+    const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -401,5 +412,18 @@ orderNoPost(orderNumber,emplId) {
 
   });
 }
+
+
+OrderReversal(orderNumber, segment) {
+  const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+    .set('segment', segment)
+
+  const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
+  return this.http.put(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
+
 
 }
