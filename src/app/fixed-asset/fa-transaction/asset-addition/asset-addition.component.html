@@ -660,7 +660,7 @@
                                                             <ng-template #thendispdata>
                                                                     <!-- <tr *ngFor="let com of lstcomment" class="ItemStyle" style="text-decoration:none;"> -->
                                                                         <tr>
-                                                                      <td> {{lstcomment.bookTypeCode}}</td>
+                                                                      <td > {{lstcomment.bookTypeCode}}</td>
                                                                       <td>{{lstcomment.costToClear}}</td>
                                                                       <td style="text-align: right;">{{lstcomment.recoverableCost}}</td>
                                                                       <td style="text-align: right;">{{lstcomment.netBookValue}}</td>
@@ -681,7 +681,7 @@
                                                           <table class="center" >
                                                             <tr>
                                                                     <td style="width: 15%" class="LabelFontStyle">Original&nbsp;Cost</td>
-                                                                    <td>{{lstcomment.costToClear}}</td>
+                                                                    <td >{{lstcomment.costToClear}}</td>
                                                                     <td style="width: 15%" class="LabelFontStyle">Salvage&nbsp;Value</td>
                                                                 <td  style="width: 8rem;">{{lstcomment.salvageAmt}}</td>
                                                                 <td style="width: 15%" class="LabelFontStyle">Date&nbsp;in Service</td>
@@ -770,14 +770,13 @@
                                                                                         <tbody>
                                                                                             <tr *ngFor="let com of lstDepriciation" class="ItemStyle" style="text-decoration:none;">
                                                                                                 <!-- <tr> -->
-                                                                                              <td>{{com.periodName}}</td>
-                                                                                              <td></td>
+                                                                                              <td style="text-align: right;">{{com.periodName}}</td>
+                                                                                              <td style="text-align: right;">{{com.deprnAmount}}</td>
                                                                                               <td style="text-align: right;">{{com.deprnAmount}}</td>
                                                                                               <td style="text-align: right;">{{com.adjustedCost}}</td>
-                                                                                              <td></td>
-                                                                                              <td></td>
-                                                                                              <td></td>
-                                                                                              <td>{{com.revalAmortization}}</td>
+                                                                                              <td style="text-align: right;">{{com.bonusDeprnAmount}}</td>
+                                                                                              <td style="text-align: right;">{{com.bonusDeprnAdjustmentAmount}}</td>
+                                                                                              <td style="text-align: right;">{{com.revalAmortization}}</td>
                                                                                             </tr>
                                                                                         </tbody>
                                                                                           </table>

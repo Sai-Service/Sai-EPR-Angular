@@ -122,6 +122,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   displayheader:boolean=true;
   displayLocator:Array<boolean>=[];
   displayButton:boolean=true;
+  displayaddButton:boolean=true;
   addRow:boolean=true;
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -176,11 +177,11 @@ export class MiscellaneousTransactionComponent implements OnInit {
   {
     this.miscellaneousForm=fb.group({
       compNo:[''],
-             compileName:[''],
+      compileName:[''],
       compileId:[''],
       locId:[''],
       subInventory:['',Validators.required],
-      segmentName:[''],
+      segmentName:['',Validators.required],
       segment11:[''],
       segment2:[''],
       segment3:[''],
@@ -192,7 +193,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       segment5:[''],
       trans:[''],
       lookupValueDesc5:[''],
-      codeCombinationId:['',Validators.required],
+      codeCombinationId:[''],
       compileType:['',Validators.required],
       reason:['',Validators.required],
       compileStatus:[''],
@@ -225,7 +226,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     LinNo:[''],
     invItemId:[''],
     adjustmentQty:[''],
-    physicalQty:[''],
+    physicalQty:['',Validators.required],
     systemQty:[''],
     locatorId:[''],
     subInventory:[''],
@@ -237,7 +238,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     description:[''],
     divisionId:[''],
     entryStatusCode:[''],
-    LocatorSegment:[''],
+    LocatorSegment:['',Validators.required],
     resveQty:[''],
     locId:[''],
     itemId:[''],
@@ -790,12 +791,12 @@ this.router.navigate(['admin']);
           var locId1=this.miscellaneousForm.get('locId').value
          
             let variantFormGroup = <FormGroup>variants.controls[i];
-            variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, Validators.required));
-            variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
+            variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, []));
+            variantFormGroup.addControl('locId', new FormControl(locId1, []));
             // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
-            variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].physicalQty, Validators.required));
-            variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
-            variantFormGroup.addControl('transactionNumber',new FormControl(transtypeid.locCode,Validators.required));
+            variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].physicalQty, []));
+            variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
+            variantFormGroup.addControl('transactionNumber',new FormControl(transtypeid.locCode,[]));
          
          
         // var reserveinfo=formValue[0];
@@ -932,9 +933,11 @@ this.router.navigate(['admin']);
       }
 
       saveMisc()
-      {
-        // if (this.miscellaneousForm.valid) {
-        this.displayButton=true;
+      {this.displayButton=true;
+        this.displayaddButton=true;
+        if (this.miscellaneousForm.valid) {
+        // this.displayButton=true;
+        // this.displayaddButton=true;
         const formValue:Imiscellaneous=this.miscellaneousForm.value;
         this.service.miscSubmit(formValue).subscribe
         ((res:any) => {
@@ -955,6 +958,7 @@ this.router.navigate(['admin']);
 
                 this.miscellaneousForm.disable();
                 this.displayButton=false;
+                this.displayaddButton=false;
           }
           else
           {
@@ -965,13 +969,13 @@ this.router.navigate(['admin']);
             }
           }
         })
-      // }
-    //   else{
+      }
+      else{
   
-    //     alert('else');
-    //     this.HeaderValidation();
+        alert('else');
+        this.HeaderValidation();
       
-    // }
+    }
       }
 
      
@@ -1019,7 +1023,7 @@ this.router.navigate(['admin']);
       
       getGroupControl(fieldName) {
         return(this.miscellaneousForm.get(fieldName));
-      }Header
+      }
        
       getGroupControllinewise(index,fieldName) {
         // alert('nam'+fieldName);
