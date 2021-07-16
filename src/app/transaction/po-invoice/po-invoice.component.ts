@@ -1095,6 +1095,7 @@ getGroupControl(index,arrayname, fieldName) {
              
             }
           }
+
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           for (let i=0; i<data.invDisLines.length;i++){
             (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId});
@@ -1516,6 +1517,7 @@ getGroupControl(index,arrayname, fieldName) {
     }
     return matches;
   };
+
   InventIdSelected(event, k) {
     let select = this.invItemList1.find(d => d.segment === event);
     this.invItemId = select.itemId;
@@ -1526,6 +1528,8 @@ getGroupControl(index,arrayname, fieldName) {
     // alert(this.invItemList1[0].description);
     this.invDescription=this.invItemList1[0].description;
   }
+
+
   onOptionTaxCatSelected(taxCategoryName, k) {
     if(this.isSearchPatch === false){
     this.indexVal = k;
@@ -2198,7 +2202,7 @@ getGroupControl(index,arrayname, fieldName) {
        var arraybase=this.poInvoiceForm.get('obj').value;
        var invId=arraybase[0].invoiceId;
         console.log(arraybase);
-             this.invoiceId=arraybase[0].invoiceId;
+        this.invoiceId=arraybase[0].invoiceId;
      
         console.log(this.invoiceDistId);
         
@@ -2221,6 +2225,7 @@ getGroupControl(index,arrayname, fieldName) {
             }
             
             this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);
+
             let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
             for (let i=0; i<this.lstTdsLineDetails.length;i++){
               // alert(this.lstTdsLineDetails[i].invDistributionId);
