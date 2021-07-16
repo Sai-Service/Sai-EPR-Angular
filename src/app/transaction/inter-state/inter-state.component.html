@@ -4,7 +4,7 @@
   <input hidden class="form-control" formControlName="locId" [(ngModel)]='locId'>
   <input hidden class="form-control" formControlName="locationId" [(ngModel)]='locationId'>
   <input hidden type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
-  <input hidden class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
+  
   <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
   <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'> -->
 <input hidden class="form-control" [(ngModel)]='ouId' formControlName="ouId">
@@ -54,6 +54,7 @@
               </td>
               <td>
                   <select  formControlName="BillLocName" [(ngModel)]="BillLocName" value={{BillLocName}} class="form-control" style="width: 160px;" (ngModelChange)="onOptiongetItem($event)" >
+                        <input hidden class="form-control" formControlName="billToLocId" [(ngModel)]='billToLocId'>
                   <option>--Select--</option>
                   <option *ngFor="let loc of getshiplist">{{loc.toLocation}}</option>
                   </select>
@@ -265,8 +266,7 @@
 
                                           </td>
                                           <input hidden formControlName="invType">
-                                          <td>
-                                              <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptionsSelectedDescription($event,i)" />
+                                          <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptionsSelectedDescription($event,i)" />
                                               <datalist id="dynmicUserIds1">
                                                 <option *ngFor="let item of ItemIdList">{{item.SEGMENT}}
                                                   </option>

@@ -14,6 +14,7 @@ interface IinterState{
   orderNumber:number;
   transactionTypeName:number;
   BillLocName:string;
+  billToLocId:number;
   paymentType:string;
   paymentTermId: number;
   priceListName:string;
@@ -79,7 +80,7 @@ taxCategoryId:number;
   segment:string;
   selectedLine = 0;
   orderedItem: string;
-  billLocName: string;
+  billToLocId: number;
   subInventoryId:number;
   public minDate = new Date();
   getshiplist: any=[];
@@ -119,6 +120,7 @@ taxCategoryId:number;
       priceListName:[],
       priceListId:[],
       BillLocName: [''],
+      billToLocId:[],
       issuedBy:[],
       orderStatus:[],
       remarks:[],
@@ -320,6 +322,7 @@ taxCategoryId:number;
   
   onOptiongetItem(event){
     alert(event);
+    
     this.service.ItemIdListDept(this.deptName,this.locId,this.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;
@@ -333,6 +336,7 @@ taxCategoryId:number;
       this.custAddress=select1.address1+select1.address2+select1.address3;
       this.state=select1.state;
       this.gstNo=select1.gstNo;
+      this.billToLocId=select1.toLocationId;
   }
   taxDetails(op, i, taxCategoryId) {
     // alert('hi'+' ' +op+'-' +i);
