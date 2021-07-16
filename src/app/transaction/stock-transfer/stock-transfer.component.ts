@@ -176,6 +176,7 @@ export class StockTransferComponent implements OnInit {
     this.deptName=(sessionStorage.getItem('deptName'));
     this.issueBy=(sessionStorage.getItem('name'))
     // alert(this.deptName+'Depart');
+    alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
   
     this.service.searchall(this.locId).subscribe(
       data=>{
@@ -186,7 +187,7 @@ export class StockTransferComponent implements OnInit {
       
     )
 
-    this.service.searchallatother(this.locId).subscribe(
+    this.service.searchallatother(Number(sessionStorage.getItem('locId'))).subscribe(
       data=>{
         this.pendingatother=data;
        console.log(this.pendingrec);
@@ -204,19 +205,16 @@ export class StockTransferComponent implements OnInit {
         this.subInventoryCode=this.subInvCode.subInventoryCode;
         // alert('subInventoryCode');
       });
-
-      this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
-        data => {
-          this.ItemIdList = data;
-          // console.log(this.invItemId);
-        });
-
+      
     this.service.locationIdList().subscribe
       (data => {
         this.locIdList = data;
 
       });
-      this.addnewtrxLinesList(-1);
+  
+  this.addnewtrxLinesList(-1);
+     
+     
       var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
      {
@@ -374,7 +372,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].onHandId, Validators.required));
        variantFormGroup.addControl('invItemId', new FormControl(trxLnArr1[i].itemId, Validators.required));
        variantFormGroup.addControl('transactionNumber',new FormControl(todesc.locCode,Validators.required));
-   
+       
   // var reserveinfo=formValue[0];
 
   this.service.reservePost(variants.value[i]).subscribe((res:any)=>{
@@ -394,6 +392,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
 }
   newStkTransfer() {
 
+    var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     const formValue: IStockTransfer = this.stockTranferForm.value;
     let variants = <FormArray>this.trxLinesList();
     console.log(variants);
@@ -418,6 +417,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       variantFormGroup.addControl('status', new FormControl(staus, Validators.required));
       variantFormGroup.addControl('orgId', new FormControl(this.locId, Validators.required));
       variantFormGroup.addControl('subInventoryCode',new FormControl(subInv,Validators.required));
+      variantFormGroup.addControl('locatorId', new FormControl(trxLnArr1[i].frmLocator,[]));
     }
     console.log(variants.value);
     this.service.stockTransferSubmit(variants.value).subscribe((res: any) => {
@@ -528,13 +528,24 @@ selectByShipNo(shipmentNumber:any)
   
 }
 
-onlocationissueselect(event:any){
+onlocationissueselect(event){
+  alert(event);
+
   var loc=this.stockTranferForm.get('transferOrgId').value;
+  if(loc===undefined){}
+  else{
   this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
   (data => {
     this.issueByList = data;
     console.log(this.issueByList);
   });
+  this.service.ItemIdListDept(this.deptName,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+    data => {
+      this.ItemIdList = data;
+      // console.log(this.invItemId);
+    });
+
+}
 }
 
 }

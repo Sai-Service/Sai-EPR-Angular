@@ -45,7 +45,7 @@
             To Organization:
           </td>
           <td>
-             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId"(ngModelChange)="onlocationissueselect($event)">
+             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId" (ngModelChange)="onlocationissueselect($event)">
                   <option>--Select--</option>
                   <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
                       {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
