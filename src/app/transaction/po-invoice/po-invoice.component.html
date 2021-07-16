@@ -1319,7 +1319,7 @@
 
             <div class="tab-pane fade" id="panel10008" role="tabpanel">
                 <div class="grid_scroll_1">
-                    <button class="btn btn-primary" (click)="showTdsLines()" style="width: 150px;">Show Tds details </button>
+                    <!-- <button class="btn btn-primary" (click)="showTdsLines()" style="width: 150px;">Show Tds details </button> -->
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
@@ -1396,16 +1396,27 @@
                             </td>
 
                             <td>
-                                <input  formControlName="invoiceId" class="form-control" style="width: 40px;height: 25px;">
+                                <input  formControlName="invoiceId" [(ngModel)]="invoiceId" class="form-control" style="width: 40px;height: 25px;">
                             </td>
 
                             <td>
-                                <input  formControlName="invoiceDistId" class="form-control" style="width: 40px;height: 25px;">
+                                <input type="number" formControlName="invoiceDistId"  class="form-control" style="width: 40px;height: 25px;">
                             </td>
 
                             <td>
-                                <input  formControlName="distCodeCombId" class="form-control" style="width: 40px;height: 25px;">
+                                <input  formControlName="distCodeCombId" class="form-control" style="width: 50px;height: 25px;">
                             </td>
+
+                            <td>
+                                <input  formControlName="thresHoldHdrId" [(ngModel)]="thresHoldHdrId"  class="form-control" style="width: 50px;height: 25px;">
+                            </td>
+
+                            <td>
+                                <input  formControlName="thresHoldTypeId" [(ngModel)]="thresHoldTypeId" class="form-control" style="width: 50px;height: 25px;">
+                            </td>
+
+     
+
 
                             <!-- <td>
                             <button type="submit" class="btn btn-primary"

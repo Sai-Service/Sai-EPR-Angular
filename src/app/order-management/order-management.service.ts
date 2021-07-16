@@ -24,7 +24,7 @@ export class OrderManagementService {
   }
 
   categoryList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemCategory/type1`);
+    return this.http.get(this.ServerUrl + `/itemCategory/type`);
   }
 
 
@@ -67,7 +67,7 @@ export class OrderManagementService {
   }
 
     
-  downloadCSPreINV(orderNumber) {
+  downloadCSPreINV(orderNumber) :Observable<any> {
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
     const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
@@ -101,6 +101,19 @@ export class OrderManagementService {
     });
   }
 
+
+
+  downloadAddonINV(InvoiceNumber){
+    // const REQUEST_URI = ` http://saihorizon.com:8080/ErpReplica//orderHeader/salesTaxInv/${InvoiceNumber}`;  
+    // local
+    const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   public  countersaleReadyForInvFn(orderNumber){
     const options = {
       headers: this.headers
@@ -124,7 +137,9 @@ export class OrderManagementService {
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
-
+  ItemDescList(segment,ouId):Observable<any>{
+    return this.http.get(this.ServerUrl+`/JaiTaxCatg/IgstTaxCtg?itemId=${segment}&ouId=${ouId}`)
+  }
   priceListNameList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist`);
   }

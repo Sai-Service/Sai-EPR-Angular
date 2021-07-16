@@ -1040,6 +1040,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             data => {
               this.vehicleSaleOrderDetails = data.obj;
               console.log(this.vehicleSaleOrderDetails);
+              
 
               if (this.vehicleSaleOrderDetails===null) 
               {
