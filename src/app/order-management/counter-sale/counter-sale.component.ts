@@ -591,9 +591,11 @@ orderNumber:number;
 
 this.displaysegmentInvType[0]=true;
 // this.displayRemoveRow[0]=true;
-this.displayLineflowStatusCode[0]=true;
-for ( let i=0;this.lstgetOrderLineDetails.length;i++){
+// this.displayLineflowStatusCode[0]=true;
+alert(this.lstgetOrderLineDetails.length);
+for ( let i=0;this.lstgetOrderLineDetails.length<0;i++){
 this.displayCounterSaleLine[i]=true;
+// this.displaysegmentInvType[i]=true;
 if (this.lstgetOrderLineDetails[i].flowStatusCode != null){
   this.displayRemoveRow[i]=true;
 }
@@ -1280,7 +1282,7 @@ counterSaleOrderSave(){
 
 
 addRow(){
-  this.displaysegmentInvType.push(true);
+  // this.displaysegmentInvType.push(true);
   this.displayRemoveRow.push(true);
   this.displayCounterSaleLine.push(true);
   this.displayLineflowStatusCode.push(true);

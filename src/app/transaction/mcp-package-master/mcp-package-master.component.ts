@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { trigger } from '@angular/animations';
+import { iif } from 'rxjs';
 
 
 interface IMcpPkgMaster {
@@ -56,7 +57,7 @@ export class McpPackageMasterComponent implements OnInit {
           
 
 
-          lstcomments: any;
+          lstcomments: any[];
           mcpItemList: any[];
 
           loginName:string;
@@ -118,6 +119,7 @@ export class McpPackageMasterComponent implements OnInit {
           searchByPkgType:string;
           searchByFuelType:string;
           srlNo:number=0;
+          showPkgNumber=true;
 
      
           // public codeCombinationId=2079;
@@ -376,13 +378,13 @@ RemoveRow(index) {
 
 
    SearchByPkgFuelType(pType:any,fType:any){
-    // alert ("Package Type : "+pType+ " Fuel Type : "+fType);
+    alert ("Package Type : "+pType+ " Fuel Type : "+fType);
     const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
-    if (formValue.searchByPkgType===undefined || formValue.searchByPkgType===null)
-    {
-        alert ("PACKAGE TYPE: Select Package Type");
-        return;
-     } 
+    // if (formValue.searchByPkgType===undefined || formValue.searchByPkgType===null)
+    // {
+    //     alert ("PACKAGE TYPE: Select Package Type");
+    //     return;
+    //  } 
      if (formValue.searchByFuelType===undefined || formValue.searchByFuelType===null)
      {
          alert ("FUEL TYPE: Select Fuel Type");
@@ -411,22 +413,59 @@ RemoveRow(index) {
              return;
          } 
 
-         if (formValue.searchByPkgNumber===undefined || formValue.searchByPkgNumber===null)
-         {
-             alert ("PACKAGE NUMBER: Enter Correct Package Number");
-             return;
-         } 
+        //  if (formValue.searchByPkgNumber===undefined || formValue.searchByPkgNumber===null)
+        //  {
+        //      alert ("PACKAGE NUMBER: Enter Correct Package Number");
+        //      return;
+        //  } 
 
     
             this.service.getMcpPackageSearchNew2(pkgNo ,fType)
             .subscribe(
-            data => {
+            data=> {
               this.lstcomments = data;
-              alert("Records Found : "+ this.lstcomments.length);
               console.log(this.lstcomments);
+
+              if(this.lstcomments===null) {
+                alert("Package Number-Fuel Type Comination does'nt exists..");
+              
+              } else {
+              
+              alert("Records Found : "+ this.lstcomments.length); }
+
+              // this.lstcomments.push(data);
+              // alert("Records Found  data: "+ data.length);
+              // alert(data.packageDesc);
+            
     
             } ); 
              
+           }
+
+
+           mcpSearchBy(mcpPtype,mcpFtype,mcpPkgNo) {
+
+            alert(mcpPtype+ ","+mcpFtype +" ,"+mcpPkgNo)
+
+            if(mcpPtype !=null && mcpFtype != null && mcpPtype !='--Select--') { 
+              this.SearchByPkgFuelType(mcpPtype,mcpFtype);
+              return;
+            }
+
+            if(mcpFtype !=null && mcpPkgNo !=null) {
+
+              this.SearchByPkgNoFuelType (mcpPkgNo,mcpFtype)
+              return;
+            }
+
+     
+           }
+
+           onSelectionPkgType(mPkgType){
+             if(mPkgType !=null && mPkgType !='--Select--' ) {
+             this.showPkgNumber=false; this.searchByPkgNumber=null;} else {this.showPkgNumber=true;}
+            //  alert("Pkg Type Salected :"+mPkgType + ", "+this.showPkgNumber);
+
            }
 
      

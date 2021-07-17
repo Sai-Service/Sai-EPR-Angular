@@ -109,6 +109,25 @@
                 </tr>
                </table>
             <!-- </div> -->
+            <fieldset class="RFS" style="height: 100px;">
+                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> Line Details</legend>
+                <!-- <table class="GridFont" cellspacing="0" cellpadding="4" border="0" style="width:100%;border-collapse:collapse;"> -->
+              <table>
+                    <tr>
+                   
+                    <td style="width: 22%;font-weight: bold;" class="LabelFontStyle">
+                        Order&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="text" class="form-control" formControlName="orderNumber"
+                            [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 170px;font-weight: bold;height: 25px;">
+                    </td>
+                    <td>
+                        <button type="submit" (click)="Reverse()" class="btn btn-primary">Reverse</button>
+                    </td>
+               </tr>
+                </table>
+            </fieldset>
             <div class="grid_scroll">
                 <fieldset class="RFS" style="height: 400px;">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;"> Line Details</legend>

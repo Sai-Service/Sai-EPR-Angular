@@ -26,6 +26,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { MasterService } from 'src/app/master/master.service';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
+
+
+const MIME_TYPES = {
+  pdf: 'application/pdf',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
+};
+
 
 
 
@@ -182,4 +191,16 @@ export class SalesGatePassComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
+
+  
+
+  downloadGatePass(){
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.downloadGatePass(this.orderNumber)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+    });
+  }
+  
 }

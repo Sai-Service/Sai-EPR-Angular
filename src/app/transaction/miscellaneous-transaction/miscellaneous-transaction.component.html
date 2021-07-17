@@ -306,8 +306,16 @@
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>
               </td>
+              <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
+                </div>
+                <ng-template #thenBlockopen>
               <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
               <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+                </ng-template>
+                <ng-template #elseBlockfreeze>
+                    <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
+                    <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+                </ng-template>
             </tr>
             </ng-container>
             </tbody>
@@ -335,7 +343,7 @@
         </td>
       </ng-template>
         <ng-template #elseBlock2>
-          <button type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+          <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
       </ng-template>
   
       </tr>
