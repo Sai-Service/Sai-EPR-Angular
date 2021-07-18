@@ -144,6 +144,7 @@ export class PoInvoiceComponent implements OnInit {
   baseAmount:number;
   amount:number;
   invoiceDistId:number;
+ 
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -1051,6 +1052,7 @@ getGroupControl(index,arrayname, fieldName) {
           this.isSearchPatch = true;
           this.poInvoiceForm.patchValue({invoiceNum:data.invoiceNum,
             segment1: data.invLines[0].poNumber,
+
            })
           this.lstInvLineDeatails = data;
           this.lstTdsLine=data.invDisLines;
@@ -1263,11 +1265,13 @@ getGroupControl(index,arrayname, fieldName) {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.poInvoiceForm.reset();
         // alert(res.obj);
         this.internalSeqNum=res.obj;
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.poInvoiceForm.reset();
         }
       }
     });
@@ -1276,6 +1280,7 @@ getGroupControl(index,arrayname, fieldName) {
     // alert('else');
     this.HeaderValidation();
   }
+
   }
 
   close() {

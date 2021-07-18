@@ -57,7 +57,7 @@ export class McpPackageMasterComponent implements OnInit {
           
 
 
-          lstcomments: any[];
+          lstcomments: any;
           mcpItemList: any[];
 
           loginName:string;
@@ -378,7 +378,7 @@ RemoveRow(index) {
 
 
    SearchByPkgFuelType(pType:any,fType:any){
-    alert ("Package Type : "+pType+ " Fuel Type : "+fType);
+    // alert ("Package Type : "+pType+ " Fuel Type : "+fType);
     const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
     // if (formValue.searchByPkgType===undefined || formValue.searchByPkgType===null)
     // {
@@ -404,7 +404,7 @@ RemoveRow(index) {
 
 
        SearchByPkgNoFuelType(pkgNo:any,fType:any){
-        alert ("Package No : "+pkgNo+ " Fuel Type : "+fType);
+        // alert ("Package No : "+pkgNo+ " Fuel Type : "+fType);
         const formValue: IMcpPkgMaster = this.mcpPackageMasterForm.value
        
          if (formValue.searchByFuelType===undefined || formValue.searchByFuelType===null)
@@ -413,18 +413,13 @@ RemoveRow(index) {
              return;
          } 
 
-        //  if (formValue.searchByPkgNumber===undefined || formValue.searchByPkgNumber===null)
-        //  {
-        //      alert ("PACKAGE NUMBER: Enter Correct Package Number");
-        //      return;
-        //  } 
-
-    
-            this.service.getMcpPackageSearchNew2(pkgNo ,fType)
+     
+            this.service.getMcpPackageSearchNew2(pkgNo ,fType,this.ouId)
             .subscribe(
             data=> {
               this.lstcomments = data;
               console.log(this.lstcomments);
+
 
               if(this.lstcomments===null) {
                 alert("Package Number-Fuel Type Comination does'nt exists..");
@@ -602,7 +597,8 @@ RemoveRow(index) {
       alert ("Putting data  to MCP PACKAGE LINE item......")
       // const formValue: IPriceList = this.priceListMasterForm.value;
       const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
-      this.service.UpdateMcpPackageMaster(formValue, formValue.packageId).subscribe((res: any) => {
+      // this.service.UpdateMcpPackageMaster(formValue, formValue.packageId).subscribe((res: any) => {
+            this.service.UpdateMcpPackageMaster(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFUILY');
           window.location.reload();
@@ -624,7 +620,8 @@ RemoveRow(index) {
         alert("Data Validation Sucessfull....\nPutting data  to MCP PACKAGE MASTER TABLE")
      
       const formValue: IMcpPkgMaster =this.transeData(this.mcpPackageMasterForm.value);
-      this.service.UpdateMcpPackageMaster(formValue, formValue.packageId).subscribe((res: any) => {
+      // this.service.UpdateMcpPackageMaster(formValue, formValue.packageId).subscribe((res: any) => {
+        this.service.UpdateMcpPackageMaster(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFUILY');
           window.location.reload();

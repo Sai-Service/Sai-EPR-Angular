@@ -198,6 +198,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   displayReason=false;
   ewCancelFlag=false;
   cancelledFlag=false;
+  dispCustButton=false;
 
   variantItemId : number;
 
@@ -773,6 +774,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           .subscribe(
             data => {
               this.getVehRegDetails = data;
+              if(this.getVehRegDetails !=null){
+                this.dispCustButton=true;
+              
               console.log(this.getVehRegDetails);
 
               this.saiEwForm.patchValue({
@@ -810,9 +814,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               this.getDiffDays(saleDate,mToday);
 
             } 
-         }
-          );
+         } else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.saiEwForm.reset();}
         }
+          );}
+        
+        
 
 
         GetCustomerDetails(mCustId :any){
