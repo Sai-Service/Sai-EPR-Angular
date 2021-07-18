@@ -925,6 +925,7 @@
                                                                                         {{sc.billableTyName}}
                                                                                     </option>
                                                                                 </select>
+                                                                                <input type="number" formControlName="billableTyId" [(ngModel)]="billableTyId" class="form-control"  style="height: 25px;">
                                                                             </td>
                                                                             <td>
                                                                                 <!-- <input type="number" formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
@@ -981,7 +982,7 @@
                                                                                 formControlName="taxCategoryName" [(ngModel)]="taxCategoryName"
                                                                                 class="form-control"
                                                                                 style="height: 25px;">
-                                                                                <!-- <input  type="text"  formControlName="taxCategoryName"  style="width: 170px;"  id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected(i, $event)' class="form-control"> -->
+                                                                                <input  type="text"  formControlName="taxCategoryId"  style="width: 170px;"  id="taxCategoryId"  class="form-control">
                                                                               
                                                                             </td>
                                                                             <td>
@@ -1183,10 +1184,10 @@
                                                                                 formControlName="billableTyId" hidden
                                                                                 class="form-control"
                                                                                 style="width: 160px;height: 25px;">
-                                                                            <!-- <input type="text"
+                                                                            <input type="text"
                                                                                 formControlName="billableTyName" 
                                                                                 class="form-control"
-                                                                                style="width: 160px;height: 25px;">  -->
+                                                                                style="width: 160px;height: 25px;"> 
                                                                             <select formControlName="billableTyId"
                                                                                 id="billableTyId" class="form-control">
                                                                                 <option>--Select--</option>
@@ -1222,7 +1223,11 @@
                                                                                     [ngValue]="sc.taxCategoryId">
                                                                                     {{sc.taxCategoryName}}
                                                                                 </option>
-                                                                            </select></td>
+                                                                            </select>
+                                                                            <input hidden type="number" formControlName="taxCategoryId" 
+                                                                            disabled class="form-control"
+                                                                            style="width: 3rem;height: 25px; text-align: right;">
+                                                                        </td>
                                                                         <td>
                                                                             <input type="number" formControlName="qty"
                                                                                 disabled class="form-control"

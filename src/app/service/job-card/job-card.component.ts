@@ -83,6 +83,7 @@ export class JobCardComponent implements OnInit {
   regNo: string;
   labTotTaxAmt:number;
 matTaxableAmt:number;
+// billableTyId:number;
 matTotTaxAmt:number;
 matTotAmt:number;
   labTaxableAmt:number;
@@ -609,6 +610,7 @@ totAmt:[],
             unitPrice: data1.price,
             frtHrs:data1.frtHrs,
             taxCategoryName:data1.taxCategoryName,
+            taxCategoryId:data1.taxCategoryId,
           })
           alert(this.taxCategoryName);
         }
@@ -822,6 +824,7 @@ totAmt:[],
           // );
           // this.jobcardForm.get('jobCardLabLines').patchValue(data.jobCardLabLines);
           this.jobcardForm.patchValue(this.lstcomments);
+          let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
           this.jobcardForm.patchValue({
             labTaxableAmt: this.lstcomments.labTaxableAmt,
             labTotTaxAmt: this.lstcomments.labTotTaxAmt,
@@ -829,8 +832,11 @@ totAmt:[],
             matTaxableAmt: this.lstcomments.matTaxableAmt,
             matTotTaxAmt: this.lstcomments.matTotTaxAmt,
             matTotAmt: this.lstcomments.matTotAmt,
+            billableTyId:selectbilTy.billableTyName,
           })
-          // alert(this.lstcomments.matTotTaxAmt);
+          // let select = this.billableTyIdList.find(d => d.billableTyId === this.billableTyId);
+        
+    // this.billableTyId= selectbilTy.billableTyName;
         }
       );
     // this.totalActualLabMat();
