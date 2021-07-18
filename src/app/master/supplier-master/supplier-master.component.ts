@@ -502,9 +502,11 @@ alert(suppSiteId);
     }
   }   
   onOptionsSelectedSupp(event: any) {
+    
     this.Status1 = this.supplierMasterForm.get('status').value;
-    alert(this.Status1);
+    
     if (this.Status1 === 'Inactive') {
+
       this.displayInactive = false;
       this.endDate = new Date();
     }
@@ -574,7 +576,7 @@ alert(suppSiteId);
       }
       
       onMSMESelected(msmeYN : any){
-        alert(msmeYN);
+        // alert(msmeYN);
           if (msmeYN === 'Y') {   
             this.displayMsmeNo = true;
           }

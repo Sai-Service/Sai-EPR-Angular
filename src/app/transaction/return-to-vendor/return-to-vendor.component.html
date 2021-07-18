@@ -64,17 +64,17 @@
 
                             <input hidden   formControlName="poStatus"  class="form-control">
                             <!-- <input hidden   formControlName="shipHeaderId" [(ngModel)] ="shipHeaderId" class="form-control"> -->
-                            <input hidden   formControlName="suppId" class="form-control">
-                            <input hidden   formControlName="shipmentNo" class="form-control">
-                            <input hidden   formControlName="billToLocId" [(ngModel)] ="billToLocId" class="form-control"> 
-                            <input hidden   formControlName="shipmentDate" class="form-control"> 
-                            <input hidden   formControlName="shipToLocId" class="form-control">
-                            <input hidden   formControlName="ewayBillNo" class="form-control">
-                            <input hidden   formControlName="ewayBillDate" class="form-control"> 
-                            <input hidden   formControlName="gstDocNo" class="form-control"> 
-                            <input hidden   formControlName="gstDocDate" class="form-control">
-                            <input hidden   formControlName="apInvNum" class="form-control"> 
-                            <input hidden   formControlName="apInvDate" class="form-control"> 
+                            <input hidden   formControlName="suppId"       [(ngModel)] ="suppId"  class="form-control">
+                            <input hidden   formControlName="shipmentNo"   [(ngModel)] ="shipmentNo"  class="form-control">
+                            <input hidden   formControlName="billToLocId"  [(ngModel)] ="billToLocId" class="form-control"> 
+                            <input hidden   formControlName="shipmentDate" [(ngModel)] ="shipmentDate" class="form-control"> 
+                            <input hidden   formControlName="shipToLocId"  [(ngModel)] ="shipToLocId" class="form-control">
+                            <input hidden   formControlName="ewayBillNo"   [(ngModel)] ="ewayBillNo" class="form-control">
+                            <input hidden   formControlName="ewayBillDate" [(ngModel)] ="ewayBillNo" class="form-control"> 
+                            <input hidden   formControlName="gstDocNo"     [(ngModel)] ="gstDocNo" class="form-control"> 
+                            <input hidden   formControlName="gstDocDate"   [(ngModel)] ="gstDocDate" class="form-control">
+                            <input hidden   formControlName="apInvNum"     [(ngModel)] ="apInvNum" class="form-control"> 
+                            <input hidden   formControlName="apInvDate"    [(ngModel)] ="apInvDate" class="form-control"> 
 
                             <td >
                                 <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
@@ -273,8 +273,8 @@
                                 &nbsp;Ship&nbsp;Header&nbsp;Id:&nbsp;
                             </td> 
 
-                            <td><input disabled   formControlName="shipHeaderId" [(ngModel)] ="shipHeaderId" class="form-control"></td>
-
+                            <td><input disabled   formControlName="shipHeaderId"  class="form-control"></td>
+                            <!-- [(ngModel)]='shipHeaderId' -->
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;PO&nbsp;Header&nbsp;Id:&nbsp;
                             </td> 
@@ -285,19 +285,19 @@
                         </tr>
 
                         <tr>
-                            <td style="width: 15%" class="LabelFontStyle"> Amount&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Rtn&nbsp;Amount&nbsp;:&nbsp;</td>
                             <td>
                                 <input disabled formControlName="baseAmount" [(ngModel)]="baseAmount" value={{baseAmount}}
                                        class="form-control"  placeholder="00.00" >
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle"> Tax&nbsp;Amount&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
                             <td>
                                 <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt"
                                     value={{taxAmt}} class="form-control" placeholder="00.00" >
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle"> Total&nbsp;Amount&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Total&nbsp;Ant&nbsp;:&nbsp;</td>
                             <td>
                                 <input disabled formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
                                     class="form-control" >

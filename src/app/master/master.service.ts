@@ -2077,8 +2077,10 @@ EwClaimedCheck(mRegno): Observable<any> {
   ///////////////////////////// MCP /////////////////////////////////
 
   getMcpstatusVehcile(mRegno): Observable<any> {
-    alert("ms>>MCP status checking"+mRegno);
-    return this.http.get(this.ServerUrl + `/McpRegCheck/${mRegno}`);
+    // alert("ms>>MCP status checking"+mRegno);
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpRegCheck/${mRegno}`);
+
+    // http://localhost:8081/SsMcpEnqMst/McpRegCheck/MH12EM6011
   }
 
 
@@ -2115,9 +2117,10 @@ getMcpPackageSearchNew1(mPkgType,mFuelType): Observable<any>
 
 }
 
-getMcpPackageSearchNew2(mPkgNo,mFuelType): Observable<any>
+getMcpPackageSearchNew2(mPkgNo,mFuelType,mOuId): Observable<any>
 {
-   return this.http.get(this.ServerUrl + `/PackageMst/PkgNoAndFuelType?packageNumber=${mPkgNo}&fuelType=${mFuelType}`);
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgNoFuelOuId?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}`);
+  //  http://localhost:8081//PackageMst/PkgNoFuelOuId?packageNumber=PKG00018&fuelType=Petrol&ouId=81
  }
 
 getMcpPackageSearchByPkgId(mPkgId): Observable<any> 
@@ -2154,11 +2157,12 @@ public McpPackageMasterSubmit(McpPkgMasterRecord) {
 //   return this.http.put(url, PriceListMasterRecord, options);
 // }
 
-UpdateMcpPackageMaster(McpPkgMasterRecord,mcpPkgId) {
+UpdateMcpPackageMaster(McpPkgMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/PackageMst/${mcpPkgId}`);
+  // const url = (this.ServerUrl + `/PackageMst/${mcpPkgId}`);
+  const url = (this.ServerUrl + `/PackageMst`);
   return this.http.put(url, McpPkgMasterRecord, options);
 }
 
@@ -2167,6 +2171,14 @@ mcpSchemeList(mRegNo): Observable<any> {
   // http://localhost:8081/SsMcpEnqMst/validPkgDtls?regNo=MH12EM6011
    return this.http.get(this.ServerUrl +`/SsMcpEnqMst/validPkgDtls?regNo=${mRegNo}`);
  } 
+
+ public McpEnquiryMasterSubmit(McpEnquiryMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/SsMcpEnqMst';
+  return this.http.post(url, McpEnquiryMasterRecord, options);
+}
 
 
 //////////////////////VARIANT MASTER////////////////////////////

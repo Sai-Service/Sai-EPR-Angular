@@ -144,6 +144,7 @@ export class PoInvoiceComponent implements OnInit {
   baseAmount:number;
   amount:number;
   invoiceDistId:number;
+ 
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -216,6 +217,8 @@ export class PoInvoiceComponent implements OnInit {
   poChargeDesc:string= 'Unprocessed';
   dispStatus=true;
   displayTdsButton=false;
+  showTdsLineDetails=true;
+  tdsLineValidation=false;
   disDeleteButton=true;
   dispAccountCode=true;
   displayAddNewLine=true;
@@ -284,7 +287,7 @@ export class PoInvoiceComponent implements OnInit {
   segmentName1: string;
   taxDetaileSendArr: any = [];
   paymentMethod1:any;
-  tdsLineValidation=true;
+  // tdsLineValidation=true;
   public taxarr = new Map<number, any>();
   public distarr = new Map<number, any>();
 
@@ -427,7 +430,7 @@ getLocation(k)
  
 
 
-
+////////////////////////////DISTRIBUTION ///////////////////////
   distLineDetails() {
     return this.fb.group({
       invDistributionId: [],
@@ -953,6 +956,8 @@ getGroupControl(index,arrayname, fieldName) {
       }
     });
   }
+
+
   @HostListener("window:keyup.control.f", ["$event"]) f(e: KeyboardEvent) {
     console.log("control+ f", e);
     // alert('control+ f'+e);
@@ -1047,6 +1052,7 @@ getGroupControl(index,arrayname, fieldName) {
           this.isSearchPatch = true;
           this.poInvoiceForm.patchValue({invoiceNum:data.invoiceNum,
             segment1: data.invLines[0].poNumber,
+
            })
           this.lstInvLineDeatails = data;
           this.lstTdsLine=data.invDisLines;
@@ -1082,9 +1088,9 @@ getGroupControl(index,arrayname, fieldName) {
           this.poInvoiceForm.get('invLines').patchValue(data.invLines);
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
-          this.poInvoiceForm.get('tdsLines').patchValue(data.invDisLines);
+          // this.poInvoiceForm.get('tdsLines').patchValue(data.invDisLines);
+          this.poInvoiceForm.get('tdsLines').patchValue(data.invTdsLines);
           let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
-        
          
           
           for (let i=0; i<data.invLines.length;i++){
@@ -1099,10 +1105,27 @@ getGroupControl(index,arrayname, fieldName) {
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           for (let i=0; i<data.invDisLines.length;i++){
             (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId});
+            (tdscontrolInv.controls[i]).patchValue({ baseAmount: data.invDisLines[i].baseAmount});
+            (tdscontrolInv.controls[i]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg});
+            (tdscontrolInv.controls[i]).patchValue({ accDesc: data.invDisLines[i].accDesc});
+            (tdscontrolInv.controls[i]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum});
           }
         
           this.INVStatus=data.invoiceStatus;
-          this.showTdsLines();
+          
+          if(data.invTdsLines.length===0) {
+            // alert("data.invTdsLines.length :" +data.invTdsLines.length);
+            // this.saveTdsDetails=true;
+            this.displayTdsButton=true;
+            this.showTdsLineDetails=false;
+            this.showTdsLines();
+          } else {    
+              this.displayTdsButton=false;
+              this.showTdsLineDetails=true;
+            }
+         
+
+
           // console.log(data.invDisLines[0].invTransferStatus||data.invoiceStatus==='Validated');
         
           // if(data.invDisLines[0].invTransferStatus===null){
@@ -1242,11 +1265,13 @@ getGroupControl(index,arrayname, fieldName) {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.poInvoiceForm.reset();
         // alert(res.obj);
         this.internalSeqNum=res.obj;
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.poInvoiceForm.reset();
         }
       }
     });
@@ -1255,6 +1280,7 @@ getGroupControl(index,arrayname, fieldName) {
     // alert('else');
     this.HeaderValidation();
   }
+
   }
 
   close() {
@@ -2177,10 +2203,64 @@ getGroupControl(index,arrayname, fieldName) {
 
   }
 
+  CheckTdsLineValidations(i) {
+
+    // alert('addrow index '+i);
+    this.tdsLineValidation=true;
+    var tdsLineArr1 = this.poInvoiceForm.get('tdsLines').value;
+    var tdsTaxAmt=tdsLineArr1[i].taxAmount;
+    var taxCatId =tdsLineArr1[i].taxCategoryId;
+    var tdsSectionCd=tdsLineArr1[i].actualSectionCode;
+    
+    // alert("Line Value :"+lineValue1);
+     var j=i+1;
+
+
+     if(tdsSectionCd ===null ||tdsSectionCd ===undefined) {
+      alert("Line-"+(j)+ " SECTION CODE :  Should not be null.");
+      this.tdsLineValidation=false;
+     
+      // patch.controls[index].patchValue({tdsSelectFlag:''})
+
+      return;
+    }
+
+    if(taxCatId ===null ||taxCatId ===undefined) {
+      alert("Line-"+(j)+ " TAX CATEGORY :  Should not be null.");
+      this.tdsLineValidation=false;
+      
+      // patch.controls[index].patchValue({tdsSelectFlag:''})
+      return;
+      
+    }
+    if(tdsTaxAmt===undefined || tdsTaxAmt===null || tdsTaxAmt<0 ){
+      alert("Line-"+j+ " TAX AMOUNT :  Should not be null value");
+      this.tdsLineValidation=false;
+      return;
+    } 
+
+  
+    }
+
 
       SaveTdsDetails() {
         // alert("SAVE TDS DETAILS.....WIP")
+
+        var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
+        var len1=tdsLineArr.length;
+        
+        for (let i = 0; i < len1 ; i++) 
+          {
+            this.CheckTdsLineValidations(i);
+          }
+
+      
+
+        if (this.tdsLineValidation) {
+          alert("TDS data Validation Sucessfull....Posting data...")
+       
         var tdsLines= this.poInvoiceForm.get('tdsLines').value;
+
         console.log();
         this.transactionService.PoInvoiceTdsDataSubmit(tdsLines).subscribe((res: any) => {
           if (res.code === 200) {
@@ -2193,6 +2273,7 @@ getGroupControl(index,arrayname, fieldName) {
             }
           }
         });
+      }else{ alert("TDS data Validation Not Sucessfull....\nPosting Not Done...")  }
   
   
       }
@@ -2250,7 +2331,7 @@ getGroupControl(index,arrayname, fieldName) {
            this.tdsLineValidation=true;
           // if ( e.target.checked) {alert("Checked...");} else {alert("Unchecked...");}
           if ( e.target.checked) {
-          this.displayTdsButton=true;
+        
           var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
           var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
           var len1=tdsLineArr.length;
@@ -2284,7 +2365,7 @@ getGroupControl(index,arrayname, fieldName) {
             this.showTdsTaxLines(1,baseAmount,taxCatId,tdsSectionCd,index);}
 
           // }
-          } else { this.tdsTaxDetailsArray().reset();    this.displayTdsButton=false;  }    
+          } else { this.tdsTaxDetailsArray().reset();}    
         
         }
 

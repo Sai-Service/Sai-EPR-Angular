@@ -69,7 +69,7 @@
                                 <td style="width: 15%" class="LabelFontStyle1">&nbsp;Description:&nbsp;</td>
                                 
                                 <td>
-                                    <input  style="width: 270%;"  type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
+                                    <input  style="width: 445%;"  type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
                                 </td>
                             
                                 </tr> 
@@ -112,6 +112,12 @@
                                         </option>
                                     </select>
                                 </td>
+
+                                <td style="width: 15%" class="LabelFontStyle1">From&nbsp;Days:&nbsp;</td>
+                                    
+                                <td>
+                                    <input   type="number"  formControlName="fromDays"  id="fromDays" [(ngModel)]="fromDays" class="form-control" >
+                                </td>
                             
                             </tr>
                                 
@@ -119,11 +125,7 @@
                            
                             <tr>
 
-                                <td style="width: 15%" class="LabelFontStyle1">From&nbsp;Days:&nbsp;</td>
-                                    
-                                <td>
-                                    <input   type="number"  formControlName="fromDays"  id="fromDays" [(ngModel)]="fromDays" class="form-control" >
-                                </td>
+                               
 
                                 <td style="width: 15%" class="LabelFontStyle1">To&nbsp;Days:&nbsp;</td>
                                     
@@ -145,25 +147,28 @@
                                 <td>
                                     <input   type="number"  formControlName="toKms"  id="toKms" [(ngModel)]="toKms" class="form-control" >
                                 </td>
-                            </tr>
-                                <tr>
                                 <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Period:&nbsp;</td>
                                     
                                 <td>
                                     <input   type="number"  formControlName="validPeriod"  id="validPeriod" [(ngModel)]="validPeriod" class="form-control" >
                                 </td>
 
+                               
+                            </tr>
+                                <tr>
+                               
+
                                 <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;KM:&nbsp;</td>
                                     
                                 <td>
                                     <input   type="number"  formControlName="validKm"  id="validKm" [(ngModel)]="validKm" class="form-control" >
                                 </td>
-
                                 <td style="width: 15%" class="LabelFontStyle1">Start&nbsp;Date:&nbsp;</td>
                                         
                                 <td>
                                     <input   type="date"  formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control" >
                                 </td>
+                               
                                 <td style="width: 15%" class="LabelFontStyle1">End&nbsp;Date:&nbsp;</td>
                                         
                                 <td>
