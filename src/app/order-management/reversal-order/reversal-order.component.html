@@ -122,6 +122,13 @@
                         <input  type="text" class="form-control" formControlName="orderNumber"
                             [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 170px;font-weight: bold;height: 25px;">
                     </td>
+                    <td style="width: 22%;font-weight: bold;" class="LabelFontStyle">
+                        Reason&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="text" class="form-control" formControlName="reversalReason"
+                            [(ngModel)]='reversalReason' value={{reversalReason}} style="width: 170px;font-weight: bold;height: 25px;">
+                    </td>
                     <td>
                         <button type="submit" (click)="Reverse()" class="btn btn-primary">Reverse</button>
                     </td>

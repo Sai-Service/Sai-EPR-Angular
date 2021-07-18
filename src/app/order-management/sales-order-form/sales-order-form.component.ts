@@ -880,7 +880,8 @@ OrderFind(orderNumber) {
 }
 
 
-TaxCategoryupdate(TaxCategoryupdate,i){
+TaxCategoryupdate(index){
+  // alert(index);
   const formValue: AccOrderLinesPost1 = this.transData(this.SalesOrderBookingForm.value);
     var accLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     var taxAmounts:FormArray = this.SalesOrderBookingForm.get('taxAmounts').value ;
@@ -892,14 +893,15 @@ TaxCategoryupdate(TaxCategoryupdate,i){
     for (let j=0;j<taxAmounts.length;j++){
       taxAmounts[j].invLineNo=accLines[i].lineNumber;
     }
-    var accArr1 = accLines[i];
+    var accArr1 = accLines[index];
     accArr1['orderNumber'] = formValue.orderNumber;
     accArr1['taxAmounts'] = taxAmounts;
-    accArr1['invLineNo'] = accLines[i].lineNumber;
+    // accArr1['invLineNo'] = accLines[i].lineNumber;
+    accArr1['invLineNo'] =index+1;
     req.push(accArr1); 
   }
-  for (let i=0; this.lstgetOrderLineDetails.length;i++){
-  if (this.lstgetOrderLineDetails[i].invType==='SS_VEHICLE' && this.lstgetOrderLineDetails[i].flowStatusCode==='ALLOTED'){
+  // for (let i=0; this.lstgetOrderLineDetails.length;i++){
+  if (this.lstgetOrderLineDetails[index].invType==='SS_VEHICLE' && this.lstgetOrderLineDetails[index].flowStatusCode==='ALLOTED'){
    
     this.orderManagementService.UpdateTaxCategoryLineWise(req[0]).subscribe((res: any) => {
       if (res.code === 200) {
@@ -918,7 +920,7 @@ TaxCategoryupdate(TaxCategoryupdate,i){
   else{
     alert('Vehicle already Invoice');
   }
-    }
+    // }
 }
 
 onOptionTaxCatSelected(taxCategoryName, i) {
