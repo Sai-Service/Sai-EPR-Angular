@@ -12,6 +12,7 @@ import { DepriciationMethodComponent } from './fa-master/depriciation-method/dep
 import { BookControlComponent } from './fa-master/book-control/book-control.component';
 import { AssetCategoriesComponent } from './fa-master/asset-categories/asset-categories.component';
 import { AssetAdditionComponent } from './fa-transaction/asset-addition/asset-addition.component';
+import { FaRetirementComponent } from './fa-transaction/fa-retirement/fa-retirement.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { AssetAdditionComponent } from './fa-transaction/asset-addition/asset-ad
    
   AssetCategoriesComponent,
    
-  AssetAdditionComponent],
+  AssetAdditionComponent,
+   
+  FaRetirementComponent],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
   

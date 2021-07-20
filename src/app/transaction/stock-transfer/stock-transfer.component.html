@@ -53,6 +53,9 @@
               </select>
               <span  *ngIf="!stockTranferForm.get('transferOrgId').valid && stockTranferForm.get('transferOrgId').touched">Please
                   select Organization Name </span>
+                  <span
+                  *ngIf="getGroupControl('transferOrgId').touched && getGroupControl('transferOrgId').invalid" class="error">Valid Item
+                 </span>
           </td>
                     <td>
             <input type="hidden" formControlName="locId" [(ngModel)]="locId">
@@ -103,6 +106,9 @@
               </select>
               <span  *ngIf="!stockTranferForm.get('issueTo').valid && stockTranferForm.get('issueTo').touched" class="cross-validation-error-message alert">Please
                   select Issue Name </span>
+                  <span
+                  *ngIf="getGroupControl('issueTo').touched && getGroupControl('issueTo').invalid" class="error">Valid Item
+                 </span>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
             Status:
@@ -163,6 +169,9 @@
                   <option>--Select--</option>
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
                   </select>
+                  <span
+                  *ngIf="getGroupControllinewise(trxLineIndex,'itemId').touched && getGroupControllinewise(trxLineIndex,'itemId').invalid" class="error">Valid Item
+                 </span>
                 </td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;"formControlName="description"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
@@ -172,13 +181,20 @@
                 <option>--Select--</option>
                 <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
+                <span
+                *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
+               </span>
                 <input hidden formControlName="onHandQty">
                 <input hidden type="number" formControlName="onHandId">
                 <input hidden type="number" formControlName="locatorId">
                 <input hidden  type="text" formControlName="resveQty">
                 </td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" #qty></td>
+                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" #qty>
+                  <span
+                  *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
+                 </span>
+                </td>
                 <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()"></button></td>
                 <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
               </tr>

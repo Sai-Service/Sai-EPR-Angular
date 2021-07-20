@@ -362,15 +362,15 @@
                                                              </td> 
                                                              <td style="width: 15%" class="LabelFontStyle">YTD&nbsp;Depriciation&nbsp;:</td>
                                                              <td>  
-                                                                 <input type="text" class="form-control" formControlName="ytdDeprc">
+                                                                 <input disabled type="text" class="form-control" formControlName="ytdDeprc">
                                                               </td>
                                                               <td style="width: 15%" class="LabelFontStyle">Original&nbsp;Cost&nbsp;:</td>
                                                               <td>  
-                                                                  <input type="text" class="form-control" formControlName="originalCost">
+                                                                  <input disabled type="text" class="form-control" formControlName="originalCost">
                                                                </td>
                                                                <td style="width: 15%" class="LabelFontStyle">Accumulated&nbsp;Depriciation&nbsp;:</td>
                                                                <td>  
-                                                                   <input type="text" class="form-control"formControlName="accDeprc">
+                                                                   <input  disabled type="text" class="form-control"formControlName="accDeprc">
                                                                 </td>
                                                     </tr>
                                                     <tr>
@@ -383,11 +383,11 @@
                                                              </td>
                                                              <td style="width: 15%" class="LabelFontStyle">Salvage&nbsp;Value&nbsp;Percent&nbsp;</td>
                                                              <td>  
-                                                                 <input class="form-control"formControlName="saleValPer">
+                                                                 <input disabled class="form-control"formControlName="saleValPer">
                                                                  </td>
                                                                  <td style="width: 15%" class="LabelFontStyle">Salvage&nbsp;Value&nbsp;</td>
                                                                  <td>  
-                                                                     <input class="form-control" formControlName="salvageAmt">
+                                                                     <input disabled class="form-control" formControlName="salvageAmt">
                                                                      </td>
                                                                      <!-- <td style="width: 15%" class="LabelFontStyle">Revaluation&nbsp;Ceiling&nbsp;</td>
                                                                      <td>  
@@ -397,7 +397,7 @@
                                                     <tr>
                                                             <td style="width: 15%" class="LabelFontStyle">Recoverable&nbsp;Cost&nbsp;</td>
                                                             <td>  
-                                                                <input class="form-control" formControlName="recoverableCost">
+                                                                <input disabled class="form-control" formControlName="recoverableCost">
                                                                 </td>
                                                                 <td style="width: 15%" class="LabelFontStyle">Revaluation&nbsp;Reserve&nbsp;</td>
                                                             <td>  
@@ -428,7 +428,7 @@
                                                               </td>
                                                               <td style="width: 15%" class="LabelFontStyle">Month&nbsp;:</td>
                                                               <td>  
-                                                                  <input type="text" class="form-control" formControlName="month">
+                                                                  <input type="text" class="form-control" formControlName="lifeInMonth">
                                                                </td>
                                                                <td style="width: 15%" class="LabelFontStyle">Bonus&nbsp;Rule&nbsp;:</td>
                                                                <td>  
@@ -443,7 +443,7 @@
                                                                 </td>
                                                              <td style="width: 15%" class="LabelFontStyle">Date&nbsp;in&nbsp;Service:</td>
                                                              <td>  
-                                                                 <input type="text" class="form-control" formControlName="datePlacedInService">
+                                                                 <input type="date" class="form-control" formControlName="datePlacedInService">
                                                               </td>
                                                               <td style="width: 15%" class="LabelFontStyle">Prorate&nbsp;Convention:</td>
                                                               <td>  
@@ -681,21 +681,21 @@
                                                           <table class="center" >
                                                             <tr>
                                                                     <td style="width: 15%" class="LabelFontStyle">Original&nbsp;Cost</td>
-                                                                    <td >{{lstcomment.costToClear}}</td>
+                                                                    <td class="LabelFontStyle">{{lstcomment.costToClear}}</td>
                                                                     <td style="width: 15%" class="LabelFontStyle">Salvage&nbsp;Value</td>
-                                                                <td  style="width: 8rem;">{{lstcomment.salvageAmt}}</td>
+                                                                <td  style="width: 8rem;"class="LabelFontStyle">{{lstcomment.salvageAmt}}</td>
                                                                 <td style="width: 15%" class="LabelFontStyle">Date&nbsp;in Service</td>
-                                                                <td>{{lstcomment.datePlacedInService}}</td>
+                                                                <td class="LabelFontStyle">{{lstcomment.datePlacedInService}}</td>
                                                                 <td style="width: 15%" class="LabelFontStyle">Prorate&nbsp;Convention</td>
-                                                                <td>{{lstcomment.prorateConc}}</td>
+                                                                <td class="LabelFontStyle">{{lstcomment.prorateConc}}</td>
                                                             </tr>
                                                             <tr>
                                                                     <td style="width: 15%" class="LabelFontStyle">Prorate&nbsp;Date</td>
-                                                                    <td>{{lstcomment.transactionDate}}</td>
+                                                                    <td class="LabelFontStyle">{{lstcomment.transactionDate}}</td>
                                                                     <td style="width: 15%" class="LabelFontStyle">Method&nbsp;</td>
-                                                                    <td>{{lstcomment.method}}</td>
+                                                                    <td class="LabelFontStyle">{{lstcomment.method}}</td>
                                                                     <td style="width: 15%" class="LabelFontStyle">Life&nbsp;Years</td>
-                                                                    <td>{{lstcomment.lifeYearMonth}}</td>
+                                                                    <td class="LabelFontStyle">{{lstcomment.lifeYearMonth}}</td>
                                                                     <td style="width: 15%" class="LabelFontStyle">Months&nbsp;</td>
                                                                     <td></td>
                                                             </tr>

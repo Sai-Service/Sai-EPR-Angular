@@ -242,12 +242,12 @@ margin-left: 30%;
       font-size: small;
          }
 
-input.ng-invalid{
+/* input.ng-invalid{
   background-color:yellow;
 }
 input.ng-valid{
   background-color:white; 
-}
+} */
 
 .error-msg {
   color: #a94442;
