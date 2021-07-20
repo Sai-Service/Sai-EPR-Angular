@@ -93,7 +93,7 @@ export class ReturnToVendorComponent implements OnInit {
       locatorDesc:string;
       
       searchBypoNumber=2181211101212100;
-      searchReceiptNo=1000154;
+      searchReceiptNo=1000156;
 
       poStatus:string;
       shipHeaderId:number
@@ -304,24 +304,16 @@ export class ReturnToVendorComponent implements OnInit {
     
       //  }
 
-         
-     
-
-
-        SearchByPONumber(mPoNumber)   {
+   
+        SearchByPONumber(mPoNumber){
           alert("WIP-PO: "+mPoNumber);
           this.service.getPOReceiptSearchByPONo(mPoNumber)
           .subscribe(
             data => {
              this.lstcomments = data.obj;
              console.log(this.lstcomments);
-          }
-         );
-      
-         }
-
-         
-
+          }   );}
+    
 
         validateQty(index: any){
    
@@ -460,16 +452,29 @@ export class ReturnToVendorComponent implements OnInit {
               if(this.lstReceiptHeader !=null) {
                 this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
                 this.headerFound=true;
+                this.segment1=this.lstReceiptHeader.segment1;
                 this.poDate=this.lstReceiptHeader.poDate;
                 this.receiptNo=this.lstReceiptHeader.receiptNo;
                 this.receiptDate=this.lstReceiptHeader.receiptDate;
                 this.suppNo=this.lstReceiptHeader.suppNo;
+                this.suppInvNo=this.lstReceiptHeader.suppInvNo;
                 this.suppInvDate=this.lstReceiptHeader.suppInvDate;
                 this.supplierName=this.lstReceiptHeader.supplierName;
+                this.apInvNum=this.lstReceiptHeader.apInvNum;
                 this.apInvDate=this.lstReceiptHeader.apInvDate;
                 this.billToLocId=this.lstReceiptHeader.billToLocId;
-                this.returntoVendorForm.patchValue(this.lstReceiptHeader);
-                
+                this.shipToLocId=this.lstReceiptHeader.shipToLocId;
+                this.poHeaderId=this.lstReceiptHeader.poHeaderId;
+
+                this.ewayBillNo=this.lstReceiptHeader.ewayBillNo;
+                this.ewayBillDate=this.lstReceiptHeader.ewayBillDate;
+                this.gstDocNo=this.lstReceiptHeader.gstDocNo;
+                this.gstDocDate=this.lstReceiptHeader.gstDocDate;
+            
+
+                // this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
+                // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
+                // this.shipHeaderId=null;
                            
               } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found / doesn't exists.");
                 this.headerFound=false;this.resetMast();}
@@ -515,7 +520,8 @@ export class ReturnToVendorComponent implements OnInit {
           updateShipId() {
 
             var billToLoc = this.returntoVendorForm.get('billToLocId').value;
-            var pShipHeaderId = this.returntoVendorForm.get('shipHeaderId').value;
+            // var pShipHeaderId = this.returntoVendorForm.get('shipHeaderId').value;
+            var pShipHeaderId=this.lstReceiptHeader.shipHeaderId;
             var pHeaderId= this.returntoVendorForm.get('poHeaderId').value;
             // alert("billToLocId :"+billToLoc +" parentShipHeaderId :"+pShipHeaderId);
     
@@ -530,6 +536,9 @@ export class ReturnToVendorComponent implements OnInit {
               patch.controls[i].patchValue({billToLocId:billToLoc})
               patch.controls[i].patchValue({shipLineId:null})
               patch.controls[i].patchValue({poHeaderId:pHeaderId})
+              patch.controls[i].patchValue({baseAmount:0})
+              patch.controls[i].patchValue({taxAmount:0})
+              patch.controls[i].patchValue({totAmount:0})
          
             }
           }
@@ -608,67 +617,7 @@ export class ReturnToVendorComponent implements OnInit {
         } }
 
 
-        newMast() {
-
-          this.selectFlagCheck()
-
-          if(this.rtnChkboxValidation) {
-      
-          var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
-          var len1=rtnLineArr.length;
-
-          
-          for (let i = 0; i < len1 ; i++) 
-            {
-              this.CheckRtnLineValidations(i);
-            }
-
-        }
-
-            if(this.rtnLineValidation===false ) { 
-              alert("Line Validation Failed... \nPlease check all  line data fileds are updated properly..")
-              return;
-            }
-          
-        
-          alert("nLine Validation : "+this.rtnLineValidation);
-          
-          if (this.rtnLineValidation) 
-          {
-            alert("Data Validation Sucessfull....\nPosting data  ")
-
-            const formValue: IRtnToVendor =this.transeData(this.returntoVendorForm.value);
-
-          // =============================================================
-            let variants = <FormArray>this.lineDetailsArray;
-            var billToLocId = this.returntoVendorForm.get('billToLocId').value;
-            var parentShipHeaderId = this.returntoVendorForm.get('shipHeaderId').value;
-
-            alert("billToLocId :"+billToLocId +" parentShipHeaderId :"+parentShipHeaderId);
-           
-            for (let i = 0; i < this.lineDetailsArray.length; i++) {
-              let variantFormGroup = <FormGroup>variants.controls[i];
-              variantFormGroup.addControl('billToLocId', new FormControl(billToLocId, Validators.required));
-              variantFormGroup.addControl('shipHeaderId', new FormControl(parentShipHeaderId, Validators.required));
-            }
-            console.log(variants.value);
-            // ===========================================
-
-            this.service.PoReceiptReturnSubmit(formValue).subscribe((res: any) => {
-              if (res.code === 200) {
-
-                
-                alert('RECORD INSERTED SUCCESSFUILY');
-                this.returntoVendorForm.reset();
-              } else {
-                if (res.code === 400) {
-                  alert('ERROR WHILE INSERTING');
-                  this.returntoVendorForm.reset();
-                }
-              }
-            });
-          }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
-    } 
+       
 
 
     LineSelectFlag(e,index) {
@@ -706,6 +655,7 @@ export class ReturnToVendorComponent implements OnInit {
       this.locId=Number(sessionStorage.getItem('locId'));
 
         console.log(this.lstReceiptLines);
+        this.shipHeaderId=null;
    
         this.service.rtvSaveSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
@@ -836,7 +786,7 @@ export class ReturnToVendorComponent implements OnInit {
               poLineId: pLineId,
               poChargeAcc: selectedValue.poChargeAcc,
               billToLocId:this.returntoVendorForm.get('billToLocId').value,
-              parentShipHeaderId:  this.returntoVendorForm.get('shipHeaderId').value,
+              parentShipHeaderId:  this.lstReceiptHeader.shipHeaderId,
               parentShipLineId:selectedValue.shipLineId,
         
             }

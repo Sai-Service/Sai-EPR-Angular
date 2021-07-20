@@ -17,7 +17,7 @@
                             <td>
                                 <table class="center" style="width: 20%;">
                                     <tr>
-                                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle1">
                                             Supplier&nbsp;Code&nbsp;:&nbsp;</td>
                                         <td>
                                             <input type = "number" formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
@@ -72,7 +72,7 @@
                     </table>
                     <table class="center" style="border-top-style: ridge;border-top-color: #92a8d1;width: 100%;">
                         <tr style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;">
-                            <td style="width: 15%" class="LabelFontStyle">Supplier&nbsp;Code&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Code&nbsp;:&nbsp;</td>
                             <td>
                                 <input formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
                                  [ngClass]="{ 'is-invalid': submitted && f.suppNo.errors }"
@@ -85,7 +85,7 @@
                              <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
                                  Enter supplier No </span>
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle">Supplier&nbsp;Name&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td colspan="6">
                                     <input formControlName="name" value={{name}} class="form-control" [(ngModel)]='name'
                                     [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
@@ -192,11 +192,12 @@
                         <td>
                             <input type="text" disabled formControlName="state" [ngModel]="state" class="form-control">
                         </td>
+                        
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                         <td>
-                            <select formControlName="status" id="status"  [ngModel]="status" DI class="form-control" (ngModelChange)='onOptionsSelectedSupp($event)'>
-                                <option>--Select--</option>
-                                <option *ngFor="let sc of statusList" [ngValue]="sc.code">
+                            <select formControlName="status" id="status"  [ngModel]="status" class="form-control" (ngModelChange)='onOptionsSelectedSupp($event)'>
+                                <!-- <option>--Select--</option> -->
+                                <option *ngFor="let sc of statusList" [ngValue]="sc.code" >
                                     {{sc.codeDesc}}
                                 </option>
                             </select>
@@ -216,6 +217,8 @@
                                 </td>
                             </ng-template>
                         </tr>
+                        
+
                         <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Mobile1&nbsp;:&nbsp;</td>
                             <td>
@@ -316,7 +319,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;MSME&nbsp;Applicable&nbsp;:&nbsp;</td>
                             <td>
                                 <select formControlName="msmeYN" id="msmeYN"  [ngModel]="msmeYN" (ngModelChange)='onMSMESelected($event)' class="form-control">
-                                    <option>--Select--</option>
+                                    <!-- <option>--Select--</option> -->
                                     <option *ngFor="let sc of YesNoList" [ngValue] ="sc.code"> 
                                         {{sc.code}}
                                     </option>

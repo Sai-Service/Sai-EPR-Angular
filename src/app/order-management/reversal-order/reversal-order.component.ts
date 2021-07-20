@@ -64,6 +64,7 @@ export class ReversalOrderComponent implements OnInit {
   reversalOrderForm: FormGroup;
   divisionName:string;
   locationId:number;
+  reversalReason:string;
   ouName:string;
   locCode:string;
   ticketNo:string;
@@ -95,7 +96,8 @@ export class ReversalOrderComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) { 
     this.reversalOrderForm = fb.group({
-
+      orderNumber:[''],
+      reversalReason:[''],
     })
   }
 
@@ -121,7 +123,21 @@ export class ReversalOrderComponent implements OnInit {
 
   accountNoSearch(accountNo){}
 
-  Reverse(){}
+
+  Reverse(){
+    alert(this.orderNumber);
+    this.orderManagementService.OrderReversal(this.orderNumber,this.emplId,this.reversalReason).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFULLY');
+        // this.deAllotmentForm.reset();
+      } else {
+        if (res.code === 400) {
+          alert('Data already present in the data base');
+          // this.deAllotmentForm.reset();
+        }
+      }
+    });
+  }
   close() {
     this.router.navigate(['admin']);
   }

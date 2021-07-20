@@ -224,7 +224,7 @@
                         </table>
                         <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="address1" [(ngModel)]='address1' value={{address1}}
                                         (keyup)="onKey($event)" class="form-control"
@@ -292,23 +292,24 @@
                                         *ngIf="!customerMasterForm.get('address4').valid && customerMasterForm.get('address4').touched">Please
                                         Enter address </span>
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">
+                                    Location&nbsp;&nbsp;&nbsp;:&nbsp;</td>
                                 <td>
-                                    <!-- <select formControlName="city" id="city" class="form-control">
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  cityList">
-                                            {{sc.codeDesc}}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="submitted && f. city.errors" class="invalid-feedback">
-                                        <div *ngIf="f.city.errors.required">city must be a valid</div>
-                                         <div *ngIf="f.city.errors?.maxLength">city  Name must be a valid 
+                                    <input formControlName="location" value={{location}} class="form-control"
+                                        placeholder="Enter location"
+                                        [ngClass]="{ 'is-invalid': submitted && f.location.errors }">
+                                    <div *ngIf="submitted && f. location.errors" class="invalid-feedback">
+                                        <div *ngIf="f.location.errors.required">Enter location </div>
+                                        <div *ngIf="f.location.errors?.maxLength">Enter location
                                         </div>
                                     </div>
                                     <span
-                                        *ngIf="!customerMasterForm.get('city').valid && customerMasterForm.get('city').touched">Please
-                                        Enter city </span> -->
-                                    <select formControlName="city" id="city" class="form-control" [ngModel]="city"
+                                        *ngIf="!customerMasterForm.get('location').valid && customerMasterForm.get('location').touched">Please
+                                        Enter location </span>
+                                </td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
+                                <td>
+                                        <select formControlName="city" id="city" class="form-control" [ngModel]="city"
                                         (ngModelChange)='onOptionsSelectedCity($event)'>
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
@@ -325,6 +326,9 @@
                                         *ngIf="!customerMasterForm.get('city').valid && customerMasterForm.get('city').touched">Please
                                         Enter City</span>
                                 </td>
+                                
+                            </tr>
+                            <tr>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
@@ -340,8 +344,6 @@
                                         *ngIf="!customerMasterForm.get('pinCd').valid && customerMasterForm.get('pinCd').touched">Please
                                         Enter pin code </span>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;State&nbsp;:&nbsp;</td>
                                 <td>
                                     <input type="text" disabled formControlName="state" [ngModel]="state"
@@ -470,7 +472,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
                                         placeholder="Enter birthDate"
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
-                                        max="{{minDate | date:'yyyy-MM-dd'}}">
+                                        max="{{minDateBirth | date:'yyyy-MM-dd'}}">
                                     <div *ngIf="submitted && f. birthDate.errors" class="invalid-feedback">
                                         <div *ngIf="f.birthDate.errors.required">birth date must</div>
                                         <div *ngIf="f.birthDate.errors?.maxLength">birth date must
@@ -485,7 +487,7 @@
                                     <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate'
                                         value={{weddingDate}} (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }"
-                                        placeholder="Enter weddingDate" max="{{minDate | date:'yyyy-MM-dd'}}">
+                                        placeholder="Enter weddingDate" max="{{minDateWedding | date:'yyyy-MM-dd'}}">
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Start&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>
@@ -565,7 +567,7 @@
                             <tr>
                             </tr>
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle1">
+                                <!-- <td style="width: 15%" class="LabelFontStyle1">
                                     Location&nbsp;&nbsp;&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="location" value={{location}} class="form-control"
@@ -579,7 +581,7 @@
                                     <span
                                         *ngIf="!customerMasterForm.get('location').valid && customerMasterForm.get('location').touched">Please
                                         Enter location </span>
-                                </td>
+                                </td> -->
                             </tr>
 
                         </table>
