@@ -424,7 +424,7 @@ var segment = temp1[0];}
               this.AssetAdditionForm.patchValue({assetCategoryId:data.obj.categoryId});
               this.AssetAdditionForm.patchValue({method:data.obj.deprnMethod,ownedLeased:data.obj.ownedLeased,inventorial:data.obj.inventorial,
                 bookTypeCode:data.obj.bookTypeCode,prorateConc:data.obj.prorateConventionCode,depreciateFlag:data.obj.depreciateFlag,
-                salValType:data.obj.salValType,saleValPer:data.obj.percent});
+                salValType:data.obj.salValType,saleValPer:data.obj.percent,lifeInMonth:data.obj.lifeInMonth});
                 this.segment4=this.segmentNameList.deprnExpenseAcct;
                 // alert(this.segment4+'seg');
               // this.method=this.segmentNameList.deprnMethod;

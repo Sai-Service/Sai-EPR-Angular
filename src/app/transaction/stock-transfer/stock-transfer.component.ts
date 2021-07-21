@@ -103,7 +103,7 @@ export class StockTransferComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
-      ShipmentNo: ['',[Validators.required]],
+      ShipmentNo: [''],
       locId: [''],
       deptName:[''],
       shipmentNumber: [''],
@@ -131,14 +131,14 @@ export class StockTransferComponent implements OnInit {
   newtrxLinesList(): FormGroup {
     return this.fb.group({
      
-      itemId: [''],
+      itemId: ['',[Validators.required]],
           // shipmentNumber:[''],
       // IssueTo:[''],
       resveQty:[''],
-      frmLocator: [''],
+      frmLocator: ['',[Validators.required]],
       description: [''],
       uom: [''],
-      primaryQty: [''],
+      primaryQty: ['',[Validators.required]],
       locatorId: [''],
       segment: [''],
       locator: [''],
@@ -176,7 +176,7 @@ export class StockTransferComponent implements OnInit {
     this.deptName=(sessionStorage.getItem('deptName'));
     this.issueBy=(sessionStorage.getItem('name'))
     // alert(this.deptName+'Depart');
-    alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
+    // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
   
     this.service.searchall(this.locId).subscribe(
       data=>{
@@ -307,8 +307,8 @@ export class StockTransferComponent implements OnInit {
   var itemid=trxLnArr[i].itemId;
   var locId=trxLnArr[i].frmLocator;
   var onhandid=trxLnArr[i].id;
-  // trxLnArr1.controls[i].patchValue({locatorId:locId});
- alert(locId+'locatorID');
+  trxLnArr1.controls[i].patchValue({locatorId:locId});
+//  alert(locId+'locatorID');
   var subcode=this.stockTranferForm.get('subInventoryCode').value;
  // alert(subcode);
   // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
@@ -317,8 +317,8 @@ export class StockTransferComponent implements OnInit {
     (data =>{ 
       this.onhand1 = data;
       console.log(this.onhand1);
-      alert(this.onHandId);
-      alert(this.onhand1);
+      // alert(this.onHandId);
+      // alert(this.onhand1);
       trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj;
@@ -333,13 +333,14 @@ export class StockTransferComponent implements OnInit {
   
 }
 validate(i:number,qty1)
-{alert("Validate");
+{
+  // alert("Validate");
   var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
   var trxLnArr1=this.stockTranferForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].primaryQty;  
- alert(avalqty+'avalqty');
- alert(trxLnArr[i].primaryQty +' qty');
+//  alert(avalqty+'avalqty');
+//  alert(trxLnArr[i].primaryQty +' qty');
   if(qty>avalqty)
   {
     alert("You can not enter more than available quantity");
@@ -355,7 +356,8 @@ validate(i:number,qty1)
   
 }
 reservePos(i)
-{alert("Hello");
+{
+  // alert("Hello");
 var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   // var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   const formValue: IStockTransfer = this.stockTranferForm.value;
@@ -366,12 +368,12 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     var locId1=this.stockTranferForm.get('locId').value
    
       let variantFormGroup = <FormGroup>variants.controls[i];
-      variantFormGroup.addControl('transactionTypeId', new FormControl(1, Validators.required));
-      variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
-      variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].primaryQty, Validators.required));
+      variantFormGroup.addControl('transactionTypeId', new FormControl(1, []));
+      variantFormGroup.addControl('locId', new FormControl(locId1, []));
+      variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].primaryQty, []));
       // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].onHandId, Validators.required));
-       variantFormGroup.addControl('invItemId', new FormControl(trxLnArr1[i].itemId, Validators.required));
-       variantFormGroup.addControl('transactionNumber',new FormControl(todesc.locCode,Validators.required));
+       variantFormGroup.addControl('invItemId', new FormControl(trxLnArr1[i].itemId, []));
+       variantFormGroup.addControl('transactionNumber',new FormControl(todesc.locCode,[]));
        
   // var reserveinfo=formValue[0];
 
@@ -392,6 +394,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
 }
   newStkTransfer() {
 
+    if (this.stockTranferForm.valid) {
     var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     const formValue: IStockTransfer = this.stockTranferForm.value;
     let variants = <FormArray>this.trxLinesList();
@@ -407,17 +410,17 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     var subInv=this.stockTranferForm.get('subInventoryCode').value;
     for (let i = 0; i < this.trxLinesList().length; i++) {
       let variantFormGroup = <FormGroup>variants.controls[i];
-      variantFormGroup.addControl('transferOrgId', new FormControl(tranorgid, Validators.required));
-      variantFormGroup.addControl('issueTo', new FormControl(isso, Validators.required));
-      variantFormGroup.addControl('ewayBill', new FormControl(ewaybil, Validators.required));
-      variantFormGroup.addControl('ewayBillDate', new FormControl(ewaydate, Validators.required));
-      variantFormGroup.addControl('remarks', new FormControl(rmark, Validators.required));
-      variantFormGroup.addControl('issueBy', new FormControl(issb, Validators.required));
-      variantFormGroup.addControl('transDate', new FormControl(tranda, Validators.required));
-      variantFormGroup.addControl('status', new FormControl(staus, Validators.required));
-      variantFormGroup.addControl('orgId', new FormControl(this.locId, Validators.required));
-      variantFormGroup.addControl('subInventoryCode',new FormControl(subInv,Validators.required));
-      variantFormGroup.addControl('locatorId', new FormControl(trxLnArr1[i].frmLocator,[]));
+      variantFormGroup.addControl('transferOrgId', new FormControl(tranorgid, []));
+      variantFormGroup.addControl('issueTo', new FormControl(isso, []));
+      variantFormGroup.addControl('ewayBill', new FormControl(ewaybil, []));
+      variantFormGroup.addControl('ewayBillDate', new FormControl(ewaydate, []));
+      variantFormGroup.addControl('remarks', new FormControl(rmark, []));
+      variantFormGroup.addControl('issueBy', new FormControl(issb, []));
+      variantFormGroup.addControl('transDate', new FormControl(tranda, []));
+      variantFormGroup.addControl('status', new FormControl(staus, []));
+      variantFormGroup.addControl('orgId', new FormControl(this.locId, []));
+      variantFormGroup.addControl('subInventoryCode',new FormControl(subInv,[]));
+      // variantFormGroup.addControl('locatorId', new FormControl(trxLnArr1[i].frmLocator,[]));
     }
     console.log(variants.value);
     this.service.stockTransferSubmit(variants.value).subscribe((res: any) => {
@@ -425,11 +428,13 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
       if (res.code === 200) {
         alert("Record inserted Successfully");
-        this.shipmentNumber =res.obj.shipmentNumber;
-         this.stockTranferForm.patchValue({
-           'transferLoc':res.obj[0].transReference,
-         'issueTo':res.obj[0].issueTo,
-         'shipmentNumber':res.obj[0].shipmentNumber,});
+        this.shipmentNumber =res.obj[0].shipmentNumber;
+        this.transferLoc=res.obj[0].transReference;
+        // this.search(this.shipmentNumber);
+        //  this.stockTranferForm.patchValue({
+        //    'transferLoc':res.obj[0].transReference,
+        //  'issueTo':res.obj[0].issueTo,
+        //  'shipmentNumber':res.obj[0].shipmentNumber})
         // 'transReference':res.obj[0].transReference
         // 'transferOrgId':res.obj[0].transReference });
          var trxLnArr2 = this.stockTranferForm.get('trxLinesList') as FormArray;
@@ -453,14 +458,21 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       }
     });
   }
+  else{
+    
+      // alert('else');
+      this.HeaderValidation();
+    
+  }
+  }
 
   search(ShipmentNo) {
     // alert('1'+ShipmentNo);
     this.display = true;
 
-    var shipNo = (this.stockTranferForm.get('ShipmentNo').value);
+    // var shipNo = (this.stockTranferForm.get('ShipmentNo').value);
     // alert('2'+shipNo)
-    this.service.getsearchByShipmentNo(shipNo).subscribe
+    this.service.getsearchByShipmentNo(ShipmentNo).subscribe
       (data => {
         this.lstcomment = data;
         let control = this.stockTranferForm.get('trxLinesList') as FormArray;
@@ -473,7 +485,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
           var trxlist: FormGroup = this.newtrxLinesList();
           this.trxLinesList().push(trxlist);
         }
-
+        // alert(this.transferLoc);
         this.stockTranferForm.patchValue(this.lstcomment[0]);
         this.transferLoc=this.lstcomment[0].transferLoc;
         this.displayButton = false;
@@ -529,7 +541,7 @@ selectByShipNo(shipmentNumber:any)
 }
 
 onlocationissueselect(event){
-  alert(event);
+  // alert(event);
 
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
@@ -546,6 +558,46 @@ onlocationissueselect(event){
     });
 
 }
+}
+
+HeaderValidation() {
+  var isValid:boolean=false;
+Object.keys(this.stockTranferForm.controls).forEach(
+  (key) => { 
+    const control=this.stockTranferForm.controls[key] as FormControl|FormArray|FormGroup
+    
+    if(control instanceof FormControl){
+      control.markAsTouched();
+    }
+    else if (control instanceof FormArray){
+        
+(<FormArray>this.stockTranferForm.get('trxLinesList')).controls.forEach((group: FormGroup) => {
+  (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+      control.markAsTouched();
+  }) 
+});
+    }
+    else if  (control instanceof FormGroup){}
+    // isValid=this.hasRequiredField(control);
+    
+}) ;
+
+// return isValid;
+ 
+}
+
+
+
+getGroupControl(fieldName) {
+  // alert('nam'+fieldName);
+  // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
+  return(this.stockTranferForm.get(fieldName));
+}
+ 
+getGroupControllinewise(index,fieldName) {
+  // alert('nam'+fieldName);
+  return (<FormArray>this.stockTranferForm.get('trxLinesList')).at(index).get(fieldName);
+  
 }
 
 }
