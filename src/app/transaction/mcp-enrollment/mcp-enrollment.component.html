@@ -113,20 +113,20 @@
                                    
                             </tr>
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Item:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
             
                                 <td>
                                     <input disabled  type="text"  formControlName="vehicleItem"  id="vehicleItem" [(ngModel)]="vehicleItem" class="form-control" >
                                 </td>
                                 
         
-                            <td style="width: 15%" class="LabelFontStyle">Model&nbsp;Variant:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Variant:&nbsp;</td>
         
                             <td>
                                 <input disabled  type="text"  formControlName="variant"  id="variant" [(ngModel)]="variant" class="form-control" >
                             </td>
         
-                            <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
         
                             <td>
                                 <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
@@ -157,7 +157,7 @@
                                 <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle1">Curr.&nbsp;Mileage:&nbsp;</td>
             
                             <td>
                                 <input   type="text"  formControlName="kmReading"  id="kmReading" [(ngModel)]="kmReading" class="form-control">
@@ -182,7 +182,7 @@
                                 </td> -->
         
                             
-                            <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
         
                             <td>
                                 <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
@@ -244,14 +244,14 @@
                                             <td style="text-align: right;">{{k+1}}</td>
                                             <td><input  type="radio"  style="text-align: center;width: 2em;"  formControlName="applyrcptFlag" ></td>
                                             <!-- (change)="applyReceiptFlag($event,k)" -->
-                                            <td><input style="width: 100px;height: 25px;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder=""  > </td>
-                                            <td><input style="width: 100px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
-                                            <td><input style="width: 100px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>    
-                                            <td><input style="width: 100px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;"  disabled   type="text" formControlName="balance1" class="form-control" placeholder="" ></td>  
+                                            <td><input style="width: 125px;height: 25px;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder=""  > </td>
+                                            <td><input style="width: 125px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
+                                            <td><input style="width: 160px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>    
+                                            <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;"  disabled   type="text" formControlName="balance1" class="form-control" placeholder="" ></td>  
                                         </tr>
                                         </ng-container>
                                         </ng-container>
@@ -434,7 +434,26 @@
                                                   <td>
                                                       <input disabled  style="width: 450%"  type="text"  formControlName="customerSiteAddress"  id="customerSiteAddress" [(ngModel)]="customerSiteAddress" class="form-control" >
                                                   </td>
-                                                  </tr>
+                                             </tr>
+                                             <tr>
+                        
+                                                <td style="width: 5%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+                            
+                                                <td>
+                                                    <input disabled    type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" >
+                                                </td>
+                                                <td style="width: 5%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                            
+                                                <td>
+                                                    <input disabled    type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" >
+                                                </td>
+                                                <td style="width: 5%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+                            
+                                                <td>
+                                                    <input disabled    type="text"  formControlName="custPincode"  id="custPincode" [(ngModel)]="custPincode" class="form-control" >
+                                                </td>
+
+                                            </tr>
                           
                                               </table>
                                               </fieldset>

@@ -10,7 +10,10 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 
-interface IMcpEnrollment {   }
+interface IMcpEnrollment { 
+  regNo:string;
+  startKms:number;
+  }
 
 @Component({
   selector: 'app-mcp-enrollment',
@@ -63,6 +66,9 @@ export class McpEnrollmentComponent implements OnInit {
         dmsCustNo:number;
         customerSiteId:number;
         customerSiteAddress:string;
+        custCity:string;
+        custState:String;
+        custPincode:string;
         CustomerGstNo:string
         customerPanNo:string
         custAccountNo:number;
@@ -148,6 +154,7 @@ export class McpEnrollmentComponent implements OnInit {
             enqDate:[],
             packageId:[],
             packageNumber:[],
+            packageDesc:[],
             mcpStartDate:[],
             mcpEndDate:[],
             uptoKm:[],
@@ -159,6 +166,9 @@ export class McpEnrollmentComponent implements OnInit {
             dmsCustNo:['',Validators.required,  Validators.pattern('^[a-zA-Z0-9]')],
             custName:[],
             customerSiteAddress:[],
+            custCity:[],
+            custState:[],
+            custPincode:[],
             CustomerGstNo:[],
             customerPanNo:[],
             billToSiteId:[],
@@ -383,20 +393,20 @@ export class McpEnrollmentComponent implements OnInit {
               else{
                  console.log(this.CustomerSiteDetails);
                  this.mcpEnrollmentForm.patchValue({
-                  customerSiteId:this.CustomerSiteDetails.customerSiteId,
-                  customerSiteAddress:this.CustomerSiteDetails.address1+","+
-                                      this.CustomerSiteDetails.address2+","+
-                                      this.CustomerSiteDetails.address3+","+
-                                      this.CustomerSiteDetails.location+","+
-                                      this.CustomerSiteDetails.city+","+
-                                      this.CustomerSiteDetails.state+"-"+
-                                      this.CustomerSiteDetails.pinCd,
-                CustomerGstNo:this.CustomerSiteDetails.gstNo,
+                customerSiteId:this.CustomerSiteDetails.customerSiteId,
+                customerSiteAddress:this.CustomerSiteDetails.address1+","+
+                                    this.CustomerSiteDetails.address2+","+
+                                    this.CustomerSiteDetails.address3+","+
+                                    this.CustomerSiteDetails.location,
+                custCity:this.CustomerSiteDetails.city,
+                custState:this.CustomerSiteDetails.state,                 
+                custPincode:this.CustomerSiteDetails.pinCd,                    
+                customerGstNo:this.CustomerSiteDetails.gstNo,
                 customerPanNo:this.CustomerSiteDetails.panNo,
                 custPhone:this.CustomerSiteDetails.mobile1,
                 customerType:this.CustomerSiteDetails.customerId.custType,
                 custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
-                 
+                  
             });
     
             }  });  }
