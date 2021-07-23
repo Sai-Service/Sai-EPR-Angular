@@ -1572,8 +1572,8 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 }
 
 getsearchByReceiptNo(segment1): Observable<any> {
-  // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
-  return this.http.get(this.ServerUrl + `/rcvShipment/receiptHdr/${segment1}`);
+  return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
+//  return this.http.get(this.ServerUrl + `/rcvShipment/receiptHdr/${segment1}`);
   
 }
 
