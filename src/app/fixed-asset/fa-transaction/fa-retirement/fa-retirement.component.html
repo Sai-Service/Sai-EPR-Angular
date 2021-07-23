@@ -1,0 +1,320 @@
+<div class="center">
+  <form [formGroup]="AssetRetirementForm" (ngSubmit)="AssetRetirement(AssetRetirementForm.value)">
+  <table style="width: 100%;background-color: white;">
+      <tr>
+          <td class="PageHeader"> &nbsp;Asset&nbsp;Retirement&nbsp;</td>
+          <table style="width: 100%; background-color: #a4d3e9;">
+                  <tr>
+                      <td style="width: 15%" class="LabelFontStyle">Asset&nbsp;No:</td>
+                      <td>
+                          <input type="text"  class="form-control" formControlName="AssetNo" id="AssetNo" name="AssetNo" [(ngModel)]="AssetNo">
+                      </td>
+                      <td colspan="8" style="text-align: left; width: 100%;">
+                          <!-- <button type="submit" class="btn btn-primary" (click)="search(AssetNo)"><i class="fa fa-search"></i></button> -->
+                      </td>
+                  </tr>
+              </table>
+      </tr>
+  </table>
+
+  <div class="center" style="width: 100%;">
+      <div class="form-bg">
+          <div class="center" style="width: 100%;">
+              <!-- <form [formGroup]="BookControlForm" (ngSubmit)="bookControl(BookControlForm.value)"> -->
+                  <table class="center" >
+                    <tr>
+                      <fieldset>
+                          <table class="center">
+                              <tr>
+                          <td style="width: 15%" class="LabelFontStyle">Asset&nbsp;No:</td>
+                      <td   style="border: none;color: black;">
+                          <input type="text" class="form-control" >
+                      </td>
+                      <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No:</td>
+
+                      <td>
+                         <input type="text" class="form-control" >
+                      </td>
+                      <td style="width: 15%" class="LabelFontStyle">Book&nbsp;:</td>
+
+                      <td>
+                      <input type="text" class="form-control">
+                      </td>
+                  </tr>
+                  <tr>
+
+                        <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:</td>
+                          <td>
+                                 <input type="text" class="form-control">
+                          </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">Retire&nbsp;Date&nbsp;:</td>
+                        <td>
+                               <input type="date" class="form-control" >
+                        </td>
+                             <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:</td>
+                        <td>
+                               <input type="text" class="form-control" >
+                                    </td>
+                      </tr>
+                          </table>
+                      </fieldset>
+                    </tr>
+                      <tr>
+                          <fieldset class="RFS">
+                                  <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                  style="font-size: 10px;color: black;">
+                                  <b> Retirementnbsp;Details</b>
+                              </legend>
+                              <table>
+                                  <tr>
+                                      <td style="width: 15%"class="LabelFontStyle">
+                                          Current&nbsp;Units:
+                                      </td>
+                                      <td >
+                                          <input type="number" class="form-control">
+                                      </td>
+                                      <td style="width: 15%"class="LabelFontStyle">
+                                              Units&nbsp;Retired&nbsp;:
+                                          </td>
+                                          <td >
+                                              <input type="number" class="form-control" >
+                                          </td>
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                              Retirement&nbsp;Type&nbsp;:
+                                          </td>
+                                          <td >
+                                              <select  class="form-control">
+                                                <option>--Select--</option>
+                                                <option></option>
+                                              </select>
+                                          </td>
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                              Retirement&nbsp;Convention&nbsp;:
+                                          </td>
+                                          <td >
+                                              <input type="text" class="form-control">
+                                          </td>
+                                  </tr>
+                                  <tr>
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                              Current&nbsp;Cost&nbsp;:
+                                          </td>
+                                          <td >
+                                              <input type="number" class="form-control" >
+                                          </td>
+
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                                  Cost&nbsp;Retired&nbsp;:
+                                              </td>
+                                              <td >
+                                                  <input type="number" class="form-control">
+                                              </td>
+
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                                  Proceeds&nbsp;of&nbsp;Sale:
+                                              </td>
+                                              <td >
+                                                  <input type="text" class="form-control">
+                                              </td>
+
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                                  Costs&nbsp;Reserve&nbsp;:
+                                              </td>
+                                              <td >
+                                                  <input type="text" class="form-control" formControlName="revalReserveAcct">
+                                              </td>
+
+                                  </tr>
+                                  <tr>
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                             AR&nbsp;Invoice&nbsp;No:
+                                          </td>
+                                          <td >
+                                              <input type="number" class="form-control">
+                                          </td>
+
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                                  Customer&nbsp;Id&nbsp;:
+                                              </td>
+                                              <td >
+                                                  <input type="number" class="form-control">
+                                              </td>
+
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                                  Customernbsp;Name&nbsp;:
+                                              </td>
+                                              <td >
+                                                  <input type="text" class="form-control" >
+                                              </td>
+
+                                          <td style="width: 15%"class="LabelFontStyle">
+                                                  AR&nbsp;Invoice&nbsp;Date:
+                                              </td>
+                                              <td >
+                                                  <input type="date" class="form-control">
+                                              </td>
+
+                                  </tr>
+                               </table>
+                          </fieldset>
+                      </tr>
+                </table>
+                      <!-- </fieldset>        -->
+
+
+
+                   <br>
+
+
+
+
+                  <!-- ===================================Buttons======================================== -->
+                  <!-- <br> -->
+                  <table class="center">
+                      <tr>
+                           <td>
+                                  <button type="button" class="btn btn-info">Search</button>
+                              </td>
+                              <td>
+                                      <button type="button" class="btn btn-info">Done</button>
+                                  </td>
+                                 <td>
+                                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Rate</button>
+                                              </td>
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="myModal1" role="dialog">
+                                                      <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                              <label style="text-align: center;margin-left: 7rem;">Depriciation Rates</label>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                            <!-- <table class="center" style="width: 100%;"> -->
+                                                                  <div class="grid_scroll">
+
+                                                                          <table style="width: fit-content; border: solid 1px Gray" class="auto-style4"
+                                                                                    cellspacing="0" cellpadding="4" rules="all" class="center">
+                                                                                    <thead>
+                                                                                      <tr class="GridHeader">
+                                                                                            <!-- <th scope="col">No.</th> -->
+                                                                                            <th scope="col">Basic %</th>
+                                                                                            <th scope="col">Adjusting %</th>
+                                                                                            <th scope="col">Adjusted %</th>
+                                                                                            <th scope="col">Add+</th>
+                                                                                            <th scope="col">Del-</th>
+                                                                                      </tr>
+                                                                                    </thead>
+
+                                                                                  <tr>
+
+                                                                                    <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                                                                      <td>
+                                                                                          <input type="number"  class="form-control"  style="width: 80px;">
+                                                                                      </td>
+                                                                                      <td>
+                                                                                          <input  style="width: 80px;" type="number"  class="form-control">
+                                                                                      </td>
+                                                                                      <td>
+                                                                                          <input style="width: 80px;"  type="number"   class="form-control">
+                                                                                      </td>
+                                                                                   <td>
+                                                                                          <button type="submit" class="btn btn-info"  style="width: min-content;"><i
+                                                                                          class="fa fa-plus"></i></button>
+                                                                                      </td>
+
+                                                                                      <td>
+                                                                                              <button type="submit" class="btn btn-info" style="width: min-content;"><i
+                                                                                              class="fa fa-trash"></i></button>
+                                                                                      </td>
+
+                                                                                    </tr>
+
+                                                                          </table>
+                                                                      </div>
+                                                            <!-- </table> -->
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                              <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+
+
+               <!-- ====================Reset Dialog ======================== -->
+
+                  <td>
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                  </td>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-body">
+                          <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                              Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                          </label>
+                      </div>
+                      <div class="modal-footer">
+                          <table class="center">
+                              <tr>
+                                  <td>
+                                      <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                  </td>
+                                  <td>
+                                      <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button>
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </div>
+                  </div>
+                  </div>
+
+                      <!-- =====================Close Dialog Box====================== -->
+                      <td>
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                      </td>
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                              <div class="modal-body">
+                                  <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                      <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                      Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                  </label>
+                              </div>
+                              <div class="modal-footer">
+                                  <table class="center">
+                                      <tr>
+                                          <td>
+                                          <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                          </td>
+                                          <td>
+                                          <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                          </div>
+                          </div>
+                      </div>
+
+              </tr>
+              </table>
+              <br>
+              <!-- </form> -->
+          </div>
+      </div>
+  </div>
+  </form>
+</div>
+
+
+
+
+

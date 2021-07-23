@@ -47,7 +47,7 @@ interface IItemMaster{
   warrantyStatus:string;
   ewStatus:string;
   ewStartDate:Date;
-  ewEndDate:Date; 
+  ewEndDate:Date;
   ewPeriod:number;
   ewBookletNo:string;
   smartCardNumber:number;
@@ -93,7 +93,7 @@ taxCategorySale:number;
   styleUrls: ['./item-master.component.css']
 })
 export class ItemMasterComponent implements OnInit {
-  
+
   itemMasterForm: FormGroup;
   segment:string;
   submitted = false;
@@ -201,7 +201,7 @@ export class ItemMasterComponent implements OnInit {
   public purchasableList: Array<string>=[];
   public costCenterList:Array<string>=[];
   public hsnSacCodeList: Array<string>[];
- 
+
   public internalOrderList:Array<string>[];
   public marginCategoryList:Array<string>[];
   public assetItemList:Array<string>[];
@@ -247,7 +247,7 @@ export class ItemMasterComponent implements OnInit {
  purchasableShow=true;
  isTaxableShow=true;
 
-  
+
  loginName:string;
  loginArray:string;
  name:string;
@@ -256,12 +256,12 @@ export class ItemMasterComponent implements OnInit {
  locName : string;
  orgId:number;
  ouId :number;
- deptId:number; 
+ deptId:number;
  divisionId:number;
 // emplId :number;
  public emplId =6;
 
- 
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService:OrderManagementService) {
     this.itemMasterForm = fb.group({
 
@@ -374,7 +374,7 @@ taxCategorySale:[],
 
 
 
-   
+
    get f() { return this.itemMasterForm.controls; }
 
   ngOnInit(): void {
@@ -389,11 +389,11 @@ taxCategorySale:[],
     // this.locName=(sessionStorage.getItem('locName'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     // this.emplId= Number(sessionStorage.getItem('emplId'));
-   
+
     this.orgId=this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
-   
+
 
 
 
@@ -477,8 +477,8 @@ taxCategorySale:[],
     //       console.log(this.YesNoList);
     //     }
     //   )
-    
- 
+
+
 
     this.service.uomList()
     .subscribe(
@@ -487,7 +487,7 @@ taxCategorySale:[],
         console.log(this.uomList);
       }
     );
-    
+
 
     // this.service.costingList()
     // .subscribe(
@@ -505,7 +505,7 @@ taxCategorySale:[],
     //     console.log(this.stockableList);
     //   }
     // );
-    
+
     // this.service.purchasableList()
     // .subscribe(
     //   data => {
@@ -537,7 +537,7 @@ taxCategorySale:[],
     //     console.log(this.internalOrderList);
     //   }
     // );
-    
+
     this.service.marginCategoryList()
     .subscribe(
       data => {
@@ -553,7 +553,7 @@ taxCategorySale:[],
     //     console.log(this.assetItemList);
     //   }
     // );
-    
+
     // this.service.itemStatusList()
     // .subscribe(
     //   data => {
@@ -569,7 +569,7 @@ taxCategorySale:[],
   //       console.log(this.typeList);
   //     }
   //   );
-    
+
    this.service.mainModelList()
     .subscribe(
       data => {
@@ -593,7 +593,7 @@ taxCategorySale:[],
         console.log(this.variantCodeList);
       }
     );
-    
+
     // this.service.manYaerList()
     // .subscribe(
     //   data => {
@@ -609,7 +609,7 @@ taxCategorySale:[],
     //     console.log(this.octraiBillDateList);
     //   }
     // );
-    
+
     // this.service.octraiTypeList()
     // .subscribe(
     //   data => {
@@ -617,22 +617,22 @@ taxCategorySale:[],
     //     console.log(this.octraiTypeList);
     //   }
     // );
-    
+
     // this.service.warrantyStatusList()
     // .subscribe(
     //   data => {
     //     this.warrantyStatusList = data;
     //     console.log(this.warrantyStatusList);
     //   }
-    // );  
-    
+    // );
+
     // this.service.ewStatusList()
     // .subscribe(
     //   data => {
     //     this.ewStatusList = data;
     //     console.log(this.ewStatusList);
     //   }
-    // );  
+    // );
 
     // this.service.ewPeriodList()
     // .subscribe(
@@ -641,7 +641,7 @@ taxCategorySale:[],
     //     console.log(this.ewPeriodList);
     //   }
     // );
-    
+
 
     this.service.ewInsNameList()
     .subscribe(
@@ -650,9 +650,9 @@ taxCategorySale:[],
         console.log(this.ewInsNameList);
       }
     );
-   
-    
-    
+
+
+
     this.service.itemTypeList()
     .subscribe(
       data => {
@@ -668,7 +668,7 @@ taxCategorySale:[],
         console.log(this.insNameList);
       }
     );
-    
+
     // this.service.insSiteList(customerId)
     // .subscribe(
     //   data => {
@@ -684,7 +684,7 @@ taxCategorySale:[],
     //     console.log(this.ripsList);
     //   }
     // );
-    
+
     // ;
     // this.service.twoToneList()
     // .subscribe(
@@ -711,13 +711,13 @@ taxCategorySale:[],
     );
    }
 
-  
+
   onHsnCodeSelected(mHsnCode:any){
 
     alert("Hsn Code :"+mHsnCode);
 
     // if(mHsnCode != undefined) {
-   
+
       this.service.hsnSacCodeDet(mHsnCode)
       .subscribe(
       data => {
@@ -757,7 +757,7 @@ taxCategorySale:[],
     .subscribe(
       data => {
         this.VariantSearch = data;
-        console.log(this.VariantSearch);  
+        console.log(this.VariantSearch);
       }
     );
    }
@@ -782,7 +782,7 @@ taxCategorySale:[],
 
   itemMaster(itemMaster: any) {
   }
-  
+
   onOptionsSelectedItemType(category:any){
     // alert("onOptionsSelectedItemType");
     if(category == 'SS_VEHICLE'){
@@ -797,14 +797,14 @@ taxCategorySale:[],
     if(select.costing=='Y'){this.costingShow = false; this.displayCosting=false; this.costing='Y' }
     if(select.costing=='N'){this.costingShow = true; this.costing='N' }
     if(select.internalOrder=='Y'){this.internalOrderShow = false; this.internalOrder='Y'}
-    if(select.internalOrder=='N'){this.internalOrderShow = true; this.internalOrder='N'}  
+    if(select.internalOrder=='N'){this.internalOrderShow = true; this.internalOrder='N'}
     if(select.assetItem=='Y'){this.assetItemShow = false; this.assetItem='Y'}
-    if(select.assetItem=='N'){this.assetItemShow = true; this.assetItem='N'}  
+    if(select.assetItem=='N'){this.assetItemShow = true; this.assetItem='N'}
     if(select.purchable=='Y'){this.purchasableShow = false; this.displayPoCharge=false; this.purchasable='Y' }
-    if(select.purchable=='N'){this.purchasableShow = true; this.purchasable='N'}  
+    if(select.purchable=='N'){this.purchasableShow = true; this.purchasable='N'}
     if(select.isTaxable=='Y'){this.isTaxableShow = false; this.displayisTaxable=false; this.isTaxable='Y' }
-    if(select.isTaxable=='N'){this.isTaxableShow = true; this.isTaxable='N'}  
-    
+    if(select.isTaxable=='N'){this.isTaxableShow = true; this.isTaxable='N'}
+
     this.service.categoryIdList(category)
     .subscribe(
       data => {
@@ -815,13 +815,13 @@ taxCategorySale:[],
     if(category=='SS_VEHICLE'){    this.ssVehical=true; this.ssSpares=false;}
     if(category=='SS_SPARES'){     this.ssVehical=false; this.ssSpares=true;}
 
-     
-    
+
+
      this.itemMasterForm.get('hsnGstPer').reset();
      this.itemMasterForm.get('hsnSacCode').reset();
      this.taxCategoryListS=null;
      this.taxCategoryListP=null;
-    
+
    }
 
 
@@ -935,11 +935,11 @@ taxCategorySale:[],
       );
   }
   onEwInsNameSelected(customerId: any) {
-   
+
     console.log(customerId);
     let select = this.ewInsNameList.find(d => d.custName == customerId);
     console.log(select.customerId);
-    
+
     this.SearchonEwInsName(select.customerId);
   }
   SearchonEwInsName(customerId) {
@@ -980,7 +980,7 @@ taxCategorySale:[],
     delete val.lookupValueDesc2;
     delete val.lookupValueDesc3;
     delete val.lookupValueDesc5;
-   
+
     return val;
   }
   newItemMast(){
@@ -990,7 +990,7 @@ taxCategorySale:[],
     formValue.costing= this.costing;
     formValue.internalOrder= this.internalOrder;
     formValue.assetItem= this.assetItem;
-    formValue.purchasable= this.purchasable; 
+    formValue.purchasable= this.purchasable;
     formValue.isTaxable= this.isTaxable;
     // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
@@ -1047,14 +1047,14 @@ taxCategorySale:[],
       + this.itemMasterForm.get('segment5').value;
     // + this.itemMasterForm.get('segment6').value;
     //  + this.itemMasterForm.get('segment7').value + '.'
-    //  + this.itemMasterForm.get('segment8').value + '.' 
+    //  + this.itemMasterForm.get('segment8').value + '.'
     //  + this.itemMasterForm.get('segment9').value  ;
     // this.segmentName1 = segmentName
     // console.log(this.segmentName1);
     // alert(segmentName)
    this.itemMasterForm.patchValue({ segmentName: segmentName })
    this.itemMasterForm.patchValue({ poChargeAccount:this.itemMasterForm.get('segment4').value })
-    
+
     this.itemMasterForm.get('segment11').reset();
     this.itemMasterForm.get('segment2').reset();
     this.itemMasterForm.get('segment3').reset();
@@ -1099,7 +1099,7 @@ taxCategorySale:[],
       //       var patch = this.itemMasterForm.get('poLines') as FormArray;
       //       (patch.controls[i]).patchValue({ segmentName: ''})
       //       alert(this.segmentNameList.message);
-            
+
       //     }
       //   }
       // );

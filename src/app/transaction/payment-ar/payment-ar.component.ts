@@ -58,6 +58,7 @@ export class PaymentArComponent implements OnInit {
   accountNoSearch:any;
   getVehRegDetails:any;
   CustomerDetailsList:any;
+  CustomerSiteDetails:any;
 
   userList1: any[] = [];
   lastkeydown1: number = 0;
@@ -86,13 +87,31 @@ export class PaymentArComponent implements OnInit {
   receiptNumber:number;
   orderNumber:string;
   referenceNo:string = null;
-  custAccountNo :number;
+ 
   // customerId:number=8
   // custId:number;
+  customerId:number; 
+  dmsCustNo:number;
+  custName:string;
+  customerSiteId:number;
+  customerSiteAddress:string;
+  custCity:string;
+  custState:String;
+  custPincode:string;
+  CustomerGstNo:string
+  customerPanNo:string
+  custAccountNo:number;
+  custPhone:string;
+  customerType:string;
+  custTaxCategoryName:string;
+
+
+
+
   accountNo:number;
   vehRegNo : string;
   attribute1:string;
-  custName:string;
+ 
  
   // billToSiteId:number;
   custAddr:string;
@@ -171,10 +190,10 @@ export class PaymentArComponent implements OnInit {
   orgId:number;
 
   public emplId =6;
-  customerId:number;
+  // customerId:number;
   public billToSiteId=101;
   // public billToSiteId=107; 
-  customerSiteId:number;
+
   public applyTo='INVOICE'
   public applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   // applyTo: string;
@@ -219,8 +238,6 @@ export class PaymentArComponent implements OnInit {
 
       orderNumber:[],
       referenceNo:[],
-      custAccountNo :[],
-      customerId:[],
       custAddr:[],
       accountNo:[],
       vehRegNo:[],
@@ -232,11 +249,24 @@ export class PaymentArComponent implements OnInit {
       bankBranch : [],
       comments:[],
 
+      customerId:[],
+      dmsCustNo:[],
+      custName:[],
+      customerSiteId:[],
+      customerSiteAddress:[],
+      custCity:[],
+      custState:[],
+      custPincode:[],
+      CustomerGstNo:[],
+      customerPanNo:[],
+      custAccountNo:[],
+      custPhone:[],
+      customerType:[],
+      custTaxCategoryName:[],
+
       srlNo:[],
       refType:[],
-      custName:[],
       customerSite:[],
-      customerSiteId:[],
       mobileNo:[],
       searchBy:[],
       searchValue:[],
@@ -436,7 +466,7 @@ export class PaymentArComponent implements OnInit {
 
       serchByRegNo(mRegNo) {
 
-        // alert(mRegNo);
+        alert(mRegNo);
         this.service.getVehRegDetails(mRegNo)
         .subscribe(
           data => {
@@ -447,30 +477,84 @@ export class PaymentArComponent implements OnInit {
               
               customerId: this.getVehRegDetails.customerId,
            });
+
          alert("customer Id:"+this.customerId);
          this.enableCustAccount =false;
          this.GetCustomerDetails(this.customerId);
+         this.GetCustomerSiteDetails(this.customerId);
          
        
        } );
       }
 
-      GetCustomerDetails(mCustId :any){
-        // alert("Customer Id: "+mCustId);
-      this.service.ewInsSiteList(mCustId)
-      .subscribe(
-        data1 => {
-          this.CustomerDetailsList = data1;
-          console.log(this.CustomerDetailsList);
-          this.paymentArForm.patchValue({
-            custAccountNo:this.CustomerDetailsList.custAccountNo,
-            // custName: this.CustomerDetailsList.custName,
 
-        });
-        this.CustAccountNoSearch(this.custAccountNo)
-        }
-      );  
-    }
+
+    //   GetCustomerDetails(mCustId :any){
+    //     // alert("Customer Id: "+mCustId);
+    //   this.service.ewInsSiteList(mCustId)
+    //   .subscribe(
+    //     data1 => {
+    //       this.CustomerDetailsList = data1;
+    //       console.log(this.CustomerDetailsList);
+    //       this.paymentArForm.patchValue({
+    //         custAccountNo:this.CustomerDetailsList.custAccountNo,
+    //         // custName: this.CustomerDetailsList.custName,
+
+    //     });
+    //     this.CustAccountNoSearch(this.custAccountNo)
+    //     }
+    //   );  
+    // }
+
+    GetCustomerDetails(mCustId :any){
+      // alert("Customer Id: "+mCustId);
+    this.service.ewInsSiteList(mCustId)
+    .subscribe(
+      data1 => {
+        this.CustomerDetailsList = data1;
+        console.log(this.CustomerDetailsList);
+        this.paymentArForm.patchValue({
+          custAccountNo:this.CustomerDetailsList.custAccountNo,
+          custName: this.CustomerDetailsList.custName,
+      });
+      }); 
+  }
+
+
+    GetCustomerSiteDetails(mCustId :any){
+      // alert("Customer Id: "+mCustId);
+    this.service.GetCustomerSiteDetails(mCustId,this.ouId)
+    .subscribe(
+      data1 => {
+        this.CustomerSiteDetails = data1;
+
+        if (this.CustomerSiteDetails===null ) 
+           {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
+        else if (this.CustomerSiteDetails.taxCategoryName===null)
+           {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
+        else{
+          // this.dispCustButton=true;
+           console.log(this.CustomerSiteDetails);
+           this.paymentArForm.patchValue({
+            customerSiteId:this.CustomerSiteDetails.customerSiteId,
+            customerSiteAddress:this.CustomerSiteDetails.address1+","+
+                                this.CustomerSiteDetails.address2+","+
+                                this.CustomerSiteDetails.address3+","+
+                                this.CustomerSiteDetails.location,
+          custCity:this.CustomerSiteDetails.city,
+          custState:this.CustomerSiteDetails.state,                 
+          custPincode:this.CustomerSiteDetails.pinCd,                    
+          customerGstNo:this.CustomerSiteDetails.gstNo,
+          customerPanNo:this.CustomerSiteDetails.panNo,
+          custPhone:this.CustomerSiteDetails.mobile1,
+          customerType:this.CustomerSiteDetails.customerId.custType,
+          custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
+           
+      });
+
+      }  });  }
+
+
 
       onPayTypeSelected(payType : any  , rmStatus : any){
         // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
@@ -937,22 +1021,23 @@ export class PaymentArComponent implements OnInit {
             }
             else 
             {
-              
-                //  this.paymentArForm.patchValue(this.accountNoSearch.custName);
-                //  this.custName = this.accountNoSearch.custName;
-                 
+         
                  console.log(this.accountNoSearch);
                  this.paymentArForm.patchValue({
+                 customerId:this.accountNoSearch.customerId,
                  custName: this.accountNoSearch.custName,
                  custSiteAddress: this.accountNoSearch.billToAddress,
                  billToSiteId :this.accountNoSearch.billToLocId,
             });
+              this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
           }
         
           }
         );
         }
       }
+
+
 
       findSearchByValue(searchBy,searchValue){
         alert("Not Ready....");

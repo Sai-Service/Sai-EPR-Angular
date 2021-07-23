@@ -10,7 +10,10 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 
-interface IMcpEnrollment {   }
+interface IMcpEnrollment { 
+  regNo:string;
+  startKms:number;
+  }
 
 @Component({
   selector: 'app-mcp-enrollment',
@@ -33,6 +36,7 @@ export class McpEnrollmentComponent implements OnInit {
   getVehVinDetails:any;
   variantDetailsList:any;
   CustomerDetailsList:any;
+  CustomerSiteDetails:any;
 
       loginName:string;
         loginArray:string;
@@ -55,9 +59,23 @@ export class McpEnrollmentComponent implements OnInit {
         vehRegNo:string;
         vehicleId:string;
         custId:number;
-        custAccountNo:number;
-        dmsCustNo:number;
+       
+
+        customerId:number; 
         custName:string;
+        dmsCustNo:number;
+        customerSiteId:number;
+        customerSiteAddress:string;
+        custCity:string;
+        custState:String;
+        custPincode:string;
+        CustomerGstNo:string
+        customerPanNo:string
+        custAccountNo:number;
+        billToSiteId:number;
+        custPhone:string;
+        customerType:string;
+        custTaxCategoryName:string;
 
         vehicleItem:string;
         fuelType :string;
@@ -96,6 +114,7 @@ export class McpEnrollmentComponent implements OnInit {
         inactiveDate: Date;
         display = true;
         displayButton = true;
+        dispCustButton=false;
         //////////////////////////////////
   
 
@@ -129,17 +148,33 @@ export class McpEnrollmentComponent implements OnInit {
             kmReading:[],
             soldByEmpId:[],
             custId:[],
-            custAccountNo:[],
-            custName:[],
+           
 
             enqNo:[],
             enqDate:[],
             packageId:[],
             packageNumber:[],
+            packageDesc:[],
             mcpStartDate:[],
             mcpEndDate:[],
             uptoKm:[],
             uptoVehAge:[],
+
+            customerId:[],
+            customerSiteId:[],
+            custAccountNo:[],
+            dmsCustNo:['',Validators.required,  Validators.pattern('^[a-zA-Z0-9]')],
+            custName:[],
+            customerSiteAddress:[],
+            custCity:[],
+            custState:[],
+            custPincode:[],
+            CustomerGstNo:[],
+            customerPanNo:[],
+            billToSiteId:[],
+            custPhone:[],
+            customerType:[],
+            custTaxCategoryName:[],
             
 
             searchRegno:[],
@@ -258,6 +293,9 @@ export class McpEnrollmentComponent implements OnInit {
               data => {
                 this.getVehRegDetails = data;
                 console.log(this.getVehRegDetails);
+                if(this.getVehRegDetails !=null){
+                  this.dispCustButton=true;
+               
   
                 this.mcpEnrollmentForm.patchValue({
                   fuelType: this.getVehRegDetails.fuelType,
@@ -279,6 +317,7 @@ export class McpEnrollmentComponent implements OnInit {
          
              this.GetVariantDeatils(this.variant);
              this.GetCustomerDetails(this.custId);
+             this.GetCustomerSiteDetails(this.custId);
   
               var saleDate=new Date(this.deliveryDate);
               var mToday   = new Date(Date.now());
@@ -290,10 +329,15 @@ export class McpEnrollmentComponent implements OnInit {
           
                this.getDiffDays(saleDate,mToday);
             
-           }
-            );
-  
+           }else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.mcpEnrollmentForm.reset();}
           }
+            );
+          }
+
+
+        
+  
+          
 
           serchByVin(mVin) {
             alert(mVin);
@@ -334,6 +378,38 @@ export class McpEnrollmentComponent implements OnInit {
             );
   
           }
+
+          GetCustomerSiteDetails(mCustId :any){
+            // alert("Customer Id: "+mCustId);
+          this.service.GetCustomerSiteDetails(mCustId,this.ouId)
+          .subscribe(
+            data1 => {
+              this.CustomerSiteDetails = data1;
+    
+              if (this.CustomerSiteDetails===null ) 
+                 {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
+              else if (this.CustomerSiteDetails.taxCategoryName===null)
+                 {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
+              else{
+                 console.log(this.CustomerSiteDetails);
+                 this.mcpEnrollmentForm.patchValue({
+                customerSiteId:this.CustomerSiteDetails.customerSiteId,
+                customerSiteAddress:this.CustomerSiteDetails.address1+","+
+                                    this.CustomerSiteDetails.address2+","+
+                                    this.CustomerSiteDetails.address3+","+
+                                    this.CustomerSiteDetails.location,
+                custCity:this.CustomerSiteDetails.city,
+                custState:this.CustomerSiteDetails.state,                 
+                custPincode:this.CustomerSiteDetails.pinCd,                    
+                customerGstNo:this.CustomerSiteDetails.gstNo,
+                customerPanNo:this.CustomerSiteDetails.panNo,
+                custPhone:this.CustomerSiteDetails.mobile1,
+                customerType:this.CustomerSiteDetails.customerId.custType,
+                custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
+                  
+            });
+    
+            }  });  }
 
           GetVariantDeatils(modelVariant){
 

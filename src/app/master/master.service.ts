@@ -1466,7 +1466,7 @@ UpdateJaiTaxCategoryLineMasterById(JaiTaxCategoryLineMasterRecord) {
 //////////////////////////////
 regimNameList(regimeId): Observable<any>
 {
-  alert("Regime Id: "+regimeId);
+  // alert("Regime Id: "+regimeId);
   if ( regimeId>0 ) {
   return this.http.get(this.ServerUrl +`/jairegime/${regimeId}`);
   }
@@ -1835,7 +1835,7 @@ OrderCategoryList(): Observable<any> {
   ////////////////////////// ///////////////////////////////////////
 
   custAccountNoSearch(accountNo,ouId): Observable<any> {
-    alert("ms >>account no:"+accountNo+","+ouId);
+    // alert("ms >>account no:"+accountNo+","+ouId);
     // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
@@ -2029,7 +2029,9 @@ OrderCategoryList(): Observable<any> {
 
   getVehicleOrderDetails(mOrderNumber): Observable<any> {
     // alert("ms order number>>"+mOrderNumber);
-    return this.http.get(this.ServerUrl + `/orderHeader/EwOrder/${mOrderNumber}`);
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/Sales/${mOrderNumber}`);
+    // http://localhost:8081/SsMcpEnqMst/Sales/2111242168 
+
     }
 
 
@@ -2077,8 +2079,10 @@ EwClaimedCheck(mRegno): Observable<any> {
   ///////////////////////////// MCP /////////////////////////////////
 
   getMcpstatusVehcile(mRegno): Observable<any> {
-    alert("ms>>MCP status checking"+mRegno);
-    return this.http.get(this.ServerUrl + `/McpRegCheck/${mRegno}`);
+    // alert("ms>>MCP status checking"+mRegno);
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpRegCheck/${mRegno}`);
+
+    // http://localhost:8081/SsMcpEnqMst/McpRegCheck/MH12EM6011
   }
 
 
@@ -2115,9 +2119,10 @@ getMcpPackageSearchNew1(mPkgType,mFuelType): Observable<any>
 
 }
 
-getMcpPackageSearchNew2(mPkgNo,mFuelType): Observable<any>
+getMcpPackageSearchNew2(mPkgNo,mFuelType,mOuId): Observable<any>
 {
-   return this.http.get(this.ServerUrl + `/PackageMst/PkgNoAndFuelType?packageNumber=${mPkgNo}&fuelType=${mFuelType}`);
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgNoFuelOuId?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}`);
+  //  http://localhost:8081//PackageMst/PkgNoFuelOuId?packageNumber=PKG00018&fuelType=Petrol&ouId=81
  }
 
 getMcpPackageSearchByPkgId(mPkgId): Observable<any> 
@@ -2127,7 +2132,7 @@ getMcpPackageSearchByPkgId(mPkgId): Observable<any>
 
 getMcpPackagePriceDetails(mPkgNo,mFuelType,mPtype,mOuId,mVariant,mCustSite,mLocId): Observable<any> 
 {
-  alert(mPkgNo +","+mFuelType+","+mPtype+","+mOuId+","+mVariant+","+mCustSite+","+mLocId);
+  // alert(mPkgNo +","+mFuelType+","+mPtype+","+mOuId+","+mVariant+","+mCustSite+","+mLocId);
    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpPrcDetails?packageNumber=${mPkgNo}&fuelType=${mFuelType}&packageType=${mPtype}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId} `);
  }
 
@@ -2154,19 +2159,40 @@ public McpPackageMasterSubmit(McpPkgMasterRecord) {
 //   return this.http.put(url, PriceListMasterRecord, options);
 // }
 
-UpdateMcpPackageMaster(McpPkgMasterRecord,mcpPkgId) {
+UpdateMcpPackageMaster(McpPkgMasterRecord) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/PackageMst/${mcpPkgId}`);
+  // const url = (this.ServerUrl + `/PackageMst/${mcpPkgId}`);
+  const url = (this.ServerUrl + `/PackageMst`);
   return this.http.put(url, McpPkgMasterRecord, options);
 }
 
 
-mcpSchemeList(mRegNo): Observable<any> {
+mcpSchemeList(mRegNo,mKms): Observable<any> {
   // http://localhost:8081/SsMcpEnqMst/validPkgDtls?regNo=MH12EM6011
-   return this.http.get(this.ServerUrl +`/SsMcpEnqMst/validPkgDtls?regNo=${mRegNo}`);
+   return this.http.get(this.ServerUrl +`/SsMcpEnqMst/validPkgDtls?regNo=${mRegNo}&currKms=${mKms}`);
  } 
+
+ public McpEnquiryMasterSubmit(McpEnquiryMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/SsMcpEnqMst';
+  return this.http.post(url, McpEnquiryMasterRecord, options);
+}
+
+
+
+
+
+getsearchByEnqNo(mEnqNo): Observable<any> {
+  // alert("ms>>MCP Enq No"+mEnqNo);
+  return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqNo/${mEnqNo}`);
+
+  // http://localhost:8081/SsMcpEnqMst/enqNo/ENQ201-17851
+ 
+}
 
 
 //////////////////////VARIANT MASTER////////////////////////////

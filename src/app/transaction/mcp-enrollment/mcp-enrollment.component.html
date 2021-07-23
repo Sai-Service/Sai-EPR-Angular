@@ -113,20 +113,20 @@
                                    
                             </tr>
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Item:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
             
                                 <td>
                                     <input disabled  type="text"  formControlName="vehicleItem"  id="vehicleItem" [(ngModel)]="vehicleItem" class="form-control" >
                                 </td>
                                 
         
-                            <td style="width: 15%" class="LabelFontStyle">Model&nbsp;Variant:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Variant:&nbsp;</td>
         
                             <td>
                                 <input disabled  type="text"  formControlName="variant"  id="variant" [(ngModel)]="variant" class="form-control" >
                             </td>
         
-                            <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
         
                             <td>
                                 <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
@@ -156,49 +156,57 @@
                             <td>
                                 <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
                             </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">Curr.&nbsp;Mileage:&nbsp;</td>
+            
+                            <td>
+                                <input   type="text"  formControlName="kmReading"  id="kmReading" [(ngModel)]="kmReading" class="form-control">
+                            </td>
         
-                            <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
         
                             
                             <td>
                                 <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
-                            </td>
+                            </td> -->
                             
         
                             </tr>
         
                             <tr>
         
-                           
-                                <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
-            
-                                <td>
-                                    <input   type="text"  formControlName="kmReading"  id="kmReading" [(ngModel)]="kmReading" class="form-control">
-                                </td>
-        
-                                <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
-        
-                                <td>
-                                    <select type="text" class="form-control" formControlName="soldByEmpId">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
-                                    {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
-                                    </option>
-                                    </select>
-                                </td>
-        
-                                <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+                                <!-- <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
         
                                 <td>
                                     <input   type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" >
-                                </td>
+                                </td> -->
         
                             
-                            <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
         
                             <td>
                                 <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
                             </td>
+
+                            <div *ngIf="dispCustButton; then thenBlockC; else elseBlockC"></div>
+                              <ng-template #thenBlockC>
+  
+                              <td>
+                                  <button type="button"  class="btn btn-primary" 
+                                  data-toggle="modal" data-target="#exampleModal20"   style="width: 9rem;color: black;">
+                                  &nbsp;View&nbsp;Customer&nbsp;Details</button>
+                                  <!-- (click)="showPkgDetails()" -->
+                             </td>
+                              </ng-template>
+                              <ng-template #elseBlockC>
+  
+                                  <td>
+                                      <button disabled type="button"  class="btn btn-primary" 
+                                      data-toggle="modal" data-target="#exampleModal20"   style="width: 9rem;color: black;">
+                                      &nbsp;View&nbsp;Customer&nbsp;Details</button>
+                                      <!-- (click)="showPkgDetails()" -->
+                                 </td>
+                              </ng-template>
     
     
     
@@ -236,14 +244,14 @@
                                             <td style="text-align: right;">{{k+1}}</td>
                                             <td><input  type="radio"  style="text-align: center;width: 2em;"  formControlName="applyrcptFlag" ></td>
                                             <!-- (change)="applyReceiptFlag($event,k)" -->
-                                            <td><input style="width: 100px;height: 25px;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder=""  > </td>
-                                            <td><input style="width: 100px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
-                                            <td><input style="width: 100px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>    
-                                            <td><input style="width: 100px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
-                                            <td><input style="width: 100px;height: 25px;text-align: right;"  disabled   type="text" formControlName="balance1" class="form-control" placeholder="" ></td>  
+                                            <td><input style="width: 125px;height: 25px;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder=""  > </td>
+                                            <td><input style="width: 125px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
+                                            <td><input style="width: 160px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>    
+                                            <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
+                                            <td><input style="width: 120px;height: 25px;text-align: right;"  disabled   type="text" formControlName="balance1" class="form-control" placeholder="" ></td>  
                                         </tr>
                                         </ng-container>
                                         </ng-container>
@@ -257,63 +265,79 @@
                                 <table class="center">
                                     
                                    <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">Enrollment&nbsp;No:&nbsp;</td>
-                                    
-                                    <td>
-                                        <input  disabled type="text"  formControlName="enqNo"  id="enqNo" [(ngModel)]="enqNo" class="form-control" >
-                                    </td>
-    
-                                    <td style="width: 15%" class="LabelFontStyle">Enrollment&nbsp;Date:&nbsp;</td>
-                                    
-                                    <td>
-                                        <input  disabled type="text"  formControlName="enqDate"  id="enqDate" [(ngModel)]="enqDate" class="form-control" >
-                                    </td>
-                                   </tr>
+                                        <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;No:&nbsp;</td>
+                                        
+                                        <td>
+                                            <input  disabled type="text"  formControlName="enqNo"  id="enqNo" [(ngModel)]="enqNo" class="form-control" >
+                                        </td>
+        
+                                        <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;Date:&nbsp;</td>
+                                        
+                                        <td>
+                                            <input  disabled type="text"  formControlName="enqDate"  id="enqDate" [(ngModel)]="enqDate" class="form-control" >
+                                        </td>
+
+                                        <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+            
+                                        <td>
+                                            <select type="text" class="form-control" formControlName="soldByEmpId">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
+                                            {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
+                                            </option>
+                                            </select>
+                                        </td>
+
+                                            <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;No:&nbsp;</td>
+                                            
+                                            <td>
+                                                <input disabled  type="text"  formControlName="packageId"  id="packageId" [(ngModel)]="packageId" class="form-control" >
+                                            </td>
+                                    </tr>
                                    
+                                 
                                     <tr>
-                                         <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;No:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Period:&nbsp;</td>
                                     
                                         <td>
-                                            <input   type="text"  formControlName="packageId"  id="packageId" [(ngModel)]="packageId" class="form-control" >
+                                            <input  disabled type="text"  formControlName="uptoVehAge"  id="uptoVehAge" [(ngModel)]="uptoVehAge" class="form-control" >
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Kms:&nbsp;</td>
+                                    
+                                        <td>
+                                            <input disabled  type="text"  formControlName="uptoKm"  id="uptoKm" [(ngModel)]="uptoKm" class="form-control" >
                                         </td>
     
-                                        <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;Description:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle1">Start&nbsp;Date:&nbsp;</td>
                                     
                                         <td>
-                                            <input disabled style="width: 260%;" type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
+                                            <input  disabled type="text"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" >
                                         </td>
-                                        <td></td> <td></td>
+                                        <td style="width: 15%" class="LabelFontStyle1">End&nbsp;Date:&nbsp;</td>
+                                    
+                                        <td>
+                                            <input disabled  type="text"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" >
+                                        </td>
+    
+    
+                                    </tr>
+
+                                    <tr>
+                                        
+    
+                                        <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;Name:&nbsp;</td>
+                                    
+                                        <td>
+                                            <input disabled style="width: 440%;" type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
+                                        </td>
+
+                                        <td></td> <td></td><td></td> <td></td> <td></td> 
     
                                         <td>
                                             <button style="width: 10em;" type="button" class="btn btn-info" (click)="showPkgDetails()">Show Details</button>
                                         </td>
     
                                        
-    
-                                    </tr>
-                                        <tr>
-                                        <td style="width: 15%" class="LabelFontStyle1">Vehicle&nbsp;Age:&nbsp;</td>
-                                    
-                                        <td>
-                                            <input   type="text"  formControlName="uptoVehAge"  id="uptoVehAge" [(ngModel)]="uptoVehAge" class="form-control" >
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle1">Mileage&nbsp;Upto:&nbsp;</td>
-                                    
-                                        <td>
-                                            <input   type="text"  formControlName="uptoKm"  id="uptoKm" [(ngModel)]="uptoKm" class="form-control" >
-                                        </td>
-    
-                                        <td style="width: 15%" class="LabelFontStyle1">Start&nbsp;Date:&nbsp;</td>
-                                    
-                                        <td>
-                                            <input   type="text"  formControlName="mcpStartDate"  id="mcpStartDate" [(ngModel)]="mcpStartDate" class="form-control" >
-                                        </td>
-                                        <td style="width: 15%" class="LabelFontStyle1">End&nbsp;Date:&nbsp;</td>
-                                    
-                                        <td>
-                                            <input   type="text"  formControlName="mcpEndDate"  id="mcpEndDate" [(ngModel)]="mcpEndDate" class="form-control" >
-                                        </td>
-    
     
                                     </tr>
                                       
@@ -326,6 +350,127 @@
 
                         <fieldset class="RFS">
                             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">CUSTOMER(BILL TO) DETAILS</legend>
+
+                              <!-- -----------------------------CUSTOMER MODAL FORM STARTS HERE--------------------- -->
+  
+                             <div class="modal fade" id="exampleModal20" tabindex="-1" role="dialog" aria-labelledby="exampleModal20Label" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document" style="max-width: fit-content;">
+                                  <div class="modal-content">
+                                   <div class="modal-header">
+  
+  
+                                    <h6 class="modal-title" id="exampleModal20Label">Customer&nbsp;Name:&nbsp;{{this.custName}}</h6>
+                                    
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                   </div>
+                                  
+                                   <div class="modal-body">
+                                      <table class="center" style="width: 100%;">
+                                          <tr>
+  
+                                              <fieldset class="RFS">
+                                                  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">CUSTOMER DETAILS</legend>
+                                              <table class="center">
+                                              <tr>
+  
+                                                  <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
+  
+                                                  <td>
+                                                      <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
+                                                  </td>
+                                                  <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Account&nbsp;No:&nbsp;</td>
+                                                  
+                                                  <td>
+                                                      <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
+                                                  </td>
+  
+                                                  <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+                          
+                                                  <td>
+                                                      <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" >
+                                                  </td>
+                                                 
+                                               
+                                                  </tr>
+                                                 
+                                             
+                                              <tr>
+                          
+                                              
+                                              <td style="width: 15%" class="LabelFontStyle">GST&nbsp;No:&nbsp;</td>
+                          
+                                              <td>
+                                                  <input disabled    type="text"  formControlName="CustomerGstNo"  id="CustomerGstNo" [(ngModel)]="CustomerGstNo" class="form-control" >
+                                              </td>
+                                              
+                                              <td style="width: 15%" class="LabelFontStyle">PAN&nbsp;:&nbsp;</td>
+                          
+                                              <td>
+                                                  <input disabled    type="text"  formControlName="customerPanNo"  id="customerPanNo" [(ngModel)]="customerPanNo" class="form-control" >
+                                              </td>
+  
+                                              <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+                          
+                                              <td>
+                                                  <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              
+                                                  <td style="width: 15%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
+                                  
+                                                  <td>
+                                                      <input disabled   type="text"  formControlName="custPhone"  id="custPhone" [(ngModel)]="custPhone" class="form-control" >
+                                                  </td>
+                                      
+                                              </tr>
+                                         
+                                              <tr>
+                          
+                                                  <td style="width: 5%" class="LabelFontStyle">Site&nbsp;Address:&nbsp;</td>
+                              
+                                                  <td>
+                                                      <input disabled  style="width: 450%"  type="text"  formControlName="customerSiteAddress"  id="customerSiteAddress" [(ngModel)]="customerSiteAddress" class="form-control" >
+                                                  </td>
+                                             </tr>
+                                             <tr>
+                        
+                                                <td style="width: 5%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+                            
+                                                <td>
+                                                    <input disabled    type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" >
+                                                </td>
+                                                <td style="width: 5%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                            
+                                                <td>
+                                                    <input disabled    type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" >
+                                                </td>
+                                                <td style="width: 5%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+                            
+                                                <td>
+                                                    <input disabled    type="text"  formControlName="custPincode"  id="custPincode" [(ngModel)]="custPincode" class="form-control" >
+                                                </td>
+
+                                            </tr>
+                          
+                                              </table>
+                                              </fieldset>
+  
+                                              <div class="modal-footer">
+                                                 <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                              </div>
+  
+                                          </tr>
+                                      </table>
+                                   </div>
+                                  </div>
+                              </div>
+                             </div>
+  
+                              <!-- -----------------------------CUSTOMER MODAL FORM ENDS HERE--------------------- -->
+  
                         </fieldset>
 
 

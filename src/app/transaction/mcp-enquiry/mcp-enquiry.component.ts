@@ -10,7 +10,16 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 
-interface IMcpEnquiry {   }
+interface IMcpEnquiry { 
+  regNo:string;
+  startKms:number;
+  pkgEnquired:string;
+  executive:number;
+  customerId:number;
+  customerSiteId:number;
+  sourceDesc:string;
+  orderNumber:number;
+  }
 
 @Component({
   selector: 'app-mcp-enquiry',
@@ -35,11 +44,15 @@ export class McpEnquiryComponent implements OnInit {
   variantDetailsList:any;
   CustomerDetailsList:any;
   getLastRunKmsVeh:any;
-  getPkgDetails:any;
+  getPkgDetails:any[];
   getPkgPriceDetails:any;
   getPkgLineDetails:any
   CustomerSiteDetails:any;
   mcpStatusDetails:any;
+  vehicleSaleOrderDetails:any;
+  lstMcplines: any;
+  vehicleItemDetails:any;
+  getVehRegDetails_fnd:any;
 
 
         loginName:string;
@@ -60,22 +73,24 @@ export class McpEnquiryComponent implements OnInit {
      
         vehicleAgeDays:number;
      
-      
-        vehRegNo:string;
+        
+        sourceDesc:string='SERVICE'
+        regNo:string;itemId :number;
         vehicleId:string;
-       
+        orderNumber:number=2111242168;
 
         vehicleItem:string;
         fuelType :string;
-        variant:string ;
-        variantDesc:string;
+        variantCode:string ;
+        mainModel:string;
         chassisNo:string;
         engineNo:string;
+        colorCode:string;
         serviceModel:string;
         deliveryDate:string;
         dealerCode:string;
-        kmReading:number;
-        soldByEmpId : string;
+        startKms:number;
+        executive : number;
         lastRunKms:number;
        
         ///////////////////////////////
@@ -87,29 +102,29 @@ export class McpEnquiryComponent implements OnInit {
         // enqDate:Date;
 
         now = Date.now();
-        enqDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+        enqDate = this.pipe.transform(this.now, 'y-MM-dd');
+        startDate = this.pipe.transform(this.now, 'y-MM-dd');
+        endDate:string;
 
         packageId:number;
-        packageNumber:string;
+        // packageNumber:string;
+        pkgEnquired:string;
         packageType:string;
         packageDesc:string;
         // mcpStartDate:Date;
-        mcpStartDate = this.pipe.transform(this.now, 'y-MM-dd');
-        mcpEndDate:Date;
-        uptoKm:number;
-        uptoVehAge:number;
-        
-
-        packageAmt:number;
+       
+        validKms:number;
+        validMonths:number;
+     
         matAmt:number;
         matDiscAmt:number;
-        matGstAmt:number;
+        matTaxAmt:number;
         matNetAmt:number;
         matCessAmt:number;
 
         labAmt:number;
         labDiscAmt:number;
-        labGstAmt:number;
+        labTaxAmt:number;
         labNetAmt:number;
         labCessAmt:number;
 
@@ -119,13 +134,21 @@ export class McpEnquiryComponent implements OnInit {
         consNetAmt:number;
         consCessAmt:number;
 
+        totBaseAmt:number;
+        discAmt:number;
+        totTaxAmt:number;
+        totCessAmt:number;
+        packageAmt:number;
 
-        custId:number; 
-        dmsCustNo:number;
+        customerId:number; 
         custName:string;
+        dmsCustNo:number;
         customerSiteId:number;
         customerSiteAddress:string;
-        CustomerGstNo:string
+        custCity:string;
+        custState:String;
+        custPincode:string;
+        customerGstNo:string
         customerPanNo:string
         custAccountNo:number;
         billToSiteId:number;
@@ -142,6 +165,12 @@ export class McpEnquiryComponent implements OnInit {
           displayButton = true;
           showDetailsButton=false;
           isMcpActive=false;
+          dispCustButton=false;
+          showOrderInputLine=false;
+          addFlag=true;
+          headerValidation=false;
+          lineValidation=false;
+    
           //////////////////////////////////
   
 
@@ -162,46 +191,55 @@ export class McpEnquiryComponent implements OnInit {
             emplId:[''],
             orgId:[''],
 
-            vehRegNo:[],
+            regNo:[],
+            itemId:[],
             vehicleId:[],
+            orderNumber:[],
+
         
       
-           
+            sourceDesc:[],
             vehicleItem:[],
             fuelType :[],
-            variant:[],
-            variantDesc:[],
+            variantCode:[],
+            mainModel:[],
             chassisNo:[],
             engineNo:[],
+            colorCode:[],
             serviceModel:[],
             deliveryDate:[],
             dealerCode:[],
-            kmReading:[],
-            soldByEmpId:[],
+            startKms:[],
+            executive:[],
            
             enqNo:[],
             enqDate:[],
             packageId:[],
-            packageNumber:[],
+            pkgEnquired:[],
             packageDesc:[],
             packageType:[],
-            mcpStartDate:[],
-            mcpEndDate:[],
-            uptoKm:[],
-            uptoVehAge:[],
+            startDate:[],
+            endDate:[],
+            validKms:[],
+            validMonths:[],
 
             packageAmt:[],
+            totBaseAmt:[],
+            discAmt:[],
+            totTaxAmt:[],
+            totCessAmt:[],
+
             lastRunKms:[],
           
             matAmt:[],
             matDiscAmt:[],
-            matGstAmt:[],
+            matTaxAmt:[],
             matCessAmt:[],
             matNetAmt:[],
 
             labAmt:[],
             labDiscAmt:[],
-            labGstAmt:[],
+            labTaxAmt:[],
             labNetAmt:[],
             labCessAmt:[],
 
@@ -215,20 +253,23 @@ export class McpEnquiryComponent implements OnInit {
             searchEnqNo:[],
             searchEnqDate:[],
 
-            custId:[],
+            customerId:[],
             customerSiteId:[],
             custAccountNo:[],
             dmsCustNo:['',Validators.required,  Validators.pattern('^[a-zA-Z0-9]')],
             custName:[],
             customerSiteAddress:[],
-            CustomerGstNo:[],
+            custCity:[],
+            custState:[],
+            custPincode:[],
+            customerGstNo:[],
             customerPanNo:[],
             billToSiteId:[],
             custPhone:[],
             customerType:[],
             custTaxCategoryName:[],
 
-            invLine: this.fb.array([this.invLineDetails()]),
+            enqDtls: this.fb.array([this.invLineDetails()]),
 
 
           });
@@ -237,25 +278,27 @@ export class McpEnquiryComponent implements OnInit {
         invLineDetails() {
           return this.fb.group({
             // selectAllflag: [],
+         
           itemNumber: [],
           itemDesc: [],
+          itemId: [],  
           itemType: [],
           erpCode: [],
           quantity:[],
-          priceValue:[],
           pkgQuantity: [],
           erpQuantity: [],
-          basicAmount:[],
-          discount:[],
-          disAmount:[],
-          gstAmount:[],
-          netAmount:[],
-  
+          rate:[],
+          basicAmt:[],
+          discPer:[],
+          disAmt:[],
+          netAmt:[],
+          gstAmt:[],
+      
         })
       }
   
       invLineArray(): FormArray {
-        return <FormArray>this.mcpEnquiryForm.get('invLine')
+        return <FormArray>this.mcpEnquiryForm.get('enqDtls')
       }
 
           ngOnInit(): void 
@@ -300,9 +343,122 @@ export class McpEnquiryComponent implements OnInit {
 
           }
 
-          SearchByMcpEnqNo(mEnqNo){
-            alert("Search by Enquiry no........WIP " +mEnqNo);
+            onSourceSelected(mSource:any) {
+          if (mSource !=null){
+          if (mSource==='SALES'){
+            this.showOrderInputLine=true;  
+           }
+          else { 
+            this.showOrderInputLine=false;
+         
+           }
+           
+           if(this.displayButton) {
+            this.resetSection1();
+            this.resetSection2();
+            this.resetSection3();
           }
+        
+         
+        }
+      }
+
+       resetSection1() {
+            this.regNo=null;
+            this.vehicleId =null;
+            this.orderNumber=null;
+            this.vehicleItem=null;
+            this.variantCode=null;
+            this.mainModel=null;
+            this.fuelType=null;
+            this.chassisNo=null;
+            this.engineNo=null;
+            this.deliveryDate =null;
+            this.orderNumber=null;
+            this.dealerCode=null;
+            this.serviceModel=null;
+            this.lastRunKms=null;
+            this.custAccountNo=null;
+            this.custName=null;
+            this.custPhone=null;
+            this.customerSiteAddress =null;
+            this.custCity=null;
+            this.custState=null;
+            this.custPincode=null;
+            this.customerGstNo=null;
+            this.customerPanNo=null;
+            this.customerType=null;
+            this.startKms=null;
+       
+            }
+
+            resetSection2() {
+              this.enqNo=null;
+              this.enqDate=null;
+              this.executive=null
+              this.pkgEnquired=null;
+              this.mcpPackageList=null
+              this.packageDesc=null;
+              this.packageType=null;
+              this.validKms=null;
+              this.validMonths=null;
+              // this.startDate=null;
+              this.endDate=null;
+             }
+
+             resetSection3() {
+              this.matAmt=null;
+              this.matDiscAmt=null;
+              this.matTaxAmt=null;
+              this.matNetAmt=null;
+              this.matCessAmt=null;
+              this.labAmt=null;
+              this.labDiscAmt=null;
+              this.labTaxAmt=null;
+              this.labNetAmt=null;
+              this.labCessAmt=null;
+              this.consAmt=null;
+              this.consDiscAmt=null;
+              this.consGstAmt=null;
+              this.consNetAmt=null;
+              this.consCessAmt=null;
+              this.totBaseAmt=null;
+              this.discAmt=null;
+              this.totTaxAmt=null;
+              this.totCessAmt=null;
+              this.packageAmt=null;
+            
+             }
+           
+            
+        
+
+            GetVehicleRegInfomation(mRegNo){
+              // alert("REGNO:"+mRegNo)
+              this.service.getVehRegDetails(mRegNo)
+      
+                .subscribe(
+                  data => {
+                    this.vehicleItemDetails = data;
+                    console.log(this.vehicleItemDetails);
+                    this.mcpEnquiryForm.patchValue({
+                      vehicleId: this.vehicleItemDetails.vin,
+                      variantItemId: this.vehicleItemDetails.itemId.itemId,
+                      deliveryDate : this.vehicleItemDetails.vehicleDelvDate,
+                      vehicleItem: this.vehicleItemDetails.itemId.segment,
+                      dealerCode: this.vehicleItemDetails.dealerCode,
+                      // itemDesc: this.VehicleRegDetails.itemId.segment,
+              });
+          
+                //  this.GetItemDeatils1(this.variantItemId);
+             
+              
+                  }
+                   );
+              }
+
+          
+
 
           getUserIdsFirstWayVin($event) {
             let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
@@ -336,6 +492,58 @@ export class McpEnquiryComponent implements OnInit {
             }
             return matches;
           };
+
+          GetOrderDetails(mOrderNumber:any) {
+          // alert("order details...."+ mOrderNumber);
+
+          this.service.getVehicleOrderDetails(mOrderNumber)
+          .subscribe(
+            data => {
+              this.vehicleSaleOrderDetails = data;
+              console.log(this.vehicleSaleOrderDetails);
+              
+
+              if (this.vehicleSaleOrderDetails===null) 
+              {
+                alert("Order Number : [" + mOrderNumber+ "]  Not Found/doesnot Exist....")
+                this.resetSection1();
+                this.resetSection2();
+                this.resetSection3();
+                this.showDetailsButton=false;
+                return;
+              } 
+
+              this.mcpEnquiryForm.patchValue({
+                regNo: this.vehicleSaleOrderDetails.regNo,
+                vehicleId: this.vehicleSaleOrderDetails.vin,
+                mainModel: this.vehicleSaleOrderDetails.mainModel,
+                variantCode: this.vehicleSaleOrderDetails.variantCode,
+                fuelType: this.vehicleSaleOrderDetails.fuelType,
+                chassisNo: this.vehicleSaleOrderDetails.chassisNo,
+                engineNo: this.vehicleSaleOrderDetails.engineNo,
+                dealerCode: this.vehicleSaleOrderDetails.dealerCode,
+                colorCode: this.vehicleSaleOrderDetails.colorCode,
+                deliveryDate: this.vehicleSaleOrderDetails.vehicleDelvDate,
+                vehicleItem: this.vehicleSaleOrderDetails.itemId.segment,
+                customerId: this.vehicleSaleOrderDetails.customerId,
+                
+           });
+
+             this.getMcpStatus(this.regNo);
+             this.GetVariantDeatils(this.variantCode);
+             this.GetCustomerDetails(this.customerId);
+            
+            //  this.GetLastRunKmsSearch(mRegNo)
+
+               if(this.isMcpActive ==false) {
+                this.GetCustomerSiteDetails(this.customerId);
+                // this.CustAccountNoSearchSite(this.custAccountNo);
+                var saleDate=new Date(this.deliveryDate);
+                var mToday   = new Date(Date.now());
+                this.getDiffDays(saleDate,mToday);
+              }
+          } ); }
+
           
 
 
@@ -346,37 +554,43 @@ export class McpEnquiryComponent implements OnInit {
             .subscribe(
               data => {
                 this.getVehRegDetails = data;
+
+                // alert(this.getVehRegDetails);
+
+                if(this.getVehRegDetails !=null){
+                  this.dispCustButton=true;
                 console.log(this.getVehRegDetails);
   
-                this.mcpEnquiryForm.patchValue({
+                  this.mcpEnquiryForm.patchValue({
                   fuelType: this.getVehRegDetails.fuelType,
-                  variant: this.getVehRegDetails.variantCode,
-                  variantDesc: this.getVehRegDetails.mainModel,
+                  variantCode: this.getVehRegDetails.variantCode,
+                  mainModel: this.getVehRegDetails.mainModel,
                   chassisNo: this.getVehRegDetails.chassisNo,
                   engineNo: this.getVehRegDetails.engineNo,
+                  colorCode: this.getVehRegDetails.colorCode,
                   deliveryDate: this.getVehRegDetails.vehicleDelvDate,
                   dealerCode: this.getVehRegDetails.dealerCode,
                   vehicleId: this.getVehRegDetails.vin,
-                  variantItemId: this.getVehRegDetails.itemId.itemId,
+                  itemId : this.getVehRegDetails.itemId.itemId,
                   vehicleItem: this.getVehRegDetails.itemId.segment,
-                  custId: this.getVehRegDetails.customerId,
+                  customerId: this.getVehRegDetails.customerId,
                   // ewStatus:this.getVehRegDetails.ewStatus,
      
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
       
              this.getMcpStatus(mRegNo);
-             this.GetVariantDeatils(this.variant);
-             this.GetCustomerDetails(this.custId);
+             this.GetVariantDeatils(this.variantCode);
+             this.GetCustomerDetails(this.customerId);
   
               var saleDate=new Date(this.deliveryDate);
               var mToday   = new Date(Date.now());
   
-               this.LoadPackage(mRegNo)
+             
                this.GetLastRunKmsSearch(mRegNo)
 
                if(this.isMcpActive ==false) {
-                this.GetCustomerSiteDetails(this.custId);
+                this.GetCustomerSiteDetails(this.customerId);
                 // this.CustAccountNoSearchSite(this.custAccountNo);
                 var saleDate=new Date(this.deliveryDate);
                 var mToday   = new Date(Date.now());
@@ -384,10 +598,17 @@ export class McpEnquiryComponent implements OnInit {
   
               } 
             
-           }
-            );
-  
+            } else { alert("Vehicle Regno. Not Found...."); 
+                this.dispCustButton=false; this.showDetailsButton=false;
+                this.resetSection1(); this.resetSection2();this.resetSection3();return;}
+            } ); 
           }
+
+          
+              
+         
+       
+          
 
           serchByVin(mVin) {
             alert(mVin);
@@ -399,22 +620,22 @@ export class McpEnquiryComponent implements OnInit {
   
                 this.mcpEnquiryForm.patchValue({
                   fuelType: this.getVehVinDetails.fuelType,
-                  variant: this.getVehVinDetails.variantCode,
-                  variantDesc: this.getVehVinDetails.mainModel,
+                  variantCode: this.getVehVinDetails.variantCode,
+                  mainModel: this.getVehVinDetails.mainModel,
                   chassisNo: this.getVehVinDetails.chassisNo,
                   engineNo: this.getVehVinDetails.engineNo,
                   deliveryDate: this.getVehVinDetails.vehicleDelvDate,
                   dealerCode: this.getVehVinDetails.dealerCode,
-                  vehRegNo: this.getVehVinDetails.regNo,
+                  regNo: this.getVehVinDetails.regNo,
                   itemDesc: this.getVehVinDetails.itemId.segment,
-                  variantItemId: this.getVehVinDetails.itemId.itemId,
-                  custId: this.getVehVinDetails.customerId,
+                  itemId: this.getVehVinDetails.itemId.itemId,
+                  customerId: this.getVehVinDetails.customerId,
                   ewStatus:this.getVehVinDetails.ewStatus,
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
              alert(this.deliveryDate);
-             this.GetVariantDeatils(this.variant);
-             this.GetCustomerDetails(this.custId);
+             this.GetVariantDeatils(this.variantCode);
+             this.GetCustomerDetails(this.customerId);
   
               var saleDate=new Date(this.deliveryDate);
               var mToday   = new Date(Date.now());
@@ -431,14 +652,17 @@ export class McpEnquiryComponent implements OnInit {
           
           getMcpStatus(mRegNo:any) {
             // alert (" ew status Reg No.....:"+mRegNo);
+            // if(this.sourceDesc==='SERVICE') {
              this.service.getMcpstatusVehcile(mRegNo)
             .subscribe(
               data => {
                 this.mcpStatusDetails = data
                 alert("this.mcpStatusDetails :"+this.mcpStatusDetails);
-                if (this.mcpStatusDetails===null) 
+                if (this.mcpStatusDetails===false) 
                 {
                   this.isMcpActive=false; 
+                  alert("MCP is Not Active for the Vehicle : "+mRegNo );
+
                 } 
                 else
                 {
@@ -466,7 +690,9 @@ export class McpEnquiryComponent implements OnInit {
               
               } 
      
-          }); }
+          });}
+        //  }
+
           GetVariantDeatils(modelVariant){
 
             this.service.variantDetailsList(modelVariant)
@@ -507,17 +733,18 @@ export class McpEnquiryComponent implements OnInit {
             else if (this.CustomerSiteDetails.taxCategoryName===null)
                {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
             else{
+              this.dispCustButton=true;
                console.log(this.CustomerSiteDetails);
                this.mcpEnquiryForm.patchValue({
                 customerSiteId:this.CustomerSiteDetails.customerSiteId,
                 customerSiteAddress:this.CustomerSiteDetails.address1+","+
                                     this.CustomerSiteDetails.address2+","+
                                     this.CustomerSiteDetails.address3+","+
-                                    this.CustomerSiteDetails.location+","+
-                                    this.CustomerSiteDetails.city+","+
-                                    this.CustomerSiteDetails.state+"-"+
-                                    this.CustomerSiteDetails.pinCd,
-              CustomerGstNo:this.CustomerSiteDetails.gstNo,
+                                    this.CustomerSiteDetails.location,
+              custCity:this.CustomerSiteDetails.city,
+              custState:this.CustomerSiteDetails.state,                 
+              custPincode:this.CustomerSiteDetails.pinCd,                    
+              customerGstNo:this.CustomerSiteDetails.gstNo,
               customerPanNo:this.CustomerSiteDetails.panNo,
               custPhone:this.CustomerSiteDetails.mobile1,
               customerType:this.CustomerSiteDetails.customerId.custType,
@@ -546,9 +773,9 @@ export class McpEnquiryComponent implements OnInit {
         this.vehicleAgeDays=mDays3;
       }
 
-      LoadPackage(mRegNo){
+      LoadPackage(mRegNo,mKms){
         // alert(mVariant+","+mAging+","+mKmsCurr);
-          this.service.mcpSchemeList(mRegNo)
+          this.service.mcpSchemeList(mRegNo,mKms)
           .subscribe(
             data1 => {
               this.mcpPackageList = data1;
@@ -557,6 +784,7 @@ export class McpEnquiryComponent implements OnInit {
             }
           );  
       }
+
 
       GetLastRunKmsSearch(mRegNo){
         var z=0;
@@ -577,46 +805,67 @@ export class McpEnquiryComponent implements OnInit {
          
            alert("Last Run Km :" + this.lastRunKms +" curr Reading :"+mKms);
            if(this.lastRunKms===null) {this.lastRunKms=0;   }
-             // alert("Last Run Km :" + this.lastRunKms);
-         
- 
-          if(mKms<=0 || this.variant ===null || mKms < this.lastRunKms ) {
+     
+          if(mKms<=0 || this.variantCode ===null   || mKms < this.lastRunKms ) {
+          
             alert("Invalid KM Reading Or\nKM Reading entered is lesser than Last Run Km("+ this.lastRunKms+") Or \nCheck Model Variant Deatils..") 
-            this.kmReading=null;
+            // alert("Invalid KM Reading ..") ;
+            this.startKms=null;
             return;
-          }
+          } else { this.LoadPackage(this.regNo,mKms);}
          }
+
+       
 
 
          onSelectPackageNumber(pkgNo:any){
 
+         if (this.addFlag) {
+
           if(pkgNo !='--Select--' && pkgNo != null) {
-            this.service.getMcpPackageSearchNew2(pkgNo ,this.fuelType)
+            this.service.getMcpPackageSearchNew2(pkgNo ,this.fuelType,this.ouId)
               .subscribe(
               data => {
                 this.getPkgDetails = data;
                 console.log(this.getPkgDetails);
                 if(this.getPkgDetails !=null){
-                 this.mcpEnquiryForm.patchValue({
-                  packageDesc: this.getPkgDetails.packageDesc, 
-                  packageType:this.getPkgDetails.packageType,});
+                   this.packageType=this.getPkgDetails[0].packageType;
+                   this.packageDesc= this.getPkgDetails[0].packageDesc;
+                   this.validKms= this.getPkgDetails[0].validKm;
+                   this.validMonths= this.getPkgDetails[0].validPeriod;
+                  //  this.startDate= this.getPkgDetails[0].startDate;
+                  //  this.endDate= this.getPkgDetails[0].endDate;
 
-                  this.getPackagePriceDetails(pkgNo,this.packageType,this.getPkgDetails.fuelType);
+                //  this.mcpEnquiryForm.patchValue({
+                //   packageDesc: this.getPkgDetails.packageDesc, 
+                //   packageType:this.getPkgDetails.packageType,});
+                  this.getPackagePriceDetails(pkgNo,this.getPkgDetails[0].packageType,this.fuelType);
                   this.showPkgLineDetails();
                   this.showDetailsButton=true;
+
+                  // ------------Date-----------
+                  var stDate=new Date(this.startDate);
+                  var ew2=this.addDays(stDate,1);
+                  this.endDate=this.pipe.transform(ew2, 'y-MM-dd');
+                 // ------------Date-----------
                 
                 } else {alert("Package Details Not Found....");this.showDetailsButton=false;}
-              } );  
+              } );   } }
               
             }
             
-            }
+           
+
+            addDays(date1: Date, days1: number): Date {
+              date1.setDate(date1.getDate() + days1);
+              return date1;
+          }
 
             getPackagePriceDetails(mpkgNo,mPkgType,fType) {
               // alert("inside price details ..." +mpkgNo+","+mPkgType);
               // getMcpPackagePriceDetails(mPkgNo,mFuelType,mType,mOuId,mVariant,mCustSite,mLocId)
               var mFuelType=this.fuelType;
-              this.service.getMcpPackagePriceDetails(mpkgNo,fType,mPkgType,this.ouId,this.variant,this.customerSiteId,this.locId)
+              this.service.getMcpPackagePriceDetails(mpkgNo,fType,mPkgType,this.ouId,this.variantCode,this.customerSiteId,this.locId)
               .subscribe(
               data => {
                 this.getPkgPriceDetails = data;
@@ -626,23 +875,27 @@ export class McpEnquiryComponent implements OnInit {
                 this.mcpEnquiryForm.patchValue({
                   labAmt: this.getPkgPriceDetails.totLabBasic,
                   labDiscAmt: this.getPkgPriceDetails.totLabDis,
-                  labGstAmt: this.getPkgPriceDetails.totLabGst,
+                  labTaxAmt: this.getPkgPriceDetails.totLabGst,
                   labCessAmt: this.getPkgPriceDetails.totLabCess,
                   labNetAmt: this.getPkgPriceDetails.totLabNet,
 
                   matAmt: this.getPkgPriceDetails.totMatBasic,
                   matDiscAmt: this.getPkgPriceDetails.totMatDisc,
-                  matGstAmt: this.getPkgPriceDetails.totMatGst,
+                  matTaxAmt: this.getPkgPriceDetails.totMatGst,
                   matCessAmt: this.getPkgPriceDetails.totMatCess,
                   matNetAmt: this.getPkgPriceDetails.totMatNet,
 
-                  // consAmt: this.getPkgPriceDetails.totLabBasic,
-                  // consDiscAmt: this.getPkgPriceDetails.totLabDis,
-                  // consGstAmt: this.getPkgPriceDetails.totLabGst,
-                  // consCessAmt: this.getPkgPriceDetails.totLabCess,
-                  // consNetAmt: this.getPkgPriceDetails.totLabNet,
+                  consAmt: 0,
+                  consDiscAmt: 0,
+                  consGstAmt: 0,
+                  consCessAmt: 0,
+                  consNetAmt: 0,
 
-                  packageAmt:this.getPkgPriceDetails.totPackageAmt,
+                    totBaseAmt: (this.getPkgPriceDetails.totMatBasic+this.getPkgPriceDetails.totLabBasic),
+                    discAmt: (this.getPkgPriceDetails.totMatDisc+this.getPkgPriceDetails.totLabDis),
+                    totTaxAmt: (this.getPkgPriceDetails.totMatGst+this.getPkgPriceDetails.totLabGst),
+                    totCessAmt: 0,
+                    packageAmt:this.getPkgPriceDetails.totPackageAmt,
                  });
       
               } );   
@@ -655,15 +908,16 @@ export class McpEnquiryComponent implements OnInit {
 
               this.invLineArray().reset();
               // alert ("Package Details......in.. WIP")
-              this.service.getMcpPackageLineDetails(this.packageNumber,this.fuelType,this.ouId,this.variant,1,this.locId)
+              this.service.getMcpPackageLineDetails(this.pkgEnquired,this.fuelType,this.ouId,this.variantCode,1,this.locId)
               .subscribe(
               data => {
                 this.getPkgLineDetails = data;
                 console.log(this.getPkgLineDetails);
 
-                var len=this.invLineArray().length;
-                    // alert(len);
-                   
+                  var len=this.invLineArray().length;
+                  alert( "Total Package Line Items :"+ this.getPkgLineDetails.length);
+                  
+                 
 
                     var y=0;
                     for (let i = 0; i < this.getPkgLineDetails.length - len; i++) 
@@ -672,7 +926,7 @@ export class McpEnquiryComponent implements OnInit {
                       this.invLineArray().push(invLnGrp);
                      
                     }
-                    this.mcpEnquiryForm.get('invLine').patchValue(this.getPkgLineDetails);
+                    this.mcpEnquiryForm.get('enqDtls').patchValue(this.getPkgLineDetails);
           } );   
 
             }
@@ -695,14 +949,181 @@ export class McpEnquiryComponent implements OnInit {
 
         // }
          
+        transeData(val) {
+    
+          delete val.loginArray;
+          delete val.loginName;
+          delete val.locName;
+          delete val.ouName;
+          // delete val.locId;
+          delete val.ouId;
+          delete val.deptId;
+          delete val.emplId;
+          delete val.orgId;
+          delete val.divisionId;
 
+          delete val.vehicleId;
+          delete val.vehicleItem;
+          delete val.serviceModel;
+          delete val.deliveryDate;
+          delete val.dealerCode;
+          delete val.packageType;
+          delete val.packageDesc;
+          delete val.lastRunKms;
+          delete val.totBaseAmt;
+          delete val.totTaxAmt;
+          delete val.totCessAmt;
+          delete val.matDiscAmt;
+          delete val.matCessAmt;
+          delete val.matNetAmt;
+          delete val.labDiscAmt;
+          delete val.labNetAmt;
+          delete val.labCessAmt;
+          delete val.consAmt;
+          delete val.consDiscAmt;
+          delete val.consGstAmt;
+          delete val.consNetAmt;
+          delete val.consCessAmt;
+          delete val.searchRegno;
+          delete val.searchEnqNo;
+          delete val.searchEnqDate;
+          // delete val.customerSiteId; 
+          delete val.custAccountNo; 
+          delete val.custName; 
+          delete val.customerSiteAddress;
+          delete val.custCity; 
+          delete val.custState; 
+          delete val.custPincode; 
+          delete val.customerGstNo; 
+          delete val.customerPanNo; 
+          delete val.billToSiteId; 
+          delete val.custPhone; 
+          delete val.customerType; 
+          delete val.custTaxCategoryName; 
+
+          delete val.enqNo;
+          delete val.enqDate;
+          delete val.packageId;
+         
+         return val;
+        }
 
       
 
-      newMast(){alert ("Save.....in.. WIP")}
+        newMast() {
+      
+             this.checkHeaderValidations();
+             if (this.headerValidation==true ) { 
+               alert("Header Validation Sucessfull...") 
+
+            const formValue: IMcpEnquiry =this.transeData(this.mcpEnquiryForm.value);
+            // var pkId = formValue.packageNumber;
+            // alert(pkId.substr(3, pkId.length));
+            // formValue.packageId = Number (pkId.substr(3, pkId.length)); 
+
+            this.service.McpEnquiryMasterSubmit(formValue).subscribe((res: any) => {
+              if (res.code === 200) {
+
+                
+                alert('RECORD INSERTED SUCCESSFUILY');
+                this.mcpEnquiryForm.reset();
+              } else {
+                if (res.code === 400) {
+                  alert('ERROR WHILE INSERTING');
+                  this.mcpEnquiryForm.reset();
+                }
+              }
+            });
+          }
+          else { alert("Header Validation Failed... Please Check");  return;   }
+         
+    } 
+
+
+    
+       SearchByMcpEnqNo1(mEnqNo:any){
+        this.service.getsearchByEnqNo(mEnqNo)
+          .subscribe(
+            data => {
+              this.lstMcplines = data;
+              console.log(this.lstMcplines);
+             
+          } );   }
+
+
+
+            SearchByMcpEnqNo(mEnqNo:any){
+              // this.mcpEnquiryForm.reset();
+              this.resetSection1(); this.resetSection3(); this.resetSection3();
+              this.addFlag=false;
+              this.displayButton=false;
+
+              console.log(this.mcpEnquiryForm.value);
+              this.service.getsearchByEnqNo(mEnqNo)
+                .subscribe(
+                  data => {
+                    this.lstMcplines = data;
+                    this.mcpEnquiryForm.patchValue(this.lstMcplines);
+                    this.executive=this.lstMcplines.executive;
+                    
+                    // ---------------------------Header Details--------------------------------
+                        this.GetVehicleRegInfomation(this.lstMcplines.regNo);
+                        this.GetVariantDeatils(this.lstMcplines.variantCode);
+                        this.GetCustomerDetails(this.customerId);
+                        this.GetCustomerSiteDetails(this.customerId)
+                        this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
+                        this.getPackageInfo(this.pkgEnquired,this.lstMcplines.fuelType)
+                        
+                        this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
+                        // this.discAmt= (this.lstMcplines.totMatDisc+this.lstMcplines.totLabDis),
+                        this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
+
+                      // ----------------------------LINE DETAILS----------------------------------------
+                      for(let i=0; i<this.invLineArray.length; i++){ 
+                        this.invLineArray().removeAt(i);
+                      }
+
+                      this.invLineArray().clear();
+                      var control = this.mcpEnquiryForm.get('enqDtls') as FormArray;
+                      for (let i=0; i<this.lstMcplines.enqDtls.length;i++) 
+                        {
+                          var enqDtls:FormGroup=this.invLineDetails();
+                          control.push(enqDtls);
+                        }
+                            
+                      this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+                      this.showDetailsButton=true
+                      // ----------------------------------------------------------------------------
+          
+                     } ); 
+
+              }
+
+              getPackageInfo(pkgNo,fType,){
+                // alert(pkgNo + ","+fType);
+              this.service.getMcpPackageSearchNew2(pkgNo ,fType,this.ouId)
+              .subscribe(
+              data => {
+                this.getPkgDetails = data;
+                console.log(this.getPkgDetails);
+                if(this.getPkgDetails !=null){
+
+                   this.packageType=this.getPkgDetails[0].packageType;
+                   this.packageDesc= this.getPkgDetails[0].packageDesc;
+                   this.validKms= this.getPkgDetails[0].validKm;
+
+                }
+              }); }
+
+           
+          
+         
+     
+
+
       
       updateMast(){alert ("Update.....in.. WIP")}
-      searchMast(){alert ("Search.....in.. WIP")}
+      printMast(){alert ("Print Slip.....in.. WIP")}
 
       resetMast() {
         window.location.reload();
@@ -710,6 +1131,75 @@ export class McpEnquiryComponent implements OnInit {
     
       closeMast() {
         this.router.navigate(['admin']);
+      }
+
+
+      checkHeaderValidations()  {
+        const formValue: IMcpEnquiry = this.mcpEnquiryForm.value
+
+        // if(this.sourceDesc==='SERVICE') {
+
+        if (formValue.regNo===undefined || formValue.regNo===null || formValue.regNo.trim()==='')
+        {
+           this.headerValidation=false; 
+           alert ("VEHICLE REGISTRATION NUMBER : Should not be null....");
+           
+            return;
+         } 
+        // }
+
+        if(this.sourceDesc==='SALES') {
+
+          if (formValue.orderNumber===undefined || formValue.orderNumber===null || formValue.orderNumber<=0)
+          {
+             this.headerValidation=false; 
+             alert ("VEHICLE SALE ORDER NUMBER : Should not be null....\nAttach Reg.Number to Order and Try again.");
+             
+              return;
+           } 
+          }
+
+
+         if (formValue.customerId===undefined || formValue.customerId===null || formValue.customerId<=0)
+         {
+            this.headerValidation=false; 
+            alert ("CUSTOMER DETAILS : Not Found....");
+            
+             return;
+          } 
+
+          
+         if (formValue.customerSiteId===undefined || formValue.customerSiteId===null || formValue.customerSiteId<=0)
+         {
+            this.headerValidation=false; 
+            alert ("CUSTOMER SITE DETAILS : Not Found...");
+            
+             return;
+          } 
+
+    
+         if (formValue.startKms===undefined || formValue.startKms===null || formValue.startKms<=0)
+         {
+            this.headerValidation=false; 
+            alert ("KM READING : Should not be null....");
+           
+             return;
+          } 
+
+        if (formValue.pkgEnquired===undefined || formValue.pkgEnquired===null)
+        {
+            alert ("PACKAGE : Select Package Name");
+            return;
+         } 
+
+        if (formValue.executive===undefined || formValue.executive===null)
+        {
+            this.headerValidation=false;   
+            alert ("SALES PERSON: Select Sales Person");
+            return;
+         } 
+        
+          this.headerValidation=true;
       }
 
 }

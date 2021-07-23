@@ -414,12 +414,12 @@ orderNoPost(orderNumber,emplId) {
 }
 
 
-OrderReversal(orderNumber, segment) {
+OrderReversal(orderNumber, emplId,reversalReason) {
   const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
-    .set('segment', segment)
-
-  const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
-  return this.http.put(REQUEST_URI, {
+    .set('emplId', emplId)
+    .set('reversalReason',reversalReason)
+  const REQUEST_URI = this.ServerUrl + `/arInv/orderReversal?orderNumber=${orderNumber}&emplId=${emplId}&reversalReason=${reversalReason}`;
+  return this.http.post(REQUEST_URI, {
     params: REQUEST_PARAMS,
 
   });

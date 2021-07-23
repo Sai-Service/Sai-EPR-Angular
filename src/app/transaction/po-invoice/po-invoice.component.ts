@@ -1,5 +1,5 @@
 import { asLiteral } from '@angular/compiler/src/render3/view/util';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener ,ChangeDetectionStrategy} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -66,7 +66,7 @@ interface IpoInvoice {
   styleUrls: ['./po-invoice.component.css']
 })
 export class PoInvoiceComponent implements OnInit {
-  // public start: Date = new Date ("10/07/2017"); 
+  // public start: Date = new Date ("10/07/2017");
   // public end: Date = new Date ("11/25/2017");
   emplId: number;
   @ViewChild('dateRangePicker', { static: true })
@@ -144,6 +144,7 @@ export class PoInvoiceComponent implements OnInit {
   baseAmount:number;
   amount:number;
   invoiceDistId:number;
+
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -156,7 +157,7 @@ export class PoInvoiceComponent implements OnInit {
   taxCategoryId: number;
   taxCategoryName:string;
   // glDate:Date;
-  //  glDate=this.pipe.transform(this.now, 'd-M-y h:mm:ss'); 
+  //  glDate=this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   // glDate = new Date();
   // public glDate =this.datepipe.transform(this.glDate1, 'yyyy-MM-dd');
   // pipe = new DatePipe('en-US');
@@ -419,14 +420,14 @@ getLocation(k)
     });
   }
 
- 
+
 
   TaxDetailsArray(): FormArray {
     // return this.lineDetailsArray.controls[].get('taxAmounts') as FormArray
     return <FormArray>this.poInvoiceForm.get('taxLines')
   }
 
- 
+
 
 
 ////////////////////////////DISTRIBUTION ///////////////////////
@@ -611,7 +612,7 @@ getLocation(k)
       invLineNo: [],
     });
   }
-  
+
   tdsTaxDetailsArray(): FormArray {
     return <FormArray>this.poInvoiceForm.get('tdsTaxLines')
   }
@@ -827,45 +828,31 @@ getLocation(k)
       );
   }
 
-HeaderValidation() {
-  
+// HeaderValidation() {
+//     (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
+//     (<any>Object).values(group.controls).forEach((control: FormControl) => {
+//         control.markAsTouched();
+//     })
+//   });
 
-  (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
-    (<any>Object).values(group.controls).forEach((control: FormControl) => { 
-        control.markAsTouched();
-    }) 
-  });
-      
-      (<FormArray>this.poInvoiceForm.get('invLines')).controls.forEach((group: FormGroup) => {
-    (<any>Object).values(group.controls).forEach((control: FormControl) => { 
-        control.markAsTouched();
-    }) 
-  });
-  (<FormArray>this.poInvoiceForm.get('distribution')).controls.forEach((group: FormGroup) => {
-    (<any>Object).values(group.controls).forEach((control: FormControl) => { 
-        control.markAsTouched();
-    }) 
-  });
-  // alert('Please enter valid detail');
-  // this.lineTypeLookupCode.focus();
-  // typecode.focus();
-}
-
-getGroupControl(index,arrayname, fieldName) {
-  // alert('nam'+fieldName);
-  // if(this.poInvoiceForm.get('obj')==false)
-  // {
-  return (<FormArray>this.poInvoiceForm.get(arrayname)).at(index).get(fieldName);
-//   }
-//   return (<FormArray>this.poInvoiceForm.get('invLines')).at(index).get(fieldName);
+//       (<FormArray>this.poInvoiceForm.get('invLines')).controls.forEach((group: FormGroup) => {
+//     (<any>Object).values(group.controls).forEach((control: FormControl) => {
+//         control.markAsTouched();
+//     })
+//   });
+//   (<FormArray>this.poInvoiceForm.get('distribution')).controls.forEach((group: FormGroup) => {
+//     (<any>Object).values(group.controls).forEach((control: FormControl) => {
+//         control.markAsTouched();
+//     })
+//   });
+//   // alert('Please enter valid detail');
+//   // this.lineTypeLookupCode.focus();
+//   // typecode.focus();
 // }
-// HeaderValidation(){
-//   this.formSumitAttempt = true;
-//     if (this.poInvoiceForm.valid) {
-//             console.log('form submitted');
-//     }
-//   }
-}
+
+// getGroupControl(index,arrayname, fieldName) {
+//    return (<FormArray>this.poInvoiceForm.get(arrayname)).at(index).get(fieldName);
+// }
   transData(val) {
     return val;
   }
@@ -892,7 +879,7 @@ getGroupControl(index,arrayname, fieldName) {
         //   this.poInvoiceForm.get('invLines').disable();
         //   this.poInvoiceForm.get('taxLines').disable();
         // }
-       
+
         this.lstsearchapinv.forEach(f => {
           var invLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(invLnGrp);
@@ -900,7 +887,7 @@ getGroupControl(index,arrayname, fieldName) {
         this.poInvoiceForm.get('obj').patchValue(this.lstsearchapinv);
         // var x=this.lstsearchapinv.invLines;
         // console.log(x);
-        
+
         // alert(this.lstsearchapinv.invLines[0].taxCategoryName)
       //  this.poInvoiceForm.get('taxCategoryName').patchValue(this.lstsearchapinv.taxCategoryName);
 
@@ -917,11 +904,11 @@ getGroupControl(index,arrayname, fieldName) {
     });
   }
 
- 
+
   // addNewLine(k:number){
-    
+
   //  this.trxLinesList().push(this.newtrxLinesList());
-      
+
   // var len = this.trxLinesList().length;
   // var patch = this.poInvoiceForm.get('trxLinesList') as FormArray;
   // (patch.controls[len - 1]).patchValue(
@@ -955,30 +942,28 @@ getGroupControl(index,arrayname, fieldName) {
       }
     });
   }
+  // @HostListener("window:keyup.control.f", ["$event"]) f(e: KeyboardEvent) {
+  //   console.log("control+ f", e);
+  //   // alert('control+ f'+e);
 
+  // }comment by vinita
+  // triggerKeyboardEvent(el: any, keyString: string) {
+  //   var eventObj = document.createEvent("Events") as any;
 
-  @HostListener("window:keyup.control.f", ["$event"]) f(e: KeyboardEvent) {
-    console.log("control+ f", e);
-    // alert('control+ f'+e);
+  //   if (eventObj.initEvent) {
+  //     eventObj.initEvent("keyup", true, true);
+  //   }
 
-  }
-  triggerKeyboardEvent(el: any, keyString: string) {
-    var eventObj = document.createEvent("Events") as any;
+  //   eventObj.shiftKey = true;
+  //   eventObj.ctrlKey = false;
+  //   eventObj.metaKey = false;
+  //   eventObj.altKey = false;
+  //   eventObj.key = keyString;
 
-    if (eventObj.initEvent) {
-      eventObj.initEvent("keyup", true, true);
-    }
-
-    eventObj.shiftKey = true;
-    eventObj.ctrlKey = false;
-    eventObj.metaKey = false;
-    eventObj.altKey = false;
-    eventObj.key = keyString;
-
-    el.dispatchEvent
-      ? el.dispatchEvent(eventObj)
-      : el.fireEvent("onkeyup", eventObj);
-  }
+  //   el.dispatchEvent
+  //     ? el.dispatchEvent(eventObj)
+  //     : el.fireEvent("onkeyup", eventObj);
+  // }
 
   openCodeComb(i) {
     this.showModal = true; // Show-Hide Modal Check
@@ -1020,7 +1005,7 @@ getGroupControl(index,arrayname, fieldName) {
     return;
   }
   else
-  
+
   {  this.lineDistributionArray().clear();
     this.transactionService.distLinesDeatailsfa(this.invoiceId, lineNumber)
       .subscribe(
@@ -1035,7 +1020,7 @@ getGroupControl(index,arrayname, fieldName) {
         }
       );
       }
-      
+
   }
 
 
@@ -1043,7 +1028,7 @@ getGroupControl(index,arrayname, fieldName) {
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
     this.invLineDetailsArray().clear();
-    
+
     this.transactionService.getApInvLineDetails(invoiceNum)
       .subscribe(
         data => {
@@ -1051,52 +1036,54 @@ getGroupControl(index,arrayname, fieldName) {
           this.isSearchPatch = true;
           this.poInvoiceForm.patchValue({invoiceNum:data.invoiceNum,
             segment1: data.invLines[0].poNumber,
+
            })
           this.lstInvLineDeatails = data;
           this.lstTdsLine=data.invDisLines;
           console.log(data.invoiceStatus);
-        
-        
+
+
           data.invLines.forEach(f => {
             var invLnGrp: FormGroup = this.invLineDetails();
             this.invLineDetailsArray().push(invLnGrp);
-           
+
           });
-        
+
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
-          
+
           }
 
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
-          
+
           }
-          
+
           for (let i = 0; i < data.taxLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
-            
+
           }
 
 
-          
+
           this.poInvoiceForm.get('invLines').patchValue(data.invLines);
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           this.poInvoiceForm.get('distribution').patchValue(data.invDisLines);
           // this.poInvoiceForm.get('tdsLines').patchValue(data.invDisLines);
           this.poInvoiceForm.get('tdsLines').patchValue(data.invTdsLines);
           let controlinv = this.poInvoiceForm.get('invLines') as FormArray;
-         
-          
+
+
+
           for (let i=0; i<data.invLines.length;i++){
             if(data.invLines[i].lineTypeLookupCode==='ITEM' || data.invLines[i].lineTypeLookupCode==='OTHER'){
               // this.poInvoiceForm.patchValue({taxCategoryName:data.invLines[i].taxCategoryName})
               //controlinv.controls[i].get('taxCategoryName').setValue(data.invLines[i].taxCategoryName);
               (controlinv.controls[i]).patchValue({ taxCategoryName: data.invLines[i].taxCategoryName });
-             
+
             }
           }
 
@@ -1108,24 +1095,24 @@ getGroupControl(index,arrayname, fieldName) {
             (tdscontrolInv.controls[i]).patchValue({ accDesc: data.invDisLines[i].accDesc});
             (tdscontrolInv.controls[i]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum});
           }
-        
+
           this.INVStatus=data.invoiceStatus;
-          
+
           if(data.invTdsLines.length===0) {
             // alert("data.invTdsLines.length :" +data.invTdsLines.length);
             // this.saveTdsDetails=true;
             this.displayTdsButton=true;
             this.showTdsLineDetails=false;
             this.showTdsLines();
-          } else {    
+          } else {
               this.displayTdsButton=false;
               this.showTdsLineDetails=true;
             }
-         
+
 
 
           // console.log(data.invDisLines[0].invTransferStatus||data.invoiceStatus==='Validated');
-        
+
           // if(data.invDisLines[0].invTransferStatus===null){
           // alert(data.invDisLines[0].invTransferStatus);
           //   this.INVStatus='Never Validated';
@@ -1157,15 +1144,15 @@ getGroupControl(index,arrayname, fieldName) {
             //   this.poInvoiceForm.get('distribution').disable();
             //   this.poInvoiceForm.get('taxLines').disable();
             //  }
-      
+
           }
         //   if(data.source==='PO Receipt'  ){
         //     // alert(data.invTypeLookupCode);
         //     this.poInvoiceForm.get('invLines').disable();
-        //    this.poInvoiceForm.get('distribution').disable(); 
+        //    this.poInvoiceForm.get('distribution').disable();
         //    this.poInvoiceForm.get('taxLines').disable();
         //  }
-  
+
           else{
             this.dispStatus=false;
             this.disDeleteButton=false;
@@ -1180,7 +1167,7 @@ getGroupControl(index,arrayname, fieldName) {
       )
 
 
-      
+
   }
 
 
@@ -1209,12 +1196,12 @@ getGroupControl(index,arrayname, fieldName) {
   apInvoiceSave() {
     // alert(this.poInvoiceForm.valid+'status');
     // (<FormArray>this.poInvoiceForm.get('obj')).controls.forEach((group: FormGroup) => {
-    //   (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+    //   (<any>Object).values(group.controls).forEach((control: FormControl) => {
     //       control.valid;
     //       console.log(control.value+'---'+control.valid);
-    //   }) 
+    //   })
     // });
-    if (this.poInvoiceForm.valid) {
+    // if (this.poInvoiceForm.valid) {
     this.displayValidateButton = false;
     // let manInvObj=new ManualInvoiceObj();
     let jsonData = this.poInvoiceForm.value.obj[0];
@@ -1225,16 +1212,16 @@ getGroupControl(index,arrayname, fieldName) {
     jsonData.accPayCodeCombId = 2079
     jsonData.currency = 'INR';
     var taxStr = [];
-    for (let taxlinval of this.taxarr.values()) {  
-      // console.log("Map Values= " +JSON.stringify(value));  
+    for (let taxlinval of this.taxarr.values()) {
+      // console.log("Map Values= " +JSON.stringify(value));
      for(let i=0 ; i< taxlinval.length; i++){
          taxStr.push(taxlinval[i]);
         }
       }
 
       var disStr = [];
-      for (let dislinval of this.distarr.values()) {  
-       // console.log("Map Values= " +JSON.stringify(value));  
+      for (let dislinval of this.distarr.values()) {
+       // console.log("Map Values= " +JSON.stringify(value));
       for(let i=0 ; i< dislinval.length; i++){
        disStr.push(dislinval[i]);
          }
@@ -1245,7 +1232,7 @@ getGroupControl(index,arrayname, fieldName) {
     // manInvObj.setinvDisLines(disStr);commment by vinita
     manInvObj.setTaxLines(taxStr);
 
-    // let newTodo = Object.assign(new ManualInvoiceObj(), jsonData); 
+    // let newTodo = Object.assign(new ManualInvoiceObj(), jsonData);
     // const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
     console.log(JSON.stringify(manInvObj));
     // console.log(this.poInvoiceForm.value.obj[0].invoiceNum);
@@ -1254,7 +1241,7 @@ getGroupControl(index,arrayname, fieldName) {
     console.log(reqArr);
 
     //     reqArr.push({
-    //       supplierSiteId: 
+    //       supplierSiteId:
     //       frmDate: formValue.frmDate,
     //        toDate: formValue.frmDate,
     //       // toDate:'2021-02-05',
@@ -1263,19 +1250,21 @@ getGroupControl(index,arrayname, fieldName) {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.poInvoiceForm.reset();
         // alert(res.obj);
         this.internalSeqNum=res.obj;
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.poInvoiceForm.reset();
         }
       }
     });
-  }
-  else{
-    // alert('else');
-    this.HeaderValidation();
-  }
+  // }
+  // else{
+  //   // alert('else');
+  //   this.HeaderValidation();
+  // }
   }
 
   close() {
@@ -1365,7 +1354,7 @@ getGroupControl(index,arrayname, fieldName) {
         // alert(k+'LineNum');
         (patch.controls[len - 1]).patchValue(
           {
-           
+
             distLineNumber: len,
             // invoiceLineNum: k + 1
             invoiceLineNum:invln
@@ -1484,7 +1473,7 @@ getGroupControl(index,arrayname, fieldName) {
       );
   }
 
- 
+
   onOptioninvItemIdSelected(itemId, index) {
     // if(this.itemType === "EXPENCE"){
     // alert('in expence');
@@ -1569,7 +1558,7 @@ getGroupControl(index,arrayname, fieldName) {
     (controlinv.controls[k]).patchValue({ taxCategoryId: select.taxCategoryId });
     (controlinv.controls[k]).patchValue({locId:objarray[0].locationId});
     var disAm = 0;
-  
+
     this.transactionService.getTaxDetails(select.taxCategoryId, sessionStorage.getItem('ouId'), disAm, amount)
       .subscribe(
         data => {
@@ -1583,6 +1572,7 @@ getGroupControl(index,arrayname, fieldName) {
           for (let i = 0; i < data.miscLines.length; i++) {
             var invLnGrp: FormGroup = this.invLineDetails();
             this.invLineDetailsArray().push(invLnGrp);
+            // alert/'LineDetailPush');
           }
           (controlinv.controls[0]).patchValue({ lineNumber: 1 });
           // alert(k);
@@ -1596,32 +1586,37 @@ getGroupControl(index,arrayname, fieldName) {
             controlinv.controls[z].patchValue(data.miscLines[j - 1]);
             var ln = Number(this.indexVal+1+"."+j);
             (controlinv.controls[z]).patchValue({ lineNumber: ln });
-            controlinv.controls[z].patchValue({locId:objarray[0].locationId});
+            (controlinv.controls[z]).patchValue({locId:objarray[0].locationId});
+            // alert('Linedeail Patch');
           }
-          
-          var segment = (arrayControl[k].segment)
-          let select = this.invItemList1.find(d => d.segment === segment);
+
+          // var segment = (arrayControl[k].segment)
+          // let select = this.invItemList1.find(d => d.segment === segment);commen by vinita
           // alert(select.itemId);
           let controlinv1 = this.poInvoiceForm.get('taxLines') as FormArray;
           // var LEN = controlinv1.length;
-          this.taxDetaileSendArr.push(data.taxLines)
+          // this.taxDetaileSendArr.push(data.taxLines)commen by vinita
           this.TaxDetailsArray().clear();
           for (let i = 0; i < data.taxLines.length; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
+            // alert('tax deail push');
+            console.log(new Date());
           }
           // alert('data.taxLines.length ' + data.taxLines.length);
           // alert(data.taxLines)
           this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
           for (let j = 0; j < data.taxLines.length; j++) {
             // controlinv1.controls[j].patchValue(data.taxLines[j]);
-
+            console.log(new Date());
             controlinv1.controls[j].patchValue({
               // invLineItemId: select.itemId,  done by vinita
               invLineNo: this.indexVal + 1,
             });
+            console.log(new Date());
+            alert('tax deail pach');
           }
-          
+
           this.invLineNo=k+1;
           // alert(this.invLineNo);
           // alert(this.taxarr.size+'Arraytax');
@@ -1635,6 +1630,7 @@ getGroupControl(index,arrayname, fieldName) {
           var x1 = Number((this.lineDistributionArray().length));
           var len = this.lineDistributionArray().length
           var totalLen = len + Number(data.invDisLines.length)
+          // alert('dist deail push');
           // alert('Distribution'+totalLen)
           if (len == 1) {
             // alert('in len 1')
@@ -1645,12 +1641,14 @@ getGroupControl(index,arrayname, fieldName) {
                 // alert('pushing line i '+ i)
                 var invLnGrp: FormGroup = this.distLineDetails();
                 this.lineDistributionArray().push(invLnGrp);
+                // alert('dist in 1stif deail push');
               }
             } else {
               alert('lenght more than one')
               for (let i = len - 1; i < data.invDisLines.length - 1; i++) {
                 var invLnGrp: FormGroup = this.distLineDetails();
                 this.lineDistributionArray().push(invLnGrp);
+                // alert('dist deail else push');
               }
             }
           } else {
@@ -1686,9 +1684,9 @@ getGroupControl(index,arrayname, fieldName) {
               // this.poInvoiceForm.get('distribution').patchValue(data.distribution);
             }
           }
-          
+
           this.distarr.set(this.invLineNo, this.poInvoiceForm.get('distribution').value);
-          
+          // alert('dis deail pattch');
           // }
 
           // this.lineDistributionArray().patchValue(data.invDisLines);
@@ -1725,8 +1723,8 @@ getGroupControl(index,arrayname, fieldName) {
           var invLnGrp: FormGroup = this.distLineDetails();
           this.lineDistributionArray().push(invLnGrp);
         }
-      
-      } 
+
+      }
       else{
         alert('lenght more than one')
         for (let i = len - 1; i < lstInvLineDeatails1.invDisLines.length -1; i++) {
@@ -1792,7 +1790,7 @@ getGroupControl(index,arrayname, fieldName) {
           for(let k=0 ;k<this.invLineDetailsArray().length;k++)
           {
             arrinvln.controls[k].patchValue({lineTypeLookupCode:'OTHER',amount:Number(invamt)});
-            
+
 
           }
           console.log(this.poInvoiceForm.get('invLines').value);
@@ -1812,12 +1810,12 @@ getGroupControl(index,arrayname, fieldName) {
            console.log(this.poInvoiceForm.get('distribution').value);
            this.distarr.set(this.invoiceLineNo, this.poInvoiceForm.get('distribution').value);
         });
-        
+
         // this.poInvoiceForm.get('distribution').disable();
           this.poInvoiceForm.get('invLines').disable();
         //   this.poInvoiceForm.get('taxLines').disable();
         }
-        
+
       }
   Validate() {
         var arrayControl = this.poInvoiceForm.get('obj').value;
@@ -1859,13 +1857,13 @@ getGroupControl(index,arrayname, fieldName) {
 
   }
   validateNum(index, j) {
-    // var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;  
+    // var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;
     // // this.poMasterDtoForm.get('poLines').value
     // var value = arrayControl[index].totTaxAmt
     // if (value.charAt(0) === '-') {
     //   alert('Valid Number: ' + value);
     // } else {
-    //   alert('Invalid Number: ' + value + ' ' + 'Kindly enter negetive value');   
+    //   alert('Invalid Number: ' + value + ' ' + 'Kindly enter negetive value');
     //   // this.lineDetailsArray.controls[index].get('orderedQty').reset();
     //   // this.poMasterDtoForm.controls['poLines'].controls[index].controls['taxAmounts'].controls[j].controls.totTaxPer.value
     //   // this.TaxDetailsArray.controls[j].get('orderedQty').reset();
@@ -1902,8 +1900,8 @@ getGroupControl(index,arrayname, fieldName) {
 
               }
             );
-           
-          
+
+
           }
           for (let i=0, j=0; i< this.lineDistributionArray().length; i++){
             if(invLineNo==distributionValue[i].invoiceLineNum && distributionValue[i].lineTypeLookupCode =='MISCELLANEOUS'){
@@ -1915,9 +1913,9 @@ getGroupControl(index,arrayname, fieldName) {
               }
             );
             j=j+1;
-            } 
+            }
           }
-          
+
           // for (i = 0; i < this.taxCalforItem.length; i++) {
 
           //   if (this.taxCalforItem[i].totTaxPer != 0) {
@@ -1945,12 +1943,12 @@ getGroupControl(index,arrayname, fieldName) {
   }
 
   amountmatch(k,qty1){
-    
-   var currentlinamt=qty1.target.value;   
+
+   var currentlinamt=qty1.target.value;
    var invarr=this.poInvoiceForm.get('invLines').value;
 
    var distotamt=0;
-  
+
   var disarr=this.poInvoiceForm.get('distribution').value;
    var dispatch=this.poInvoiceForm.get('distribution') as FormArray;
    var lnrow=disarr[k].invoiceLineNum;
@@ -1965,13 +1963,13 @@ getGroupControl(index,arrayname, fieldName) {
      {
      var disamt=0;
    for(let j=0;j<this.lineDistributionArray().length;j++)
-   { 
+   {
      if(disarr[j].lineTypeLookupCode!='MISCELLANEOUS'&& disarr[j].invoiceLineNum===lnrow)
      {
       var disln=disarr[j].invoiceLineNum;
-   
+
       var distyp=disarr[j].lineTypeLookupCode;
-    
+
        if(j==k){
         // alert('inside if');
           disamt=qty1.target.value;
@@ -1982,25 +1980,25 @@ getGroupControl(index,arrayname, fieldName) {
               }
       // alert(distotamt+'befortotal');
       distotamt=Number(distotamt)+Number(disamt);
-   
+
       // alert(distotamt+'total');
      }
    }
-   
+
   }
   // alert(distotamt+'--total'+itemInvamt+'--before2if');
   // alert(invln+'line'+disln)
    if(invln===disln && invtyp===distyp && distotamt<itemInvamt )
    {
-  
+
     var newrow=k+1;
   this.addRowDistribution(newrow);
-  dispatch.controls[newrow].patchValue({invoiceLineNum:invln}) ;   
+  dispatch.controls[newrow].patchValue({invoiceLineNum:invln}) ;
   (dispatch.controls[newrow - 1]).patchValue(
         {
           distLineNumber: newrow,
         }
-      );  
+      );
 
   return;
       }
@@ -2011,8 +2009,8 @@ getGroupControl(index,arrayname, fieldName) {
    }
 
   }
-  
- 
+
+
 
 
   patchResultList(i, taxCalforItem, invLineNo, invLineItemId) {
@@ -2206,7 +2204,7 @@ getGroupControl(index,arrayname, fieldName) {
     var tdsTaxAmt=tdsLineArr1[i].taxAmount;
     var taxCatId =tdsLineArr1[i].taxCategoryId;
     var tdsSectionCd=tdsLineArr1[i].actualSectionCode;
-    
+
     // alert("Line Value :"+lineValue1);
      var j=i+1;
 
@@ -2214,7 +2212,7 @@ getGroupControl(index,arrayname, fieldName) {
      if(tdsSectionCd ===null ||tdsSectionCd ===undefined) {
       alert("Line-"+(j)+ " SECTION CODE :  Should not be null.");
       this.tdsLineValidation=false;
-     
+
       // patch.controls[index].patchValue({tdsSelectFlag:''})
 
       return;
@@ -2223,18 +2221,18 @@ getGroupControl(index,arrayname, fieldName) {
     if(taxCatId ===null ||taxCatId ===undefined) {
       alert("Line-"+(j)+ " TAX CATEGORY :  Should not be null.");
       this.tdsLineValidation=false;
-      
+
       // patch.controls[index].patchValue({tdsSelectFlag:''})
       return;
-      
+
     }
     if(tdsTaxAmt===undefined || tdsTaxAmt===null || tdsTaxAmt<0 ){
       alert("Line-"+j+ " TAX AMOUNT :  Should not be null value");
       this.tdsLineValidation=false;
       return;
-    } 
+    }
 
-  
+
     }
 
 
@@ -2243,17 +2241,17 @@ getGroupControl(index,arrayname, fieldName) {
 
         var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
         var len1=tdsLineArr.length;
-        
-        for (let i = 0; i < len1 ; i++) 
+
+        for (let i = 0; i < len1 ; i++)
           {
             this.CheckTdsLineValidations(i);
           }
 
-      
+
 
         if (this.tdsLineValidation) {
           alert("TDS data Validation Sucessfull....Posting data...")
-       
+
         var tdsLines= this.poInvoiceForm.get('tdsLines').value;
 
         console.log();
@@ -2269,37 +2267,37 @@ getGroupControl(index,arrayname, fieldName) {
           }
         });
       }else{ alert("TDS data Validation Not Sucessfull....\nPosting Not Done...")  }
-  
-  
+
+
       }
 
 
-      showTdsLines(){ 
+      showTdsLines(){
        var arraybase=this.poInvoiceForm.get('obj').value;
        var invId=arraybase[0].invoiceId;
         console.log(arraybase);
         this.invoiceId=arraybase[0].invoiceId;
-     
+
         console.log(this.invoiceDistId);
-        
+
         this.service.getTdsDetails(invId)
         .subscribe(
           data => {
             this.lstTdsLineDetails = data;
             console.log(this.lstTdsLineDetails);
-            
-            for(let i=0; i<this.TdsDetailsArray.length; i++){ 
+
+            for(let i=0; i<this.TdsDetailsArray.length; i++){
               this.TdsDetailsArray().removeAt(i);
             }
             this.TdsDetailsArray().clear();
 
              for (let i = 0; i < this.lstTdsLineDetails.length; i++)  {
-           
+
               var tdsLnGrp: FormGroup = this.tdsLineDetails();
               this.TdsDetailsArray().push(tdsLnGrp);
 
             }
-            
+
             this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);
 
             let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
@@ -2310,23 +2308,23 @@ getGroupControl(index,arrayname, fieldName) {
 
           });
 
-         
-   
+
+
       }
 
 
       onTaxCatgSelected(taxCatId : any ,index){
         // alert('ledger id =' +taxCatId + "  index ="+index);
-          // if (taxCatId > 0) {alert("yes");}  else { alert("no"); }        
+          // if (taxCatId > 0) {alert("yes");}  else { alert("no"); }
         }
 
 
         tdsSelectFlag1(e,index) {
-        
+
            this.tdsLineValidation=true;
           // if ( e.target.checked) {alert("Checked...");} else {alert("Unchecked...");}
           if ( e.target.checked) {
-        
+
           var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
           var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
           var len1=tdsLineArr.length;
@@ -2336,7 +2334,7 @@ getGroupControl(index,arrayname, fieldName) {
             var baseAmount =tdsLineArr[index].baseAmount;
             var taxCatId =tdsLineArr[index].taxCategoryId;
             var tdsSectionCd=tdsLineArr[index].actualSectionCode;
-            
+
 
             if(tdsSectionCd ===null ||tdsSectionCd ===undefined) {
               alert("Line-"+(index+1)+ " SECTION CODE :  Should not be null.");
@@ -2353,19 +2351,19 @@ getGroupControl(index,arrayname, fieldName) {
               e.target.checked=false;
               // patch.controls[index].patchValue({tdsSelectFlag:''})
               return;
-              
+
             }
-            
+
            if (this.tdsLineValidation===true) {
             this.showTdsTaxLines(1,baseAmount,taxCatId,tdsSectionCd,index);}
 
           // }
-          } else { this.tdsTaxDetailsArray().reset();}    
-        
+          } else { this.tdsTaxDetailsArray().reset();}
+
         }
 
 
-        showTdsTaxLines(mItemId:any,mBaseAmt:any,mTaxCatId:any,mtdsSection:any,j:any){ 
+        showTdsTaxLines(mItemId:any,mBaseAmt:any,mTaxCatId:any,mtdsSection:any,j:any){
           // alert ("Tds lines...wip.inv id :"+mInvId);
           this.service.getTdsTaxDetails(mItemId,mBaseAmt,mTaxCatId)
           .subscribe(
@@ -2375,17 +2373,17 @@ getGroupControl(index,arrayname, fieldName) {
 
               // alert("this.lstTdsTaxLineDetails.length  :"+this.lstTdsTaxLineDetails.length);
 
-              for(let i=0; i<this.tdsTaxDetailsArray.length; i++){ 
+              for(let i=0; i<this.tdsTaxDetailsArray.length; i++){
                 this.tdsTaxDetailsArray().removeAt(i);
               }
 
               this.tdsTaxDetailsArray().clear();
-             
-              //  for (let i = 0; i < this.lstTdsTaxLineDetails.length; i++) 
+
+              //  for (let i = 0; i < this.lstTdsTaxLineDetails.length; i++)
               // {
                 var tdsTaxLnGrp: FormGroup = this.tdsTaxDetailsGroup();
                 this.tdsTaxDetailsArray().push(tdsTaxLnGrp);
-               
+
               // }
               this.poInvoiceForm.get('tdsTaxLines').patchValue(this.lstTdsTaxLineDetails);
 
@@ -2394,10 +2392,10 @@ getGroupControl(index,arrayname, fieldName) {
               // var invLineArr = this.poInvoiceForm.get('tdsLines').value;
               var patch = this.poInvoiceForm.get('tdsLines') as FormArray;
               patch.controls[j].patchValue({taxAmount:tdsTaxAmt1})
-  
+
             }
              );
-  
+
         }
-           
+
 }
