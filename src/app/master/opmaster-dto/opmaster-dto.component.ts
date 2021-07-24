@@ -418,12 +418,12 @@ export class OPMasterDtoComponent implements OnInit {
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
-    if (this.deptName === 'Sales' || this.deptName === 'Service' || this.deptName === 'DP' || this.deptName === 'Spares') {
-      this.displayDept = true;
-      //  this.dept = this.deptName
-    } else {
-      this.displayDept = false;
-    }
+    // if (this.deptName === 'Sales' || this.deptName === 'Service' || this.deptName === 'DP' || this.deptName === 'Spares') {
+    //   this.displayDept = true;
+    //   //  this.dept = this.deptName
+    // } else {
+    //   this.displayDept = false;
+    // }
     this.service.statusList()
       .subscribe(
         data => {

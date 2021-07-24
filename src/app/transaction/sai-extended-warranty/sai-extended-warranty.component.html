@@ -133,7 +133,7 @@
                         <div *ngIf="showOrderInputLine; then ordBlockYes; else ordBlockNo"></div>
                        
                         <ng-template #ordBlockYes>
-                        <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Number:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Order&nbsp;No:&nbsp;</td>
                             <td>
                                 <table>
                                     <tr>
@@ -177,7 +177,7 @@
 
                         </ng-template>
                         <ng-template #ordBlockNo>
-                            <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Number:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Order&nbsp;No:&nbsp;</td>
                            <td>
                                 <input disabled  type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" >
                             </td>
@@ -207,7 +207,7 @@
                     </ng-template>
                     <ng-template #elseBlock905>
 
-                        <td style="width: 15%" class="LabelFontStyle">Order&nbsp;Number:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Order&nbsp;No:&nbsp;</td>
                          <td>
                                 <input disabled  type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" >
                             </td>
@@ -265,20 +265,20 @@
 
                        
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Item:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
     
                         <td>
                             <input disabled  type="text"  formControlName="itemDesc"  id="itemDesc" [(ngModel)]="itemDesc" class="form-control" >
                         </td>
                         
 
-                    <td style="width: 15%" class="LabelFontStyle">Model&nbsp;Variant:&nbsp;</td>
+                    <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
 
                     <td>
                         <input disabled  type="text"  formControlName="variant"  id="variant" [(ngModel)]="variant" class="form-control" >
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
+                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
 
                     <td>
                         <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
@@ -457,7 +457,26 @@
                                         <td>
                                             <input disabled  style="width: 450%"  type="text"  formControlName="customerSiteAddress"  id="customerSiteAddress" [(ngModel)]="customerSiteAddress" class="form-control" >
                                         </td>
-                                        </tr>
+                                    </tr>
+                                    <tr>
+                        
+                                        <td style="width: 5%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+                    
+                                        <td>
+                                            <input disabled    type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" >
+                                        </td>
+                                        <td style="width: 5%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                    
+                                        <td>
+                                            <input disabled    type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" >
+                                        </td>
+                                        <td style="width: 5%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+                    
+                                        <td>
+                                            <input disabled    type="text"  formControlName="custPincode"  id="custPincode" [(ngModel)]="custPincode" class="form-control" >
+                                        </td>
+
+                                    </tr>
                 
                                     </table>
                                     </fieldset>

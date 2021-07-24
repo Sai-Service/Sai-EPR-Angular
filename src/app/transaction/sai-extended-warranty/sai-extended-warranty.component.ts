@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
-import { data, now } from 'jquery';
+// import { data, now } from 'jquery';
 // import { MatDialogModule } from '@angular/material/dialog';
 // import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 
@@ -143,6 +143,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   custName:string;
   customerSiteId:number;
   customerSiteAddress:string;
+  custCity:string;
+  custState:String;
+  custPincode:string;
   CustomerGstNo:string
   customerPanNo:string
   custAccountNo:number;
@@ -256,6 +259,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       dmsCustNo:['',Validators.required,  Validators.pattern('^[a-zA-Z0-9]')],
       custName:[],
       customerSiteAddress:[],
+      custCity:[],
+      custState:[],
+      custPincode:[],
       CustomerGstNo:[],
       customerPanNo:[],
       billToSiteId:[],
@@ -854,17 +860,17 @@ export class SaiExtendedWarrantyComponent implements OnInit {
              this.saiEwForm.patchValue({
               customerSiteId:this.CustomerSiteDetails.customerSiteId,
               customerSiteAddress:this.CustomerSiteDetails.address1+","+
-                                  this.CustomerSiteDetails.address2+","+
-                                  this.CustomerSiteDetails.address3+","+
-                                  this.CustomerSiteDetails.location+","+
-                                  this.CustomerSiteDetails.city+","+
-                                  this.CustomerSiteDetails.state+"-"+
-                                  this.CustomerSiteDetails.pinCd,
-            CustomerGstNo:this.CustomerSiteDetails.gstNo,
-            customerPanNo:this.CustomerSiteDetails.panNo,
-            custPhone:this.CustomerSiteDetails.mobile1,
-            customerType:this.CustomerSiteDetails.customerId.custType,
-            custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
+                                    this.CustomerSiteDetails.address2+","+
+                                    this.CustomerSiteDetails.address3+","+
+                                    this.CustomerSiteDetails.location,
+              custCity:this.CustomerSiteDetails.city,
+              custState:this.CustomerSiteDetails.state,                 
+              custPincode:this.CustomerSiteDetails.pinCd,                    
+              customerGstNo:this.CustomerSiteDetails.gstNo,
+              customerPanNo:this.CustomerSiteDetails.panNo,
+              custPhone:this.CustomerSiteDetails.mobile1,
+              customerType:this.CustomerSiteDetails.customerId.custType,
+              custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
              
         });
 
