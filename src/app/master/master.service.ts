@@ -479,6 +479,11 @@ hsnSacCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/hsnSacMst');
 }
 
+hsnSacCodeData(type): Observable<any> {
+  // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
+  return this.http.get(this.ServerUrl +`/hsnSacMst/codeType/${type}`);
+}
+
 hsnSacCodeDet(mHsnCode): Observable<any> {
   // alert("ms >> "+mHsnCode);
   return this.http.get(this.ServerUrl +`/hsnSacMst/${mHsnCode}`);

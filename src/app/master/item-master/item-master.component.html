@@ -143,7 +143,7 @@
                                 <td>
                                     <select formControlName="status" id="status" class="form-control" [ngModel]="status"
                                         (ngModelChange)='onOptionsSelected($event)'>
-                                        <option>--Select--</option>
+                                        <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  statusList">
                                             {{sc.codeDesc}}
                                         </option>
@@ -1344,13 +1344,26 @@
 
         <table class="center">
             <tr>
+              <div *ngIf="dispupdate; then thenBlock1; else elseBlock1"></div>
+              <ng-template #thenBlock1>
                 <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="newItemMast()">New</button>
+                </td>
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="register"
+                        (click)="updateItemMast()">Update</button>
+                </td>
+              </ng-template>
+              <ng-template #elseBlock1>
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="register" (click)="newItemMast()">New</button>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-primary" id="register"
                         (click)="updateItemMast()">Update</button>
                 </td>
+              </ng-template>
+
                 <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="resetItemMast()">Reset</button>
                 </td>

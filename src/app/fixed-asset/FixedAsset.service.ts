@@ -11,10 +11,10 @@ export class FixedAssetService {
   headers: any;
   receiptNumber:number;
 
-  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  ServerUrl='http://localhost:8081'; 
+  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
+  ServerUrl='http://localhost:8081';
   // ServerUrl='http://saihorizon.com:8080/ErpReplica'
-   
+
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
@@ -42,6 +42,23 @@ export class FixedAssetService {
   ////////////////Categories////////////////
  public getAssetCategories(catName): Observable<any> {
     return this.http.get(this.ServerUrl + `/faCate/categoryWise/${catName}`);
+  }
+  /////////////Retirement////////////
+
+  public getAssetRetirementSearch(AssetNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/faAddtion/retire?assetId=${AssetNo}`);
+  }
+  public RetireTypeCode(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/faLookup/type/RETIRETYPECODE');
+  }
+  
+  public assRetirePost(assRetValue)
+  {
+    const options={
+      headers:this.headers
+    };
+    const url=this.ServerUrl+`/faAddtion/retirePost`;
+    return this.http.post(url,assRetValue,options);
   }
   ////////////Addition/////////
   public getAssetSearch(assNumber): Observable<any> {
@@ -89,4 +106,3 @@ public AmtCalc(cost,catId): Observable<any> {
   return this.http.get(this.ServerUrl + `/faAddtion/recovCost?cost=${cost}&catId=${catId}`);
 }
 }
-  
