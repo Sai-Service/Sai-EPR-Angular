@@ -318,11 +318,12 @@ export class OrderTypeMasterComponent implements OnInit {
         this.service.OrderTypeMasterSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFULLY');
-            this.orderTypeMasterForm.reset();
+            // this.orderTypeMasterForm.reset();
+            this.orderTypeMasterForm.disable();
           } else {
             if (res.code === 400) {
               alert('Code already present in the data base');
-              this.orderTypeMasterForm.reset();
+              // this.orderTypeMasterForm.reset();
             }
           }
         });

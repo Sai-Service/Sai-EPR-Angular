@@ -531,10 +531,10 @@
                                 </ng-template>
                            
     
-                                    <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Sales&nbsp;Person:&nbsp;</td>
             
                                     <td>
-                                        <select  class="form-control" formControlName="executive" [(ngModel)]="executive">
+                                        <select type="number" class="form-control" formControlName="executive" [(ngModel)]="executive">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
                                         {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
@@ -561,12 +561,12 @@
                                         <input disabled  type="text"  formControlName="validKms"  id="validKms" [(ngModel)]="validKms" class="form-control" style="text-align: right;" >
                                     </td>
 
-                                    <td style="width: 15%" class="LabelFontStyle1">Start&nbsp;Date:&nbsp;</td>
+                                    <!-- <td style="width: 15%" class="LabelFontStyle1">Start&nbsp;Date:&nbsp;</td>
                                 
                                     <td>
                                         <input disabled  type="date"  formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control" >
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">End&nbsp;Date:&nbsp;</td>
+                                    </td> -->
+                                    <td style="width: 15%" class="LabelFontStyle1">Enq&nbsp;Valid&nbsp;Date:&nbsp;</td>
                                 
                                     <td>
                                         <input  disabled type="date"  formControlName="endDate"  id="endDate" [(ngModel)]="endDate" class="form-control" >
@@ -643,14 +643,14 @@
                                                                 <!-- <th style="width:6rem" scope="col">Apply</th> -->
                                                                 <!-- <th style="width:5rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th> -->
                                                                 <!-- <th><input  type="checkbox"  style="text-align: center;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,totUnApplAmt,k)"></td> -->
-                                                                <th style="width:6rem" scope="col">Item Id</th>
-                                                                <!-- <th style="width:6rem" scope="col">Item Number</th> -->
-                                                                <!-- <th style="width:20rem" scope="col">Item Description</th> -->
+                                                                <!-- <th style="width:6rem" scope="col">Item Id</th> -->
+                                                                <th style="width:6rem" scope="col">Item Number</th>
+                                                                <th style="width:20rem" scope="col">Item Description</th>
                                                                 <th style="width:5rem" scope="col">Item Type</th>
                                                                 <th style="width:5rem" scope="col">ErpCode</th>
                                                                 <th style="width:5rem" scope="col">Quantity</th>
-                                                                <!-- <th style="width:5rem" scope="col">Pkg Qty</th> -->
-                                                                <!-- <th style="width:5rem" scope="col">Erp Qty</th> -->
+                                                                <th style="width:5rem" scope="col">Pkg Qty</th>
+                                                                <th style="width:5rem" scope="col">Erp Qty</th>
                                                                 <th style="width:5rem" scope="col">Price</th>
                                                                 <th style="width:5rem" scope="col">Basic Amt</th>
                                                                 <th style="width:5rem" scope="col">Discount%</th>
@@ -672,15 +672,15 @@
                     
                                                                   <tr>
                                                                     <td style="text-align: right;">{{k+1}}</td>
-                                                                    <td><input style="width:  100px;height: 25px;"  disabled  type="text" formControlName="itemId" class="form-control"   > </td>
-                                                                    <!-- <td><input style="width:  100px;height: 25px;"  disabled  type="text" formControlName="itemNumber" class="form-control"   > </td> -->
-                                                                    <!-- <td><input style="width: 200px;height: 25px;" type="text" disabled formControlName="itemDesc" class="form-control"></td> -->
+                                                                    <!-- <td><input style="width:  100px;height: 25px;"  disabled  type="text" formControlName="itemId" class="form-control"   > </td> -->
+                                                                    <td><input style="width:  100px;height: 25px;"  disabled  type="text" formControlName="itemNumber" class="form-control"   > </td>
+                                                                    <td><input style="width: 200px;height: 25px;" type="text" disabled formControlName="itemDesc" class="form-control"></td>
                                                                     <td><input style="width: 100px;height: 25px;" type="text"  disabled formControlName="itemType" class="form-control"></td>   
                                                                     <td><input style="width: 120px;height: 25px;" type="text"  disabled formControlName="erpCode" class="form-control"></td>   
                                                                     <!-- <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="pkgQuantity" class="form-control"></td>    -->
                                                                     <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="quantity" class="form-control"></td>   
-                                                                    <!-- <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="pkgQuantity" class="form-control"></td>    -->
-                                                                    <!-- <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="erpQuantity" class="form-control"></td>    -->
+                                                                    <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="pkgQuantity" class="form-control"></td>   
+                                                                    <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="erpQuantity" class="form-control"></td>   
                                                                     <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="basicAmt" class="form-control"></td>   
                                                                     <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="rate" class="form-control"></td>   
                                                                     <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="discPer"  class="form-control"></td>   
@@ -702,8 +702,9 @@
                                               </div>
                                             </div>
                                           </div>
+                                          <!-- ==================================modal end========================== -->
 
-                                                    </tr>
+                                            </tr>
                                                     
                                                         
                                             
@@ -977,12 +978,12 @@
                                             </td>
                                             <td style="background-color: #FFE4B5;">
                                                 <input class="form-control" formControlName="searchEnqNo" [(ngModel)]='searchEnqNo'
-                                                    value={{searchEnqNo}}>
+                                                    value={{searchEnqNo}} style="text-transform:uppercase;">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
                                 
                                             <td>
-                                                <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control" >
+                                                <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control" style="text-transform:uppercase;">
                                             </td>
 
                                             <td style="background-color: #FFE4B5;">

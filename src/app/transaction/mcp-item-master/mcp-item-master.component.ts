@@ -205,7 +205,8 @@ export class McpItemMasterComponent implements OnInit {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.displaySuccess=true;
-                this.mcpItemMasterForm.reset();
+                // this.mcpItemMasterForm.reset();
+                this.mcpItemMasterForm.disable();
               } else {
                 if (res.code === 400) {
                   alert('Code already present in the data base');

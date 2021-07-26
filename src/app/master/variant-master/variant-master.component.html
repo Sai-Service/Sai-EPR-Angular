@@ -224,7 +224,7 @@
                                     <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!variantMasterForm">Save</button>
                                 </td>
 
-                                <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveSatat"></div>
+                                <!-- <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveSatat"></div>
                                 <ng-template #thenBlockSaveStat>
                                     <div class="alert alert success alert-dismissible fade show " role="alert">
                                         <strong>Success!</strong> Record Updated Successfully.
@@ -234,13 +234,13 @@
                                       </div>
 
                                     </ng-template>
-                                <ng-template #elseBlockSaveSatat>
+                                <ng-template #elseBlockSaveSatat> -->
                                     <!-- <div class="alert warning">
                                         <span class="closebtn">&times;</span>  
                                         <strong>Warning!</strong> Rcord Not added.Please check
                                       </div> -->
 
-                                </ng-template>
+                                <!-- </ng-template> -->
                                 
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
