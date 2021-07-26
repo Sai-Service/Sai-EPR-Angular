@@ -261,6 +261,19 @@ export class ItemMasterComponent implements OnInit {
 // emplId :number;
  public emplId =6;
 
+ dispupdate:boolean=true;
+ dispnew:boolean=true;
+//  hsnSacCodeList = [{
+//   "codeId": 4140,
+//   "hsnsaccode": " 00440245",
+//   "description": " 00440245",
+//   "codeType": "HSN",
+//   "startdate": "2020-01-01",
+//   "enddate": null,
+//   "status": "Active",
+//   "gstPercentage": null
+// }];
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService:OrderManagementService) {
     this.itemMasterForm = fb.group({
@@ -522,14 +535,14 @@ taxCategorySale:[],
       }
     );
 
-    this.service.hsnSacCodeList()
-    .subscribe(
-      data => {
-        this.hsnSacCodeList = data;
-        console.log(this.hsnSacCodeList);
-      }
-    );
-
+    // this.service.hsnSacCodeList()
+    // .subscribe(
+    //   data => {
+    //     this.hsnSacCodeList = data;
+    //     console.log(this.hsnSacCodeList);
+    //   }
+    // );
+  
     // this.service.internalOrderList()
     // .subscribe(
     //   data => {
@@ -569,30 +582,30 @@ taxCategorySale:[],
   //       console.log(this.typeList);
   //     }
   //   );
+////comment by vinita///////////
+  //  this.service.mainModelList()
+  //   .subscribe(
+  //     data => {
+  //       this.mainModelList = data;
+  //       console.log(this.mainModelList);
+  //     }
+  //   );
 
-   this.service.mainModelList()
-    .subscribe(
-      data => {
-        this.mainModelList = data;
-        console.log(this.mainModelList);
-      }
-    );
+  //   this.service.colorCodeList()
+  //   .subscribe(
+  //     data => {
+  //       this.colorCodeList = data;
+  //       console.log(this.colorCodeList);
+  //     }
+  //   );
 
-    this.service.colorCodeList()
-    .subscribe(
-      data => {
-        this.colorCodeList = data;
-        console.log(this.colorCodeList);
-      }
-    );
-
-    this.service.variantCodeList()
-    .subscribe(
-      data => {
-        this.variantCodeList = data;
-        console.log(this.variantCodeList);
-      }
-    );
+  //   this.service.variantCodeList()
+  //   .subscribe(
+  //     data => {
+  //       this.variantCodeList = data;
+  //       console.log(this.variantCodeList);
+  //     }
+  //   );*******till func
 
     // this.service.manYaerList()
     // .subscribe(
@@ -709,14 +722,15 @@ taxCategorySale:[],
         console.log(this.holdReasonList);
       }
     );
+    this.status='Active';
    }
 
 
   onHsnCodeSelected(mHsnCode:any){
 
-    alert("Hsn Code :"+mHsnCode);
+    // alert("Hsn Code :"+mHsnCode);
 
-    // if(mHsnCode != undefined) {
+    if(mHsnCode != null) {
 
       this.service.hsnSacCodeDet(mHsnCode)
       .subscribe(
@@ -742,7 +756,8 @@ taxCategorySale:[],
             data1 = this.taxCategoryListP;
           });
       });
-    // } else {
+    }
+    // else {
     //    alert ("hsn code not found....");
     //    this.itemMasterForm.get('taxCategorySale').reset()
     //    this.itemMasterForm.get('taxCategoryPur').reset()
@@ -765,8 +780,11 @@ taxCategorySale:[],
   }
 
   onOptionsSelectedColor(variant){
-    // alert(variant)
-  //  if(variant !=undefined){
+    alert('----'+variant+'&&&&')
+      if(variant ===undefined || variant=== ''){
+     alert('IF')}
+else{
+     alert('in else')
     this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
@@ -775,7 +793,7 @@ taxCategorySale:[],
         this.onKey(0);
       }
     );
-  //  }
+   }
   //  else{}
   }
 
@@ -787,7 +805,7 @@ taxCategorySale:[],
     // alert("onOptionsSelectedItemType");
     if(category == 'SS_VEHICLE'){
       this.disItemCode = false;
-    }else{
+     }else{
       this.disItemCode = true;
     }
     let select = this.SSitemTypeList.find(d => d.itemType === category);
@@ -804,7 +822,7 @@ taxCategorySale:[],
     if(select.purchable=='N'){this.purchasableShow = true; this.purchasable='N'}
     if(select.isTaxable=='Y'){this.isTaxableShow = false; this.displayisTaxable=false; this.isTaxable='Y' }
     if(select.isTaxable=='N'){this.isTaxableShow = true; this.isTaxable='N'}
-
+   
     this.service.categoryIdList(category)
     .subscribe(
       data => {
@@ -812,9 +830,56 @@ taxCategorySale:[],
         console.log(this.categoryIdList);
       }
     );
-    if(category=='SS_VEHICLE'){    this.ssVehical=true; this.ssSpares=false;}
+    if(category=='SS_VEHICLE'){    this.ssVehical=true; this.ssSpares=false;
+    this.costCenter=select.costCenter}
     if(category=='SS_SPARES'){     this.ssVehical=false; this.ssSpares=true;}
 
+    if(category===undefined){
+    }
+    else{
+      alert('catgory');
+      this.service.mainModelList()
+      .subscribe(
+        data => {
+          this.mainModelList = data;
+          console.log(this.mainModelList);
+        }
+      );
+
+      this.service.colorCodeList()
+      .subscribe(
+        data => {
+          this.colorCodeList = data;
+          console.log(this.colorCodeList);
+        }
+      );
+
+      this.service.variantCodeList()
+      .subscribe(
+        data => {
+          this.variantCodeList = data;
+          console.log(this.variantCodeList);
+        }
+      );
+      if(this.stockable==='Y')
+      {
+        this.service.hsnSacCodeData('HSN').subscribe(
+          data=>{
+            this.hsnSacCodeList=data;
+          }
+
+        )
+      }
+      else
+      {
+        this.service.hsnSacCodeData('SAC').subscribe(
+          data=>{
+            this.hsnSacCodeList=data;
+          }
+
+        )
+      }
+    }
 
 
      this.itemMasterForm.get('hsnGstPer').reset();
@@ -920,7 +985,8 @@ taxCategorySale:[],
     }
   }
   SearchItemCode(segment){
-      this.service.getItemCodePach(segment)
+    this.dispupdate=false;
+    this.service.getItemCodePach(segment)
       .subscribe(
         data => {
           this.lstcomments = data;

@@ -10,7 +10,7 @@
                           <input type="text"  class="form-control" formControlName="AssetNo" id="AssetNo" name="AssetNo" [(ngModel)]="AssetNo">
                       </td>
                       <td colspan="8" style="text-align: left; width: 100%;">
-                          <!-- <button type="submit" class="btn btn-primary" (click)="search(AssetNo)"><i class="fa fa-search"></i></button> -->
+                          <button type="submit" class="btn btn-primary" (click)="search(AssetNo)"><i class="fa fa-search"></i></button>
                       </td>
                   </tr>
               </table>
@@ -28,17 +28,17 @@
                               <tr>
                           <td style="width: 15%" class="LabelFontStyle">Asset&nbsp;No:</td>
                       <td   style="border: none;color: black;">
-                          <input type="text" class="form-control" >
+                          <input type="number" class="form-control" formControlName="assetId" [(ngModel)]="assetId">
                       </td>
                       <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No:</td>
 
                       <td>
-                         <input type="text" class="form-control" >
+                         <input type="text" class="form-control" formControlName="referenceNum"[(ngModel)]="referenceNum" >
                       </td>
                       <td style="width: 15%" class="LabelFontStyle">Book&nbsp;:</td>
 
                       <td>
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" formControlName="bookTypeCode">
                       </td>
                   </tr>
                   <tr>
@@ -50,11 +50,11 @@
 
                         <td style="width: 15%" class="LabelFontStyle">Retire&nbsp;Date&nbsp;:</td>
                         <td>
-                               <input type="date" class="form-control" >
+                               <input type="date" class="form-control" formControlName="dateRetired">
                         </td>
                              <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:</td>
                         <td>
-                               <input type="text" class="form-control" >
+                               <input type="text" class="form-control" formControlName="status">
                                     </td>
                       </tr>
                           </table>
@@ -72,28 +72,28 @@
                                           Current&nbsp;Units:
                                       </td>
                                       <td >
-                                          <input type="number" class="form-control">
+                                          <input type="number" class="form-control" formControlName="units">
                                       </td>
                                       <td style="width: 15%"class="LabelFontStyle">
                                               Units&nbsp;Retired&nbsp;:
                                           </td>
                                           <td >
-                                              <input type="number" class="form-control" >
+                                              <input type="number" class="form-control" formControlName="unitsRetire">
                                           </td>
                                           <td style="width: 15%"class="LabelFontStyle">
                                               Retirement&nbsp;Type&nbsp;:
                                           </td>
                                           <td >
-                                              <select  class="form-control">
+                                              <select  class="form-control" formControlName="retirementTypeCode">
                                                 <option>--Select--</option>
-                                                <option></option>
+                                                <option  *ngFor="let sc of  retireTypeList">{{sc.lookupCode}}</option>
                                               </select>
                                           </td>
                                           <td style="width: 15%"class="LabelFontStyle">
                                               Retirement&nbsp;Convention&nbsp;:
                                           </td>
                                           <td >
-                                              <input type="text" class="form-control">
+                                              <input type="text" class="form-control" formControlName="retirementProrateConvention">
                                           </td>
                                   </tr>
                                   <tr>
@@ -101,28 +101,28 @@
                                               Current&nbsp;Cost&nbsp;:
                                           </td>
                                           <td >
-                                              <input type="number" class="form-control" >
+                                              <input type="number" class="form-control" formControlName="nbvRetired" >
                                           </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
                                                   Cost&nbsp;Retired&nbsp;:
                                               </td>
                                               <td >
-                                                  <input type="number" class="form-control">
+                                                  <input type="number" class="form-control" formControlName="costRetired">
                                               </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
                                                   Proceeds&nbsp;of&nbsp;Sale:
                                               </td>
                                               <td >
-                                                  <input type="text" class="form-control">
+                                                  <input type="text" class="form-control" formControlName="proceedsOfSale">
                                               </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
                                                   Costs&nbsp;Reserve&nbsp;:
                                               </td>
                                               <td >
-                                                  <input type="text" class="form-control" formControlName="revalReserveAcct">
+                                                  <input type="text" class="form-control" formControlName="revalReserveRetired">
                                               </td>
 
                                   </tr>
@@ -131,21 +131,21 @@
                                              AR&nbsp;Invoice&nbsp;No:
                                           </td>
                                           <td >
-                                              <input type="number" class="form-control">
+                                              <input type="number" class="form-control" formControlName="arInvNo">
                                           </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
-                                                  Customer&nbsp;Id&nbsp;:
+                                                  Customer&nbsp;No&nbsp;:
                                               </td>
                                               <td >
-                                                  <input type="number" class="form-control">
+                                                  <input type="number" class="form-control" formControlName="customerNo">
                                               </td>
-
+                                              <input hidden formControlName="emplId" [(ngModel)]="emplId" >
                                           <td style="width: 15%"class="LabelFontStyle">
-                                                  Customernbsp;Name&nbsp;:
+                                                  Customer&nbsp;Name&nbsp;:
                                               </td>
                                               <td >
-                                                  <input type="text" class="form-control" >
+                                                  <input type="text" class="form-control" formControlName="soldTo">
                                               </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
@@ -177,70 +177,9 @@
                                   <button type="button" class="btn btn-info">Search</button>
                               </td>
                               <td>
-                                      <button type="button" class="btn btn-info">Done</button>
+                                      <button type="button" class="btn btn-info" (click)="assRetirementSave()">Done</button>
                                   </td>
-                                 <td>
-                                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Rate</button>
-                                              </td>
-                                              <!-- Modal -->
-                                              <div class="modal fade" id="myModal1" role="dialog">
-                                                      <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                              <label style="text-align: center;margin-left: 7rem;">Depriciation Rates</label>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                            <!-- <table class="center" style="width: 100%;"> -->
-                                                                  <div class="grid_scroll">
 
-                                                                          <table style="width: fit-content; border: solid 1px Gray" class="auto-style4"
-                                                                                    cellspacing="0" cellpadding="4" rules="all" class="center">
-                                                                                    <thead>
-                                                                                      <tr class="GridHeader">
-                                                                                            <!-- <th scope="col">No.</th> -->
-                                                                                            <th scope="col">Basic %</th>
-                                                                                            <th scope="col">Adjusting %</th>
-                                                                                            <th scope="col">Adjusted %</th>
-                                                                                            <th scope="col">Add+</th>
-                                                                                            <th scope="col">Del-</th>
-                                                                                      </tr>
-                                                                                    </thead>
-
-                                                                                  <tr>
-
-                                                                                    <!-- <input type="text" hidden formControlName="priceListLineId"> -->
-                                                                                      <td>
-                                                                                          <input type="number"  class="form-control"  style="width: 80px;">
-                                                                                      </td>
-                                                                                      <td>
-                                                                                          <input  style="width: 80px;" type="number"  class="form-control">
-                                                                                      </td>
-                                                                                      <td>
-                                                                                          <input style="width: 80px;"  type="number"   class="form-control">
-                                                                                      </td>
-                                                                                   <td>
-                                                                                          <button type="submit" class="btn btn-info"  style="width: min-content;"><i
-                                                                                          class="fa fa-plus"></i></button>
-                                                                                      </td>
-
-                                                                                      <td>
-                                                                                              <button type="submit" class="btn btn-info" style="width: min-content;"><i
-                                                                                              class="fa fa-trash"></i></button>
-                                                                                      </td>
-
-                                                                                    </tr>
-
-                                                                          </table>
-                                                                      </div>
-                                                            <!-- </table> -->
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                              <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    </div>
 
 
                <!-- ====================Reset Dialog ======================== -->
