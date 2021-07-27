@@ -170,11 +170,12 @@ constructor(private service : MasterService, private fb: FormBuilder, private ro
         this.service.JaiRegimeMasterSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFULLY');
-            this.jaiRegimeMasterForm.reset();
+            // this.jaiRegimeMasterForm.reset();
+            this.jaiRegimeMasterForm.disable();
           } else {
             if (res.code === 400) {
               alert('Code already present in the data base');
-              this.jaiRegimeMasterForm.reset();
+              // this.jaiRegimeMasterForm.reset();
             }
           }
         });

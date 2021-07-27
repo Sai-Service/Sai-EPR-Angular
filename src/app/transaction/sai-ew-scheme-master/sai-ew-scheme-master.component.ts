@@ -379,7 +379,8 @@ export class SaiEwSchemeMasterComponent implements OnInit {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
             // this.saiEwSchemeMasterForm.reset();
-            window.location.reload();
+            // window.location.reload();
+            this.saiEwSchemeMasterForm.disable();
           } else {
             if (res.code === 400) {
               alert('Code already present in the data base');

@@ -185,8 +185,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   bankName:string;
   bankBranch:string;
   checkNo:string;
-  // checkDate:Date;
-  checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  checkDate:string;
+  // checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
   lastRunKms:number;
   checkValidation=false;
@@ -202,6 +202,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   ewCancelFlag=false;
   cancelledFlag=false;
   dispCustButton=false;
+  showCustModal=false;
 
   variantItemId : number;
 
@@ -525,12 +526,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
              }
 
               resetSection3() {
-                this.paymentAmt=null; 
+                this.paymentAmt=this.ewSchemeAmt;
                 this.receiptMethodId =null;
                 this.bankName=null;
                 this.bankBranch=null;
                 this.checkNo=null;
-                this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+                this.checkDate = null;
               }
 
             
@@ -856,6 +857,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           else if (this.CustomerSiteDetails.taxCategoryName===null)
              {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
           else{
+            this.showCustModal=true;
              console.log(this.CustomerSiteDetails);
              this.saiEwForm.patchValue({
               customerSiteId:this.CustomerSiteDetails.customerSiteId,
@@ -1018,7 +1020,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
         onPayTypeSelected(payType : any  , rmStatus : any){
           // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
-          if (payType !==null) {
+          if (payType !=undefined ) {
+            if(this.displayButton===true) { this.receiptMethodId=null;}
+          
             if (payType === 'CASH') {   
               // alert("checque seleected")   ;    
                 this.service.ReceiptMethodList(payType ,this.locId,rmStatus)
@@ -1029,9 +1033,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                     this.showBankDetails=false;
                   }
                 );
+                this.resetSection3();
                 } else{
       
-                  // alert("cash selected");
+                this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+               
                 this.service.ReceiptMethodList(payType ,this.ouId,rmStatus)
                 .subscribe(
                   data => {
@@ -1039,10 +1045,13 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                     console.log(this.ReceiptMethodList);
                     this.showBankDetails=true;
               });
+             
             }
           } 
           
         }
+
+       
 
         GetOrderDetails(mOrderNumber:any) {
           // alert("order details...."+ mOrderNumber);
@@ -1159,9 +1168,17 @@ export class SaiExtendedWarrantyComponent implements OnInit {
               this.ewCancelReason=select.ewCancelReason;   }
 
               // alert("CancelDate :" + this.ewCancelDate);
-              if(this.ewCancelDate !=null ) {this.cancelledFlag=true;}else {this.cancelledFlag=false;}
+              if(this.ewCancelDate !=null ) {
+                this.cancelledFlag=true; this.saiEwForm.disable();}
+                else {
+                  
+                  this.cancelledFlag=false;
+                  this.saiEwForm.disable();
+                  this.saiEwForm.get('ewBookletNo').enable();
+                  this.saiEwForm.get('ewCancelReason').enable();
+                }
 
-              this.saiEwForm.patchValue(select);
+            this.saiEwForm.patchValue(select);
             // this.ewId = select.ewId;
              this.GetVehicleRegInfomation(this.vehRegNo);
              this.GetVariantDeatils(this.variant);
@@ -1173,12 +1190,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             this.getDiffDays(this.deliveryDate,this.ewSaleDate);
             this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,this.kmsEwSale);
             this.getEwClaimStatus(this.vehRegNo);
-
-            
-         }
-
-         
         }
+    }
 
 
 
@@ -1228,12 +1241,13 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
               this.displaySuccess=true;
-              window.location.reload();
+              // window.location.reload();
+              this.saiEwForm.disable();
             } else {
               if (res.code === 400) {
                 this.displaySuccess=false;
                 alert('Code already present in the data base');
-                window.location.reload();
+                // window.location.reload();
               }
             }
             });
@@ -1413,7 +1427,7 @@ getInvItemId($event) {
                 } 
                 // alert( "receiptMethodId : "+formValue.receiptMethodId);
 
-                if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null)
+                if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null || formValue.receiptMethodId<=0)
                 {
                   this.checkValidation=false;  
                   alert ("PAY METHOD: Please Select Receipt Method....");

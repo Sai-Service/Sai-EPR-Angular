@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;EXTENDEND&nbsp;WARRANTY&nbsp;CUSTOMER&nbsp;FORM
+                &nbsp;&nbsp;EXTENDED&nbsp;WARRANTY&nbsp;CUSTOMER&nbsp;FORM
             </td>
         </tr>
     </table>
@@ -353,7 +353,7 @@
                     
                     <!-- -----------------------------CUSTOMER MODAL FORM STARTS HERE--------------------- -->
 
-                    <div *ngIf="dispCustButton; then thenBlockC; else elseBlockC"></div>
+                    <div *ngIf="showCustModal; then thenBlockC; else elseBlockC"></div>
                     <ng-template #thenBlockC>
 
                     <td>
@@ -364,12 +364,11 @@
                     </ng-template>
                     <ng-template #elseBlockC>
 
-                    <td>
-                        <button disabled type="button"  class="btn btn-primary" 
-                        data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
-                        &nbsp;View&nbsp;Customer&nbsp;Details</button>
-                        <!-- (click)="showPkgDetails()" -->
-                    </td>
+                        <td>
+                            <button disabled type="button"  class="btn btn-primary" 
+                            data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
+                            &nbsp;View&nbsp;Customer&nbsp;Details</button>
+                        </td>
                     </ng-template>
 
 
@@ -661,7 +660,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Sale&nbsp;Date:&nbsp;</td>
     
                             <td>
-                                <input disabled  type="Date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate" class="form-control" >
+                                <input disabled  type="date" value="fsd"  formControlName="ewSaleDate"  id="ewSaleDate" [(ngModel)]="ewSaleDate" class="form-control" >
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle1">EW&nbsp;Start&nbsp;Date:&nbsp;</td>
@@ -726,7 +725,7 @@
                             <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
                             <td>  
                                 <select formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control">
-                                    <option disabled>--Select--</option>
+                                    <option >--Select--</option>
                                     <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
                                         {{sc.receiptMethodId}}-{{sc.methodName}} 
                                     </option>

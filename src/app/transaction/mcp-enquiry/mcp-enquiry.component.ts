@@ -65,8 +65,8 @@ export class McpEnquiryComponent implements OnInit {
         orgId:number;
         ouId :number;
         deptId:number; 
-       // emplId :number;
-        public emplId =6;
+       emplId :number;
+        // public emplId =6;
 
         userList1: any[] = [];
         lastkeydown1: number = 0;
@@ -102,8 +102,8 @@ export class McpEnquiryComponent implements OnInit {
         // enqDate:Date;
 
         now = Date.now();
-        enqDate = this.pipe.transform(this.now, 'y-MM-dd');
-        startDate = this.pipe.transform(this.now, 'y-MM-dd');
+        enqDate = this.pipe.transform(this.now, 'dd-MM-y');
+        startDate = this.pipe.transform(this.now, 'dd-MM-y');
         endDate:string;
 
         packageId:number;
@@ -312,7 +312,7 @@ export class McpEnquiryComponent implements OnInit {
             this.locId=Number(sessionStorage.getItem('locId'));
             // this.locName=(sessionStorage.getItem('locName'));
             this.deptId=Number(sessionStorage.getItem('dept'));
-            // this.emplId= Number(sessionStorage.getItem('emplId'));
+            this.emplId= Number(sessionStorage.getItem('emplId'));
             this.orgId=this.ouId;
             console.log(this.loginArray);
             console.log(this.locId);
@@ -394,7 +394,7 @@ export class McpEnquiryComponent implements OnInit {
 
             resetSection2() {
               this.enqNo=null;
-              this.enqDate=null;
+              // this.enqDate=null;
               this.executive=null
               this.pkgEnquired=null;
               this.mcpPackageList=null
@@ -529,7 +529,7 @@ export class McpEnquiryComponent implements OnInit {
                 
            });
 
-             this.getMcpStatus(this.regNo);
+            //  this.getMcpStatus(this.regNo);
              this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.customerId);
             
@@ -579,7 +579,7 @@ export class McpEnquiryComponent implements OnInit {
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
       
-             this.getMcpStatus(mRegNo);
+            //  this.getMcpStatus(mRegNo);
              this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.customerId);
   
@@ -859,7 +859,7 @@ export class McpEnquiryComponent implements OnInit {
             addDays(date1: Date, days1: number): Date {
               date1.setDate(date1.getDate() + days1);
               return date1;
-          }
+              }
 
             getPackagePriceDetails(mpkgNo,mPkgType,fType) {
               // alert("inside price details ..." +mpkgNo+","+mPkgType);
@@ -1001,7 +1001,7 @@ export class McpEnquiryComponent implements OnInit {
           delete val.customerType; 
           delete val.custTaxCategoryName; 
 
-          delete val.enqNo;
+          // delete val.enqNo;
           delete val.enqDate;
           delete val.packageId;
          
@@ -1023,14 +1023,16 @@ export class McpEnquiryComponent implements OnInit {
 
             this.service.McpEnquiryMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
-
-                
                 alert('RECORD INSERTED SUCCESSFUILY');
-                this.mcpEnquiryForm.reset();
+                this.displayButton=false;
+                // this.enqNo=res.obj;
+                this.mcpEnquiryForm.disable();
+                // this.mcpEnquiryForm.reset();
+                
               } else {
                 if (res.code === 400) {
                   alert('ERROR WHILE INSERTING');
-                  this.mcpEnquiryForm.reset();
+                  // this.resetMast();
                 }
               }
             });
@@ -1041,25 +1043,26 @@ export class McpEnquiryComponent implements OnInit {
 
 
     
-       SearchByMcpEnqNo1(mEnqNo:any){
-        this.service.getsearchByEnqNo(mEnqNo)
-          .subscribe(
-            data => {
-              this.lstMcplines = data;
-              console.log(this.lstMcplines);
+      //  SearchByMcpEnqNo1(mEnqNo:any){
+      //   this.service.getsearchByEnqNo(mEnqNo)
+      //     .subscribe(
+      //       data => {
+      //         this.lstMcplines = data;
+      //         console.log(this.lstMcplines);
              
-          } );   }
+      //     } );   }
 
 
 
             SearchByMcpEnqNo(mEnqNo:any){
               // this.mcpEnquiryForm.reset();
+              var xEnq = mEnqNo.toUpperCase();
               this.resetSection1(); this.resetSection3(); this.resetSection3();
               this.addFlag=false;
               this.displayButton=false;
 
               console.log(this.mcpEnquiryForm.value);
-              this.service.getsearchByEnqNo(mEnqNo)
+              this.service.getsearchByEnqNo(xEnq)
                 .subscribe(
                   data => {
                     this.lstMcplines = data;
@@ -1093,6 +1096,8 @@ export class McpEnquiryComponent implements OnInit {
                             
                       this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
                       this.showDetailsButton=true
+                      this.mcpEnquiryForm.get('executive').disable();
+
                       // ----------------------------------------------------------------------------
           
                      } ); 

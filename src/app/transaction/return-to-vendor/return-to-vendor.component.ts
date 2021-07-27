@@ -663,7 +663,8 @@ export class ReturnToVendorComponent implements OnInit {
             this.disabled = false;
             this.disabledLine=false;
             alert(res.message);
-            this.returntoVendorForm.reset();
+            // this.returntoVendorForm.reset();
+            this.returntoVendorForm.disable();
           } else {
             if (res.code === 400) {
               alert('Data already present in the data base');
