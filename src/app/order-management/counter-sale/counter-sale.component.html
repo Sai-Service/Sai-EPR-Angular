@@ -311,8 +311,8 @@
                     Tax&nbsp;Amount&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
-                        class="form-control" style="width: 160px;text-align: right;">
+                    <input disabled type="number" formControlName="totTax" [(ngModel)]="totTax" value={{totTax}}
+                        class="form-control" style="width: 160px;text-align: right;" minFractionDigits="2" maxFractionDigits>
                 </td>
                 <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                     Total&nbsp;Amount&nbsp;:&nbsp;
@@ -449,7 +449,7 @@
                             Tax&nbsp;Amount&nbsp;:&nbsp;
                         </td>
                         <td>
-                            <input disabled type="text" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
+                            <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
                                 class="form-control" style="width: 160px;text-align: right;">
                         </td>
                         <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
@@ -593,7 +593,7 @@
                                                         {{item.value.segment}}
                                                     </option>
                                                 </select> -->
-                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
+                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
                                                 <datalist id="dynmicUserIds1">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
@@ -608,9 +608,9 @@
                                                 style="height: 20px;width: 160px;">
                                         </td>
                                         <td>
-                                            <select class="form-control" style="height: 20px; width: 110px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,i)'>
-                                            <option>--Select--</option>
-                                            <option *ngFor="let locId of  locData[i]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                                            <select class="form-control" style="height: 20px; width: 160px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,i)'>
+                                            <!-- <option>--Select--</option> -->
+                                            <option *ngFor="let locId of  locData[i]" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                                             <input hidden formControlName="frmLocatorId">
                                           </select>
                                           </td>
@@ -623,8 +623,8 @@
 
                                     </td>
                                         <td>
-                                            <input  type="text" formControlName="pricingQty" class="form-control"
-                                                (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                            <input  type="number" formControlName="pricingQty" class="form-control"
+                                                (change)="onKey(i)" style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
                                        
                                     </td>
                                     <td>
@@ -642,6 +642,28 @@
                                         </option>
                                     </select>
                                     </td>
+                                    <td>
+                                        <input disabled type="number" formControlName="baseAmt"  class="form-control"
+                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input disabled type="number" formControlName="taxAmt" class="form-control" [ngModel]="taxAmt"
+                                            style="height: 20px;width: 70px;" >
+                                    </td>
+                                    <td>
+                                        <!-- totAmt -->
+                                        <input disabled type="number" formControlName="totAmt" class="form-control"
+                                            style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <!-- hsnSacCode -->
+                                        <input disabled type="text" formControlName="hsnSacCode" class="form-control"
+                                            style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" formControlName="flowStatusCode" class="form-control"
+                                        style="height: 20px;width:120px;">
+                                    </td>
                                         </ng-template>
                                         <ng-template #elsesegmentInvType>
                                             <td>
@@ -657,7 +679,7 @@
                                             </td>
                                             <td>
                                                 <input disabled   formControlName="frmLocatorName"  [ngValue]="frmLocatorName" class="form-control"
-                                                style="height: 20px;width: 70px;">
+                                                style="height: 20px;width: 160px;">
                                             </td>
                                             <td>
                                                 <input disabled  type="number" formControlName="Avalqty"  [ngValue]="Avalqty" class="form-control"
@@ -682,27 +704,37 @@
                                             <input hidden type="number" formControlName="orgId" [(ngModel)]='orgId'
                                                 class="form-control" style="height: 20px;width: 160px;">
                                     </td>
+                                    <td>
+                                        <input disabled type="number" formControlName="baseAmt"  class="form-control"
+                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input disabled type="number" formControlName="taxAmt" class="form-control"
+                                            style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <!-- totAmt -->
+                                        <input disabled type="number" formControlName="totAmt" class="form-control"
+                                            style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <!-- hsnSacCode -->
+                                        <input disabled type="text" formControlName="hsnSacCode" class="form-control"
+                                            style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <select formControlName="flowStatusCode" id="flowStatusCode"
+                                                 class="form-control"
+                                                style="width: 120px;height: 25px;font-size: 10px;">
+                                                <option>--Select--</option>
+                                                <option value="BOOKED">BOOKED</option>
+                                                <option value="CANCELLED">CANCELLED</option>
+                                                <option value="Invoiced">Invoiced</option>
+                                            </select>
+                                    </td>
                                         </ng-template>
-                                        <td>
-                                            <!-- [(ngModel)]='baseAmt' -->
-                                            <input disabled type="number" formControlName="baseAmt"  class="form-control"
-                                                (change)="onKey(i)" style="height: 20px;width: 70px;">
-                                        </td>
-                                        <td>
-                                            <input disabled type="number" formControlName="taxAmt" class="form-control"
-                                                style="height: 20px;width: 70px;">
-                                        </td>
-                                        <td>
-                                            <!-- totAmt -->
-                                            <input disabled type="number" formControlName="totAmt" class="form-control"
-                                                style="height: 20px;width: 70px;">
-                                        </td>
-                                        <td>
-                                            <!-- hsnSacCode -->
-                                            <input disabled type="text" formControlName="hsnSacCode" class="form-control"
-                                                style="height: 20px;width: 70px;">
-                                        </td>
-                                        <td>
+                                       
+                                        <!-- <td>
                                             <div *ngIf="displayLineflowStatusCode[i]; then thenLineflowStatusCode; else elseLineflowStatusCode"></div>
                                             <ng-template #thenLineflowStatusCode>
                                             <input disabled type="text" formControlName="flowStatusCode" class="form-control"
@@ -718,7 +750,7 @@
                                                 <option value="Invoiced">Invoiced</option>
                                             </select>
                                             </ng-template>
-                                            </td>
+                                            </td> -->
                                         <td>
                                             <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow"></div>
                                             <ng-template #thenaddRow>
@@ -985,55 +1017,7 @@
                     <ng-template #thenpickTicketInvoice>
                     </ng-template>
                     <ng-template #elsepickTicketInvoice>
-                        <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pickTicketToInv" data-dismiss="modal" style="width: 10rem;">
-  Pick Ticket To Invoice
-  </button>
-  
-  <div class="modal fade" id="pickTicketToInv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <table class="center">
-            <tr>
-                <td>
-                    <button  type="submit" class="btn btn-primary" id="register" (click)="downloadPickTicket()" style="width: 10rem;">Download Pre Invoice</button>
-                </td>
-                <td>
-                <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketInvoiceFunction()" style="width: 10rem;">Pick Ticket To Invoice</button>
-                </td>
-            </tr>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-agreement" (click)="downloadPickTicket()">
-    Preview
-  </button>
-  <div class="modal fade" id="modal-agreement">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <button  type="submit" class="btn btn-primary" id="register" (click)="pickTicketInvoiceFunction()" style="width: 10rem;">Pick Ticket To Invoice</button>
-          <!-- <object type="application/pdf" data="/assets/download.pdf" width="100%" height="500" style="height: 85vh;">No Support</object> -->
-          <embed src="~/Content/download.pdf" frameborder="0" width="100%" height="400px">
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+  <button type="button" class="btn btn-primary"  (click)="downloadPickTicket()"> Preview</button>
          </ng-template>
                 </td>
                 <td>
@@ -1623,27 +1607,3 @@
     </div>
   </div>
 </form>
-
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <pdf-viewer
-      src="C:\Users\jyoti\Downloads\download (34).pdf"
-      [rotation]="0"
-        [fit-to-page]="true"
-        [original-size]="true"
-        [show-all]="true"
-        style="display: block;"
-    ></pdf-viewer>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
-  </ng-template>
-
-  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch</button> -->
