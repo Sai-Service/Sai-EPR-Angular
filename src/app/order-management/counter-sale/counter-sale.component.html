@@ -62,6 +62,38 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
+                                        Email&nbsp;ID&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="emailId"
+                                            [(ngModel)]='emailId' value={{emailId}} style="width: 150px;">
+                                    </td> 
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="emailId1"
+                                            [(ngModel)]='emailId1' value={{emailId1}} style="width: 150px;">
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Date&nbsp;Of&nbsp;Birth&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="date" class="form-control" formControlName="birthDate"
+                                            [(ngModel)]='birthDate' value={{birthDate}} style="width: 150px;">
+                                    </td> 
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Wedding&nbsp;Date1&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="date" class="form-control" formControlName="weddingDate"
+                                            [(ngModel)]='weddingDate' value={{weddingDate}} style="width: 150px;">
+                                    </td> 
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
                                         GSTN&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
@@ -69,7 +101,7 @@
                                             [(ngModel)]='gstNo' value={{gstNo}} style="width: 150px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        GSTN&nbsp;No&nbsp;:&nbsp;
+                                        Pan&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <input disabled type="text" class="form-control" formControlName="panNo"
@@ -119,19 +151,32 @@
                         value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)" style="width: 160px;">
                     </ng-template>
                     </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Site&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <select formControlName="name" id="name" class="form-control" style="width: 160px;"    (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let custSite of custSiteList">
+                                {{custSite.name}}
+                            </option>
+                        </select>
+                        <input hidden disabled type="number" class="form-control" formControlName="id" [(ngModel)]='id'
+                        value={{id}} style="width: 160px;">
+                    </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Name:&nbsp;
                 </td>
                 <td>
                     <input  type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
-                        value={{custName}} (keydown.tab)="custNameSearch(custName)"  style="width: 100%;">
+                        value={{custName}} (keydown.tab)="custNameSearch(custName)"  style="width: 160px;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Contact&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
                     <input class="form-control" formControlName="mobile1" [(ngModel)]='mobile1'
-                    value={{mobile1}} (keydown.tab)="contactNoSearch(mobile1)" style="width: 100%;">
+                    value={{mobile1}} (keydown.tab)="contactNoSearch(mobile1)" style="width: 160px;">
                 </td>
             </tr>
             <tr>
@@ -281,7 +326,7 @@
                     Remark&nbsp;:&nbsp;
                 </td>
                 <td colspan="3">
-                    <input type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}}
+                    <input type="text" formControlName="remarks" [(ngModel)]='remarks' value={{remarks}} 
                         class="form-control" style="width: 100%;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -469,6 +514,30 @@
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Line & Tax
             Details</legend>
+            <table style="width: 28%;">
+                <tr>
+                    <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                        Discount&nbsp;Type&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <select formControlName="discType" id="discType" class="form-control" style="width: 170px;"    (ngModelChange)='onOptionsSelectedDiscountType($event)'>
+                        <option>--Select--</option>
+                        <option value="HeadLevelDisc">Header Level Discount</option>
+                        <option value="LineLevelDisc">Line Level Discount</option>
+                    </select>
+                    </td>
+                    <div *ngIf="displaydisPer; then thendisPer; else elsedisPer"> </div>
+                     <ng-template #thendisPer>
+                     </ng-template>
+                     <ng-template #elsedisPer>
+                    <td>
+                        <input  type="text" formControlName="disPer" [(ngModel)]='disPer' value={{disPer}}  (ngModelChange)='onOptionsSelectedDiscountPer($event)'
+                        class="form-control" style="width: 160px;font-weight: bold;">
+                        <!-- (keydown.tab)="disPerCal(disPer)" -->
+                    </td>
+                     </ng-template>
+                </tr>
+            </table>
             <div class="classic-tabs">
         <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
             <li class="nav-item">
@@ -540,8 +609,11 @@
                                 <th scope="col" style="width: 160px;">Available QTY</th>
                                 <th scope="col" style="width: 70px;">Qty</th>
                                 <th scope="col" style="width: 90px;">Unit Price</th>
-                                <th scope="col" style="width: 160px;">Tax Category</th>
                                 <th scope="col" style="width: 90px;">Base Amount</th>
+                                <th scope="col" style="width: 90px;">Discount Percentage</th>
+                                <th scope="col" style="width: 90px;">Discount Amount</th>
+                                <th scope="col" style="width: 160px;">Tax Category</th>
+                               
                                 <th scope="col" style="width: 90px;">Tax Amount</th>
                                 <th scope="col" style="width: 90px;">Total Amont</th>
                                 <th scope="col" style="width: 90px;">HSN/SAC code</th>
@@ -593,7 +665,7 @@
                                                         {{item.value.segment}}
                                                     </option>
                                                 </select> -->
-                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
+                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
                                                 <datalist id="dynmicUserIds1">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
@@ -608,15 +680,15 @@
                                                 style="height: 20px;width: 160px;">
                                         </td>
                                         <td>
-                                            <select class="form-control" style="height: 20px; width: 160px;" formControlName="frmLocatorId" (ngModelChange)='AvailQty($event,i)'>
-                                            <!-- <option>--Select--</option> -->
-                                            <option *ngFor="let locId of  locData[i]" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
-                                            <input hidden formControlName="frmLocatorId">
+                                            <select class="form-control" style="height: 20px; width: 160px;" formControlName="frmLocatorId">
+                                            <!-- <option>--Select--</option>      (ngModelChange)='AvailQty(i)'-->
+                                            <option *ngFor="let locId of  locData" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                                            <!-- <input hidden formControlName="frmLocatorId"> -->
                                           </select>
                                           </td>
-                                          <input hidden formControlName="onHandQty">
+                                          <input hidden type="number" formControlName="onHandQty">
                                           <input hidden formControlName="id">
-                                          <input hidden  type="text"  formControlName="resveQty">
+                                          <input hidden  type="number"  formControlName="resveQty">
                                           <td>
                                             <input disabled  type="number" formControlName="Avalqty"  [ngValue]="Avalqty" class="form-control"
                                                  style="height: 20px;width: 70px;">
@@ -632,6 +704,18 @@
                                             style="height: 20px;width: 90px;" (change)="onKey(i)">
                                     </td>
                                     <td>
+                                        <input disabled type="number" formControlName="baseAmt"  class="form-control"
+                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input disabled  type="number" formControlName="disPer"  class="form-control"
+                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input  type="number" formControlName="disAmt"   class="form-control" 
+                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
                                         <select formControlName="taxCategoryName" id="taxCategoryName"
                                         (ngModelChange)='onOptionTaxCatSelected($event,i)'
                                         (change)="onKey(i)" class="form-control"
@@ -642,10 +726,7 @@
                                         </option>
                                     </select>
                                     </td>
-                                    <td>
-                                        <input disabled type="number" formControlName="baseAmt"  class="form-control"
-                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
-                                    </td>
+                                   
                                     <td>
                                         <input disabled type="number" formControlName="taxAmt" class="form-control" [ngModel]="taxAmt"
                                             style="height: 20px;width: 70px;" >
