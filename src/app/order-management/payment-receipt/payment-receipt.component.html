@@ -83,12 +83,12 @@
                         </tr>
                         <tr>
 
-                            <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id:&nbsp;</td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id:&nbsp;</td>
 
-                            <td>
-                                <input disabled type="number" class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+                            <td> -->
+                                <input hidden disabled type="number" class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
                                 <!-- <input   type="text" formControlName="customerId"  id="customerId" class="form-control"  placeholder="Customer Id"> -->
-                            </td>
+                            <!-- </td> -->
 
                             <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
                             
@@ -117,10 +117,12 @@
                     <!-- <table class="center"> -->
 
                         <tr>
-                            <td   style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Amount:&nbsp;</td>
+                            <td   style="width: 15%;font-weight: bold;" class="LabelFontStyle">Receipt&nbsp;Amount:&nbsp;</td>
 
                             <td>
-                                <input    type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" placeholder="Receipt Amount">
+                                <input    type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" min="0" class="form-control" 
+                                placeholder="Enter Receipt Amount" style="font-weight: bold;"
+                                oninput="this.value = Math.abs(this.value)">
                             </td>
 
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Mode:&nbsp;</td>
@@ -143,12 +145,6 @@
                                         {{sc.methodName}} 
                                     </option>
                                 </select>
-
-
-                                <!-- <input  type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;"> -->
-                                <!-- [ngValue]="sc.receiptMethodName" -->
-                                <!-- <input hidden formControlName="receiptMethodId" [(ngModel)]="receiptMethodId" > -->
-
                             </td>
                         </tr>
 
@@ -498,32 +494,32 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
         <tr class="GridHeader">
+            <th style="width:3rem" scope="col">Sr No</th>
             <th style="width:10rem" scope="col">Order No</th>
-            <th style="width:6rem" scope="col">SR No</th>
             <th style="width:6rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
-            <th style="width:10rem" scope="col">Cust No</th>
-            <th style="width:10rem" scope="col">Payment Amt</th>
+            <th style="width:10rem" scope="col">Customer Name</th>
+            <th style="width:10rem" scope="col">Payment Amount</th>
             <th style="width:10rem" scope="col">Receipt Method</th>
+            <th style="width:10rem" scope="col">Status</th>
             <!-- <th style="width:10rem" scope="col">Payment For</th> -->
         <th style="width:6rem" scope="col">Select</th>
     </tr>
    </tbody>
-            <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-                <!-- <td>{{com.oePayList.srlno}}</td> -->
-
-                <td>{{orderNumber}}</td>
-                <td>{{com.srlNo}}</td>
-                <td>{{com.receiptNumber}}</td>
-                <td>{{com.receiptDate}}</td>
-                <td>{{com.payType}}</td>  
+            <tr *ngFor="let com of lstcomments" style="text-decoration:none;">
+                <td class="grid-container">{{com.srlNo}}</td>
+                <td class="grid-container">{{com.orderNumber}}</td>
+                <td class="grid-container">{{com.receiptNumber}}</td>
+                <td class="grid-container">{{com.receiptDate}}</td>
+                <td class="grid-container">{{com.payType}}</td>  
                 <!-- <td>{{com.orderNumber}}</td> -->
-                <td>{{com.custName}}</td>
-                <td>{{com.paymentAmt}}</td>
-                <td> {{com.receiptMethodName}}</td>
+                <td class="grid-container">{{com.custName}}</td>
+                <td style="text-align: right;" class="grid-container">{{com.paymentAmt}}</td>
+                <td class="grid-container"> {{com.receiptMethodName}}</td>
+                <td class="grid-container"> {{com.status}}</td>
                 <!-- -{{com.receiptMethodName}} -->
-                <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
+                <td class="grid-container"><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
             </tr>
     </table>
 </div>

@@ -22,6 +22,11 @@ export class MasterService {
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   }
+
+  taxCategoryNameList(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/${ouId}`);
+  }
+
   memberTicketNo(locCode, deptId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
   }
@@ -952,11 +957,11 @@ taxCalforItemWithVOR(itemId,taxCatId,diss,baseAmount,vorAmt,drfAmt) {
   });
 }
 
-taxCalforItem(itemId,taxCatId,diss,baseAmount) {
+taxCalforItem(itemId,taxCatId,disAmt1,baseAmount) {
   const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
   .set('baseAmt', baseAmount)
   .set('taxCateId', taxCatId)
-  .set('disAmt', diss)
+  .set('disAmt1', disAmt1)
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
   return this.http.get(REQUEST_URI, {
     params: REQUEST_PARAMS,

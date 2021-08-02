@@ -91,9 +91,16 @@ fieldset {
     padding-bottom: 0px;
     border-color: Gray;
     height: 15px;
+    /* float: tofixed(2); */
+    
   }
+  
+
+  /* .currency:after{ content: '.00'; } */
 
   .nav-link{
       padding: 0%;
   }
 
+
+  

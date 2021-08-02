@@ -410,6 +410,7 @@ checkIfAllSelected() {
           }
           if(data.code ===200){
             this.lstcompolines = data.obj;
+            alert(data.obj.poLines.length)
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
             this.displaySaveButton =true; 
@@ -446,11 +447,16 @@ checkIfAllSelected() {
           this.disabled = true;
           this.DisplayqtyReceived=false;
           this.disabledLine=true;
-          let control = this.poReceiptForm.get('poLines') as FormArray;
-          var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.poLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
-          control.push(poLines);
+          let control = this.poReceiptForm.get('poLines') as FormArray; 
+          // var length1=this.lstcompolines.poLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
+          this.lineDetailsArray.clear();
+          // alert(data.obj.poLines.length);
+          for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
+            control.push(poLines);
+            // debugger;
+          }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
 
@@ -492,7 +498,7 @@ checkIfAllSelected() {
   }
 
   ReceiptFind(segment1){
-    // this.lineDetailsArray.clear();
+    this.lineDetailsArray.clear();
     this.displaySaveButton =false;
     // alert(segment1);
     console.log(this.poReceiptForm.value);
@@ -501,14 +507,14 @@ checkIfAllSelected() {
         data => {
           this.lstcompolines = data;
           let control = this.poReceiptForm.get('poLines') as FormArray;
-          var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.rcvLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
+          // var length1=this.lstcompolines.rcvLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
           // for (var i=0;i<=length1;i++){
           //   control.push(poLines);
           // }
-          var len=this.lineDetailsArray.length;
-          for ( var i=0;i<this.lstcompolines.rcvLines.length-len;i++){
+          // var len=this.lineDetailsArray.length;
+          for ( var i=0;i<this.lstcompolines.rcvLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
             control.push(poLines);
           }
         this.disabled = false;
@@ -540,6 +546,7 @@ checkIfAllSelected() {
           }
           if(data.code ===200){
             this.lstcompolines = data.obj;
+            this.lineDetailsArray.clear();
             // alert( this.lstcompolines.receiptNo);
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
@@ -547,15 +554,15 @@ checkIfAllSelected() {
             this.disabled = false;
               this.disabledLine=false;
               let control = this.poReceiptForm.get('poLines') as FormArray;
-          var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.poLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
-          control.push(poLines);
+          // var length1=this.lstcompolines.poLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
+          for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
+            control.push(poLines);
+            // debugger;
+          }
           this.displaySaveButton =false;
           this.poReceiptForm.patchValue(this.lstcompolines);
-         
-        
-          
           }
           else{
             const invCategory = data.obj.poLines[0].ctgDescription.substr(0, 3);
@@ -566,10 +573,13 @@ checkIfAllSelected() {
           this.disabledLine=true;
           this.DisplayqtyReceived=true;
           let control = this.poReceiptForm.get('poLines') as FormArray;
-          var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.poLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
-          control.push(poLines);
+          // var length1=this.lstcompolines.poLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
+          for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
+            control.push(poLines);
+            // debugger;
+          }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
           qtyReceived: 1;
@@ -580,10 +590,14 @@ checkIfAllSelected() {
           this.DisplayqtyReceived=false;
           this.disabledLine=true;
           let control = this.poReceiptForm.get('poLines') as FormArray;
-          var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.poLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
-          control.push(poLines);
+          // debugger;
+          // var length1=this.lstcompolines.poLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
+          for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
+            control.push(poLines);
+            // debugger;
+          }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
           // this.locatorDesc.push(this.lstcompolines.rcvLines[0].locatorDesc);
@@ -645,6 +659,7 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
               // alert(data.obj);
             }
             if(data.code ===200){
+              this.lineDetailsArray.clear();
               this.lstcompolines = data.obj;
             if(this.lstcompolines.poStatus==='Receipt Generated'){
               console.log(this.poStatus);
@@ -652,10 +667,15 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
               this.disabled = false;
                 this.disabledLine=false;
                 let control = this.poReceiptForm.get('poLines') as FormArray;
-            var poLines:FormGroup=this.lineDetailsGroup();
-            var length1=this.lstcompolines.poLines.length-1;
-            this.lineDetailsArray.removeAt(length1);
-            control.push(poLines);
+            // var poLines:FormGroup=this.lineDetailsGroup();
+            // var length1=this.lstcompolines.poLines.length-1;
+            // this.lineDetailsArray.removeAt(length1);
+            // control.push(poLines);
+            for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+              var poLines:FormGroup=this.lineDetailsGroup();
+              control.push(poLines);
+              // debugger;
+            }
             this.displaySaveButton =false;
             this.poReceiptForm.patchValue(this.lstcompolines);
             }
@@ -664,10 +684,15 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
             this.disabled = true;
             this.disabledLine=true;
             let control = this.poReceiptForm.get('poLines') as FormArray;
-            var poLines:FormGroup=this.lineDetailsGroup();
-            var length1=this.lstcompolines.poLines.length-1;
-            this.lineDetailsArray.removeAt(length1);
-            control.push(poLines);
+            // var poLines:FormGroup=this.lineDetailsGroup();
+            // var length1=this.lstcompolines.poLines.length-1;
+            // this.lineDetailsArray.removeAt(length1);
+            // control.push(poLines);
+            for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+              var poLines:FormGroup=this.lineDetailsGroup();
+              control.push(poLines);
+              // debugger;
+            }
             this.displaySaveButton =true;
             this.poReceiptForm.patchValue(this.lstcompolines);
             this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
@@ -694,14 +719,20 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
           }
           if(data.code ===200){
           // this.lstcompolines = data.obj;
+          this.lineDetailsArray.clear();
           this.lstcompolines = data.obj;
           let control = this.poReceiptForm.get('poLines') as FormArray;
           var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.poLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
+          // var length1=this.lstcompolines.poLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
           this.disabled = false;
           this.disabledLine=false;
-          control.push(poLines);
+          // control.push(poLines);
+          for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
+            control.push(poLines);
+            // debugger;
+          }
           this.poReceiptForm.patchValue(this.lstcompolines);
           this.locatorDesc=this.lstcompolines.poLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
@@ -724,14 +755,20 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
           }
           if(data.code ===200){
           // this.lstcompolines = data.obj;
+          this.lineDetailsArray.clear();
           this.lstcompolines = data.obj;
           let control = this.poReceiptForm.get('poLines') as FormArray;
-          var poLines:FormGroup=this.lineDetailsGroup();
-          var length1=this.lstcompolines.poLines.length-1;
-          this.lineDetailsArray.removeAt(length1);
+          // var poLines:FormGroup=this.lineDetailsGroup();
+          // var length1=this.lstcompolines.poLines.length-1;
+          // this.lineDetailsArray.removeAt(length1);
           this.disabled = false;
           this.disabledLine=false;
-          control.push(poLines);
+          for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
+            var poLines:FormGroup=this.lineDetailsGroup();
+            control.push(poLines);
+            // debugger;
+          }
+          // control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
           this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
