@@ -31,13 +31,13 @@ export class McpEnrollmentComponent implements OnInit {
   public VehRegNoList       : Array<string> = [];
   public VehVinList         : Array<string> = [];
   public issueByList        : Array<string> = [];
-  
+  lstMcpEnquiryList: Array<any> = [];
   getVehRegDetails:any;
   getVehVinDetails:any;
   variantDetailsList:any;
   CustomerDetailsList:any;
   CustomerSiteDetails:any;
-  lstMcpEnquiryList:any;
+  // lstMcpEnquiryList:any[];
   getPkgDetails:any[];
   lstcomments: any;
   lstMcplines: any;
@@ -68,7 +68,7 @@ export class McpEnrollmentComponent implements OnInit {
         vehicleId:string;
         custId:number;
        
-        mcpInvoiceNo:string;
+        invoiceNo:string;
         customerId:number; 
         custName:string;
         dmsCustNo:number;
@@ -87,8 +87,8 @@ export class McpEnrollmentComponent implements OnInit {
 
         vehicleItem:string;
         fuelType :string;
-        variant:string ;
-        variantDesc:string;
+        variantCode:string ;
+        mainModel :string;
         chassisNo:string;
         engineNo:string;
         serviceModel:string;
@@ -161,8 +161,8 @@ export class McpEnrollmentComponent implements OnInit {
             vehicleId:[],
             vehicleItem:[],
             fuelType :[],
-            variant:[],
-            variantDesc:[],
+            variantCode:[],
+            mainModel:[],
             chassisNo:[],
             engineNo:[],
             serviceModel:[],
@@ -172,7 +172,7 @@ export class McpEnrollmentComponent implements OnInit {
             executive:[],
             custId:[],
             pkgSource:[],
-            mcpInvoiceNo:[],
+            invoiceNo:[],
             enrollmentNo:[],
             enrollDate:[],
             enqNo:[],
@@ -348,8 +348,8 @@ export class McpEnrollmentComponent implements OnInit {
   
                 this.mcpEnrollmentForm.patchValue({
                   fuelType: this.getVehRegDetails.fuelType,
-                  variant: this.getVehRegDetails.variantCode,
-                  variantDesc: this.getVehRegDetails.mainModel,
+                  variantCode: this.getVehRegDetails.variantCode,
+                  mainModel: this.getVehRegDetails.mainModel,
                   chassisNo: this.getVehRegDetails.chassisNo,
                   engineNo: this.getVehRegDetails.engineNo,
                   deliveryDate: this.getVehRegDetails.vehicleDelvDate,
@@ -360,7 +360,7 @@ export class McpEnrollmentComponent implements OnInit {
                   customerId: this.getVehRegDetails.customerId, });
              
                   this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
-                  this.GetVariantDeatils(this.variant);
+                  this.GetVariantDeatils(this.variantCode);
                   this.GetCustomerDetails(this.customerId);
                   this.GetCustomerSiteDetails(this.customerId);
         
@@ -388,10 +388,12 @@ export class McpEnrollmentComponent implements OnInit {
 
         LoadMcpEnrolledEnquiry(mEnqNo){
           alert("Enroleld enq  :"+mEnqNo);
-          this.service.getEnrolledMcpEnqList(mEnqNo)
+          this.lstMcpEnquiryList=[];
+           this.service.getEnrolledMcpEnqList(mEnqNo)
            .subscribe(
             data => {
-              this.lstMcpEnquiryList = data;
+              // this.lstMcpEnquiryList = data;
+              this.lstMcpEnquiryList.push(data);
               console.log(this.lstMcpEnquiryList);
                                  
         }
@@ -408,8 +410,8 @@ export class McpEnrollmentComponent implements OnInit {
   
                 this.mcpEnrollmentForm.patchValue({
                   fuelType: this.getVehVinDetails.fuelType,
-                  variant: this.getVehVinDetails.variantCode,
-                  variantDesc: this.getVehVinDetails.mainModel,
+                  variantCode: this.getVehVinDetails.variantCode,
+                  mainModel: this.getVehVinDetails.mainModel,
                   chassisNo: this.getVehVinDetails.chassisNo,
                   engineNo: this.getVehVinDetails.engineNo,
                   deliveryDate: this.getVehVinDetails.vehicleDelvDate,
@@ -422,7 +424,7 @@ export class McpEnrollmentComponent implements OnInit {
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
              alert(this.deliveryDate);
-             this.GetVariantDeatils(this.variant);
+             this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.customerId);
   
               var saleDate=new Date(this.deliveryDate);
@@ -480,6 +482,8 @@ export class McpEnrollmentComponent implements OnInit {
                 
                 this.mcpEnrollmentForm.patchValue({
                   serviceModel: this.variantDetailsList.serviceModel,
+                  variantCode : this.variantDetailsList.serviceModel,
+
                 });
               });
           }
@@ -519,7 +523,7 @@ export class McpEnrollmentComponent implements OnInit {
       showPkgDetails(){alert ("Package Details......in.. WIP")}
       // SearchByMcpEnrollNo(mEnrollmentNo){alert ("SearchBy.....in.. WIP")}
     
-      updateMast(){alert ("Update.....in.. WIP")}
+      updateMast(){alert ("Print Certificate.....in.. WIP")}
     
 
       resetMast() {
@@ -573,10 +577,10 @@ export class McpEnrollmentComponent implements OnInit {
               this.packageNumber=select.pkgEnquired;
               this.pkgSource=select.sourceDesc;
               this.totLabAmt=select.labAmt;
-              this.totLabDisc=0;
+              this.totLabDisc=select.labDiscAmt;
               this.totLabGst=select.labTaxAmt;
               this.totMatAmt=select.matAmt;
-              this.totMatDisc=0;
+              this.totMatDisc=select.matDiscAmt;
               this.totMatGst=select.matTaxAmt;
               this.packageAmt=select.packageAmt;
               // mcpEndDate
@@ -615,7 +619,7 @@ export class McpEnrollmentComponent implements OnInit {
             delete val.loginName;
             delete val.locName;
             delete val.ouName;
-            delete val.ouId;
+            // delete val.ouId;
             delete val.deptId;
             delete val.emplId;
             delete val.orgId;
@@ -681,9 +685,14 @@ export class McpEnrollmentComponent implements OnInit {
              if (res.code === 200) {
                alert('RECORD INSERTED SUCCESSFUILY');
                this.displayButton=false;
-               // this.enqNo=res.obj;
+               this.enrollmentNo=res.obj.enrollmentNo;
+               this.invoiceNo=res.obj.InvoiceNo;
                this.mcpEnrollmentForm.disable();
+               this.mcpEnrollmentForm.get('searchEnrollNo').enable();
+               this.mcpEnrollmentForm.get('searchEnrollDate').enable();
+               this.mcpEnrollmentForm.get('searchRegno').enable();
                // this.mcpEnquiryForm.reset();
+             
                
              } else {
                if (res.code === 400) {
@@ -699,12 +708,10 @@ export class McpEnrollmentComponent implements OnInit {
            
            var mEnrollNo = mEnrollNo.toUpperCase();
            alert("Enrollment No :"+mEnrollNo);
-
-          // this.mcpEnquiryForm.reset();
+           // this.mcpEnquiryForm.reset();
           // this.resetSection1(); this.resetSection3(); this.resetSection3();
           // this.addFlag=false;
           this.displayButton=false;
-
           console.log(this.mcpEnrollmentForm.value);
           this.service.getsearchByEnrollNo(mEnrollNo)
             .subscribe(
@@ -719,8 +726,7 @@ export class McpEnrollmentComponent implements OnInit {
                     this.GetCustomerDetails(this.customerId);
                     this.GetCustomerSiteDetails(this.customerId)
                     this.LoadMcpEnrolledEnquiry(this.lstMcplines.enqNo)
-                    // this.LoadMcpEnrolledList(this.lstMcplines.enqNo);
-                    // this.getPackageInfo(this.pkgEnquired,this.lstMcplines.fuelType)
+                    this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
                     
                     // this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
                     // this.discAmt= (this.lstMcplines.totMatDisc+this.lstMcplines.totLabDis),
@@ -750,6 +756,22 @@ export class McpEnrollmentComponent implements OnInit {
                  } ); 
 
           }
+
+          getPackageInfo(pkgNo,fType,){
+            // alert(pkgNo + ","+fType);
+          this.service.getMcpPackageSearchNew2(pkgNo ,fType,this.ouId)
+          .subscribe(
+          data => {
+            this.getPkgDetails = data;
+            console.log(this.getPkgDetails);
+            if(this.getPkgDetails !=null){
+
+              //  this.packageType=this.getPkgDetails[0].packageType;
+               this.packageDesc= this.getPkgDetails[0].packageDesc;
+               this.validMonths= this.getPkgDetails[0].validPeriod;
+
+            }
+          }); }
 
 
           GetVehicleRegInfomation(mRegNo){

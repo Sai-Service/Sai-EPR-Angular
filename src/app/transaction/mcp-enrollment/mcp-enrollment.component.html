@@ -135,13 +135,13 @@
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Variant:&nbsp;</td>
         
                             <td>
-                                <input disabled  type="text"  formControlName="variant"  id="variant" [(ngModel)]="variant" class="form-control" >
+                                <input disabled  type="text"  formControlName="variantCode"  id="variantCode" [(ngModel)]="variantCode" class="form-control" >
                             </td>
         
                             <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
         
                             <td>
-                                <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
+                                <input disabled  type="text"  formControlName="mainModel"  id="mainModel" [(ngModel)]="mainModel" class="form-control" >
                             </td>
         
                             <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
@@ -180,26 +180,26 @@
                             <tr>
                            <td></td><td><td></td>  <td></td><td><td></td><td></td>
                             
-
+<!-- 
                             <div *ngIf="dispCustButton; then thenBlockC; else elseBlockC"></div>
                               <ng-template #thenBlockC>
-  
+   -->
                               <td>
                                   <button type="button"  class="btn btn-primary" 
                                   data-toggle="modal" data-target="#exampleModal20"   style="width: 9rem;color: black;">
                                   &nbsp;View&nbsp;Customer&nbsp;Details</button>
                                   <!-- (click)="showPkgDetails()" -->
                              </td>
-                              </ng-template>
+                              <!-- </ng-template>
                               <ng-template #elseBlockC>
   
                                   <td>
                                       <button disabled type="button"  class="btn btn-primary" 
                                       data-toggle="modal" data-target="#exampleModal20"   style="width: 9rem;color: black;">
                                       &nbsp;View&nbsp;Customer&nbsp;Details</button>
-                                      <!-- (click)="showPkgDetails()" -->
+                               
                                  </td>
-                              </ng-template>
+                              </ng-template> -->
     
     
     
@@ -232,7 +232,15 @@
                                    </tbody>
 
                                    <tr *ngFor="let com of lstMcpEnquiryList let i=index" class="ItemStyle" style="text-decoration:none;">
+
+                                            <div *ngIf="displayButton; then BlockA; else BlockB"></div>
+                                            <ng-template #BlockA>       
                                             <td><button class="btn btn-secondary" (click)="SelectPackage(com.enqNo)">Select</button></td>
+                                            </ng-template>
+                                            <ng-template #BlockB>
+                                                <td><button disabled class="btn btn-secondary" (click)="SelectPackage(com.enqNo)">Select</button></td>
+                                            </ng-template>
+
                                             <td style="text-align: center;">{{i+1}}</td>
                                             <td style="font-size: 12px;">{{com.enqNo}} </td>
                                             <td style="font-size: 12px;">{{com.enqDate| date:'dd-MM-y'}}</td>
@@ -263,7 +271,7 @@
                                         <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Inv&nbsp;No:&nbsp;</td>
                                             
                                         <td>
-                                            <input  disabled type="text"  formControlName="mcpInvoiceNo"  id="mcpInvoiceNo" [(ngModel)]="mcpInvoiceNo" class="form-control" >
+                                            <input  disabled type="text"  formControlName="invoiceNo"  id="invoiceNo" [(ngModel)]="invoiceNo" class="form-control" >
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;No:&nbsp;</td>
                                         
@@ -607,9 +615,9 @@
                                     <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpEnrollmentForm">Save</button>
                                 </td>
                                 
-                                <td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                </td>
+                                </td> -->
 
                                     <!-- ====================Reset Dialog ======================== -->
 
@@ -678,11 +686,11 @@
                                     <ng-template #elseBlock1>
                                    
                                             <td>
-                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpEnrollmentForm">Update</button>
+                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpEnrollmentForm">Print Slip </button>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                            </td>
+                                            </td> -->
                                             <!-- <td>
                                                 <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                                             </td>

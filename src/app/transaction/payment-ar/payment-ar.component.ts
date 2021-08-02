@@ -22,6 +22,7 @@ billToSiteId:number;
 glDate :Date;
 receiptNumber:number;
 receiptDate:Date;
+receiptStatus:string;
 
 payType:string;
 receiptMethodId:number;
@@ -88,6 +89,7 @@ export class PaymentArComponent implements OnInit {
   rmStatus :string
   paymentMethod : string;
   receiptAmount:number;
+  receiptStatus:string;
 
   receiptMethodId : number;
   // paymentCollection: string;
@@ -239,6 +241,7 @@ export class PaymentArComponent implements OnInit {
       payType:[],
       receiptMethodId :[],
       receiptMethodName: [],
+      receiptStatus:[],
       status:[],
       insuranceFlag:[],
       receiptAmount:[],
@@ -635,7 +638,7 @@ export class PaymentArComponent implements OnInit {
 
       SearchByRcptNo(rcptNo : any , custActNo: any, rcptdate : any) {
         // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
-       
+        this.status=null;
         var mDate= this.pipe.transform(rcptdate, 'dd-MMM-y');
          this.service.getArReceiptSearchByRcptNo(rcptNo ,custActNo,mDate)
         .subscribe(
@@ -681,7 +684,9 @@ export class PaymentArComponent implements OnInit {
             this.paymentArForm.get('reversalReasonCode').enable();
             this.paymentArForm.get('reversalCategory').enable();
             this.paymentArForm.get('reversalComment').enable();
-            this.paymentArForm.get('reversalDate').enable();}
+            this.paymentArForm.get('reversalDate').enable();
+            this.paymentArForm.get('status').enable();
+          }
 
 
           this.paymentArForm.get('searchByRcptNo').enable();   
@@ -1262,6 +1267,10 @@ export class PaymentArComponent implements OnInit {
             alert('RECORD INSERTED SUCCESSFUILY');
             this.receiptNumber=res.obj;
             this.paymentArForm.disable();
+             this.paymentArForm.get('searchByRcptNo').enable();   
+             this.paymentArForm.get('searchByCustNo').enable();  
+              this.paymentArForm.get('searchByDate').enable();  
+
             // this.paymentArForm.reset();
             this.displayButton=false;
           } else {
@@ -1309,7 +1318,7 @@ export class PaymentArComponent implements OnInit {
               return;
            } 
 
-           
+        // alert("Status :" +formValue.status);
         if (formValue.status===undefined || formValue.status===null)
         {
           alert ("STATUS: Should not be null....");
@@ -1332,11 +1341,17 @@ export class PaymentArComponent implements OnInit {
               this.service.ReverseArReceiptSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD UPDATED SUCCESSFUILY');
+                this.paymentArForm.disable()
+                // this.paymentArForm.get('receiptNumber').disable();
+
+                this.paymentArForm.get('searchByRcptNo').enable();   
+                this.paymentArForm.get('searchByCustNo').enable();  
+                this.paymentArForm.get('searchByDate').enable();  
                 // window.location.reload();
               } else {
                 if (res.code === 400) {
                   alert('ERROR OCCOURED IN PROCEESS');
-                  this.paymentArForm.reset();
+                  // this.paymentArForm.reset();
                 }
               }
             });
@@ -1352,6 +1367,7 @@ export class PaymentArComponent implements OnInit {
           // glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
           this.reversalCategory='Receipt Reversed'
           this.status='Reversed'
+          // this.receiptStatus='Reversed'
           // this.emplId=26;
       }
 

@@ -18,25 +18,28 @@
                         
                       
                         <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="orgId"
+                            <input   style="width:30px ;"  hidden type="text" formControlName="orgId"
                             class="form-control" [(ngModel)]="orgId" >
                         </td>
                      
                         <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                            <input  style="width:30px ;" hidden type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
                         </td>
 
                         <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id:&nbsp;</td> -->
 
                         <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="emplId"
+                            <input  style="width:30px ;"  type="text" hidden formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
 
                         </td>
 
                         <td>
-                            <input  disabled style="width:30px ;" type="text"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
+                            <input  hidden style="width:30px ;" type="text"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
                         </td>
+                        <!-- <td>
+                            <input  disabled style="width:30px ;" type="text"  formControlName="status"  id="status" [(ngModel)]="status" class="form-control" >
+                        </td> -->
                                             
                       </tr>
                     </table>
@@ -660,7 +663,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
                                 
                             <td>
-                                <input disabled  type="text"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
+                                <input disabled  type="date"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
                             </td>
 
                           

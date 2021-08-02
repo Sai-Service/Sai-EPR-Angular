@@ -102,8 +102,8 @@ export class McpEnquiryComponent implements OnInit {
         // enqDate:Date;
 
         now = Date.now();
-        enqDate = this.pipe.transform(this.now, 'dd-MM-y');
-        startDate = this.pipe.transform(this.now, 'dd-MM-y');
+        enqDate = this.pipe.transform(this.now, 'y-MM-dd');
+        startDate = this.pipe.transform(this.now, 'y-MM-dd');
         endDate:string;
 
         packageId:number;
@@ -802,6 +802,8 @@ export class McpEnquiryComponent implements OnInit {
 
          onEnterKms(mKms : any)
          {
+           this.resetSection2();
+           this.resetSection3();
          
            alert("Last Run Km :" + this.lastRunKms +" curr Reading :"+mKms);
            if(this.lastRunKms===null) {this.lastRunKms=0;   }
@@ -875,14 +877,14 @@ export class McpEnquiryComponent implements OnInit {
                 this.mcpEnquiryForm.patchValue({
                   labAmt: this.getPkgPriceDetails.totLabBasic,
                   labDiscAmt: this.getPkgPriceDetails.totLabDis,
-                  labTaxAmt: this.getPkgPriceDetails.totLabGst,
-                  labCessAmt: this.getPkgPriceDetails.totLabCess,
+                  labTaxAmt: this.getPkgPriceDetails.totLabGst.toFixed(2),
+                  // labCessAmt: this.getPkgPriceDetails.totLabCess,
                   labNetAmt: this.getPkgPriceDetails.totLabNet,
 
                   matAmt: this.getPkgPriceDetails.totMatBasic,
                   matDiscAmt: this.getPkgPriceDetails.totMatDisc,
-                  matTaxAmt: this.getPkgPriceDetails.totMatGst,
-                  matCessAmt: this.getPkgPriceDetails.totMatCess,
+                  matTaxAmt: this.getPkgPriceDetails.totMatGst.toFixed(2),
+                  // matCessAmt: this.getPkgPriceDetails.totMatCess,
                   matNetAmt: this.getPkgPriceDetails.totMatNet,
 
                   consAmt: 0,
@@ -894,7 +896,7 @@ export class McpEnquiryComponent implements OnInit {
                     totBaseAmt: (this.getPkgPriceDetails.totMatBasic+this.getPkgPriceDetails.totLabBasic),
                     discAmt: (this.getPkgPriceDetails.totMatDisc+this.getPkgPriceDetails.totLabDis),
                     totTaxAmt: (this.getPkgPriceDetails.totMatGst+this.getPkgPriceDetails.totLabGst),
-                    totCessAmt: 0,
+                    // totCessAmt: 0,
                     packageAmt:this.getPkgPriceDetails.totPackageAmt,
                  });
       
@@ -973,10 +975,10 @@ export class McpEnquiryComponent implements OnInit {
           delete val.totBaseAmt;
           delete val.totTaxAmt;
           delete val.totCessAmt;
-          delete val.matDiscAmt;
+          // delete val.matDiscAmt;
           delete val.matCessAmt;
           delete val.matNetAmt;
-          delete val.labDiscAmt;
+          // delete val.labDiscAmt;
           delete val.labNetAmt;
           delete val.labCessAmt;
           delete val.consAmt;
@@ -1025,8 +1027,10 @@ export class McpEnquiryComponent implements OnInit {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.displayButton=false;
-                // this.enqNo=res.obj;
+                this.enqNo=res.obj.enqNo;
                 this.mcpEnquiryForm.disable();
+                this.mcpEnquiryForm.get('searchEnqNo').enable();
+                this.mcpEnquiryForm.get('searchRegno').enable();
                 // this.mcpEnquiryForm.reset();
                 
               } else {
