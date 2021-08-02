@@ -952,11 +952,11 @@ accountNoSearch(custAccountNo){
 }
 
 onOptionsSelectedcustSiteName(name){
-  alert(name);
+  // alert(name);
     let select = this.custSiteList.find(d => d.name === name);
     this.CounterSaleOrderBookingForm.patchValue({id:select.id})
     this.id = select.id;
-    alert(this.id);
+    // alert(this.id);
     this.orderManagementService.custSideAddDet(this.id)
     .subscribe(
       data => {
