@@ -11,6 +11,24 @@ import { now } from 'jquery';
 
 interface IWsVehicleMaster {
   regNo: string;
+  mainModel:string;
+  variantCode:string;
+  segment:string;
+  colorCode:string;
+  chassisNo:string;
+  engineNo:string;
+  fueltype:string;
+  categoryId:number;
+  itemId:number;
+  custAccountNo:number;
+  custPhone1:number;
+  custName:string;
+  custAddress1:string;
+  custAddress2:string;
+  custAddress3:string;
+  custCity:string;
+  custState:string;
+  custPin:string;
 
 }
 @Component({
@@ -34,9 +52,21 @@ export class WsVehicleMasterComponent implements OnInit {
   public ewInsNameList      : Array<string> = [];
 
   public ItemEWList         : Array<string> = [];
+  public mainModelList      : Array<string>  = [];
+  public colorCodeList      : Array<string>  =[];
+  public FuelTypeList       :Array<string> = [];
+  public statusList         :Array<string> = [];
   
   pipe = new DatePipe('en-US');
 
+  /////////////////////SEARCH/////
+  mainModelName : string;
+  chassisNum :string;
+  vehRegNo :string='MH12EM6011';
+  ///////////////////////////////
+  categoryIdList:any;
+  SSitemTypeList:any;
+  VariantSearch:any;
   invItemListEw: any;
   VehicleRegDetails:any;
   EWItemList: any;
@@ -46,7 +76,7 @@ export class WsVehicleMasterComponent implements OnInit {
   getVehRegDetails:any;
   getVehVinDetails:any;
   lstEwSchemeDetails:any;
-  lstcomments: any[];
+  lstcomments: any;
   
   userList1: any[] = [];
   lastkeydown1: number = 0;
@@ -77,7 +107,8 @@ export class WsVehicleMasterComponent implements OnInit {
   ///////////////////////////////////////////////////
   regNo:string;
   vin:string;
-  ewItemCode:string;
+  monthYrManf:string;
+  segment:string;
   itemId:number;
   itemDesc:string;
   itemCatg:string;
@@ -91,9 +122,9 @@ export class WsVehicleMasterComponent implements OnInit {
   
   dealerName:string;
   dealerSite:string;
-  deliveryDate:string;
 
-  oemWarrentyEndDate:Date;
+
+
   dlrInvoiceNo:string;
   dmsInvoiceNo:string;
 
@@ -103,6 +134,7 @@ export class WsVehicleMasterComponent implements OnInit {
   inscompanySite:string;
 
   ewStatus:string;
+  mcpStatus:string;
   // ewBookletNo:string;
   ewInsurerId : number;
   ewInsurerSite:number;
@@ -110,7 +142,7 @@ export class WsVehicleMasterComponent implements OnInit {
   ewBalanceDays:number;
 
   mcpNo:string;
-  validity:string;
+  mcpEndDate:string;
   mcpYN:string;
   mcpPackage:string;
   
@@ -123,7 +155,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   fuelType :string;
-  variant:string ;
+  variantDesc:string ;
   variantCode:string;
   chassisNo:string;
   engineNo:string;
@@ -132,10 +164,22 @@ export class WsVehicleMasterComponent implements OnInit {
  
   kmReading:string;
   soldByEmpId : string;
-  custId:number;
+  customeId:number;
   custAccountNo:number;
   dmsCustNo:number;
   custName:string;
+  custAddress1:string;
+  custAddress2:string;
+  custAddress3:string;
+  custAddress4:string;
+  custCity:string;
+  custState:string;
+  custPin:string;
+  custPhone1:string;
+  custPhone2:string;
+  custPhone3:string;
+  custEmail:string;
+ 
 
   ewPeriod:number;
   warrantyDealer:string;
@@ -148,11 +192,14 @@ export class WsVehicleMasterComponent implements OnInit {
   ewTotalAmt:number;
 
   // ewSaleDate:Date;
-  segment: string;
+  // segment: string;
   
   
   now = Date.now();
-  ewSaleDate = this.pipe.transform(this.now, 'y-MM-dd');
+  deliveryDate = this.pipe.transform(this.now, 'y-MM-dd');
+  oemWarrentyEndDate:string;
+  regDate:string;
+  
 
   ewStartDate :Date
   payType:number;
@@ -171,12 +218,28 @@ export class WsVehicleMasterComponent implements OnInit {
   showBankDetails=false;
   showCancelDetails=false;
   displaySuccess=false;
+  showTvDetails=false;
+  showCreateItemButton=true;
+  showCreateCustButton=true;
+  checkValidation=false;
 
   variantItemId : number;
 
   // ewCancelDate:Date;
   ewCancelDate = this.pipe.transform(this.now, 'y-MM-dd');
   ewCancelReason:string;
+
+  //////////////////true value
+    tvStatus:string;
+    tvReSaleDate:Date;
+    tvWrExpDate:Date;
+    tvWrExpMileage:number;
+    tvCertificateNo:string;
+    tvSaleDealer:string;
+    tvSaleLocation:string;
+
+    itemTypeForCat:string='SS_VEHICLE';
+    categoryId:number;
 
 
   get f() { return this.wsVehicleMasterForm.controls; }
@@ -197,13 +260,25 @@ export class WsVehicleMasterComponent implements OnInit {
       orgId:[],
       divisionId:[],
 
+
+
+        /////////////////////SEARCH/////
+        mainModelName : [],
+        chassisNum :[],
+        vehRegNo :[],
+        ///////////////////////////////
+
       ////////////////////////////////////
+
+
       regNo:[],
       ewId:[],
       ewSchemeId:[],
       // ewDate:[],
       // ewBookletNo:[],
-
+      vin:[],
+      monthYrManf:[],
+      regDate:[],
       itemId:[],
       itemDesc:[],
       itemCatg:[],
@@ -230,7 +305,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
       mcpNo:[],
       mcpPackage:[],
-      validity:[],
+      mcpEndDate:[],
       mcpYN:[],
 
       cngCylinderNo:[],
@@ -253,10 +328,21 @@ export class WsVehicleMasterComponent implements OnInit {
       
       warrantyDealer:[],
 
-      custId:[],
+      customerId:[],
       custAccountNo:[],
       dmsCustNo:[],
       custName:[],
+      custAddress1:[],
+      custAddress2:[],
+      custAddress3:[],
+      custAddress4:[],
+      custCity:[],
+      custState:[],
+      custPhone1:[],
+      custPhone2:[],
+      custPhone3:[],
+      custPin:[],
+      custEmail:[],
       // dealerCode:[],
       ewPeriod:[],
 
@@ -292,14 +378,27 @@ export class WsVehicleMasterComponent implements OnInit {
 
       ewInvoiceNo:[],
       vehicleAgeDays:[],
-      ewItemCode:[],
+      segment:[],
 
       variantItemId:[],
-      segment :[],
+  
       
 
       ewCancelDate:[],
       ewCancelReason:[],
+
+      mcpStatus:[],
+
+      tvStatus:[],
+      tvReSaleDate:[],
+      tvWrExpDate:[],
+      tvWrExpMileage:[],
+      tvCertificateNo:[],
+      tvSaleDealer:[],
+      tvSaleLocation:[],
+
+      itemTypeForCat:[],
+      categoryId:[],
 
       });
 
@@ -397,24 +496,65 @@ export class WsVehicleMasterComponent implements OnInit {
         }
         );
 
+        this.service.mainModelList()
+        .subscribe(
+          data => {
+            this.mainModelList = data;
+            console.log(this.mainModelList);
+          }
+        );
+
+
+        this.service.colorCodeList()
+        .subscribe(
+          data => {
+            this.colorCodeList = data;
+            console.log(this.colorCodeList);
+          }
+        );
+
+        this.service.fuelTypeList()
+        .subscribe(
+        data => {
+          this.FuelTypeList = data;
+          console.log(this.FuelTypeList);
+        }
+      );
+
+      this.service.SSitemTypeListFn()
+      .subscribe(
+        data => {
+          this.SSitemTypeList = data;
+          console.log(this.SSitemTypeList);
+        }
+      );
+      this.service.categoryIdList(this.itemTypeForCat)
+      .subscribe(
+        data => {
+          this.categoryIdList = data;
+          console.log(this.categoryIdList);
+        }
+      );
+
+      this.service.statusList()
+      .subscribe(
+        data => {
+          this.statusList = data;
+          console.log(this.statusList);
+        }
+      );
+
 
       }
             
 
         // ========================================================
+
+        // onOptionsSelectedItemType(category:any){
+         
+        //  }
        
-        searchMast(regNo: string ){
-          regNo = 'MH12EM6011';
-          
-          this.service.getWsVehRegDetails(regNo)
-            .subscribe(
-              data => {
-                this.lstcomments = data.obj;
-                console.log(this.lstcomments);
-                this.wsVehicleMasterForm.patchValue(data.obj);
-              }
-            );
-           }
+      
 
 
 
@@ -431,13 +571,13 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
         newMast() {
-          alert ("Posting data  to EW SCHEME TABLE......")
-         
-  
-          // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
         
           const formValue: IWsVehicleMaster =this.transeData(this.wsVehicleMasterForm.value);
          
+          this.CheckDataValidations()
+
+          if (this.checkValidation) {
+            alert("Data Validation Sucessfull....\nPosting data  to WS Customer Master")
          
           // debugger;
           console.log(formValue);
@@ -455,12 +595,16 @@ export class WsVehicleMasterComponent implements OnInit {
               }
             }
           });
+        } else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
         }
   
         updateMast() {
-          alert ("Putting data  to EW SCHEME......")
+         
           const formValue: IWsVehicleMaster =this.transeData(this.wsVehicleMasterForm.value);
-          
+          this.CheckDataValidations()
+
+          if (this.checkValidation) {
+            alert("Data Validation Sucessfull....\Updating  WS Customer Master")
             this.service.UpdateSaiEwCustomer(formValue).subscribe((res: any) => {
             if (res.code === 200) {
               alert('RECORD UPDATED SUCCESSFUILY');
@@ -472,6 +616,7 @@ export class WsVehicleMasterComponent implements OnInit {
               }
             }
           });
+        } else{ alert("Data Validation Not Sucessfull....\Updation Not Done...")  }
         }
 
         resetMast() {
@@ -482,6 +627,359 @@ export class WsVehicleMasterComponent implements OnInit {
           this.router.navigate(['admin']);
         }
 
-  
+        SearchByModelChas(mdl,chas){
+          alert ("Search Vehicle by Model+Chassis..... wip - "+mdl + "+"+chas);
+        }
 
+        SearchByRegNo(mReg:string){
+          // alert ("Search Vehicle by RegNo..... wip :"+mReg);
+          this.service.getVehRegDetails(mReg)
+          .subscribe(
+            data => {
+              this.lstcomments = data;
+           
+             if(this.lstcomments ===null) {
+               alert ("Registration No : [ "+mReg+" ] not Found...");
+               this.displayButton=true;
+               this.showCreateCustButton=true;
+               this.showCreateItemButton=true;
+              //  this.resetVehDet();this.resetCustDet();this.resetAddnl();this.resetTv();
+              // this.wsVehicleMasterForm.reset();
+              // this.VariantSearch=null;
+              this.resetMast();
+           
+              }
+             else{
+              console.log(this.lstcomments);
+              this.wsVehicleMasterForm.patchValue(data);
+              this.GetItemDeatils(this.lstcomments.itemId.itemId);
+              this.GetCustomerDetails(this.lstcomments.customerId);
+
+              this.displayButton=false;
+              
+            }  
+          });
+        }
+        GetItemDeatils(mItemId){
+          if(mItemId>0) {
+            this.showCreateItemButton=false;
+          this.service.getItemDetail(mItemId)
+            .subscribe(
+              data => {
+                this.ItemDetailList = data;
+                console.log(this.ItemDetailList);
+                this.wsVehicleMasterForm.patchValue({
+                    itemId: this.ItemDetailList.itemId,
+                    segment: this.ItemDetailList.segment,
+                    categoryId: this.ItemDetailList.categoryId.categoryId,
+
+                }); } );   
+              } else {this.showCreateItemButton=true;}
+            }
+
+            GetCustomerDetails(mCustId :any){
+            if(mCustId>0) {
+              this.showCreateCustButton=false;
+            this.service.ewInsSiteList(mCustId)
+            .subscribe(
+              data1 => {
+                this.CustomerDetailsList = data1;
+                console.log(this.CustomerDetailsList);
+                this.wsVehicleMasterForm.patchValue({
+                  custAccountNo:this.CustomerDetailsList.custAccountNo,
+                  custName: this.CustomerDetailsList.custName,
+                  custAddress1: this.CustomerDetailsList.address1,
+                  custAddress2: this.CustomerDetailsList.address2,
+                  custAddress3: this.CustomerDetailsList.address3,
+                  custAddress4: this.CustomerDetailsList.address4,
+                  custCity: this.CustomerDetailsList.city,
+                  custState: this.CustomerDetailsList.state,
+                  custPin: this.CustomerDetailsList.pinCd,
+                  custPhone1: this.CustomerDetailsList.mobile1,
+                  custPhone2: this.CustomerDetailsList.mobile2,
+                  custPhone3: this.CustomerDetailsList.mobile3,
+                  custEmail:this.CustomerDetailsList.emailId,
+              });
+              }
+            );  
+            }else {this.showCreateCustButton=true;}
+          }
+    
+
+
+        searchMast(regNo: string ){
+          regNo = 'MH12EM6011';
+          this.service.getWsVehRegDetails(regNo)
+            .subscribe(
+              data => {
+                this.lstcomments = data.obj;
+                console.log(this.lstcomments);
+                this.wsVehicleMasterForm.patchValue(data.obj);
+              }
+            );
+           }
+
+        SearchByCustPhone(mPhone){alert ("Search by Cust Phone..... wip :"+mPhone);}
+        SearchByCustName(mName){alert ("Search by Cust Name..... wip :"+mName);}
+
+        CreateNewItem(mCode,mColor,mChassis){
+          alert ("Creating new item code ....wip:"+mCode +"-"+mColor+"-"+mChassis);
+        }
+
+        CreateItemCode(){
+        this.segment= this.variantCode +"-"+this.colorCode+"-"+this.chassisNo
+        }
+
+        CreateNewCustomer(){
+          alert ("Creating new Customer  ....wip");
+        }
+
+  
+        onOptionsSelectedModel(mainModel){
+      
+          if(mainModel != null){
+            this.variantDesc=null;
+            this.service.VariantSearchFn(mainModel)
+            .subscribe(
+              data => {
+                this.VariantSearch = data;
+                console.log(this.VariantSearch);
+              }
+            );
+          }
+          else{}
+        }
+
+
+        onOptionsSelectedVariant(modelVariant){
+
+          this.service.variantDetailsList(modelVariant)
+          .subscribe(
+            data => {
+              this.variantDetailsList = data;
+              console.log(this.variantDetailsList);
+              
+              this.wsVehicleMasterForm.patchValue({
+                variantDesc: this.variantDetailsList.varDescription,
+                serviceModel: this.variantDetailsList.serviceModel,
+
+              });
+            }
+             );
+        }
+
+        onChangeDelDate(mDelDate){
+         // ------------Date-----------
+         var stDate=new Date(mDelDate);
+         var prd =2;
+         var date2=this.addDays(stDate,prd*365);
+         this.oemWarrentyEndDate=this.pipe.transform(date2, 'y-MM-dd');
+         // ------------Date-----------
+
+        }
+            addDays(date1: Date, days1: number): Date {
+            date1.setDate(date1.getDate() + days1);
+            return date1;
+            }
+
+
+            tvFlag(e)
+            {
+             if ( e.target.checked === true) { this.showTvDetails=true; }
+             else {this.showTvDetails=false; }
+            }
+
+            GovtVehicle(e)   {
+              if ( e.target.checked === true) { alert("Govt Vehicle"); }
+              else {alert("non-Govt Vehicle"); }
+             }
+            VipVehicle(e)  {
+              if ( e.target.checked === true) { alert("VIP Vehicle"); }
+              else {alert("NON-VIP Vehicle"); }
+             }
+
+             resetVehDet(){
+               this.regNo=null; this.regDate=null; this.monthYrManf=null;
+               this.vin=null;this.segment=null;
+               this.wsVehicleMasterForm.get('mainModel').reset();
+               this.variantCode=null;this.variantDesc=null;
+               this.wsVehicleMasterForm.get('colorCode').reset();
+               this.wsVehicleMasterForm.get('fuelType').reset();
+               this.chassisNo=null;this.engineNo=null;
+               this.serviceModel=null;this.rfId=null;
+               this.deliveryDate=null;
+               this.dmsInvoiceNo=null;this.dlrInvoiceNo=null;
+               this.dealerCode=null;this.dealerName=null;this.dealerSite=null;
+               this.oemWarrentyEndDate=null;
+               this.wsVehicleMasterForm.get('categoryId').reset();
+               this.VariantSearch=null;
+             }
+             resetCustDet(){
+              this.custAccountNo=null; this.custName=null; this.dmsCustNo=null;
+              this.custAddress1=null;this.custAddress2=null;
+              this.custAddress3=null;this.custAddress4=null;
+              this.custCity=null;this.custState=null;
+              this.custPin=null;this.rfId=this.custEmail=null;
+              this.custPhone1=null; this.custPhone2=null; this.custPhone3=null;
+              this.dmsInvoiceNo=null;this.dlrInvoiceNo=null;
+             
+             }
+             resetAddnl(){
+              this.wsVehicleMasterForm.get('ewStatus').reset();
+              this.wsVehicleMasterForm.get('mcpStatus').reset();
+              this.policyNo=null; this.insuDate=null; this.insCompanyName=null;
+              this.inscompanySite=null;this.ewBookletNo=null;
+              this.ewInsurerId=null;this.ewEndDate=null;
+              this.ewBalanceDays=null;this.ewInsurerSite=null;
+              this.mcpNo=null;this.mcpEndDate=null;
+              this.cngCylinderNo=null; this.cngKitNumber=null; this.cngExpDate=null;
+              }
+
+              resetTv(){
+                this.tvReSaleDate=null; this.tvWrExpDate=null; this.tvWrExpMileage=null;
+                this.tvCertificateNo=null;this.tvSaleDealer=null;
+                this.tvSaleLocation=null;this.ewEndDate=null;
+                this.tvStatus=null;
+               
+              }
+
+              CheckDataValidations(){
+    
+                const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
+    
+                if (formValue.regNo===undefined || formValue.regNo===null || formValue.regNo.trim()==='')
+                {
+                   this.checkValidation=false; 
+                   alert ("REGISTRATION NO : Should not be null....");
+                   return;
+                 } 
+    
+                 if (formValue.mainModel===undefined || formValue.mainModel===null || formValue.mainModel.trim()==='')
+                {
+                   this.checkValidation=false; 
+                   alert ("MODEL: Should not be null....");
+                    return;
+                 } 
+    
+                  if (formValue.variantCode===undefined || formValue.variantCode===null || formValue.variantCode.trim()==='')
+                  {
+                      this.checkValidation=false; 
+                      alert ("VARIANT CODE : Should not be null....");
+                      return;
+                    } 
+    
+                    if (formValue.colorCode===undefined || formValue.colorCode===null || formValue.colorCode.trim()==='')
+                    {
+                        this.checkValidation=false; 
+                        alert ("COLOUR CODE : Should not be null....");
+                        return;
+                      } 
+
+                      if (formValue.fueltype===undefined || formValue.fueltype===null || formValue.fueltype.trim()==='')
+                      {
+                          this.checkValidation=false; 
+                          alert ("FUEL TYPE : Should not be null....");
+                          return;
+                        } 
+
+                        if (formValue.chassisNo===undefined || formValue.chassisNo===null || formValue.chassisNo.trim()==='')
+                        {
+                            this.checkValidation=false; 
+                            alert ("CHASSIS NO : Should not be null....");
+                            return;
+                          } 
+
+                      if (formValue.engineNo===undefined || formValue.engineNo===null || formValue.engineNo.trim()==='')
+                      {
+                          this.checkValidation=false; 
+                          alert ("ENGINE NO : Should not be null....");
+                          return;
+                        } 
+
+                        if (formValue.segment===undefined || formValue.segment===null || formValue.segment.trim()==='')
+                        {
+                            this.checkValidation=false; 
+                            alert ("ITEM CODE : Should not be null....");
+                            return;
+                          } 
+    
+                    if (formValue.categoryId < 0 || formValue.categoryId===undefined || formValue.categoryId===null )
+                    {
+                        this.checkValidation=false;  
+                        alert ("ITEM CATEGORY: Should not be null");
+                    } 
+
+                    if (formValue.itemId < 0 || formValue.itemId===undefined || formValue.itemId===null )
+                    {
+                        this.checkValidation=false;  
+                        alert ("ITEM CODE: Should not be null");
+                    } 
+
+
+                    if (formValue.custAccountNo < 0 || formValue.custAccountNo===undefined || formValue.custAccountNo===null )
+                    {
+                        this.checkValidation=false;  
+                        alert ("CUSTOMER NO: Should not be null");
+                    } 
+
+                    if (formValue.custPhone1 < 0 || formValue.custPhone1===undefined || formValue.custPhone1===null )
+                    {
+                        this.checkValidation=false;  
+                        alert ("CUSTOMER PHONE1: Should not be null");
+                    } 
+
+                    if (formValue.custName===undefined || formValue.custName===null || formValue.custName.trim()==='')
+                    {
+                        this.checkValidation=false; 
+                        alert ("CUSTOMER NAME : Should not be null....");
+                        return;
+                      } 
+
+                      if (formValue.custAddress1===undefined || formValue.custAddress1===null || formValue.custAddress1.trim()==='')
+                      {
+                          this.checkValidation=false; 
+                          alert ("ADDRESS1 : Should not be null....");
+                          return;
+                        } 
+
+                        if (formValue.custAddress2===undefined || formValue.custAddress2===null || formValue.custAddress2.trim()==='')
+                        {
+                            this.checkValidation=false; 
+                            alert ("ADDRESS2: Should not be null....");
+                            return;
+                          } 
+
+                          if (formValue.custAddress3===undefined || formValue.custAddress3===null || formValue.custAddress3.trim()==='')
+                          {
+                              this.checkValidation=false; 
+                              alert ("ADDRESS3 : Should not be null....");
+                              return;
+                            } 
+
+                            if (formValue.custCity===undefined || formValue.custCity===null || formValue.custCity.trim()==='')
+                            {
+                                this.checkValidation=false; 
+                                alert ("CITY : Should not be null....");
+                                return;
+                              } 
+                              if (formValue.custState===undefined || formValue.custState===null || formValue.custState.trim()==='')
+                              {
+                                  this.checkValidation=false; 
+                                  alert ("STATE : Should not be null....");
+                                  return;
+                                } 
+                                if (formValue.custPin===undefined || formValue.custPin===null || formValue.custPin.trim()==='')
+                                {
+                                    this.checkValidation=false; 
+                                    alert ("PIN : Should not be null....");
+                                    return;
+                                  } 
+                    
+                   
+                  this.checkValidation=true
+    
+              }
+
+
+          
 }

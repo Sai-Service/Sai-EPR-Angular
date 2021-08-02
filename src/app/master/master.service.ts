@@ -520,6 +520,13 @@ mainModelList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 }
 
+VariantSearchFn(mainModel): Observable<any> {
+  // alert("MS>> "+mainModel);
+  if(mainModel !=null) {
+  return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
+  }
+}
+
 colorCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulColour');
 }
@@ -2037,7 +2044,7 @@ OrderCategoryList(): Observable<any> {
 
     
     getWsVehRegDetails(mRegNumber): Observable<any> {
-      // alert(mRegNumber );
+      // alert("MS:>> " +mRegNumber );
       return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
     } 
 
