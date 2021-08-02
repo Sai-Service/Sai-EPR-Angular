@@ -1,7 +1,7 @@
 <form [formGroup]="SalesOrderBookingForm" (ngSubmit)="SalesOrderBooking(SalesOrderBookingForm.value)">
     <input hidden type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId' style="width: 40px;">
     <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
-    <input hidden type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
+    <input  type="number" class="form-control" formControlName="ouId" [(ngModel)]='ouId'>
     <input hidden class="form-control" formControlName="billLocName" [(ngModel)]='billLocName'>
     <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
     <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
