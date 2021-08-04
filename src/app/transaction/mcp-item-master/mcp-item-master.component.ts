@@ -52,8 +52,8 @@ export class McpItemMasterComponent implements OnInit {
         orgId:number;
         ouId :number;
         deptId:number; 
-       // emplId :number;
-        public emplId =6;
+       emplId :number;
+        // public emplId =6;
 
         itemId:number;
         itemNumber: string;
@@ -131,7 +131,7 @@ export class McpItemMasterComponent implements OnInit {
             this.locId=Number(sessionStorage.getItem('locId'));
             // this.locName=(sessionStorage.getItem('locName'));
             this.deptId=Number(sessionStorage.getItem('dept'));
-            // this.emplId= Number(sessionStorage.getItem('emplId'));
+            this.emplId= Number(sessionStorage.getItem('emplId'));
             this.orgId=this.ouId;
             console.log(this.loginArray);
             console.log(this.locId);
@@ -211,7 +211,7 @@ export class McpItemMasterComponent implements OnInit {
                 if (res.code === 400) {
                   alert('Code already present in the data base');
                   this.displaySuccess=false;
-                  this.mcpItemMasterForm.reset();
+                  // this.mcpItemMasterForm.reset();
                 }
               }
             });

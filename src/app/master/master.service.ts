@@ -2147,15 +2147,16 @@ EwClaimedCheck(mRegno): Observable<any> {
   return this.http.get(this.ServerUrl + '/PackageMst');
 }
 
-getMcpPackageSearchNew1(mPkgType,mFuelType): Observable<any>
+getMcpPackageSearchNew1(mPkgType,mFuelType,mOuId): Observable<any>
 {
   // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
-   return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}`);
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}&ouId=${mOuId}`);
 
 }
 
 getMcpPackageSearchNew2(mPkgNo,mFuelType,mOuId): Observable<any>
 {
+  //  alert("MS>> " + mPkgNo +","+mFuelType+","+mOuId);
    return this.http.get(this.ServerUrl + `/PackageMst/PkgNoFuelOuId?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}`);
   //  http://localhost:8081//PackageMst/PkgNoFuelOuId?packageNumber=PKG00018&fuelType=Petrol&ouId=81
  }
@@ -2223,6 +2224,10 @@ mcpSchemeList(mRegNo,mKms): Observable<any> {
 
 getsearchByEnqNo(mEnqNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqNo/${mEnqNo}`);
+}
+
+getsearchMcpEnqByRegNo(mRegNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqRegNo/${mRegNo}`);
 }
 
 getValidMcpEnqList(mRegno): Observable<any> {

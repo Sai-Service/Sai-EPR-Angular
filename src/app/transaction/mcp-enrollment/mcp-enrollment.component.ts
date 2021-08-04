@@ -12,7 +12,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 
 interface IMcpEnrollment { 
   regNo:string;
-  startKms:number;
+  currentKms:number;
   }
 
 @Component({
@@ -94,8 +94,8 @@ export class McpEnrollmentComponent implements OnInit {
         serviceModel:string;
         deliveryDate:string;
         dealerCode:string;
-        startKms:number;
-        executive : string;
+        currentKms:number;
+        executive : number;
 
 
         searchRegno:string;
@@ -168,7 +168,7 @@ export class McpEnrollmentComponent implements OnInit {
             serviceModel:[],
             deliveryDate:[],
             dealerCode:[],
-            startKms:[],
+            currentKms:[],
             executive:[],
             custId:[],
             pkgSource:[],
@@ -569,7 +569,7 @@ export class McpEnrollmentComponent implements OnInit {
            this.invLineArray().clear();
     
           if (select) {
-    
+              this.currentKms = select.startKms;
               this.packageDesc = select.packageDesc;
               this.executive =select.executive;
               this.pkgEndKms =select.validKm;

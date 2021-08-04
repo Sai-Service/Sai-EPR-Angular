@@ -246,13 +246,13 @@
                             </td>
                             
     
-                        <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
     
                         <td>
                             <input disabled  type="text"  formControlName="variantCode"  id="variantCode" [(ngModel)]="variantCode" class="form-control" >
                         </td>
     
-                        <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
     
                         <td>
                             <input disabled  type="text"  formControlName="mainModel"  id="mainModel" [(ngModel)]="mainModel" class="form-control" >
@@ -763,7 +763,7 @@
                                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">Total&nbsp;Amt:&nbsp;</td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="totBaseAmt"  id="totBaseAmt" [(ngModel)]="totBaseAmt" class="form-control" > </td>
                                     <td></td>
-                                    <td><input disabled style="text-align: right;"  type="text"  formControlName="discAmt"  id="totBaseAmt" [(ngModel)]="discAmt" class="form-control" > </td>
+                                    <td><input disabled style="text-align: right;"  type="text"  formControlName="discAmt"  id="discAmt" [(ngModel)]="discAmt" class="form-control" > </td>
                                     <td></td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="totTaxAmt"  id="totTaxAmt" [(ngModel)]="totTaxAmt" class="form-control" > </td>
                                     <!-- <td><input disabled style="text-align: right;"  type="text"  formControlName="totCessAmt"  id="totCessAmt" [(ngModel)]="totCessAmt" class="form-control" > </td> -->
@@ -980,6 +980,11 @@
                                                 <input class="form-control" formControlName="searchEnqNo" [(ngModel)]='searchEnqNo'
                                                     value={{searchEnqNo}} style="text-transform:uppercase;">
                                             </td>
+
+                                            <td style="background-color: #FFE4B5;">
+                                                <button type="button" class="btn-primary" (click)="SearchByMcpEnqNo(searchEnqNo)"><i class="fa fa-search"
+                                                        aria-hidden="true"></i></button>
+                                            </td>
                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
                                 
                                             <td>
@@ -987,7 +992,7 @@
                                             </td>
 
                                             <td style="background-color: #FFE4B5;">
-                                                <button type="button" class="btn-primary" (click)="SearchByMcpEnqNo(searchEnqNo)"><i class="fa fa-search"
+                                                <button type="button" class="btn-primary" (click)="SearchByMcpRegNo(searchRegno)"><i class="fa fa-search"
                                                         aria-hidden="true"></i></button>
                                             </td>
                                           </tr>
@@ -1015,23 +1020,29 @@
         <tr class="GridHeader">
             <th style="width:6rem" scope="col">Enq No</th>
             <th style="width:6rem" scope="col">Enq Date</th>
-            <th style="width:10rem" scope="col">Package No</th>
+            <th style="width:6rem" scope="col">Valid Till Date</th>
+            <th style="width:6rem" scope="col">Package No</th>
+            <th style="width:15rem" scope="col">Package Name</th>
              <th style="width:10rem" scope="col">Reg No</th>
-            <th style="width:10rem" scope="col">Package Value</th>
-            <th style="width:6rem" scope="col">Model</th>
+             <th style="width:6rem" scope="col">Fuel Type</th>
             <th style="width:6rem" scope="col">Source</th>
+            <th style="width:6rem;" scope="col">Package Value</th>
+            <th style="width:10rem" scope="col">Executive</th>
             <th style="width:6rem"  scope="col">Select</th>
     </tr>
    </tbody>
             <tr *ngFor="let com of lstMcplines" class="ItemStyle" style="text-decoration:none;">
                 
-                <td>{{com.enqNo}}</td>
-                <td>{{com.enqDate}}-</td>
-                <td>{{com.pkgEnquired}}</td>
-                <td>{{com.regNo}}</td>
-                <td>{{com.packageAmt}}</td>  
-                <td>{{com.variantCode}}</td>
-                <td>{{com.sourceDesc}}</td>
+                <td style="text-align: center;">{{com.enqNo}}</td>
+                <td style="text-align: center;">{{com.enqDate | date:'dd-MM-y'}}-</td>
+                <td style="text-align: center;">{{com.endDate | date:'dd-MM-y'}}-</td>
+                <td style="text-align: center;">{{com.pkgEnquired}}</td>
+                <td>{{com.packageDesc}}</td>
+                <td style="text-align: center;">{{com.regNo}}</td>
+                <td style="text-align: center;">{{com.fuelType}}</td>
+                <td style="text-align: center;">{{com.sourceDesc}}</td>
+                <td style="text-align: center;">{{com.packageAmt}}</td> 
+                <td style="text-align: center;">{{com.execName}}</td>
                 <td><button class="btn btn-secondary" (click)="Select(com.enqNo)">Select</button></td>   
                
             </tr>

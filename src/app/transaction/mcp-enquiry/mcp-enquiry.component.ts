@@ -823,7 +823,7 @@ export class McpEnquiryComponent implements OnInit {
          onSelectPackageNumber(pkgNo:any){
 
          if (this.addFlag) {
-
+          // alert ("in Select Package Fn...");
           if(pkgNo !='--Select--' && pkgNo != null) {
             this.service.getMcpPackageSearchNew2(pkgNo ,this.fuelType,this.ouId)
               .subscribe(
@@ -874,7 +874,7 @@ export class McpEnquiryComponent implements OnInit {
                 console.log(this.getPkgPriceDetails);
                 // alert(data.packageDesc);
 
-                this.mcpEnquiryForm.patchValue({
+                 this.mcpEnquiryForm.patchValue({
                   labAmt: this.getPkgPriceDetails.totLabBasic,
                   labDiscAmt: this.getPkgPriceDetails.totLabDis,
                   labTaxAmt: this.getPkgPriceDetails.totLabGst.toFixed(2),
@@ -910,17 +910,14 @@ export class McpEnquiryComponent implements OnInit {
 
               this.invLineArray().reset();
               // alert ("Package Details......in.. WIP")
-              this.service.getMcpPackageLineDetails(this.pkgEnquired,this.fuelType,this.ouId,this.variantCode,1,this.locId)
+              this.service.getMcpPackageLineDetails(this.pkgEnquired,this.fuelType,this.ouId,this.variantCode,this.customerSiteId,this.locId)
               .subscribe(
               data => {
                 this.getPkgLineDetails = data;
                 console.log(this.getPkgLineDetails);
 
                   var len=this.invLineArray().length;
-                  alert( "Total Package Line Items :"+ this.getPkgLineDetails.length);
-                  
-                 
-
+                  // alert( "Total Package Line Items :"+ this.getPkgLineDetails.length);
                     var y=0;
                     for (let i = 0; i < this.getPkgLineDetails.length - len; i++) 
                     {
@@ -934,22 +931,7 @@ export class McpEnquiryComponent implements OnInit {
             }
 
 
-        // searchByPackageId(mPkgId) {
-        //   alert ("Package No : "+mPkgId);
-        //   this.service.getMcpPackageSearchByPkgId(mPkgId)
-        //       .subscribe(
-        //       data => {
-        //         this.getPkgDetails = data;
-        //         alert("Records Found : "+ this.getPkgDetails.length);
-        //         console.log(this.getPkgDetails);
-
-        //         this.mcpEnquiryForm.patchValue({
-        //           packageDesc: this.getPkgDetails.packageDesc, });
       
-        //       } ); 
-
-
-        // }
          
         transeData(val) {
     
@@ -1027,7 +1009,7 @@ export class McpEnquiryComponent implements OnInit {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.displayButton=false;
-                this.enqNo=res.obj.enqNo;
+                this.enqNo=res.obj;
                 this.mcpEnquiryForm.disable();
                 this.mcpEnquiryForm.get('searchEnqNo').enable();
                 this.mcpEnquiryForm.get('searchRegno').enable();
@@ -1082,8 +1064,7 @@ export class McpEnquiryComponent implements OnInit {
                         this.getPackageInfo(this.pkgEnquired,this.lstMcplines.fuelType)
                         
                         this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
-                        // this.discAmt= (this.lstMcplines.totMatDisc+this.lstMcplines.totLabDis),
-                        this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
+                       this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
 
                       // ----------------------------LINE DETAILS----------------------------------------
                       for(let i=0; i<this.invLineArray.length; i++){ 
@@ -1105,8 +1086,95 @@ export class McpEnquiryComponent implements OnInit {
                       // ----------------------------------------------------------------------------
           
                      } ); 
+                     }
 
-              }
+
+                  SearchByMcpRegNo(mRegNo:any){
+                  // alert("REG No :"+mRegNo);
+                    mRegNo = mRegNo.toUpperCase();
+                    this.service.getsearchMcpEnqByRegNo(mRegNo)
+                    .subscribe(
+                      data => {
+                        this.lstMcplines = data;
+                        console.log(this.lstMcplines);
+                      
+                    } );   
+                  }
+
+                  Select(mEnqNo: any) {
+                    // alert ("Enq no :"+ mEnqNo);
+                    this.addFlag=false;
+                    let select = this.lstMcplines.find(d => d.enqNo === mEnqNo);
+                    this.mcpEnquiryForm.patchValue(select);
+                     this.regNo=select.regNo;
+                     this.variantCode='AKA4CD2';
+                     this.enqNo=select.enqNo;
+                     this.pkgEnquired=select.pkgEnquired;
+                     this.fuelType=select.fuelType;
+                     this.executive=select.executive;
+                     this.startKms=select.startKms;
+
+                     this.totBaseAmt= (select.labAmt+select.matAmt);
+                     this.totTaxAmt= (select.labTaxAmt+select.matTaxAmt);
+                     var x=((select.labAmt+select.labTaxAmt)-select.labDiscAmt);this.labNetAmt=x;
+                     var y=(select.matAmt+select.matTaxAmt)-select.matDiscAmt;this.matNetAmt=y;
+                     
+                     // ---------------------------Header Details--------------------------------
+                     this.GetVehicleRegInfomation(select.regNo);
+                     this.GetVariantDeatils(this.variantCode);
+                     this.GetCustomerDetails(select.customerId);
+                     this.GetCustomerSiteDetails(select.customerId)
+                     this.LoadPackage(select.regNo,select.startKms)
+                     this.getPackageInfo(select.pkgEnquired,select.fuelType)
+                     this.mcpEnquiryForm.get('executive').disable();
+                     this.showDetailsButton=true
+                    //  consAmt: 0,
+                    //  consDiscAmt: 0,
+                    //  consGstAmt: 0,
+                    //  consCessAmt: 0,
+                    //  consNetAmt: 0,
+   
+                      
+                        // ----------------------------LINE DETAILS----------------------------------------
+                     console.log(select.enqDtls[0]);
+                     for(let i=0; i<this.invLineArray.length; i++){ 
+                      this.invLineArray().removeAt(i);
+                      }
+                       if(select.enqDtls.length>0){
+                
+                       this.invLineArray().clear();
+                
+                         if (select) {
+                
+                         var control = this.mcpEnquiryForm.get('enqDtls') as FormArray;
+                         alert("select.enqDtls.length>>"+select.enqDtls.length);
+                          for (let i=0; i<select.enqDtls.length;i++) 
+                            {
+                              var enqDtls:FormGroup=this.invLineDetails();
+                              control.push(enqDtls);
+                            }
+                    
+                        }
+                     }
+                    
+                      this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+                
+                    //------------------------------------------------------------------------
+                    ///// Price Details ///////////////////////
+                   
+                    // this.discAmt=select.discAmt;
+                    // this.packageAmt=select.packageAmt;
+                    // this.labAmt=select.labAmt;
+                    // this.labDiscAmt=select.labDiscAmt;
+                    // this.labTaxAmt=select.labTaxAmt;
+                    // this.matAmt=select.matAmt;
+                    // this.matDiscAmt=select.matDiscAmt;
+                    // this.matTaxAmt=select.matTaxAmt;
+                  
+
+                      this.displayButton = false;
+                      this.display = false;
+                  }
 
               getPackageInfo(pkgNo,fType,){
                 // alert(pkgNo + ","+fType);
