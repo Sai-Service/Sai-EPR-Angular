@@ -126,9 +126,15 @@
                         Reason&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input  type="text" class="form-control" formControlName="reversalReason"
-                            [(ngModel)]='reversalReason' value={{reversalReason}} style="width: 170px;font-weight: bold;height: 25px;">
-                    </td>
+                        <!-- <input  type="text" class="form-control" formControlName="reversalReason"
+                            [(ngModel)]='reversalReason' value={{reversalReason}} style="width: 170px;font-weight: bold;height: 25px;"> -->
+                            <select formControlName="reversalReason" id="reversalReason" class="form-control" style="width: 170px;" >
+                                <option>--Select--</option>
+                                <option *ngFor="let reasonList of reversalReasonList">
+                                    {{reasonList.codeDesc}}
+                                </option>
+                            </select>
+                        </td>
                     <td>
                         <button type="submit" (click)="Reverse()" class="btn btn-primary">Reverse</button>
                     </td>
