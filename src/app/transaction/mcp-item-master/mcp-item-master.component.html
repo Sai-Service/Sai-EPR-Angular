@@ -60,7 +60,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Number:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="text"  formControlName="itemNumber"  id="itemNumber" [(ngModel)]="itemNumber" class="form-control" >
+                                    <input disabled  type="text"  formControlName="itemNumber"  id="itemNumber" [(ngModel)]="itemNumber" class="form-control" >
                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">Item&nbsp;type:&nbsp;</td>
@@ -207,7 +207,7 @@
                                                 <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpItemMasterForm">Update</button>
                                             </td>
 
-                                            <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveStat"></div>
+                                            <!-- <div *ngIf="displaySuccess; then thenBlockSaveStat; else elseBlockSaveStat"></div>
                                             <ng-template #thenBlockSaveStat>
                                                 <div class="alert alert success alert-dismissible fade show " role="alert">
                                                     <strong>Success!</strong> Record Updated Successfully.
@@ -216,12 +216,12 @@
                                                     </button>
                                                   </div>
                                             </ng-template>
-                                            <ng-template #elseBlockSaveStat>
+                                            <ng-template #elseBlockSaveStat> -->
                                                 <!-- <div class="alert warning">
                                                     <span class="closebtn">&times;</span>  
                                                     <strong>Warning!</strong> Rcord Not added.Please check
                                                 </div> -->
-                                            </ng-template>
+                                            <!-- </ng-template> -->
                                             <td>
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                             </td>

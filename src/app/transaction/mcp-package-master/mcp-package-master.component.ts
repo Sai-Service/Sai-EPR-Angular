@@ -391,7 +391,7 @@ RemoveRow(index) {
          return;
       } 
 
-        this.service.getMcpPackageSearchNew1(pType ,fType)
+        this.service.getMcpPackageSearchNew1(pType ,fType,this.ouId)
         .subscribe(
         data => {
           this.lstcomments = data;

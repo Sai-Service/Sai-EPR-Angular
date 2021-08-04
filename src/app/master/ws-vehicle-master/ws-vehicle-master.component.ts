@@ -29,6 +29,8 @@ interface IWsVehicleMaster {
   custCity:string;
   custState:string;
   custPin:string;
+  custTaxCategoryName:string;
+  
 
 }
 @Component({
@@ -77,6 +79,7 @@ export class WsVehicleMasterComponent implements OnInit {
   getVehVinDetails:any;
   lstEwSchemeDetails:any;
   lstcomments: any;
+  CustomerSiteDetails:any;
   
   userList1: any[] = [];
   lastkeydown1: number = 0;
@@ -179,7 +182,10 @@ export class WsVehicleMasterComponent implements OnInit {
   custPhone2:string;
   custPhone3:string;
   custEmail:string;
- 
+  custTaxCategoryName:string;
+  customerSiteId:number;
+  customerType:string;
+  // contractEndDate:string;
 
   ewPeriod:number;
   warrantyDealer:string;
@@ -199,8 +205,7 @@ export class WsVehicleMasterComponent implements OnInit {
   deliveryDate = this.pipe.transform(this.now, 'y-MM-dd');
   oemWarrentyEndDate:string;
   regDate:string;
-  
-
+  contractEndDate= this.pipe.transform(this.now, 'y-MM-dd');
   ewStartDate :Date
   payType:number;
   receiptMethodId:number;
@@ -343,6 +348,10 @@ export class WsVehicleMasterComponent implements OnInit {
       custPhone3:[],
       custPin:[],
       custEmail:[],
+      custTaxCategoryName:[],
+      customerSiteId:[],
+      customerType:[],
+      contractEndDate:[],
       // dealerCode:[],
       ewPeriod:[],
 
@@ -642,6 +651,7 @@ export class WsVehicleMasterComponent implements OnInit {
                alert ("Registration No : [ "+mReg+" ] not Found...");
                this.displayButton=true;
                this.showCreateCustButton=true;
+            
                this.showCreateItemButton=true;
               //  this.resetVehDet();this.resetCustDet();this.resetAddnl();this.resetTv();
               // this.wsVehicleMasterForm.reset();
@@ -654,6 +664,7 @@ export class WsVehicleMasterComponent implements OnInit {
               this.wsVehicleMasterForm.patchValue(data);
               this.GetItemDeatils(this.lstcomments.itemId.itemId);
               this.GetCustomerDetails(this.lstcomments.customerId);
+              this.GetCustomerSiteDetails(this.lstcomments.customerId);
 
               this.displayButton=false;
               
@@ -680,6 +691,7 @@ export class WsVehicleMasterComponent implements OnInit {
             GetCustomerDetails(mCustId :any){
             if(mCustId>0) {
               this.showCreateCustButton=false;
+        
             this.service.ewInsSiteList(mCustId)
             .subscribe(
               data1 => {
@@ -699,11 +711,69 @@ export class WsVehicleMasterComponent implements OnInit {
                   custPhone2: this.CustomerDetailsList.mobile2,
                   custPhone3: this.CustomerDetailsList.mobile3,
                   custEmail:this.CustomerDetailsList.emailId,
+                  custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
               });
               }
             );  
             }else {this.showCreateCustButton=true;}
           }
+
+          GetCustomerSiteDetails(mCustId :any){
+            // alert("Customer Id: "+mCustId);
+          this.service.GetCustomerSiteDetails(mCustId,this.ouId)
+          .subscribe(
+            data1 => {
+              this.CustomerSiteDetails = data1;
+    
+              if (this.CustomerSiteDetails===null ) 
+                 {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
+              else if (this.CustomerSiteDetails.taxCategoryName===null)
+                 {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
+              else{
+                // this.showCustModal=true;
+                 console.log(this.CustomerSiteDetails);
+                 this.wsVehicleMasterForm.patchValue({
+                  customerType:this.CustomerSiteDetails.customerId.custType,
+                  custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
+                  customerSiteId:this.CustomerSiteDetails.customerSiteId,
+                  
+                 
+            });
+    
+            }  });  }
+
+            GetCustomerSiteDetails1(mCustId :any){
+              // alert("Customer Id: "+mCustId);
+            this.service.GetCustomerSiteDetails(mCustId,this.ouId)
+            .subscribe(
+              data1 => {
+                this.CustomerSiteDetails = data1;
+      
+                if (this.CustomerSiteDetails===null ) 
+                   {alert("Customer Site [" + this.ouId + "] Not Found in Site Master.....\nPlease check and try again....");this.resetMast();}
+                else if (this.CustomerSiteDetails.taxCategoryName===null)
+                   {alert("Tax Category not attached to  this customer.Pls Update Tax category for this customer.");this.resetMast();}
+                else{
+                  // this.showCustModal=true;
+                   console.log(this.CustomerSiteDetails);
+                   this.wsVehicleMasterForm.patchValue({
+                    customerSiteId:this.CustomerSiteDetails.customerSiteId,
+                    customerSiteAddress:this.CustomerSiteDetails.address1+","+
+                                          this.CustomerSiteDetails.address2+","+
+                                          this.CustomerSiteDetails.address3+","+
+                                          this.CustomerSiteDetails.location,
+                    custCity:this.CustomerSiteDetails.city,
+                    custState:this.CustomerSiteDetails.state,                 
+                    custPincode:this.CustomerSiteDetails.pinCd,                    
+                    customerGstNo:this.CustomerSiteDetails.gstNo,
+                    customerPanNo:this.CustomerSiteDetails.panNo,
+                    custPhone:this.CustomerSiteDetails.mobile1,
+                    customerType:this.CustomerSiteDetails.customerId.custType,
+                    custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
+                   
+              });
+      
+              }  });  }
     
 
 
