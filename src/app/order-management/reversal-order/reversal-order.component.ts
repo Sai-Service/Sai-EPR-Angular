@@ -32,6 +32,7 @@ interface ISalesBookingForm {
   ouId:number;
   deptId:number;
   locId:number;
+  reversalReason:string;
   customerId:number;
   shipLocName:string;
   billLocName:string;
@@ -139,6 +140,7 @@ export class ReversalOrderComponent implements OnInit {
 
   Reverse(){
     alert(this.orderNumber);
+    alert(this.reversalReason);
     this.orderManagementService.OrderReversal(this.orderNumber,this.emplId,this.reversalReason).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);

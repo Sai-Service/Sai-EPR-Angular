@@ -1,3 +1,12 @@
 td{
     padding: 0px;
 }
+
+
+.ItemStyle{
+    text-align: center;
+}
+
+.GridFont{
+    border-color: black;
+}

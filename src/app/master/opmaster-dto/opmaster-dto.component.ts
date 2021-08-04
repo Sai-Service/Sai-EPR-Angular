@@ -1948,13 +1948,7 @@ export class OPMasterDtoComponent implements OnInit {
     return matches;
   };
 
-  // openCodeComb(i) {
-
-  // this.displayModal =false;
-  //   this.showModal = true; // Show-Hide Modal Check
-  //   this.content = i; // Dynamic Data
-  //   this.title = "PoLine :" + i + 1;    // Dynamic Data
-  // }
+  
 
   openCodeComb(i) {
     let segmentName1 = this.lineDetailsArray.controls[i].get('segmentName').value;

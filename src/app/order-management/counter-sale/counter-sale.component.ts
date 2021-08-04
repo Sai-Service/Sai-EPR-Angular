@@ -542,9 +542,19 @@ orderNumber:number;
     .subscribe(
       data1 => {
         this.categoryList = data1;
-        console.log(this.categoryList);
-        data1 = this.categoryList;
+        if (this.deptName==='TrueValue'){}
+      else{
+        // let selectInvType=this.categoryList.find(d => d.itemType === 'SS_VEHICLE');
+          for (let i=0;i<data1.length;i++){
+            if (data1[i].itemType==='SS_VEHICLE'){
+              this.categoryList.splice(i,1)
+            }
+        }        
+      // var s=data1.find(d => d.itemType != 'SS_VEHICLE');
+      // console.log(s);
+      
       }
+    }
     );
 
     this.service.createOrderTypeListFn()
@@ -887,17 +897,7 @@ onOptionsSelectedPriceListID(priceListName) {
 }
 
 
-// onOptionsSelectedlncategoryType(){
-//   this.service.taxCategoryListForSALES()
-//   .subscribe(
-//     data1 => {
-//       this.taxCategoryList = data1;
-//       console.log(this.taxCategoryList);
-//       data1 = this.taxCategoryList;
-//     }
-//   );
 
-// }
 public itemMap2= new Map<number, any[]>();
 
 
@@ -1248,47 +1248,55 @@ onOptionsSelectedDescription(segment: any, k) {
         }
     }
     );
-    if (itemType==='SS_SPARES'){
-    this.service.getfrmSubLoc(this.locId,select.itemId,this.subInventoryId).subscribe(
-      data =>{
-        console.log(data);
-        var getfrmSubLoc =data;
-          this.locData = data;
-          if(getfrmSubLoc.length==1)
-          {
-            // alert(getfrmSubLoc.length);
-          // this.displayLocator[i]=false;
-          controlinv.controls[k].patchValue({onHandId:getfrmSubLoc[0].segmentName});
-          controlinv.controls[k].patchValue({frmLocatorId:getfrmSubLoc[0].locatorId});
-          controlinv.controls[k].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-          controlinv.controls[k].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
-          controlinv.controls[k].patchValue({id:getfrmSubLoc[0].id});
-          }
-          else
-          {
-           // this.getfrmSubLoc=data;;
-         //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
-         controlinv.controls[k].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-         controlinv.controls[k].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
-         controlinv.controls[k].patchValue({id:getfrmSubLoc[0].id});
-          }
-
-      });
+    if (itemType==='SS_SPARES'  ){
+      this.getLocatorDetails(k,select.itemId);
       if(this.deptName=='Spares')
       {
         controlinv.controls[k].patchValue({invType:'SS_SPARES'});
       }
-      this.service.getreserqty(this.locId,select.itemId).subscribe
-      (data=>{
-        this.resrveqty=data;
-        controlinv.controls[k].patchValue({resveQty:this.resrveqty});
-        this.AvailQty(k,select.itemId);
-      });
-    
+ 
+  }
+  if (this.deptName==='TrueValue' && itemType==='SS_VEHICLE'){
+    this.getLocatorDetails(k,select.itemId)
+    controlinv.controls[k].patchValue({invType:'SS_VEHICLE'});
   }
 }
 }
 
+
+getLocatorDetails(k,itemId){
+  let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  this.service.getfrmSubLoc(this.locId,itemId,this.subInventoryId).subscribe(
+    data =>{
+      console.log(data);
+      var getfrmSubLoc =data;
+        this.locData = data;
+        if(getfrmSubLoc.length==1)
+        {
+
+        controlinv.controls[k].patchValue({onHandId:getfrmSubLoc[0].segmentName});
+        controlinv.controls[k].patchValue({frmLocatorId:getfrmSubLoc[0].locatorId});
+        controlinv.controls[k].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
+        controlinv.controls[k].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
+        controlinv.controls[k].patchValue({id:getfrmSubLoc[0].id});
+        }
+        else
+        {
+         // this.getfrmSubLoc=data;;
+       //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
+       controlinv.controls[k].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
+       controlinv.controls[k].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
+       controlinv.controls[k].patchValue({id:getfrmSubLoc[0].id});
+        }
+
+    });
+    this.service.getreserqty(this.locId,itemId).subscribe
+    (data=>{
+      this.resrveqty=data;
+      controlinv.controls[k].patchValue({resveQty:this.resrveqty});
+      this.AvailQty(k,itemId);
+    });
+}
 
 
 

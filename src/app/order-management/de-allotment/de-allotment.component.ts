@@ -42,6 +42,7 @@ export class DeAllotmentComponent implements OnInit {
     this.deAllotmentForm = fb.group({
  orderNumber:[''],
  orderedItem:[''],
+ selectOrderNumber:[],
     })
   }
 
@@ -68,7 +69,7 @@ export class DeAllotmentComponent implements OnInit {
   }
 
   selectOrderNumberEvent(e,orderNumber,orderedItem) {
-    alert(orderNumber+' '+ orderedItem);
+    // alert(orderNumber+' '+ orderedItem);
     this.orderNumber1=orderNumber;
     this.segment1=orderedItem;
     if (e.target.checked) {
@@ -82,36 +83,26 @@ export class DeAllotmentComponent implements OnInit {
 
 
   deAllotedVehicleSelect(){
-    alert(this.segment1+' '+ this.orderNumber1);
+    // alert(this.segment1+' '+ this.orderNumber1);
     this.deAllotedChassisArray.push({orderNumber:this.orderNumber1,orderedItem:this.segment1});
     console.log(this.deAllotedChassisArray);
     
   }
 
 
-  // Deallocate(){
-  //   this.orderManagementService.allotmentSubmit(this.deAllotedChassisArray).subscribe((res: any) => {
-  //     if (res.code === 200) {
-  //       alert('RECORD INSERTED SUCCESSFULLY');
-  //       // this.deAllotmentForm.reset();
-  //     } else {
-  //       if (res.code === 400) {
-  //         alert('Data already present in the data base');
-  //         // this.deAllotmentForm.reset();
-  //       }
-  //     }
-  //   });
-  // }
+  
 
   Deallocate(){
     // alert(this.orderNumber+' '+this.orderedItem);
     this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         // this.deAllotmentForm.reset();
+        window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
+          window.location.reload();
           // this.deAllotmentForm.reset();
         }
       }

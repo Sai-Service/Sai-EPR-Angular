@@ -38,7 +38,7 @@
         <div class="center" style="width: 100%;">
             <div class="form-bg">
                 <div class="grid_scroll">
-                    <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
+                    <table  class="GridFont" cellspacing="0" cellpadding="4">
                         <thead>
                             <tr class="GridHeader">
                                 <th scope="col">Allocate</th>
@@ -57,13 +57,13 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let com of allotmentsearchlist" class="ItemStyle" style="text-decoration:none;">
-                                <!-- [formControl]="selectOrderNumber"  -->
+                                <!-- [formControl]="selectOrderNumber"    [(ngModel)]='selectOrderNumber' -->
                                 <td>
-                                    <input  type="checkbox" [formControl]="selectOrderNumber"
-                                    [(ngModel)]='selectOrderNumber' (change)="selectOrderNumberEvent($event,com.orderNumber)">
+                                    <input  type="checkbox" formControlName="selectOrderNumber"
+                                   (change)="selectOrderNumberEvent($event,com.orderNumber)">
                                 </td>
                                 <td>{{com.orderNumber}}</td>
-                               <td>{{com.orderedDate}}</td>
+                               <td>{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                                <td>{{com.model}}</td>
                                <td>{{com.variant}}</td>
                                <td>{{com.color}}</td>
@@ -104,8 +104,8 @@
                                                 <tbody>
                                                     <tr *ngFor="let com of allotmentVehiclesearchlist" class="ItemStyle" style="text-decoration:none;">
                                                         <td>
-                                                            <input  type="checkbox" [formControl]="selectChasisNumber" 
-                                                            [(ngModel)]='selectChasisNumber' (change)="selectChasisNumberEvent($event,com.segment)">
+                                                            <input  type="checkbox" formControlName="selectChasisNumber" 
+                                                            (change)="selectChasisNumberEvent($event,com.segment)">
                                                         </td>
                                                         <td>{{com.segment}}</td>
                                                         <td>{{com.description}}</td>
