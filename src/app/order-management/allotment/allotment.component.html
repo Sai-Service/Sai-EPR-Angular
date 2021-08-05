@@ -41,42 +41,42 @@
                     <table  class="GridFont" cellspacing="0" cellpadding="4">
                         <thead>
                             <tr class="GridHeader">
-                                <th scope="col">Allocate</th>
-                                <th scope="col">Order Number</th>
-                                <th scope="col">Ordered Date</th>
-                                <th scope="col">Model</th>
-                                <th scope="col">Variant</th>
-                                <th scope="col">Color</th>
-                                <th scope="col">Paid Amount</th>
-                                <th scope="col">Order Type</th>
-                                <th scope="col">Taxi Flag</th>
-                                <th scope="col">Exchange Flag</th>
-                                <th scope="col">aging</th>
-                                <th scope="col">Select</th>
+                                <th scope="col" style="border: 1px solid black;">Allocate</th>
+                                <th scope="col" style="border: 1px solid black;">Order Number</th>
+                                <th scope="col" style="border: 1px solid black;">Ordered Date</th>
+                                <th scope="col" style="border: 1px solid black;">Model</th>
+                                <th scope="col" style="border: 1px solid black;">Variant</th>
+                                <th scope="col" style="border: 1px solid black;">Color</th>
+                                <th scope="col" style="border: 1px solid black;">Paid Amount</th>
+                                <th scope="col" style="border: 1px solid black;">Order Type</th>
+                                <th scope="col" style="border: 1px solid black;">Taxi Flag</th>
+                                <th scope="col" style="border: 1px solid black;">Exchange Flag</th>
+                                <th scope="col" style="border: 1px solid black;">aging</th>
+                                <th scope="col" style="border: 1px solid black;">Select</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let com of allotmentsearchlist" class="ItemStyle" style="text-decoration:none;">
                                 <!-- [formControl]="selectOrderNumber"    [(ngModel)]='selectOrderNumber' -->
-                                <td>
+                                <td style="border: 1px solid black;">
                                     <input  type="checkbox" formControlName="selectOrderNumber"
                                    (change)="selectOrderNumberEvent($event,com.orderNumber)">
                                 </td>
-                                <td>{{com.orderNumber}}</td>
-                               <td>{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
-                               <td>{{com.model}}</td>
-                               <td>{{com.variant}}</td>
-                               <td>{{com.color}}</td>
-                               <td style="text-align: right;">{{com.paidAmount}}</td>
-                               <td>{{com.transactionTypeName}}</td>
-                               <td>{{com.taxiYN}}</td>
-                               <td>{{com.exchangeYN}}</td>
-                               <td>{{com.aging}}</td>
-                               <td><button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
+                                <td style="border: 1px solid black;">{{com.orderNumber}}</td>
+                               <td style="border: 1px solid black;">{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                               <td style="border: 1px solid black;">{{com.model}}</td>
+                               <td style="border: 1px solid black;">{{com.variant}}</td>
+                               <td style="border: 1px solid black;">{{com.color}}</td>
+                               <td style="text-align: right;border: 1px solid black;padding-right: 10px;">{{com.paidAmount}}</td>
+                               <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
+                               <td style="border: 1px solid black;">{{com.taxiYN}}</td>
+                               <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
+                               <td style="border: 1px solid black;">{{com.aging}}</td>
+                               <td style="border: 1px solid black;"><button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-dialog modal-xl" role="document">
                                       <div class="modal-content">
-                                        <div class="modal-header modal-lg">
+                                        <div class="modal-header modal-xl">
                                             <label style="width: 100%;text-align: center;font-size: 14px;">
                                                 &nbsp;Select&nbsp;Vehicle&nbsp;
                                             </label>
@@ -88,35 +88,35 @@
                                             <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
                                                 <thead>
                                                     <tr class="GridHeader">
-                                                        <th scope="col">Select</th>
-                                                        <th scope="col">Item To Allocate</th>
-                                                        <th scope="col">Description</th>
-                                                        <th scope="col">Date Of Purchase</th>
-                                                        <th scope="col">Dealer Code</th>
-                                                        <th scope="col">Rips</th>
-                                                        <th scope="col">Interiors</th>
-                                                        <th scope="col">Two Tone</th>
-                                                        <th scope="col">Hold</th>
-                                                        <th scope="col">Hold Reason</th>
-                                                        <th scope="col">Fuel Type</th>
+                                                        <th scope="col" style="border: 1px solid black;">Select</th>
+                                                        <th scope="col" style="border: 1px solid black;">Item To Allocate</th>
+                                                        <th scope="col" style="border: 1px solid black;">Description</th>
+                                                        <th scope="col" style="border: 1px solid black;">Date Of Purchase</th>
+                                                        <th scope="col" style="border: 1px solid black;">Dealer Code</th>
+                                                        <th scope="col" style="border: 1px solid black;">Rips</th>
+                                                        <th scope="col" style="border: 1px solid black;">Interiors</th>
+                                                        <th scope="col" style="border: 1px solid black;">Two Tone</th>
+                                                        <th scope="col" style="border: 1px solid black;">Hold</th>
+                                                        <th scope="col" style="border: 1px solid black;">Hold Reason</th>
+                                                        <th scope="col" style="border: 1px solid black;">Fuel Type</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let com of allotmentVehiclesearchlist" class="ItemStyle" style="text-decoration:none;">
-                                                        <td>
+                                                        <td style="border: 1px solid black;">
                                                             <input  type="checkbox" formControlName="selectChasisNumber" 
                                                             (change)="selectChasisNumberEvent($event,com.segment)">
                                                         </td>
-                                                        <td>{{com.segment}}</td>
-                                                        <td>{{com.description}}</td>
-                                                        <td>{{com.dateOfPurchase}}</td>
-                                                        <td>{{com.dealerCode}}</td>
-                                                        <td>{{com.rips}}</td>
-                                                        <td>{{com.interiors}}</td>
-                                                        <td>{{com.twoTone}}</td>
-                                                        <td>{{com.hold}}</td>
-                                                        <td>{{com.holdReason}}</td>
-                                                        <td>{{com.fuelType}}</td>
+                                                        <td style="border: 1px solid black;">{{com.segment}}</td>
+                                                        <td style="border: 1px solid black;">{{com.description}}</td>
+                                                        <td style="border: 1px solid black;">{{com.dateOfPurchase}}</td>
+                                                        <td style="border: 1px solid black;">{{com.dealerCode}}</td>
+                                                        <td style="border: 1px solid black;">{{com.rips}}</td>
+                                                        <td style="border: 1px solid black;">{{com.interiors}}</td>
+                                                        <td style="border: 1px solid black;">{{com.twoTone}}</td>
+                                                        <td style="border: 1px solid black;">{{com.hold}}</td>
+                                                        <td style="border: 1px solid black;">{{com.holdReason}}</td>
+                                                        <td style="border: 1px solid black;">{{com.fuelType}}</td>
                                                         
                                                     </tr>
                                                 </tbody>

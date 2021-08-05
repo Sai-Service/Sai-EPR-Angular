@@ -129,6 +129,8 @@ export class CounterSaleComponent implements OnInit {
   // lnflowStatusCode:string;
   lnflowStatusCode:'BOOKED'
   frmLocatorId:number;
+  uom:string;
+  pricingQty:number;
   disAmt1:number;
   name:string;
   id:number;
@@ -436,6 +438,7 @@ orderNumber:number;
       discType:[],
       disPer:[],
       disAmt:[],
+      uom:[],
       lnflowStatusCode:[''],
       Avalqty:[],
       resveQty:[],
@@ -1236,6 +1239,7 @@ onOptionsSelectedDescription(segment: any, k) {
               hsnSacCode: data[i].hsnSacCode,
               taxCategoryId: data[i].taxCategoryId,
               taxCategoryName: data[i].taxCategoryName,
+              uom:data[i].uom,
               unitSellingPrice:data[i].priceValue.toFixed(2),
               });
           }
@@ -1748,21 +1752,31 @@ onOptionsSelectedDiscountPer(disPer){
     disPer: this.disPer,
   });
 }
-  // alert(disPer)
-//   let controlinv1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;   
-//   // for (let i=0;controlinv1.lenght;i++){
-//     var baseAmt =  controlinv1[0].baseAmt;
 
- 
-//   console.log(baseAmt);
-//   var patch = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
-//   (patch.controls[0]).patchValue({
-//     totTaxAmt: -(this.disPer/100)*baseAmt,
-//   });
- 
-//   var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
-//  this.disAmt = arrayControltaxAmounts[0].totTaxAmt;
-// }
+validateNumber(e: any) {
+  // alert(e);
+  if (this.uom==='NO'){
+  let input = String.fromCharCode(e.charCode);
+  const reg = /^\d*(?:[.,]\d{1,2})?$/;
+
+  if (!reg.test(input)) {
+    e.preventDefault();
+  }
+}
+else{}
+}
+
+
+qtyvalidation(i,uom,pricingQty){
+ alert(i+' ' +uom+' '+ pricingQty);
+ if (uom==='NO'){
+   alert(pricingQty);
+   pricingQty:[0-9]
+ }
+ else{
+  pricingQty: '[0-9\.\,]'
+ }
+}
 }
 
 

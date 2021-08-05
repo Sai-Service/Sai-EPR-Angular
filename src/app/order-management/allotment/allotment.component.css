@@ -10,3 +10,9 @@ td{
 .GridFont{
     border-color: black;
 }
+
+
+tr:nth-child(even){
+    background-color: rgb(231, 227, 227);
+}
+
