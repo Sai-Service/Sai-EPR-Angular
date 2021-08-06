@@ -469,16 +469,26 @@
                                                                  <td>  
                                                                      <input class="form-control" formControlName="percent">
                                                                      </td>
-                                                                     <td style="width: 15%" class="LabelFontStyle">Amortization&nbsp;start&nbsp;Date</td>
+                                                                     <td style="width: 15%" class="LabelFontStyle">Basic&nbsp;start&nbsp;Date</td>
                                                                      <td>  
                                                                          <input class="form-control" formControlName="amortDate">
                                                                          </td>
+                                                                         <td style="width: 15%" class="LabelFontStyle">Amortization&nbsp;start&nbsp;Date</td>
+                                                                         <td>  
+                                                                             <input class="form-control" formControlName="amortDate">
+                                                                             </td>
+                                                                         
                                                     </tr>
                                                     <tr>
                                                             <td style="width: 15%" class="LabelFontStyle">Ceiling&nbsp;</td>
                                                             <td>  
                                                                 <input class="form-control" formControlName="ceil">
                                                                 </td>
+                                                                <td style="width: 15%" class="LabelFontStyle">Amortization&nbsp;start&nbsp;Date</td>
+                                                                     <td>  
+                                                                         <input class="form-control" formControlName="amortDate">
+                                                                         </td>
+                                                                     
                                                                 <td></td>
                                                             <td colspan="2">
                                                                     <input type="checkbox" class="form-check-input"  formControlName="amortlife">
@@ -497,12 +507,16 @@
                                     </legend>
                                     <table>
                                         <tr>
+                                            <!-- <table>
+                                                <tr>
                                             <td>
                                                 Transfer Date:
                                             </td>
                                             <td>
-                                                <input class="form-control" formControlName="tranDate">
+                                                <input type=date class="form-control" formControlName="tranDate">
                                             </td>
+                                        </tr>
+                                        </table> -->
                                         </tr>
                                         <tr>
                                             <div class="center">
@@ -515,12 +529,13 @@
                                                                   cellspacing="0" cellpadding="4" rules="all" class="center">
                                                                   <thead>
                                                                     <tr class="GridHeader">
-                                                                          <!-- <th scope="col">No.</th> -->
+                                                                          <th scope="col">Change Units</th>
                                                                           <th scope="col">Units</th>
                                                                           <th scope="col">Employee Name</th>
                                                                           <th scope="col">Employee Number</th>
                                                                           <th scope="col">Expense Account</th>
                                                                           <th scope="col">Location</th>
+                                                                          <th scope="col">Transfer Date</th>
                                                                           <th scope="col">Add+</th>
                                                                           <th scope="col">Del-</th>
                                                                     </tr>
@@ -529,7 +544,10 @@
                                                                   <ng-container *ngFor="let assAddList of faDisHisLst().controls; let assLineIndex=index" [formGroupName]="assLineIndex">
                                                                 <tr>
                                                                     
-                                                                  <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                                                  <input type="number"  formControlName="faDistributionId">
+                                                                  <td>
+                                                                        <input type="number"  class="form-control"  style="width: 150px;" formControlName="transactionUnits">
+                                                                    </td> 
                                                                     <td>
                                                                         <input type="number"  class="form-control"  style="width: 150px;" formControlName="unitsAssigned">
                                                                     </td> 
@@ -578,7 +596,10 @@
                                                                                    </td>
                                                                             </tr></table>
                                                                            
-                                                                        </td>                                                                   
+                                                                        </td>          
+                                                                        <td>
+                                                                                <input type=date class="form-control" formControlName="tranDate">
+                                                                            </td>                                                         
                                                                     <td>
                                                                         <button type="submit" class="btn btn-info"  style="width: min-content;" (click)="addnewfaDisHisLst()"><i
                                                                         class="fa fa-plus"></i></button>
@@ -907,7 +928,9 @@
                                 </div>
                                 </div>
                             </div>
-    
+                            <td>
+                                    <button type="button" class="btn btn-info" (click)="AssetTransfer()">Transfer</button>
+                                    </td>    
                     </tr>
                     </table>
                     <br>
