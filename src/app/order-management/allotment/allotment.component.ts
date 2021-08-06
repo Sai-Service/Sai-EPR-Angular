@@ -71,7 +71,7 @@ console.log(this.orgId);
   }
 
   Select(model:any,color:any,variant:any,locId) {
-   alert(model+color+variant+this.locId);
+  //  alert(model+color+variant+this.locId);
    this.orderManagementService.allotmentVehicleSearch(model,color,variant,this.locId)
     .subscribe(
       data => {
@@ -82,7 +82,7 @@ console.log(this.orgId);
     }
 
     selectOrderNumberEvent(e,orderNumber) {
-      alert(orderNumber);
+      // alert(orderNumber);
       this.orderNumber1=orderNumber;
       if (e.target.checked) {
       this.selectOrderNumber='Y'
@@ -93,7 +93,7 @@ console.log(this.orgId);
     }
 
     selectChasisNumberEvent(e,segment) {
-      alert(segment);
+      // alert(segment);
       this.segment1=segment;
       // select=this.allotmentsearchlist.find(d=>this.)
       if (e.target.checked) {
@@ -105,7 +105,7 @@ console.log(this.orgId);
     }
 
     allotedVehicleSelect(){
-      alert(this.segment1+' '+ this.orderNumber1);
+      // alert(this.segment1+' '+ this.orderNumber1);
       this.allotedChassisArray.push({orderNumber:this.orderNumber1,segment:this.segment1});
       console.log(this.allotedChassisArray);
       
@@ -114,12 +114,13 @@ console.log(this.orgId);
     allotment1(){
       this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFULLY');
-          this.allotmentForm.reset();
+          alert(res.message);
+          window.location.reload();
+          // this.orderManagementService.allotmentSearch(this.orgId)
         } else {
           if (res.code === 400) {
-            alert('Data already present in the data base');
-            this.allotmentForm.reset();
+            alert(res.message);
+            window.location.reload();
           }
         }
       });

@@ -36,6 +36,7 @@ interface IcustomerMaster {
   status: string;
   classCodeType: string;
   ouId: string;
+  taxCategoryName:string;
   location: string;
   saddress1: string;
   saddress2: string;
@@ -67,6 +68,7 @@ export class CustomerMasterComponent implements OnInit {
   customerId:number;
   custType: string;
   PersonType: any;
+  taxCategoryName:string;
   displayPerson: boolean;
   displayOrgnization: boolean;
   title: string;
@@ -134,6 +136,7 @@ export class CustomerMasterComponent implements OnInit {
   public custTypeList: Array<string>[];
   public titleList: Array<string>[];
   public cityList: Array<string>[];
+  public taxCategoryNameList : Array<string>[];
   public pinCdList: Array<string>[];
   public stateList: Array<string>[];
   public ouIdList: Array<string>[];
@@ -166,6 +169,7 @@ export class CustomerMasterComponent implements OnInit {
       address3: ['',[Validators.maxLength(100)]],
       address4: ['',[Validators.maxLength(100)]],
       city: ['', Validators.required],
+      taxCategoryName: ['', Validators.required],
       pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state: ['', Validators.required],
       mobile1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
@@ -259,6 +263,15 @@ export class CustomerMasterComponent implements OnInit {
         data => {
           this.statusList = data;
           console.log(this.statusList);
+        }
+      );
+
+      this.service.taxCategoryNameList(this.ouId)
+      .subscribe(
+        data => {
+          this.taxCategoryNameList = data;
+          console.log(this.taxCategoryNameList);
+          
         }
       );
 

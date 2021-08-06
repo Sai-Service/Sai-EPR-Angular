@@ -444,12 +444,13 @@ export class AvgCostUpdateComponent implements OnInit {
           
             if (res.code === 200) {
               alert("Record inserted Successfully");
-              this.avgCostUpdateForm .reset();
+              // this.avgCostUpdateForm .reset();
+              this.avgCostUpdateForm.disable();
             }
             else {
               if (res.code === 400) {
                 alert("Code already present in data base");
-                this.avgCostUpdateForm.reset();
+                // this.avgCostUpdateForm.reset();
               }
             }
           });

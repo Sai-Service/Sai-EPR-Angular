@@ -32,6 +32,7 @@ interface ISalesBookingForm {
   ouId:number;
   deptId:number;
   locId:number;
+  reversalReason:string;
   customerId:number;
   shipLocName:string;
   billLocName:string;
@@ -93,6 +94,7 @@ export class ReversalOrderComponent implements OnInit {
   transactionTypeName:string;
   orderedDate:string;
   totTax:number;
+  reversalReasonList:any[];
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) { 
     this.reversalOrderForm = fb.group({
@@ -113,6 +115,18 @@ export class ReversalOrderComponent implements OnInit {
     this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locationId=Number(sessionStorage.getItem('locId'));
+
+
+
+    this.orderManagementService.reversalReasonList()
+    .subscribe(
+      data1 => {
+        this.reversalReasonList = data1;
+        console.log(this.reversalReasonList);
+        
+      }
+    );
+
   }
 
 
@@ -126,13 +140,14 @@ export class ReversalOrderComponent implements OnInit {
 
   Reverse(){
     alert(this.orderNumber);
+    alert(this.reversalReason);
     this.orderManagementService.OrderReversal(this.orderNumber,this.emplId,this.reversalReason).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         // this.deAllotmentForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.deAllotmentForm.reset();
         }
       }

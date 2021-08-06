@@ -18,25 +18,28 @@
                         
                       
                         <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="orgId"
+                            <input   style="width:30px ;"  hidden type="text" formControlName="orgId"
                             class="form-control" [(ngModel)]="orgId" >
                         </td>
                      
                         <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                            <input  style="width:30px ;" hidden type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
                         </td>
 
                         <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id:&nbsp;</td> -->
 
                         <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="emplId"
+                            <input  style="width:30px ;"  type="text" hidden formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
 
                         </td>
 
                         <td>
-                            <input  disabled style="width:30px ;" type="text"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
+                            <input  hidden style="width:30px ;" type="text"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
                         </td>
+                        <!-- <td>
+                            <input  disabled style="width:30px ;" type="text"  formControlName="status"  id="status" [(ngModel)]="status" class="form-control" >
+                        </td> -->
                                             
                       </tr>
                     </table>
@@ -264,12 +267,12 @@
                                 <div *ngIf="enableCustAccount ,then thenBlockCustno; else elseBlockCustno")></div>
                                 <ng-template #thenBlockCustno>
                                     <td>
-                                    <input  style="width: 100px;" type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="Customer No">
+                                    <input  style="width: 110px;" type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="">
                                     </td>
                                 </ng-template>
                                 <ng-template #elseBlockCustno>
                                     <td>
-                                    <input style="width: 100px;"  disabled type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="Customer No">
+                                    <input style="width: 100px;"  disabled type="number" formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" (change)="CustAccountNoSearch(custAccountNo)"   class="form-control"  placeholder="">
                                     </td>
                                 </ng-template>
 
@@ -397,7 +400,7 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
                             <td>
-                                <input  disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control"  placeholder="Customer Name">
+                                <input  disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control"  placeholder="">
                             </td>
                             <td></td>
                             
@@ -451,7 +454,7 @@
                                     <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date&nbsp;</td>
             
                                     <td>
-                                        <input  disabled type="text"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" >
+                                        <input  disabled  type="date"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" >
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
@@ -464,7 +467,7 @@
                                             <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
         
                                             <td>
-                                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" placeholder="Receipt Amount">
+                                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" placeholder="">
                                             </td>
 
                                    
@@ -482,7 +485,7 @@
                                     <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
 
                                     <td>
-                                    <input   type="text" formControlName="referenceNo"  id="referenceNo"  class="form-control"  placeholder="Refernce No -sale/Sr no">
+                                    <input   type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  placeholder=" ">
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
@@ -530,19 +533,19 @@
                                     <ng-template #thenBlock3>
                                     <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
                                      <td>
-                                        <input    type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                                        <input    type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input    type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                                        <input    type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
                                     <td>
-                                        <input     type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                                        <input     type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
                                     <td>
-                                        <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                                        <input    type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="">
                                     </td>
                              
                                     </ng-template>
@@ -550,19 +553,19 @@
 
                                     <td style="width: 15%" class="LabelFontStyle1">Bank&nbsp;Name:&nbsp;</td>
                                      <td>
-                                        <input  disabled  type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="Bank Name">
+                                        <input  disabled  type="text" formControlName="bankName"  id="bankName" [(ngModel)] ="bankName" class="form-control"  placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Branch&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input  disabled  type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="Branch">
+                                        <input  disabled  type="text" formControlName="bankBranch"  id="bankBranch" [(ngModel)] ="bankBranch" class="form-control" placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">&nbsp;DD/Chq.&nbsp;No:&nbsp;</td>
                                     <td>
-                                        <input  disabled   type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="DD/Cheque No..">
+                                        <input  disabled   type="text" formControlName="checkNo"  id="checkNo"  [(ngModel)] ="checkNo"  class="form-control"  placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">DD/Chq.&nbsp;Date:&nbsp;</td>
                                     <td>
-                                        <input disabled   type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
+                                        <input disabled   type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="">
                                     </td>
 
                                     </ng-template>
@@ -579,10 +582,10 @@
                                         <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
             
                                         <td>  
-                                        <select formControlName="receiptStatus" id="receiptStatus" [(ngModel)]="receiptStatus" class="form-control">
+                                        <select formControlName="status" id="status" [(ngModel)]="status" class="form-control">
                                             <option disabled>--Select--</option>
-                                            <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.cmnTypeId"  >
-                                                {{sc.cmnTypeId}}-{{sc.code}}
+                                            <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.code"  >
+                                              {{sc.code}}
                                             </option>
                                         </select>
                                         </td>
@@ -597,50 +600,46 @@
                             </table>
                             </fieldset>
 
+
+                            <div *ngIf="displayButton; then showTotalYes; else showTotalNo"></div>
+                            <ng-template #showTotalNo>
+
                             <fieldset class="RFS">
                                 <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Balances</legend>
                                 
                             <table class="center">
 
-                                <tr>
-                                   
 
-                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied&nbsp;&nbsp;:&nbsp;</td>
-                                    <td>
-                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalUnappliedAmt"  id="totalUnappliedAmt" [(ngModel)] ="totalUnappliedAmt" class="form-control" placeholder="Total Unapplied Amt">
-                                    </td>
+
+                                <tr>
                                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Applied&nbsp;&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalAppliedAmt"  id="totalAppliedAmt" [(ngModel)] ="totalAppliedAmt" class="form-control" placeholder="Total Applied Amt">
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalAppliedAmt"  id="totalAppliedAmt" [(ngModel)] ="totalAppliedAmt" class="form-control" placeholder="">
                                     </td>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied&nbsp;&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalUnappliedAmt"  id="totalUnappliedAmt" [(ngModel)] ="totalUnappliedAmt" class="form-control" placeholder="">
+                                    </td>
+                                   
                                     <td style="width: 15%" class="LabelFontStyle">&nbsp;OnAct&nbsp;&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input  disabled style="text-align: right;"  type="text" formControlName="totalOnAccountAmt"  id="totalOnAccountAmt" [(ngModel)] ="totalOnAccountAmt" class="form-control" placeholder="Total OnAccount Amt">
+                                        <input  disabled style="text-align: right;"  type="text" formControlName="totalOnAccountAmt"  id="totalOnAccountAmt" [(ngModel)] ="totalOnAccountAmt" class="form-control" placeholder="">
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle">Balance&nbsp;&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input  disabled  style="text-align: right;" type="text" formControlName="balanceAmount"  id="balanceAmount" [(ngModel)] ="balanceAmount" class="form-control" placeholder="Total Balance Amt">
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="balanceAmount"  id="balanceAmount" [(ngModel)] ="balanceAmount" class="form-control" placeholder="">
                                     </td>
                                 </tr>
+                           
 
                             </table>
 
                             </fieldset>
+                       
 
-
-                         
-                          <!-- </td>
-
-                         
-
-                           </tr>
-
-                         <tr> -->
-
-                         <!-- <td> -->
-                        <div *ngIf="showReason; then thenBlock2; else elseBlock2"></div>
-                        <ng-template #thenBlock2>
+                        <!-- <div *ngIf="showReason; then thenBlock2; else elseBlock2"></div>
+                        <ng-template #thenBlock2> -->
 
                         <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Reversal Details</legend>
@@ -648,18 +647,11 @@
                         <table class="center">
 
                             <tr>
-                                
-                            <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
-                                
-                            <td>
-                                <input   type="text"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
-                            </td>
-
-                          
-                                <td style="width: 15%" class="LabelFontStyle">Rev.&nbsp;Reason:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reason:&nbsp;</td>
 
                                 <td>
-                                    <select formControlName="reversalReasonCode" id="reversalReasonCode" [(ngModel)]="reversalReasonCode" class="form-control">
+                                    <select formControlName="reversalReasonCode" id="reversalReasonCode" [(ngModel)]="reversalReasonCode" class="form-control"
+                                                             (ngModelChange)='onReasonSelected($event)'>
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
                                             {{sc.cmnTypeId}}-{{sc.code}}
@@ -667,32 +659,46 @@
                                     </select>
                                 </td>
                            
-                                <td style="width: 15%" class="LabelFontStyle">Rev.&nbsp;Category:&nbsp;</td>
+                                
+                            <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
+                                
+                            <td>
+                                <input disabled  type="date"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
+                            </td>
 
+                          
+                               
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Category:&nbsp;</td>
                                 <td>
+                                    <input   type="text"  formControlName="reversalCategory"  id="reversalCategory"  [(ngModel)]="reversalCategory" class="form-control" >
+                                </td>
+
+                                <!-- <td>
                                     <select  formControlName="reversalCategory" id="reversalCategory" [(ngModel)]="reversalCategory" class="form-control">
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
                                             {{sc.cmnTypeId}}-{{sc.code}}
                                         </option>
                                     </select>
-                                </td>
-                            
-                              </tr>
-                              <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
+                                </td> -->
+
+                                <td style="width: 15%" class="LabelFontStyle">Comments&nbsp;:&nbsp;</td>
                                 
-                            <td>
-                                <input style="width: 265%;"   type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
-                            </td>
+                                <td>
+                                    <input  style="text-transform:uppercase;"  type="text"  formControlName="reversalComment"  id="reversalComment"  [(ngModel)]="reversalComment" class="form-control" >
+                                </td>
 
-
-
-                            </tr>
+                              </tr>
+                             
                         </table>
                         </fieldset>
                         </ng-template>
-                        <ng-template #elseBlock2> </ng-template>
+                        <ng-template #showTotalYes>
+
+                        </ng-template>
+
+                        <!-- </ng-template>
+                        <ng-template #elseBlock2> </ng-template> -->
                   
 
 
@@ -705,7 +711,7 @@
                             </table> -->
 
                              <!-- ----------------------------------------buttons-------------------- -->
-                    <!-- <br> -->
+                    <br>
                      <table class="center">
                         <tr>
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
@@ -792,27 +798,50 @@
                                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                                             </td>
                                                          -->
+
+                                                            <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
+                                                            <ng-template #CancelButtonYes>
                                                             <td>
-                                                                <button style="width: 10em;" type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse Receipt</button>
+                                                                <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
                                                             </td>
+                                                            </ng-template>
+                                                            <ng-template #CancelButtonNo>
+                                                                <td>
+                                                                    <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
+                                                                </td>
+                                                            </ng-template>
+
 
                                                              <!-- ==========================SEARCH & APPLY =============================== -->
 
-                    <td>
-                        <button type="button"  class="btn btn-primary" 
-                        data-toggle="modal" data-target="#exampleModal2"  (click)="LoadValues()" style="width: 8rem;color: black;">
-                        Receipt&nbsp;Apply</button>
-                        <!-- (click)="SearchInvoices(custAccountNo,billToSiteId)" -->
-                        </td>
+                            <div *ngIf="enableApplyButton; then ApplyButtonYes; else ApplyButtonNo"></div>
+                            <ng-template #ApplyButtonYes>
+                            
+                            <td>
+                                <button type="button"  class="btn btn-primary" 
+                                data-toggle="modal" data-target="#exampleModal2"  (click)="LoadValues()" style="width: 5rem;color: black;">
+                                &nbsp;Apply</button>
+                            </td>
+                            </ng-template>
+                            <ng-template #ApplyButtonNo>
+                                <td>
+                                    <button disabled type="button"  class="btn btn-primary" 
+                                    data-toggle="modal" data-target="#exampleModal2"  (click)="LoadValues()" style="width: 5rem;color: black;">
+                                    &nbsp;Apply</button>
+                                </td>
+                            </ng-template>
 
-                        <!-- <button style="width: 8rem;color: black;" class="btn btn-primary" [routerLink]="['/ReceiptArApplication',receiptNumber]">Appl&nbsp;Receipt</button> -->
 
+
+
+                        <div *ngIf="showModalForm; then ShowMYes; else ShowMNo"></div>
+                        <ng-template #ShowMYes>
                         <!-- =================modal================= -->
                         <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                  <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Applications&nbsp;-&nbsp;Receipt&nbsp;No/Bill&nbsp;To&nbsp;Site:&nbsp;{{searchByRcptNo}} / {{billToSiteId}}</h5>
+                                  <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Applications&nbsp;-&nbsp;Receipt&nbsp;No/Bill&nbsp;To&nbsp;Site:&nbsp;{{this.receiptNumber}} / {{billToSiteId}}</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -896,7 +925,7 @@
                                             </td>
                                               
                                             <td>
-                                                <button style="width: 8em;" type="button" class="btn btn-info" (click)="SearchInvoices(custAccountNo,billToSiteId,applyTo,searchByRcptNo)"  >Run</button>
+                                                <button style="width: 8em;" type="button" class="btn btn-info" (click)="SearchInvoices(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Run</button>
                                             </td>
                                             </tr>    
                                             </table>
@@ -904,7 +933,7 @@
                                         </td>
                                     
                                         <td>
-                                            <button style="width: 8em;" type="button" class="btn btn-info" (click)="AppliedDetails(custAccountNo,billToSiteId,applyTo,searchByRcptNo)"  >Apply&nbsp;Details</button>
+                                            <button style="width: 8em;" type="button" class="btn btn-info" (click)="AppliedDetails(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Apply&nbsp;Details</button>
                                         </td>
 
                                          <td style="width: 15%" class="LabelFontStyle">
@@ -955,8 +984,9 @@
                                                 <th style="width:6rem" scope="col">Invoice No</th>
                                                 <th style="width:6rem" scope="col">Invoice Date</th>
                                                 <th style="width:10rem" scope="col">Invoice Amt</th>
-                                                <th style="width:11rem" scope="col">Apply Date</th>
                                                 <th style="width:10rem" scope="col">Applied Amt</th>
+                                                <th style="width:11rem" scope="col">Apply Date</th>
+                                                <th style="width:10rem" scope="col">Apply Amt</th>
                                                 <th style="width:10rem" scope="col">Balance  Due</th>
                                                 <!-- <th style="width:10rem" scope="col">Balance</th> -->
                                                 <!-- <th style="width:10rem" scope="col">billToCustId</th> -->
@@ -975,13 +1005,14 @@
                                                    
                                                     <td><input  type="checkbox"  style="text-align: center;width: 5rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
                                                     <td><input style="width: 100px;height: 25px;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
-                                                    <td><input style="width: 110px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
-                                                    <td><input style="width: 145px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>    
-                                                    <td><input style="width: 130px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
-                                                    <!-- <td><input style="width: 110px;height: 25px;text-align: right;" disabled  type="text" formControlName="balance" class="form-control"></td> -->
+                                                    <td><input style="width: 145px;height: 25px;" type="text" disabled formControlName="trxNumber" class="form-control"></td>
+                                                    <td><input style="width: 145px;height: 25px;" type="text"  disabled formControlName="trxDate" class="form-control"></td>   
+                                                    <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
+                                                    <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                                    <td><input style="width: 120px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
                                                     <td><input style="width: 145px;height: 25px;text-align: right; background-color: white;" disabled  type="text" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                                    <td><input style="width: 130px;height: 25px;text-align: right;"    type="text" formControlName="applAmt" (change)="validateLineApplAmt(k)" class="form-control" placeholder="Enter Apply Amt" > </td>
-                                                    <td><input style="width: 130px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="balance Due" > </td>
+                                                    <td><input style="width: 120px;height: 25px;text-align: right;"    type="text" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="Enter Apply Amt" > </td>
+                                                    <td><input style="width: 120px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="balance Due" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled hidden  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  hidden type="text" formControlName="billToCustId" class="form-control" placeholder="custid" ></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  hidden  type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" ></td>
@@ -1005,6 +1036,8 @@
                               </div>
                             </div>
                           </div>
+                        </ng-template>
+                        <ng-template #ShowMNo> </ng-template>
 
                 <!-- ====================Reset Dialog ======================== -->
 
@@ -1025,10 +1058,10 @@
                                         <table class="center">
                                             <tr>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                                 </td>
                                                 <td>
-                                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Yes</button> 
+                                                    <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
                                                 </td>
                                             </tr>
                                         </table>
@@ -1043,7 +1076,7 @@
                                     </td>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog" role="document" style="max-width: 500px;">
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
@@ -1055,10 +1088,10 @@
                                                 <table class="center">
                                                     <tr>
                                                         <td>
-                                                        <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
                                                         </td>
                                                         <td>
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -1080,7 +1113,7 @@
 
                 </tr>
                 </table>
-                <br>
+                <!-- <br> -->
 
                 <!-- <table style="width: 100%; background-color: #FFE4B5;" >
                     <tr>
@@ -1089,39 +1122,56 @@
                 </table> -->
 
             
-             <!-- <table class="center" style="width:100%; background-color:beige" > -->
 
-                <table style="width: 100%; background-color: #FFE4B5;">
-                            
-                                 
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Number:&nbsp;</td>
-                    <td>
-                        <input   type="text" formControlName="searchByRcptNo" [(ngModel)]="searchByRcptNo"   class="form-control" placeholder="Enter Receipt no here" >
-                    </td>
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                       SEARCH</legend>
+                <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                    <tr>
+                      <td >
+                          <table class="center">
+                              <tr>
 
-                   
-                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
-                    <td>
-                        <input   type="text" formControlName="searchByCustNo" [(ngModel)]="searchByCustNo"   class="form-control" placeholder="Enter Customer Account no here" >
-                    </td>
+                                
+                                <!-- <td  style="background-color: #FFE4B5;"> &nbsp;Receipt&nbsp;No&nbsp;:&nbsp; </td> -->
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Receipt&nbsp;No&nbsp;:&nbsp; </td>
+                                <td style="background-color: #FFE4B5;">
+                                    <input class="form-control" formControlName="searchByRcptNo" [(ngModel)]='searchByRcptNo'
+                                        value={{searchByRcptNo}}>
+                                </td>
+
+                                
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Customer&nbsp;No:&nbsp;</td>
+                    
+                                <td>
+                                    <input   type="text"  formControlName="searchByCustNo"  id="searchByCustNo" [(ngModel)]="searchByCustNo" class="form-control"  >
+                                    <!-- (change)='OnEnterCustNo(searchByCustNo)' -->
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Receipt&nbsp;Date:&nbsp;</td>
+                    
+                                <td>
+                                    <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control" >
+                                </td>
+
+                                <td style="background-color: #FFE4B5;">
+                                    <button type="button" class="btn-primary" (click)="SearchByRcptNo(searchByRcptNo,searchByCustNo,searchByDate)"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </td>
+
+                               
+                                <td>
+                                    <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Clear</button>
+                                </td>
 
 
-                    <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date:&nbsp;</td>
-    
-                    <td>
-                        <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
-                        <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control" >
-                    </td>
-
-                    <td colspan="8" style="text-align: left; width: 100%;">
-                        <button type="submit"  (click)="SearchByRcptNo(searchByRcptNo,searchByCustNo,searchByDate)" class="btn btn-primary"><i
-                                class="fa fa-search"></i></button> 
-
-                </tr>
-
-                
-             </table>
+                              </tr>
+                          </table>
+                      </td>
+                    </tr>
+                </table>
+                </fieldset>
+             
                     
                 </form>
             </div>
@@ -1136,12 +1186,13 @@
         <tr class="GridHeader">
             <th style="width:6rem" scope="col">Srl No</th>
             <th style="width:6rem" scope="col">Operating Unit</th>
-            <th style="width:6rem" scope="col">Cust No/Site/Name</th>
-            <th style="width:6rem" scope="col">Receipt No</th>
+            <th style="width:15rem" scope="col">Cust No/Site/Name</th>
+            <th style="width:8rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
              <th style="width:10rem" scope="col">Payment Amt</th>
-            <th style="width:10rem" scope="col">Receipt Method</th>
+            <th style="width:10rem" scope="col">Reference Type</th>
+            <th style="width:10rem" scope="col">Status</th>
             <th style="width:6rem"  scope="col">Select</th>
     </tr>
    </tbody>
@@ -1150,11 +1201,11 @@
                 <td>{{com.orgId}}</td>
                 <td>{{com.custAccountNo}}/{{com.custSiteId}}/{{com.custName}}-</td>
                 <td>{{com.receiptNumber}}</td>
-                <td>{{com.receiptDate}}</td>
+                <td>{{com.receiptDate  |date:'dd-MM-y'}}</td>
                 <td>{{com.payType}}</td>  
-                <td>{{com.paymentAmt}}</td>
-                <td>{{com.receiptMethodId}} - {{com.receiptMethodName}}</td>
-                    <!-- {{com.receiptMethodName}}</td> -->
+                <td style="text-align: right;">{{com.paymentAmt}}</td>
+                <td style="text-align: center;">{{com.refType}}</td>
+                <td>{{com.status}}</td>
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
                
             </tr>

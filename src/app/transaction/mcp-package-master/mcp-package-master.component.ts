@@ -391,7 +391,7 @@ RemoveRow(index) {
          return;
       } 
 
-        this.service.getMcpPackageSearchNew1(pType ,fType)
+        this.service.getMcpPackageSearchNew1(pType ,fType,this.ouId)
         .subscribe(
         data => {
           this.lstcomments = data;
@@ -581,7 +581,8 @@ RemoveRow(index) {
 
                 
                 alert('RECORD INSERTED SUCCESSFUILY');
-                this.mcpPackageMasterForm.reset();
+                // this.mcpPackageMasterForm.reset();
+                this.mcpPackageMasterForm.disable();
               } else {
                 if (res.code === 400) {
                   alert('ERROR WHILE INSERTING');

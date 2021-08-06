@@ -512,11 +512,12 @@ export class PricelistMasterComponent implements OnInit {
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD INSERTED SUCCESSFULLY');
-          this.priceListMasterForm.reset();
+          // this.priceListMasterForm.reset();
+          this.priceListMasterForm.disable()
         } else {
           if (res.code === 400) {
             alert('ERROR WHILE INSERTING');
-            this.priceListMasterForm.reset();
+            // this.priceListMasterForm.reset();
           }
         }
       });

@@ -22,6 +22,11 @@ export class MasterService {
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   }
+
+  taxCategoryNameList(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/${ouId}`);
+  }
+
   memberTicketNo(locCode, deptId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
   }
@@ -515,6 +520,13 @@ mainModelList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 }
 
+VariantSearchFn(mainModel): Observable<any> {
+  // alert("MS>> "+mainModel);
+  if(mainModel !=null) {
+  return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
+  }
+}
+
 colorCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulColour');
 }
@@ -945,11 +957,11 @@ taxCalforItemWithVOR(itemId,taxCatId,diss,baseAmount,vorAmt,drfAmt) {
   });
 }
 
-taxCalforItem(itemId,taxCatId,diss,baseAmount) {
+taxCalforItem(itemId,taxCatId,disAmt1,baseAmount) {
   const REQUEST_PARAMS = new HttpParams().set('itemId', itemId)
   .set('baseAmt', baseAmount)
   .set('taxCateId', taxCatId)
-  .set('disAmt', diss)
+  .set('disAmt1', disAmt1)
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
   return this.http.get(REQUEST_URI, {
     params: REQUEST_PARAMS,
@@ -1819,7 +1831,7 @@ OrderCategoryList(): Observable<any> {
   }
 
   ReverseReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/cmnLookup/type/RvslReson');
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReversalReason');
   }
 
   public ArReceiptSubmit(ArReceiptRecord) {
@@ -1829,6 +1841,20 @@ OrderCategoryList(): Observable<any> {
     const url = this.ServerUrl + '/arCashReceipts/ArReceipt';
     return this.http.post(url, ArReceiptRecord, options);
   }
+
+  // ReverseArReceipt
+
+  ReverseArReceiptSubmit(ArReceiptReversalRecord) {
+    alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/arCashReceipts/ArReceiptReversal`);
+    return this.http.put(url, ArReceiptReversalRecord, options);
+    // http://localhost:8081/arCashReceipts/ArReceiptReversal
+  }
+
+
   ////////////////////////// RECEIPT APPLICATION /////////////////////
   public ArReceipApplySubmit(ArReceiptApplyRecord) {
     const options = {
@@ -1848,15 +1874,19 @@ OrderCategoryList(): Observable<any> {
   getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
-    if(rcptDate===undefined)
-    {
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&accountNo=${custActNo}`);
-    }else
-    {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&accountNo=${custActNo}&receiptDate='${rcptDate}'`);
-    }
-  }
+     
+    if(rcptDate !=undefined || rcptDate!=null){
+        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`) 
+      } 
+      if( rcptNumber !=undefined || rcptNumber!=null) {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
+      }
 
+      if(custActNo !=undefined || custActNo!=null){
+         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
+    }
+      
+   
 
   getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
@@ -2014,7 +2044,7 @@ OrderCategoryList(): Observable<any> {
 
     
     getWsVehRegDetails(mRegNumber): Observable<any> {
-      // alert(mRegNumber );
+      // alert("MS:>> " +mRegNumber );
       return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
     } 
 
@@ -2117,15 +2147,16 @@ EwClaimedCheck(mRegno): Observable<any> {
   return this.http.get(this.ServerUrl + '/PackageMst');
 }
 
-getMcpPackageSearchNew1(mPkgType,mFuelType): Observable<any>
+getMcpPackageSearchNew1(mPkgType,mFuelType,mOuId): Observable<any>
 {
   // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
-   return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}`);
+   return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}&ouId=${mOuId}`);
 
 }
 
 getMcpPackageSearchNew2(mPkgNo,mFuelType,mOuId): Observable<any>
 {
+  //  alert("MS>> " + mPkgNo +","+mFuelType+","+mOuId);
    return this.http.get(this.ServerUrl + `/PackageMst/PkgNoFuelOuId?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}`);
   //  http://localhost:8081//PackageMst/PkgNoFuelOuId?packageNumber=PKG00018&fuelType=Petrol&ouId=81
  }
@@ -2192,11 +2223,42 @@ mcpSchemeList(mRegNo,mKms): Observable<any> {
 
 
 getsearchByEnqNo(mEnqNo): Observable<any> {
-  // alert("ms>>MCP Enq No"+mEnqNo);
   return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqNo/${mEnqNo}`);
+}
 
-  // http://localhost:8081/SsMcpEnqMst/enqNo/ENQ201-17851
+getsearchMcpEnqByRegNo(mRegNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqRegNo/${mRegNo}`);
+}
+
+getValidMcpEnqList(mRegno): Observable<any> {
+  // alert("ms>>MCP Enq No"+mEnqNo);
+  return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqList/${mRegno}`);
+  // /McpEnrollMst/McpEnqList/MH12EM6011
  
+}
+getEnrolledMcpEnqList(mEnqNo): Observable<any> {
+  // alert("ms>>MCP Enq No"+mEnqNo);
+  return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqDtls/${mEnqNo}`);
+  // /McpEnrollMst/McpEnqList/MH12EM6011
+ 
+}
+
+
+///////////// MCP ENROLLMENT POSTING
+public McpEnrollmentMasterSubmit(McpEnrollmentMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/McpEnrollMst';
+  return this.http.post(url, McpEnrollmentMasterRecord, options);
+}
+
+getMcpEnrollmentSearch(mEnrollNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo//${mEnrollNo}`);
+}
+
+getsearchByEnrollNo(mEnrollNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`);
 }
 
 

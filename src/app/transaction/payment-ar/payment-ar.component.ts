@@ -20,7 +20,9 @@ deptId:number;
 custAccountNo:number;
 billToSiteId:number;
 glDate :Date;
-receiptStatus:number;
+receiptNumber:number;
+receiptDate:Date;
+receiptStatus:string;
 
 payType:string;
 receiptMethodId:number;
@@ -29,6 +31,13 @@ bankName:string;
 bankBranch:string;
 checkNo:string;
 checkDate:string;
+
+  reversalDate :string;
+  reversalComment: string;
+  reversalReasonCode:number;
+  reversalCategory:string;
+  status : string;
+  
 
 }
 
@@ -80,13 +89,14 @@ export class PaymentArComponent implements OnInit {
   rmStatus :string
   paymentMethod : string;
   receiptAmount:number;
+  receiptStatus:string;
 
   receiptMethodId : number;
   // paymentCollection: string;
   receiptMethodName:string;
   receiptNumber:number;
   orderNumber:string;
-  referenceNo:string = null;
+  referenceNo:string ;
  
   // customerId:number=8
   // custId:number;
@@ -119,19 +129,18 @@ export class PaymentArComponent implements OnInit {
   mobileNo:string;
   
   // glDate:Date;
-  glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   now = Date.now();
-  receiptDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+  receiptDate = this.pipe.transform(this.now, 'dd-MM-y');
+  glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   trxdate= this.pipe.transform(this.now, 'dd-MM-y');
-  reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
-  
+  // reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
+  reversalDate :string;
   reversalComment: string;
-  reversalReasonCode:string;
-  // reversalDate:string;
+  reversalReasonCode:number;
   reversalCategory:string;
-
+  status : string;
   cancelDate =null;
-  receiptStatus : string;
+ 
 
   comments : string
 
@@ -176,6 +185,10 @@ export class PaymentArComponent implements OnInit {
   showOrg=false;
   showReason=false;
   showBankDetails=false;
+  showModalForm=true;
+  enableCancelButton=true;
+  enableApplyButton=true;
+  cancelValidation=false;
   insuranceFlag : string;
   refType: string;
 
@@ -189,7 +202,7 @@ export class PaymentArComponent implements OnInit {
   // emplId :number;
   orgId:number;
 
-  public emplId =6;
+  public emplId =26;
   // customerId:number;
   public billToSiteId=101;
   // public billToSiteId=107; 
@@ -219,16 +232,17 @@ export class PaymentArComponent implements OnInit {
       ouName :[''],
       locId:[''],
       locName :[''],
-      emplId:[''],
+      emplId:[],
       
       receiptNumber:[],
-      receiptDate: [],
+      receiptDate:[],
       glDate:[],
       paymentAmt:[],
       payType:[],
       receiptMethodId :[],
       receiptMethodName: [],
       receiptStatus:[],
+      status:[],
       insuranceFlag:[],
       receiptAmount:[],
 
@@ -311,9 +325,10 @@ export class PaymentArComponent implements OnInit {
         trxNumber: [],
         trxDate: [],
         invoiceAmount:[],
+        applAmt: [],
         balDueAmt:[],
         balance1: [],
-        applAmt: [],
+        applAmtNew:[],
         applDate:[],
         billToCustId:[],
         billToSiteId:[],
@@ -336,7 +351,7 @@ export class PaymentArComponent implements OnInit {
           this.locId=Number(sessionStorage.getItem('locId'));
           // this.locName=(sessionStorage.getItem('locName'));
           this.deptId=Number(sessionStorage.getItem('dept'));
-          // this.emplId= Number(sessionStorage.getItem('emplId'));
+          this.emplId= Number(sessionStorage.getItem('emplId'));
          
           this.orgId=this.ouId;
           console.log(this.loginArray);
@@ -466,7 +481,7 @@ export class PaymentArComponent implements OnInit {
 
       serchByRegNo(mRegNo) {
 
-        alert(mRegNo);
+        // alert(mRegNo);
         this.service.getVehRegDetails(mRegNo)
         .subscribe(
           data => {
@@ -478,7 +493,7 @@ export class PaymentArComponent implements OnInit {
               customerId: this.getVehRegDetails.customerId,
            });
 
-         alert("customer Id:"+this.customerId);
+        //  alert("customer Id:"+this.customerId);
          this.enableCustAccount =false;
          this.GetCustomerDetails(this.customerId);
          this.GetCustomerSiteDetails(this.customerId);
@@ -616,37 +631,75 @@ export class PaymentArComponent implements OnInit {
       //   this.modalForm = new FormGroup();
       //  }
        
+      resetSection1(){}
+        
     
 
 
       SearchByRcptNo(rcptNo : any , custActNo: any, rcptdate : any) {
         // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
-        this.service.getArReceiptSearchByRcptNo(rcptNo ,custActNo,rcptdate)
+        this.status=null;
+        var mDate= this.pipe.transform(rcptdate, 'dd-MMM-y');
+         this.service.getArReceiptSearchByRcptNo(rcptNo ,custActNo,mDate)
         .subscribe(
         data => {
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
          }
-        );
-      }
+        );}
+
       
 
-      Select (receiptNumber: any) {
+      Select(receiptNumber: any) {
         // alert ("Invoice Number,Receipt Number : " +receiptNumber +" ,"+trxNumber);
-        this.searchByRcptNo=receiptNumber;
+        // this.searchByRcptNo=receiptNumber;
         let select = this.lstcomments.find(d => d.receiptNumber === receiptNumber);
         if (select) {
                
           this.paymentArForm.patchValue(select);
           this.receiptNumber = select.receiptNumber;
           this.custSiteAddress = select.custAddress;
+          this.customerId=select.customerId;
+          this.receiptDate=this.pipe.transform(select.receiptDate, 'y-MM-dd');
+          this.checkDate=this.pipe.transform(select.checkDate, 'y-MM-dd');
+          this.glDate=this.pipe.transform(select.glDate, 'y-MM-dd');
+          this.reversalReasonCode=Number(select.reversalReasonCode)
+          this.reversalComment=select.reversalComment;
+          // this.emplId=select.emplId;
           this.displayButton = false;
+        
           this.display = false;
+          this.CustAccountNoSearch(select.custAccountNo);
+
+          if(Number(select.reversalReasonCode)>0) {
+            this.showModalForm=false;
+            this.enableApplyButton=false;
+            this.enableCancelButton=false;
+           this.paymentArForm.disable();} else {
+            this.showModalForm=true;
+            this.enableApplyButton=true;
+            this.enableCancelButton=true;
+            this.paymentArForm.disable()
+            this.paymentArForm.get('receiptNumber').enable();
+            this.paymentArForm.get('reversalReasonCode').enable();
+            this.paymentArForm.get('reversalCategory').enable();
+            this.paymentArForm.get('reversalComment').enable();
+            this.paymentArForm.get('reversalDate').enable();
+            this.paymentArForm.get('status').enable();
+          }
+
+
+          this.paymentArForm.get('searchByRcptNo').enable();   
+          this.paymentArForm.get('searchByCustNo').enable();  
+          this.paymentArForm.get('searchByDate').enable();  
+
           
         }
       }
 
       LoadValues(){
+
+     
         this.invLineArray().clear(); 
         this.totUnAppliedtAmount=this.paymentAmt;
         this.totalUnappliedAmt=this.paymentAmt;
@@ -659,7 +712,7 @@ export class PaymentArComponent implements OnInit {
         this.custAddr=this.custSiteAddress;
         this.receiptAmount=this.paymentAmt;
         
-
+        
       }
 
       applyReceiptFlagAll(e)
@@ -741,8 +794,8 @@ export class PaymentArComponent implements OnInit {
                   {
                     //  alert ("in if section")
                       xyz=LineinvAmt;
-                      patch.controls[index].patchValue({applAmt:lineBalDueAmt})
-                      LineApplAmount = invLineArr[index].applAmt;
+                      patch.controls[index].patchValue({applAmtNew:lineBalDueAmt})
+                      LineApplAmount = invLineArr[index].applAmtNew;
                       invBalAmt =0;
                       patch.controls[index].patchValue({balDueAmt:invBalAmt})
                     }
@@ -750,8 +803,8 @@ export class PaymentArComponent implements OnInit {
                   {
                       var appAmt =0
                       appAmt =Number(totUnAppAmt.toFixed(2));
-                      patch.controls[index].patchValue({applAmt:appAmt})
-                      LineApplAmount = invLineArr[index].applAmt;
+                      patch.controls[index].patchValue({applAmtNew:appAmt})
+                      LineApplAmount = invLineArr[index].applAmtNew;
                       var x=0;
                       invBalAmt =lineBalDueAmt-totUnAppAmt;
                       var newBal=0;
@@ -766,10 +819,10 @@ export class PaymentArComponent implements OnInit {
                   alert("applyReceiptFlag-ELSE selected ");
                   xyz=LineinvAmt;
                   lineBalDueAmt=invLineArr[index].balance1;
-                  LineApplAmount=invLineArr[index].applAmt;
+                  LineApplAmount=invLineArr[index].applAmtNew;
                   invBalAmt =invLineArr[index].balDueAmt;
                   patch.controls[index].patchValue({balDueAmt:lineBalDueAmt})
-                  patch.controls[index].patchValue({applAmt:0})
+                  patch.controls[index].patchValue({applAmtNew:0})
                   xyz=0;
                   invBalAmt=invBalAmt+LineApplAmount;
                   this.totAppliedtAmount= Number(this.totAppliedtAmount)-LineApplAmount;
@@ -787,7 +840,7 @@ export class PaymentArComponent implements OnInit {
          
           for (let i = 0; i < this.lstinvoices.length ; i++) 
           {
-            totAppAmt=totAppAmt+Number(invLineArr[i].applAmt);
+            totAppAmt=totAppAmt+Number(invLineArr[i].applAmtNew);
             if(invLineArr[i].applyrcptFlag ===true) { appCount=appCount+1;}
           }
 
@@ -818,7 +871,7 @@ export class PaymentArComponent implements OnInit {
             var invBalAmt=0;
             var applyReceiptFlag;
             var invLineArr = this.paymentArForm.get('invLine').value;
-            var lineApplAmt= invLineArr[index].applAmt;
+            var lineApplAmt= invLineArr[index].applAmtNew;
             var applyReceiptFlag=invLineArr[index].applyrcptFlag;
 
             alert("Apply Flag : "+index+","+ applyReceiptFlag);
@@ -833,7 +886,7 @@ export class PaymentArComponent implements OnInit {
             if(lineApplAmt > LineDueAmt || lineApplAmt <=0 ) 
               { 
                 alert ("Line: "+ (index+1) + "\nInvoice Amt :"+LineDueAmt+"\nApplied Amt :"+ lineApplAmt+   "\nLine appiled Amt should be > 0 and <= Line balance Amt");
-                patch.controls[index].patchValue({applAmt:''})
+                patch.controls[index].patchValue({applAmtNew:''})
                 patch.controls[index].patchValue({applyrcptFlag:''})
 
               } 
@@ -845,7 +898,7 @@ export class PaymentArComponent implements OnInit {
           
 
                   LineinvAmt=invLineArr[index].invoiceAmount;
-                  LineApplAmount=invLineArr[index].applAmt;
+                  LineApplAmount=invLineArr[index].applAmtNew;
                   invBalAmt =invLineArr[index].balance1;
                   var newBal=0;
                   newBal =invBalAmt-LineApplAmount;
@@ -868,7 +921,7 @@ export class PaymentArComponent implements OnInit {
             
               for (let i = 0; i < this.lstinvoices.length ; i++) 
               {
-               totAppAmt=totAppAmt+Number(invLineArr[i].applAmt);
+               totAppAmt=totAppAmt+Number(invLineArr[i].applAmtNew);
               //  alert("invLineArr[i].applAmt :" +i+","+ invLineArr[i].applAmt);
               }
               // alert("totAppAmt "+totAppAmt);
@@ -907,31 +960,21 @@ export class PaymentArComponent implements OnInit {
       }
 
       SearchInvoices(custActNo : any,billToSiteId : any,applyTp : any , rcptNo: any) {
-        // alert(custActNo+','+billToSiteId+','+applyTp);
-         this.invLineArray().reset();
-
-          // this.paymentArForm.get("totUnApplAmt").reset();
-          // this.paymentArForm.get("onAccountAmt").reset();
-          // this.paymentArForm.get("totApplAmt").reset();
       
+       
+         this.invLineArray().reset();
          if(applyTp==='INVOICE') {
 
-          // alert("INVOICE selected");
-
-              this.totUnAppliedtAmount=this.paymentAmt;
+           this.totUnAppliedtAmount=this.paymentAmt;
               this.totAppliedtAmount =0;
 
               this.service.getArReceiptSearchByInvoiceNo(custActNo,billToSiteId,rcptNo)
               .subscribe(
               data => {
-                // this.lstinvoices = data.obj;
                 this.lstinvoices = data.obj.invLine;
                 console.log(this.lstinvoices);
                     var len=this.invLineArray().length;
-                    // alert(len);
-                   
-
-                    var y=0;
+                   var y=0;
                     for (let i = 0; i < this.lstinvoices.length - len; i++) 
                     {
                       var invLnGrp: FormGroup = this.invLineDetails();
@@ -939,7 +982,6 @@ export class PaymentArComponent implements OnInit {
                      
                     }
                     this.paymentArForm.get('invLine').patchValue(this.lstinvoices);
-
 
                     /////////////////////////////////////////////////////////
                     var patch = this.paymentArForm.get('invLine') as FormArray;
@@ -954,22 +996,19 @@ export class PaymentArComponent implements OnInit {
 
                     this.applyTo=applyTp;
                     this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-                  
-                    // alert("INVOICE selected......"); 
-                    
-              }
-              );
+                  }
+                  );
       
-            } else 
-            { 
-              this.invLineArray().clear(); 
+                  } else 
+                  { 
+                    this.invLineArray().clear(); 
 
-              this.invLineArray().push(this.invLineDetails());
-              this.applyTo=applyTp;
-              this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-            }
-
-      }
+                    this.invLineArray().push(this.invLineDetails());
+                    this.applyTo=applyTp;
+                    this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+                  }
+               
+          }
 
 
       SearchCustomerAll() {
@@ -1002,7 +1041,7 @@ export class PaymentArComponent implements OnInit {
 
 
       CustAccountNoSearch(accountNo){
-        alert("CustAccountNoSearch:"+accountNo);
+        // alert("CustAccountNoSearch:"+accountNo);
        if(accountNo<=0)
         {
           this.custName=null;
@@ -1026,7 +1065,7 @@ export class PaymentArComponent implements OnInit {
                  this.paymentArForm.patchValue({
                  customerId:this.accountNoSearch.customerId,
                  custName: this.accountNoSearch.custName,
-                 custSiteAddress: this.accountNoSearch.billToAddress,
+                //  custSiteAddress: this.accountNoSearch.billToAddress,
                  billToSiteId :this.accountNoSearch.billToLocId,
             });
               this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
@@ -1083,6 +1122,13 @@ export class PaymentArComponent implements OnInit {
         delete val.custSiteAddress;
         delete val.cancelReason;
         delete val.cancelDate;
+        delete val.prePayment;
+        delete val.selectAllflag1;
+        delete val.applyrcptFlag1;
+        delete val.applyTo;
+        delete val.totApplAmt;
+        delete val.totUnApplAmt;
+        delete val.invLine;
 
         return val;
       }
@@ -1108,7 +1154,7 @@ export class PaymentArComponent implements OnInit {
         delete val.customerSite;
         
         delete val.glDate;
-        delete val.receiptStatus;
+        delete val.status;
         delete val.checkDate;
         delete val.locId;
         delete val.srlNo;
@@ -1186,12 +1232,14 @@ export class PaymentArComponent implements OnInit {
       SaveApplyReceipt() 
       {
         alert ("Posting data  to AR RECEIPT appl......")
-       
+        const formValue: IPaymentRcptAr =this.paymentArForm.value;
 
-        // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
-        const formValue: IPaymentRcptAr =this.transeData1(this.paymentArForm.value);
+        var invLine= this.paymentArForm.get('invLine').value;
+
+        console.log();
+        // const formValue: IPaymentRcptAr =this.transeData1(this.paymentArForm.value);
         // debugger;
-        this.service.ArReceipApplySubmit(formValue).subscribe((res: any) => {
+        this.service.ArReceipApplySubmit(invLine).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
             // this.paymentArForm.reset();
@@ -1219,7 +1267,12 @@ export class PaymentArComponent implements OnInit {
             alert('RECORD INSERTED SUCCESSFUILY');
             this.receiptNumber=res.obj;
             this.paymentArForm.disable();
+             this.paymentArForm.get('searchByRcptNo').enable();   
+             this.paymentArForm.get('searchByCustNo').enable();  
+              this.paymentArForm.get('searchByDate').enable();  
+
             // this.paymentArForm.reset();
+            this.displayButton=false;
           } else {
             if (res.code === 400) {
               alert('Error While Saving Record:-'+res.obj);
@@ -1230,6 +1283,96 @@ export class PaymentArComponent implements OnInit {
       }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
 
       }
+
+      CheckCancelValidation(){
+
+        const formValue: IPaymentRcptAr = this.paymentArForm.value;
+
+
+        if (formValue.reversalReasonCode===undefined || formValue.reversalReasonCode===null || formValue.reversalReasonCode<=0)
+        {
+           this.cancelValidation=false; 
+           alert ("REVERSE REASON: Should not be null....");
+            return;
+         } 
+
+         if (formValue.reversalDate===undefined || formValue.reversalDate===null)
+        {
+           this.cancelValidation=false; 
+           alert ("REVERSAL DATE: Should not be null....");
+            return;
+         } 
+
+
+         if (formValue.reversalCategory===undefined || formValue.reversalCategory===null )
+         {
+            this.cancelValidation=false; 
+            alert ("REVERSAL CATEGORY : Should not be null");
+             return;
+          } 
+          
+          if (formValue.reversalComment===undefined || formValue.reversalComment===null || formValue.reversalComment.trim()=='')
+          {
+             this.cancelValidation=false; 
+             alert ("REVERSAL REMARKS : Should not be null");
+              return;
+           } 
+
+        // alert("Status :" +formValue.status);
+        if (formValue.status===undefined || formValue.status===null)
+        {
+          alert ("STATUS: Should not be null....");
+          this.cancelValidation=false
+          return;
+          } 
+
+          this.cancelValidation=true;
+      }
+
+
+      reverseReceipt() {
+            this.CheckCancelValidation();
+            if (this.cancelValidation) {
+              alert("Data Validation Sucessfull....\nCancelling Receipt.")
+
+              // const formValue: IPaymentRcptAr =this.transeData(this.paymentArForm.value);
+              const formValue: IPaymentRcptAr =this.paymentArForm.value;
+              // debugger;
+              this.service.ReverseArReceiptSubmit(formValue).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('RECORD UPDATED SUCCESSFUILY');
+                this.paymentArForm.disable()
+                // this.paymentArForm.get('receiptNumber').disable();
+
+                this.paymentArForm.get('searchByRcptNo').enable();   
+                this.paymentArForm.get('searchByCustNo').enable();  
+                this.paymentArForm.get('searchByDate').enable();  
+                // window.location.reload();
+              } else {
+                if (res.code === 400) {
+                  alert('ERROR OCCOURED IN PROCEESS');
+                  // this.paymentArForm.reset();
+                }
+              }
+            });
+          }else{ alert("Data Validation Not Sucessfull....\nCancellation not done...")  }
+        }
+
+
+     
+      onReasonSelected (mReasonId) {
+        // alert("Reason id :"+mReasonId);
+        if (mReasonId>0) { 
+          this.reversalDate= this.pipe.transform(this.now, 'y-MM-dd');
+          // glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+          this.reversalCategory='Receipt Reversed'
+          this.status='Reversed'
+          // this.receiptStatus='Reversed'
+          // this.emplId=26;
+      }
+
+      }
+
 
       ReceiptArApplication(rcptNumber:any,custActNo:any,rcptDate:any){
         alert(this.receiptNumber) ;
@@ -1258,12 +1401,8 @@ export class PaymentArComponent implements OnInit {
           }
 
 
-          reverseReceipt(){ 
-            this.showReason=true;
-            
-            alert("Cancel Receipt........wip");
-          }
 
+         
 
           CheckDataValidations(){
 
@@ -1383,7 +1522,7 @@ export class PaymentArComponent implements OnInit {
                  
                  }
 
-                 if (formValue.receiptStatus===undefined || formValue.receiptStatus===null)
+                 if (formValue.status===undefined || formValue.status===null)
                  {
                     this.checkValidation=false; 
                     alert ("RECEIPT STATUS: Should not be null....");
@@ -1392,6 +1531,16 @@ export class PaymentArComponent implements OnInit {
               this.checkValidation=true
 
           }
+
+          clearSearch() {
+            this.paymentArForm.get('searchByRcptNo').reset();
+            this.paymentArForm.get('searchByCustNo').reset();
+            this.paymentArForm.get('searchByDate').reset();
+            this.lstcomments=null;
+          }
+          
+  
+         
 
            
           

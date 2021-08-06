@@ -288,13 +288,13 @@ endDate:Date;
             if (res.code === 200) {
               alert('RECORD INSERTED SUCCESSFUILY');
               this.displaySuccess=true;
-              // this.saiEwSchemeMasterForm.reset();
-              window.location.reload();
+              this.variantMasterForm.disable();
+              // window.location.reload();
             } else {
               if (res.code === 400) {
                 this.displaySuccess=false;
                 alert('Code already present in the data base');
-                this.variantMasterForm.reset();
+                // this.variantMasterForm.reset();
               }
             }
           });

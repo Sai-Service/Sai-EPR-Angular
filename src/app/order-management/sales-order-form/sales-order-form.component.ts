@@ -763,8 +763,11 @@ transData(val) {
 
 OrderBooked() {
   // this.flowStatusCode='BOOKED';
+  this.ouId=Number(sessionStorage.getItem('ouId'))
+  alert(this.ouId)
   const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
   formValue.flowStatusCode = 'BOOKED';
+  formValue.ouId=Number(sessionStorage.getItem('ouId'))
   this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       this.orderNumber = res.obj;

@@ -65,8 +65,8 @@ export class McpEnquiryComponent implements OnInit {
         orgId:number;
         ouId :number;
         deptId:number; 
-       // emplId :number;
-        public emplId =6;
+       emplId :number;
+        // public emplId =6;
 
         userList1: any[] = [];
         lastkeydown1: number = 0;
@@ -312,7 +312,7 @@ export class McpEnquiryComponent implements OnInit {
             this.locId=Number(sessionStorage.getItem('locId'));
             // this.locName=(sessionStorage.getItem('locName'));
             this.deptId=Number(sessionStorage.getItem('dept'));
-            // this.emplId= Number(sessionStorage.getItem('emplId'));
+            this.emplId= Number(sessionStorage.getItem('emplId'));
             this.orgId=this.ouId;
             console.log(this.loginArray);
             console.log(this.locId);
@@ -394,7 +394,7 @@ export class McpEnquiryComponent implements OnInit {
 
             resetSection2() {
               this.enqNo=null;
-              this.enqDate=null;
+              // this.enqDate=null;
               this.executive=null
               this.pkgEnquired=null;
               this.mcpPackageList=null
@@ -529,7 +529,7 @@ export class McpEnquiryComponent implements OnInit {
                 
            });
 
-             this.getMcpStatus(this.regNo);
+            //  this.getMcpStatus(this.regNo);
              this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.customerId);
             
@@ -579,7 +579,7 @@ export class McpEnquiryComponent implements OnInit {
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
       
-             this.getMcpStatus(mRegNo);
+            //  this.getMcpStatus(mRegNo);
              this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.customerId);
   
@@ -802,6 +802,8 @@ export class McpEnquiryComponent implements OnInit {
 
          onEnterKms(mKms : any)
          {
+           this.resetSection2();
+           this.resetSection3();
          
            alert("Last Run Km :" + this.lastRunKms +" curr Reading :"+mKms);
            if(this.lastRunKms===null) {this.lastRunKms=0;   }
@@ -821,7 +823,7 @@ export class McpEnquiryComponent implements OnInit {
          onSelectPackageNumber(pkgNo:any){
 
          if (this.addFlag) {
-
+          // alert ("in Select Package Fn...");
           if(pkgNo !='--Select--' && pkgNo != null) {
             this.service.getMcpPackageSearchNew2(pkgNo ,this.fuelType,this.ouId)
               .subscribe(
@@ -859,7 +861,7 @@ export class McpEnquiryComponent implements OnInit {
             addDays(date1: Date, days1: number): Date {
               date1.setDate(date1.getDate() + days1);
               return date1;
-          }
+              }
 
             getPackagePriceDetails(mpkgNo,mPkgType,fType) {
               // alert("inside price details ..." +mpkgNo+","+mPkgType);
@@ -872,17 +874,17 @@ export class McpEnquiryComponent implements OnInit {
                 console.log(this.getPkgPriceDetails);
                 // alert(data.packageDesc);
 
-                this.mcpEnquiryForm.patchValue({
+                 this.mcpEnquiryForm.patchValue({
                   labAmt: this.getPkgPriceDetails.totLabBasic,
                   labDiscAmt: this.getPkgPriceDetails.totLabDis,
-                  labTaxAmt: this.getPkgPriceDetails.totLabGst,
-                  labCessAmt: this.getPkgPriceDetails.totLabCess,
+                  labTaxAmt: this.getPkgPriceDetails.totLabGst.toFixed(2),
+                  // labCessAmt: this.getPkgPriceDetails.totLabCess,
                   labNetAmt: this.getPkgPriceDetails.totLabNet,
 
                   matAmt: this.getPkgPriceDetails.totMatBasic,
                   matDiscAmt: this.getPkgPriceDetails.totMatDisc,
-                  matTaxAmt: this.getPkgPriceDetails.totMatGst,
-                  matCessAmt: this.getPkgPriceDetails.totMatCess,
+                  matTaxAmt: this.getPkgPriceDetails.totMatGst.toFixed(2),
+                  // matCessAmt: this.getPkgPriceDetails.totMatCess,
                   matNetAmt: this.getPkgPriceDetails.totMatNet,
 
                   consAmt: 0,
@@ -894,7 +896,7 @@ export class McpEnquiryComponent implements OnInit {
                     totBaseAmt: (this.getPkgPriceDetails.totMatBasic+this.getPkgPriceDetails.totLabBasic),
                     discAmt: (this.getPkgPriceDetails.totMatDisc+this.getPkgPriceDetails.totLabDis),
                     totTaxAmt: (this.getPkgPriceDetails.totMatGst+this.getPkgPriceDetails.totLabGst),
-                    totCessAmt: 0,
+                    // totCessAmt: 0,
                     packageAmt:this.getPkgPriceDetails.totPackageAmt,
                  });
       
@@ -908,17 +910,14 @@ export class McpEnquiryComponent implements OnInit {
 
               this.invLineArray().reset();
               // alert ("Package Details......in.. WIP")
-              this.service.getMcpPackageLineDetails(this.pkgEnquired,this.fuelType,this.ouId,this.variantCode,1,this.locId)
+              this.service.getMcpPackageLineDetails(this.pkgEnquired,this.fuelType,this.ouId,this.variantCode,this.customerSiteId,this.locId)
               .subscribe(
               data => {
                 this.getPkgLineDetails = data;
                 console.log(this.getPkgLineDetails);
 
                   var len=this.invLineArray().length;
-                  alert( "Total Package Line Items :"+ this.getPkgLineDetails.length);
-                  
-                 
-
+                  // alert( "Total Package Line Items :"+ this.getPkgLineDetails.length);
                     var y=0;
                     for (let i = 0; i < this.getPkgLineDetails.length - len; i++) 
                     {
@@ -932,22 +931,7 @@ export class McpEnquiryComponent implements OnInit {
             }
 
 
-        // searchByPackageId(mPkgId) {
-        //   alert ("Package No : "+mPkgId);
-        //   this.service.getMcpPackageSearchByPkgId(mPkgId)
-        //       .subscribe(
-        //       data => {
-        //         this.getPkgDetails = data;
-        //         alert("Records Found : "+ this.getPkgDetails.length);
-        //         console.log(this.getPkgDetails);
-
-        //         this.mcpEnquiryForm.patchValue({
-        //           packageDesc: this.getPkgDetails.packageDesc, });
       
-        //       } ); 
-
-
-        // }
          
         transeData(val) {
     
@@ -973,10 +957,10 @@ export class McpEnquiryComponent implements OnInit {
           delete val.totBaseAmt;
           delete val.totTaxAmt;
           delete val.totCessAmt;
-          delete val.matDiscAmt;
+          // delete val.matDiscAmt;
           delete val.matCessAmt;
           delete val.matNetAmt;
-          delete val.labDiscAmt;
+          // delete val.labDiscAmt;
           delete val.labNetAmt;
           delete val.labCessAmt;
           delete val.consAmt;
@@ -1001,7 +985,7 @@ export class McpEnquiryComponent implements OnInit {
           delete val.customerType; 
           delete val.custTaxCategoryName; 
 
-          delete val.enqNo;
+          // delete val.enqNo;
           delete val.enqDate;
           delete val.packageId;
          
@@ -1023,14 +1007,18 @@ export class McpEnquiryComponent implements OnInit {
 
             this.service.McpEnquiryMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
-
-                
                 alert('RECORD INSERTED SUCCESSFUILY');
-                this.mcpEnquiryForm.reset();
+                this.displayButton=false;
+                this.enqNo=res.obj;
+                this.mcpEnquiryForm.disable();
+                this.mcpEnquiryForm.get('searchEnqNo').enable();
+                this.mcpEnquiryForm.get('searchRegno').enable();
+                // this.mcpEnquiryForm.reset();
+                
               } else {
                 if (res.code === 400) {
                   alert('ERROR WHILE INSERTING');
-                  this.mcpEnquiryForm.reset();
+                  // this.resetMast();
                 }
               }
             });
@@ -1041,25 +1029,26 @@ export class McpEnquiryComponent implements OnInit {
 
 
     
-       SearchByMcpEnqNo1(mEnqNo:any){
-        this.service.getsearchByEnqNo(mEnqNo)
-          .subscribe(
-            data => {
-              this.lstMcplines = data;
-              console.log(this.lstMcplines);
+      //  SearchByMcpEnqNo1(mEnqNo:any){
+      //   this.service.getsearchByEnqNo(mEnqNo)
+      //     .subscribe(
+      //       data => {
+      //         this.lstMcplines = data;
+      //         console.log(this.lstMcplines);
              
-          } );   }
+      //     } );   }
 
 
 
             SearchByMcpEnqNo(mEnqNo:any){
               // this.mcpEnquiryForm.reset();
+              var xEnq = mEnqNo.toUpperCase();
               this.resetSection1(); this.resetSection3(); this.resetSection3();
               this.addFlag=false;
               this.displayButton=false;
 
               console.log(this.mcpEnquiryForm.value);
-              this.service.getsearchByEnqNo(mEnqNo)
+              this.service.getsearchByEnqNo(xEnq)
                 .subscribe(
                   data => {
                     this.lstMcplines = data;
@@ -1075,8 +1064,7 @@ export class McpEnquiryComponent implements OnInit {
                         this.getPackageInfo(this.pkgEnquired,this.lstMcplines.fuelType)
                         
                         this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
-                        // this.discAmt= (this.lstMcplines.totMatDisc+this.lstMcplines.totLabDis),
-                        this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
+                       this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
 
                       // ----------------------------LINE DETAILS----------------------------------------
                       for(let i=0; i<this.invLineArray.length; i++){ 
@@ -1093,11 +1081,100 @@ export class McpEnquiryComponent implements OnInit {
                             
                       this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
                       this.showDetailsButton=true
+                      this.mcpEnquiryForm.get('executive').disable();
+
                       // ----------------------------------------------------------------------------
           
                      } ); 
+                     }
 
-              }
+
+                  SearchByMcpRegNo(mRegNo:any){
+                  // alert("REG No :"+mRegNo);
+                    mRegNo = mRegNo.toUpperCase();
+                    this.service.getsearchMcpEnqByRegNo(mRegNo)
+                    .subscribe(
+                      data => {
+                        this.lstMcplines = data;
+                        console.log(this.lstMcplines);
+                      
+                    } );   
+                  }
+
+                  Select(mEnqNo: any) {
+                    // alert ("Enq no :"+ mEnqNo);
+                    this.addFlag=false;
+                    let select = this.lstMcplines.find(d => d.enqNo === mEnqNo);
+                    this.mcpEnquiryForm.patchValue(select);
+                     this.regNo=select.regNo;
+                     this.variantCode='AKA4CD2';
+                     this.enqNo=select.enqNo;
+                     this.pkgEnquired=select.pkgEnquired;
+                     this.fuelType=select.fuelType;
+                     this.executive=select.executive;
+                     this.startKms=select.startKms;
+
+                     this.totBaseAmt= (select.labAmt+select.matAmt);
+                     this.totTaxAmt= (select.labTaxAmt+select.matTaxAmt);
+                     var x=((select.labAmt+select.labTaxAmt)-select.labDiscAmt);this.labNetAmt=x;
+                     var y=(select.matAmt+select.matTaxAmt)-select.matDiscAmt;this.matNetAmt=y;
+                     
+                     // ---------------------------Header Details--------------------------------
+                     this.GetVehicleRegInfomation(select.regNo);
+                     this.GetVariantDeatils(this.variantCode);
+                     this.GetCustomerDetails(select.customerId);
+                     this.GetCustomerSiteDetails(select.customerId)
+                     this.LoadPackage(select.regNo,select.startKms)
+                     this.getPackageInfo(select.pkgEnquired,select.fuelType)
+                     this.mcpEnquiryForm.get('executive').disable();
+                     this.showDetailsButton=true
+                    //  consAmt: 0,
+                    //  consDiscAmt: 0,
+                    //  consGstAmt: 0,
+                    //  consCessAmt: 0,
+                    //  consNetAmt: 0,
+   
+                      
+                        // ----------------------------LINE DETAILS----------------------------------------
+                     console.log(select.enqDtls[0]);
+                     for(let i=0; i<this.invLineArray.length; i++){ 
+                      this.invLineArray().removeAt(i);
+                      }
+                       if(select.enqDtls.length>0){
+                
+                       this.invLineArray().clear();
+                
+                         if (select) {
+                
+                         var control = this.mcpEnquiryForm.get('enqDtls') as FormArray;
+                         alert("select.enqDtls.length>>"+select.enqDtls.length);
+                          for (let i=0; i<select.enqDtls.length;i++) 
+                            {
+                              var enqDtls:FormGroup=this.invLineDetails();
+                              control.push(enqDtls);
+                            }
+                    
+                        }
+                     }
+                    
+                      this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+                
+                    //------------------------------------------------------------------------
+                    ///// Price Details ///////////////////////
+                   
+                    // this.discAmt=select.discAmt;
+                    // this.packageAmt=select.packageAmt;
+                    // this.labAmt=select.labAmt;
+                    // this.labDiscAmt=select.labDiscAmt;
+                    // this.labTaxAmt=select.labTaxAmt;
+                    // this.matAmt=select.matAmt;
+                    // this.matDiscAmt=select.matDiscAmt;
+                    // this.matTaxAmt=select.matTaxAmt;
+                  
+
+                      this.displayButton = false;
+                      this.display = false;
+                  }
 
               getPackageInfo(pkgNo,fType,){
                 // alert(pkgNo + ","+fType);

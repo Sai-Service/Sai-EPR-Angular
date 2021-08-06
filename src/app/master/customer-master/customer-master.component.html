@@ -326,7 +326,7 @@
                                         *ngIf="!customerMasterForm.get('city').valid && customerMasterForm.get('city').touched">Please
                                         Enter City</span>
                                 </td>
-                                
+                               
                             </tr>
                             <tr>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
@@ -348,20 +348,15 @@
                                 <td>
                                     <input type="text" disabled formControlName="state" [ngModel]="state"
                                         class="form-control">
-                                    <!-- <select formControlName="state" id="state" class="form-control">
-                                         <option>--Select--</option>
-                                        <option *ngFor="let sc of  stateList">
-                                        {{sc.codeDesc}}
-                                       </option>
-                                    </select>
-                                    <div *ngIf="submitted && f. state.errors" class="invalid-feedback">
-                                        <div *ngIf="f.state.errors.required">state must be a valid</div>
-                                         <div *ngIf="f.state.errors?.maxLength">state Name must be a valid 
-                                        </div>
-                                    </div>
-                                    <span
-                                        *ngIf="!customerMasterForm.get('state').valid && customerMasterForm.get('state').touched">Please
-                                        Enter state </span> -->
+                                </td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control" [ngModel]="taxCategoryName">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let taxcate of  taxCategoryNameList">
+                                        {{taxcate.taxCategoryName}}
+                                    </option>
+                                </select>
                                 </td>
                             </tr>
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">

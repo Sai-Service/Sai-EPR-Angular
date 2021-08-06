@@ -43,7 +43,7 @@ interface IPaymentRcpt {
   })
 export class PaymentReceiptComponent implements OnInit  {
   paymentReceiptForm : FormGroup;
-
+  paymentAmt:number;
     public DivisionIDList : Array<string>=[];
     public OUIdList: Array<string> = [];
     public DepartmentList: Array<string> = [];
@@ -60,7 +60,6 @@ export class PaymentReceiptComponent implements OnInit  {
     checkDate: Date;
     bankName : string;
     bankBranch : string;
-    paymentAmt : number;
     methodType:string;
     // payType : string; 
     rmStatus :string
@@ -138,7 +137,7 @@ export class PaymentReceiptComponent implements OnInit  {
       division:[],
       ouId :[],
       deptId :[],
-      paymentAmt:[],
+      paymentAmt:['',[Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],
       // receiptDate: [],
       receiptMethodId :[],
       // paymentCollection: [],
@@ -243,15 +242,16 @@ export class PaymentReceiptComponent implements OnInit  {
 
     this.sub = this.router1.params.subscribe(params => {
       this.orderNumber = params['orderNumber'];
-      alert(this.orderNumber);
+      // alert(this.orderNumber);
       this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
       .subscribe(
       data => {
+        // data.obj.oePayList.push('orderNumber',data.obj.orderNumber);
         this.lstcomments = data.obj.oePayList;
         // this.lstcomments1=data.obj.orderNumber;
         this.custName=data.obj.custName;
         this.customerId=data.obj.customerId;
-        this.orderNumber=data.obj.orderNumber;
+        // this.lstcomments.push('orderNumber',data.obj.orderNumber);
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
         console.log(this.lstcomments);
@@ -354,7 +354,7 @@ export class PaymentReceiptComponent implements OnInit  {
       // this.orderNumber=this.lstcomments1;
       this.displayButton = false;
       this.display = false;
-      
+      this.paymentReceiptForm.disable();
     }
   }
 
@@ -389,11 +389,11 @@ export class PaymentReceiptComponent implements OnInit  {
     // debugger;
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        this.paymentReceiptForm.reset();
+        alert(res.message);
+        window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert(res.message);
           // this.paymentReceiptForm.reset();
         }
       }
