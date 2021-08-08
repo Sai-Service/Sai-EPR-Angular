@@ -656,15 +656,7 @@
                                         </select>
                                         </td>
                                         <td>
-                                            <!-- <select formControlName="segment" id="segment{{i}}"  
-                                                    (ngModelChange)='onOptionsSelectedDescription($event,i)'
-                                                    class="form-control"
-                                                    style="width: 160px;height: 25px;font-size: 10px;">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
-                                                        {{item.value.segment}}
-                                                    </option>
-                                                </select> -->
+                                           
                                                 <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
                                                 <datalist id="dynmicUserIds1">
                                                     <option>--Select--</option>
@@ -694,11 +686,16 @@
                                                  style="height: 20px;width: 70px;">
 
                                     </td>
+                                    <!-- <td> -->
+                                        <input hidden type="text" formControlName="uom" class="form-control" [(ngModel)]="uom"
+                                            style="height: 20px;width: 70px;"  >
+                                <!-- </td> -->
                                         <td>
-                                            <input  type="number" formControlName="pricingQty" class="form-control"
-                                                (change)="onKey(i)" style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
+                                            <input  type="number" formControlName="pricingQty" class="form-control"  [(ngModel)]="pricingQty"
+                                                (change)="onKey(i)" (keypress)="validateNumber($event)"  style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
                                        
                                     </td>
+                                    <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" -->
                                     <td>
                                         <input disabled type="number" formControlName="unitSellingPrice" class="form-control"
                                             style="height: 20px;width: 90px;" (change)="onKey(i)">

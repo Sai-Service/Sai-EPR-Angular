@@ -133,6 +133,9 @@ assNumber:number;
   userList3: any[] = [];
   lastkeydown2: number = 0;
   public InterBrancList:Array<string>=[];
+  faDistributionId:number;
+  transactionUnits:number;
+  tranDate:Date;
   
   public CostCenterList:Array<string>=[];
   public NaturalAccountList:Array<string>=[];
@@ -141,6 +144,7 @@ assNumber:number;
   unitsAssigned:number;
   depreciateFlag:string
   lstDepriciation: any[];
+  lifeInMonth:number;
 
 constructor(private fb: FormBuilder, private router: Router, private fixedAssetservice:FixedAssetService,private service: MasterService) {
   this.AssetAdditionForm=fb.group({ 
@@ -202,7 +206,7 @@ constructor(private fb: FormBuilder, private router: Router, private fixedAssets
     
       segment5:[''],
       depreciateFlag:[],
-   
+      lifeInMonth:[],
       faDisHisLst:this.fb.array([]),
   })
 }
@@ -218,7 +222,9 @@ newfaDisHisLst():FormGroup{
     unitsAssigned:[],
     codeCombinationId:[],
     locationId:[],
-    
+    faDistributionId:[],
+    transactionUnits:[],
+    tranDate:[],
   })
 }
 
@@ -424,7 +430,7 @@ var segment = temp1[0];}
               this.AssetAdditionForm.patchValue({assetCategoryId:data.obj.categoryId});
               this.AssetAdditionForm.patchValue({method:data.obj.deprnMethod,ownedLeased:data.obj.ownedLeased,inventorial:data.obj.inventorial,
                 bookTypeCode:data.obj.bookTypeCode,prorateConc:data.obj.prorateConventionCode,depreciateFlag:data.obj.depreciateFlag,
-                salValType:data.obj.salValType,saleValPer:data.obj.percent,lifeInMonth:data.obj.lifeInMonth});
+                salValType:data.obj.salValType,saleValPer:data.obj.percent,lifeInMonth:data.obj.lifeInMonth,lifeYearMonth:data.obj.lifeYearMonth});
                 this.segment4=this.segmentNameList.deprnExpenseAcct;
                 // alert(this.segment4+'seg');
               // this.method=this.segmentNameList.deprnMethod;
@@ -482,7 +488,11 @@ var segment = temp1[0];}
               console.log(this.keyList);
               // this.assetKeyCcid = Number(this.keyList.faCodeCombinationId)
               this.AssetAdditionForm.patchValue({assetKeyCcid:this.keyList.obj.faCodeCombinationId});
-              
+              var patcharr=this.AssetAdditionForm.get('faDisHisLst') as FormArray;
+              patcharr.controls[0].patchValue ({locationName:this.keyList.obj.segment4,locationId:this.keyList.obj.faLocationId,
+                segmentName:this.keyList.obj.segmentName,codeCombinationId:this.keyList.obj.assetKeyCcid})
+              // this.AssetAdditionForm.patchValue({locationName:this.keyList.obj.segment4,faLocationId:this.keyList.obj.faLocationId,
+              //   segmentName:this.keyList.obj.segmentName,codeCombinationId:this.keyList.obj.assetKeyCcid})
             }
           } else if (this.keyList.code === 400) {
             this.AssetAdditionForm.patchValue({assetkey:''});
@@ -500,6 +510,7 @@ var segment = temp1[0];}
 
   search(assNumber){
       // alert(assNumber+'ty');
+      this.faDisHisLst().clear;
       this.fixedAssetservice.getAssetSearch(assNumber).subscribe
       (data =>
        {
@@ -507,12 +518,23 @@ var segment = temp1[0];}
          this.lstcomment=data;
          this.lstDepriciation=data.faDprnLst
          console.log(this.lstcomment);
-         this.AssetAdditionForm.patchValue(this.lstcomment);
+         
         //  console.log(this.lstcomment.bookTypeCode);
         //  for(let i=0;i< this.lstDepriciation.length)
         //  this.AssetAdditionForm.patchValue({ownedLeased:this.lstcomment.ownedLeased});
-         this.AssetAdditionForm.disable()  ;
-       
+        //  this.AssetAdditionForm.disable()  ;
+        var len = this.faDisHisLst().length;
+        // alert('len ' + len)
+        // alert('anita' + data.jobCardMatLines.length)
+        let faDisHisLstpush= this.AssetAdditionForm.get('faDisHisLst') as FormArray;
+        this.faDisHisLst().clear;
+        alert(data.faDisHisLst.length);
+        for (let i = 0; i < data.faDisHisLst.length-len; i++) {
+          var faTransfer: FormGroup = this.newfaDisHisLst();
+          faDisHisLstpush.push(faTransfer);
+        }
+        this.AssetAdditionForm.patchValue(this.lstcomment);
+       this.AssetAdditionForm.get('faDisHisLst').patchValue(data.faDisHisLst);
        }
        );
     
@@ -765,5 +787,20 @@ var segment = temp1[0];}
           }
         )       
       }
+      AssetTransfer() {
+        const formValue:IAssetAddition = this.AssetAdditionForm.value;
+        this.fixedAssetservice.AssetTransfer(formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('Asset Transfer SUCCESSFULLY');
+            // window.location.reload();
+            this.AssetAdditionForm.disable();
+          } else {
+            if (res.code === 400) {
+              alert('ERROR OCCOURED IN PROCEESS');
+              this.AssetAdditionForm.reset();
+            }
+          }
+        });
+      };
   
 }

@@ -9,6 +9,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { DatePipe } from '@angular/common';
 import { ManualInvoiceObj } from './manual-invoice-obj';
+import {InvoiceSearchObj} from './invoice-search';
 import { from } from 'rxjs';
 
 interface IpoInvoice {
@@ -59,12 +60,29 @@ interface IpoInvoice {
   thresHoldTypeId:number;
 }
 
+interface ISearch{
+suppNo:number;
+name:string;//supplier name
+segment1:string;
+suppSiteId:number;
+invoiceNum:string;
+frminvoiceAmt:number;
+toinvoiceAmt:number;
+frminvoiceDate:Date; 
+toinvoiceDate:Date; 
+attribute1:string;//Invoice Status
+receiptNo:number;
+ouId:number;
+}
 
 @Component({
   selector: 'app-po-invoice',
   templateUrl: './po-invoice.component.html',
   styleUrls: ['./po-invoice.component.css']
 })
+
+
+
 export class PoInvoiceComponent implements OnInit {
   // public start: Date = new Date ("10/07/2017");
   // public end: Date = new Date ("11/25/2017");
@@ -144,6 +162,7 @@ export class PoInvoiceComponent implements OnInit {
   baseAmount:number;
   amount:number;
   invoiceDistId:number;
+  // segment1:string
 
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
@@ -868,8 +887,21 @@ getLocation(k)
     this.displayitemName = true;
     this.displaydescription = true;
     this.displaydistributionSet = true;
-    const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
-    this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
+    // const formValue:InvoiceSearchObj = this.poInvoiceForm.value
+
+    let jsonData=this.poInvoiceForm.value;
+    let invSearch:ISearch = Object.assign({},jsonData);
+
+    var searchObj:InvoiceSearchObj=new InvoiceSearchObj();
+    // searchObj.segment1=this.poInvoiceForm.get('segment1').value;
+    // searchObj.attribute1=this.poInvoiceForm.get('attribute1').value;
+    if(this.poInvoiceForm.get('segment1').value != null){searchObj.segment1=this.poInvoiceForm.get('segment1').value}
+    if(this.poInvoiceForm.get('suppNo').value != null){searchObj.suppNo=this.poInvoiceForm.get('suppNo').value}
+    
+    // searchObj.suppNo=this.poInvoiceForm.get('suppNo').value;
+    // searchObj.suppSiteId=this.poInvoiceForm.get('suppSiteId').val ue;
+    
+    this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.lstsearchapinv = res.obj;
         // alert(res.obj[0].segment1);

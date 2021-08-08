@@ -51,22 +51,22 @@
                         </tr>
                     </thead>
                         <tbody>
-                        <tr *ngFor="let com of Deallotmentsearchlist" class="ItemStyle" style="text-decoration:none;">
+                        <tr *ngFor="let com of Deallotmentsearchlist" class="ItemStyle" style="text-decoration:none;text-align: center;">
                             <td>
-                                <input  type="checkbox" [formControl]="selectOrderNumber"
-                                [(ngModel)]='selectOrderNumber' (change)="selectOrderNumberEvent($event,com.orderNumber,com.orderedItem)">
+                                <input  type="checkbox" formControlName="selectOrderNumber"
+                                (change)="selectOrderNumberEvent($event,com.orderNumber,com.orderedItem)">
                             </td>
                             <td>{{com.orderNumber}}</td>
                             <td>{{com.orderedItem}}</td>
                             <td>{{com.description}}</td>
-                            <td>{{com.lineCreationDt}}</td>
+                            <td>{{com.lineCreationDt | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                             <td>{{com.rips}}</td>
                             <td>{{com.twoTone}}</td>
                             <td>{{com.interiors}}</td>
                             <td></td>
                             <td>{{com.hold}}</td>
                             <td>{{com.holdReason}}</td>
-                            <td>{{com.creationDate}}</td>
+                            <td>{{com.creationDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                             <td>{{com.aging}}</td>
                         </tr>
                     </tbody>
