@@ -29,6 +29,7 @@ export class McpItemMappingComponent implements OnInit {
   mcpItemList: any[];
   invItemList:any;
   variantDetailsList:any;
+  lstMcpItem: any;
 
   showRelateItemSection=false;
 
@@ -59,12 +60,16 @@ export class McpItemMappingComponent implements OnInit {
         startDate:Date;
         endDate:Date;
 
-        mainModel:string;
+        model:string;
         variant:string;
-        itemSrvModel:string;
+        serviceModel:string;
         fuelType:string;
         quantity:number=1;
-        erpItemCode:string;
+        erpCode:string;
+
+        sitemNumber:string;
+        sfuelType:string;
+        sserviceModel:string;
 
       //////////////////////////////////
       displayInactive = true;
@@ -101,35 +106,43 @@ export class McpItemMappingComponent implements OnInit {
             startDate:[],
             endDate:[],
 
-            mainModel:[],
+            model:[],
             variant:[],
-            itemSrvModel:[],
+            serviceModel:[],
             fuelType:[],
             quantity:[],
-            erpItemCode:[],
+            erpCode:[],
 
             invItemId:[],
             segment:[],
 
-            mcpMappingitemLine: this.fb.array([this.lineDetailsGroup()])   
+            sitemNumber:[],
+            sfuelType:[],
+            sserviceModel:[],
+
+            mcpRelatedItemList: this.fb.array([this.lineDetailsGroup()])   
           });
         }
     
         lineDetailsGroup() {
           return this.fb.group({
-            // priceListLineId:[''],
             itemId :['', [Validators.required]],    
             itemName:['', [Validators.required]],
             itemDescription: ['', [Validators.required]],
             itemCategory: ['', [Validators.required]],
             segment:[],
             uom:[],
+            relatedId:[],
+            mainPartId:[],
+            mainPart:[],
+            relatedItemId:[],
+            relatedItem:[],
                     
            });
         }
       
        lineDetailsArray() :FormArray{
-          return <FormArray>this.mcpItemMappingForm.get('mcpMappingitemLine')
+          return <FormArray>this.mcpItemMappingForm.get('mcpRelatedItemList')
         }
 
           ngOnInit(): void 
@@ -155,7 +168,6 @@ export class McpItemMappingComponent implements OnInit {
                 this.mcpItemList = data;
                 console.log(this.mcpItemList);
                 // console.log(this.mcpItemList[0].itemId);
-                
               }
             );
 
@@ -203,8 +215,8 @@ export class McpItemMappingComponent implements OnInit {
           }
 
           onOptionsSelectedModel(mainModel){
-              alert(mainModel)
-            if(mainModel===!null){
+              // alert(mainModel)
+            if(mainModel !=null){
             this.orderManagementService.VariantSearchFn(mainModel)
             .subscribe(
               data => {
@@ -216,7 +228,8 @@ export class McpItemMappingComponent implements OnInit {
           }
 
           onOptionsSelectedVariant(modelVariant){
-
+            // alert(modelVariant);
+            this.serviceModel=null;this.fuelType=null;
             this.service.variantDetailsList(modelVariant)
             .subscribe(
               data => {
@@ -224,8 +237,7 @@ export class McpItemMappingComponent implements OnInit {
                 console.log(this.variantDetailsList);
                 
                 this.mcpItemMappingForm.patchValue({
-                  // variantDesc: this.variantDetailsList.varDescription,
-                  itemSrvModel:this.variantDetailsList.serviceModel,
+                  serviceModel:this.variantDetailsList.serviceModel,
                   fuelType:this.variantDetailsList.fuelType,
                   
   
@@ -258,14 +270,16 @@ export class McpItemMappingComponent implements OnInit {
     return matches;
   };
 
-  onOptionMcpItemIdSelectedSingle(itemId:any) {
+  onOptionMcpItemIdSelectedSingle(itemNum:any) {
  
-    this.mcpItemMappingForm.get('itemType').reset();
-    this.mcpItemMappingForm.get('itemDesc').reset();
-    //  alert('item function :'+ itemId);
-      let selectedValue = this.mcpItemList.find(v => v.itemNumber == itemId);
-      
+    // this.mcpItemMappingForm.get('itemType').reset();
+    // this.mcpItemMappingForm.get('itemDesc').reset();
+
+    //  alert('item function :'+ itemNum);
+      let selectedValue = this.mcpItemList.find(v => v.itemNumber === itemNum);
+     
       if( selectedValue != undefined){
+        // alert("Selected Value :"+selectedValue);
             console.log(selectedValue);
             this.itemId = selectedValue.itemId;
             this.itemNumber=selectedValue.itemNumber;
@@ -276,6 +290,7 @@ export class McpItemMappingComponent implements OnInit {
      if( this.itemType==='Material') 
      {
        this.showRelateItemSection=true;
+       
       } else {this.showRelateItemSection=false;}
 
 
@@ -348,6 +363,53 @@ export class McpItemMappingComponent implements OnInit {
    }
  }
 
+ 
+
+  SearchMcpItem(mItemNum,mFtype,mSrvModel){
+    alert("Search Item ..WIP..."+mItemNum +","+mFtype+","+mSrvModel);
+    // this.mcpEnquiryForm.reset();
+    // var xEnq = mEnqNo.toUpperCase();
+    // this.addFlag=false;
+    this.displayButton=false;
+
+    console.log(this.mcpItemMappingForm.value);
+    this.service.mcpItemMappingSearch1(mItemNum,mFtype,mSrvModel,this.ouId)
+      .subscribe(
+        data => {
+          this.lstMcpItem = data;
+        
+          console.log(this.lstMcpItem);
+          this.mcpItemMappingForm.patchValue(this.lstMcpItem);
+
+             // ----------------------------LINE DETAILS----------------------------------------
+             for(let i=0; i<this.lineDetailsArray.length; i++){ 
+              this.lineDetailsArray().removeAt(i);
+            }
+
+            this.lineDetailsArray().clear();
+            alert("this.lstMcpItem.mcpRelatedItemList.length >>"+this.lstMcpItem.mcpRelatedItemList.length);
+            var control = this.mcpItemMappingForm.get('mcpRelatedItemList') as FormArray;
+            for (let i=0; i<this.lstMcpItem.mcpRelatedItemList.length;i++) 
+              {
+                var mcpRelatedItemList:FormGroup=this.lineDetailsGroup();
+                control.push(mcpRelatedItemList);
+              }
+                  
+            this.mcpItemMappingForm.get('mcpRelatedItemList').patchValue(this.lstMcpItem.enqDtls);
+          
+            
+            // ----------------------------------------------------------------------------
+
+            
+          
+        });
+        this.mcpItemMappingForm.get('itemNumber').disable();
+        this.mcpItemMappingForm.get('model').disable();
+        this.mcpItemMappingForm.get('variant').disable();
+        this.mcpItemMappingForm.get('fuelType').disable();
+        this.mcpItemMappingForm.get('quantity').disable();
+        this.mcpItemMappingForm.get('erpCode').disable();
+      }
 
 
  //////////////////////////////////////////////////////////////////////////

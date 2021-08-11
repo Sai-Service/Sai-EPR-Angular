@@ -57,7 +57,7 @@
                                     <input   type="text"  formControlName="itemNumber"  id="itemNumber" [(ngModel)]="itemNumber" class="form-control" >
                                 </td> -->
 
-                                <td>
+                                <!-- <td>
                                     <input type="text" formControlName="itemNumber"
                                     (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                     list="dynmicUserIds1" class="form-control"
@@ -69,7 +69,15 @@
                                             {{mc.itemNumber}}
                                         </option>
                                     </datalist>
-                                </td> 
+                                </td>  -->
+                                <td>
+                                    <select formControlName="itemNumber" id="itemNumber" [(ngModel)]="itemNumber" class="form-control"  (ngModelChange)="onOptionMcpItemIdSelectedSingle($event)" >
+                                        <option>--Select--</option>
+                                        <option *ngFor="let mc of mcpItemList" [ngValue]="mc.itemNumber">
+                                            {{mc.itemNumber}}
+                                        </option>
+                                    </select>
+                                </td>
 
 
 
@@ -90,7 +98,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
                                     
                                 <td>  
-                                    <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control" (ngModelChange)="onOptionsSelectedModel($event)" >
+                                    <select formControlName="model" id="model" [(ngModel)]="model" class="form-control" (ngModelChange)="onOptionsSelectedModel($event)" >
                                         <option>--Select--</option>
                                         <option *ngFor="let mm of mainModelList">
                                             {{mm.code}}
@@ -98,7 +106,7 @@
                                     </select>
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Name:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
                                 
                                 <td>  
                                    
@@ -117,7 +125,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
                                         
                                 <td>
-                                    <input disabled  type="text"  formControlName="itemSrvModel"  id="itemSrvModel" [(ngModel)]="itemSrvModel" class="form-control" >
+                                    <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
                                 </td>
                               
                                
@@ -147,7 +155,7 @@
                                 </td> -->
 
                                 <td>
-                                    <input type="text" formControlName="erpItemCode"
+                                    <input type="text" formControlName="erpCode"
                                     (keyup)="getInvItemId1($event)" id="invItemIdFirstWay"
                                     list="dynmicUserIds2" class="form-control"
                                     (ngModelChange)="onOptioninvItemIdSelectedSingle($event)" >
@@ -180,6 +188,7 @@
                                           cellspacing="0" cellpadding="4" rules="all" class="center">
                                           <thead>
                                             <tr class="GridHeader">
+                                                  <th style="width:10rem" scope="col">Srl#</th>
                                                   <th style="width:10rem" scope="col">Item Code</th>
                                                   <th style="width:10rem" scope="col">Item Description</th>
                                                   <th style="width:10rem" scope="col">Item Category</th>
@@ -192,9 +201,11 @@
                                         <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
                                             
                                         <!-- <input type="text" hidden formControlName="priceListLineId"> -->
+                                        <td>{{i+1}} </td>
+                                            
                                             
                                         <td>
-                                                <input type="text" formControlName="segment"
+                                                <input type="text" formControlName="relatedItem"
                                                 (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                 list="dynmicUserIds3" class="form-control"
                                                 (ngModelChange)="onOptioninvItemIdSelectedLine($event,i)" />
@@ -237,8 +248,7 @@
                     </ng-template>
                     <ng-template #elseBlock101></ng-template>
 
-
-
+                  
 
                     <br>
                     <!-- ===================================Buttons======================================== -->
@@ -397,6 +407,62 @@
                                 </tr>
                             </table>
                             <!-- ==================================================== -->
+
+
+                            <fieldset class="RFS">
+                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                                   SEARCH</legend>
+                            <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                                <tr>
+                                  <td >
+                                      <table class="center">
+                                          <tr>
+                                            <td  style="background-color: #FFE4B5;">
+                                                &nbsp;Item&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td style="background-color: #FFE4B5;">
+                                                <!-- <input class="form-control" formControlName="itemNumber" [(ngModel)]='itemNumber'
+                                                    value={{itemNumber}} style="text-transform:uppercase;"> -->
+
+                                                    <td>
+                                                        <select formControlName="sitemNumber" id="sitemNumber" [(ngModel)]="sitemNumber" class="form-control"  (ngModelChange)="onOptionMcpItemIdSelectedSingle($event)" >
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let mc of mcpItemList" [ngValue]="mc.itemNumber">
+                                                                {{mc.itemNumber}}
+                                                            </option>
+                                                        </select>
+                                                    </td>
+                                            
+        
+                                           
+                                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Fuel&nbsp;Type:&nbsp;</td>
+                                
+                                            <td>  
+                                                <select   formControlName="sfuelType" id="sfuelType" [(ngModel)]="sfuelType" class="form-control">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
+                                                       {{sc.code}}
+                                                    </option>
+                                                </select>
+                                            </td>
+        
+                                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Service&nbsp;Model:&nbsp;</td>
+                                
+                                            <td>
+                                                <input   type="text"  formControlName="sserviceModel"  id="sserviceModel" [(ngModel)]="sserviceModel" class="form-control" style="text-transform:uppercase;">
+                                            </td>
+        
+                                            <td style="background-color: #FFE4B5;">
+                                                <button type="button" class="btn-primary" (click)="SearchMcpItem(sitemNumber,sfuelType,sserviceModel)"><i class="fa fa-search"
+                                                        aria-hidden="true"></i></button>
+                                            </td>
+                                          </tr>
+                                      </table>
+                                  </td>
+                                </tr>
+                            </table>
+                            </fieldset>
+        
 
                 </form>
             </div>

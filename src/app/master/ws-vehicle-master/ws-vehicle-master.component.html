@@ -375,6 +375,14 @@
                         <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
                     </td>
 
+                    <td style="width: 15%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+
+                    <td >
+                        <input  style="width:30px ;"   type="text" disabled formControlName="customerSiteId"
+                        class="form-control" [(ngModel)]="customerSiteId" placeholder="">
+
+                    </td>
+
 
                     <!-- <td></td>
 
@@ -392,6 +400,7 @@
                   
 
                 </tr>
+              
                
             </table>
             <!-- </fieldset> -->
@@ -638,10 +647,10 @@
                 </table>
             </fieldset>
 
-            <tr>
-              <table>
-                  <tr>
-                <td>
+            <tr class="center">
+              <table class="center" style="width: 100%;">
+                <tr>
+                <td >
         
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
@@ -774,6 +783,16 @@
              
                          <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
                       </tr>
+
+                      <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
+    
+                        <td >
+                            <input style="width: 190%;"    type="text" disabled formControlName="billToAddress"
+                            class="form-control" [(ngModel)]="billToAddress" placeholder="">
+    
+                        </td>
+                    </tr>
                       <tr>
                         <td></td>
                         <div *ngIf="showCreateCustButton; then CustYes; else CustNo"></div>
@@ -917,6 +936,16 @@
                       <tr>
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Valid&nbsp;Upto:&nbsp;</td>
                         <td> <input  disabled type="date"  name="contractEndDate" formControlName="contractEndDate"  [(ngModel)]="contractEndDate" class="form-control"  style="height: 25px;"></td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
+    
+                        <td >
+                            <input style="width: 190%;"    type="text" disabled formControlName="billToAddress"
+                            class="form-control" [(ngModel)]="billToAddress" placeholder="">
+    
+                        </td>
                     </tr>
                       
 

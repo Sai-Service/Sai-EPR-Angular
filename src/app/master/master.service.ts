@@ -2261,6 +2261,10 @@ getsearchByEnrollNo(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`);
 }
 
+////////////////////////MCP ITEM MAPPING////////////////////////
+mcpItemMappingSearch1(mItemNum,mFtype,mSrvModel,mOuId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/SsErpItemMst/ItemSearch?itemNumber=${mItemNum}&serviceModel=${mSrvModel}&fuelType=${mFtype}&ouId=${mOuId}`);
+ } 
 
 //////////////////////VARIANT MASTER////////////////////////////
 public VariantMasterSubmit(VariantMasterRecord) {
