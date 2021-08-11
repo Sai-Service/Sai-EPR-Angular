@@ -57,6 +57,9 @@ RegNoListFN() : Observable<any> {
 billableTyIdListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy`);
 } 
+billableTyIdLstFN(type,regno) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/billType?srTy=${type}&regNo=${regno}`);
+} 
 LaborItemListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);
 } 

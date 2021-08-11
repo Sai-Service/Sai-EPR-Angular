@@ -240,7 +240,7 @@
                                                                                     [(ngModel)]="divisionName"
                                                                                     formControlName="divisionName"> -->
                                                                                 <select formControlName="jcType"
-                                                                                    id="jcType" class="form-control">
+                                                                                    id="jcType" class="form-control" (ngModelChange)='onOptionBillableSelected($event)'>
                                                                                     <option>--Select--</option>
                                                                                     <option
                                                                                         *ngFor="let sc of  jcTypeList">
@@ -844,6 +844,10 @@
                                                                                 class="btn btn-primary" id="register"
                                                                                 (click)="closeMast()">Cancel</button>
                                                                         </td>
+                                                                        <div
+                                                                        *ngIf="dispReadyInvoice; then thenBlockRFI; else elseBlockRFI">
+                                                                    </div>
+                                                                    <ng-template #thenBlockRFI>
                                                                         <td>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary"
@@ -851,6 +855,21 @@
                                                                                 (click)="jobCardStatusClose()"
                                                                                 id="register">Ready for invoice</button>
                                                                         </td>
+                                                                    </ng-template>
+                                                                    <ng-template #elseBlockRFI>
+                                                                        <td>
+                                                                            <button disabled type="submit"
+                                                                                class="btn btn-primary"
+                                                                                style="width: fit-content;"
+                                                                                (click)="jobCardStatusClose()"
+                                                                                id="register">Ready for invoice</button>
+                                                                        </td>
+                                                                    </ng-template>
+                                                                    <td>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                            style="width: fit-content;"
+                                                                            id="register">Pre-Invoice</button>
+                                                                    </td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -869,7 +888,7 @@
                                                 <div class="center">
                                                     <table style="width: 100%;background-color: white;">
                                                         <tr>
-                                                            <td class="PageHeader1">
+                                                            <td class="PageHeader1" >
                                                                 &nbsp;&nbsp;Labor&nbsp;Details&nbsp;
                                                             </td>
                                                         </tr>
@@ -916,17 +935,17 @@
                                                                             <td>
                                                                                 <!-- <input type="number" formControlName="billableTyId"  class="form-control"  style="height: 25px;"> -->
                                                                                 <select formControlName="billableTyId"
-                                                                                    id="billableTyId" [(ngModel)]="billableTyId"
+                                                                                    id="billableTyId"
                                                                                     style="width: fit-content;"
                                                                                     class="form-control">
-                                                                                    <option disabled>--Select--</option>
+                                                                                    <!-- <option disabled>--Select--</option> -->
                                                                                     <option
                                                                                         *ngFor="let sc of  billableTyIdList"
                                                                                         [selected]="sc.billableTyName===Customer" [ngValue]=sc.billableTyId>
                                                                                         {{sc.billableTyName}}
                                                                                     </option>
                                                                                 </select>
-                                                                                <input type="number" formControlName="billableTyId" [(ngModel)]="billableTyId" class="form-control"  style="height: 25px;">
+                                                                                <!-- <input  type="number" formControlName="billableTyId" class="form-control"  style="height: 25px;"> -->
                                                                             </td>
                                                                             <td>
                                                                                 <!-- <input type="number" formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
@@ -1180,6 +1199,7 @@
                                                                                 class="form-control"
                                                                                 style="width: 3rem;height: 25px;"
                                                                                 formControlName="lineNum">
+                                                                                <input  type="number" formControlName="trxLineId">
                                                                         </td>
                                                                         <td>
                                                                             <input type="number"
@@ -1579,7 +1599,6 @@
                                                                             <td>
                                                                                 <input type="number"
                                                                                     class="form-control"
-                                                                                    [(ngModel)]="insurerCompNo"
                                                                                     placeholder=""
                                                                                     formControlName="insurerCompNo"
                                                                                     >
@@ -1587,8 +1606,7 @@
                                                                                   <td>
                                                                                         <input type="text"
                                                                                             class="form-control"
-                                                                                            [(ngModel)]="insurerCompName"
-                                                                                            placeholder=""
+                                                                                          placeholder=""
                                                                                             formControlName="insurerCompName"
                                                                                             >
                                                                                           </td>
@@ -1615,7 +1633,6 @@
                                                                                     disabled
                                                                                     formControlName="insurerSite"
                                                                                     class="form-control"
-                                                                                    [(ngModel)]="insurerSite"
                                                                                     placeholder="">
                                                                             </td>
                                                                             <td style="width: 15%"
@@ -1626,7 +1643,6 @@
                                                                                     disabled
                                                                                     formControlName="bGstNo"
                                                                                     class="form-control"
-                                                                                    [(ngModel)]="bGstNo"
                                                                                     placeholder="">
                                                                             </td>
                                                                         </tr>
@@ -1641,7 +1657,7 @@
                                                                                     formControlName="bEmail"
                                                                                     class="form-control"
                                                                                     placeholder=""
-                                                                                    [(ngModel)]="bEmail">
+                                                                                   >
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -1653,7 +1669,7 @@
                                                                                     formControlName="bContNo"
                                                                                     class="form-control"
                                                                                     placeholder=""
-                                                                                    [(ngModel)]="bContNo">
+                                                                                   >
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -1666,7 +1682,6 @@
                                                                             <td>
                                                                                 <input type="date"
                                                                                     class="form-control"
-                                                                                    [(ngModel)]="validTillDt"
                                                                                     placeholder=""
                                                                                     formControlName="validTillDt">
                                                                             </td>
@@ -1680,7 +1695,6 @@
                                                                                     formControlName="bAdd"
                                                                                     class="form-control"
                                                                                     placeholder=""
-                                                                                    [(ngModel)]="bAdd"
                                                                                     style="width: 20rem">
                                                                             </td>
                                                                         </tr>
@@ -1953,6 +1967,13 @@
                                                                         <input type="number" class="form-control"
                                                                             placeholder="" formControlName="salvage">
                                                                     </td>
+                                                                    <div
+                                                                    *ngIf="displayInsheader; then InsheaderthenBlock; else InsheaderelseBlock">
+                                                                </div>
+                                                                <ng-template #InsheaderthenBlock></ng-template>
+                                                                <ng-template #InsheaderelseBlock>
+                                                                    <td>Insurance:</td>
+                                                                </ng-template>
                                                                 </tr>
                                                                 <tr>
                                                                     <td></td>
@@ -1979,6 +2000,18 @@
                                                                             <option value="AGM">AGM</option>
                                                                         </select>
                                                                     </td>
+                                                                    <div
+                                                                    *ngIf="displayInslinedetails; then InslinedetailsthenBlock; else InslinedetailselseBlock">
+                                                                </div>
+                                                                <ng-template #InslinedetailsthenBlock></ng-template>
+                                                                <ng-template #InslinedetailselseBlock>
+                                                                    <td><input type="number" [(ngModel)]="insTaxableAmt"
+                                                                        formControlName="insTaxableAmt"></td>
+                                                                <td><input type="number" [(ngModel)]="insTotTaxAmt"
+                                                                        formControlName="insTotTaxAmt"></td>
+                                                                <td><input type="number" formControlName="insTotAmt">
+                                                                </td>
+                                                            </ng-template>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -2024,36 +2057,62 @@
                                                                 style="width: fit-content;"
                                                                 (click)="BillingCal()">Save</button>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="button" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 (click)="clearMatLineFormArray()">Reset</button>
-                                                        </td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary" id="register"
-                                                                style="width: fit-content;">Close</button>
-                                                        </td>
+                                                        </td> -->
+                                                        <div *ngIf="dispButtonStatus; then ButtonEnablehenBlock; else ButtonDisableelseBlock"></div>
+                                                            <ng-template #ButtonEnablehenBlock>
+                                                   
                                                         <td>
                                                             <button type="submit" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 (click)="ReopenMaterialIssue()"
                                                                 id="register">Reopen-Material Issue</button>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary"
                                                                 style="width: fit-content;"
                                                                 id="register">Pre-Invoice</button>
-                                                        </td>
+                                                        </td> -->
 
                                                         <td>
                                                             <button type="submit" class="btn btn-primary"
                                                                 (click)="GenerateInvoice(jobCardNum)" id="register"
                                                                 style="width: fit-content;">Generate Invoice</button>
                                                         </td>
+                                                    </ng-template>
+                                                    <ng-template #ButtonDisableelseBlock>
+                                                       
+                                                        <td>
+                                                            <button disabled type="submit" class="btn btn-primary"
+                                                                style="width: fit-content;"
+                                                                (click)="ReopenMaterialIssue()"
+                                                                id="register">Reopen-Material Issue</button>
+                                                        </td>
+                                                        <!-- <td>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                style="width: fit-content;"
+                                                                id="register">Pre-Invoice</button>
+                                                        </td> -->
+
+                                                        <td>
+                                                            <button disabled type="submit" class="btn btn-primary"
+                                                                (click)="GenerateInvoice(jobCardNum)" id="register"
+                                                                style="width: fit-content;">Generate Invoice</button>
+                                                        </td>
+                                                    </ng-template>
                                                         <td>
                                                             <button type="submit" class="btn btn-primary" id="register"
                                                                 style="width: fit-content;">Print invoice</button>
                                                         </td>
+                                                        <td>
+                                                                <button type="submit" class="btn btn-primary" id="register"
+                                                                    style="width: fit-content;">Close</button>
+                                                            </td>
+                                                           
+                                                                
                                                     </tr>
                                                 </table>
                                             </div>

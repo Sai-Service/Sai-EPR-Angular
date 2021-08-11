@@ -71,6 +71,9 @@ interface IjobCard {
   customerSiteId: number;
   // contact1: string;
   taxCategoryId: number;
+  insTaxableAmt:number;
+insTotTaxAmt:number;
+insTotAmt:number;
 }
 
 @Component({
@@ -153,6 +156,8 @@ matTotAmt:number;
   displaybilling=true;
   displayCustDetails=true;
   displayCustInsDetails=true;
+  displayInslinedetails=true;
+  displayInsheader=true;
   insurerCompId: number;
   insurerSiteId: number;
   insurerSite:string;
@@ -189,6 +194,16 @@ matTotAmt:number;
   insLabBasicAmt:number;
   insMatBasicAmt:number;
   actualInsAmt:number;
+
+  insTaxableAmt:number;
+  insTotTaxAmt:number;
+  insTotAmt:number;
+
+  trxLineId:number;
+
+  dispReadyInvoice=false;
+  dispButtonStatus=false;
+
 
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
@@ -294,6 +309,10 @@ matTotAmt:number;
       insLabBasicAmt:[],
       insMatBasicAmt:[],
       actualInsAmt:[],
+
+      insTaxableAmt:[],
+      insTotTaxAmt:[],
+      insTotAmt:[],
 
       disTypeLab: [],
       disTypeMat: [],
@@ -418,6 +437,7 @@ matTotAmt:number;
     return this.fb.group({
       // invDistributionId: [],
       lineNum: [],
+      trxLineId:[],
       billableTyId: [],
       billableTyName:[],
       taxCategoryName:[],
@@ -518,25 +538,25 @@ totAmt:[],
           console.log(this.RegNoList1);
         }
       );
-    this.serviceService.billableTyIdListFN()
-      .subscribe(
-        data1 => {
-          this.billableTyIdList = data1;
-          console.log(this.billableTyIdList);
-           let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
-      this.lineDetailsGroup();
-      var patch=this.jobcardForm.get('jobCardLabLines') as FormArray
-      (patch.controls[0]).patchValue(
-        {
-          lineNum: 1,
-          billableTyId:selectbilTy.billableTyId,
-          // billableTyName:selectbilTy.billableTyName
-          // billableTyId:selectbilTy.billableTyName
-          // ,comment by vinita
-        }
-      );
-        }
-      );
+    // this.serviceService.billableTyIdListFN()
+    //   .subscribe(
+    //     data1 => {
+    //       this.billableTyIdList = data1;
+    //       console.log(this.billableTyIdList);
+    //        let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
+    //   this.lineDetailsGroup();
+    //   var patch=this.jobcardForm.get('jobCardLabLines') as FormArray
+    //   (patch.controls[0]).patchValue(
+    //     {
+    //       lineNum: 1,
+    //       billableTyId:selectbilTy.billableTyId,
+    //       // billableTyName:selectbilTy.billableTyName
+    //       // billableTyId:selectbilTy.billableTyName
+    //       // ,comment by vinita
+    //     }
+    //   );
+    //     }
+    //   );
     this.serviceService.LaborItemListFN()
       .subscribe(
         data1 => {
@@ -614,8 +634,8 @@ totAmt:[],
           // });
           this.jobcardForm.get('jobCardMatLines').patchValue(data1);
           var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
-          for (let i = 1; i <= data1.length; i++) {
-            // this.jobcardForm.get('jobCardMatLines').patchValue({lineNum: i+1})
+          for (let i = 0; i <= data1.length; i++) {
+            // this.jobcardForm.get('jobCardMatLines').patchValue({lineNum: i+1})change by vinita
             patch.controls[i].patchValue({ lineNum: i + 1 })
           }
           // this.jobCarStatusList = data1;
@@ -718,6 +738,36 @@ totAmt:[],
   //  this.jobcardForm.patchValue(select)
   this.jobcardForm.patchValue({ groupId:select.groupId })
   }
+  onOptionBillableSelected(event)
+  {
+    var regno= this.jobcardForm.get('regNo').value;
+    alert(regno);
+    if(regno!=undefined){
+    this.serviceService.billableTyIdLstFN(event,regno)
+    .subscribe(
+      data1 => {
+        this.billableTyIdList = data1;
+        console.log(data1);
+        console.log(this.billableTyIdList);
+         let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
+    this.lineDetailsGroup();
+    var patch=this.jobcardForm.get('jobCardLabLines') as FormArray
+    (patch.controls[0]).patchValue(
+      {
+        lineNum: 1,
+        billableTyId:selectbilTy.billableTyId,
+        // billableTyName:selectbilTy.billableTyName
+        // billableTyId:selectbilTy.billableTyName
+        // ,comment by vinita
+      }
+    );
+      }
+    );
+    }
+    else{
+      alert('Please enter correct Registration number');
+    }
+  }
   addRow(index) {
 
     var arrayControl = this.jobcardForm.get('jobCardLabLines').value
@@ -792,6 +842,8 @@ totAmt:[],
       {
        this.displayCustDetails=false;
        this.displayCustInsDetails=false;
+       this.displayInsheader=false;
+       this.displayInslinedetails=false;
       }
   }
   totalActualLabMat() {
@@ -820,20 +872,31 @@ totAmt:[],
           this.jobStatus=data.jobStatus;
           alert( this.jobStatus)
           // alert(this.lstcomments.jobCardNum);
-
-
+          
+          if(this.lstcomments.lineCnt>0){
+            this.dispReadyInvoice=true;
+          }
+          alert('status'+' '+this.lstcomments.matStatus +' '+this.jobStatus)
+          // // || this.lstcomments.matStatus === 'Compeleted'
+          // if(this.jobStatus ==='Ready for Invoice'){
+          //   alert('In If');
+          //   alert( this.dispButtonStatus);
+          //   this.dispButtonStatus=true;
+          // }
           if(this.lstcomments.jobCardNum!=undefined){
             this.displaylabMatTab=false;
           }
-         if(this.lstcomments.jobStatus =='Invoiced'&& this.lstcomments.matStatus == 'Compeleted'){
+         if(this.lstcomments.jobStatus =='Invoiced'|| this.lstcomments.matStatus == 'Compeleted'){
            this.jobcardForm.disable();
            this.jobcardForm.get('jobCardLabLines').disable();
            this.jobcardForm.get('jobCardMatLines').disable();
            this.displaybilling=false;
+           this.dispButtonStatus=false;
          }
           if(this.lstcomments.matStatus == 'Compeleted' || this.lstcomments.jobStatus == 'Ready for Invoice'){
 
             this.displaybilling=false;
+            this.dispButtonStatus=true;
           }
           var len = this.lineDistributionArray().length;
           // alert('len ' + len)
@@ -857,24 +920,39 @@ totAmt:[],
           // );
           // this.jobcardForm.get('jobCardLabLines').patchValue(data.jobCardLabLines);
           this.jobcardForm.patchValue(this.lstcomments);
-          let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
+          this.onOptionBillableSelected(this.jobcardForm.get('jcType').value);
+          var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
+          // let selectbillTy=this.billableTyIdList.find(d=> d.billableTyId=== this.billableTyId)
+          for (let i = 0; i < data.jobCardLabLines.length - len1; i++) {
+            
+            let selectbilTy = this.billableTyIdList.find(d => d.billableTyId=== data.jobCardLabLines[i].billableTyId);
+            patch.controls[i].patchValue({billableTyId:selectbilTy.billableTyName});
+            
+          }
+
           this.jobcardForm.patchValue({
             // labTaxableAmt: this.lstcomments.labTaxableAmt,
             labTotTaxAmt: this.lstcomments.labTotTaxAmt,
-            labTaxableAmt: this.lstcomments.labTotAmt,
+            labTaxableAmt: this.lstcomments.labTaxableAmt,
             matTaxableAmt: this.lstcomments.matTaxableAmt,
             matTotTaxAmt: this.lstcomments.matTotTaxAmt,
             matTotAmt: this.lstcomments.matTotAmt,
-            billableTyId:selectbilTy.billableTyName,
-            actualBasicAmt:this.lstcomments.invTotAmt,
+            // billableTyId:selectbilTy.billableTyName,
+            actualBasicAmt:this.lstcomments.totBasicAmt,
+            actualInsAmt:this.lstcomments.insTotBasicAmt,
+
+            insTaxableAmt:this.lstcomments.insMatTaxableAmt+this.lstcomments.insLabTaxableAmt,
+            insTotTaxAmt:this.lstcomments.insLabTotTaxAmt+this.lstcomments.insMatTotTaxAmt,
+            insTotAmt:this.lstcomments.insInvTotAmt,
           })
           // let select = this.billableTyIdList.find(d => d.billableTyId === this.billableTyId);
-          var labBasicAmt= (this.jobcardForm.get('labBasicAmt').value)
+          // var labBasicAmt= (this.jobcardForm.get('labBasicAmt').value)
           var control=this.jobcardForm.get('jobCardLabLines').value;
           var totlabtaxamt=0;
           for(var i=0;i<control.length;i++)
           {
-            totlabtaxamt=totlabtaxamt+(labBasicAmt*control[i].taxPer)/100;
+            // var labBasicAmt=control[i].get('basicAmt').value;
+            totlabtaxamt=totlabtaxamt+(control[i].basicAmt*control[i].taxPer)/100;
           }
           this.jobcardForm.patchValue({
             labTotTaxAmt:totlabtaxamt,
@@ -895,9 +973,10 @@ totAmt:[],
            // alert(perValueLab);
 
     // this.billableTyId= selectbilTy.billableTyName;
+    
         }
       );
-
+        
     // this.totalActualLabMat();
   }
   // onOptionTaxCatSelected(i, taxCategoryName) {
@@ -1001,14 +1080,16 @@ totAmt:[],
       // alert(this.lineDetailsArray.length+ " length")
 var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
 console.log(res.obj.jobCardLinesList);
-for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
-  var invLnGrp: FormGroup = this.lineDetailsGroup();
-            this.lineDetailsArray.push(invLnGrp);
-            let select = this.splitRatioList.find(d => d.splitCateId === res.obj.jobCardLinesList[i].splitCateId);
- patch.controls[i].patchValue({splitRatio:select.billingNature});
-}
-this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);
-
+// for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
+//   var invLnGrp: FormGroup = this.lineDetailsGroup();
+//             this.lineDetailsArray.push(invLnGrp);
+//             let select = this.splitRatioList.find(d => d.splitCateId === res.obj.jobCardLinesList[i].splitCateId);
+//  patch.controls[i].patchValue({splitRatio:select.billingNature});
+// }
+// this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);comment by Vinita
+var jobNo=this.jobcardForm.get('jobCardNum').value;
+this. Search(jobNo);
+this.dispReadyInvoice=true;
       // patch.patchValue(res.obj.jobCardLinesList);
         // obj.jobCardLinesList
       } else {
@@ -1027,15 +1108,19 @@ this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);
 console.log(res.obj.jobCardLinesList);
 var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
 console.log(res.obj.jobCardLinesList.lenght);
-for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
-     var invLnGrp: FormGroup = this.distLineDetails();
-        this.lineDistributionArray().push(invLnGrp);
-}
+var jobNo=this.jobcardForm.get('jobCardNum').value;
+this. Search(jobNo);
+this.dispReadyInvoice=true;
+// for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
+//      var invLnGrp: FormGroup = this.distLineDetails();
+//         this.lineDistributionArray().push(invLnGrp);
+// }comment by vinita
+
 // for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
 //   var invLnGrp: FormGroup = this.distLineDetails();
 //             this.lineDistributionArray().push(invLnGrp);
 // }
-this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
+// this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);comment by vinita
       } else {
         if (res.code === 400) {
           alert(res.message);
@@ -1196,6 +1281,7 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
         // alert(res.message);
         this.jobcardForm.patchValue({ jobStatus: 'Ready for Invoice' })
         this.displaybilling=false;
+        this.dispButtonStatus=false;
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
         if (res.code === 400) {
@@ -1218,16 +1304,19 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     var totlabtaxamt=0;
     for(var i=0;i<control.length;i++)
     {
-      totlabtaxamt=totlabtaxamt+(labBasicAmt*control[i].taxPer)/100;
+      var basictax=(control[i].basicAmt*event)/100;
+      totlabtaxamt=totlabtaxamt+((control[i].basicAmt-basictax)*control[i].taxPer)/100;
     }
     var perValueLab= (labBasicAmt* event)/100;
     // var labTotTaxAmt =(labBasicAmt*labtaxper)/100
     var aaa = labBasicAmt-perValueLab;
+    // var basictax=(aaa*event)/100;
     // alert(perValueLab);
     this.jobcardForm.patchValue({
       labDiscount: perValueLab,
       labTaxableAmt:labBasicAmt-perValueLab,
       labTotTaxAmt:totlabtaxamt,
+      // labTotTaxAmt:basictax,
       labTotAmt:totlabtaxamt+aaa,
     })
   }
@@ -1238,12 +1327,18 @@ this.jobcardForm.get('jobCardMatLines').patchValue(res.obj.jobCardLinesList);
     var labDisAmt=(this.jobcardForm.get('labDiscount').value)
     // var labtaxper=(this.jobcardForm.get('taxPer').value)
     var control=this.jobcardForm.get('jobCardLabLines').value;
-
+    var perValueLab=(labDisAmt*100)/labBasicAmt;
     var labTaxAmt=labBasicAmt-labDisAmt;
     var totlabtaxamt=0;
     for(var i=0;i<control.length;i++)
     {
-      totlabtaxamt=totlabtaxamt+(labTaxAmt*control[i].taxPer)/100;
+      // var basictax=(control[i].basicAmt*event)/100;
+      // totlabtaxamt=totlabtaxamt+(control[i].basicAmt*control[i].taxPer)/100;
+      // totlabtaxamt=totlabtaxamt+(labTaxAmt*control[i].taxPer)/100;
+      var perDisLab=(control[i].basicAmt*perValueLab)/100;
+      var pervalLab=control[i].basicAmt-perDisLab;
+      totlabtaxamt=totlabtaxamt+(pervalLab*control[i].taxPer)/100;
+      // totlabtaxamt=totlabtaxamt+pervalLab;
     }
      // var labTotTaxAmt =(labBasicAmt*labtaxper)/100
     // var aaa = labBasicAmt-perValueLab;
