@@ -738,7 +738,7 @@ totAmt:[],
   //  this.jobcardForm.patchValue(select)
   this.jobcardForm.patchValue({ groupId:select.groupId })
   }
-  onOptionBillableSelected(event)
+  onOptionBillableSelected(event,jcStatus:string)
   {
     var regno= this.jobcardForm.get('regNo').value;
     alert(regno);
@@ -749,8 +749,9 @@ totAmt:[],
         this.billableTyIdList = data1;
         console.log(data1);
         console.log(this.billableTyIdList);
+        if(jcStatus==='New'){
          let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
-    this.lineDetailsGroup();
+            this.lineDetailsGroup();
     var patch=this.jobcardForm.get('jobCardLabLines') as FormArray
     (patch.controls[0]).patchValue(
       {
@@ -761,7 +762,7 @@ totAmt:[],
         // ,comment by vinita
       }
     );
-      }
+      }}
     );
     }
     else{
@@ -920,13 +921,15 @@ totAmt:[],
           // );
           // this.jobcardForm.get('jobCardLabLines').patchValue(data.jobCardLabLines);
           this.jobcardForm.patchValue(this.lstcomments);
-          this.onOptionBillableSelected(this.jobcardForm.get('jcType').value);
+          this.onOptionBillableSelected(this.jobcardForm.get('jcType').value,'Search');
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
           // let selectbillTy=this.billableTyIdList.find(d=> d.billableTyId=== this.billableTyId)
-          for (let i = 0; i < data.jobCardLabLines.length - len1; i++) {
-            
+          alert(this.billableTyIdList.length);
+          for (let i = 0; i < data.jobCardLabLines.length; i++) {
+            alert(data.jobCardLabLines[i].billableTyId+'Labor'+i);
             let selectbilTy = this.billableTyIdList.find(d => d.billableTyId=== data.jobCardLabLines[i].billableTyId);
             patch.controls[i].patchValue({billableTyId:selectbilTy.billableTyName});
+            
             
           }
 

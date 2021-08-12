@@ -240,7 +240,7 @@
                                                                                     [(ngModel)]="divisionName"
                                                                                     formControlName="divisionName"> -->
                                                                                 <select formControlName="jcType"
-                                                                                    id="jcType" class="form-control" (ngModelChange)='onOptionBillableSelected($event)'>
+                                                                                    id="jcType" class="form-control" (ngModelChange)='onOptionBillableSelected($event,"New")'>
                                                                                     <option>--Select--</option>
                                                                                     <option
                                                                                         *ngFor="let sc of  jcTypeList">
