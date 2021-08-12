@@ -5,6 +5,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { ServiceService } from '../service.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { observable, Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
 // import { of } from 'rxjs/observable/of';
 // import 'rxjs/add/observable/of';
 
@@ -203,7 +204,13 @@ matTotAmt:number;
 
   dispReadyInvoice=false;
   dispButtonStatus=false;
+  dispfreezeDetail=true;
 
+  // public minDatetime = new Date();
+  promiseDate= new Date();
+  pipe = new DatePipe('en-US');
+  // now = Date.now();
+  public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
 
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
@@ -466,6 +473,8 @@ totAmt:[],
     this.owner = sessionStorage.getItem('name')
     this.divisionName = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
+    this.jobStatus='Opened';
+    // this.jobCardDate=Date.now();
     this.service.taxCategoryListForSALES()
       .subscribe(
         data1 => {
@@ -474,13 +483,13 @@ totAmt:[],
           data1 = this.taxCategoryList;
         }
       );
-    this.serviceService.jobCarStatusListFn()
-      .subscribe(
-        data1 => {
-          this.jobCarStatusList = data1;
-          console.log(this.jobCarStatusList);
-        }
-      );
+    // this.serviceService.jobCarStatusListFn()
+    //   .subscribe(
+    //     data1 => {
+    //       this.jobCarStatusList = data1;
+    //       console.log(this.jobCarStatusList);
+    //     }
+    //   );comment by vinita
     this.serviceService.pickupTypeListFN()
       .subscribe(
         data1 => {
@@ -488,13 +497,13 @@ totAmt:[],
           console.log(this.pickupTypeList);
         }
       );
-    this.serviceService.srTypeIdListFN()
-      .subscribe(
-        data1 => {
-          this.srTypeIdList = data1;
-          console.log(this.srTypeIdList);
-        }
-      );
+    // this.serviceService.srTypeIdListFN()
+    //   .subscribe(
+    //     data1 => {
+    //       this.srTypeIdList = data1;
+    //       console.log(this.srTypeIdList);
+    //     }
+    //   );
     this.serviceService.matStatusListFN()
       .subscribe(
         data1 => {
@@ -517,13 +526,13 @@ totAmt:[],
           console.log(this.labDiscountPerList);
         }
       );
-    this.serviceService.srvAdvisorListtFN((sessionStorage.getItem('locId')), (sessionStorage.getItem('deptId')))
-      .subscribe(
-        data1 => {
-          this.srvAdvisorList = data1;
-          console.log(this.srvAdvisorList);
-        }
-      );
+    // this.serviceService.srvAdvisorListtFN((sessionStorage.getItem('locId')), (sessionStorage.getItem('deptId')))
+    //   .subscribe(
+    //     data1 => {
+    //       this.srvAdvisorList = data1;
+    //       console.log(this.srvAdvisorList);
+    //     }
+    //   );
     this.serviceService.groupIdListFN((sessionStorage.getItem('locId')), (sessionStorage.getItem('deptId')))
       .subscribe(
         data1 => {
@@ -589,7 +598,6 @@ totAmt:[],
 
 
 
-      this.jobStatus='Opened';
       this.matStatus='No Material';
       this.billableTyName='Customer';
        var laborLineArr = this.jobcardForm.get('jobCardLabLines') as FormArray;
@@ -683,7 +691,7 @@ totAmt:[],
       }
     }
     return matches;
-  };
+  }; 
 
   jobcard(jobcardForm) {
 
@@ -738,8 +746,16 @@ totAmt:[],
   //  this.jobcardForm.patchValue(select)
   this.jobcardForm.patchValue({ groupId:select.groupId })
   }
+ 
   onOptionBillableSelected(event,jcStatus:string)
   {
+    this.serviceService.srTypeIdstFN(event)
+      .subscribe(
+        data1 => {
+          this.srTypeIdList = data1;
+          console.log(this.srTypeIdList);
+        }
+      );
     var regno= this.jobcardForm.get('regNo').value;
     alert(regno);
     if(regno!=undefined){
@@ -768,6 +784,13 @@ totAmt:[],
     else{
       alert('Please enter correct Registration number');
     }
+    this.serviceService.srvAdvisorListFN((sessionStorage.getItem('locId')), event)
+      .subscribe(
+        data1 => {
+          this.srvAdvisorList = data1;
+          console.log(this.srvAdvisorList);
+        }
+      );
   }
   addRow(index) {
 
@@ -1145,6 +1168,7 @@ this.dispReadyInvoice=true;
         if(res.obj.jobCardNum!=undefined){
           this.displaylabMatTab=false;
         }
+        this.dispfreezeDetail=false;
         // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
@@ -1270,7 +1294,7 @@ this.dispReadyInvoice=true;
     //   alert("Material status not completed")
     // }
   }
-  jobCardStatusClose() {
+    jobCardStatusClose() {
 
   //  labDiscountPerCal
     // var matStatus= this.jobcardForm.get('matStatus').value;
@@ -1415,6 +1439,15 @@ this.dispReadyInvoice=true;
       invTotAmt:(totalMatTaxableAmt+totmattaxamt)+labTotAt,
 
     })
+  }
+  validateKm(event)
+  {
+    var storeKm=this.RegNoList.lastRunKms;
+    if(event.target.value<storeKm)
+    {
+      alert("You can not enter Km less than Actual Km");
+      this.jobcardForm.patchValue({lastRunKms:this.RegNoList.lastRunKms});
+    }
   }
 
 }

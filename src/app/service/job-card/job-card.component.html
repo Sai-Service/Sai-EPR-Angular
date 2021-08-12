@@ -98,7 +98,7 @@
                                                                                 class="LabelFontStyle">
                                                                                 Job&nbsp;Card&nbsp;Date&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="text" disabled
+                                                                                <input type="date" disabled
                                                                                     class="form-control" placeholder=""
                                                                                     [(ngModel)]="jobCardDate"
                                                                                     formControlName="jobCardDate">
@@ -107,7 +107,10 @@
                                                                                 class="LabelFontStyle">
                                                                                 Job&nbsp;Card&nbsp;Status&nbsp;:</td>
                                                                             <td>
-                                                                                <select formControlName="jobStatus"
+                                                                                    <input type="text" disabled
+                                                                                    class="form-control" placeholder=""
+                                                                                   formControlName="jobStatus" [(ngModel)]="jobStatus">
+                                                                                <!-- <select formControlName="jobStatus"
                                                                                     name="jobStatus" id="jobStatus"
                                                                                     class="form-control"
                                                                                     [(ngModel)]="jobStatus">
@@ -117,7 +120,7 @@
                                                                                         [value]="sc.code" >
                                                                                         {{sc.code}}
                                                                                     </option>
-                                                                                </select>
+                                                                                </select> -->
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -166,6 +169,9 @@
                                                                             </td>
                                                                         </tr>
                                                                     </fieldset>
+                                                                    <div *ngIf="dispfreezeDetail; then thenBlockOpen; else elseBlockFreeze">
+                                                                        </div>
+                                                                        <ng-template #thenBlockOpen>
                                                                     <fieldset class="RFS">
                                                                         <legend id="FormsPH_LGAadhaar" class="RFSL"
                                                                             style="font-size: 10px;color: black;">
@@ -225,7 +231,7 @@
                                                                             <td>
                                                                                 <input type="number"
                                                                                     class="form-control" placeholder=""
-                                                                                    formControlName="lastRunKms">
+                                                                                    formControlName="lastRunKms" (change)="validateKm($event)">
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">JC Type&nbsp;:
@@ -457,6 +463,283 @@
                                                                         </tr>
 
                                                                     </fieldset>
+                                                                        </ng-template>
+                                                                        <ng-template #elseBlockFreeze>
+                                                                                <fieldset class="RFS">
+                                                                                    <legend id="FormsPH_LGAadhaar" class="RFSL"
+                                                                                        style="font-size: 10px;color: black;">
+                                                                                        <b>Vehicle&nbsp;Details&nbsp;</b>
+                                                                                    </legend>
+                                                                                    <tr>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">
+                                                                                            Registration&nbsp;No&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input disabled type="text"
+                                                                                                formControlName="regNo"
+                                                                                                [(ngModel)]="regNo"
+                                                                                               class="form-control" />
+                                                                                            <!-- <select  formControlName="RegNo" id="RegNo"  (ngModelChange)="serchByRegNo($event)"
+                                                                                        class="form-control">
+                                                                                        <option>--Select--</option>
+                                                                                        <option *ngFor="let sc of  RegNoList1" >
+                                                                                            {{sc.srvAdvisorName}}
+                                                                                        </option>
+                                                                                    </select> -->
+                                                                                            <input type="text" hidden
+                                                                                                formControlName="itemId">
+                                                                                            <input type="text" hidden
+                                                                                                formControlName="customerSiteId">
+                                                                                            <input type="number" hidden
+                                                                                                formControlName="ouId">
+                                                                                            <input type="number" hidden
+                                                                                                formControlName="deptId">
+                                                                                            <input type="number" hidden
+                                                                                                formControlName="locId">
+                                                                                            <input type="text" hidden
+                                                                                                formControlName="customerId">
+                                                                                        </td>
+            
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">
+                                                                                            Vehicle&nbsp;ID&nbsp;(VIN)&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input disabled type="text" class="form-control"
+                                                                                                placeholder=""
+                                                                                                formControlName="vin">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">
+                                                                                            OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input disabled type="number"
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="lastRunKms">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">JC Type&nbsp;:
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="text" hidden
+                                                                                                class="form-control" placeholder=""
+                                                                                                [(ngModel)]="divisionId"
+                                                                                                formControlName="divisionId">
+                                                                                            <!-- <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                [(ngModel)]="divisionName"
+                                                                                                formControlName="divisionName"> -->
+                                                                                            <input disabled formControlName="jcType"
+                                                                                                id="jcType" class="form-control">
+                                                                                              <!-- <select formControlName="jcType">
+                                                                                                <option ng-repeat="x in jcTypeList" value="{{x.model}}">{{x.model}}</option>
+                                                                                              </select> -->
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">
+                                                                                            Service&nbsp;Type&nbsp;:</td>
+                                                                                        <td>
+            
+                                                                                            <input disabled type="text" class="form-control" placeholder="" formControlName="srTypeId">
+                                                                                            <!-- <select formControlName="srTypeId"
+                                                                                                id="srTypeId"
+                                                                                                (ngModelChange)="onOptionsSelectedsrTypeId($event)"
+                                                                                                class="form-control">
+                                                                                                <option>--Select--</option>
+                                                                                                <option
+                                                                                                    *ngFor="let sc of  srTypeIdList"
+                                                                                                    [ngValue]="sc.srTypeId">
+                                                                                                    {{sc.srTypeName}}-{{sc.description}}
+                                                                                                </option>
+                                                                                            </select> -->
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">
+                                                                                            Sub&nbsp;Service&nbsp;Type&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input disabled type="text" class="form-control" placeholder="" formControlName="subTypeId">
+                                                                                            <!-- <select formControlName="subTypeId"
+                                                                                                id="subTypeId" class="form-control">
+                                                                                                <option>--Select--</option>
+                                                                                                <option
+                                                                                                    *ngFor="let sc of  SubSrTypeIdList"
+                                                                                                    [ngValue]="sc.subTypeId">
+                                                                                                    {{sc.subTypeName}}-{{sc.description}}
+                                                                                                </option>
+                                                                                            </select> -->
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">
+                                                                                            Service&nbsp;Advisor&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <!-- (ngModelChange)='onOptionsrvAdvisorSelected($event)' -->
+                                                                                            <input disabled type="text" class="form-control" placeholder="" formControlName="srvAdvisor">
+                                                                                            <!-- <select formControlName="srvAdvisor"
+                                                                                                (ngModelChange)='onOptionsrvAdvisorSelected($event)'
+                                                                                                id="srvAdvisor"
+                                                                                                class="form-control">
+                                                                                                <option>--Select--</option>
+                                                                                                <option
+                                                                                                    *ngFor="let sc of  srvAdvisorList"
+                                                                                                    [ngValue]="sc.srvAdvisor">
+                                                                                                    {{sc.srvAdvisorName}}
+                                                                                                </option>
+                                                                                            </select> -->
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle1">Group&nbsp;:
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input disabled type="text" class="form-control" placeholder="" formControlName="groupId">
+                                                                                              <!-- <select formControlName="groupId"
+                                                                                                id="groupId" class="form-control">
+                                                                                                <option>--Select--</option>
+                                                                                                <option
+                                                                                                    *ngFor="let sc of  groupIdList"
+                                                                                                    [ngValue]="sc.teamId">
+                                                                                                    {{sc.teamName}}-{{sc.teamDesc}}
+                                                                                                </option>
+                                                                                            </select> -->
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Bay&nbsp;Code&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input disabled type="text" class="form-control"
+                                                                                                placeholder=""
+                                                                                                formControlName="bayTyId">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">&nbsp;</td>
+                                                                                        <td>
+                                                                                            <input type="text" hidden
+                                                                                                class="form-control" placeholder="">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">Technician&nbsp;:
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input disabled type="text" class="form-control"
+                                                                                                placeholder=""
+                                                                                                formControlName="techId">
+                                                                                            <!-- <select formControlName="techId"
+                                                                                                id="techId"
+                                                                                                (ngModelChange)="technician($event)"
+                                                                                                class="form-control">
+                                                                                                <option>--Select--</option>
+                                                                                                <option
+                                                                                                    *ngFor="let sc of  TechnicianList"
+                                                                                                    [ngValue]="sc.teamId">
+                                                                                                    {{sc.description}}
+                                                                                                </option>
+                                                                                            </select> -->
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Technical&nbsp;Adivsor&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input disabled type="text" class="form-control"
+                                                                                                placeholder="">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Vehicle&nbsp;Model&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="mainModel">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Vehicle&nbsp;Sale&nbsp;Date&nbsp;:
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="regDate">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Chassis&nbsp;No&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="chassisNo">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Engine&nbsp;No&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="engineNo">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Vehicle&nbsp;Variant&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="variantCode">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">Color&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="colorCode">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Dealer&nbsp;Name&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="dealerName">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Dealer&nbsp;Site&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" disabled
+                                                                                                class="form-control" placeholder=""
+                                                                                                formControlName="dealerSite">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Customers&nbsp;Demanded&nbsp;Job&nbsp;:
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="text" class="form-control"
+                                                                                                placeholder="">
+                                                                                        </td>
+                                                                                        <td style="width: 15%"
+                                                                                            class="LabelFontStyle">
+                                                                                            Recommendation&nbsp;:</td>
+                                                                                        <td>
+                                                                                            <input type="text" class="form-control"
+                                                                                                placeholder="">
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <button data-toggle="modal"
+                                                                                                class="btn btn-primary"
+                                                                                                data-target="#exampleModalScrollable"
+                                                                                                style="width: fit-content;">Additional
+                                                                                                Details</button>
+                                                                                        </td>
+                                                                                    </tr>
+            
+                                                                                </fieldset>
+                                                                                    </ng-template>
                                                                     <tr>
                                                                         <table>
                                                                             <tr>
@@ -593,7 +876,7 @@
                                                                                                     Customer&nbsp;Account&nbsp;:
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <input type="text"
+                                                                                                    <input disabled type="text"
                                                                                                         class="form-control"
                                                                                                         [(ngModel)]="bCustAcct"
                                                                                                         placeholder=""
@@ -810,9 +1093,9 @@
                                                                                 Promise&nbsp;Date&nbsp;&&nbsp;Time&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input type="date" class="form-control"
+                                                                                <input type="datetime-local" class="form-control" style="width: fit-content;"
                                                                                     placeholder=""
-                                                                                    formControlName="promiseDate">
+                                                                                    formControlName="promiseDate" min="{{minDatetime | date:'yyyy-MM-ddThh:mm'}}">
                                                                             </td>
                                                                         </tr>
                                                                     </fieldset>
