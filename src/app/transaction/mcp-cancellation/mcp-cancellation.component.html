@@ -209,13 +209,13 @@
                         <tr>
     
                        
-                            <td style="width: 15%" class="LabelFontStyle1">Current&nbsp;Mileage:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Current&nbsp;Mileage:&nbsp;</td>
         
                             <td>
                                 <input disabled  type="text"  formControlName="currentKms"  id="currentKms" [(ngModel)]="currentKms" class="form-control">
                             </td>
     
-                            <td style="width: 15%" class="LabelFontStyle1">Sold&nbsp;By:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">Sales&nbsp;Exe:&nbsp;</td>
 
                             <!-- <td>
                                 <input disabled  type="text"  formControlName="executive"  id="executive" [(ngModel)]="executive" class="form-control" >
@@ -231,7 +231,7 @@
                             </td>
 
     
-                            <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
     
                             <td>
                                 <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" >
@@ -485,7 +485,7 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpEnquiryForm">Cancel</button>
+                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpCancellationForm">Cancel</button>
                                 </td>
                                 
                                 <td>

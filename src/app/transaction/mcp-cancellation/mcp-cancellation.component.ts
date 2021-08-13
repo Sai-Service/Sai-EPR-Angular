@@ -499,7 +499,7 @@ export class McpCancellationComponent implements OnInit {
         var xEnq = mRegNo.toUpperCase();
         // this.resetSection1(); this.resetSection3(); this.resetSection3();
         // this.addFlag=false;
-        this.displayButton=false;
+        // this.displayButton=false;
 
         console.log(this.mcpCancellationForm.value);
         this.service.mcpRegSearch(xEnq)

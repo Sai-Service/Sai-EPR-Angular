@@ -675,7 +675,7 @@ export class PaymentArComponent implements OnInit {
             this.showModalForm=false;
             this.enableApplyButton=false;
             this.enableCancelButton=false;
-           this.paymentArForm.disable();} else {
+            this.paymentArForm.disable();} else {
             this.showModalForm=true;
             this.enableApplyButton=true;
             this.enableCancelButton=true;
@@ -692,6 +692,7 @@ export class PaymentArComponent implements OnInit {
           this.paymentArForm.get('searchByRcptNo').enable();   
           this.paymentArForm.get('searchByCustNo').enable();  
           this.paymentArForm.get('searchByDate').enable();  
+          this.paymentArForm.get('applyTo').enable();
 
           
         }
