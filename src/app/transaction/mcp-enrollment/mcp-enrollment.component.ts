@@ -37,12 +37,13 @@ export class McpEnrollmentComponent implements OnInit {
   variantDetailsList:any;
   CustomerDetailsList:any;
   CustomerSiteDetails:any;
+  vehicleItemDetails:any;
   // lstMcpEnquiryList:any[];
   getPkgDetails:any[];
   lstcomments: any;
   lstMcplines: any;
   lstMcpEnrolledEnq:any;
-  vehicleItemDetails:any;
+ 
 
 
 

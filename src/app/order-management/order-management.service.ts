@@ -90,9 +90,9 @@ export class OrderManagementService {
   }
   
   downloadVehicleINV(InvoiceNumber){
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -103,9 +103,9 @@ export class OrderManagementService {
 
 
   downloadAddonINV(InvoiceNumber){
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/addonTaxInv/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/addonTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -148,6 +148,9 @@ export class OrderManagementService {
   addonDescList(segment): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
+
+
+
   ItemDescList(segment,ouId):Observable<any>{
     return this.http.get(this.ServerUrl+`/JaiTaxCatg/IgstTaxCtg?itemId=${segment}&ouId=${ouId}`)
   }
@@ -170,6 +173,10 @@ export class OrderManagementService {
     };
     const url = this.ServerUrl + '/orderHeader/postAccItems';
     return this.http.post(url, AccLineRecord, options);
+  }
+
+  viewAllInvoice(orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/referenceNo/${orderNumber}`);
   }
 
 // **************** counter Sale order Save post *****************************/////
@@ -278,7 +285,9 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
 
-
+  YesNoList(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/YesNo');
+  }
 
   ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
@@ -403,13 +412,11 @@ getGatepassSearch(orderNumber): Observable<any> {
   return this.http.get(this.ServerUrl + `/salesGatePass/${orderNumber}`);
 }
 
-// public orderNoPost(orderNumber) {
-//   const options = {
-//     headers: this.headers
-//   };
-//   const url = this.ServerUrl + `/salesGatePass/postSlGatepass/${orderNumber}`;
-//   return this.http.post(url, orderNumber, options);
-// }
+lineLevelOrderStatus():Observable<any>{
+  return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/OrderBookType`);
+}
+
+
 
 
 orderNoPost(orderNumber,emplId) {

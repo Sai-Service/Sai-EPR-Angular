@@ -217,10 +217,9 @@ export class PricelistMasterComponent implements OnInit {
     }
    
 
-     get f() { return this.priceListMasterForm.controls; }
-
- 
+  get f() { return this.priceListMasterForm.controls; }
   priceListMaster(priceListMasterForm:any) {  }
+  
 
   ngOnInit(): void {
 
@@ -661,7 +660,7 @@ export class PricelistMasterComponent implements OnInit {
 
   
   searchMast() {
-    this.service.getPriceListSearch()
+    this.service.getPriceListSearch(this.ouId,this.deptId)
       .subscribe(
         data => {
           this.lstcomments = data;

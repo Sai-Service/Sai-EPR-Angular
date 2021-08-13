@@ -301,6 +301,7 @@ export class McpPackageMasterComponent implements OnInit {
     }
     return matches;
   };
+  
 
  //======================================================================
  onOptionmcpItemIdSelected(itemId :any, index) {
@@ -582,6 +583,7 @@ RemoveRow(index) {
                 
                 alert('RECORD INSERTED SUCCESSFUILY');
                 // this.mcpPackageMasterForm.reset();
+                this.displayButton=false;
                 this.mcpPackageMasterForm.disable();
               } else {
                 if (res.code === 400) {

@@ -33,6 +33,10 @@ export class McpCancellationComponent implements OnInit {
   getVehVinDetails:any;
   variantDetailsList:any;
   CustomerDetailsList:any;
+  lstMcplines: any;
+  CustomerSiteDetails:any;
+  vehicleItemDetails:any;
+  getPkgDetails:any[];
 
         loginName:string;
         loginArray:string;
@@ -62,15 +66,17 @@ export class McpCancellationComponent implements OnInit {
 
         vehicleItem:string;
         fuelType :string;
-        variant:string ;
-        variantDesc:string;
+        variantCode:string ;
+        mainModel:string;
         chassisNo:string;
         engineNo:string;
         serviceModel:string;
         deliveryDate:string;
         dealerCode:string;
-        kmReading:number;
-        soldByEmpId : string;
+        currentKms:number;
+        executive : string;
+        invoiceNo:string;
+        invoiceDate:Date;
        
         ///////////////////////////////
         searchRegno:string;
@@ -78,27 +84,31 @@ export class McpCancellationComponent implements OnInit {
         searchEnrollDate:Date;
 
         enrollmentNo:string;
+        enrollmentDt:Date;
         // enqDate:Date;
 
         now = Date.now();
-        enrollmentDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-
+        // enrollmentDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+       
+        mcpCancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         packageId:number;
         packageNumber:string;
         packageDesc:string;
-        mcpStartDate:Date;
-        mcpEndDate:Date;
+        pkgStartDate:Date;
+        pkgEndDate:Date;
         uptoKm:number;
         uptoVehAge:number;
 
         packageAmt:number;
-        matAmt:number;
+        refundAmt:number;
+
+        totMatAmt:number;
         matDiscAmt:number;
         matGstAmt:number;
         matNetAmt:number;
         matCessAmt:number;
 
-        labAmt:number;
+        totLabAmt:number;
         labDiscAmt:number;
         labGstAmt:number;
         labNetAmt:number;
@@ -116,7 +126,7 @@ export class McpCancellationComponent implements OnInit {
 
         mcpCancelCharges:string;
         mcpCancelValue:number;
-        mcpCancelDate:Date;
+        // mcpCancelDate:Date;
         mcpCancelReason:string;
 
         refPartAmt:number;
@@ -130,6 +140,9 @@ export class McpCancellationComponent implements OnInit {
         refTotal1:number;
         refTotal2:number;
         netRefAmt:number;
+
+        labAmt:number;
+        matAmt:number;
 
           //////////////////////////////////
           displayInactive = true;
@@ -164,39 +177,44 @@ export class McpCancellationComponent implements OnInit {
            
             vehicleItem:[],
             fuelType :[],
-            variant:[],
-            variantDesc:[],
+            variantCode:[],
+            mainModel:[],
             chassisNo:[],
             engineNo:[],
             serviceModel:[],
             deliveryDate:[],
             dealerCode:[],
-            kmReading:[],
-            soldByEmpId:[],
+            currentKms:[],
+            executive:[],
             custId:[],
             custAccountNo:[],
             custName:[],
 
+            invoiceNo:[],
+            invoiceDate:[],
+
 
 
             enrollmentNo:[],
-            enrollmentDate:[],
+            enrollmentDt:[],
             packageId:[],
             packageNumber:[],
-            mcpStartDate:[],
-            mcpEndDate:[],
+            packageDesc:[],
+            pkgStartDate:[],
+            pkgEndDate:[],
             uptoKm:[],
             uptoVehAge:[],
 
             packageAmt:[],
+            refundAmt:[],
           
-            matAmt:[],
+            totMatAmt:[],
             matDiscAmt:[],
             matGstAmt:[],
             matCessAmt:[],
             matNetAmt:[],
 
-            labAmt:[],
+            totLabAmt:[],
             labDiscAmt:[],
             gstLabAmt:[],
             labNetAmt:[],
@@ -233,6 +251,9 @@ export class McpCancellationComponent implements OnInit {
             refConsTaxAmt:[],
             refTotal2:[],
             netRefAmt:[],
+
+            labAmt:[],
+            matAmt:[],
 
 
           });
@@ -329,8 +350,9 @@ export class McpCancellationComponent implements OnInit {
                 console.log(this.getVehRegDetails);
   
                 this.mcpCancellationForm.patchValue({
+                  
                   fuelType: this.getVehRegDetails.fuelType,
-                  variant: this.getVehRegDetails.variantCode,
+                  variantCode: this.getVehRegDetails.variantCode,
                   variantDesc: this.getVehRegDetails.mainModel,
                   chassisNo: this.getVehRegDetails.chassisNo,
                   engineNo: this.getVehRegDetails.engineNo,
@@ -346,7 +368,7 @@ export class McpCancellationComponent implements OnInit {
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
       
          
-             this.GetVariantDeatils(this.variant);
+             this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.custId);
   
               var saleDate=new Date(this.deliveryDate);
@@ -374,7 +396,7 @@ export class McpCancellationComponent implements OnInit {
   
                 this.mcpCancellationForm.patchValue({
                   fuelType: this.getVehVinDetails.fuelType,
-                  variant: this.getVehVinDetails.variantCode,
+                  variantCode: this.getVehVinDetails.variantCode,
                   variantDesc: this.getVehVinDetails.mainModel,
                   chassisNo: this.getVehVinDetails.chassisNo,
                   engineNo: this.getVehVinDetails.engineNo,
@@ -388,7 +410,7 @@ export class McpCancellationComponent implements OnInit {
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
              alert(this.deliveryDate);
-             this.GetVariantDeatils(this.variant);
+             this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.custId);
   
               var saleDate=new Date(this.deliveryDate);
@@ -464,6 +486,96 @@ export class McpCancellationComponent implements OnInit {
       closeMast() {
         this.router.navigate(['admin']);
       }
+
+      SearchMcpByRegNo1() {
+        alert ("Search.....in.. WIP");
+
+
+      }
+
+
+      SearchMcpByRegNo(mRegNo:any){
+        // this.mcpEnquiryForm.reset();
+        var xEnq = mRegNo.toUpperCase();
+        // this.resetSection1(); this.resetSection3(); this.resetSection3();
+        // this.addFlag=false;
+        // this.displayButton=false;
+
+        console.log(this.mcpCancellationForm.value);
+        this.service.mcpRegSearch(xEnq)
+          .subscribe(
+            data => {
+              this.lstMcplines = data;
+              this.mcpCancellationForm.patchValue(this.lstMcplines);
+              // this.executive=this.lstMcplines.executive;
+              
+              // ---------------------------Header Details--------------------------------
+                  this.GetVehicleRegInfomation(this.lstMcplines.regNo);
+                  this.GetVariantDeatils(this.lstMcplines.variantCode);
+                  this.GetCustomerDetails(this.lstMcplines.customerId);
+                //   this.GetCustomerSiteDetails(this.customerId)
+                //   this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
+                  this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+                  
+                  this.discTotal= (this.lstMcplines.totLabDisc+this.lstMcplines.totMatDisc);
+                  this.taxTotal= (this.lstMcplines.totLabGst+this.lstMcplines.totMatGst);
+                  // this.mcpCancelValue=this.lstMcplines.refundAmt;
+                  this.netRefAmt=this.lstMcplines.refundAmt;
+
+              
+    
+               } ); 
+               }
+
+               GetVehicleRegInfomation(mRegNo){
+                // alert("REGNO:"+mRegNo)
+                this.service.getVehRegDetails(mRegNo)
+        
+                  .subscribe(
+                    data => {
+                      this.vehicleItemDetails = data;
+                      console.log(this.vehicleItemDetails);
+                      this.mcpCancellationForm.patchValue({
+                        vehRegNo: this.vehicleItemDetails.regNo,
+                        vehicleId: this.vehicleItemDetails.vin,
+                        variantItemId: this.vehicleItemDetails.itemId.itemId,
+                        deliveryDate : this.vehicleItemDetails.vehicleDelvDate,
+                        vehicleItem: this.vehicleItemDetails.itemId.segment,
+                        dealerCode: this.vehicleItemDetails.dealerCode,
+                        // itemDesc: this.VehicleRegDetails.itemId.segment,
+                });
+            
+                  //  this.GetItemDeatils1(this.variantItemId);
+               
+                
+                    }
+                     );
+                }
+
+
+                getPackageInfo(pkgNo,fType,){
+                  // alert(pkgNo + ","+fType);
+                this.service.getMcpPackageSearchNew2(pkgNo ,fType,this.ouId)
+                .subscribe(
+                data => {
+                  this.getPkgDetails = data;
+                  console.log(this.getPkgDetails);
+                  if(this.getPkgDetails !=null){
+      
+                    //  this.packageType=this.getPkgDetails[0].packageType;
+                     this.packageDesc= this.getPkgDetails[0].packageDesc;
+                    //  this.validMonths= this.getPkgDetails[0].validPeriod;
+      
+                  }
+                }); }
+
+
+                CalcNetRefund(cancCharges :number){
+                  // this.netRefAmt=this.lstMcplines.refundAmt-this.mcpCancelValue;
+                  this.netRefAmt=this.lstMcplines.refundAmt-cancCharges;
+                }
+
+               
 
 }
 

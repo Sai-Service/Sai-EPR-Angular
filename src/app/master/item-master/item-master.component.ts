@@ -96,6 +96,9 @@ export class ItemMasterComponent implements OnInit {
 
   itemMasterForm: FormGroup;
   segment:string;
+  userList1: any[] = [];
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
   submitted = false;
   description:string;
   categoryId:number;
@@ -1228,4 +1231,27 @@ else{
     const aaa ='MV'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
     this.itemMasterForm.patchValue({segment:aaa})
   }
+
+
+  getHSCSACCODE($event) {
+    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+    this.userList2 = [];
+
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList2 = this.searchFromArray1(this.hsnSacCodeList, userId);
+      }
+    }
+  }
+
+  searchFromArray1(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
 }

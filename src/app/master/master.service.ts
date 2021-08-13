@@ -604,6 +604,13 @@ fuelTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/FuelType');
 }
 
+serviceModelLst(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/ServModel');
+}
+
+
+
+
 McpPackageTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/McpPackageType');
 }
@@ -965,7 +972,6 @@ taxCalforItem(itemId,taxCatId,disAmt1,baseAmount) {
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
   return this.http.get(REQUEST_URI, {
     params: REQUEST_PARAMS,
-
   });
 }
 
@@ -1778,9 +1784,9 @@ PriceListIdList(): Observable<any> {
       return this.http.put(url, OrderTypeMasterRecord, options);
     }
 
-    getPriceListSearch(): Observable<any> {
+    getPriceListSearch(ouId,deptId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + '/pricelist/prcListDto');
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouID=${ouId}&deptID=${deptId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {
@@ -2265,6 +2271,30 @@ getsearchByEnrollNo(mEnrollNo): Observable<any> {
 mcpItemMappingSearch1(mItemNum,mFtype,mSrvModel,mOuId): Observable<any> {
     return this.http.get(this.ServerUrl +`/SsErpItemMst/ItemSearch?itemNumber=${mItemNum}&serviceModel=${mSrvModel}&fuelType=${mFtype}&ouId=${mOuId}`);
  } 
+
+ public McpItemMappingSubmitLbr(McpItemMappingrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/SsErpItemMst/ErpRelatedLabPost';
+  return this.http.post(url, McpItemMappingrRecord, options);
+}
+
+public McpItemMappingSubmitMatrl(McpItemMappingrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/SsErpItemMst/ErpRelatedMatPost';
+  return this.http.post(url, McpItemMappingrRecord, options);
+}
+
+
+//  ------------------------MCP TERMINATION--------------------------
+
+mcpRegSearch(mRegNo): Observable<any> {
+   return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
+ } 
+
 
 //////////////////////VARIANT MASTER////////////////////////////
 public VariantMasterSubmit(VariantMasterRecord) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
@@ -14,6 +14,9 @@ import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
 
+
+
+
 interface IallotmentForm {
   orderNumber:number;
   segment:string;
@@ -22,8 +25,9 @@ interface IallotmentForm {
 @Component({
   selector: 'app-allotment',
   templateUrl: './allotment.component.html',
-  styleUrls: ['./allotment.component.css']
+  styleUrls: ['./allotment.component.css'],
 })
+
 export class AllotmentComponent implements OnInit {
   allotmentForm: FormGroup;
   ouName:string;
@@ -35,11 +39,16 @@ export class AllotmentComponent implements OnInit {
   selectChasisNumber:string;
   orderNumber1:number;
   segment1:string;
+  qtyAvail:number;
 
   public allotedChassisArray=[];
-
+  // displayChassisForm=true;
+  displayChassisForm:boolean;
   allotmentsearchlist:any[];
   allotmentVehiclesearchlist:any[];
+
+  
+
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) { 
     this.allotmentForm = fb.group({
       ouName:[''],
@@ -48,6 +57,7 @@ export class AllotmentComponent implements OnInit {
       segment:[''],
       selectOrderNumber:[''],
       selectChasisNumber:[''],
+      qtyAvail:[],
     })
   }
 
@@ -63,11 +73,25 @@ console.log(this.orgId);
 
     this.orderManagementService.allotmentSearch(this.orgId)
     .subscribe(
-      data => {
+      (data: any[])  => {
         this.allotmentsearchlist = data;
         console.log(this.allotmentsearchlist);
+        this.allotmentForm.patchValue(data);
+        for (let i=0;i<data.length;i++){
+          if (data[i].qtyAvail===0){
+            alert(this.displayChassisForm)
+            this.displayChassisForm=false;
+          }
+          else{
+            if (data[i].qtyAvail>0){
+              // alert(data[i].qtyAvail)
+            this.displayChassisForm=true;
+            }
+          }
+        }
       }
     );
+ 
   }
 
   Select(model:any,color:any,variant:any,locId) {
@@ -108,15 +132,10 @@ console.log(this.orgId);
       // alert(this.segment1+' '+ this.orderNumber1);
       this.allotedChassisArray.push({orderNumber:this.orderNumber1,segment:this.segment1});
       console.log(this.allotedChassisArray);
-      
-    }
-    
-    allotment1(){
       this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
           window.location.reload();
-          // this.orderManagementService.allotmentSearch(this.orgId)
         } else {
           if (res.code === 400) {
             alert(res.message);
@@ -125,6 +144,20 @@ console.log(this.orgId);
         }
       });
     }
+    
+    // allotment1(){
+    //   this.orderManagementService.allotmentSubmit(this.allotedChassisArray).subscribe((res: any) => {
+    //     if (res.code === 200) {
+    //       alert(res.message);
+    //       window.location.reload();
+    //     } else {
+    //       if (res.code === 400) {
+    //         alert(res.message);
+    //         window.location.reload();
+    //       }
+    //     }
+    //   });
+    // }
 
     closeMast() {
       this.router.navigate(['admin']);
@@ -134,6 +167,8 @@ console.log(this.orgId);
       window.location.reload();
     }
 
+
+    
   }
 
 // allotedChassisArray
