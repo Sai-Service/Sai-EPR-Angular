@@ -182,6 +182,7 @@ export class CounterSaleComponent implements OnInit {
   poLineTax: number;
   hsnSacCode:string;
   displayorderHedaerDetails=true;
+  displayCSOrderAndLineDt=true;
   displaypickTicketUpdate=true;
   displaysegmentInvType:Array<boolean>=[];
   displayRemoveRow:Array<boolean>=[];
@@ -508,6 +509,7 @@ orderNumber:number;
     this.op = 'insert';
     this.startDate = new Date();
     this.displaypickTicketInvoice=true;
+    this.displayCSOrderAndLineDt=true;
     // this.divisionName = sessionStorage.getItem('divisionName');
     this.dept=Number(sessionStorage.getItem('deptId'));
     this.loginArray=sessionStorage.getItem('divisionName');
@@ -896,7 +898,8 @@ onOptionsSelectedPriceListID(priceListName) {
   // alert(priceListName);
     let select = this.priceListNameList.find(d => d.priceListName === priceListName);
     // alert(select);
-    this.priceListId = select.priceListHeaderId
+    this.priceListId = select.priceListHeaderId;
+    this.displayCSOrderAndLineDt=false;
 }
 
 

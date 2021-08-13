@@ -110,8 +110,6 @@
                                             [(ngModel)]='accountNo' value={{accountNo}}
                                             (keydown.tab)="accountNoSearch(accountNo)" style="width: 170px;">
                                         </td>
-                                  
-                                   
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
@@ -934,6 +932,9 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-primary" [routerLink]="['/paymentReceipt',orderNumber]">Payment</button>
+                                </td>
+                                <td>
+                                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                                 </td>
                             </tr>
                         </table>

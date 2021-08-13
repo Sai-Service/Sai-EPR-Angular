@@ -141,15 +141,15 @@
                     Customer&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <div *ngIf="displaycustAccountNo; then thencustAccountNo; else elsecustAccountNo"></div>
-                    <ng-template #thencustAccountNo>
+                    <!-- <div *ngIf="displaycustAccountNo; then thencustAccountNo; else elsecustAccountNo"></div>
+                    <ng-template #thencustAccountNo> -->
                     <input type="text" class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
                         value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)" style="width: 160px;" >
-                    </ng-template>
+                    <!-- </ng-template>
                     <ng-template #elsecustAccountNo>
                         <input disabled type="text" class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
                         value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)" style="width: 160px;">
-                    </ng-template>
+                    </ng-template> -->
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
                         Customer&nbsp;Site&nbsp;:&nbsp;
@@ -511,6 +511,10 @@
     
     <!-- Line & Txa details ....... -->
     <div class="grid_scroll">
+        <div *ngIf="displayCSOrderAndLineDt; then thenCSOrderAndLineDt; else elseCSOrderAndLineDt"></div>
+        <ng-template #thenCSOrderAndLineDt>
+        </ng-template>
+        <ng-template #elseCSOrderAndLineDt>     
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Line & Tax
             Details</legend>
@@ -1083,7 +1087,7 @@
         </div>
         </div>
     </fieldset>
-
+        </ng-template>
     </div>
 
     <fieldset class="RFS">
