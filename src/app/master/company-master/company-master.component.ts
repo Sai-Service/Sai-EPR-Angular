@@ -65,10 +65,10 @@ export class CompanyMasterComponent implements OnInit {
       compId: [],
       compCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(10),Validators.pattern('[a-zA-Z 0-9]*')]],
       compName: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(50),Validators.pattern('[a-zA-Z 0-9]*')]],
-      address1: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
-      address2: ['', [Validators.required, Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
-      address3: ['', [Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
-      address4: ['', [Validators.maxLength(45),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address1: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(100)]],
+      address2: ['', [Validators.required, Validators.minLength(3),Validators.maxLength(100)]],
+      address3: ['', [Validators.maxLength(45)]],
+      address4: ['', [Validators.maxLength(45)]],
       city: ['', [Validators.required, Validators.maxLength(50)]],
       pinCd: ['', [Validators.required, Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state: ['', [Validators.required]],
@@ -119,6 +119,10 @@ export class CompanyMasterComponent implements OnInit {
   }
 
   newMast() {
+    this.submitted = true;
+    if(this.CompanyMasterForm.invalid){
+    return;
+    }
     const formValue: ICompany = this.transData(this.CompanyMasterForm.value);
     this.service.CompanyMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
