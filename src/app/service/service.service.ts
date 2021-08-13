@@ -33,6 +33,9 @@ pickupTypeListFN(): Observable<any> {
 srTypeIdListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/srvType`);
 }
+srTypeIdstFN(jcTyp): Observable<any> {
+  return this.http.get(this.ServerUrl +`/srvType/srTypeWise/${jcTyp}`);
+}
 getSubSrTypeIdList(srTypeId): Observable<any> {
   return this.http.get(this.ServerUrl +`/srvType/subTy/${srTypeId}`);
 }
@@ -48,6 +51,9 @@ labDiscPerListFN(): Observable<any> {
 srvAdvisorListtFN(locId,deptId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisor?locId=${locId}&deptId=${deptId}`);
 } 
+srvAdvisorListFN(locId,jcTyp) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisorNew?locId=${locId}&jcType=${jcTyp}`);
+} 
 groupIdListFN(locId,deptId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/teamMaster/srvGroup?locId=${locId}&deptId=${deptId}`);
 } 
@@ -56,6 +62,9 @@ RegNoListFN() : Observable<any> {
 } 
 billableTyIdListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy`);
+} 
+billableTyIdLstFN(type,regno) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/billType?srTy=${type}&regNo=${regno}`);
 } 
 LaborItemListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);

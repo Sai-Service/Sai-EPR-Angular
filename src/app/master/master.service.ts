@@ -604,6 +604,13 @@ fuelTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/FuelType');
 }
 
+serviceModelLst(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/ServModel');
+}
+
+
+
+
 McpPackageTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/McpPackageType');
 }
@@ -2259,6 +2266,34 @@ getMcpEnrollmentSearch(mEnrollNo): Observable<any> {
 getsearchByEnrollNo(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`);
 }
+
+////////////////////////MCP ITEM MAPPING////////////////////////
+mcpItemMappingSearch1(mItemNum,mFtype,mSrvModel,mOuId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/SsErpItemMst/ItemSearch?itemNumber=${mItemNum}&serviceModel=${mSrvModel}&fuelType=${mFtype}&ouId=${mOuId}`);
+ } 
+
+ public McpItemMappingSubmitLbr(McpItemMappingrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/SsErpItemMst/ErpRelatedLabPost';
+  return this.http.post(url, McpItemMappingrRecord, options);
+}
+
+public McpItemMappingSubmitMatrl(McpItemMappingrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/SsErpItemMst/ErpRelatedMatPost';
+  return this.http.post(url, McpItemMappingrRecord, options);
+}
+
+
+//  ------------------------MCP TERMINATION--------------------------
+
+mcpRegSearch(mRegNo): Observable<any> {
+   return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
+ } 
 
 
 //////////////////////VARIANT MASTER////////////////////////////

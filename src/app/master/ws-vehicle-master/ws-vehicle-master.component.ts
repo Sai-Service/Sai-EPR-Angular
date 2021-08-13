@@ -185,6 +185,8 @@ export class WsVehicleMasterComponent implements OnInit {
   custTaxCategoryName:string;
   customerSiteId:number;
   customerType:string;
+  billToAddress:string;
+  shipToAddress:string;
   // contractEndDate:string;
 
   ewPeriod:number;
@@ -352,6 +354,8 @@ export class WsVehicleMasterComponent implements OnInit {
       customerSiteId:[],
       customerType:[],
       contractEndDate:[],
+      billToAddress:[],
+      shipToAddress:[],
       // dealerCode:[],
       ewPeriod:[],
 
@@ -711,7 +715,8 @@ export class WsVehicleMasterComponent implements OnInit {
                   custPhone2: this.CustomerDetailsList.mobile2,
                   custPhone3: this.CustomerDetailsList.mobile3,
                   custEmail:this.CustomerDetailsList.emailId,
-                  custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
+                  // custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
+                 
               });
               }
             );  
@@ -736,10 +741,17 @@ export class WsVehicleMasterComponent implements OnInit {
                   customerType:this.CustomerSiteDetails.customerId.custType,
                   custTaxCategoryName:this.CustomerSiteDetails.taxCategoryName,
                   customerSiteId:this.CustomerSiteDetails.customerSiteId,
+                  billToAddress :this.CustomerDetailsList.address1+","+
+                                 this.CustomerDetailsList.address2+","+
+                                 this.CustomerDetailsList.address3+","+
+                                 this.CustomerDetailsList.city+","+
+                                 this.CustomerDetailsList.state+"-"+
+                                 this.CustomerDetailsList.pinCd,
                   
+                                
                  
             });
-    
+         
             }  });  }
 
             GetCustomerSiteDetails1(mCustId :any){

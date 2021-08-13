@@ -105,4 +105,11 @@ export class FixedAssetService {
 public AmtCalc(cost,catId): Observable<any> {
   return this.http.get(this.ServerUrl + `/faAddtion/recovCost?cost=${cost}&catId=${catId}`);
 }
+public AssetTransfer(AssetTransferRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + '/faAddtion/assetTransfer');
+  return this.http.put(url, AssetTransferRecord, options);
+}
 }
