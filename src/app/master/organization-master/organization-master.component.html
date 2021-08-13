@@ -22,10 +22,14 @@
                             [ngClass]="{ 'is-invalid': submitted && f.ouName.errors }"
                             placeholder="Enter OU code" uppercase  style="text-transform: uppercase;">
                         <div *ngIf="submitted && f.ouName.errors" class="invalid-feedback">
-                            <div *ngIf="f.ouName.errors.required">Code cannot be blank, have spaces or have special characters</div>
+                            <!-- <div *ngIf="f.ouName.errors.required">Code cannot be blank, have spaces or have special characters</div> -->
+                            <div *ngIf="f.ouName.errors.required">Code cannot be blank </div>
+                            <div *ngIf="f.ouName.errors.pattern">Code cannot have spaces or special characters </div>
+                            <div *ngIf="f.ouName.errors.minlength">Minimum Length is 5 characters</div>
+                            <div *ngIf="f.ouName.errors.maxlength">Maximum Length is 10 characters</div>
                         </div>
-                        <span
-                            *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Code cannot be blank, have spaces or have special characters</span>
+                        <!-- <span
+                            *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Code cannot be blank, have spaces or have special characters</span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Operating&nbsp;Unit&nbsp;Name&nbsp;:
@@ -35,10 +39,14 @@
                             [ngClass]="{ 'is-invalid': submitted && f.ouDesc.errors }"
                             placeholder="Enter OU name">
                         <div *ngIf="submitted && f.ouDesc.errors" class="invalid-feedback">
-                            <div *ngIf="f.ouDesc.errors.required">Name cannot be blank or have special characters</div>
+                            <!-- <div *ngIf="f.ouDesc.errors.required">Name cannot be blank or have special characters</div> -->
+                            <div *ngIf="f.ouDesc.errors.required">Name cannot be blank</div>
+                            <div *ngIf="f.ouDesc.errors.pattern">Name cannot have special characters</div>
+                            <div *ngIf="f.ouDesc.errors.minlength">Minimum length is 5 characters</div>
+                            <div *ngIf="f.ouDesc.errors.maxlength">Maximum length is 50 characters</div>
                         </div>
-                        <span
-                            *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Name cannot be blank or have special characters</span>
+                        <!-- <span
+                            *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Name cannot be blank or have special characters</span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Division&nbsp;Name&nbsp;:
@@ -50,7 +58,11 @@
                                     {{sc.divisionName}}
                                 </option>
                             </select>
-<span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Division name cannot be balnk</span>    
+                            <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
+                                 <div *ngIf="f.divisionId.errors.required">Please select Division Name</div>
+                             </div> 
+                             <!-- Derina -->
+                           <!-- <span *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Division name cannot be balnk</span>     -->
                         </td>
                     </tr>
                     <tr>
@@ -64,7 +76,11 @@
                                     {{sc.compName}}
                                 </option>
                             </select>
-<span *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Company name cannot be balnk</span>
+                            <div *ngIf="submitted && f.compId.errors" class="invalid-feedback">
+                                <div *ngIf="f.compId.errors.required">Please select Company Name</div>
+                            </div>
+                            
+                         <!-- <span *ngIf="!operatingUnitMasterForm.get('compId').valid && operatingUnitMasterForm.get('compId').touched">Company name cannot be balnk</span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Main&nbsp;Branch&nbsp;Address&nbsp;:
@@ -75,9 +91,11 @@
                             placeholder="Enter Main Branch Address">
                         <div *ngIf="submitted && f.mainBrAdd.errors" class="invalid-feedback">
                             <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address cannot be blank</div>
+                            <div *ngIf="f.mainBrAdd.errors.minlength">Minimum Length is 5 characters</div>
+                            <div *ngIf="f.mainBrAdd.errors.maxlength">Maximum Length is 10 characters</div>
                         </div>
-                        <span
-                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span>
+                        <!-- <span
+                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             City&nbsp;:&nbsp;
@@ -89,14 +107,12 @@
                                     {{sc.codeDesc}}
                                 </option>
                             </select>
-                            <div *ngIf="submitted && f. city.errors" class="invalid-feedback">
-                                <div *ngIf="f.city.errors.required">City must be required
-                                </div>
-                                <div *ngIf="f.city.errors?.maxLength">City must be required
-                                </div>
+                            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                <div *ngIf="f.city.errors.required">City must be required </div>
+                                <div *ngIf="f.city.errors.maxLength">City must be required </div>
                             </div>
-                            <span *ngIf="!operatingUnitMasterForm.get('city').valid && operatingUnitMasterForm.get('city').touched">Please
-                                Enter City</span>
+                            <!-- <span *ngIf="!operatingUnitMasterForm.get('city').valid && operatingUnitMasterForm.get('city').touched">Please
+                                Enter City</span> -->
                         </td>
                              
                     </tr>
@@ -127,9 +143,9 @@
                         <td>
                             <input type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
-                        <span
+                        <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
-                            Enter start Date </span>
+                            Enter start Date </span> -->
                         </td>
                     </tr>
                     <tr>
@@ -139,20 +155,20 @@
                         <td>
                             <input type="text" formControlName="uheadCeo" class="form-control"
                             placeholder="Enter unit Head/CEO">
-                        <span
+                        <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('uheadCeo').valid && operatingUnitMasterForm.get('uheadCeo').touched">Please
-                            Enter unit Head/CEO </span>
+                            Enter unit Head/CEO </span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
                             Status&nbsp;:
                         </td>
                         <td>
                             <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                            <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
                                 <div *ngIf="f.status.errors.required">status is required</div>
-                                <span
+                                <!-- <span
                                     *ngIf="!operatingUnitMasterForm.get('status').valid && operatingUnitMasterForm.get('status').touched">Please
-                                    Enter valid status </span>
+                                    Enter valid status </span> -->
                           </div>
                         </td>
                     </tr>
@@ -169,9 +185,9 @@
                         <div *ngIf="submitted && f.ouName.errors" class="invalid-feedback">
                             <div *ngIf="f.ouName.errors.required">OU code is required</div>
                         </div>
-                        <span
+                        <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('ouName').valid && operatingUnitMasterForm.get('ouName').touched">Please
-                            Enter OU code </span>
+                            Enter OU code </span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
                             OU&nbsp;Name&nbsp;:
@@ -183,9 +199,9 @@
                         <div *ngIf="submitted && f.ouDesc.errors" class="invalid-feedback">
                             <div *ngIf="f.ouDesc.errors.required">OU name is required</div>
                         </div>
-                        <span
+                        <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('ouDesc').valid && operatingUnitMasterForm.get('ouDesc').touched">Please
-                            Enter OU name </span>
+                            Enter OU name </span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Division&nbsp;Name&nbsp;:
@@ -199,9 +215,9 @@
                             </select>
                             <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
                                 <div *ngIf="f.divisionId.errors.required">Division name cannot be balnk</div>
-                                <span
+                                <!-- <span
                                     *ngIf="!operatingUnitMasterForm.get('divisionId').valid && operatingUnitMasterForm.get('divisionId').touched">Please
-                                    Division name cannot be balnk </span>
+                                    Division name cannot be balnk </span> -->
                             </div>    
                         </td>
                     </tr>
@@ -236,8 +252,8 @@
                         <div *ngIf="submitted && f.mainBrAdd.errors" class="invalid-feedback">
                             <div *ngIf="f.mainBrAdd.errors.required">Main Branch Address cannot be blank</div>
                         </div>
-                        <span
-                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span>
+                        <!-- <span
+                            *ngIf="!operatingUnitMasterForm.get('mainBrAdd').valid && operatingUnitMasterForm.get('mainBrAdd').touched">Main Branch Address cannot be blank</span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
                             City&nbsp;:
@@ -246,9 +262,9 @@
                             <input disabled type="text" formControlName="city" value={{city}} [ngModel]="city" class="form-control">
                         <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                             <div *ngIf="f.city.errors.required">State is required</div>
-                            <span
+                            <!-- <span
                                 *ngIf="!operatingUnitMasterForm.get('city').valid && operatingUnitMasterForm.get('city').touched">Please
-                                Enter State </span>
+                                Enter State </span> -->
                         </div>
                         </td>
                     </tr>
@@ -260,9 +276,9 @@
                             <input disabled type="text" formControlName="mState" value={{mState}} [ngModel]="mState" class="form-control">
                         <div *ngIf="submitted && f.mState.errors" class="invalid-feedback">
                             <div *ngIf="f.mState.errors.required">State is required</div>
-                            <span
+                            <!-- <span
                                 *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">Please
-                                Enter State </span>
+                                Enter State </span> -->
                         </div>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">
@@ -277,9 +293,9 @@
                         <td>
                             <input disabled type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
-                        <span
+                        <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
-                            Enter start Date </span>
+                            Enter start Date </span> -->
                         </td>
                     </tr>
                     <tr>
@@ -289,9 +305,9 @@
                         <td>
                             <input type="text" formControlName="uheadCeo" class="form-control"
                             placeholder="Enter unit Head/CEO">
-                        <span
+                        <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('uheadCeo').valid && operatingUnitMasterForm.get('uheadCeo').touched">Please
-                            Enter unit Head/CEO </span>
+                            Enter unit Head/CEO </span> -->
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                             Status&nbsp;:
@@ -304,11 +320,11 @@
                                     {{sc.codeDesc}}
                                 </option> 
                             </select>
-                            <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
                                 <div *ngIf="f.status.errors.required">status is required</div>
-                                <span
+                                <!-- <span
                                     *ngIf="!operatingUnitMasterForm.get('status').valid && operatingUnitMasterForm.get('status').touched">Please
-                                    Enter valid status </span>
+                                    Enter valid status </span> -->
                             </div>    
                         </td> 
                         <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
@@ -333,8 +349,9 @@
                     <ng-template #thenBlock1>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
-                            [disabled]="!operatingUnitMasterForm.valid" (click)="newMast()">Save</button>
+                            (click)="newMast()">Save</button>
                     </td>
+                    <!-- [disabled]="!operatingUnitMasterForm.valid"  -->
                     <td>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
