@@ -28,18 +28,30 @@
                         </td>
                     
                         <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                            <input  style="width:50px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
                         </td>
 
                         <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            <input  style="width:50px ;"  type="text" disabled formControlName="deptId"
                             class="form-control" [(ngModel)]="deptId" placeholder="">
 
                         </td>
 
                         <td >
-                            <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
+                            <input  style="width: 50px;"  type="text" disabled formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
+
+                        </td>
+
+                        <td >
+                            <input  style="width: 70px;"  type="number" disabled formControlName="itemId"
+                            class="form-control" [(ngModel)]="itemId" placeholder="">
+
+                        </td>
+
+                        <td >
+                            <input  style="width: 70px;"  type="number" disabled formControlName="erpCodeItemId"
+                            class="form-control" [(ngModel)]="erpCodeItemId" placeholder="">
 
                         </td>
                                            
@@ -90,7 +102,7 @@
                                <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Description:&nbsp;</td>
                                     
                                 <td>
-                                    <input disabled  type="text"  formControlName="itemDesc"  id="itemDesc" [(ngModel)]="itemDesc" class="form-control" >
+                                    <input disabled  type="text"  formControlName="itemName"  id="itemName" [(ngModel)]="itemName" class="form-control" >
                                 </td>
                            </tr>
 
@@ -98,15 +110,16 @@
                                 <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
                                     
                                 <td>  
-                                    <select formControlName="model" id="model" [(ngModel)]="model" class="form-control" (ngModelChange)="onOptionsSelectedModel($event)" >
+                                    <select formControlName="model" id="model" [(ngModel)]="model" class="form-control" 
+                                        (ngModelChange)="onOptionsSelectedModel($event)">  
                                         <option>--Select--</option>
-                                        <option *ngFor="let mm of mainModelList">
+                                        <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
                                             {{mm.code}}
                                         </option>
                                     </select>
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
+                                <!-- <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
                                 
                                 <td>  
                                    
@@ -118,7 +131,7 @@
                                         </option>
                                     </select>
 
-                                </td>
+                                </td> -->
 
 
                             
@@ -127,11 +140,7 @@
                                 <td>
                                     <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
                                 </td>
-                              
-                               
-                            </tr>
 
-                            <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
                                         
                                 <td>  
@@ -142,6 +151,12 @@
                                         </option>
                                     </select>
                                 </td>
+                              
+                               
+                            </tr>
+
+                            <tr>
+                               
 
                                 <td style="width: 15%" class="LabelFontStyle">Quantity&nbsp;:&nbsp;</td>
                                         
@@ -149,11 +164,6 @@
                                     <input style="text-align: right;"  type="text"  formControlName="quantity"  id="quantity" [(ngModel)]="quantity" class="form-control" >
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">ERP&nbsp;Item&nbsp;Code:&nbsp;</td>
-                                        
-                                <!-- <td>
-                                    <input   type="text"  formControlName="erpItemCode"  id="erpItemCode" [(ngModel)]="erpItemCode" class="form-control" >
-                                </td> -->
-
                                 <td>
                                     <input type="text" formControlName="erpCode"
                                     (keyup)="getInvItemId1($event)" id="invItemIdFirstWay"
@@ -180,7 +190,7 @@
 
                     <div class="center">
                         <!-- <br> -->
-                       <div class="center" formArrayName="mcpMappingitemLine">
+                       <div class="center" formArrayName="mcpRelatedItemList">
   
                             <div class="grid_scroll">
 
@@ -188,7 +198,10 @@
                                           cellspacing="0" cellpadding="4" rules="all" class="center">
                                           <thead>
                                             <tr class="GridHeader">
-                                                  <th style="width:10rem" scope="col">Srl#</th>
+                                                  <!-- <th style="width:10rem" scope="col">Srl#</th> -->
+                                                  <!-- <th style="width:10rem" scope="col">Main PartId</th> 
+                                                  <th style="width:10rem" scope="col">Main Part</th>
+                                                  <th style="width:10rem" scope="col">Item Id</th>  -->
                                                   <th style="width:10rem" scope="col">Item Code</th>
                                                   <th style="width:10rem" scope="col">Item Description</th>
                                                   <th style="width:10rem" scope="col">Item Category</th>
@@ -199,35 +212,37 @@
                                           </thead>
 
                                         <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
+                                         
                                             
-                                        <!-- <input type="text" hidden formControlName="priceListLineId"> -->
-                                        <td>{{i+1}} </td>
+                                          
+
+                                      
+                                        <!-- <td>{{i+1}} </td> -->
                                             
                                             
                                         <td>
-                                                <input type="text" formControlName="relatedItem"
-                                                (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                list="dynmicUserIds3" class="form-control"
-                                                (ngModelChange)="onOptioninvItemIdSelectedLine($event,i)" />
-                                            <datalist id="dynmicUserIds3">
-                                                <option *ngFor="let item of invItemList"
-                                                    [ngValue]="item.itemId">{{item.segment}}
-                                                </option>
-                                            </datalist>
-        
-                                            </td> 
-                                            
+                                         <input type="text" formControlName="relatedItem"
+                                            (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                            list="dynmicUserIds1" class="form-control"
+                                            (ngModelChange)="onOptioninvItemIdSelectedLine($event,i)"/>
+                                        <datalist id="dynmicUserIds1">
+                                            <option *ngFor="let item of invItemList" [ngValue]="item.itemId">
+                                                {{item.segment}}
+                                            </option>
+                                        </datalist>
+                                        </td> 
+
+
+                                                                                   
                                             <td>
-                                                <input style="width: 500px;" disabled  type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
+                                                <input disabled style="width: 450px;"   type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
                                             </td>
                                             <td>
-                                                <input style="width: 150px;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                                <input disabled style="width: 180px;"   type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                             </td>
                                             <td>
-                                                <input style="width: 100px;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
+                                                <input disabled style="width: 100px;"   type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                             </td>
-                                            
-                                            
 
                                             <td>
                                                 <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
@@ -238,6 +253,9 @@
                                                     <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
                                                     class="fa fa-trash"></i></button>
                                             </td>
+                                                <input  hidden type="number"  formControlName="relatedItemId" >
+                                                <input  hidden type="number"  formControlName="mainPartId" >
+                                                <input  hidden type="text"  formControlName="mainPart" >
 
                                           </tr>
                                 </table>
@@ -260,9 +278,9 @@
                                     <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!mcpItemMappingForm">Save</button>
                                 </td>
                                 
-                                <td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                </td>
+                                </td> -->
 
                                     <!-- ====================Reset Dialog ======================== -->
 
@@ -333,9 +351,10 @@
                                             <td>
                                                 <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpItemMappingForm">Update</button>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                            </td>
+                                            </td> -->
+
                                             <!-- <td>
                                                 <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                                             </td>
@@ -448,9 +467,20 @@
         
                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Service&nbsp;Model:&nbsp;</td>
                                 
-                                            <td>
+                                            <!-- <td>
                                                 <input   type="text"  formControlName="sserviceModel"  id="sserviceModel" [(ngModel)]="sserviceModel" class="form-control" style="text-transform:uppercase;">
+                                            </td> -->
+
+                                            <td>  
+                                                <select   formControlName="sserviceModel" id="sserviceModel" [(ngModel)]="sserviceModel" class="form-control">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  ServiceModelList" [ngValue]="sc.code">
+                                                       {{sc.code}}
+                                                    </option>
+                                                </select>
                                             </td>
+
+
         
                                             <td style="background-color: #FFE4B5;">
                                                 <button type="button" class="btn-primary" (click)="SearchMcpItem(sitemNumber,sfuelType,sserviceModel)"><i class="fa fa-search"

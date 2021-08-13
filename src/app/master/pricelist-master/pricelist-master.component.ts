@@ -217,10 +217,9 @@ export class PricelistMasterComponent implements OnInit {
     }
    
 
-     get f() { return this.priceListMasterForm.controls; }
-
- 
+  get f() { return this.priceListMasterForm.controls; }
   priceListMaster(priceListMasterForm:any) {  }
+  
 
   ngOnInit(): void {
 
