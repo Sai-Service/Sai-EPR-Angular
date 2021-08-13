@@ -1096,11 +1096,15 @@ custNameSearch(custName){
 
 onKey(index) {
   console.log(index);
-  var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value
+  var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
   var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
   console.log(arrayControl);
   var itemId=arrayControl[index].itemId;
-  var taxCategoryId=arrayControl[index].taxCategoryId;
+  var taxcatName=arrayControl[index].taxCategoryName;
+  let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
+  var taxCategoryId= select.taxCategoryId;
+  patch.controls[index].patchValue({taxCategoryId:taxCategoryId});
+  // var taxCategoryId=arrayControl[index].taxCategoryId;
 var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
 console.log(baseAmt);  
 var disAmt1= arrayControl[index].disAmt;
@@ -1142,6 +1146,7 @@ if(disAmt1===null && disPer===null){
           // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
           taxAmt: sum,
           totAmt: baseAmt + sum,
+          disAmt: -(disPer/100)*baseAmt,
         });
         // disAmt: -(this.disPer/100)*baseAmt,
         let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -1336,9 +1341,6 @@ AvailQty(i,itemId)
 
 
 onOptionTaxCatSelected(taxCategoryName, i) {
-//  alert('******** ITEM *******');
-  // var taxCategoryName = taxCategory.taxCategoryName;
-  // var taxCategoryId = taxCategoryId;
   this.indexVal = i;
   var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
 

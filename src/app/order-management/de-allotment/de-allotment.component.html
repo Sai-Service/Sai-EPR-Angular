@@ -37,17 +37,19 @@
                             <th scope="col">Select</th>
                             <th scope="col">Order Number</th>
                             <th scope="col">Item Allocated</th>
+                            <th scope="col">Color Code</th>
                             <th scope="col">Description</th>
                             <th scope="col">Alloted Date</th>
-                           
                             <th scope="col">RIPS</th>
                             <th scope="col">Two Tone</th>
                             <th scope="col">Interiors</th>
                             <th scope="col">Accessories Fitted</th>
                             <th scope="col">Hold</th>
                             <th scope="col">Hold Reason</th>
+                            <th scope="col">Exchange</th>
                             <th scope="col">Date of Purchase</th>
                             <th scope="col">Aging</th>
+                            <th scope="col">Order Aging</th>
                         </tr>
                     </thead>
                         <tbody>
@@ -58,6 +60,7 @@
                             </td>
                             <td>{{com.orderNumber}}</td>
                             <td>{{com.orderedItem}}</td>
+                            <td>{{com.colorCode}}</td>
                             <td>{{com.description}}</td>
                             <td>{{com.lineCreationDt | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                             <td>{{com.rips}}</td>
@@ -66,8 +69,10 @@
                             <td></td>
                             <td>{{com.hold}}</td>
                             <td>{{com.holdReason}}</td>
+                            <td>{{com.exchangeYN}}</td>
                             <td>{{com.creationDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                             <td>{{com.aging}}</td>
+                            <td>{{com.orderAging}}</td>
                         </tr>
                     </tbody>
                 </table>  

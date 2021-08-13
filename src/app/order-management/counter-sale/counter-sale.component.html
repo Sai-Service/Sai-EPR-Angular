@@ -687,15 +687,15 @@
 
                                     </td>
                                     <!-- <td> -->
-                                        <input hidden type="text" formControlName="uom" class="form-control" [(ngModel)]="uom"
-                                            style="height: 20px;width: 70px;"  >
+                                        <!-- <input hidden type="text" formControlName="uom" class="form-control" [(ngModel)]="uom"
+                                            style="height: 20px;width: 70px;"  > -->
                                 <!-- </td> -->
                                         <td>
-                                            <input  type="number" formControlName="pricingQty" class="form-control"  [(ngModel)]="pricingQty"
-                                                (change)="onKey(i)" (keypress)="validateNumber($event)"  style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
+                                            <input  type="number" formControlName="pricingQty" class="form-control"  
+                                                (change)="onKey(i)"   style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
                                        
                                     </td>
-                                    <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" -->
+                                    <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" (keypress)="validateNumber($event)"-->
                                     <td>
                                         <input disabled type="number" formControlName="unitSellingPrice" class="form-control"
                                             style="height: 20px;width: 90px;" (change)="onKey(i)">
@@ -713,8 +713,8 @@
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
                                     <td>
+                                        <!-- (ngModelChange)='onOptionTaxCatSelected($event,i)' -->
                                         <select formControlName="taxCategoryName" id="taxCategoryName"
-                                        (ngModelChange)='onOptionTaxCatSelected($event,i)'
                                         (change)="onKey(i)" class="form-control"
                                         style="width: 160px;height: 25px;font-size: 10px;">
                                         <option>--Select--</option>
@@ -722,6 +722,7 @@
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
+                                    <input  type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
                                     </td>
                                    
                                     <td>

@@ -965,7 +965,6 @@ taxCalforItem(itemId,taxCatId,disAmt1,baseAmount) {
   const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
   return this.http.get(REQUEST_URI, {
     params: REQUEST_PARAMS,
-
   });
 }
 
@@ -1778,9 +1777,9 @@ PriceListIdList(): Observable<any> {
       return this.http.put(url, OrderTypeMasterRecord, options);
     }
 
-    getPriceListSearch(): Observable<any> {
+    getPriceListSearch(ouId,deptId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + '/pricelist/prcListDto');
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouID=${ouId}&deptID=${deptId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {

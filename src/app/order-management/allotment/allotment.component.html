@@ -45,6 +45,7 @@
                                 <th scope="col" style="border: 1px solid black;">Order Number</th>
                                 <th scope="col" style="border: 1px solid black;">Ordered Date</th>
                                 <th scope="col" style="border: 1px solid black;">Model</th>
+                                <th scope="col" style="border: 1px solid black;">Order Type</th>
                                 <th scope="col" style="border: 1px solid black;">Variant</th>
                                 <th scope="col" style="border: 1px solid black;">Color</th>
                                 <th scope="col" style="border: 1px solid black;">Paid Amount</th>
@@ -52,6 +53,7 @@
                                 <th scope="col" style="border: 1px solid black;">Taxi Flag</th>
                                 <th scope="col" style="border: 1px solid black;">Exchange Flag</th>
                                 <th scope="col" style="border: 1px solid black;">aging</th>
+                                <th scope="col" style="border: 1px solid black;">Available Quantity</th>
                                 <th scope="col" style="border: 1px solid black;">Select</th>
                             </tr>
                         </thead>
@@ -65,6 +67,7 @@
                                 <td style="border: 1px solid black;">{{com.orderNumber}}</td>
                                <td style="border: 1px solid black;">{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                                <td style="border: 1px solid black;">{{com.model}}</td>
+                               <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
                                <td style="border: 1px solid black;">{{com.variant}}</td>
                                <td style="border: 1px solid black;">{{com.color}}</td>
                                <td style="text-align: right;border: 1px solid black;padding-right: 10px;">{{com.paidAmount}}</td>
@@ -72,7 +75,11 @@
                                <td style="border: 1px solid black;">{{com.taxiYN}}</td>
                                <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
                                <td style="border: 1px solid black;">{{com.aging}}</td>
-                               <td style="border: 1px solid black;"><button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
+                               <td style="border: 1px solid black;">{{com.qtyAvail}}</td>
+                               <div *ngIf="displayChassisForm; then thenChassisForm; else elseChassisForm"> </div>
+                               <ng-template #thenChassisForm>
+                               <td style="border: 1px solid black;">
+                                <button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl" role="document">
                                       <div class="modal-content">
@@ -128,16 +135,22 @@
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                            </td>   
+                                  </div>  
+                            </td> 
+                               </ng-template>
+                               <ng-template #elseChassisForm>
+                            <td style="border: 1px solid black;">  
+                              disable
+                            </td>
+                               </ng-template>
                             </tr>
                         </tbody>
                     </table>
                     <table class="center">
                         <tr>
-                            <td>
+                            <!-- <td>
                                 <button type="submit" class="btn btn-primary" id="register" (click)="allotment1()">Allotment</button>
-                            </td>
+                            </td> -->
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                             </td>
@@ -150,3 +163,6 @@
             </div>
         </div>
 </form>
+
+
+
