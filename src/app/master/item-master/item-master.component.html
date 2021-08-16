@@ -67,13 +67,13 @@
 
                                 <td style="width: 15%" class="LabelFontStyle1">HSN&nbsp;/&nbsp;SAC&nbsp;:&nbsp;</td>
                                 <td>
-                                    <!-- <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control" (ngModelChange)='onHsnCodeSelected($event)'>
+                                    <select formControlName="hsnSacCode" id="hsnSacCode" class="form-control" (ngModelChange)='onHsnCodeSelected($event)'>
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
                                             {{sc.hsnsaccode}}-{{sc.description}}
                                         </option>
-                                    </select> -->
-                                    <input type="text" formControlName="hsnSacCode"
+                                    </select>
+                                    <!-- <input type="text" formControlName="hsnSacCode"
                                     (keyup)="getHSCSACCODE($event)" id="invItemIdFirstWay"
                                     list="dynmicUserIds1" class="form-control"
                                     (ngModelChange)='onHsnCodeSelected($event)' />
@@ -81,7 +81,7 @@
                                     <option *ngFor="let item of hsnSacCodeList"
                                     [ngValue]="sc.hsnsaccode">{{sc.hsnsaccode}}-{{sc.description}}
                                     </option>
-                                </datalist>
+                                </datalist> -->
                                     <div *ngIf="submitted && f. hsnSacCode.errors" class="invalid-feedback">
                                         <div *ngIf="f.hsnSacCode.errors.required">Enter hsn/sac </div>
                                         <div *ngIf="f.hsnSacCode.errors?.maxLength">Enter hsn/sac

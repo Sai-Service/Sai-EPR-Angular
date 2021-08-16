@@ -13,6 +13,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
+import * as XLSX from 'xlsx'; 
 
 
 
@@ -29,6 +30,7 @@ interface IallotmentForm {
 })
 
 export class AllotmentComponent implements OnInit {
+  fileName= 'ExcelSheet.xlsx';
   allotmentForm: FormGroup;
   ouName:string;
   locId:number;
@@ -42,8 +44,9 @@ export class AllotmentComponent implements OnInit {
   qtyAvail:number;
 
   public allotedChassisArray=[];
-  // displayChassisForm=true;
-  displayChassisForm:boolean;
+  displayChassisForm:Array<boolean>=[];;
+  displayChassisFormHead=true;
+  // displayChassisForm:boolean;
   allotmentsearchlist:any[];
   allotmentVehiclesearchlist:any[];
 
@@ -75,17 +78,13 @@ console.log(this.orgId);
     .subscribe(
       (data: any[])  => {
         this.allotmentsearchlist = data;
-        console.log(this.allotmentsearchlist);
-        this.allotmentForm.patchValue(data);
         for (let i=0;i<data.length;i++){
           if (data[i].qtyAvail===0){
-            alert(this.displayChassisForm)
-            this.displayChassisForm=false;
+            this.displayChassisForm[i]=false;
           }
           else{
             if (data[i].qtyAvail>0){
-              // alert(data[i].qtyAvail)
-            this.displayChassisForm=true;
+            this.displayChassisForm[i]=true;
             }
           }
         }
@@ -168,7 +167,24 @@ console.log(this.orgId);
     }
 
 
+    exportexcel(): void 
+    {
+       /* table id is passed over here */   
+       let element = document.getElementById('excel-table'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, this.fileName);
+			
+    }
+
+  
+}
     
-  }
+
 
 // allotedChassisArray

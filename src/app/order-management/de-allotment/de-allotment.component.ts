@@ -29,6 +29,7 @@ export class DeAllotmentComponent implements OnInit {
   orderNumber:number;
   orderedItem:string;
   segment:string;
+  cancelReason:string;
   ouId:string;
   orderNumber1:string;
   selectOrderNumber:string;
@@ -43,6 +44,7 @@ export class DeAllotmentComponent implements OnInit {
  orderNumber:[''],
  orderedItem:[''],
  selectOrderNumber:[],
+ cancelReason:[],
     })
   }
 
@@ -68,10 +70,11 @@ export class DeAllotmentComponent implements OnInit {
     return val;
   }
 
-  selectOrderNumberEvent(e,orderNumber,orderedItem) {
+  selectOrderNumberEvent(e,orderNumber,orderedItem,cancelReason) {
     // alert(orderNumber+' '+ orderedItem);
     this.orderNumber1=orderNumber;
     this.segment1=orderedItem;
+    this.cancelReason=cancelReason;
     if (e.target.checked) {
     this.selectOrderNumber='Y'
     }
@@ -82,19 +85,19 @@ export class DeAllotmentComponent implements OnInit {
 
 
 
-  deAllotedVehicleSelect(){
-    // alert(this.segment1+' '+ this.orderNumber1);
-    this.deAllotedChassisArray.push({orderNumber:this.orderNumber1,orderedItem:this.segment1});
-    console.log(this.deAllotedChassisArray);
+  // deAllotedVehicleSelect(){
+  //   alert(this.segment1+' '+ this.orderNumber1+' '+ this.cancelReason);
+  //   this.deAllotedChassisArray.push({orderNumber:this.orderNumber1,orderedItem:this.segment1,cancelReason:this.cancelReason});
+  //   console.log(this.deAllotedChassisArray);
     
-  }
+  // }
 
 
   
 
   Deallocate(){
-    // alert(this.orderNumber+' '+this.orderedItem);
-    this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1).subscribe((res: any) => {
+    alert(this.orderNumber+' '+this.orderedItem+' '+this.cancelReason);
+    this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1,this.cancelReason).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         // this.deAllotmentForm.reset();

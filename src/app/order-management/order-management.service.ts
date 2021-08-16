@@ -68,9 +68,9 @@ export class OrderManagementService {
 
     
   downloadCSPreINV(orderNumber) :Observable<any> {
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -79,9 +79,9 @@ export class OrderManagementService {
   }
 
   downloadCSINV(InvoiceNumber){
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -313,10 +313,10 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
   // http://localhost:8081/orderHeader/deallotment?orderNumber=2111242153&segment=MVSAA4CZ2-ZQD-278852
-  DeallocateSubmit(orderNumber, segment) {
+  DeallocateSubmit(orderNumber, segment,cancelReason) {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('segment', segment)
-
+      .set('cancelReason',cancelReason)
     const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
     return this.http.put(REQUEST_URI, {
       params: REQUEST_PARAMS,

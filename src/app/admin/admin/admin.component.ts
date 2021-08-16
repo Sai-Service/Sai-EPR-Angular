@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
+import {formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-admin',
@@ -9,7 +10,11 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent  {
   ticketNo:string;
-  constructor(private router: Router) { }
+  today= new Date();
+  todaysDataTime = '';
+  constructor(private router: Router) { 
+    this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
+  }
 
   ngOnInit(): void {
     $("#menu-toggle").click(function(e) {
