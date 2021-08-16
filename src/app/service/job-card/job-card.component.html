@@ -98,10 +98,10 @@
                                                                                 class="LabelFontStyle">
                                                                                 Job&nbsp;Card&nbsp;Date&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="date" disabled
+                                                                                <input  disabled
                                                                                     class="form-control" placeholder=""
                                                                                     [(ngModel)]="jobCardDate"
-                                                                                    formControlName="jobCardDate">
+                                                                                    formControlName="jobCardDate"  min="{{minDate | date:'yyyy-MM-dd'}}">
                                                                             </td>
                                                                             <td style="width: 15%"
                                                                                 class="LabelFontStyle">
@@ -215,6 +215,8 @@
                                                                                     formControlName="locId">
                                                                                 <input type="text" hidden
                                                                                     formControlName="customerId">
+                                                                                <input type="number" hidden
+                                                                                    formControlName="emplId">
                                                                             </td>
 
                                                                             <td style="width: 15%"
@@ -343,7 +345,7 @@
                                                                                     class="form-control" placeholder="">
                                                                             </td>
                                                                             <td style="width: 15%"
-                                                                                class="LabelFontStyle">Technician&nbsp;:
+                                                                                class="LabelFontStyle1">Technician&nbsp;:
                                                                             </td>
                                                                             <td>
                                                                                 <!-- <input type="text" class="form-control"
@@ -1124,7 +1126,7 @@
                                                                         <td>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary" id="register"
-                                                                                (click)="closeMast()">Cancel</button>
+                                                                                (click)="cancelJobNo()">Cancel</button>
                                                                         </td>
                                                                         <div
                                                                         *ngIf="dispReadyInvoice; then thenBlockRFI; else elseBlockRFI">
@@ -1227,7 +1229,7 @@
                                                                                         {{sc.billableTyName}}
                                                                                     </option>
                                                                                 </select>
-                                                                                <!-- <input  type="number" formControlName="billableTyId" class="form-control"  style="height: 25px;"> -->
+                                                                                <input  type="number" formControlName="billableTyId" class="form-control"  style="height: 25px;">
                                                                             </td>
                                                                             <td>
                                                                                 <!-- <input type="number" formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
@@ -1408,7 +1410,7 @@
                                                             </td>
                                                             <td>
                                                                 <button type="submit" class="btn btn-primary"
-                                                                    id="register" (click)="closeMast()">Cancel</button>
+                                                                    id="register" (click)="cancelJobNo()">Cancel</button>
                                                             </td>
                                                         </tr>
                                                     </table>

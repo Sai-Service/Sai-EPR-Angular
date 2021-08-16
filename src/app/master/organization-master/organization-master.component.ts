@@ -150,6 +150,11 @@ export class OrganizationMasterComponent implements OnInit {
   }
 
   newMast() {
+    this.submitted = true;
+    if(this.operatingUnitMasterForm.invalid){
+    return;
+    }
+
     const formValue: IOperatingUnit = this.transData(this.operatingUnitMasterForm.value);
     this.service.operatingUnitMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
