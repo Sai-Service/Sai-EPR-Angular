@@ -76,6 +76,7 @@ interface IjobCard {
   insTaxableAmt: number;
   insTotTaxAmt: number;
   insTotAmt: number;
+  emplId:number;
 }
 
 @Component({
@@ -91,7 +92,7 @@ export class JobCardComponent implements OnInit {
   regNo: string;
   labTotTaxAmt: number;
   matTaxableAmt: number;
-  // billableTyId:number;
+  billableTyId:number;
   matTotTaxAmt: number;
   matTotAmt: number;
   labTaxableAmt: number;
@@ -112,7 +113,6 @@ export class JobCardComponent implements OnInit {
   jobCardNum: string;
   divisionName: string;
   divisionId: number;
-  jobCardDate = new Date();
   lstcomments: any;
   RegNoList: any;
   RegNoList1: any[];
@@ -202,6 +202,7 @@ export class JobCardComponent implements OnInit {
   insTotAmt: number;
 
   trxLineId: number;
+  emplId:number;
 
   dispReadyInvoice = false;
   dispButtonStatus = false;
@@ -209,11 +210,13 @@ export class JobCardComponent implements OnInit {
 
   // public minDatetime = new Date();
   promiseDate = new Date();
+  minDate=new Date();
   pipe = new DatePipe('en-US');
-  // now = Date.now();
+  now = Date.now();
+  jobCardDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
 
-  public minDatetime = moment(new Date()).format('YYYY-MM-DDThh:mm')
+  public minDatetime = moment(new Date()).format('YYYY-MM-DDTHH:mm')
 
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
@@ -346,6 +349,7 @@ export class JobCardComponent implements OnInit {
       balanceAmt: [],
       advAmt: [],
       labDiscountPer: [],
+      emplId:[],
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
@@ -477,6 +481,8 @@ export class JobCardComponent implements OnInit {
     this.divisionName = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.jobStatus = 'Opened';
+    this.emplId=Number(sessionStorage.getItem('emplId'));
+    alert(this.emplId);
     // this.jobCardDate=Date.now();
     this.service.taxCategoryListForSALES()
       .subscribe(
@@ -1443,5 +1449,20 @@ export class JobCardComponent implements OnInit {
       this.jobcardForm.patchValue({ lastRunKms: this.RegNoList.lastRunKms });
     }
   }
+  cancelJobNo(){
+    var jobcardNo = this.jobcardForm.get('jobCardNum').value;
+    this.serviceService.jobCardStatusCancel(jobcardNo).subscribe((res: any) => {
+      if (res.code === 200) {
+         alert(res.message);
+         this.jobcardForm.patchValue({jobStatus:res.obj.status});
+         this.displaylabMatTab = true;
+   }
+   else {
+    if (res.code === 400) {
+      alert(res.message);
+    }
+  }
 
+});
+}
 }

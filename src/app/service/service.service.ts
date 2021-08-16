@@ -99,6 +99,13 @@ public ReopenMaterialIssue(jobcardNo, matStatus){
   const url = this.ServerUrl + `/jobCard/matStatus?jobNum=${jobcardNo}&matStatus=${matStatus}`;
   return this.http.put(url, options);
 }
+public jobCardStatusCancel(jobcardNo){
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + `/jobCard/jobCardCancel/${jobcardNo}`;
+  return this.http.put(url, options);
+}
 public jobCardStatusReadyInvoice(jobcardNo, status){
   const options = {
     headers: this.headers
