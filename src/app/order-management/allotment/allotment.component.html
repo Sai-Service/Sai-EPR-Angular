@@ -114,7 +114,7 @@
                                                     <tr *ngFor="let com of allotmentVehiclesearchlist" class="ItemStyle" style="text-decoration:none;">
                                                         <td style="border: 1px solid black;">
                                                             <input  type="checkbox" formControlName="selectChasisNumber" 
-                                                            (change)="selectChasisNumberEvent($event,com.orderNumber,com.segment)">
+                                                            (change)="selectChasisNumberEvent($event,com.segment)">
                                                         </td>
                                                         <td style="border: 1px solid black;">{{com.segment}}</td>
                                                         <td style="border: 1px solid black;">{{com.description}}</td>

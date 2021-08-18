@@ -114,14 +114,17 @@ export class OrderManagementService {
   }
 
 
-  public createInvoiceAll(orderNumber,emplId) {
-    const options = {
-      headers: this.headers
-    };
-    const url = this.ServerUrl + `/arInv/inserDtls?orderNumber=${orderNumber}&emplId=${emplId}`;
-    return this.http.post(url, orderNumber, options);
+  createInvoiceAll(orderNumber,emplId) {
+    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+      .set('emplId', emplId)
+  
+    const REQUEST_URI = this.ServerUrl + `/arInv/inserDtls?orderNumber=${orderNumber}&emplId=${emplId}`;
+    return this.http.post(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
   }
-
+  
 
  
   downloadGatePass(InvoiceNumber){
@@ -299,6 +302,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl +'/cmnLookup/YesNo');
   }
 
+  
+
   ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
@@ -323,11 +328,11 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
   // http://localhost:8081/orderHeader/deallotment?orderNumber=2111242153&segment=MVSAA4CZ2-ZQD-278852
-  DeallocateSubmit(orderNumber, segment,cancelReason) {
+  DeallocateSubmit(orderNumber, segment,deallotReason) {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('segment', segment)
-      .set('cancelReason',cancelReason)
-    const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
+      .set('deallotReason',deallotReason)
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}&deallotReason=${deallotReason}`;
     return this.http.put(REQUEST_URI, {
       params: REQUEST_PARAMS,
 
@@ -427,6 +432,9 @@ lineLevelOrderStatus():Observable<any>{
 }
 
 
+deallotmentReasonType():Observable<any>{
+  return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/DeallotReason`);
+}
 
 
 orderNoPost(orderNumber,emplId) {

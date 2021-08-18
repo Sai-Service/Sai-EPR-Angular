@@ -14,6 +14,7 @@ import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
 import { saveAs } from 'file-saver';
+import { SalesOrderobj} from './sales-orderobj'
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -75,6 +76,7 @@ interface ISalesBookingForm {
   gstNo: string;
   panNo: string;
   invType: string;
+ taxAmounts: IterableIterator<any[]>;
 }
 
 interface AccOrderLinesPost1 {
@@ -229,6 +231,7 @@ public YesNoList: Array<string> = [];
   // displayTaxCategoryupdate:Array<boolean>=[];
   displayCounterSaleLine: Array<boolean> = [];
   public itemMap=new Map <string,any[]>();
+  public taxMap=new Map <string,any>();
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
@@ -621,7 +624,8 @@ public YesNoList: Array<string> = [];
 
 
  
-  addDiscount(i) {   
+  addDiscount(i) { 
+    alert(i)  ;
     console.log(this.SalesOrderBookingForm.get('oeOrderLinesAllList').value);  
     let controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;   
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
@@ -630,7 +634,8 @@ public YesNoList: Array<string> = [];
     var taxCategoryId=controlinv1[i].taxCategoryId;
     console.log(controlinv1[i].taxCategoryId);
     this.activeLineNo=invLineNo;
-    this.baseAmt=controlinv1[i].baseAmt;
+    var baseAmt=controlinv1[i].baseAmt;
+    alert(baseAmt);
     var patch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var arrayControlTax = this.SalesOrderBookingForm.get('taxAmounts').value;
     var index = Number(arrayControlTax[1].invLineNo);
@@ -640,7 +645,7 @@ public YesNoList: Array<string> = [];
     var diss4 = arrayControlTax[3].totTaxAmt;
     var diss5 = arrayControlTax[4].totTaxAmt;
     // var itemId = controlinv1[index - 1].itemId;
-    this.service.taxCalforItemwithMulDisc (sessionStorage.getItem('ouId'), taxCategoryId, this.baseAmt,diss1,diss2,diss3,diss4,diss5)
+    this.service.taxCalforItemwithMulDisc (sessionStorage.getItem('ouId'), taxCategoryId,baseAmt,diss1,diss2,diss3,diss4,diss5)
       .subscribe(
         (data: any[]) => {
           this.taxCalforItem = data;
@@ -701,8 +706,6 @@ alert('Tax has been applied.')
     // alert('call')
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
     var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    // var taxCatNm : string = arrayControl[index].taxCategoryName;
-    // var taxCategoryId : number = arrayControl[index].taxCategoryId;
     var taxcatName=arrayControl[index].taxCategoryName;
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
     var taxCategoryId= select.taxCategoryId;
@@ -743,6 +746,7 @@ alert('Tax has been applied.')
             data[i].invLineNo=invLineNo1;
           }
           this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
+         this.taxMap.set(index,data);
         });
       } 
     else{
@@ -1038,8 +1042,17 @@ onOptionTaxCatSelected(taxCategoryName, i) {
 
 
   orderLineUpdate(){
-    const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
-    this.orderManagementService.UpdateSalesUpdateLine(formValue).subscribe((res: any) => {
+    // const formValue: ISalesBookingForm = (this.SalesOrderBookingForm.value);
+    var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
+    // var taxAmounts = this.SalesOrderBookingForm.get('taxAmounts').value;
+    // formValue.taxAmounts=this.taxMap.values();
+    let jsonData=this.SalesOrderBookingForm.value;
+    let salesObj=Object.assign(new SalesOrderobj(),jsonData);
+    salesObj.setoeOrderLinesAllList(orderLines);
+    salesObj.settaxAmounts(this.taxMap.values());
+    console.log(JSON.stringify(salesObj));
+    debugger;
+    this.orderManagementService.UpdateSalesUpdateLine(JSON.stringify(salesObj)).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);
       this.OrderFind(this.orderNumber);
@@ -1196,15 +1209,15 @@ onOptionTaxCatSelected(taxCategoryName, i) {
       }
 }
 createInvoice(){
-  this.orderManagementService.createInvoiceAll(this.orderNumber,this.emplId)
-  .subscribe(
-    res => {
-      // if (res.code === 200) {
-      //   this.orderNumber = res.obj; 
-      // }
-      // else (res.code === 400)  {
-      //   this.orderNumber = res.obj; 
-      // }
+    this.orderManagementService.createInvoiceAll(this.orderNumber,this.emplId).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.OrderFind(this.orderNumber);
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
     }
   );  
 }

@@ -60,11 +60,17 @@
                                 (change)="selectOrderNumberEvent($event,com.orderNumber,com.orderedItem)">
                             </td>
                             <td style="border: 1px solid black;">
-                                <select formControlName="cancelReason" id="cancelReason" class="form-control" style="width: 120px;height: 22px;">
+                                <!-- <select formControlName="cancelReason" id="cancelReason" class="form-control" style="width: 120px;height: 22px;">
                                     <option>--Select--</option>
                                     <option value="PaymentRefund">Payment Refund</option>
                                     <option value="Booking Cancelled">Booking Cancelled</option>
-                                    </select>
+                                    </select> -->
+                                    <select formControlName="deallotReason" id="deallotReason" [(ngModel)]="deallotReason" class="form-control"  style="width: 120px;height: 22px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let deallotmentReason of deallotmentReasonTypelist">
+                                        {{deallotmentReason.codeDesc}}
+                                    </option>
+                                </select>
                             </td>
                             <td style="border: 1px solid black;">{{com.orderNumber}}</td>
                             <td style="border: 1px solid black;">{{com.orderedItem}}</td>
@@ -104,7 +110,7 @@
             <table class="center">
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate()">Deallocate</button>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate(deallotReason)">Deallocate</button>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>

@@ -29,22 +29,24 @@ export class DeAllotmentComponent implements OnInit {
   orderNumber:number;
   orderedItem:string;
   segment:string;
-  cancelReason:string;
+  deallotReason:string;
   ouId:string;
   orderNumber1:string;
   selectOrderNumber:string;
   segment1:string;
   ouName:string;
+  deallotReason1:string;
 
   public Deallotmentsearchlist=[];
   public deAllotedChassisArray=[];
+  deallotmentReasonTypelist:any[];
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) { 
     this.deAllotmentForm = fb.group({
  orderNumber:[''],
  orderedItem:[''],
  selectOrderNumber:[],
- cancelReason:[],
+ deallotReason:[],
     })
   }
 
@@ -63,6 +65,15 @@ export class DeAllotmentComponent implements OnInit {
         console.log(this.Deallotmentsearchlist);
       }
     );
+    this.orderManagementService.deallotmentReasonType()
+    .subscribe(
+      data => {
+        this.deallotmentReasonTypelist = data;
+        console.log(this.Deallotmentsearchlist);
+      }
+    );
+
+    
   }
 
 
@@ -70,11 +81,11 @@ export class DeAllotmentComponent implements OnInit {
     return val;
   }
 
-  selectOrderNumberEvent(e,orderNumber,orderedItem,cancelReason) {
+  selectOrderNumberEvent(e,orderNumber,orderedItem,deallotReason) {
     // alert(orderNumber+' '+ orderedItem);
     this.orderNumber1=orderNumber;
     this.segment1=orderedItem;
-    this.cancelReason=cancelReason;
+    this.deallotReason1=deallotReason;
     if (e.target.checked) {
     this.selectOrderNumber='Y'
     }
@@ -95,9 +106,9 @@ export class DeAllotmentComponent implements OnInit {
 
   
 
-  Deallocate(){
-    alert(this.orderNumber+' '+this.orderedItem+' '+this.cancelReason);
-    this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1,this.cancelReason).subscribe((res: any) => {
+  Deallocate(deallotReason){
+    alert(deallotReason);
+    this.orderManagementService.DeallocateSubmit(this.orderNumber1,this.segment1,deallotReason).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         // this.deAllotmentForm.reset();
