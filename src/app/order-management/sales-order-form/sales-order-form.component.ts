@@ -925,7 +925,9 @@ OrderFind(orderNumber) {
                
              }
             }
+            if (controlinv1.taxCategoryName!=null){
             this.onKey(i)
+          }
          }
          );
        }
@@ -1192,6 +1194,19 @@ onOptionTaxCatSelected(taxCategoryName, i) {
         this.orderlineDetailsArray().removeAt(index);
         this.TaxDetailsArray().removeAt(index);
       }
+}
+createInvoice(){
+  this.orderManagementService.createInvoiceAll(this.orderNumber,this.emplId)
+  .subscribe(
+    res => {
+      // if (res.code === 200) {
+      //   this.orderNumber = res.obj; 
+      // }
+      // else (res.code === 400)  {
+      //   this.orderNumber = res.obj; 
+      // }
+    }
+  );  
 }
 
   }

@@ -169,7 +169,7 @@ export class CounterSaleComponent implements OnInit {
   classCodeType:string;
   public cityList1: any;
   location:string;
-
+  displaydisAmt=false;
 
 
   trxNumber:number;
@@ -1744,9 +1744,11 @@ onOptionsSelectedDiscountType(discType){
   // alert(discType)
   if (discType==='HeadLevelDisc'){
     this.displaydisPer=false;
+    this.displaydisAmt=true;
   }
   else{
     this.displaydisPer=true;
+    this.displaydisAmt=false;
   }
 }
  

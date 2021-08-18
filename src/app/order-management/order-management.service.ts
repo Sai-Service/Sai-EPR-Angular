@@ -114,6 +114,16 @@ export class OrderManagementService {
   }
 
 
+  public createInvoiceAll(orderNumber,emplId) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/arInv/inserDtls?orderNumber=${orderNumber}&emplId=${emplId}`;
+    return this.http.post(url, orderNumber, options);
+  }
+
+
+ 
   downloadGatePass(InvoiceNumber){
     const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
     // local
