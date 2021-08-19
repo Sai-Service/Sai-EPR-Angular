@@ -10,7 +10,12 @@ import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 
-interface IMcpCancel {   }
+interface IMcpCancel {   
+  enrollmentNo :string;
+  cancRsnId:number;
+  refundAmt:number;
+
+}
 
 @Component({
   selector: 'app-mcp-cancellation',
@@ -24,10 +29,13 @@ export class McpCancellationComponent implements OnInit {
   pipe = new DatePipe('en-US');
   
 
-  public OUIdList           : Array<string> = [];
-  public VehRegNoList       : Array<string> = [];
-  public VehVinList         : Array<string> = [];
-  public issueByList        : Array<string> = [];
+  public OUIdList           :Array<string> = [];
+  public VehRegNoList       :Array<string> = [];
+  public VehVinList         :Array<string> = [];
+  public issueByList        :Array<string> = [];
+  public mcpReasonList      :Array<string>  = [];
+  public mcpRemarkList      :Array<string>  = [];
+  
   
   getVehRegDetails:any;
   getVehVinDetails:any;
@@ -114,6 +122,24 @@ export class McpCancellationComponent implements OnInit {
         labNetAmt:number;
         labCessAmt:number;
 
+
+        totLabDisc:number;
+        totMatDisc:number;
+        totLabGst:number;
+        totMatGst:number;
+
+        totLabUtilised:number;
+        totMatUtilised:number;
+        totLabBalanced:number;
+        totMatBalanced:number;
+
+        totMatBalTax:number;
+        totLabBalTax:number;
+
+        totAvailed:number;
+        totBalance:number;
+                
+
         consAmt:number;
         consDiscAmt:number;
         consGstAmt:number;
@@ -143,6 +169,9 @@ export class McpCancellationComponent implements OnInit {
 
         labAmt:number;
         matAmt:number;
+
+        cancRsnId:number;
+        cancRemarksId:number;
 
           //////////////////////////////////
           displayInactive = true;
@@ -229,7 +258,22 @@ export class McpCancellationComponent implements OnInit {
             discTotal:[],
             taxTotal:[],
             netTotal:[],
-    
+
+
+            totLabDisc:[],
+            totMatDisc:[],
+            totLabGst:[],
+            totMatGst:[],
+
+            totLabUtilised:[],
+            totMatUtilised:[],
+            totLabBalanced:[],
+            totMatBalanced:[],
+            totMatBalTax:[],
+            totLabBalTax:[],
+            totAvailed:[],
+            totBalance:[],
+                
 
             searchRegno:[],
             searchEnrollNo:[],
@@ -254,6 +298,8 @@ export class McpCancellationComponent implements OnInit {
 
             labAmt:[],
             matAmt:[],
+            cancRsnId:[],
+            cancRemarksId:[],
 
 
           });
@@ -297,7 +343,24 @@ export class McpCancellationComponent implements OnInit {
                 console.log(this.VehVinList);
               }
             ); 
+
+            this.service.mcpReasonLst()
+            .subscribe(
+              data => {
+                this.mcpReasonList = data;
+                console.log(this.mcpReasonList);
+              }
+            );
   
+            this.service.mcpRemarkLst()
+            .subscribe(
+              data => {
+                this.mcpRemarkList = data;
+                console.log(this.mcpRemarkList);
+              }
+            );
+
+            
 
           }
 
@@ -472,11 +535,53 @@ export class McpCancellationComponent implements OnInit {
         this.vehicleAgeDays=mDays3;
       }
 
+      transeData(val) {
+        delete val.loginArray;
+        delete val.loginName;
+        delete val.ouName;
+        delete val.divisionId;
+        delete val.locId;
+        delete val.locName;
+        delete val.ouId;
+        delete val.deptId;
+        delete val.orgId;
+        // delete val.emplId;
+ 
+        return val;
+      }
+
 
       showPkgDetails(){alert ("Package Details......in.. WIP")}
 
-      newMast(){alert ("Save.....in.. WIP")}
-      updateMast(){alert ("Update.....in.. WIP")}
+      newMast(){alert ("Save.....in.. WIP")
+
+      
+        // this.CheckDataValidations();
+
+        // if (this.checkValidation===true) {
+        //   alert("Data Validation Sucessfull....\nPutting data to MCP ITEM MASTER  TABLE")
+
+          const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
+          this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.refundAmt,formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+         
+            alert('RECORD UPDATED SUCCESSFUILY');
+            // window.location.reload();
+          } else {
+            if (res.code === 400) {
+            
+              alert('ERROR OCCOURED IN PROCEESS');
+              this.mcpCancellationForm.reset();
+            }
+          }
+        });
+      // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+      // }
+      }
+       
+      updateMast(){alert ("Update.....in.. WIP")
+    
+    }
       searchMast(){alert ("Search.....in.. WIP")}
 
       resetMast() {
@@ -517,11 +622,15 @@ export class McpCancellationComponent implements OnInit {
                 //   this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
                   this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
                   
-                  this.discTotal= (this.lstMcplines.totLabDisc+this.lstMcplines.totMatDisc);
-                  this.taxTotal= (this.lstMcplines.totLabGst+this.lstMcplines.totMatGst);
+                  this.totAvailed= (this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised);
+                  this.totBalance= (this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced);
                   // this.mcpCancelValue=this.lstMcplines.refundAmt;
-                  this.netRefAmt=this.lstMcplines.refundAmt;
-
+                 
+                  this.refTotal1=(this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced);
+                  this.refTotal2=(this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax);
+                  // this.netRefAmt=this.lstMcplines.refundAmt;
+                  var xy=this.lstMcplines.refundAmt+this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax;
+                  this.netRefAmt=xy;
               
     
                } ); 

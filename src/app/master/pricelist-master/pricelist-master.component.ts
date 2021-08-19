@@ -643,16 +643,6 @@ export class PricelistMasterComponent implements OnInit {
       this.displayButton = false;
       this.display = false;
       this.showItemSearch=true;
-      // alert('priceListHeaderId='+priceListHeaderId+"  PL TYPE :" + this.priceListType);
-      // console.log("price list details : " + select.priceListDetailList);
-      // let controlinv1 = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-      // for (let i=0; i<select.priceListDetailList.length;i++) {
-      //   alert('Item '+select.priceListDetailList[i].itemId);
-      //   alert('priceValue '+select.priceListDetailList[i].priceValue); 
-      //   // controlinv1.controls[i].patchValue(select.priceListDetailList[i]);
-      // // this.priceListMasterForm.get('priceListDetailList').patchValue(select.priceListDetailList);
-      // }
-      // this.priceListMasterForm.get('priceListDetailList').patchValue(select.priceListDetailList);
       this.priceListMasterForm.patchValue(select);
     }
   
