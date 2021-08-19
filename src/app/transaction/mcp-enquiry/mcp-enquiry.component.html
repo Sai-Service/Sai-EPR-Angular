@@ -312,7 +312,7 @@
                         <div *ngIf="displayButton; then thenBlockMcp1; else elseBlockMcp1"></div>
                         <ng-template #thenBlockMcp1>
                         <td>
-                            <input   type="text"  formControlName="startKms"  id="startKms" [(ngModel)]="startKms" class="form-control" (change)='onEnterKms(startKms)' placeholder='Current Mileage' >
+                            <input   type="text"  formControlName="startKms"  id="startKms" [(ngModel)]="startKms" class="form-control" (change)='onEnterKms(startKms)' placeholder='Current Mileage' style="background-color: yellow" >
                         </td>
                         </ng-template>
                         <ng-template #elseBlockMcp1>
@@ -519,19 +519,21 @@
                                 <ng-template #elseBlockMcp2>
 
                                 <td>
-                                    <select disabled type="text" class="form-control" formControlName="pkgEnquired" [(ngModel)]="pkgEnquired"
+                                    <!-- <select disabled type="text" class="form-control" formControlName="pkgEnquired" [(ngModel)]="pkgEnquired"
                                         (ngModelChange)="onSelectPackageNumber($event)">
                                     <option>--Select--</option>
                                     <option *ngFor="let pk of mcpPackageList" [ngValue]="pk.packageNumber" >
-                                    <!-- {{pk.packageId}}- -->
-                                        {{pk.packageNumber}}-{{pk.packageDesc}}
+                                       {{pk.packageNumber}}-{{pk.packageDesc}}
                                     </option>
-                                    </select>
+                                    </select> -->
+
+                                    <input disabled  type="text"  formControlName="pkgEnquired"  id="pkgEnquired" [(ngModel)]="pkgEnquired" class="form-control" >
+                                    
                                 </td>
                                 </ng-template>
                            
     
-                                    <td style="width: 15%" class="LabelFontStyle1">Sales&nbsp;Person:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Executive&nbsp;:&nbsp;</td>
             
                                     <td>
                                         <select type="number" class="form-control" formControlName="executive" [(ngModel)]="executive">
@@ -550,12 +552,12 @@
                                
                               
                                     <tr>
-                                    <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Period:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;Period:&nbsp;</td>
                                 
                                     <td>
                                         <input disabled  type="text"  formControlName="validMonths"  id="validMonths" [(ngModel)]="validMonths" class="form-control" style="text-align: right;">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Kms:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;Kms:&nbsp;</td>
                                 
                                     <td>
                                         <input disabled  type="text"  formControlName="validKms"  id="validKms" [(ngModel)]="validKms" class="form-control" style="text-align: right;" >
@@ -566,7 +568,7 @@
                                     <td>
                                         <input disabled  type="date"  formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control" >
                                     </td> -->
-                                    <td style="width: 15%" class="LabelFontStyle1">Enq&nbsp;Valid&nbsp;Date:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Enq&nbsp;Valid&nbsp;Date:&nbsp;</td>
                                 
                                     <td>
                                         <input  disabled type="date"  formControlName="endDate"  id="endDate" [(ngModel)]="endDate" class="form-control" >
@@ -577,10 +579,10 @@
 
                                 <tr>
 
-                                     <td style="width: 15%" class="LabelFontStyle1">Package&nbsp;Name:&nbsp;</td>
+                                     <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Name:&nbsp;</td>
                                 
                                     <td>
-                                        <input disabled style="width: 455%;" type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
+                                        <input disabled style="width: 458%;" type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
                                     </td>
 
                                     <td></td> <td></td><td></td> <td></td> <td></td> 

@@ -269,8 +269,10 @@ export class McpEnquiryComponent implements OnInit {
             customerType:[],
             custTaxCategoryName:[],
 
+            // enqDtls: this.fb.array([this.invLineDetails()]),
+            
             enqDtls: this.fb.array([this.invLineDetails()]),
-
+            
 
           });
         }
@@ -298,7 +300,10 @@ export class McpEnquiryComponent implements OnInit {
       }
   
       invLineArray(): FormArray {
+        // return <FormArray>this.mcpEnquiryForm.get('enqDtls')
         return <FormArray>this.mcpEnquiryForm.get('enqDtls')
+
+        
       }
 
           ngOnInit(): void 
@@ -873,6 +878,7 @@ export class McpEnquiryComponent implements OnInit {
                 this.getPkgPriceDetails = data;
                 console.log(this.getPkgPriceDetails);
                 // alert(data.packageDesc);
+                if(this.getPkgPriceDetails !=null){
 
                  this.mcpEnquiryForm.patchValue({
                   labAmt: this.getPkgPriceDetails.totLabBasic,
@@ -899,6 +905,7 @@ export class McpEnquiryComponent implements OnInit {
                     // totCessAmt: 0,
                     packageAmt:this.getPkgPriceDetails.totPackageAmt,
                  });
+                } else {alert ("MCP Price details not Found....");}
       
               } );   
 
@@ -1060,11 +1067,11 @@ export class McpEnquiryComponent implements OnInit {
                         this.GetVariantDeatils(this.lstMcplines.variantCode);
                         this.GetCustomerDetails(this.customerId);
                         this.GetCustomerSiteDetails(this.customerId)
-                        this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
+                        // this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
                         this.getPackageInfo(this.pkgEnquired,this.lstMcplines.fuelType)
                         
                         this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
-                       this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
+                        this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
 
                       // ----------------------------LINE DETAILS----------------------------------------
                       for(let i=0; i<this.invLineArray.length; i++){ 
@@ -1104,8 +1111,9 @@ export class McpEnquiryComponent implements OnInit {
                   Select(mEnqNo: any) {
                     // alert ("Enq no :"+ mEnqNo);
                     this.addFlag=false;
-                    let select = this.lstMcplines.find(d => d.enqNo === mEnqNo);
-                    this.mcpEnquiryForm.patchValue(select);
+                    this.displayButton=false;
+                     let select = this.lstMcplines.find(d => d.enqNo === mEnqNo);
+                     this.mcpEnquiryForm.patchValue(select);
                      this.regNo=select.regNo;
                      this.variantCode='AKA4CD2';
                      this.enqNo=select.enqNo;
@@ -1124,7 +1132,7 @@ export class McpEnquiryComponent implements OnInit {
                      this.GetVariantDeatils(this.variantCode);
                      this.GetCustomerDetails(select.customerId);
                      this.GetCustomerSiteDetails(select.customerId)
-                     this.LoadPackage(select.regNo,select.startKms)
+                    //  this.LoadPackage(select.regNo,select.startKms)
                      this.getPackageInfo(select.pkgEnquired,select.fuelType)
                      this.mcpEnquiryForm.get('executive').disable();
                      this.showDetailsButton=true
@@ -1137,9 +1145,10 @@ export class McpEnquiryComponent implements OnInit {
                       
                         // ----------------------------LINE DETAILS----------------------------------------
                      console.log(select.enqDtls[0]);
-                     for(let i=0; i<this.invLineArray.length; i++){ 
+                     for(let i=0; i<this.invLineArray().length; i++){ 
                       this.invLineArray().removeAt(i);
                       }
+                      alert("select.enqDtls.length>>."+ select.enqDtls.length);
                        if(select.enqDtls.length>0){
                 
                        this.invLineArray().clear();
@@ -1147,7 +1156,7 @@ export class McpEnquiryComponent implements OnInit {
                          if (select) {
                 
                          var control = this.mcpEnquiryForm.get('enqDtls') as FormArray;
-                         alert("select.enqDtls.length>>"+select.enqDtls.length);
+                        //  alert("select.enqDtls.length>>"+select.enqDtls.length);
                           for (let i=0; i<select.enqDtls.length;i++) 
                             {
                               var enqDtls:FormGroup=this.invLineDetails();
@@ -1156,9 +1165,9 @@ export class McpEnquiryComponent implements OnInit {
                     
                         }
                      }
-                    
-                      this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
-                
+                         this.mcpEnquiryForm.patchValue(select);
+                      // this.mcpEnquiryForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+                      // this.mcpEnquiryForm.patchValue(this.lstMcplines);
                     //------------------------------------------------------------------------
                     ///// Price Details ///////////////////////
                    

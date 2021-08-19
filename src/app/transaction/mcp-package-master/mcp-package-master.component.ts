@@ -439,9 +439,10 @@ RemoveRow(index) {
            }
 
 
-           mcpSearchBy(mcpPtype,mcpFtype,mcpPkgNo) {
-
-            alert(mcpPtype+ ","+mcpFtype +" ,"+mcpPkgNo)
+           mcpSearchBy(mcpPtype:any,mcpFtype:any,mcpPkgNo:any) {
+       
+           var mcpPkgNo=mcpPkgNo.toUpperCase();
+           alert(mcpPtype+ ","+mcpFtype +" ,"+mcpPkgNo)
 
             if(mcpPtype !=null && mcpFtype != null && mcpPtype !='--Select--') { 
               this.SearchByPkgFuelType(mcpPtype,mcpFtype);
@@ -627,15 +628,23 @@ RemoveRow(index) {
         this.service.UpdateMcpPackageMaster(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFUILY');
-          window.location.reload();
+          // window.location.reload();
+          this.mcpPackageMasterForm.disable();
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
-            this.mcpPackageMasterForm.reset();
+            // this.mcpPackageMasterForm.reset();
           }
         }
       });
     }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
+    }
+
+    clearSearch() {
+      this.mcpPackageMasterForm.get('searchByPkgType').reset();
+      this.mcpPackageMasterForm.get('searchByFuelType').reset();
+      this.mcpPackageMasterForm.get('searchByPkgNumber').reset();
+      this.lstcomments=null;
     }
 
   // ============================================================

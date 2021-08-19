@@ -14,58 +14,29 @@
                 <form [formGroup]="wsVehicleMasterForm" (ngSubmit)="wsVehicleMaster(wsVehicleMasterForm.value)">
 
 
-                    <table class="center">
-                        <tr>
-                        <!-- <td  class="LabelFontStyle">DivId/div/ouid/locid/deptid/empId/custid/inssite/Aging/type/Stat/itemcd&nbsp;:&nbsp;</td> -->
-   
-                        <td >
-                            <input  style="width:30px ;"   type="text" disabled formControlName="divisionId"
+                    <!-- <table class="center">
+                        <tr> -->
+                        
+                            <input  style="width:30px ;"   type="text" hidden formControlName="divisionId"
                             class="form-control" [(ngModel)]="divisionId" placeholder="">
-
-                        </td>
-                        <td   style="border: none;color: black;">
-                            <input  style="width:100px ;"  type="text" disabled formControlName="loginArray"
+                            <input  style="width:100px ;"  type="text" hidden formControlName="loginArray"
                                 class="form-control" [(ngModel)]="loginArray" placeholder="">
-                        </td>
-                    
-                        <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            <input   style="width:30px ;"  hidden type="text" formControlName="ouId"
                             class="form-control" [(ngModel)]="ouId" >
-                        </td>
-                    
-                        <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
-                        </td>
-                        <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            <input  style="width:30px ;" hidden type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
+                            <input  style="width:30px ;"  type="text" hidden formControlName="deptId"
                             class="form-control" [(ngModel)]="deptId" placeholder="">
-
-                        </td>
-                        <td >
-                            <input  style="width:30px ;"   type="text" disabled formControlName="emplId"
+                            <input  style="width:30px ;"   type="text" hidden formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
-
-                        </td>
-
-                        <td >
-                            <input  style="width:30px ;"   type="text" disabled formControlName="itemId"
+                            <input  style="width:30px ;"   type="text" hidden formControlName="itemId"
                             class="form-control" [(ngModel)]="itemId" placeholder="">
-
-                        </td>
-
-                        <td >
-                            <input  style="width:30px ;"   type="text" disabled formControlName="customerSiteId"
+                           <input  style="width:30px ;"   type="text" hidden formControlName="customerSiteId"
                             class="form-control" [(ngModel)]="customerSiteId" placeholder="">
 
-                        </td>
-                        
-                        </tr>
-                    </table>
-                  
 
                    
 
-                <br>
+              
                 <div class="auto-style103" >
                     <div class="classic-tabs">
                            <!-- Nav tabs -->
@@ -78,11 +49,12 @@
                                <a class="nav-link waves-light active"   data-toggle="tab" href="#panel101" role="tab">Vehicle Info</a>
                              </li>
                              <li class="nav-item">
+                                <a class="nav-link waves-light" data-toggle="tab" href="#panel103" role="tab">Vehicle Additional Info</a>
+                              </li>
+                             <!-- <li class="nav-item">
                                <a class="nav-link waves-light" data-toggle="tab" href="#panel102" role="tab">Customer Info </a>
-                             </li>
-                             <li class="nav-item">
-                               <a class="nav-link waves-light" data-toggle="tab" href="#panel103" role="tab">Vehicle Additional Info</a>
-                             </li>
+                             </li> -->
+                            
                                <li class="nav-item"></li><li class="nav-item"></li> <li class="nav-item"></li> <li class="nav-item"></li> <li class="nav-item"></li>
                                <li class="nav-item"></li> <li class="nav-item"></li> <li class="nav-item"></li> <li class="nav-item"></li> <li class="nav-item"></li>
                                <li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li><li class="nav-item"></li>
@@ -375,13 +347,13 @@
                         <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+                    <!-- <td style="width: 15%" class="LabelFontStyle">Site.&nbsp;Id&nbsp;:&nbsp;</td>
 
                     <td >
                         <input  style="width:30px ;"   type="text" disabled formControlName="customerSiteId"
                         class="form-control" [(ngModel)]="customerSiteId" placeholder="">
 
-                    </td>
+                    </td> -->
 
 
                     <!-- <td></td>
@@ -399,6 +371,25 @@
                     <ng-template #ItemNo></ng-template> -->
                   
 
+                </tr>
+
+                    <tr>
+                       
+                        <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                        <td>
+                            <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
+                        <td>
+                            <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                        </td>
+
+                        <td></td>
+                        <td>
+                            <button  type="button"  class="btn btn-primary" 
+                            data-toggle="modal" data-target="#CustomerInfo"  style="width: 10rem;color: black;">
+                            &nbsp;Customer Details</button>
+                        </td>
                 </tr>
               
                
@@ -598,382 +589,406 @@
 
           </div>
 
-          <div class="tab-pane fade" id="panel102" role="tabpanel">
+          <!-- <div class="tab-pane fade" id="panel102" role="tabpanel">
          
-            <fieldset class="RFS">
-                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                   Search Customer </legend>
-
-             <table class="center" style="width: 100%;background-color: #FFE4B5;">
-                <!-- <table> -->
-                    <tr>
-                      <td >
-                          <table class="center">
-                              <tr>
-
-                                <td style="width: 15%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
-                    
-                                <td>
-                                    <input class="form-control" formControlName="custPhone1" [(ngModel)]='custPhone1'
-                                        value={{custPhone1}} style="text-transform:uppercase;">
-                                </td>
-
-                                <td style="background-color: #FFE4B5;">
-                                    <button type="button" class="btn-primary" (click)="SearchByCustPhone(custPhone1)"><i class="fa fa-search"
-                                            aria-hidden="true"></i></button>
-                                </td>
-                                <td>&nbsp;Customer&nbsp;Name:&nbsp;</td>
-                               <td>
-                                    <input class="form-control" formControlName="custName" [(ngModel)]='custName'
-                                        value={{custName}} style="text-transform:uppercase;">
-                                </td>
-
-                                <td>
-                                    <button type="button" class="btn-primary" (click)="SearchByCustName(custName)"><i class="fa fa-search"
-                                            aria-hidden="true"></i></button>
-                                </td>
-                
-                              
-                
-                                                                                 
-                               
-                               
-                              </tr>
-                          </table>
-                      </td>
-                    </tr>
-
-                   
-                </table>
-            </fieldset>
-
-            <tr class="center">
-              <table class="center" style="width: 100%;">
-                <tr>
-                <td >
-        
-                    <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                            Customer Details (Owner) </legend>
-            
-                       <tr>
-
-                        
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
-
-                        <td>
-                            <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
-                        </td>
-                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
-                        <td>
-                            <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
-            
-                        <td>
-                            <input  disabled  type="text"  formControlName="custAddress1"  id="custAddress1" [(ngModel)]="custAddress1" class="form-control"  >
-                        </td>
-
-                        <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
-
-                        <td>
-                            <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
-                        </td>
-
-                    </tr>
-                        <tr>
-                           
-                        
-                            <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input disabled  type="text"  formControlName="custAddress2"  id="custAddress2" [(ngModel)]="custAddress2" class="form-control"  >
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" style="width: 130px;">
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input disabled type="text"  formControlName="custAddress3"  id="custAddress3" [(ngModel)]="custAddress3" class="form-control"  >
-                            </td>
-                        
-                            <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input  disabled  type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" style="width: 130px;">
-                            </td>
-                           
-                        </tr>
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custPin"  id="custPin" [(ngModel)]="custPin" class="form-control" style="width: 130px;" >
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                           
-            
-                            <td style="width: 15%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
-                            </td>
-                        </tr>
-
-                      
-                        <tr>
-                           
-                           
-            
-                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
-            
-                            <td>
-                                <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
-                            </td>
-                           
-                      </tr>
-                      <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
-                
-                        <td>
-                            <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
-                        </td>
-
-                        <td style="width: 15%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
-                            </td>
-            
-                      </tr>
-                      <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
-                        <td> <input disabled  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
-                         
-                        
-             
-                         <td style="width: 15%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
-             
-                         <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
-                      </tr>
-
-                      <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
-    
-                        <td >
-                            <input style="width: 190%;"    type="text" disabled formControlName="billToAddress"
-                            class="form-control" [(ngModel)]="billToAddress" placeholder="">
-    
-                        </td>
-                    </tr>
-                      <tr>
-                        <td></td>
-                        <div *ngIf="showCreateCustButton; then CustYes; else CustNo"></div>
-                        <ng-template #CustYes>
-                        <td>
-                            <button type="button"  class="btn btn-primary" 
-                             style="width: 8rem;color: black;"
-                            (click)="CreateNewCustomer()"> Create&nbsp;Customer </button>
-                       </td>
-                        </ng-template>
-                        <ng-template #CustNo></ng-template>
-                      </tr>
-
-
-                        </fieldset>
-                </td>
-            
-                <td>
-                    <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                            Customer Details (Billing) </legend>
-            
-                       <tr>
-
-                        
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
-
-                        <td>
-                            <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
-                        </td>
-                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
-                        <td>
-                            <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
-            
-                        <td>
-                            <input  disabled  type="text"  formControlName="custAddress1"  id="custAddress1" [(ngModel)]="custAddress1" class="form-control"  >
-                        </td>
-
-                        <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
-
-                        <td>
-                            <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
-                        </td>
-
-                    </tr>
-                        <tr>
-                           
-                        
-                            <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input disabled  type="text"  formControlName="custAddress2"  id="custAddress2" [(ngModel)]="custAddress2" class="form-control"  >
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" style="width: 130px;">
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input disabled type="text"  formControlName="custAddress3"  id="custAddress3" [(ngModel)]="custAddress3" class="form-control" >
-                            </td>
-                        
-                            <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input  disabled  type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" style="width: 130px;">
-                            </td>
-                           
-                        </tr>
-                        <tr>
-                            <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custPin"  id="custPin" [(ngModel)]="custPin" class="form-control" style="width: 130px;" >
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                           
-            
-                            <td style="width: 15%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
-            
-                            <td>
-                                <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
-                            </td>
-                            <td style="width: 15%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
-                            </td>
-                        </tr>
-
-                      
-                        <tr>
-                           
-                           
-            
-                            <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
-            
-                            <td>
-                                <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
-                            </td>
-                           
-                      </tr>
-                      <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
-                
-                        <td>
-                            <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
-                        </td>
-
-                        <td style="width: 15%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
-                            </td>
-            
-                      </tr>
-
-                      <tr>
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Valid&nbsp;Upto:&nbsp;</td>
-                        <td> <input  disabled type="date"  name="contractEndDate" formControlName="contractEndDate"  [(ngModel)]="contractEndDate" class="form-control"  style="height: 25px;"></td>
-                    </tr>
-
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
-    
-                        <td >
-                            <input style="width: 190%;"    type="text" disabled formControlName="billToAddress"
-                            class="form-control" [(ngModel)]="billToAddress" placeholder="">
-    
-                        </td>
-                    </tr>
-                      
-
-                      <tr>
-                        <td></td>
-                        <div *ngIf="showCreateCustButton; then CustBYes; else CustBNo"></div>
-                        <ng-template #CustBYes>
-                        <td>
-                            <button type="button"  class="btn btn-primary" 
-                             style="width: 10rem;color: black;"
-                            (click)="CreateNewCustomer()"> Create&nbsp;Billing Customer</button>
-                        </ng-template>
-                        <ng-template #CustBNo></ng-template>
-                      </tr>
-                      </fieldset>
-                </td>
-                </tr>
-              </table>
-            </tr>
-        
-            
          
-          </div>
+         
+          </div> -->
             
         </div>
             
     </div>
 </div>
+
+<!-- ------------------------------------Modal form Start - Customer Details--------------------------------- -->
+<!-- CustomerInfo -->
+
+<div class="modal fade" id="CustomerInfo" tabindex="-1" role="dialog" aria-labelledby="CustomerInfoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+         <div class="modal-header">
+          <h5 class="modal-title" id="CustomerInfoLabel">CUSTOMER&nbsp;INFORMATION&nbsp;&nbsp;</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+                <div class="modal-body">
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                           Search Customer </legend>
+        
+                     <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <!-- <table> -->
+                            <tr>
+                              <td >
+                                  <table class="center">
+                                      <tr>
+        
+                                        <td style="width: 15%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
+                            
+                                        <td>
+                                            <input class="form-control" formControlName="custPhone1" [(ngModel)]='custPhone1'
+                                                value={{custPhone1}} style="text-transform:uppercase;">
+                                        </td>
+        
+                                        <td style="background-color: #FFE4B5;">
+                                            <button type="button" class="btn-primary" (click)="SearchByCustPhone(custPhone1)"><i class="fa fa-search"
+                                                    aria-hidden="true"></i></button>
+                                        </td>
+                                        <td>&nbsp;Customer&nbsp;Name:&nbsp;</td>
+                                       <td>
+                                            <input class="form-control" formControlName="custName" [(ngModel)]='custName'
+                                                value={{custName}} style="text-transform:uppercase;">
+                                        </td>
+        
+                                        <td>
+                                            <button type="button" class="btn-primary" (click)="SearchByCustName(custName)"><i class="fa fa-search"
+                                                    aria-hidden="true"></i></button>
+                                        </td>
+                                                       
+                                      </tr>
+                                  </table>
+                              </td>
+                            </tr>
+                           
+                        </table>
+                    </fieldset>
+                   
+                        
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                        <td >
+                      
+                                  <fieldset class="RFS">
+                                      <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                                          Customer Details (Owner) </legend>
+                          
+                                     <tr>
+              
+                                      
+                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
+              
+                                      <td>
+                                          <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                                      </td>
+                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                                      <td>
+                                          <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
+                                      </td>
+              
+                                  </tr>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
+                          
+                                      <td>
+                                          <input  disabled  type="text"  formControlName="custAddress1"  id="custAddress1" [(ngModel)]="custAddress1" class="form-control"  >
+                                      </td>
+              
+                                      <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
+              
+                                      <td>
+                                          <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
+                                      </td>
+              
+                                  </tr>
+                                      <tr>
+                                         
+                                      
+                                          <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled  type="text"  formControlName="custAddress2"  id="custAddress2" [(ngModel)]="custAddress2" class="form-control"  >
+                                          </td>
+                                          <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" style="width: 130px;">
+                                          </td>
+              
+                                      </tr>
+                                      <tr>
+                                          <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled type="text"  formControlName="custAddress3"  id="custAddress3" [(ngModel)]="custAddress3" class="form-control"  >
+                                          </td>
+                                      
+                                          <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" style="width: 130px;">
+                                          </td>
+                                         
+                                      </tr>
+                                      <tr>
+                                          <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
+                                          </td>
+                                          <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custPin"  id="custPin" [(ngModel)]="custPin" class="form-control" style="width: 130px;" >
+                                          </td>
+                                          
+                                      </tr>
+                                      <tr>
+                                         
+                          
+                                          <td style="width: 15%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
+                                          </td>
+                                          <td style="width: 15%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
+                                          </td>
+                                      </tr>
+              
+                                    
+                                      <tr>
+                                         
+                                         
+                          
+                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
+                                          </td>
+              
+                                          <td style="width: 15%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
+                                          </td>
+                                         
+                                    </tr>
+                                    <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+                              
+                                      <td>
+                                          <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                                      </td>
+              
+                                      <td style="width: 15%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
+                                          </td>
+                          
+                                    </tr>
+                                    <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
+                                      <td> <input disabled  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
+                                       
+                                      
+                           
+                                       <td style="width: 15%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
+                           
+                                       <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
+                                    </tr>
+              
+                                    <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
+                  
+                                      <td >
+                                          <input style="width: 195%;"    type="text" disabled formControlName="billToAddress"
+                                          class="form-control" [(ngModel)]="billToAddress" placeholder="">
+                  
+                                      </td>
+                                  </tr>
+                                    <tr>
+                                      <td></td>
+                                      <div *ngIf="showCreateCustButton; then CustYes; else CustNo"></div>
+                                      <ng-template #CustYes>
+                                      <td>
+                                          <button type="button"  class="btn btn-primary" 
+                                           style="width: 8rem;color: black;"
+                                          (click)="CreateNewCustomer()"> Create&nbsp;Customer </button>
+                                     </td>
+                                      </ng-template>
+                                      <ng-template #CustNo></ng-template>
+                                    </tr>
+              
+              
+                                      </fieldset>
+                              </td>
+                          
+                              <td>
+                                  <fieldset class="RFS">
+                                      <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                                          Customer Details (Billing) </legend>
+                          
+                                     <tr>
+              
+                                      
+                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
+              
+                                      <td>
+                                          <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                                      </td>
+                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                                      <td>
+                                          <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
+                                      </td>
+              
+                                  </tr>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
+                          
+                                      <td>
+                                          <input  disabled  type="text"  formControlName="custAddress1"  id="custAddress1" [(ngModel)]="custAddress1" class="form-control"  >
+                                      </td>
+              
+                                      <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
+              
+                                      <td>
+                                          <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
+                                      </td>
+              
+                                  </tr>
+                                      <tr>
+                                         
+                                      
+                                          <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled  type="text"  formControlName="custAddress2"  id="custAddress2" [(ngModel)]="custAddress2" class="form-control"  >
+                                          </td>
+                                          <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custCity"  id="custCity" [(ngModel)]="custCity" class="form-control" style="width: 130px;">
+                                          </td>
+              
+                                      </tr>
+                                      <tr>
+                                          <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled type="text"  formControlName="custAddress3"  id="custAddress3" [(ngModel)]="custAddress3" class="form-control" >
+                                          </td>
+                                      
+                                          <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custState"  id="custState" [(ngModel)]="custState" class="form-control" style="width: 130px;">
+                                          </td>
+                                         
+                                      </tr>
+                                      <tr>
+                                          <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
+                                          </td>
+                                          <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custPin"  id="custPin" [(ngModel)]="custPin" class="form-control" style="width: 130px;" >
+                                          </td>
+                                          
+                                      </tr>
+                                      <tr>
+                                         
+                          
+                                          <td style="width: 15%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
+                          
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
+                                          </td>
+                                          <td style="width: 15%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
+                                          </td>
+                                      </tr>
+              
+                                    
+                                      <tr>
+                                         
+                                         
+                          
+                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
+                          
+                                          <td>
+                                              <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
+                                          </td>
+              
+                                          <td style="width: 15%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
+                                          </td>
+                                         
+                                    </tr>
+                                    <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+                              
+                                      <td>
+                                          <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
+                                      </td>
+              
+                                      <td style="width: 15%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
+              
+                                          <td>
+                                              <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
+                                          </td>
+                          
+                                    </tr>
+              
+                                    <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Valid&nbsp;Upto:&nbsp;</td>
+                                      <td> <input  disabled type="date"  name="contractEndDate" formControlName="contractEndDate"  [(ngModel)]="contractEndDate" class="form-control"  style="height: 25px;"></td>
+                                  </tr>
+              
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
+                  
+                                      <td >
+                                          <input style="width: 195%;"    type="text" disabled formControlName="billToAddress"
+                                          class="form-control" [(ngModel)]="billToAddress" placeholder="">
+                  
+                                      </td>
+                                  </tr>
+                                    
+              
+                                    <tr>
+                                      <td></td>
+                                      <div *ngIf="showCreateCustButton; then CustBYes; else CustBNo"></div>
+                                      <ng-template #CustBYes>
+                                      <td>
+                                          <button type="button"  class="btn btn-primary" 
+                                           style="width: 10rem;color: black;"
+                                          (click)="CreateNewCustomer()"> Create&nbsp;Billing Customer</button>
+                                      </ng-template>
+                                      <ng-template #CustBNo></ng-template>
+                                    </tr>
+                                    </fieldset>
+                              </td>
+                              </tr>
+                            </table>
+                          <!-- </tr> -->
+                </div>
+
+                   <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-info" (click)="resetModalMast()">Reset</button> -->
+                  </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- ------------------------------------Modal form  End- Customer Details--------------------------------- -->
+
 
 
             <br>
