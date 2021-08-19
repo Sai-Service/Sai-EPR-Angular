@@ -76,6 +76,7 @@ interface IjobCard {
   insTaxableAmt: number;
   insTotTaxAmt: number;
   insTotAmt: number;
+  emplId:number;
 }
 
 @Component({
@@ -91,7 +92,7 @@ export class JobCardComponent implements OnInit {
   regNo: string;
   labTotTaxAmt: number;
   matTaxableAmt: number;
-  // billableTyId:number;
+  billableTyId:number;
   matTotTaxAmt: number;
   matTotAmt: number;
   labTaxableAmt: number;
@@ -112,7 +113,6 @@ export class JobCardComponent implements OnInit {
   jobCardNum: string;
   divisionName: string;
   divisionId: number;
-  jobCardDate = new Date();
   lstcomments: any;
   RegNoList: any;
   RegNoList1: any[];
@@ -202,6 +202,7 @@ export class JobCardComponent implements OnInit {
   insTotAmt: number;
 
   trxLineId: number;
+  emplId:number;
 
   dispReadyInvoice = false;
   dispButtonStatus = false;
@@ -209,11 +210,13 @@ export class JobCardComponent implements OnInit {
 
   // public minDatetime = new Date();
   promiseDate = new Date();
+  minDate=new Date();
   pipe = new DatePipe('en-US');
-  // now = Date.now();
+  now = Date.now();
+  jobCardDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
   //public minDatetime=this.pipe.transform(this.promiseDate, 'yyyy-MM-ddThh:mm')
 
-  public minDatetime = moment(new Date()).format('YYYY-MM-DDThh:mm')
+  public minDatetime = moment(new Date()).format('YYYY-MM-DDTHH:mm')
 
   @ViewChild("myinput") myInputField: ElementRef;
   arInvNum: string;
@@ -346,6 +349,7 @@ export class JobCardComponent implements OnInit {
       balanceAmt: [],
       advAmt: [],
       labDiscountPer: [],
+      emplId:[],
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
@@ -477,6 +481,8 @@ export class JobCardComponent implements OnInit {
     this.divisionName = sessionStorage.getItem('divisionName');
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.jobStatus = 'Opened';
+    this.emplId=Number(sessionStorage.getItem('emplId'));
+    alert(this.emplId);
     // this.jobCardDate=Date.now();
     this.service.taxCategoryListForSALES()
       .subscribe(
@@ -764,9 +770,11 @@ export class JobCardComponent implements OnInit {
       this.serviceService.billableTyIdLstFN(event, regno)
         .subscribe(
           data1 => {
+           
             this.billableTyIdList = data1;
             console.log(data1);
             console.log(this.billableTyIdList);
+            alert("-----"+jcStatus);
             if (jcStatus === 'New') {
               let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
               this.lineDetailsGroup();
@@ -896,9 +904,8 @@ export class JobCardComponent implements OnInit {
           this.lstcomments = data;
           console.log(this.lstcomments);
           this.jobStatus = data.jobStatus;
-          alert(this.jobStatus)
-          // alert(this.lstcomments.jobCardNum);
-
+         
+        
           if (this.lstcomments.lineCnt > 0) {
             this.dispReadyInvoice = true;
           }
@@ -924,39 +931,32 @@ export class JobCardComponent implements OnInit {
             this.displaybilling = false;
             this.dispButtonStatus = true;
           }
+
+          this.jobcardForm.patchValue({regNo : data.regNo});
           var len = this.lineDistributionArray().length;
-          // alert('len ' + len)
-          // alert('anita' + data.jobCardMatLines.length)
+         
           for (let i = 0; i < data.jobCardMatLines.length - len; i++) {
             var payInvGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(payInvGrp);
           }
-          // this.jobcardForm.get('jobCardMatLines').patchValue(data.jobCardMatLines);
+         
           var len1 = this.lineDetailsArray.length;
-          // alert('len1 ' + len1)
+         
           for (let i = 0; i < data.jobCardLabLines.length - len1; i++) {
             var payInvGrp: FormGroup = this.lineDetailsGroup();
             this.lineDetailsArray.push(payInvGrp);
           }
-          // var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-          // (patch.controls[0]).patchValue(
-          //   {
-          //     lineId: 1,
-          //   }
-          // );
-          // this.jobcardForm.get('jobCardLabLines').patchValue(data.jobCardLabLines);
           this.jobcardForm.patchValue(this.lstcomments);
-          this.onOptionBillableSelected(this.jobcardForm.get('jcType').value, 'Search');
+  
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-          // let selectbillTy=this.billableTyIdList.find(d=> d.billableTyId=== this.billableTyId)
-          alert(this.billableTyIdList.length);
-          for (let i = 0; i < data.jobCardLabLines.length; i++) {
-            alert(data.jobCardLabLines[i].billableTyId + 'Labor' + i);
-            let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === data.jobCardLabLines[i].billableTyId);
-            patch.controls[i].patchValue({ billableTyId: selectbilTy.billableTyName });
+          alert('jobCardLabLines length---'+data.jobCardLabLines.length) 
+          // for (let ln=0; ln < data.jobCardLabLines.length; ln++) {
+          //   alert('inside loop'+ln) 
+          //   let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === data.jobCardLabLines[ln].billableTyId);
+          //   patch.controls[ln].patchValue({ billableTyId: selectbilTy.billableTyName });
 
 
-          }
+          // }
 
           this.jobcardForm.patchValue({
             // labTaxableAmt: this.lstcomments.labTaxableAmt,
@@ -1443,5 +1443,20 @@ export class JobCardComponent implements OnInit {
       this.jobcardForm.patchValue({ lastRunKms: this.RegNoList.lastRunKms });
     }
   }
+  cancelJobNo(){
+    var jobcardNo = this.jobcardForm.get('jobCardNum').value;
+    this.serviceService.jobCardStatusCancel(jobcardNo).subscribe((res: any) => {
+      if (res.code === 200) {
+         alert(res.message);
+         this.jobcardForm.patchValue({jobStatus:res.obj.status});
+         this.displaylabMatTab = true;
+   }
+   else {
+    if (res.code === 400) {
+      alert(res.message);
+    }
+  }
 
+});
+}
 }

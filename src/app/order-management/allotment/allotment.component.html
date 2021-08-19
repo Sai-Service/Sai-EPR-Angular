@@ -16,13 +16,13 @@
             <table class="center">
                 <tr>
                     <td  style="font-weight: bold;width: 100%;text-align: center;">
-                        &nbsp;OU&nbsp;Name&nbsp;:&nbsp; {{ouName}}
+                        &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp; {{ouName}}
                     </td>
                 </tr>
             </table>
-        <table style="background-color: #FFE4B5;">
+        <table style="background-color: #FFE4B5;" align="center">
             <tr>
-                <td style="font-weight: bold;">
+                <td>
                     &nbsp;Order&nbsp;Number&nbsp;:&nbsp;  
                 </td>
                 <td>
@@ -35,30 +35,33 @@
            
         </table>
     </div>
-        <div class="center" style="width: 100%;">
+        <div class="center" style="width: 100%;padding-top: 10px;">
             <div class="form-bg">
                 <div class="grid_scroll">
-                    <table  class="GridFont" cellspacing="0" cellpadding="4">
+                    <a style="cursor: pointer" (click)="exportexcel()">
+                        cloud_download
+                      </a>
+                    <table  class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
                         <thead>
                             <tr class="GridHeader">
                                 <th scope="col" style="border: 1px solid black;">Allocate</th>
                                 <th scope="col" style="border: 1px solid black;">Order Number</th>
                                 <th scope="col" style="border: 1px solid black;">Ordered Date</th>
-                                <th scope="col" style="border: 1px solid black;">Model</th>
                                 <th scope="col" style="border: 1px solid black;">Order Type</th>
+                                <th scope="col" style="border: 1px solid black;">Model</th>
                                 <th scope="col" style="border: 1px solid black;">Variant</th>
                                 <th scope="col" style="border: 1px solid black;">Color</th>
                                 <th scope="col" style="border: 1px solid black;">Paid Amount</th>
-                                <th scope="col" style="border: 1px solid black;">Order Type</th>
+                                <th scope="col" style="border: 1px solid black;">Aging</th>
+                                <th scope="col" style="border: 1px solid black;">Available Qty</th>
                                 <th scope="col" style="border: 1px solid black;">Taxi Flag</th>
                                 <th scope="col" style="border: 1px solid black;">Exchange Flag</th>
-                                <th scope="col" style="border: 1px solid black;">aging</th>
-                                <th scope="col" style="border: 1px solid black;">Available Quantity</th>
                                 <th scope="col" style="border: 1px solid black;">Select</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let com of allotmentsearchlist" class="ItemStyle" style="text-decoration:none;">
+                            <tr *ngFor="let com of allotmentsearchlist let i= index"
+                            class="ItemStyle" style="text-decoration:none;">
                                 <!-- [formControl]="selectOrderNumber"    [(ngModel)]='selectOrderNumber' -->
                                 <td style="border: 1px solid black;">
                                     <input  type="checkbox" formControlName="selectOrderNumber"
@@ -66,17 +69,16 @@
                                 </td>
                                 <td style="border: 1px solid black;">{{com.orderNumber}}</td>
                                <td style="border: 1px solid black;">{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
-                               <td style="border: 1px solid black;">{{com.model}}</td>
                                <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
+                               <td style="border: 1px solid black;">{{com.model}}</td>
                                <td style="border: 1px solid black;">{{com.variant}}</td>
                                <td style="border: 1px solid black;">{{com.color}}</td>
                                <td style="text-align: right;border: 1px solid black;padding-right: 10px;">{{com.paidAmount}}</td>
-                               <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
-                               <td style="border: 1px solid black;">{{com.taxiYN}}</td>
-                               <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
                                <td style="border: 1px solid black;">{{com.aging}}</td>
                                <td style="border: 1px solid black;">{{com.qtyAvail}}</td>
-                               <div *ngIf="displayChassisForm; then thenChassisForm; else elseChassisForm"> </div>
+                               <td style="border: 1px solid black;">{{com.taxiYN}}</td>
+                               <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
+                               <div *ngIf="displayChassisForm[i]; then thenChassisForm; else elseChassisForm"> </div>
                                <ng-template #thenChassisForm>
                                <td style="border: 1px solid black;">
                                 <button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
@@ -84,8 +86,8 @@
                                     <div class="modal-dialog modal-xl" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header modal-xl">
-                                            <label style="width: 100%;text-align: center;font-size: 14px;">
-                                                &nbsp;Select&nbsp;Vehicle&nbsp;
+                                            <label style="width: 100%;text-align: center;font-size: 14px;font-weight: bold;">
+                                                &nbsp;Vehicle&nbsp;Items&nbsp;List&nbsp;
                                             </label>
                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -116,7 +118,7 @@
                                                         </td>
                                                         <td style="border: 1px solid black;">{{com.segment}}</td>
                                                         <td style="border: 1px solid black;">{{com.description}}</td>
-                                                        <td style="border: 1px solid black;">{{com.dateOfPurchase}}</td>
+                                                        <td style="border: 1px solid black;">{{com.dateOfPurchase  | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                                                         <td style="border: 1px solid black;">{{com.dealerCode}}</td>
                                                         <td style="border: 1px solid black;">{{com.rips}}</td>
                                                         <td style="border: 1px solid black;">{{com.interiors}}</td>
@@ -140,7 +142,6 @@
                                </ng-template>
                                <ng-template #elseChassisForm>
                             <td style="border: 1px solid black;">  
-                              disable
                             </td>
                                </ng-template>
                             </tr>

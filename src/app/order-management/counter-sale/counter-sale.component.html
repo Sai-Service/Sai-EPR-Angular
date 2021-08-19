@@ -713,8 +713,15 @@
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
                                     <td>
+                                        <div *ngIf="displaydisAmt; then thendisAmt; else elsedisAmt"> </div>
+                                        <ng-template #thendisAmt>
+                                            <input disabled type="number" formControlName="disAmt"   class="form-control" 
+                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                        </ng-template>
+                                        <ng-template #elsedisAmt>
                                         <input  type="number" formControlName="disAmt"   class="form-control" 
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                        </ng-template>
                                     </td>
                                     <td>
                                         <!-- (ngModelChange)='onOptionTaxCatSelected($event,i)' -->
@@ -777,6 +784,17 @@
                                             <input disabled type="number" formControlName="unitSellingPrice" class="form-control"
                                                 style="height: 20px;width: 90px;" (change)="onKey(i)">
                                         </td>
+                                        <!-- <td>
+                                            <div *ngIf="displaydisAmt; then thendisAmt; else elsedisAmt"> </div>
+                                            <ng-template #thendisAmt>
+                                                <input disabled type="number" formControlName="disAmt"   class="form-control" 
+                                                (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                            </ng-template>
+                                            <ng-template #elsedisAmt>
+                                            <input  type="number" formControlName="disAmt"   class="form-control" 
+                                                (change)="onKey(i)" style="height: 20px;width: 70px;">
+                                            </ng-template>
+                                        </td> -->
                                         <td>
                                             
                                             <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">

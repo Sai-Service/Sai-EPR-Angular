@@ -151,10 +151,7 @@ export class McpItemMappingComponent implements OnInit {
           return <FormArray>this.mcpItemMappingForm.get('mcpRelatedItemList')
         }
 
-      
-
-       
-
+    
           ngOnInit(): void 
           {
             this.name=  sessionStorage.getItem('name');
@@ -236,7 +233,7 @@ export class McpItemMappingComponent implements OnInit {
 
           onOptionsSelectedModel(mainModel){
               // alert(mainModel)
-            
+            if(this.displayButton) {
             if(mainModel !=null){
             this.orderManagementService.VariantSearchFn(mainModel)
             .subscribe(
@@ -251,11 +248,14 @@ export class McpItemMappingComponent implements OnInit {
               }
             );
             }else{}
-
+          }
           }
 
           onOptionsSelectedVariant(modelVariant){
             // alert(modelVariant);
+            alert("this.displayButton >> "+this.displayButton);
+            if(this.displayButton) {
+            
             this.serviceModel=null;this.fuelType=null;
             this.service.variantDetailsList(modelVariant)
             .subscribe(
@@ -271,17 +271,10 @@ export class McpItemMappingComponent implements OnInit {
                 });
               }
                );
-  
+            }
             }
 
            // ===============================================================================
-
- 
-
- 
-  
-  
- 
 
 
   onOptionMcpItemIdSelectedSingle(itemNum:any) {
@@ -365,36 +358,38 @@ export class McpItemMappingComponent implements OnInit {
           this.lstMcpItem = data;
           //  console.log(this.lstMcpItem);
            this.mcpItemMappingForm.patchValue(this.lstMcpItem);
+          //  this.fuelType=this.lstMcpItem.fuelType;
       
              // ----------------------------LINE DETAILS----------------------------------------
              for(let i=0; i<this.lineDetailsArray().length; i++){ 
               this.lineDetailsArray().removeAt(i); }
               this.lineDetailsArray().clear();
           
-            // alert("this.lstMcpItem.mcpRelatedItemList.length >>"+this.lstMcpItem.mcpRelatedItemList.length);
+            alert("this.lstMcpItem.mcpRelatedItemList.length >>"+this.lstMcpItem.mcpRelatedItemList.length);
              var control = this.mcpItemMappingForm.get('mcpRelatedItemList') as FormArray;
              for (let i=0; i<this.lstMcpItem.mcpRelatedItemList.length;i++) 
               {
                 var mcpRelatedItemList:FormGroup=this.lineDetailsGroup();
                 control.push(mcpRelatedItemList);
 
-                // alert(this.lstMcpItem.mcpRelatedItemList[i].relatedItem);
-                var item=this.lstMcpItem.mcpRelatedItemList[i].relatedItem;
-                let selectedValue = this.invItemList.find(v => v.segment == item);
-                // if( selectedValue != undefined){
+              //   var item=this.lstMcpItem.mcpRelatedItemList[i].relatedItem;
+              //   let selectedValue = this.invItemList.find(v => v.segment == item);
+              //  (control.controls[i]).patchValue(
+              //     {
+              //       uom: selectedValue.uom,
+              //       itemDescription: selectedValue.description,
+              //       itemCategory: selectedValue.categoryId.attribute1,
+              //       itemName:selectedValue.segment,
+              //     }
+              //   ); 
 
-                (control.controls[i]).patchValue(
-                  {
-                    uom: selectedValue.uom,
-                    itemDescription: selectedValue.description,
-                    itemCategory: selectedValue.categoryId.attribute1,
-                    // relatedItemId: selectedValue.itemId,
-                    itemName:selectedValue.segment,
-                  }
-                ); }
 
-              this.mcpItemMappingForm.get('mcpRelatedItemList').patchValue(this.lstMcpItem.mcpRelatedItemList);
-              // this.mcpItemMappingForm.patchValue(this.lstMcpItem);
+            }
+            this.mcpItemMappingForm.get('mcpRelatedItemList').patchValue(this.lstMcpItem.mcpRelatedItemList);
+              
+            
+              
+        
             // ----------------------------------------------------------------------------
      
         });

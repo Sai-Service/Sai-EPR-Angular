@@ -520,6 +520,16 @@ mainModelList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 }
 
+mcpReasonLst(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/McpCancelRsn');
+}
+
+mcpRemarkLst(): Observable<any> {
+  return this.http.get(this.ServerUrl +'/cmnLookup/type/McpCancRemark');
+}
+
+
+
 VariantSearchFn(mainModel): Observable<any> {
   // alert("MS>> "+mainModel);
   if(mainModel !=null) {
@@ -1786,7 +1796,7 @@ PriceListIdList(): Observable<any> {
 
     getPriceListSearch(ouId,deptId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouID=${ouId}&deptID=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&deptId=${deptId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {
@@ -1881,14 +1891,14 @@ OrderCategoryList(): Observable<any> {
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
      
-    if(rcptDate !=undefined || rcptDate!=null){
+    if(rcptDate !=undefined || rcptDate !=null){
         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`) 
       } 
-      if( rcptNumber !=undefined || rcptNumber!=null) {
+      if( rcptNumber !=undefined || rcptNumber !=null) {
       return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
       }
 
-      if(custActNo !=undefined || custActNo!=null){
+      if(custActNo !=undefined || custActNo !=null){
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
     }
       
@@ -2033,7 +2043,7 @@ OrderCategoryList(): Observable<any> {
     }
 
     variantDetailsList(mVariant): Observable<any> {
-      // alert(mVariant );
+      alert(mVariant );
       return this.http.get(this.ServerUrl + `/VariantMst/VariantDesc/${mVariant}`);
     }
 
@@ -2295,6 +2305,15 @@ mcpRegSearch(mRegNo): Observable<any> {
    return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
  } 
 
+ McpCancelUpdate(mEnrollNo,mRsnId,mRefAmt,McpCancelrRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/McpEnrollMst/mcpCancByEnroll?enrollmentNo=${mEnrollNo}&cancRsnId=${mRsnId}&refundAmt=${mRefAmt}`);
+  return this.http.put(url, McpCancelrRecord, options);
+
+  // http://localhost:8081/McpEnrollMst/mcpCancByEnroll?enrollmentNo=ENR201-2&cancRsnId=461&refundAmt=6500
+}
 
 //////////////////////VARIANT MASTER////////////////////////////
 public VariantMasterSubmit(VariantMasterRecord) {
