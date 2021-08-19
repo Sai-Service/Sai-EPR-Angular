@@ -28,46 +28,65 @@
             </tr>        
         </table>
 </div>
-    <div class="center" style="width: 100%;">
+    <div class="center" style="width: 100%;padding-top: 7px;">
         <div class="form-bg">
             <div class="grid_scroll">
-                 <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; "> 
+                 <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%;"> 
                     <thead>
                         <tr class="GridHeader"> 
-                            <th scope="col">Select</th>
-                            <th scope="col">Order Number</th>
-                            <th scope="col">Item Allocated</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Alloted Date</th>
-                           
-                            <th scope="col">RIPS</th>
-                            <th scope="col">Two Tone</th>
-                            <th scope="col">Interiors</th>
-                            <th scope="col">Accessories Fitted</th>
-                            <th scope="col">Hold</th>
-                            <th scope="col">Hold Reason</th>
-                            <th scope="col">Date of Purchase</th>
-                            <th scope="col">Aging</th>
+                            <th scope="col" style="border: 1px solid black;">Select</th>
+                            <th scope="col" style="border: 1px solid black;">De-Allotment Reason</th>
+                            <th scope="col" style="border: 1px solid black;">Order Number</th>
+                            <th scope="col" style="border: 1px solid black;">Item Allocated</th>
+                            <th scope="col" style="border: 1px solid black;">Color Code</th>
+                            <th scope="col" style="border: 1px solid black;">Description</th>
+                            <th scope="col" style="border: 1px solid black;">Alloted Date</th>
+                            <th scope="col" style="border: 1px solid black;">RIPS</th>
+                            <th scope="col" style="border: 1px solid black;">Two Tone</th>
+                            <th scope="col" style="border: 1px solid black;">Interiors</th>
+                            <th scope="col" style="border: 1px solid black;">Accessories Fitted</th>
+                            <th scope="col" style="border: 1px solid black;">Hold</th>
+                            <th scope="col" style="border: 1px solid black;">Hold Reason</th>
+                            <th scope="col" style="border: 1px solid black;">Exchange</th>
+                            <th scope="col" style="border: 1px solid black;">Date of Purchase</th>
+                            <th scope="col" style="border: 1px solid black;">Aging</th>
+                            <th scope="col" style="border: 1px solid black;">Order Aging</th>
                         </tr>
                     </thead>
                         <tbody>
                         <tr *ngFor="let com of Deallotmentsearchlist" class="ItemStyle" style="text-decoration:none;text-align: center;">
-                            <td>
+                            <td style="border: 1px solid black;">
                                 <input  type="checkbox" formControlName="selectOrderNumber"
                                 (change)="selectOrderNumberEvent($event,com.orderNumber,com.orderedItem)">
                             </td>
-                            <td>{{com.orderNumber}}</td>
-                            <td>{{com.orderedItem}}</td>
-                            <td>{{com.description}}</td>
-                            <td>{{com.lineCreationDt | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
-                            <td>{{com.rips}}</td>
-                            <td>{{com.twoTone}}</td>
-                            <td>{{com.interiors}}</td>
-                            <td></td>
-                            <td>{{com.hold}}</td>
-                            <td>{{com.holdReason}}</td>
-                            <td>{{com.creationDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
-                            <td>{{com.aging}}</td>
+                            <td style="border: 1px solid black;">
+                                <!-- <select formControlName="cancelReason" id="cancelReason" class="form-control" style="width: 120px;height: 22px;">
+                                    <option>--Select--</option>
+                                    <option value="PaymentRefund">Payment Refund</option>
+                                    <option value="Booking Cancelled">Booking Cancelled</option>
+                                    </select> -->
+                                    <select formControlName="deallotReason" id="deallotReason" [(ngModel)]="deallotReason" class="form-control"  style="width: 120px;height: 22px;">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let deallotmentReason of deallotmentReasonTypelist">
+                                        {{deallotmentReason.codeDesc}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td style="border: 1px solid black;">{{com.orderNumber}}</td>
+                            <td style="border: 1px solid black;">{{com.orderedItem}}</td>
+                            <td style="border: 1px solid black;">{{com.colorCode}}</td>
+                            <td style="border: 1px solid black;">{{com.description}}</td>
+                            <td style="border: 1px solid black;width: 8rem;">{{com.lineCreationDt | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                            <td style="border: 1px solid black;">{{com.rips}}</td>
+                            <td style="border: 1px solid black;">{{com.twoTone}}</td>
+                            <td style="border: 1px solid black;">{{com.interiors}}</td>
+                            <td style="border: 1px solid black;"></td>
+                            <td style="border: 1px solid black;">{{com.hold}}</td>
+                            <td style="border: 1px solid black;">{{com.holdReason}}</td>
+                            <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
+                            <td style="border: 1px solid black;width: 8rem;">{{com.creationDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                            <td style="border: 1px solid black;">{{com.aging}}</td>
+                            <td style="border: 1px solid black;">{{com.orderAging}}</td>
                         </tr>
                     </tbody>
                 </table>  
@@ -91,7 +110,7 @@
             <table class="center">
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate()">Deallocate</button>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="Deallocate(deallotReason)">Deallocate</button>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>

@@ -136,7 +136,9 @@ assNumber:number;
   faDistributionId:number;
   transactionUnits:number;
   tranDate:Date;
-  
+  basicRate:number;
+  adjustedRate:number;
+
   public CostCenterList:Array<string>=[];
   public NaturalAccountList:Array<string>=[];
   public emplList:Array<string>=[];
@@ -207,6 +209,8 @@ constructor(private fb: FormBuilder, private router: Router, private fixedAssets
       segment5:[''],
       depreciateFlag:[],
       lifeInMonth:[],
+      basicRate:[],
+      adjustedRate:[],
       faDisHisLst:this.fb.array([]),
   })
 }
