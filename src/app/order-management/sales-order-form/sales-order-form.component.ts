@@ -945,8 +945,9 @@ export class SalesOrderFormComponent implements OnInit {
               }
             }
 
-            }}
-    )
+          }
+        }
+      )
 
     this.SalesOrderBookingForm.get('accountNo').disable();
     this.displayorderDetails = false;
@@ -1032,24 +1033,16 @@ export class SalesOrderFormComponent implements OnInit {
   orderLineUpdate() {
     // const formValue: ISalesBookingForm = (this.SalesOrderBookingForm.value);
     var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
-    // var taxAmounts = this.SalesOrderBookingForm.get('taxAmounts').value;
-    // formValue.taxAmounts=this.taxMap.values();
-    debugger;
     let jsonData = this.SalesOrderBookingForm.value;
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
-    var taxArr = this.taxMap.values();
-
     var taxStr = [];
-    for (let taxlinval of this.taxMap.values()) {  
-     // console.log("Map Values= " +JSON.stringify(value));  
-    for(let i=0 ; i< taxlinval.length; i++){
+    for (let taxlinval of this.taxMap.values()) {
+      for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
-       }
-     }
+      }
+    }
     salesObj.settaxAmounts(taxStr);
-    console.log(JSON.stringify(salesObj));
-
     this.orderManagementService.UpdateSalesUpdateLine(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
