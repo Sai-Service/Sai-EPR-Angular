@@ -261,7 +261,7 @@
                         <td>
                             <input disabled type="text" formControlName="city" value={{city}} [ngModel]="city" class="form-control">
                         <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                            <div *ngIf="f.city.errors.required">State is required</div>
+                            <div *ngIf="f.city.errors.required">City cannot be blank</div>
                             <!-- <span
                                 *ngIf="!operatingUnitMasterForm.get('city').valid && operatingUnitMasterForm.get('city').touched">Please
                                 Enter State </span> -->
@@ -275,7 +275,7 @@
                         <td>
                             <input disabled type="text" formControlName="mState" value={{mState}} [ngModel]="mState" class="form-control">
                         <div *ngIf="submitted && f.mState.errors" class="invalid-feedback">
-                            <div *ngIf="f.mState.errors.required">State is required</div>
+                            <div *ngIf="f.mState.errors.required">State cannot be blank</div>
                             <!-- <span
                                 *ngIf="!operatingUnitMasterForm.get('mState').valid && operatingUnitMasterForm.get('mState').touched">Please
                                 Enter State </span> -->
@@ -293,6 +293,7 @@
                         <td>
                             <input disabled type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                            
                         <!-- <span
                             *ngIf="!operatingUnitMasterForm.get('startDate').valid && operatingUnitMasterForm.get('startDate').touched">Please
                             Enter start Date </span> -->
