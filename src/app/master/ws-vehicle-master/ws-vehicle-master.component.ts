@@ -724,7 +724,7 @@ export class WsVehicleMasterComponent implements OnInit {
           }
 
           GetCustomerSiteDetails(mCustId :any){
-            // alert("Customer Id: "+mCustId);
+            alert("Customer Id: "+mCustId);
           this.service.GetCustomerSiteDetails(mCustId,this.ouId)
           .subscribe(
             data1 => {

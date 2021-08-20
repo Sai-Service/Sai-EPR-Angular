@@ -319,6 +319,12 @@
                                     <td>
                                         <input disabled  type="date"  formControlName="pkgEndDate"  id="pkgEndDate" [(ngModel)]="pkgEndDate" class="form-control" >
                                     </td>
+
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">Package&nbsp;Amt:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="packageAmt"  id="packageAmt" [(ngModel)]="packageAmt" class="form-control"  >
+                                    </td>
+
                                    
                                     
                                 </tr>
@@ -336,60 +342,64 @@
                                         <input disabled  style="text-align: right;"  type="number"  formControlName="totLabAmt"  id="totLabAmt" [(ngModel)]="totLabAmt" class="form-control" >
                                     </td>
 
-                                    <td style="width: 15%" class="LabelFontStyle">Disc&nbsp;Amt:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Amt:&nbsp;</td>
                                     <td>
-                                        <input disabled  style="text-align: right;"  type="number"  formControlName="discTotal"  id="discTotal" [(ngModel)]="discTotal" class="form-control" >
+                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatAmt"  id="totMatAmt" [(ngModel)]="totMatAmt" class="form-control" >
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Availed:&nbsp;</td>
                                     <td>
-                                        <input disabled  style="text-align: right;"  type="number"  formControlName="labAmt"  id="labAmt" [(ngModel)]="labAmt" class="form-control" >
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabUtilised"  id="totLabUtilised" [(ngModel)]="totLabUtilised" class="form-control" >
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Balance:&nbsp;</td>
                                     <td>
-                                        <input disabled  style="text-align: right;"  type="number"  formControlName="labAmt"  id="labAmt" [(ngModel)]="labAmt" class="form-control" >
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabBalanced"  id="totLabBalanced" [(ngModel)]="totLabBalanced" class="form-control" >
                                     </td>
                                 </tr>
 
                                 <tr>
                                    
+                                    <td style="width: 15%" class="LabelFontStyle">Lab&nbsp;Disc:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabDisc"  id="totLabDisc" [(ngModel)]="totLabDisc" class="form-control" >
+                                    </td>
 
-                                    
-                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Amt:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Disc:&nbsp;</td>
                                     <td>
-                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatAmt"  id="totMatAmt" [(ngModel)]="totMatAmt" class="form-control" >
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totMatDisc"  id="totMatDisc" [(ngModel)]="totMatDisc" class="form-control" >
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Amt:&nbsp;</td>
-                                    <td>
-                                        <input disabled  style="text-align: right;"  type="number"  formControlName="taxTotal"  id="taxTotal" [(ngModel)]="taxTotal" class="form-control" >
-                                    </td>
+                                  
                                     <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Availed:&nbsp;</td>
                                     <td>
-                                        <input disabled style="text-align: right;"  type="number"  formControlName="matAmt"  id="matAmt" [(ngModel)]="matAmt" class="form-control" >
+                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatUtilised"  id="totMatUtilised" [(ngModel)]="totMatUtilised" class="form-control" >
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Balance:&nbsp;</td>
                                     <td>
-                                        <input disabled style="text-align: right;"  type="number"  formControlName="matAmt"  id="matAmt" [(ngModel)]="matAmt" class="form-control" >
+                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatBalanced"  id="totMatBalanced" [(ngModel)]="totMatBalanced" class="form-control" >
                                     </td>
                               
                                 </tr>
                                 <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Lab&nbsp;Tax:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabGst"  id="totLabGst" [(ngModel)]="totLabGst" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Tax:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totMatGst"  id="totMatGst" [(ngModel)]="totMatGst" class="form-control" >
+                                    </td>
                                     
-                                    <td style="width: 15%" class="LabelFontStyle">Cons.&nbsp;Amt:&nbsp;</td>
+                                    
+                                    <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Availed:&nbsp;</td>
                                     <td>
-                                        <input disabled style="text-align: right;"  type="number"  formControlName="consAmt"  id="consAmt" [(ngModel)]="consAmt" class="form-control" >
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totAvailed"  id="totAvailed" [(ngModel)]="totAvailed" class="form-control" >
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Net&nbsp;Amt:&nbsp;</td>
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Balance:&nbsp;</td>
                                     <td>
-                                        <input disabled  style="text-align: right;"  type="number"  formControlName="packageAmt"  id="packageAmt" [(ngModel)]="packageAmt" class="form-control" >
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Cons.&nbsp;Availed:&nbsp;</td>
-                                    <td>
-                                        <input disabled style="text-align: right;"  type="number"  formControlName="consAmt"  id="consAmt" [(ngModel)]="consAmt" class="form-control" >
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Cons.&nbsp;Balance:&nbsp;</td>
-                                    <td>
-                                        <input disabled style="text-align: right;"  type="number"  formControlName="consAmt"  id="consAmt" [(ngModel)]="consAmt" class="form-control" >
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totBalance"  id="totBalance" [(ngModel)]="totBalance" class="form-control" >
                                     </td>
 
                                 </tr>
@@ -403,45 +413,21 @@
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP CANCELLATION DETAILS</legend>
                         <table class="center">
                                
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Charges:&nbsp;</td>
-                              
-                                <td>
-                                    <input disabled   type="text"  formControlName="mcpCancelCharges"  id="mcpCancelCharges" [(ngModel)]="mcpCancelCharges" class="form-control"  placeholder="LOV">
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle">Value&nbsp;:&nbsp;</td>
-                                <td>
-                                    <input  style="text-align: right;"  type="number"  formControlName="mcpCancelValue"  id="mcpCancelValue" [(ngModel)]="mcpCancelValue" class="form-control"  (change)= "CalcNetRefund(mcpCancelValue)" placeholder="mcpCancelValue">
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
-                                <td>
-                                    <input disabled   type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  placeholder="mcpCancelDate">
-                                </td>
-
-                                <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">Net&nbsp;Payable:&nbsp;</td>
-                                <td>
-                                    <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="netRefAmt"  id="netRefAmt" [(ngModel)]="netRefAmt" class="form-control"  placeholder="netRefAmt">
-                                </td>
-                            </tr>
+                           
 
                             <tr>
                                     <td style="width: 15%;font-weight: bold" class="LabelFontStyle">REFUND&nbsp;AMT&nbsp;Part:&nbsp;</td>
 
                                     <td>
-                                        <input disabled  style="text-align: right;" type="text"  formControlName="refPartAmt"  id="refPartAmt" [(ngModel)]="refPartAmt" class="form-control"  placeholder="">
+                                        <input disabled  style="text-align: right;" type="text"  formControlName="totMatBalanced"  id="totMatBalanced" [(ngModel)]="totMatBalanced" class="form-control"  placeholder="">
                                     </td>
     
                                     <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input disabled style="text-align: right;"  type="text"  formControlName="refLbrAmt"  id="refLbrAmt" [(ngModel)]="refLbrAmt" class="form-control"  placeholder="">
+                                        <input disabled style="text-align: right;"  type="text"  formControlName="totLabBalanced"  id="totLabBalanced" [(ngModel)]="totLabBalanced" class="form-control"  placeholder="">
                                     </td>
     
-                                    <td style="width: 15%" class="LabelFontStyle">Consumbles&nbsp;:&nbsp;</td>
-                                    <td>
-                                        <input disabled  style="text-align: right;" type="text"  formControlName="refConsAmt"  id="refConsAmt" [(ngModel)]="refConsAmt" class="form-control"  placeholder="">
-                                    </td>
+                                  
     
                                     <td style="width: 15%" class="LabelFontStyle">Total&nbsp;:&nbsp;</td>
                                     <td>
@@ -453,22 +439,74 @@
                                 <tr>
                                     <td style="width: 15%;font-weight: bold" class="LabelFontStyle">TAX&nbsp;AMT&nbsp;Part:&nbsp;</td>
                                     <td>
-                                        <input disabled  style="text-align: right;" type="text"  formControlName="refPartTaxAmt"  id="refPartTaxAmt" [(ngModel)]="refPartTaxAmt" class="form-control"  placeholder="">
+                                        <input disabled  style="text-align: right;" type="text"  formControlName="totMatBalTax"  id="totMatBalTax" [(ngModel)]="totMatBalTax" class="form-control"  placeholder="">
                                     </td>
     
                                     <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input disabled style="text-align: right;"  type="text"  formControlName="refLbrTaxAmt"  id="refLbrTaxAmt" [(ngModel)]="refLbrTaxAmt" class="form-control"  placeholder="">
+                                        <input disabled style="text-align: right;"  type="text"  formControlName="totLabBalTax"  id="totLabBalTax" [(ngModel)]="totLabBalTax" class="form-control"  placeholder="">
                                     </td>
     
-                                    <td style="width: 15%" class="LabelFontStyle">Consumbles&nbsp;:&nbsp;</td>
-                                    <td>
-                                        <input disabled  style="text-align: right;" type="text"  formControlName="refConsTaxAmt"  id="refConsTaxAmt" [(ngModel)]="refConsTaxAmt" class="form-control"  placeholder="">
-                                    </td>
-    
+                                     
                                     <td style="width: 15%" class="LabelFontStyle">Total&nbsp;:&nbsp;</td>
                                     <td>
                                         <input disabled style="text-align: right;"  type="text"  formControlName="refTotal2"  id="refTotal2" [(ngModel)]="refTotal2" class="form-control"  placeholder="netRefAmt">
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Cancellation&nbsp;Charges:&nbsp;</td>
+                                  
+                                    <td>
+                                        <input disabled   type="text"  formControlName="mcpCancelCharges"  id="mcpCancelCharges" [(ngModel)]="mcpCancelCharges" class="form-control"  placeholder="LOV">
+                                    </td> -->
+    
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Value&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input  style="text-align: right;"  type="number"  formControlName="mcpCancelValue"  id="mcpCancelValue" [(ngModel)]="mcpCancelValue" class="form-control"  (change)= "CalcNetRefund(mcpCancelValue)" placeholder="mcpCancelValue">
+                                    </td> -->
+
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">Reason&nbsp;:&nbsp;</td>
+                                    <!-- <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="text"  formControlName="cancRsnId"  id="cancRsnId" [(ngModel)]="cancRsnId" class="form-control"  >
+                                    </td> -->
+
+                                    <td>  
+                                        <select formControlName="cancRsnId" id="cancRsnId" [(ngModel)]="cancRsnId" class="form-control" >
+                                            <!-- (ngModelChange)="onOptionsSelectedModel($event)">   -->
+                                            <option>--Select--</option>
+                                            <option *ngFor="let rs of mcpReasonList" [ngValue]="rs.cmnId">
+                                                {{rs.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
+                                    <td>
+                                        <input disabled   type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  placeholder="mcpCancelDate">
+                                    </td>
+    
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">Net&nbsp;Payable:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="netRefAmt"  id="netRefAmt" [(ngModel)]="netRefAmt" class="form-control"  >
+                                    </td>
+
+                                   
+
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">Remark&nbsp;:&nbsp;</td>
+                                  
+                                    <td>  
+                                        <select formControlName="cancRemarksId" id="cancRemarksId" [(ngModel)]="cancRemarksId" class="form-control" >
+                                            <!-- (ngModelChange)="onOptionsSelectedModel($event)">   -->
+                                            <option>--Select--</option>
+                                            <option *ngFor="let rs of mcpRemarkList" [ngValue]="rs.cmnId">
+                                                {{rs.cmnDesc}}
+                                            </option>
+                                        </select>
                                     </td>
 
                                 </tr>

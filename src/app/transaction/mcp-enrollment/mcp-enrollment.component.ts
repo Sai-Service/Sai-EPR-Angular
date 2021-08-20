@@ -63,13 +63,15 @@ export class McpEnrollmentComponent implements OnInit {
         lastkeydown1: number = 0;
      
         vehicleAgeDays:number;
-     
+        now = Date.now();
       
         regNo:string;
         vehicleId:string;
         custId:number;
        
         invoiceNo:string;
+        // enrollmentDt:string;
+        
         customerId:number; 
         custName:string;
         dmsCustNo:number;
@@ -107,11 +109,11 @@ export class McpEnrollmentComponent implements OnInit {
         enrollmentNo:string;
         // enqDate:Date;
 
-        now = Date.now();
+        
         enrollDate = this.pipe.transform(Date.now(), 'y-MM-dd');
         // mcpStartDate= this.pipe.transform(this.now, 'dd-MM-y');
         pkgStartDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-        
+        enrollmentDt = this.pipe.transform(Date.now(), 'y-MM-dd');
         // mcpStartDate:Date;
         pkgEndDate:string;
 
@@ -174,8 +176,9 @@ export class McpEnrollmentComponent implements OnInit {
             custId:[],
             pkgSource:[],
             invoiceNo:[],
+            invoiceDate:[],
             enrollmentNo:[],
-            enrollDate:[],
+            enrollmentDt:[],
             enqNo:[],
             enqDate:[],
             packageId:[],
@@ -709,18 +712,20 @@ export class McpEnrollmentComponent implements OnInit {
            
            var mEnrollNo = mEnrollNo.toUpperCase();
            alert("Enrollment No :"+mEnrollNo);
-           // this.mcpEnquiryForm.reset();
-          // this.resetSection1(); this.resetSection3(); this.resetSection3();
-          // this.addFlag=false;
-          this.displayButton=false;
-          console.log(this.mcpEnrollmentForm.value);
+            this.displayButton=false;
+          // console.log(this.mcpEnrollmentForm.value);
+         
           this.service.getsearchByEnrollNo(mEnrollNo)
             .subscribe(
               data => {
                 this.lstMcplines = data;
+                console.log(this.lstMcplines);
+                // alert( "this.lstMcplines >> "+this.lstMcplines);
+                if(this.lstMcplines != null) {
                 this.mcpEnrollmentForm.patchValue(this.lstMcplines);
                 // this.executive=this.lstMcplines.executive;
-                
+                // var z=this.pipe.transform(this.lstMcplines.invoiceDate, 'dd-MM-yy');
+                // this.invoiceDate=z;
                 // ---------------------------Header Details--------------------------------
                     this.GetVehicleRegInfomation(this.lstMcplines.regNo);
                     this.GetVariantDeatils(this.lstMcplines.variantCode);
@@ -753,7 +758,7 @@ export class McpEnrollmentComponent implements OnInit {
                   // this.mcpEnrollmentForm.get('executive').disable();
 
                   // ----------------------------------------------------------------------------
-      
+                  } else {alert("Enrollment No :" +mEnrollNo + " Not Found");}
                  } ); 
 
           }

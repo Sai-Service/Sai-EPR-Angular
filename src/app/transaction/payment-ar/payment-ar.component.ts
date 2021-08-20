@@ -20,6 +20,7 @@ deptId:number;
 custAccountNo:number;
 billToSiteId:number;
 glDate :Date;
+// glDateLine:Date
 receiptNumber:number;
 receiptDate:Date;
 receiptStatus:string;
@@ -80,7 +81,8 @@ export class PaymentArComponent implements OnInit {
 
   checkNo : string;
   // checkDate: Date;
-  checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+ 
+ 
   bankName : string;
   bankBranch : string;
   paymentAmt : number;
@@ -130,9 +132,14 @@ export class PaymentArComponent implements OnInit {
   
   // glDate:Date;
   now = Date.now();
-  receiptDate = this.pipe.transform(this.now, 'dd-MM-y');
-  glDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  trxdate= this.pipe.transform(this.now, 'dd-MM-y');
+  checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  glDate = this.pipe.transform(this.now, 'y-MM-dd');
+  // trxDate= this.pipe.transform(this.now, 'dd-MM-y');
+  trxDate=this.pipe.transform(this.now, 'y-MM-dd');
+  applDate:string;
+  glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
+  // applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   // reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
   reversalDate :string;
   reversalComment: string;
@@ -177,6 +184,7 @@ export class PaymentArComponent implements OnInit {
 
   enableCustAccount=true;
   checkValidation=false;
+  applLineValidation=false;
   displayInactive = true;
   Status1: any;
   inactiveDate: Date;
@@ -189,6 +197,10 @@ export class PaymentArComponent implements OnInit {
   enableCancelButton=true;
   enableApplyButton=true;
   cancelValidation=false;
+
+  showInvoiceGrid=false;
+  showRefundGrid=false;
+  showOnAcGrid=false;
   insuranceFlag : string;
   refType: string;
 
@@ -208,7 +220,9 @@ export class PaymentArComponent implements OnInit {
   // public billToSiteId=107; 
 
   public applyTo='INVOICE'
-  public applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+ 
+  
+  
   // applyTo: string;
       
     get f() { return this.paymentArForm.controls; }
@@ -330,9 +344,11 @@ export class PaymentArComponent implements OnInit {
         balance1: [],
         applAmtNew:[],
         applDate:[],
+        glDateLine:[],
         billToCustId:[],
         billToSiteId:[],
-        invCurrancyCode:[]
+        invCurrancyCode:[],
+        refReasonCode:[],
 
       })
     }
@@ -757,11 +773,26 @@ export class PaymentArComponent implements OnInit {
       }
 
 
+      applyReceiptFlagRefund(e,index) 
+      {
+
+          var patch = this.paymentArForm.get('invLine') as FormArray;
+          var  totUnAppAmt =this.totUnAppliedtAmount;
+
+          if (e.target.checked) 
+          {
+            if(totUnAppAmt<=0)
+            {alert("Unapplied Balance not availabe to make Refund"); e.target.checked=false ;return}
+            else { patch.controls[index].patchValue({applAmtNew:totUnAppAmt}) } 
+          } 
+          else  {  patch.controls[index].patchValue({applAmtNew:''}) }
+        }
+
      
       applyReceiptFlag(e,index) 
       {
-         alert("invoked fn from applyReceiptFlagAll");
-        alert("e  ,index= "+ e +","+index);
+        //  alert("invoked fn from applyReceiptFlagAll");
+        // alert("e  ,index= "+ e +","+index);
           var xyz;
           var tApplAmt; 
           var tUappAmt;
@@ -862,6 +893,26 @@ export class PaymentArComponent implements OnInit {
           this.balanceAmount=  this.totUnAppliedtAmount;
       }
        ////////////////////////////////////////////////
+
+       validateLineRefAmt(index) 
+       {
+        var patch = this.paymentArForm.get('invLine') as FormArray;
+        var invLineArr = this.paymentArForm.get('invLine').value;
+        var lineApplAmt= invLineArr[index].applAmtNew;
+        var  ytotUnAppAmt =this.totUnAppliedtAmount;
+       
+       
+
+        if(lineApplAmt > ytotUnAppAmt || lineApplAmt <=0 ) 
+          { 
+            alert ("Line: "+ (index+1) + "\nUnApplied  Amt :"+ytotUnAppAmt+"\n Refund Amt :"+ lineApplAmt+   "\nLine Refund Amt should be > 0 and <= Total Unapplied Amt");
+            patch.controls[index].patchValue({applAmtNew:''})
+            patch.controls[index].patchValue({applyrcptFlag:''})
+          } 
+
+       }
+
+
       validateLineApplAmt(index)
       {
             var x=0;
@@ -878,13 +929,13 @@ export class PaymentArComponent implements OnInit {
             alert("Apply Flag : "+index+","+ applyReceiptFlag);
 
             if (applyReceiptFlag == true) {
-              alert("true");
+              // alert("true");
 
-            var LineinvAmt = Number(invLineArr[index].invoiceAmount);
-            var LineDueAmt = Number(invLineArr[index].balance1);
-            var patch = this.paymentArForm.get('invLine') as FormArray;
+                var LineinvAmt = Number(invLineArr[index].invoiceAmount);
+                var LineDueAmt = Number(invLineArr[index].balance1);
+                var patch = this.paymentArForm.get('invLine') as FormArray;
 
-            if(lineApplAmt > LineDueAmt || lineApplAmt <=0 ) 
+                if(lineApplAmt > LineDueAmt || lineApplAmt <=0 ) 
               { 
                 alert ("Line: "+ (index+1) + "\nInvoice Amt :"+LineDueAmt+"\nApplied Amt :"+ lineApplAmt+   "\nLine appiled Amt should be > 0 and <= Line balance Amt");
                 patch.controls[index].patchValue({applAmtNew:''})
@@ -908,7 +959,7 @@ export class PaymentArComponent implements OnInit {
                   patch.controls[index].patchValue({balDueAmt:newBal})
                   x=0;
                   patch.controls[index].patchValue({applAmt:LineApplAmount})
-            }
+             }
 
               /////////////////////////////////////////////////////////
               var patch = this.paymentArForm.get('invLine') as FormArray;
@@ -935,24 +986,7 @@ export class PaymentArComponent implements OnInit {
 
           } 
           
-     /////////////////////////////////////////     
-           
-        
-
-      
-
-      // ApplyRcpt(trxNumber:any,  receiptNumber: any) {
-
-      //   if(this.applyrcptFlag==='Y'){
-      //   alert ("Invoice Number,Receipt Number : " +trxNumber   +" ,"+receiptNumber);
-      //    }
-      //    else 
-      //    {
-      //    alert("APPLY flag not selected");
-      //    }
-     
-      // }
-
+    
     
       AppliedDetails(custActNo : any,billToSiteId : any,applyTp : any , rcptNo: any)
       {
@@ -992,11 +1026,15 @@ export class PaymentArComponent implements OnInit {
                     {
                      y=invLineArr[i].balDueAmt;
                      patch.controls[i].patchValue({balance1:y})
+                    //  var z=invLineArr[i].trxDate;
+                     var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
+                     patch.controls[i].patchValue({trxDate:z})
                     }
                     ///////////////////////////////////////////////////////
 
                     this.applyTo=applyTp;
-                    this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+                    // this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
                   }
                   );
       
@@ -1006,7 +1044,7 @@ export class PaymentArComponent implements OnInit {
 
                     this.invLineArray().push(this.invLineDetails());
                     this.applyTo=applyTp;
-                    this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
                   }
                
           }
@@ -1229,14 +1267,45 @@ export class PaymentArComponent implements OnInit {
      
       }
 
+      SaveApply(applType){
+
+       
+        if(applType ==='INVOICE') {
+          alert("Application type :"+applType +" ....wip");
+          this.SaveApplyReceipt() ;
+        }
+        if(applType ==='REFUND') {
+          alert("Application type :"+applType + " ....wip");
+        }
+        if(applType ==='ON ACCOUNT') {
+          alert("Application type :"+applType +" ....wip");
+        }
+
+      }
+
 
       SaveApplyReceipt() 
       {
-        alert ("Posting data  to AR RECEIPT appl......")
+        // alert ("Posting data  to AR RECEIPT appl......")
+       
+
+        this.applLineValidation=false;
+        var applLineArr = this.paymentArForm.get('invLine').value;
+        var len1=applLineArr.length;
+        
+        for (let i = 0; i < len1 ; i++) 
+          {
+            this.CheckLineValidations(i);
+          }
+
+          if(this.applLineValidation===false ) { 
+            alert("Apply Validation Failed... \nPosting not done....")
+            return;
+          }
+      
         const formValue: IPaymentRcptAr =this.paymentArForm.value;
-
         var invLine= this.paymentArForm.get('invLine').value;
-
+      
         console.log();
         // const formValue: IPaymentRcptAr =this.transeData1(this.paymentArForm.value);
         // debugger;
@@ -1388,22 +1457,21 @@ export class PaymentArComponent implements OnInit {
 
 
       OnApplyTypeSelected(applType : any ){
-        // alert('applType =' +applType  );
+    
         this.invLineArray().clear();
-
         this.applyTo=applType;
-
-          // if (applType === 'INVOICE') {   
-          //   // alert("checque seleected")   ;    
-          //   this.applyTo=applType;
+          if (applType === 'INVOICE') {   
+            // alert ("in INVOICE  ...");
+             this.showInvoiceGrid =true;  this.showRefundGrid =false;  this.showOnAcGrid =false; }
+          else if (applType === 'REFUND') {
+            // alert ("in REFUND  ...");
+            this.showInvoiceGrid =false;  this.showRefundGrid =true;  this.showOnAcGrid =false; }
+          else if (applType === 'ON ACCOUNT') {
+            // alert ("in ON ACCOUNT  ...");
+            this.showInvoiceGrid =false;  this.showRefundGrid =false;  this.showOnAcGrid =true; }
            
-          //       }
-              
-          }
-
-
-
-         
+          } 
+       
 
           CheckDataValidations(){
 
@@ -1539,6 +1607,40 @@ export class PaymentArComponent implements OnInit {
             this.paymentArForm.get('searchByDate').reset();
             this.lstcomments=null;
           }
+
+          CheckLineValidations(i) {
+
+            // alert('addrow index '+i);
+          
+            var applLineArr = this.paymentArForm.get('invLine').value;
+            var lineValue1=applLineArr[i].applAmtNew;
+            var lineValue2=applLineArr[i].glDateLine;
+            var chkFlag =applLineArr[i].applyrcptFlag;
+            var j=i+1;
+    
+            // if(lineValue3===undefined || lineValue3===null || lineValue3==='' ){
+            //   alert("Line-"+j+ " ITEM CODE :  Should not be null value/ Select valid item from the list");
+            //   this.checkApplValidation=false;
+            //   return;
+            // } 
+
+           
+          //  alert ("Line-"+j+" Appl Flag >> " +applLineArr[i].applyrcptFlag + " "+chkFlag);
+
+            if(lineValue1===undefined || lineValue1===null || lineValue1<=0){
+              alert("Line-"+j+ " APPL AMT :  Should  be grater than Zero");
+              this.applLineValidation=false;
+              return;
+            } 
+
+            if(chkFlag ===false || chkFlag ===null ||chkFlag ===undefined) {
+              alert("Line-"+j+ " : Line not Selected.Pls Check Mark the Line");
+              this.applLineValidation=false;
+              return;
+            }
+            
+             this.applLineValidation =true;
+            }
           
   
          

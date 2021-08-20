@@ -1227,14 +1227,8 @@ else{
 
   }
   onKey(event: any) {
-    if (this.divisionId==1){
     const aaa ='MV'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
     this.itemMasterForm.patchValue({segment:aaa})
-  }
-  else{
-    const aaa ='BJ'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
-    this.itemMasterForm.patchValue({segment:aaa})
-  }
   }
 
 

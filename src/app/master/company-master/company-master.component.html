@@ -134,8 +134,9 @@
                             </td>
                             <td>
                                 <select formControlName="city" id="city" class="form-control" 
+                                [ngClass]="{ 'is-invalid': submitted && f.city.errors }"
                                 (change)='onOptionsSelectedCity($event)'>
-                                <option>--Select--</option>
+                                <!-- <option>--Select--</option> -->
                                 <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
                                     {{sc.codeDesc}}
                                 </option>
@@ -218,6 +219,7 @@
                             </td>
                             <td>
                                 <input type="date" formControlName="startDate" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }"
                                 placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
                                 <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
                                     <div *ngIf="f.startDate.errors.required">Start date cannot be blank </div>

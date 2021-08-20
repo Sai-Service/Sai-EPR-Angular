@@ -196,20 +196,23 @@ export class McpItemMasterComponent implements OnInit {
             // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
             const formValue: IMcpitemMaster =this.transeData(this.mcpItemMasterForm.value);
             // debugger;
-            var mcpItmId = formValue.itemNumber;
-            alert(mcpItmId);
-            alert(mcpItmId.length);
-            alert(mcpItmId.substr(3, mcpItmId.length));
-            formValue.itemId = Number (mcpItmId.substr(3,mcpItmId.length)); 
+            // var mcpItmId = formValue.itemNumber;
+            // alert(mcpItmId);
+            // alert(mcpItmId.length);
+            // alert(mcpItmId.substr(3, mcpItmId.length));
+            // formValue.itemId = Number (mcpItmId.substr(3,mcpItmId.length)); 
             this.service.McpItemMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
                 this.displaySuccess=true;
                 // this.mcpItemMasterForm.reset();
+                this.itemNumber=res.obj;
                 this.mcpItemMasterForm.disable();
               } else {
                 if (res.code === 400) {
-                  alert('Code already present in the data base');
+                  var x=res.obj;
+                  // alert('Code already present in the data base');
+                  alert(x);
                   this.displaySuccess=false;
                   // this.mcpItemMasterForm.reset();
                 }
@@ -230,14 +233,15 @@ export class McpItemMasterComponent implements OnInit {
               if (res.code === 200) {
              
                 this.displaySuccess=true;
-                // alert('RECORD UPDATED SUCCESSFUILY');
+                alert('RECORD UPDATED SUCCESSFUILY');
                 // window.location.reload();
+                this.mcpItemMasterForm.disable();
               } else {
                 if (res.code === 400) {
                 
                   this.displaySuccess=false;
                   alert('ERROR OCCOURED IN PROCEESS');
-                  this.mcpItemMasterForm.reset();
+                  // this.mcpItemMasterForm.reset();
                 }
               }
             });
@@ -262,13 +266,13 @@ export class McpItemMasterComponent implements OnInit {
     
             const formValue: IMcpitemMaster = this.mcpItemMasterForm.value;
 
-            if (formValue.itemNumber===undefined || formValue.itemNumber===null || formValue.itemNumber.trim()==='')
-            {
-               this.checkValidation=false; 
-               alert ("ITEM NO : Should not be null....");
-              //  this.isAlert=true;
-                return;
-             } 
+            // if (formValue.itemNumber===undefined || formValue.itemNumber===null || formValue.itemNumber.trim()==='')
+            // {
+            //    this.checkValidation=false; 
+            //    alert ("ITEM NO : Should not be null....");
+            //   //  this.isAlert=true;
+            //     return;
+            //  } 
 
              if (formValue.itemType===undefined || formValue.itemType===null)
             {
@@ -341,6 +345,16 @@ export class McpItemMasterComponent implements OnInit {
             // alert("not Deleted ")
 
 
+          }
+
+          validateDiscount(mDisc){
+                  
+            if(mDisc<0 ) {
+          
+              alert("Invalid Entry . DISCOUNT should not be lesser than Zero..") 
+              this.discount=null;
+              return;
+            }
           }
  
 }
