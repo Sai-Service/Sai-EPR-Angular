@@ -283,7 +283,6 @@ public YesNoList: Array<string> = [];
       panNo: [''],
       tcs:[''],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
-      // taxAmounts: this.fb.array([this.TaxDetailsArray()])
       taxAmounts: this.fb.array([this.TaxDetailsGroup()])
     })
    }
@@ -817,9 +816,7 @@ transData(val) {
 
 
 OrderBooked() {
-  // this.flowStatusCode='BOOKED';
   this.ouId=Number(sessionStorage.getItem('ouId'))
-  // alert(this.ouId)
   const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
   formValue.flowStatusCode = 'BOOKED';
   formValue.ouId=Number(sessionStorage.getItem('ouId'))
@@ -1044,14 +1041,14 @@ onOptionTaxCatSelected(taxCategoryName, i) {
   orderLineUpdate(){
     // const formValue: ISalesBookingForm = (this.SalesOrderBookingForm.value);
     var orderLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
-    // var taxAmounts = this.SalesOrderBookingForm.get('taxAmounts').value;
+    var taxAmounts = this.SalesOrderBookingForm.get('taxAmounts').value;
     // formValue.taxAmounts=this.taxMap.values();
     let jsonData=this.SalesOrderBookingForm.value;
     let salesObj=Object.assign(new SalesOrderobj(),jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     salesObj.settaxAmounts(this.taxMap.values());
     console.log(JSON.stringify(salesObj));
-    debugger;
+    // debugger;
     this.orderManagementService.UpdateSalesUpdateLine(JSON.stringify(salesObj)).subscribe((res: any) => {
     if (res.code === 200) {
       alert(res.message);

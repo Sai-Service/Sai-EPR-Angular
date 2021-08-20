@@ -455,6 +455,11 @@ public VehItemSubmit(VehItemRecord) {
   const url = this.ServerUrl + '/itemMst/withInfo1';
   return this.http.post(url, VehItemRecord, options);
 }
+
+categoryIdList1(category,divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemCategory/typeDivision?itemType=${category}&divisionId=${divisionId}`);
+}
+
 categoryIdList(category): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemCategory/type/${category}`);
 }

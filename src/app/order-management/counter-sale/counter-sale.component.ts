@@ -555,9 +555,7 @@ orderNumber:number;
               this.categoryList.splice(i,1)
             }
         }        
-      // var s=data1.find(d => d.itemType != 'SS_VEHICLE');
-      // console.log(s);
-      
+     
       }
     }
     );
