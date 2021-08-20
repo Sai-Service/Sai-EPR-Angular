@@ -402,9 +402,8 @@ taxCategorySale:[],
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
-    // this.locName=(sessionStorage.getItem('locName'));
     this.deptId=Number(sessionStorage.getItem('dept'));
-    // this.emplId= Number(sessionStorage.getItem('emplId'));
+
 
     this.orgId=this.ouId;
     console.log(this.loginArray);
@@ -826,7 +825,7 @@ else{
     if(select.isTaxable=='Y'){this.isTaxableShow = false; this.displayisTaxable=false; this.isTaxable='Y' }
     if(select.isTaxable=='N'){this.isTaxableShow = true; this.isTaxable='N'}
    
-    this.service.categoryIdList(category)
+    this.service.categoryIdList1(category,this.divisionId)
     .subscribe(
       data => {
         this.categoryIdList = data;
@@ -1228,8 +1227,14 @@ else{
 
   }
   onKey(event: any) {
+    if (this.divisionId==1){
     const aaa ='MV'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
     this.itemMasterForm.patchValue({segment:aaa})
+  }
+  else{
+    const aaa ='BJ'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
+    this.itemMasterForm.patchValue({segment:aaa})
+  }
   }
 
 
