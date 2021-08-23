@@ -1142,8 +1142,21 @@ transType():Observable<any>{
 getsearchByJob(jobno):Observable<any>{
  return this.http.get(this.ServerUrl+`/mtrlIssue/repair?repairNo=${jobno}`)
 }
+
+
 subInvCode(deptId):Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
+}
+
+
+subInvCode2(deptId, divisionId) {
+  const REQUEST_PARAMS = new HttpParams().set('deptId', deptId)
+                                         .set('divisionId', divisionId)
+  const REQUEST_URI = this.ServerUrl +'/subInvMst/wipissue/';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
 }
 subInvCode1():Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);

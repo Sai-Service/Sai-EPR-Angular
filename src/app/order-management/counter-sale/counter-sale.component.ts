@@ -129,6 +129,7 @@ export class CounterSaleComponent implements OnInit {
   // lnflowStatusCode:string;
   lnflowStatusCode:'BOOKED'
   frmLocatorId:number;
+  divisionId:number;
   uom:string;
   pricingQty:number;
   disAmt1:number;
@@ -510,7 +511,6 @@ orderNumber:number;
     this.startDate = new Date();
     this.displaypickTicketInvoice=true;
     this.displayCSOrderAndLineDt=true;
-    // this.divisionName = sessionStorage.getItem('divisionName');
     this.dept=Number(sessionStorage.getItem('deptId'));
     this.loginArray=sessionStorage.getItem('divisionName');
     this.ouName = (sessionStorage.getItem('ouName'));
@@ -524,6 +524,7 @@ orderNumber:number;
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locationId=Number(sessionStorage.getItem('locId'));
     this.deptName=(sessionStorage.getItem('deptName'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.invType ='SS_SPARES';
     this.service.payTermDescList()
     .subscribe(
@@ -622,7 +623,7 @@ orderNumber:number;
       }
     );
 
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {
         this.subInvCode = data;
         console.log(this.subInventoryId);
@@ -913,7 +914,7 @@ onOptionsSelectedCategory(orderType :string, lnNo :number) {
  }else{
  }
  this.invItemList1 = this.itemMap.get(orderType);
-   this.orderManagementService.getItemByCatType(orderType,1 )
+   this.orderManagementService.getItemByCatType(orderType,this.divisionId)
   .subscribe(
     data => {
             this.orderedItem=data.description;
@@ -1096,6 +1097,7 @@ custNameSearch(custName){
 }
 
 onKey(index) {
+  alert(index)
   console.log(index);
   var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
   var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -1109,10 +1111,9 @@ onKey(index) {
 var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
 console.log(baseAmt);  
 var disAmt1= arrayControl[index].disAmt;
-// this.disAmt1= -(this.disPer/100)*baseAmt;
-// alert(disAmt1);
+
 var disPer=arrayControl[index].disPer;
-// debugger;
+
 if(disAmt1===null && disPer>0){
   disAmt1= -(disPer/100)*baseAmt;
   (patch.controls[index]).patchValue({
@@ -1122,13 +1123,7 @@ if(disAmt1===null && disPer>0){
 if(disAmt1===null && disPer===null){
   return;
 }
-// if(this.disPer>0){
-//   alert(this.disPer);
-// (patch.controls[index]).patchValue({
-//   disAmt: -(this.disPer/100)*baseAmt,
-// });
-// alert(this.disAmt);
-// }
+
   var sum = 0;
   this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
     .subscribe(
@@ -1144,21 +1139,22 @@ if(disAmt1===null && disPer===null){
         }
         (patch.controls[index]).patchValue({
           baseAmt: baseAmt,
-          // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
           taxAmt: sum,
           totAmt: baseAmt + sum,
           disAmt: -(disPer/100)*baseAmt,
         });
-        // disAmt: -(this.disPer/100)*baseAmt,
         let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
+        console.log(controlinv1);
         this.TaxDetailsArray().clear();
-        // alert(data.length);
         for (let i = 0; i < data.length; i++) {
           var invLnGrp: FormGroup = this.TaxDetailsGroup();
-          // this.TaxDetailsArray().push(invLnGrp);
           controlinv1.push(invLnGrp);
+          (controlinv1.controls[i]).patchValue({
+            invLineNo:index+1,
+          });
         }
         this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
+        
       });
 
 }
@@ -1411,7 +1407,6 @@ pickTicketInvoiceFunction(){
 
 counterSaleOrderSave(){
   const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
-  // formValue.flowStatusCode = 'BOOKED';
   this.ouId = Number(sessionStorage.getItem('ouId'));
   this.emplId = Number(sessionStorage.getItem('emplId'));
   this.orderManagementService.SaveCounterSaleOrder(formValue).subscribe((res: any) => {
@@ -1466,8 +1461,8 @@ addRow(){
   addDiscount(i) {
     var invLine = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
-    const invItemId = arrayControltaxAmounts[0].taxItemId
-    const lineNo = arrayControltaxAmounts[0].invLineNo
+    // const invItemId = arrayControltaxAmounts[0].taxItemId
+    // const lineNo = arrayControltaxAmounts[0].invLineNo
     var taxCategoryId=invLine[i].taxCategoryId;
     var disAmt1 = arrayControltaxAmounts[0].totTaxAmt;
     var baseAmt1=invLine[i].baseAmt;
