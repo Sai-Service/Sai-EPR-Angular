@@ -87,7 +87,7 @@
         
                                     </td> 
     
-                                    <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
+                                    <td style="width: 15%" class="LabelFontStyle">VIN&nbsp;:&nbsp;</td>
         
                                     <td>
                                     <input disabled type="text"
@@ -268,16 +268,18 @@
                                     
                                    <tr>
 
+                                    <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;No:&nbsp;</td>
+                                        
+                                    <td>
+                                        <input  disabled type="text"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control" >
+                                    </td>
+
                                         <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Inv&nbsp;No:&nbsp;</td>
                                             
                                         <td>
                                             <input  disabled type="text"  formControlName="invoiceNo"  id="invoiceNo" [(ngModel)]="invoiceNo" class="form-control" >
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;No:&nbsp;</td>
-                                        
-                                        <td>
-                                            <input  disabled type="text"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control" >
-                                        </td>
+                                       
         
                                         <td style="width: 15%" class="LabelFontStyle">Enq&nbsp;No:&nbsp;</td>
                                         
@@ -294,10 +296,14 @@
                                     </tr>
 
                                     <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+
+                                        <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;Date:&nbsp;</td>
+                                            
                                         <td>
-                                                <input disabled  type="text"  formControlName="pkgSource"  id="pkgSource" [(ngModel)]="pkgSource" class="form-control" >
+                                            <input  disabled type="date"  formControlName="enrollmentDt"  id="enrollmentDt" [(ngModel)]="enrollmentDt" class="form-control" >
                                         </td>
+
+                                       
 
                                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Mileage:&nbsp;</td>
             
@@ -360,7 +366,13 @@
                                         <td style="width: 15%" class="LabelFontStyle">Pacakge&nbsp;Amt:&nbsp;</td>
                                         <td><input disabled style="font-weight: bold;text-align: right;" type="number"  formControlName="packageAmt"  id="packageAmt" [(ngModel)]="packageAmt" class="form-control" placeholder="Package Total"> </td>
 
+                                        <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+                                        <td>
+                                                <input disabled  type="text"  formControlName="pkgSource"  id="pkgSource" [(ngModel)]="pkgSource" class="form-control" >
+                                        </td>
+
                                         <td></td>
+
                                         <div *ngIf="showDetailsButton; then thenBlockA; else elseBlockA"></div>
                                         <ng-template #thenBlockA>
                                         <td>
@@ -786,7 +798,7 @@
                                             <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
                                 
                                             <td>
-                                                <input   type="text"  formControlName="searchEnrollDate"  id="searchEnrollDate" [(ngModel)]="searchEnrollDate" class="form-control" style="text-transform:uppercase;">
+                                                <input   type="date"  formControlName="searchEnrollDate"  id="searchEnrollDate" [(ngModel)]="searchEnrollDate" class="form-control" style="text-transform:uppercase;">
                                             </td>
                             
                             

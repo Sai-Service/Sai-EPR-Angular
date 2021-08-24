@@ -29,6 +29,7 @@ import { get } from 'jquery';
 interface IpostPO {
   poHeaderId: number;
   poLineId: number;
+  divisionId:number;
   ouId: number;
   poDate: Date;
   poType: string;
@@ -125,6 +126,7 @@ export class OPMasterDtoComponent implements OnInit {
   showModal: boolean;
   content: number;
   title: string;
+  divisionId:number;
   mainType: string;
   userList1: any[] = [];
   userList2: any[] = [];
@@ -412,12 +414,16 @@ export class OPMasterDtoComponent implements OnInit {
     console.log(sessionStorage.getItem('emplId'));
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
+    console.log( this.dept);
     this.deptName = (sessionStorage.getItem('deptName'));
     var locCODE = sessionStorage.getItem('locCode')
     var temp = locCODE.split('.');
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
+    var divisionName=(sessionStorage.getItem('divisionName'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    this.poMasterDtoForm.patchValue({divisionName:(sessionStorage.getItem('divisionName'))})
     // if (this.deptName === 'Sales' || this.deptName === 'Service' || this.deptName === 'DP' || this.deptName === 'Spares') {
     //   this.displayDept = true;
     //   //  this.dept = this.deptName
@@ -452,8 +458,8 @@ export class OPMasterDtoComponent implements OnInit {
           this.DepartmentListById = data;
           console.log(this.DepartmentListById);
           console.log(this.DepartmentListById.divisionName);
-          this.poMasterDtoForm.patchValue(this.DepartmentListById.divisionName);
-          this.divisionName = this.DepartmentListById.divisionName
+          // this.poMasterDtoForm.patchValue(this.DepartmentListById.divisionName);
+          // this.divisionName = this.DepartmentListById.divisionName
         }
       );
 
@@ -1149,6 +1155,7 @@ export class OPMasterDtoComponent implements OnInit {
     const formValue: IpostPO = this.transData(this.poMasterDtoForm.value);
     formValue.authorizationStatus = 'Inprogress';
     formValue.ouId = this.ouId;
+  formValue.divisionId=this.divisionId;
     formValue.currencyCode = 'INR';
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     this.baseAmount = 0;

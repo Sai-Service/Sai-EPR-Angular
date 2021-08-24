@@ -100,7 +100,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">Discount&nbsp;:&nbsp;</td>
                                     
                                 <td>
-                                    <input   type="number"  formControlName="discount"  id="discount" [(ngModel)]="discount" class="form-control" >
+                                    <input   type="number"  formControlName="discount"  id="discount" [(ngModel)]="discount" (change)="validateDiscount(discount)" class="form-control" >
                                 </td>
                             </tr>
                             <tr>

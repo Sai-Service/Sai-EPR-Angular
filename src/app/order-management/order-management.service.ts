@@ -68,9 +68,9 @@ export class OrderManagementService {
 
     
   downloadCSPreINV(orderNumber) :Observable<any> {
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -79,9 +79,9 @@ export class OrderManagementService {
   }
 
   downloadCSINV(InvoiceNumber){
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -114,6 +114,19 @@ export class OrderManagementService {
   }
 
 
+  createInvoiceAll(orderNumber,emplId) {
+    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+      .set('emplId', emplId)
+  
+    const REQUEST_URI = this.ServerUrl + `/arInv/inserDtls?orderNumber=${orderNumber}&emplId=${emplId}`;
+    return this.http.post(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
+  }
+  
+
+ 
   downloadGatePass(InvoiceNumber){
     const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
     // local
@@ -289,6 +302,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl +'/cmnLookup/YesNo');
   }
 
+  
+
   ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
@@ -313,11 +328,11 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
   // http://localhost:8081/orderHeader/deallotment?orderNumber=2111242153&segment=MVSAA4CZ2-ZQD-278852
-  DeallocateSubmit(orderNumber, segment) {
+  DeallocateSubmit(orderNumber, segment,deallotReason) {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('segment', segment)
-
-    const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}`;
+      .set('deallotReason',deallotReason)
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/deallotment?orderNumber=${orderNumber}&segment=${segment}&deallotReason=${deallotReason}`;
     return this.http.put(REQUEST_URI, {
       params: REQUEST_PARAMS,
 
@@ -417,6 +432,9 @@ lineLevelOrderStatus():Observable<any>{
 }
 
 
+deallotmentReasonType():Observable<any>{
+  return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/DeallotReason`);
+}
 
 
 orderNoPost(orderNumber,emplId) {

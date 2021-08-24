@@ -164,7 +164,8 @@
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order-New</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
               <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
-
+              <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OMSalesOrder']">OM Sales</a></li>
+              
             </ul>
             </li>
 
@@ -241,6 +242,9 @@
                 Login&nbsp;As&nbsp;&nbsp;:
               </td>
               <td style="font-size: 11px;color: black;font-weight: bold;text-align: left;">{{ticketNo}}</td>
+            </tr>
+            <tr>
+             <td colspan="2" style="font-size: 10px;width: 100%;font-weight: bold;"> {{todaysDataTime}}</td>
             </tr>
             </table>
            </div>

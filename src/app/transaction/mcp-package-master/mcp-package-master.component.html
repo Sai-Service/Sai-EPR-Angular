@@ -203,7 +203,7 @@
                                                       <!-- <th style="width:10rem" scope="col">PkgNo</th> -->
                                                       <!-- <th style="width:10rem" scope="col">Fuel Type</th> -->
                                                       <th style="width:10rem" scope="col">Item Code</th>
-                                                      <th style="width:10rem" scope="col">Item Id</th>
+                                                      <!-- <th style="width:10rem" scope="col">Item Id</th> -->
                                                       <th style="width:10rem" scope="col">Item Description</th>
                                                       <th style="width:10rem" scope="col">Item Type</th>
                                                       <th style="width:7rem" scope="col">Quantity</th>
@@ -234,14 +234,14 @@
                                                 </datalist>
                                                 </td> 
 
-                                                  <td>
+                                                  <!-- <td>
                                                     <input disabled style="width: 100px;"  type="text" formControlName="itemId"  class="form-control" placeholder="mcp Item Id "  >
-                                                </td>
+                                                </td> -->
 
                                                 
                                            
                                                 <td>
-                                                    <input disabled style="width: 400px;" type="text" formControlName="itemDesc"  class="form-control" placeholder="Item Description "  >
+                                                    <input disabled style="width: 550px;" type="text" formControlName="itemDesc"  class="form-control" placeholder="Item Description "  >
                                                 </td>
 
 
@@ -429,10 +429,17 @@
                             </table>
                             <!-- ==================================================== -->
                             <br>
-                            <table class="center" style="width: 100%; background-color: #FFE4B5; ">
-                            
+                           
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                       SEARCH</legend>
+                <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                    <tr>
+                      <td >
+                          <table class="center">
+                              <tr>
                                  
-                                <tr>
+                               
 
                                     <!-- <td></td><td></td> -->
 
@@ -488,17 +495,30 @@
 
                 
                                                   
-                                    <td colspan="8" style="text-align: left; width: 100%;">
+                                    <!-- <td colspan="8" style="text-align: left; width: 100%;">
                                         <button type="submit"  (click)="mcpSearchBy(searchByPkgType,searchByFuelType,searchByPkgNumber)" class="btn btn-primary"><i
                                                 class="fa fa-search"></i></button> 
-                
+                 -->
                                         <!-- <td colspan="8" style="text-align: left; width: 100%;">
                                             <button type="submit"  (click)="SearchByPkgNoFuelType(searchByPkgNumber,searchByFuelType)" class="btn btn-primary"><i
                                                     class="fa fa-search"></i></button> 
                                          -->
-                                </tr>
-                  
-                             </table>
+
+                                         <td style="background-color: #FFE4B5;">
+                                            <button type="button" class="btn-primary" (click)="mcpSearchBy(searchByPkgType,searchByFuelType,searchByPkgNumber)"><i class="fa fa-search"
+                                                    aria-hidden="true"></i></button>
+                                        </td>
+
+                                         <td>
+                                            <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Clear</button>
+                                        </td>
+                               
+                              </tr>
+                            </table>
+                        </td>
+                      </tr>
+                  </table>
+                  </fieldset>
                 </form>
             </div>
         </div>
