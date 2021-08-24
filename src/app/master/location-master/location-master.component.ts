@@ -85,7 +85,7 @@ export class LocationMasterComponent implements OnInit {
       locCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(35),Validators.pattern('[a-zA-Z0-9.]*')]],
       locName: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(240),Validators.pattern('[a-zA-Z 0-9]*')]],
       ouId: ['', [Validators.required]],
-      address1: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
+      address1: ['',[Validators.required, Validators.minLength(5),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
       address2: ['',[Validators.required, Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
       address3: ['',[Validators.maxLength(250)]],
       address4: ['',[Validators.maxLength(250),]],
@@ -181,7 +181,7 @@ export class LocationMasterComponent implements OnInit {
     this.submitted = true;
     if(this.LocationMasterForm.invalid){
     return;
-    }
+    } 
     const formValue: ILocationMaster = this.transData(this.LocationMasterForm.value);
     this.service.LocationMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
