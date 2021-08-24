@@ -198,7 +198,7 @@ export class StockTransferComponent implements OnInit {
 
     
 
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {
         this.subInvCode = data;
         console.log(this.subInventoryId);

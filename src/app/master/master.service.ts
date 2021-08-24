@@ -1123,7 +1123,7 @@ WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
 }
 getPriceDetail(locId,itemid,subInv,repNo):Observable<any>{
-  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=101-15`)
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}`)
 }
 BillableType():Observable<any>{
   return this.http.get(this.ServerUrl+`/billableTy`);

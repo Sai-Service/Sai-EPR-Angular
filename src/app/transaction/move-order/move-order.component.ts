@@ -108,6 +108,7 @@ export class MoveOrderComponent implements OnInit {
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
  priceValue:number;
  batchCode:string;
+ public batchdata:Array<string>=[];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
    this.moveOrderForm=fb.group({
@@ -212,7 +213,7 @@ export class MoveOrderComponent implements OnInit {
        } );
        
 
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInventoryId);
         // alert('subInventoryCode');
@@ -374,12 +375,10 @@ onChangeItem()
 }
  onOptionSelectedSubInv(event:any,i)
  {
-  // alert('2');
-  // alert(subCode.subInventoryId);
-  // alert('LocID'+this.locId);
-  // var subCode=this.moveOrderForm.get('frmSubInvCode').value;
-  // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
-  // alert(this.subInvCode.subInventoryId+'ID');
+   alert('----' + event +'*****');
+   if(event==='')
+   {return;
+   }
   var subInv=this.subInvCode.subInventoryId;
   var repNo=this.moveOrderForm.get('repairNo').value;
 
@@ -444,12 +443,22 @@ onChangeItem()
     ((res: any) => {
       if (res.code === 200)
       {
+        for(let j=0;j<res.obj.length;j++)
+        { 
+          alert('j')
+          this.batchdata.push(res.obj[j].batchCode);
+
+        }
         alert(res.message);
-        trxLnArr2.controls[i].patchValue({priceValue:res.code.priceValue,batchCode:res.code.batchCode});
+        alert(this.batchdata.length+'length');
+        trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
+        // var batchdata=res.obj;
+        // trxLnArr2.controls[i].patchValue({priceValue:res.obj.priceValue,batchCode:res.obj.batchCode});
       }
       else {
         if (res.code === 400) {
           alert(res.message);
+          trxLnArr2.controls[i].patchValue({invItemId:'',description:'',frmLocatorId:''});
         }
       }
     });

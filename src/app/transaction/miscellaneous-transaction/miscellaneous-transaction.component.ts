@@ -296,7 +296,7 @@ console.log(this.route1.queryParams+'hell');
 
 
 
-        this.service.subInvCode(this.deptId).subscribe(
+        this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
           data => {this.subInvCode = data;
              console.log(data);
              this.subInventory=this.subInvCode.subInventoryCode;

@@ -230,8 +230,12 @@
                 </ng-template>
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
+                <td><select class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode">
+                  <option>--Select--</option>
+                  <option *ngFor="let batcode of  batchdata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
+                 </select>
+                </td>
                 <td><input type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="batchCode"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
                 <input hidden  type="text"  formControlName="resveQty">
                 <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="uom"></td>
