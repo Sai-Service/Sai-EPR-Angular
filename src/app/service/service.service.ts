@@ -72,8 +72,8 @@ billableTyIdLstFN(type,regno) : Observable<any> {
 LaborItemListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);
 } 
-LaborItemListDivisionFN(divisionId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst?itemType=Labor&divisionId=${divisionId}&dept=Service`);
+LaborItemListDivisionFN(divisionId,deptname) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&divisionId=${divisionId}&dept=${deptname}`);
 } 
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);

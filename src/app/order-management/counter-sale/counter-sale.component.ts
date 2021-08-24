@@ -822,12 +822,12 @@ export class CounterSaleComponent implements OnInit {
     const formValue: ISalesBookingForm = this.CounterSaleOrderBookingForm.value;
     this.orderManagementService.UpdateCounterSaleInv(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert(res.message);
+        alert( res.message + 'res.message');
         this.OrderFind(this.orderNumber);
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert(res.message);
+          alert( res.message + 'res.message');
           this.CounterSaleOrderBookingForm.reset();
         }
       }
@@ -946,7 +946,7 @@ export class CounterSaleComponent implements OnInit {
           }
           else {
             if (data.code === 400) {
-              alert(data.message);
+              alert('res' + data.message);
               this.displaycreateCustomer = false;
             }
           }
@@ -1019,7 +1019,7 @@ export class CounterSaleComponent implements OnInit {
           }
           else {
             if (data.code === 400) {
-              alert(data.message);
+              alert('res' + data.message);
               this.displaycreateCustomer = false;
               // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
               // this.CounterSaleOrderBookingForm.get('custName').disable();
@@ -1082,7 +1082,7 @@ export class CounterSaleComponent implements OnInit {
           }
           else {
             if (data.code === 400) {
-              alert(data.message);
+              alert('RES'+data.message);
               this.displaycreateCustomer = false;
               this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
               this.CounterSaleOrderBookingForm.get('custName').disable();
@@ -1094,7 +1094,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   onKey(index) {
-    alert(index)
+    alert('onKey' + index)
     console.log(index);
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -1214,7 +1214,6 @@ export class CounterSaleComponent implements OnInit {
       (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
 
     }
-
     else {
       //let select = this.invItemList1.find(d => d.segment === segment);
       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -1248,7 +1247,7 @@ export class CounterSaleComponent implements OnInit {
             if (itemType === 'SS_SPARES') {
               this.getLocatorDetails(k, select.itemId);
               if (this.deptName == 'Spares') {
-                controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
+               // controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
               }
 
             }
@@ -1264,16 +1263,23 @@ export class CounterSaleComponent implements OnInit {
 
   }
   getLocatorDetails(k, itemId) {
+    alert('getLocatorDetails');
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+    var invTp = controlinv.controls[k].get('invType').value;
     this.service.getfrmSubLoc(this.locId, itemId, this.subInventoryId).subscribe(
       data => {
         console.log(data);
         if (data.length===0){
-          alert('Locator Not Found!.')
+          alert('Locator Not Found!.');
+          var lotList=[{locatorId :0 ,segmentName:'Not Found'}]
+          controlinv.controls[k].patchValue({ frmLocatorId: lotList});
+          controlinv.controls[k].patchValue({ onHandQty: 0 });
+          controlinv.controls[k].get('frmLocatorId').disable()
           return;
-        }
+        }else{
         var getfrmSubLoc = data;
         this.locData = data;
+        controlinv.controls[k].get('frmLocatorId').enable();
         if (getfrmSubLoc.length == 1) {
 
           controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });
@@ -1289,14 +1295,16 @@ export class CounterSaleComponent implements OnInit {
           controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty })
           controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
         }
-
+        this.service.getreserqty(this.locId, itemId).subscribe
+        (data => {
+          this.resrveqty = data;
+          controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+          this.AvailQty(k, itemId);
+        });
+      }
       });
-    this.service.getreserqty(this.locId, itemId).subscribe
-      (data => {
-        this.resrveqty = data;
-        controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
-        this.AvailQty(k, itemId);
-      });
+    
+      controlinv.controls[k].patchValue({ invType:invTp});
   }
 
 
@@ -1306,7 +1314,7 @@ export class CounterSaleComponent implements OnInit {
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // var itemid=trxLnArr[i].itemId;
     var locId = trxLnArr[i].frmLocatorId;
-    alert(locId);
+    alert( locId+'locId');
     var onhandid = trxLnArr[i].id;
     if (locId != null){
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId, itemId).subscribe
