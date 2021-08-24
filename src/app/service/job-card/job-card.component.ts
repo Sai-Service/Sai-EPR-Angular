@@ -203,6 +203,7 @@ export class JobCardComponent implements OnInit {
 
   trxLineId: number;
   emplId:number;
+  deptName:string;
 
   dispReadyInvoice = false;
   dispButtonStatus = false;
@@ -350,6 +351,7 @@ export class JobCardComponent implements OnInit {
       advAmt: [],
       labDiscountPer: [],
       emplId:[],
+      deptName:[],
       jobCardLabLines: this.fb.array([this.lineDetailsGroup()]),
       jobCardMatLines: this.fb.array([this.distLineDetails()]),
       splitAmounts: this.fb.array([this.splitDetailsGroup()])
@@ -482,6 +484,7 @@ export class JobCardComponent implements OnInit {
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.jobStatus = 'Opened';
     this.emplId=Number(sessionStorage.getItem('emplId'));
+    this.deptName=sessionStorage.getItem('deptName');
     alert(this.emplId);
     // this.jobCardDate=Date.now();
     this.service.taxCategoryListForSALES()
@@ -575,7 +578,7 @@ export class JobCardComponent implements OnInit {
     //   );
     //     }
     //   );
-    this.serviceService.LaborItemListDivisionFN(this.divisionId)
+    this.serviceService.LaborItemListDivisionFN(this.divisionId,this.deptName)
       .subscribe(
         data1 => {
           this.LaborItemList = data1;
