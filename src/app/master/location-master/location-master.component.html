@@ -346,6 +346,19 @@
                                     Enter valid status </span>
                             </div>
                             </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                LOC&nbsp;ID&nbsp;:
+                            </td>
+                            <td>
+                                <input  type="number"  [ngModel]="locId" formControlName="locId"
+                                class="form-control">
+                            <div *ngIf="submitted && f. locId.errors" class="invalid-feedback">
+                                <div *ngIf="f.locId.errors.required">status is required</div>
+                                <span
+                                    *ngIf="!LocationMasterForm.get('locId').valid && LocationMasterForm.get('locId').touched">Please
+                                    Enter valid status </span>
+                            </div>
+                            </td>
                         </tr>
                     </ng-template>
                     <ng-template #elseBlock>

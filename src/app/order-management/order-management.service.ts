@@ -71,7 +71,7 @@ export class OrderManagementService {
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
     const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
-    return this.http.get(REQUEST_URI, {
+    return this.http.get(REQUEST_URI, { 
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,

@@ -177,7 +177,6 @@ export class LocationMasterComponent implements OnInit {
 
 
   newMast() {
-    
     this.submitted = true;
     if(this.LocationMasterForm.invalid){
     return;
@@ -185,14 +184,14 @@ export class LocationMasterComponent implements OnInit {
     const formValue: ILocationMaster = this.transData(this.LocationMasterForm.value);
     this.service.LocationMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        window.location.reload();
+        alert(res.message);
+        // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.LocationMasterForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });

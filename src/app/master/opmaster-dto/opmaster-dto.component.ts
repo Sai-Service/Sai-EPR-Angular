@@ -1804,7 +1804,7 @@ export class OPMasterDtoComponent implements OnInit {
         if (this.invItemList.length <= 0) {
 
 
-          this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
+          this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')),(sessionStorage.getItem('divisionId')))
             .subscribe(
               data => {
                 this.invItemList = data;

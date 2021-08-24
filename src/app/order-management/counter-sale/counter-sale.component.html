@@ -661,7 +661,8 @@
                                         </td>
                                         <td>
                                            
-                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
+                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;" 
+                                                 (ngModelChange)='onOptionsSelectedDescription($event,i)' >
                                                 <datalist id="dynmicUserIds1">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
@@ -1691,7 +1692,7 @@
                         <select formControlName="paymentType" id="paymentType" class="form-control" [ngModel]="paymentType">
                         <option>--Select--</option>
                         <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.cmnTypeId">
-                            {{sc.codeDesc}}
+                            {{sc.lookupValue}}
                         </option>
                     </select>
                     
