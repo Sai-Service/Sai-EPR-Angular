@@ -108,7 +108,7 @@ export class MoveOrderComponent implements OnInit {
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
  priceValue:number;
  batchCode:string;
- public batchdata:Array<string>=[];
+ public batchdata = [];
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
    this.moveOrderForm=fb.group({
@@ -445,14 +445,9 @@ onChangeItem()
       {
         for(let j=0;j<res.obj.length;j++)
         { 
-          alert('j')
-          this.batchdata.push(res.obj[j].batchCode);
-
+          this.batchdata.push({'batchCode': res.obj[j].batchCode});
         }
-        alert(res.message);
-        alert(this.batchdata.length+'length');
         trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
-        // var batchdata=res.obj;
         // trxLnArr2.controls[i].patchValue({priceValue:res.obj.priceValue,batchCode:res.obj.batchCode});
       }
       else {
