@@ -212,7 +212,7 @@ export class MoveOrderComponent implements OnInit {
        } );
        
 
-    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
+    this.service.subInvCode(this.deptId).subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInventoryId);
         // alert('subInventoryCode');
