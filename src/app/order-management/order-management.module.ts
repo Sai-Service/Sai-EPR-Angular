@@ -11,10 +11,11 @@ import { CounterSaleComponent } from './counter-sale/counter-sale.component';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { ReversalOrderComponent } from './reversal-order/reversal-order.component';
 import { SalesGatePassComponent } from './sales-gate-pass/sales-gate-pass.component';
+import { OmSalesOrderFormComponent } from './om-sales-order-form/om-sales-order-form.component';
 
 
 @NgModule({
-  declarations: [SalesOrderBookingComponent, PaymentReceiptComponent, AllotmentComponent, DeAllotmentComponent, CounterSaleComponent, SalesOrderFormComponent, ReversalOrderComponent, SalesGatePassComponent],
+  declarations: [SalesOrderBookingComponent, PaymentReceiptComponent, AllotmentComponent, DeAllotmentComponent, CounterSaleComponent, SalesOrderFormComponent, ReversalOrderComponent, SalesGatePassComponent, OmSalesOrderFormComponent],
   imports: [
     CommonModule,
     OrderManagementRoutingModule,

@@ -286,7 +286,11 @@
                             </td>
                             <td>
                                 <!-- (keyup)="savegstNo($event)" -->
+<<<<<<< HEAD
                                 <input formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
+=======
+                                <input  formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
+>>>>>>> 56a0beb4f20153c6cea6880ae31334b7167b4129
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
