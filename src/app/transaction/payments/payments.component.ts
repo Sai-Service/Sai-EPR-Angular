@@ -134,6 +134,8 @@ public PaymentReturnArr:any;
       paymentMethodId:[],
       statusLookupCode:[],
       payDate:[],
+      suppSiteId:[],
+      siteName:[],
       PayAmount:[],
       docNo :[],
 payAddress:[],
@@ -228,8 +230,9 @@ voucherNo:[],
      this.displayouId=true;
      this.displaysiteAddress=true;
      this.displaystatus=true;
-     this.transactionService.getsearchByPayment(suppNo).subscribe((res: any) => {
+     this.transactionService.getsearchByPayment(suppNo,this.ouId).subscribe((res: any) => {
       this.lstsearchpayminv=res.obj;
+      console.log(res.obj);
       this.lstsearchpayminv.forEach(f => {
         var payLnGrp: FormGroup = this.payHeaderLineDtl();
         this.payHeaderLineDtlArray().push(payLnGrp);
@@ -245,7 +248,6 @@ voucherNo:[],
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
        this.lstinvoiceDetls=res.obj;
        var sum=0;
-
        for (let i=0;i<this.lstinvoiceDetls.length;i++){
         sum=sum+this.lstinvoiceDetls[i].invoiceAmt;
         // this.invAmtArr.push(this.lstinvoiceDetls[i].invoiceAmt);
