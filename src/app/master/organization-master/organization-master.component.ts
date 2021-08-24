@@ -71,7 +71,7 @@ export class OrganizationMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private _location: Location) {
     this.operatingUnitMasterForm = fb.group({
       ouId: [],
-      ouName: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(15),Validators.pattern('[a-zA-Z 0-9]*')]],
+      ouName: ['', [Validators.required,Validators.minLength(5), Validators.maxLength(15),Validators.pattern('[a-zA-Z 0-9 -]*')]],
       ouDesc: ['', [Validators.required,Validators.minLength(5),Validators.pattern('[a-zA-Z -]*')]],
       divisionId: ['', [Validators.required]],
       divisionName:[''],
@@ -154,18 +154,17 @@ export class OrganizationMasterComponent implements OnInit {
     if(this.operatingUnitMasterForm.invalid){
     return;
     }
-
     const formValue: IOperatingUnit = this.transData(this.operatingUnitMasterForm.value);
     this.service.operatingUnitMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        window.location.reload();
+        alert(res.message);
+        // window.location.reload();
         // this.operatingUnitMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.operatingUnitMasterForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });
