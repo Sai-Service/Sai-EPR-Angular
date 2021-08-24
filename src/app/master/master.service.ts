@@ -1107,6 +1107,9 @@ public reservePost(reserverecord)
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
 }
+getPriceDetail(locId,itemid,subInv,repNo):Observable<any>{
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=101-15`)
+}
 BillableType():Observable<any>{
   return this.http.get(this.ServerUrl+`/billableTy`);
 }

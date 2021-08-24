@@ -34,6 +34,8 @@ interface ImoveOrder{
     frmLocator:string;
     avlqty:number;
     JobNo:string;
+    priceValue:number;
+    batchCode:string;
 }
 
 @Component({
@@ -104,6 +106,8 @@ export class MoveOrderComponent implements OnInit {
  pipe = new DatePipe('en-US');
  now=new Date();
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+ priceValue:number;
+ batchCode:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
    this.moveOrderForm=fb.group({
@@ -160,6 +164,8 @@ export class MoveOrderComponent implements OnInit {
       toLocator:[],
       onHandQty:[],
       id:[],
+      priceValue:[],
+      batchCode:[],
     });
   }
   addnewtrxLinesList(i:number){
@@ -191,6 +197,7 @@ export class MoveOrderComponent implements OnInit {
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.issueBy=(sessionStorage.getItem('name'));
     this.deptName=(sessionStorage.getItem('deptName'));
+
     
     // alert(this.issueBy);
     console.log(this.divisionId);
@@ -205,7 +212,7 @@ export class MoveOrderComponent implements OnInit {
        } );
        
 
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInventoryId);
         // alert('subInventoryCode');
@@ -374,6 +381,7 @@ onChangeItem()
   // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
   // alert(this.subInvCode.subInventoryId+'ID');
   var subInv=this.subInvCode.subInventoryId;
+  var repNo=this.moveOrderForm.get('repairNo').value;
 
   let locId1=this.moveOrderForm.get('locId');
   var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
@@ -431,6 +439,19 @@ onChangeItem()
     (data=>{
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
+    });
+    this.service.getPriceDetail(this.locId,itemid,subInv,repNo).subscribe
+    ((res: any) => {
+      if (res.code === 200)
+      {
+        alert(res.message);
+        trxLnArr2.controls[i].patchValue({priceValue:res.code.priceValue,batchCode:res.code.batchCode});
+      }
+      else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
     });
     
  }

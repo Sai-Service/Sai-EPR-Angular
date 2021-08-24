@@ -60,6 +60,9 @@ groupIdListFN(locId,deptId) : Observable<any> {
 RegNoListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/regList`);
 } 
+RegNoListDividionwiseFN(divisionId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemMst/regList/${divisionId}`);
+} 
 billableTyIdListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy`);
 } 
@@ -68,6 +71,9 @@ billableTyIdLstFN(type,regno) : Observable<any> {
 } 
 LaborItemListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);
+} 
+LaborItemListDivisionFN(divisionId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemMst?itemType=Labor&divisionId=${divisionId}&dept=Service`);
 } 
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
