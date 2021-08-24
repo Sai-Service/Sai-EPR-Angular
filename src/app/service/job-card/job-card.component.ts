@@ -549,7 +549,7 @@ export class JobCardComponent implements OnInit {
           console.log(this.groupIdList);
         }
       );
-    this.serviceService.RegNoListFN()
+    this.serviceService.RegNoListDividionwiseFN(this.divisionId)
       .subscribe(
         data1 => {
           this.RegNoList1 = data1;
@@ -575,7 +575,7 @@ export class JobCardComponent implements OnInit {
     //   );
     //     }
     //   );
-    this.serviceService.LaborItemListFN()
+    this.serviceService.LaborItemListDivisionFN(this.divisionId)
       .subscribe(
         data1 => {
           this.LaborItemList = data1;
@@ -898,6 +898,7 @@ export class JobCardComponent implements OnInit {
     })
   }
   Search(jonCardNo) {
+    this.jobcardForm.reset();
     this.serviceService.getJonCardNoSearch(jonCardNo)
       .subscribe(
         data => {
@@ -1106,15 +1107,21 @@ export class JobCardComponent implements OnInit {
         // alert(this.lineDetailsArray.length+ " length")
         var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
         console.log(res.obj.jobCardLinesList);
-        // for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
-        //   var invLnGrp: FormGroup = this.lineDetailsGroup();
-        //             this.lineDetailsArray.push(invLnGrp);
-        //             let select = this.splitRatioList.find(d => d.splitCateId === res.obj.jobCardLinesList[i].splitCateId);
+        if(res.obj.jobCardLinesList.itemType='Labor')
+        {
+        for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
+          var invLnGrp: FormGroup = this.lineDetailsGroup();
+                    this.lineDetailsArray.push(invLnGrp);
+                    // let select = this.splitRatioList.find(d => d.splitCateId === res.obj.jobCardLinesList[i].splitCateId);
+                    this.onOptionsplitRatioSelect1(i,res.obj.jobCardLinesList[i].splitCateId)
         //  patch.controls[i].patchValue({splitRatio:select.billingNature});
-        // }
-        // this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);comment by Vinita
-        var jobNo = this.jobcardForm.get('jobCardNum').value;
-        this.Search(jobNo);
+         let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === res.obj.jobCardLinesList[i].billableTyId);
+            patch.controls[i].patchValue({ billableTyId: selectbilTy.billableTyName });
+        }
+        this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);
+        }
+        // var jobNo = this.jobcardForm.get('jobCardNum').value;
+        // this.Search(jobNo);comment by vinita
         this.dispReadyInvoice = true;
         // patch.patchValue(res.obj.jobCardLinesList);
         // obj.jobCardLinesList

@@ -182,7 +182,7 @@ reqNo:string;
         this.transactionTypeId=this.transType[0].transactionTypeId;
        } );
 
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInvCode);
         this.toSubInvCode=this.subInvCode.subInventoryCode;
