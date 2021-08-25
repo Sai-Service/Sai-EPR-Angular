@@ -1141,7 +1141,7 @@ export class CounterSaleComponent implements OnInit {
           (patch.controls[index]).patchValue({
             baseAmt: baseAmt,
             taxAmt: sum,
-            totAmt: baseAmt + sum,
+            totAmt: baseAmt + sum-disAmt1,
             disAmt: (disPer / 100) * baseAmt,
           });
           let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
