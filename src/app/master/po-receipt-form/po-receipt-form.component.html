@@ -1158,7 +1158,8 @@
   
   <!-- Modal -->
   <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- modal-dialog-scrollable -->
       <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
@@ -1210,7 +1211,8 @@
                 </tr>
                 <br>
                 </table>
-                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                <div class="grid_scroll2">
+                <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
                     <thead>
                       <tr class="GridHeader">
                       <th>Line</th>
@@ -1222,7 +1224,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;">
+                        <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;">
                           <td>{{com.jeLineNum}}</td>
                           <td >{{com.segmentName}}</td>
                           <td style="text-align: right;padding-right: 5px;" >{{com.enteredDr}}</td>
@@ -1259,7 +1261,7 @@
                         </tr>
                        
                      </table>  -->
-            
+                    </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
