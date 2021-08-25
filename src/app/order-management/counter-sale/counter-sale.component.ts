@@ -1112,9 +1112,9 @@ export class CounterSaleComponent implements OnInit {
     var disPer = arrayControl[index].disPer;
 
     if (disAmt1 === null && disPer > 0) {
-      disAmt1 = -(disPer / 100) * baseAmt;
+      disAmt1 = (disPer / 100) * baseAmt;
       (patch.controls[index]).patchValue({
-        disAmt: -(disPer / 100) * baseAmt,
+        disAmt: (disPer / 100) * baseAmt,
       });
     }
     if (disAmt1 === null && disPer === null) {
@@ -1138,7 +1138,7 @@ export class CounterSaleComponent implements OnInit {
             baseAmt: baseAmt,
             taxAmt: sum,
             totAmt: baseAmt + sum,
-            disAmt: -(disPer / 100) * baseAmt,
+            disAmt: (disPer / 100) * baseAmt,
           });
           let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
           console.log(controlinv1);
@@ -1314,7 +1314,7 @@ export class CounterSaleComponent implements OnInit {
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // var itemid=trxLnArr[i].itemId;
     var locId = trxLnArr[i].frmLocatorId;
-    alert( locId+'locId');
+    // alert( locId+'locId');
     var onhandid = trxLnArr[i].id;
     if (locId != null){
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId, itemId).subscribe
