@@ -352,6 +352,7 @@ export class OPMasterDtoComponent implements OnInit {
       currencyCode: [],
       authorizationStatus: [],
       totalAmt: [],
+      supplierAddress:[],
       suppInvNo: ['', [Validators.minLength(3)]],
       // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
@@ -829,7 +830,6 @@ export class OPMasterDtoComponent implements OnInit {
           } if (data.code === 200) {
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
-
             this.lstcomments1 = data.obj;
             const status = this.lstcomments1.authorizationStatus;
             if (status === 'Inprogress') {
@@ -916,17 +916,7 @@ export class OPMasterDtoComponent implements OnInit {
               this.displaygoReceiptForm = false;
               this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
-
-              // let control = this.poMasterDtoForm.get('poLines') as FormArray;
-              // for (let i = 0; i < data.poLines.length - 1; i++) {
-              //   var poLine: FormGroup = this.lineDetailsGroup();
-              //   control.push(poLine);
-              //   this.displayPoLine[i] = false;
-              //   this.hideArray[i] = true;
-              // }
-              // this.poMasterDtoForm.patchValue(this.lstcomments1);
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
-              // for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray

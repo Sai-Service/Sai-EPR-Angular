@@ -10,6 +10,7 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { DatePipe } from '@angular/common';
 import { from } from 'rxjs';
 import {PaymentObj} from './payment-obj';
+import { Location } from "@angular/common";
 
 interface Ipayment{
   suppNo:number;
@@ -88,7 +89,7 @@ export class PaymentsComponent implements OnInit {
 public paymentIdListList:Array<string>=[];
 public PaymentReturnArr:any;
 // public invAmtArr : any [];
-  constructor(private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
+  constructor(private fb: FormBuilder, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
       suppNo:[],
       ouName: [],
@@ -467,6 +468,13 @@ console.log(jsonData);
   });
 }
 
+close(){
+  this.location.back();
+}
 
+refresh()
+      {
+        window.location.reload();
+      }
 
 }
