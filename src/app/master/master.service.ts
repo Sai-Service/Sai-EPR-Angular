@@ -1177,6 +1177,9 @@ return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&division
 ItemIdList():Observable<any>{
   return this.http.get(this.ServerUrl+'/itemMst/category');
 }
+ItemIdDivisionList(divisionId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/itemMst/SpAcItems/${divisionId}`);
+}
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
 }

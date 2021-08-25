@@ -88,6 +88,9 @@ TechnicianListFN(locId) : Observable<any> {
 priceListFN(locId,segment) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`);
 } 
+priceListDivisionFN(segment,serModel,locId,ouId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`);
+} 
 MatImptWipFn(jobCardNum,locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/partLines?jobNum=${jobCardNum}&locId=${locId}`);
 } 
