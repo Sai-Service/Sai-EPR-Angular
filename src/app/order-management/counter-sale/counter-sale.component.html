@@ -649,7 +649,8 @@
                                         <td>
                                             <!-- <input disabled type="text" formControlName="invType" value="invType"
                                             [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
-                                            <select formControlName="invType" id="invType{{i}}"
+                                            <!-- id="invType{{i}}" -->
+                                            <select formControlName="invType" 
                                             (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                             class="form-control"
                                             style="width: 160px;height: 25px;font-size: 10px;">
@@ -720,7 +721,7 @@
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </ng-template>
                                         <ng-template #elsedisAmt>
-                                        <input  type="number" formControlName="disAmt"   class="form-control" 
+                                        <input  formControlName="disAmt"   class="form-control" 
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </ng-template>
                                     </td>
@@ -734,7 +735,7 @@
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
-                                    <input  type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
+                                    <input hidden type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
                                     </td>
                                    
                                     <td>
