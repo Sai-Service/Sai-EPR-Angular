@@ -352,7 +352,7 @@ console.log(this.route1.queryParams+'hell');
         }
       )
 
-      this.service.ItemIdList().subscribe(
+      this.service.ItemIdDivisionList(this.divisionId).subscribe(
             data =>{ this.ItemIdList = data;
               console.log(this.ItemIdList);
 

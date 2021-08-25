@@ -5,6 +5,7 @@ import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angu
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+import { ServiceService } from 'src/app/service/service.service';
 import { DatePipe } from '@angular/common';
 
 
@@ -36,6 +37,7 @@ interface ImoveOrder{
     JobNo:string;
     priceValue:number;
     batchCode:string;
+    regNo:string;
 }
 
 @Component({
@@ -109,8 +111,10 @@ export class MoveOrderComponent implements OnInit {
  priceValue:number;
  batchCode:string;
  public batchdata = [];
+ pricedata:any[];
+ regNo:string;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
    this.moveOrderForm=fb.group({
     requestNumber:[],
     transactionTypeId:['',[Validators.required]],
@@ -132,6 +136,7 @@ export class MoveOrderComponent implements OnInit {
     JobNo:[''],
     issueTo:['',[Validators.required]],
     deptName:[],
+    regNo:[],
     // subInventoryId:[],
     trxLinesList:this.fb.array([]),
 
@@ -232,11 +237,11 @@ export class MoveOrderComponent implements OnInit {
       console.log(data);
      }
    );
-   this.service.BillableType().subscribe(
-    data=>{
-      this.Billabletype=data;
-    }
-   )
+  //  this.service.BillableType().subscribe(
+  //   data=>{
+  //     this.Billabletype=data;
+  //   }
+  //  )
    this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
       (data => {this.issueByList = data;
           console.log(this.issueByList);
@@ -364,15 +369,25 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   }
   );
 }
-
-onChangeItem()
+onChangeRepairNo(event)
 {
-  this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
-    data => {
-      this.ItemIdList = data;
-      // console.log(this.invItemId);
-    });
+  var selregno=this.workshopIssue.find(d=>d.jobCardNum===event)
+  this.serviceService.billableTyIdLstFN(event, selregno.regNo)
+  .subscribe(
+    data1 => {
+     
+      this.Billabletype = data1;
+      console.log(data1);
+      console.log(this.Billabletype);
+    }
+     )
+     this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
+      data => {
+        this.ItemIdList = data;
+        // console.log(this.invItemId);
+      });
 }
+
  onOptionSelectedSubInv(event:any,i)
  {
    alert('----' + event +'*****');
@@ -443,11 +458,19 @@ onChangeItem()
     ((res: any) => {
       if (res.code === 200)
       {
+         this.pricedata=res.obj;
         for(let j=0;j<res.obj.length;j++)
         { 
           this.batchdata.push({'batchCode': res.obj[j].batchCode});
         }
+        // if(this.batchdata.length===1)
+        // {
+        //   alert('hello');
+        //   trxLnArr2.controls[i].patchValue({batchCode:this.batchdata[0]});
+        // }
+        // else{
         trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
+        // }
         // trxLnArr2.controls[i].patchValue({priceValue:res.obj.priceValue,batchCode:res.obj.batchCode});
       }
       else {
@@ -459,7 +482,14 @@ onChangeItem()
     });
     
  }
-
+onOptionBatchCode(event,i)
+{
+  alert(event);
+  var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
+  var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
+  alert(selbatchCode.priceValue+'Price');
+  trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});;
+}
 AvailQty(event:any,i:number) 
 {
 
