@@ -721,7 +721,7 @@
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </ng-template>
                                         <ng-template #elsedisAmt>
-                                        <input  type="number" formControlName="disAmt"   class="form-control" 
+                                        <input  formControlName="disAmt"   class="form-control" 
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </ng-template>
                                     </td>
@@ -735,7 +735,7 @@
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
-                                    <input  type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
+                                    <input hidden type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
                                     </td>
                                    
                                     <td>
@@ -797,6 +797,7 @@
                                                 (change)="onKey(i)" style="height: 20px;width: 70px;">
                                             </ng-template>
                                         </td> -->
+                                       
                                         <td>
                                             
                                             <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
@@ -811,6 +812,14 @@
                                         <input disabled type="number" formControlName="baseAmt"  class="form-control"
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
+                                    <!-- <td>
+                                    <input disabled  type="number" formControlName="disPer"  class="form-control"
+                                    style="height: 20px;width: 70px;">
+                            </td>
+                            <td>
+                                <input disabled  type="number" formControlName="disPer"  class="form-control"
+                                    style="height: 20px;width: 70px;">
+                            </td> -->
                                     <td>
                                         <input disabled type="number" formControlName="taxAmt" class="form-control"
                                             style="height: 20px;width: 70px;">

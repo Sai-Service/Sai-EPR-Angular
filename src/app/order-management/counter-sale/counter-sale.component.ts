@@ -137,7 +137,7 @@ export class CounterSaleComponent implements OnInit {
   name: string;
   id: number;
   disPer: number;
-  disAmt: number = 0;
+  disAmt: number;
   taxAmt: number;
   discType: string;
   // Customer Form
@@ -507,7 +507,7 @@ export class CounterSaleComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.currentCS = 'insert';
+    this.CounterSaleOrderBookingForm.patchValue({ disAmt: 0})
     this.op = 'insert';
     this.startDate = new Date();
     this.displaypickTicketInvoice = true;
@@ -527,6 +527,9 @@ export class CounterSaleComponent implements OnInit {
     this.deptName = (sessionStorage.getItem('deptName'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.invType = 'SS_SPARES';
+
+  
+
     this.service.payTermDescList()
       .subscribe(
         data => {
@@ -905,6 +908,8 @@ export class CounterSaleComponent implements OnInit {
 
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
     this.invType = orderType;
+    this.disAmt=0;
+    alert(this.disAmt)
     if (this.itemMap.has(orderType)) {
       var itemsList = this.itemMap.get(orderType);
       this.itemMap2.set(lnNo, this.itemMap.get(orderType));
@@ -919,7 +924,6 @@ export class CounterSaleComponent implements OnInit {
           this.itemMap2.set(lnNo, this.itemMap.get(orderType));
           // this.lnflowStatusCode='BOOKED'
           console.log(this.lnflowStatusCode);
-
         }
       );
 
@@ -1094,7 +1098,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   onKey(index) {
-    alert('onKey' + index)
+    // alert('onKey' + index)
     console.log(index);
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -1112,9 +1116,9 @@ export class CounterSaleComponent implements OnInit {
     var disPer = arrayControl[index].disPer;
 
     if (disAmt1 === null && disPer > 0) {
-      disAmt1 = -(disPer / 100) * baseAmt;
+      disAmt1 = (disPer / 100) * baseAmt;
       (patch.controls[index]).patchValue({
-        disAmt: -(disPer / 100) * baseAmt,
+        disAmt: (disPer / 100) * baseAmt,
       });
     }
     if (disAmt1 === null && disPer === null) {
@@ -1137,8 +1141,8 @@ export class CounterSaleComponent implements OnInit {
           (patch.controls[index]).patchValue({
             baseAmt: baseAmt,
             taxAmt: sum,
-            totAmt: baseAmt + sum,
-            disAmt: -(disPer / 100) * baseAmt,
+            totAmt: baseAmt + sum-disAmt1,
+            disAmt: (disPer / 100) * baseAmt,
           });
           let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
           console.log(controlinv1);
@@ -1157,54 +1161,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
 
-  // onKeyPerDisc(index,disAmt){
-  //   alert(disAmt);
-  //   console.log(index);
-  //   var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value
-  //   var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-  //   console.log(arrayControl);
-  //   var itemId=arrayControl[index].itemId;
-  //   var taxCategoryId=arrayControl[index].taxCategoryId;
-  // var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
-  // console.log(baseAmt);  
-  // var disAmt1=  this.disAmt;
-  // (patch.controls[index]).patchValue({
-  //   disAmt: -(this.disPer/100)*baseAmt,
-  // });
-
-  //   var sum = 0;
-  //   this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
-  //     .subscribe(
-  //       (data: any[]) => {
-  //         this.taxCalforItem = data;
-  //         console.log(this.taxCalforItem);
-
-  //         for (let i = 0; i < this.taxCalforItem.length; i++) {
-
-  //           if (this.taxCalforItem[i].totTaxPer != 0) {
-  //             sum = sum + this.taxCalforItem[i].totTaxAmt
-  //           }
-  //         }
-  //         (patch.controls[index]).patchValue({
-  //           baseAmt: baseAmt,
-  //           // baseAmtLineWise: arrayControl[index].baseAmtLineWise,
-  //           taxAmt: sum,
-  //           totAmt: baseAmt + sum,
-  //         });
-  //         // disAmt: -(this.disPer/100)*baseAmt,
-  //         let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
-  //         this.TaxDetailsArray().clear();
-  //         // alert(data.length);
-  //         for (let i = 0; i < data.length; i++) {
-  //           var invLnGrp: FormGroup = this.TaxDetailsGroup();
-  //           // this.TaxDetailsArray().push(invLnGrp);
-  //           controlinv1.push(invLnGrp);
-  //         }
-  //         this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
-  //       });
-
-  // }
-
+ 
 
   onOptionsSelectedDescription(segment: any, k) {
     if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
@@ -1263,7 +1220,7 @@ export class CounterSaleComponent implements OnInit {
 
   }
   getLocatorDetails(k, itemId) {
-    alert('getLocatorDetails');
+    // alert('getLocatorDetails');
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var invTp = controlinv.controls[k].get('invType').value;
     this.service.getfrmSubLoc(this.locId, itemId, this.subInventoryId).subscribe(
@@ -1314,7 +1271,7 @@ export class CounterSaleComponent implements OnInit {
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // var itemid=trxLnArr[i].itemId;
     var locId = trxLnArr[i].frmLocatorId;
-    alert( locId+'locId');
+    // alert( locId+'locId');
     var onhandid = trxLnArr[i].id;
     if (locId != null){
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId, itemId).subscribe

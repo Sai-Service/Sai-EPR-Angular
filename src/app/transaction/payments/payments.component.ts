@@ -10,6 +10,7 @@ import { TransactionService } from 'src/app/transaction/transaction.service';
 import { DatePipe } from '@angular/common';
 import { from } from 'rxjs';
 import {PaymentObj} from './payment-obj';
+import { Location } from "@angular/common";
 
 interface Ipayment{
   suppNo:number;
@@ -88,7 +89,7 @@ export class PaymentsComponent implements OnInit {
 public paymentIdListList:Array<string>=[];
 public PaymentReturnArr:any;
 // public invAmtArr : any [];
-  constructor(private fb: FormBuilder, private transactionService :TransactionService,private service :MasterService,private router: Router) {
+  constructor(private fb: FormBuilder, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
       suppNo:[],
       ouName: [],
@@ -134,6 +135,8 @@ public PaymentReturnArr:any;
       paymentMethodId:[],
       statusLookupCode:[],
       payDate:[],
+      suppSiteId:[],
+      siteName:[],
       PayAmount:[],
       docNo :[],
 payAddress:[],
@@ -232,6 +235,7 @@ voucherNo:[],
 
     this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId')).subscribe((res: any) => {
       this.lstsearchpayminv=res.obj;
+      console.log(res.obj);
       this.lstsearchpayminv.forEach(f => {
         var payLnGrp: FormGroup = this.payHeaderLineDtl();
         this.payHeaderLineDtlArray().push(payLnGrp);
@@ -247,7 +251,6 @@ voucherNo:[],
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
        this.lstinvoiceDetls=res.obj;
        var sum=0;
-
        for (let i=0;i<this.lstinvoiceDetls.length;i++){
         sum=sum+this.lstinvoiceDetls[i].invoiceAmt;
         // this.invAmtArr.push(this.lstinvoiceDetls[i].invoiceAmt);
@@ -467,6 +470,13 @@ console.log(jsonData);
   });
 }
 
+close(){
+  this.location.back();
+}
 
+refresh()
+      {
+        window.location.reload();
+      }
 
 }

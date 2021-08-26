@@ -67,7 +67,7 @@
             </td>
             <td>
               <!-- <input type="text" class="form-control" formControlName="repairNo"> -->
-              <select type="text" class="form-control" formControlName="repairNo" (ngModelChange)="onChangeItem()">
+              <select type="text" class="form-control" formControlName="repairNo" (ngModelChange)="onChangeRepairNo($event)">
                   <option>--Select--</option>
                   <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}</option>
                 </select>
@@ -230,7 +230,7 @@
                 </ng-template>
                 <input hidden formControlName="onHandQty">
                 <input hidden formControlName="id">
-                <td><select class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode">
+                <td><select class="form-control" style="height: 20px; width: 70px;" formControlName="batchCode" (ngModelChange)="onOptionBatchCode($event,trxLineIndex)">
                   <option *ngFor="let batcode of  batchdata" [value]="batcode.batchCode">{{batcode.batchCode}}</option>
                  </select>                </td>
                 <td><input type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="priceValue"></td>
