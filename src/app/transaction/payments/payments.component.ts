@@ -228,7 +228,9 @@ voucherNo:[],
      this.displayouId=true;
      this.displaysiteAddress=true;
      this.displaystatus=true;
-     this.transactionService.getsearchByPayment(suppNo).subscribe((res: any) => {
+   //  this.transactionService.getsearchByPayment(suppNo).subscribe((res: any) => {
+
+    this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId')).subscribe((res: any) => {
       this.lstsearchpayminv=res.obj;
       this.lstsearchpayminv.forEach(f => {
         var payLnGrp: FormGroup = this.payHeaderLineDtl();
@@ -405,7 +407,7 @@ voucherNo:[],
 paymentSave(){
   this.totAmt=0; 
   const totlCalControls=this.paymentForm.get('obj').value;
-  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
+  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {          
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
   const formValue: Ipayment = this.paymentForm.value;
