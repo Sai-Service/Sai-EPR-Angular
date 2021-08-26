@@ -138,9 +138,10 @@ export class McpEnrollmentComponent implements OnInit {
         Status1: any;
         inactiveDate: Date;
         display = true;
-        displayButton = true;
+        displayButton = false;
         dispCustButton=false;
         showDetailsButton=false;
+        searchStatus =false;
         //////////////////////////////////
   
 
@@ -340,7 +341,7 @@ export class McpEnrollmentComponent implements OnInit {
 
           serchByRegNo(mRegNo) {
 
-            alert("REGNO : "+ mRegNo);
+            // alert("REGNO : "+ mRegNo);
             this.service.getVehRegDetails(mRegNo)
             .subscribe(
               data => {
@@ -376,6 +377,7 @@ export class McpEnrollmentComponent implements OnInit {
                 }else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.mcpEnrollmentForm.reset();}
           }
             );
+           
           }
 
         
@@ -387,11 +389,13 @@ export class McpEnrollmentComponent implements OnInit {
               this.lstMcpEnquiryList = data;
               console.log(this.lstMcpEnquiryList);
                      
-        }
-        ); }   
+        } );
+        
+          this.displayButton=true;
+      }   
 
         LoadMcpEnrolledEnquiry(mEnqNo){
-          alert("Enroleld enq  :"+mEnqNo);
+          // alert("Enroleld enq  :"+mEnqNo);
           this.lstMcpEnquiryList=[];
            this.service.getEnrolledMcpEnqList(mEnqNo)
            .subscribe(
@@ -685,10 +689,12 @@ export class McpEnrollmentComponent implements OnInit {
             //   alert("Header Validation Sucessfull...") 
 
            const formValue: IMcpEnrollment =this.transeData(this.mcpEnrollmentForm.value);
+         
              this.service.McpEnrollmentMasterSubmit(formValue).subscribe((res: any) => {
              if (res.code === 200) {
                alert('RECORD INSERTED SUCCESSFUILY');
                this.displayButton=false;
+               this.searchStatus=true;
                this.enrollmentNo=res.obj.enrollmentNo;
                this.invoiceNo=res.obj.InvoiceNo;
                this.mcpEnrollmentForm.disable();
@@ -711,7 +717,7 @@ export class McpEnrollmentComponent implements OnInit {
          SearchByMcpEnrollNo(mEnrollNo:any){
            
            var mEnrollNo = mEnrollNo.toUpperCase();
-           alert("Enrollment No :"+mEnrollNo);
+          //  alert("Enrollment No :"+mEnrollNo);
             this.displayButton=false;
           // console.log(this.mcpEnrollmentForm.value);
          

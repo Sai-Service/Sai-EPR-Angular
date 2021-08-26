@@ -696,10 +696,17 @@
 
                                     </ng-template>
                                     <ng-template #elseBlock1>
-                                   
+
+                                        <div *ngIf="searchStatus; then thenBlock112; else elseBlock112"></div>
+                                        <ng-template #thenBlock112>
                                             <td>
-                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpEnrollmentForm">Print Slip </button>
+                                                <button   type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!mcpEnrollmentForm">Print Slip </button>
                                             </td>
+                                        </ng-template>
+                                        <ng-template #elseBlock112></ng-template>
+
+
+
                                             <!-- <td>
                                                 <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                             </td> -->
