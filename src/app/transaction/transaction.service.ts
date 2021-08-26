@@ -98,8 +98,8 @@ UpdateValidate(invoiceNum) {
     return this.http.post(url, poTdsRecord, options);
   }
 //=======================================Payment Componanat==============================
-getsearchByPayment(suppNo): Observable<any> {
-  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp/${suppNo}`);
+getsearchByPayment(suppNo,ouId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}`);
 }
 
 getsearchByInvDtls(suppNo,ouId): Observable<any> {

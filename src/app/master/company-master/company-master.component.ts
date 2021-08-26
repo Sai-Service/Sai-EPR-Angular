@@ -197,7 +197,7 @@ export class CompanyMasterComponent implements OnInit {
 
   onOptionsSelectedCity (city: any){
     // alert(city);
-    this.service.cityList1(city)
+    this.service.cityList1(city.target.value)
     .subscribe(
       data => {
         this.cityList1 = data;

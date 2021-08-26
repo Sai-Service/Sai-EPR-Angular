@@ -118,14 +118,21 @@ export class MasterService {
   invItemList(itemType,deptName):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
-
     const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
     });
   }
 
+  invItemList2(itemType,deptName,divisionId):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+    .set('dept', deptName)
+    .set('divisionId',divisionId)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
@@ -455,6 +462,11 @@ public VehItemSubmit(VehItemRecord) {
   const url = this.ServerUrl + '/itemMst/withInfo1';
   return this.http.post(url, VehItemRecord, options);
 }
+
+categoryIdList1(category,divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemCategory/typeDivision?itemType=${category}&divisionId=${divisionId}`);
+}
+
 categoryIdList(category): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemCategory/type/${category}`);
 }
@@ -1117,6 +1129,9 @@ public reservePost(reserverecord)
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
 }
+getPriceDetail(locId,itemid,subInv,repNo):Observable<any>{
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}`)
+}
 BillableType():Observable<any>{
   return this.http.get(this.ServerUrl+`/billableTy`);
 }
@@ -1137,10 +1152,22 @@ transType():Observable<any>{
 getsearchByJob(jobno):Observable<any>{
  return this.http.get(this.ServerUrl+`/mtrlIssue/repair?repairNo=${jobno}`)
 }
+
+
 subInvCode(deptId):Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue/${deptId}`);
 }
 
+
+subInvCode2(deptId, divisionId) {
+  const REQUEST_PARAMS = new HttpParams().set('deptId', deptId)
+                                         .set('divisionId', divisionId)
+  const REQUEST_URI = this.ServerUrl +'/subInvMst/wipissue/';
+  return this.http.get(REQUEST_URI, {
+    params: REQUEST_PARAMS,
+
+  });
+}
 subInvCode1():Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
 }
@@ -1150,6 +1177,9 @@ return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&division
 }
 ItemIdList():Observable<any>{
   return this.http.get(this.ServerUrl+'/itemMst/category');
+}
+ItemIdDivisionList(divisionId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/itemMst/SpAcItems/${divisionId}`);
 }
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)

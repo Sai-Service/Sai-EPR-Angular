@@ -1070,6 +1070,7 @@ export class PoInvoiceComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
+    this.selectedLine=i;
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
     this.invLineDetailsArray().clear();
@@ -1867,15 +1868,19 @@ export class PoInvoiceComponent implements OnInit {
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
-    var amount = arrayControl[0].invoiceAmt;
+    var amount = arrayControl[this.selectedLine].invoiceAmt;
+    alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
     }
+    alert(totalOfInvLineAmout);
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       totalOfDistributionAmout = totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)
     }
+
+    alert('Dist Amt'+ ' '+ totalOfDistributionAmout)
     // alert('totalOfDistributionAmout ' + totalOfDistributionAmout);
 
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {

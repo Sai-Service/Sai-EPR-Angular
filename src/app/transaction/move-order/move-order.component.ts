@@ -5,6 +5,7 @@ import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angu
 import { Router } from '@angular/router';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+import { ServiceService } from 'src/app/service/service.service';
 import { DatePipe } from '@angular/common';
 
 
@@ -34,6 +35,9 @@ interface ImoveOrder{
     frmLocator:string;
     avlqty:number;
     JobNo:string;
+    priceValue:number;
+    batchCode:string;
+    regNo:string;
 }
 
 @Component({
@@ -104,8 +108,13 @@ export class MoveOrderComponent implements OnInit {
  pipe = new DatePipe('en-US');
  now=new Date();
  creationDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+ priceValue:number;
+ batchCode:string;
+ public batchdata = [];
+ pricedata:any[];
+ regNo:string;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
    this.moveOrderForm=fb.group({
     requestNumber:[],
     transactionTypeId:['',[Validators.required]],
@@ -127,6 +136,7 @@ export class MoveOrderComponent implements OnInit {
     JobNo:[''],
     issueTo:['',[Validators.required]],
     deptName:[],
+    regNo:[],
     // subInventoryId:[],
     trxLinesList:this.fb.array([]),
 
@@ -160,6 +170,8 @@ export class MoveOrderComponent implements OnInit {
       toLocator:[],
       onHandQty:[],
       id:[],
+      priceValue:[],
+      batchCode:[],
     });
   }
   addnewtrxLinesList(i:number){
@@ -191,6 +203,7 @@ export class MoveOrderComponent implements OnInit {
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.issueBy=(sessionStorage.getItem('name'));
     this.deptName=(sessionStorage.getItem('deptName'));
+
     
     // alert(this.issueBy);
     console.log(this.divisionId);
@@ -205,7 +218,7 @@ export class MoveOrderComponent implements OnInit {
        } );
        
 
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {this.subInvCode = data;
         console.log(this.subInventoryId);
         // alert('subInventoryCode');
@@ -224,11 +237,11 @@ export class MoveOrderComponent implements OnInit {
       console.log(data);
      }
    );
-   this.service.BillableType().subscribe(
-    data=>{
-      this.Billabletype=data;
-    }
-   )
+  //  this.service.BillableType().subscribe(
+  //   data=>{
+  //     this.Billabletype=data;
+  //   }
+  //  )
    this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
       (data => {this.issueByList = data;
           console.log(this.issueByList);
@@ -356,24 +369,33 @@ var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   }
   );
 }
-
-onChangeItem()
+onChangeRepairNo(event)
 {
-  this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
-    data => {
-      this.ItemIdList = data;
-      // console.log(this.invItemId);
-    });
+  var selregno=this.workshopIssue.find(d=>d.jobCardNum===event)
+  this.serviceService.billableTyIdLstFN(event, selregno.regNo)
+  .subscribe(
+    data1 => {
+     
+      this.Billabletype = data1;
+      console.log(data1);
+      console.log(this.Billabletype);
+    }
+     )
+     this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
+      data => {
+        this.ItemIdList = data;
+        // console.log(this.invItemId);
+      });
 }
+
  onOptionSelectedSubInv(event:any,i)
  {
-  // alert('2');
-  // alert(subCode.subInventoryId);
-  // alert('LocID'+this.locId);
-  // var subCode=this.moveOrderForm.get('frmSubInvCode').value;
-  // let select1= this.subInvCode.find(d=>d.subInventoryCode===this.frmSubInvCode);
-  // alert(this.subInvCode.subInventoryId+'ID');
+   alert('----' + event +'*****');
+   if(event==='')
+   {return;
+   }
   var subInv=this.subInvCode.subInventoryId;
+  var repNo=this.moveOrderForm.get('repairNo').value;
 
   let locId1=this.moveOrderForm.get('locId');
   var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
@@ -432,9 +454,42 @@ onChangeItem()
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
     });
+    this.service.getPriceDetail(this.locId,itemid,subInv,repNo).subscribe
+    ((res: any) => {
+      if (res.code === 200)
+      {
+         this.pricedata=res.obj;
+        for(let j=0;j<res.obj.length;j++)
+        { 
+          this.batchdata.push({'batchCode': res.obj[j].batchCode});
+        }
+        // if(this.batchdata.length===1)
+        // {
+        //   alert('hello');
+        //   trxLnArr2.controls[i].patchValue({batchCode:this.batchdata[0]});
+        // }
+        // else{
+        trxLnArr2.controls[i].patchValue({batchCode:this.batchdata});
+        // }
+        // trxLnArr2.controls[i].patchValue({priceValue:res.obj.priceValue,batchCode:res.obj.batchCode});
+      }
+      else {
+        if (res.code === 400) {
+          alert(res.message);
+          trxLnArr2.controls[i].patchValue({invItemId:'',description:'',frmLocatorId:''});
+        }
+      }
+    });
     
  }
-
+onOptionBatchCode(event,i)
+{
+  alert(event);
+  var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
+  var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
+  alert(selbatchCode.priceValue+'Price');
+  trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});;
+}
 AvailQty(event:any,i:number) 
 {
 

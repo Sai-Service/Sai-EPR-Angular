@@ -82,30 +82,21 @@ export class LocationMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.LocationMasterForm = fb.group({
       locId: [],
-      // locCode:[],
       locCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(35),Validators.pattern('[a-zA-Z0-9.]*')]],
-      // locName:[],
       locName: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(240),Validators.pattern('[a-zA-Z 0-9]*')]],
-      // ouId:[],
       ouId: ['', [Validators.required]],
-      // address1:[],
       address1: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
-      // address2:[],
       address2: ['',[Validators.required, Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],
       address3: ['',[Validators.maxLength(250)]],
       address4: ['',[Validators.maxLength(250),]],
-      // city:[],
       city: ['', [Validators.required]],
-      // pinCd:[],
       pinCd: ['', [Validators.required, Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state1: ['', [Validators.required]],
-      // state: ['', [Validators.required]],
       country: ['', [Validators.required, Validators.maxLength(50)]],
       phone1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(12)]],
       phone2: ['', [Validators.pattern('[0-9]*'),Validators.minLength(10), Validators.maxLength(12)]],
       emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       region: ['',[Validators.required]],
-      // gstNo: ['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [],
@@ -113,7 +104,6 @@ export class LocationMasterComponent implements OnInit {
       status: ['', [Validators.required]],
       endDate: [],
       ouName:[],
-      // attribute1:[],
     });
   }
   get f() { return this.LocationMasterForm.controls; }
@@ -187,17 +177,21 @@ export class LocationMasterComponent implements OnInit {
 
 
   newMast() {
+    this.submitted = true;
+    if(this.LocationMasterForm.invalid){
+    return;
+    }
     const formValue: ILocationMaster = this.transData(this.LocationMasterForm.value);
     this.service.LocationMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        window.location.reload();
+        alert(res.message);
+        // window.location.reload();
         // this.LocationMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.LocationMasterForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
       }
     });

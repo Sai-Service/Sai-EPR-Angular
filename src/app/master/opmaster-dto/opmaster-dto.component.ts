@@ -29,6 +29,7 @@ import { get } from 'jquery';
 interface IpostPO {
   poHeaderId: number;
   poLineId: number;
+  divisionId:number;
   ouId: number;
   poDate: Date;
   poType: string;
@@ -125,6 +126,7 @@ export class OPMasterDtoComponent implements OnInit {
   showModal: boolean;
   content: number;
   title: string;
+  divisionId:number;
   mainType: string;
   userList1: any[] = [];
   userList2: any[] = [];
@@ -350,6 +352,7 @@ export class OPMasterDtoComponent implements OnInit {
       currencyCode: [],
       authorizationStatus: [],
       totalAmt: [],
+      supplierAddress:[],
       suppInvNo: ['', [Validators.minLength(3)]],
       // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
@@ -412,12 +415,16 @@ export class OPMasterDtoComponent implements OnInit {
     console.log(sessionStorage.getItem('emplId'));
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
+    console.log( this.dept);
     this.deptName = (sessionStorage.getItem('deptName'));
     var locCODE = sessionStorage.getItem('locCode')
     var temp = locCODE.split('.');
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
+    var divisionName=(sessionStorage.getItem('divisionName'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    this.poMasterDtoForm.patchValue({divisionName:(sessionStorage.getItem('divisionName'))})
     // if (this.deptName === 'Sales' || this.deptName === 'Service' || this.deptName === 'DP' || this.deptName === 'Spares') {
     //   this.displayDept = true;
     //   //  this.dept = this.deptName
@@ -452,8 +459,8 @@ export class OPMasterDtoComponent implements OnInit {
           this.DepartmentListById = data;
           console.log(this.DepartmentListById);
           console.log(this.DepartmentListById.divisionName);
-          this.poMasterDtoForm.patchValue(this.DepartmentListById.divisionName);
-          this.divisionName = this.DepartmentListById.divisionName
+          // this.poMasterDtoForm.patchValue(this.DepartmentListById.divisionName);
+          // this.divisionName = this.DepartmentListById.divisionName
         }
       );
 
@@ -823,7 +830,6 @@ export class OPMasterDtoComponent implements OnInit {
           } if (data.code === 200) {
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
-
             this.lstcomments1 = data.obj;
             const status = this.lstcomments1.authorizationStatus;
             if (status === 'Inprogress') {
@@ -910,17 +916,7 @@ export class OPMasterDtoComponent implements OnInit {
               this.displaygoReceiptForm = false;
               this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
-
-              // let control = this.poMasterDtoForm.get('poLines') as FormArray;
-              // for (let i = 0; i < data.poLines.length - 1; i++) {
-              //   var poLine: FormGroup = this.lineDetailsGroup();
-              //   control.push(poLine);
-              //   this.displayPoLine[i] = false;
-              //   this.hideArray[i] = true;
-              // }
-              // this.poMasterDtoForm.patchValue(this.lstcomments1);
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
-              // for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
@@ -1149,6 +1145,7 @@ export class OPMasterDtoComponent implements OnInit {
     const formValue: IpostPO = this.transData(this.poMasterDtoForm.value);
     formValue.authorizationStatus = 'Inprogress';
     formValue.ouId = this.ouId;
+  formValue.divisionId=this.divisionId;
     formValue.currencyCode = 'INR';
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     this.baseAmount = 0;
@@ -1797,7 +1794,7 @@ export class OPMasterDtoComponent implements OnInit {
         if (this.invItemList.length <= 0) {
 
 
-          this.service.invItemList(itemType, (sessionStorage.getItem('deptName')))
+          this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')),(sessionStorage.getItem('divisionId')))
             .subscribe(
               data => {
                 this.invItemList = data;

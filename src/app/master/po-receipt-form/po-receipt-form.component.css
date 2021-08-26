@@ -131,6 +131,11 @@
   width: 100%;
 }
 
+.grid_scroll2{
+  overflow: auto;
+   height: 300px; 
+  width: 100%;
+}
 .grid_scroll1{
   overflow: auto;
   height: 400px; 

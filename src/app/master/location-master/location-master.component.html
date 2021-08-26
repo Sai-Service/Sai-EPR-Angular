@@ -294,7 +294,7 @@
                             </td>
                             <td>
                                 <!-- (keyup)="savegstNo($event)" -->
-                                <input disabled formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
+                                <input  formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f. panNo.errors" class="invalid-feedback">
@@ -343,6 +343,19 @@
                                 <div *ngIf="f.status.errors.required">status is required</div>
                                 <span
                                     *ngIf="!LocationMasterForm.get('status').valid && LocationMasterForm.get('status').touched">Please
+                                    Enter valid status </span>
+                            </div>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                LOC&nbsp;ID&nbsp;:
+                            </td>
+                            <td>
+                                <input  type="number"  [ngModel]="locId" formControlName="locId"
+                                class="form-control">
+                            <div *ngIf="submitted && f. locId.errors" class="invalid-feedback">
+                                <div *ngIf="f.locId.errors.required">status is required</div>
+                                <span
+                                    *ngIf="!LocationMasterForm.get('locId').valid && LocationMasterForm.get('locId').touched">Please
                                     Enter valid status </span>
                             </div>
                             </td>
