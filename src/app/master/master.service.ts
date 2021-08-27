@@ -115,15 +115,15 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
 
-  invItemList(itemType,deptName):Observable<any> {
+  invItemList(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
+    .set('divisionId',divisionId)
     const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
     });
   }
-
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
@@ -1171,6 +1171,7 @@ subInvCode2(deptId, divisionId) {
 subInvCode1():Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
 }
+
 issueByList(locId,deptId,divisionId):Observable<any>{
 return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
 }
@@ -1881,6 +1882,15 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReversalReason');
   }
 
+  RefReasonLst(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/REFUND_REASON');
+  }
+
+  
+  GLperiod(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/glPeriod/currentMonthPeriod');
+  }
+
   public ArReceiptSubmit(ArReceiptRecord) {
     const options = {
       headers: this.headers
@@ -1909,6 +1919,16 @@ OrderCategoryList(): Observable<any> {
     };
     const url = this.ServerUrl + '/arCashReceipts/apply/inv';
     return this.http.post(url, ArReceiptApplyRecord, options);
+  }
+  ////////////////////////// ///////////////////////////////////////
+
+   ////////////////////////// RECEIPT REFUND SUBMIT /////////////////////
+   public ArReceiptRefundSubmit(ArReceiptRefundRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/arCashReceipts/ArReceiptRef';
+    return this.http.post(url, ArReceiptRefundRecord, options);
   }
   ////////////////////////// ///////////////////////////////////////
 
@@ -2043,7 +2063,7 @@ OrderCategoryList(): Observable<any> {
     }
 
     RegNoListFN() : Observable<any> {
-      return this.http.get(this.ServerUrl +`/itemMst/regList`);
+      return this.http.get(this.ServerUrl +`/itemMst/regList/1`);
     }
 
     VehVinList() : Observable<any> {
@@ -2074,7 +2094,7 @@ OrderCategoryList(): Observable<any> {
     }
 
     variantDetailsList(mVariant): Observable<any> {
-      alert(mVariant );
+      // alert(mVariant );
       return this.http.get(this.ServerUrl + `/VariantMst/VariantDesc/${mVariant}`);
     }
 
@@ -2336,11 +2356,11 @@ mcpRegSearch(mRegNo): Observable<any> {
    return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
  } 
 
- McpCancelUpdate(mEnrollNo,mRsnId,mRefAmt,McpCancelrRecord) {
+ McpCancelUpdate(McpCancelrRecord) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/McpEnrollMst/mcpCancByEnroll?enrollmentNo=${mEnrollNo}&cancRsnId=${mRsnId}&refundAmt=${mRefAmt}`);
+  const url = (this.ServerUrl + `/McpEnrollMst/mcpCancByEnroll`);
   return this.http.put(url, McpCancelrRecord, options);
 
   // http://localhost:8081/McpEnrollMst/mcpCancByEnroll?enrollmentNo=ENR201-2&cancRsnId=461&refundAmt=6500

@@ -1356,14 +1356,15 @@ export class OPMasterDtoComponent implements OnInit {
                 this.ItemDetailsList = data;
                 console.log(this.ItemDetailsList);
                 var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+                if (this.ItemDetailsList.taxCategoryId !=null){
                 this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-
+              }
                   (patch.controls[index]).patchValue(
                     {
                       diss1: 0,
                       uom: this.ItemDetailsList.uom,
-                      invDescription: this.ItemDetailsList.invDescription,
-                      invCategory: this.ItemDetailsList.invCategory,
+                      invDescription: data.invDescription,
+                      invCategory: data.invCategory,
                       hsnSacCode: this.ItemDetailsList.hsnSacCode,
                       taxCategoryName: this.ItemDetailsList.taxCategoryName,
                       segmentName: this.ItemDetailsList.segmentName,
@@ -1788,9 +1789,9 @@ export class OPMasterDtoComponent implements OnInit {
         this.displaygetInvItemId = true;
         this.displaysupplierSiteId = false;
         this.displayBillShipList = false;
-        this.displayBillShipList1 = false
+        this.displayBillShipList1 = false;
         var deptName1 = this.poMasterDtoForm.get('dept').value;
-
+        this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
         if (this.invItemList.length <= 0) {
 
 
@@ -1821,7 +1822,7 @@ export class OPMasterDtoComponent implements OnInit {
         this.displayinvDesc = false;
         (document.getElementById("invDescription") as any).disabled = false;
         var deptName = 'NA';
-        this.service.invItemList(itemType, deptName)
+        this.service.invItemList(itemType, deptName,(sessionStorage.getItem('divisionId')))
           .subscribe(
             data => {
               this.invItemList = data;
@@ -1924,7 +1925,7 @@ export class OPMasterDtoComponent implements OnInit {
     return matches;
   };
 
-  getInvItemId($event) {
+  getInvItemId($event,i) {
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
     this.userList2 = [];
 
@@ -1933,6 +1934,7 @@ export class OPMasterDtoComponent implements OnInit {
         this.userList2 = this.searchFromArray1(this.invItemList, userId);
       }
     }
+    
   }
 
   searchFromArray1(arr, regex) {

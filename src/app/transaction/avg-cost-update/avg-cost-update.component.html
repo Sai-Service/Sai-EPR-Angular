@@ -214,16 +214,22 @@
                                                 <input  style="width: 100px;"  type="text" formControlName="locatorId" [(ngModel)]="locatorId" class="form-control" placeholder="locatorId "  >
                                                 </td>
 
-                                                <!-- <td>
-                                                <input  style="width: 70px;" type="text" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode"  class="form-control" placeholder="subInventoryCode "  >
-                                                </td> -->
-                                                <td>
-                                                    <select style="width: 100px;" class="form-control" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
+                                                 <td>
+                                                    <!-- <select style="width: 100px;" class="form-control" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
                                                     <option disabled>--Select--</option>
                                                     <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">
                                                         {{subCode.subInventoryCode}}
                                                     </option>
-                                                    </select>
+                                                    </select> -->
+                                               
+
+                                                        <select style="width: 100px;" formControlName="subInventoryCode" id="subInventoryCode" class="form-control">
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryCode"  >
+                                                                <!-- {{sc.subInventoryId}}- -->
+                                                            {{sc.subInventoryCode}}
+                                                            </option>
+                                                        </select>
                                                 </td>
 
                                                 <td>

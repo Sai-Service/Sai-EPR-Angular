@@ -868,93 +868,26 @@
                                         <input type="text" disabled formControlName="locId" class="form-control"
                                         [(ngModel)]='locId' style="height: 20px;width: 60px;">
                                     </td>
-                                    <td> <input disabled type="text"
+                                    <td>
+                                        <div *ngIf="displaysubInvDesc[i]; then thensubInvDesc; else elsesubInvDesc"></div>
+                                        <ng-template #thensubInvDesc>
+                                        </ng-template>
+                                        <ng-template #elsesubInvDesc> 
+                                            <input disabled type="text"
                                             formControlName="subInvDesc"
                                             class="form-control" style="height: 20px;width:60px;">
+                                        </ng-template>
                                     </td>
                                     <td> 
-                                        <div *ngIf="displaylocatorDesc; then thenlocatorDesc; else elselocatorDesc"></div>
+                                        <div *ngIf="displaylocatorDesc[i]; then thenlocatorDesc; else elselocatorDesc"></div>
                                         <ng-template #thenlocatorDesc>
-                                            <input disabled type="text" formControlName="locatorDesc" [(ngModel)]="locatorDesc" value={{locatorDesc}} class="form-control" style="height: 20px;width:60px;">
+                                            <input disabled type="text" formControlName="locatorDesc"  value={{locatorDesc}} class="form-control" style="height: 20px;width:100px;">
                                         </ng-template>
                                         <ng-template #elselocatorDesc>
                                         <input type="text" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"
-                                            formControlName="locatorDesc" (click)="openLocator(i)" [(ngModel)]="locatorDesc"
+                                            formControlName="locatorDesc" (click)="openLocator(i)" 
                                             class="form-control" style="height: 20px;width: 100px;">
-                                            <input hidden type="number" formControlName="locatorId" [(ngModel)]="locatorId" >
-                                            <div class="modal fade" id="myModal1" role="dialog">
-                                                <div class="modal-dialog modal-sm">
-                                                  <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <label style="text-align: center;margin-left: 7rem;">Locator</label>
-                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                      <table class="center" style="width: 100%;">
-                                                        <tr>
-                                                            <td style="width: 35%" class="LabelFontStyle1">
-                                                                Floor&nbsp;:
-                                                            </td>
-                                                            <td>
-                                                                <input type="text" formControlName="segment11"  value={{segment11}} [(ngModel)]='segment11' class="form-control"
-                                                                [ngClass]="{ 'is-invalid': submitted && f.segment11.errors }"
-                                                                placeholder="Floor" style="width: 52px;" >
-                                                                <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
-                                                                    <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
-                                                                    <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
-                                                                    <div *ngIf="f.segment11.errors?.pattern">Required Two Digit Code</div>
-                                                                <span *ngIf="!poReceiptForm.get('segment11').valid && poReceiptForm.get('segment11').touched">Required Two Digit Code</span>
-                                                            </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 35%" class="LabelFontStyle1">
-                                                                Rack&nbsp;:
-                                                            </td>
-                                                            <td>
-                                  <input formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
-                                    [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
-                                                placeholder="Rack" style="width: 52px;">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 35%" class="LabelFontStyle1">
-                                                                Rack&nbsp;Number&nbsp;:
-                                                            </td>
-                                                            <td>
-                                                                <input  formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
-                                                                [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
-                                                                placeholder="Rack No" style="width: 52px;">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 35%" class="LabelFontStyle1">
-                                                                Row&nbsp;:
-                                                            </td>
-                                                            <td>
-                                                                <input formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
-                                                                [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
-                                                                placeholder="Row" style="width: 52px;">
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 45%" class="LabelFontStyle1">
-                                                                Row&nbsp;Number&nbsp;:
-                                                            </td>
-                                                            <td>
-                                                                <input  formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
-                                                                [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
-                                                                placeholder="Row No" style="width: 52px;">
-                                                            </td>
-                                                        </tr>
-                                                      </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="okLocator(i)">Ok</button>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div> 
+                                            <input hidden type="number" formControlName="locatorId"  >
                                         </ng-template>                                                                            
                                     </td>
                                     <td> <input disabled type="text"
@@ -1072,7 +1005,7 @@
                                         </td>
                                         <td> 
                                             <input type="text" disabled class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"
-                                                formControlName="locatorDesc"[(ngModel)]="locatorDesc"
+                                                formControlName="locatorDesc"
                                                 class="form-control" style="height: 20px;width: 100px;">
                                                
                                                 <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
@@ -1314,6 +1247,82 @@
                 </table>
                 
             </fieldset>
+
+
+
+            <div class="modal fade" id="myModal1" role="dialog">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <label style="text-align: center;margin-left: 7rem;">Locator+{{title}}</label>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <table class="center" style="width: 100%;">
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Floor&nbsp;:
+                            </td>
+                            <td>
+                                <input type="text" formControlName="segment11"  value={{segment11}} [(ngModel)]='segment11' class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.segment11.errors }"
+                                placeholder="Floor" style="width: 52px;" >
+                                <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
+                                    <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
+                                    <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
+                                    <div *ngIf="f.segment11.errors?.pattern">Required Two Digit Code</div>
+                                <span *ngIf="!poReceiptForm.get('segment11').valid && poReceiptForm.get('segment11').touched">Required Two Digit Code</span>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Rack&nbsp;:
+                            </td>
+                            <td>
+  <input formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
+                placeholder="Rack" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Rack&nbsp;Number&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
+                                placeholder="Rack No" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Row&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
+                                placeholder="Row" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 45%" class="LabelFontStyle1">
+                                Row&nbsp;Number&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
+                                placeholder="Row No" style="width: 52px;">
+                            </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="okLocator(content)">Ok</button>
+                    </div>
+                  </div>
+                </div>
+              </div> 
             </form>
         </div>
     </div>

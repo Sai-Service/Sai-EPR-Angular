@@ -18,18 +18,19 @@
                                 Division&nbsp;Code&nbsp;:&nbsp;
                             </td>
                             <td>
-                                <select formControlName="divisionId" id="divisionId" class="form-control">
-                                    <option>--Select--</option>
+                                <select formControlName="divisionId" id="divisionId" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.divisionId.errors }">
+                                    <option></option>
                                     <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
                                         {{sc.divisionId}}-{{sc.divisionName}}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && f. divisionId.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
                                     <div *ngIf="f.divisionId.errors.required">Division Code is required
                                     </div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!itemCategoryMasterForm.get('divisionId').valid && itemCategoryMasterForm.get('divisionId').touched">Please
-                                        Enter division Code </span>
+                                        Enter division Code </span> -->
                                 </div>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">
@@ -40,7 +41,12 @@
                                 value={{description}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
                                 placeholder="Enter description">
-                            </td>
+                                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                    <div *ngIf="f.description.errors.required">Digision cannot be blank</div>
+                                    <div *ngIf="f.description.errors.maxlength">Maximum 50 characters allowed</div>
+                                    <div *ngIf="f.description.errors.minlength">Minimum  5 characters required</div>
+                                </div>
+                                </td>
                             <td style="width: 15%" class="LabelFontStyle1">
                                 Item&nbsp;Category&nbsp;:&nbsp;
                             </td>
@@ -71,11 +77,14 @@
                         <td>
                             <select formControlName="mainType" id="mainType"
                                 [(ngModel)]='mainType' class="form-control" style="width: 120px;">
-                                <option>--Select--</option>
+                                <option></option>
                                     <option *ngFor="let sc of  mainTypeList">
                                         {{sc.codeDesc}}
                                 </option>
                             </select>
+                            <div *ngIf="submitted && f.mainType.errors" class="invalid-feedback">
+                                <div *ngIf="f.mainType.errors.required">Item type cannot be blank</div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -84,12 +93,15 @@
                         <td>
                             <select formControlName="subType" id="subType"
                                 [(ngModel)]='subType' class="form-control" style="width: 120px;">
-                                <option>--Select--</option>
+                                <option></option>
                                 <option *ngFor="let sc of  subTypeList">
                                     {{sc.codeDesc}}
                                     <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
                                 </option>
                             </select>
+                            <div *ngIf="submitted && f.subType.errors" class="invalid-feedback">
+                                <div *ngIf="f.subType.errors.required">Item Sub type cannot be blank</div>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -105,22 +117,34 @@
         </div>
     </div>
 </div>
-                            </td>
+ <!-- Derina -->
+<div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
+    <div *ngIf="f.categoryId.errors.required">Category cannot be blank</div>  
+</div>
+ </td>
                         </tr>
 <tr>
 <td style="width: 15%" class="LabelFontStyle">Principle&nbsp;Item&nbsp;:&nbsp;</td>
 <td>
-    <select formControlName="princpleItem" id="princpleItem"
-    class="form-control">
-    <option>--Select--</option>
+    <select formControlName="princpleItem" id="princpleItem" class="form-control"
+    [ngClass]="{ 'is-invalid': submitted && f.princpleItem.errors }"
+    >
+    <option></option>
     <option *ngFor="let sc of YesNoList">
         {{sc.code}}
     </option>
-</select>
+    </select>
+    <div *ngIf="submitted && f.princpleItem.errors" class="invalid-feedback">
+         <div *ngIf="f.princpleItem.errors.required">Principle item cannot be blank</div>
+    </div>
 </td>
+
 <td style="width: 15%" class="LabelFontStyle">Status:&nbsp;</td>
 <td>
     <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
+    <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+        <div *ngIf="f.status.errors.required">status is required</div>
+    </div>
 </td>
                         </tr>
                     </ng-template>
@@ -237,8 +261,8 @@ placeholder="Select Item Category">
                         <ng-template #thenBlock1>
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register"
-                                    [disabled]="!itemCategoryMasterForm.valid"
                                     (click)="newItemCatMast()">New</button>
+                                    <!-- [disabled]="!itemCategoryMasterForm.valid" -->
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary" id="register"

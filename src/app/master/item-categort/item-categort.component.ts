@@ -60,14 +60,14 @@ export class ItemCategortComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.itemCategoryMasterForm = fb.group({
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(50),Validators.pattern('[a-zA-Z0-9]*')]],
       divisionId: ['', [Validators.required]],
       attribute1: ['', [Validators.required]],
       princpleItem: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      subType: [''],
-      mainType: [''],
-      categoryId: [],
+      subType: ['', [Validators.required]],
+      mainType: ['', [Validators.required]],
+      categoryId:['', [Validators.required]],
       endDate:[],
       // divisionCode:[''],
     })
@@ -136,6 +136,10 @@ export class ItemCategortComponent implements OnInit {
   }
 
   newItemCatMast() {
+    this.submitted = true;
+    if(this.itemCategoryMasterForm.invalid){
+    return;
+    } 
     const formValue: IItemCategory = this.transData(this.itemCategoryMasterForm.value);
     this.service.ItemCatMastSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -197,6 +201,7 @@ export class ItemCategortComponent implements OnInit {
     }
   }
   onOptionsSelected(event: any) {
+
     this.Status1 = this.itemCategoryMasterForm.get('status').value;
     // alert(this.Status1);
     if (this.Status1 === 'Inactive') {
