@@ -290,8 +290,8 @@ voucherNo:[],
 
 
     onOptionsSelected(bankAccountNo: string, index) {
-      // alert(bankAccountNo);
-      // if(bankAccountNo == undefined){
+      // add  check for cash payment
+       if(bankAccountNo != undefined){
         // alert(bankAccountNo);
         var value=bankAccountNo.split('/');
       // alert(value[0]);
@@ -307,7 +307,7 @@ voucherNo:[],
           console.log(this.docCategoryCodeList);
         }
       );
-      // }
+       }
       
     }
 
@@ -416,9 +416,10 @@ paymentSave(){
   const formValue: Ipayment = this.paymentForm.value;
   console.log(formValue.suppId);
   var jsonData=this.paymentForm.value.obj1[0];
-  
+  if(jsonData.bankAccountNo != undefined){
   var value=jsonData.bankAccountNo.split('/');
   jsonData.bankAccountNo= value[0];
+  }
   jsonData.country ='India';
   jsonData.currency='INR';
   jsonData.ouId= this.ouId ;

@@ -34,10 +34,10 @@
                     <th scope="col">Supplier Address</th>
                     <th scope="col">Country</th>
                     <th scope="col">Payment Date</th>
-                    <th scope="col">Payment Amount</th>
-                    <th scope="col">Bank Account</th>
-                    <th scope="col">Currency</th>
                     <th scope="col">Payment Method</th>
+                    <th scope="col">Payment Amount</th>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Bank Account</th>
                     <th scope="col">Payment Process profile</th>
                     <th scope="col">Payment Document</th>
                     <th scope="col">Document Number</th>
@@ -150,7 +150,18 @@
                         style="width: 100px;height: 25px;font-size: 10px;">  
                     </td>
                     <td>
+                        <select formControlName="paymentMethodId"  id="paymentMethodId" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
+                            <option>--Select--</option>
+                            <option *ngFor="let paymentDoc of  paymentIdListList" [ngValue]="paymentDoc.lookupValueId" >
+                                {{paymentDoc.lookupValue}}
+                            </option>
+                        </select>
+                    </td>
+                    <td>
                         <input type="text" class="form-control" formControlName="PayAmount" style="width: 100px;height: 25px;font-size: 10px;">  
+                    </td>
+                    <td>
+                        <input disabled  class="form-control" formControlName="currency" value={{currency}} style="width: 60px;height: 25px;font-size: 10px;">
                     </td>
                     <td>
                         <!-- (ngModelChange)='onOptionsSelected($event)' -->
@@ -164,17 +175,8 @@
                             </option>
                         </select>
                     </td>
-                    <td>
-                        <input disabled  class="form-control" formControlName="currency" value={{currency}} style="width: 60px;height: 25px;font-size: 10px;">
-                    </td>
-                    <td>
-                        <select formControlName="paymentMethodId"  id="paymentMethodId" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
-                            <option>--Select--</option>
-                            <option *ngFor="let paymentDoc of  paymentIdListList" [ngValue]="paymentDoc.lookupValueId" >
-                                {{paymentDoc.lookupValue}}
-                            </option>
-                        </select>
-                    </td>
+                
+                   
                     <td>
                         <select formControlName="docCategoryCode" id="docCategoryCode" class="form-control"
                         [ngModel]="docCategoryCode"   (ngModelChange)='onOptionsSelectedDocCat($event)'
