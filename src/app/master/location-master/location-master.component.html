@@ -286,11 +286,7 @@
                             </td>
                             <td>
                                 <!-- (keyup)="savegstNo($event)" -->
-<<<<<<< HEAD
                                 <input formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
-=======
-                                <input  formControlName="panNo" value={{panNo}} class="form-control" [(ngModel)]="panNo" (keyup)="savegstNo($event)" 
->>>>>>> 56a0beb4f20153c6cea6880ae31334b7167b4129
                                 [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                 placeholder="Please enter pan no">
                             <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
@@ -848,7 +844,7 @@
             <th scope="col">Status</th>
             <th scope="col">Select one</th>
         </tr>
-    </tbody>
+    
     <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
         <td>{{com.locId}}</td>
         <td>{{com.locCode}}</td>
@@ -870,6 +866,7 @@
         <td>{{com.status}}</td>
         <td><button class="btn btn-primary" (click)="Select(com.locId)">Select</button></td>
     </tr>
+</tbody>
     </table>
 </div>
 </div>
