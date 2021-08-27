@@ -228,6 +228,7 @@ export class PoReceiptFormComponent implements OnInit {
       periodName:[''],
       postedDate:[''],
       jeCategory:[''],
+      ledgerId:[''],
       name1:[''],
       runningTotalDr:[''],
       runningTotalCr:[''],
@@ -997,17 +998,6 @@ refresh()
         formValue.baseAmount=this.baseAmount;
         formValue.taxAmt=this.taxAmt;
         formValue.totalAmt=this.totalAmt;
-        // var test = this.lstcompolines;
-//         var arrayControl = this.poReceiptForm.get('poLines').value
-//         for(let i =0; i<this.lstcompolines.poLines.length; i++){
-// this.lstcompolines.poLines[i].qtyReceived= arrayControl[i].qtyReceived;
-// this.lstcompolines.poLines[i].baseAmount= arrayControl[i].baseAmount;
-// this.lstcompolines.poLines[i].taxAmount= arrayControl[i].taxAmount;
-// this.lstcompolines.poLines[i].totAmount= arrayControl[i].totAmount;
-// this.lstcompolines.poLines[i].qtyReceived=  formValue.qtyReceived;
-// this.lstcompolines.poLines[i].baseAmount=  formValue.baseAmount;
-// this.lstcompolines.poLines[i].taxAmount= formValue.taxAmt;
-// this.lstcompolines.poLines[i].totAmount= formValue.totalAmt;
 this.locId=Number(sessionStorage.getItem('locId'));
 // alert(this.lstcompolines.poLines[i].qtyReceived)
         // }
@@ -1019,6 +1009,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
         this.receiptNo=res.obj;
         this.disabled = false;
         this.disabledLine=false;
+        this.disabledViewAccounting=false;
         alert(res.message);
 
         // this.poReceiptForm.reset();

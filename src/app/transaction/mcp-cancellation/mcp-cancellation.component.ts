@@ -12,8 +12,16 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 
 interface IMcpCancel {   
   enrollmentNo :string;
-  cancRsnId:number;
-  refundAmt:number;
+   refundAmt:number;
+   netRefAmt
+   cancelRsnId:number;
+  // cancRemarksId:string;
+  cancelRemarks:string;
+  refundApprovedBy:string;
+  refundIncludeGst:string;
+  
+
+
 
 }
 
@@ -150,7 +158,7 @@ export class McpCancellationComponent implements OnInit {
         taxTotal:number;
         netTotal:number;
 
-        mcpCancelCharges:string;
+        refundIncludeGst:string;
         mcpCancelValue:number;
         // mcpCancelDate:Date;
         mcpCancelReason:string;
@@ -170,15 +178,19 @@ export class McpCancellationComponent implements OnInit {
         labAmt:number;
         matAmt:number;
 
-        cancRsnId:number;
-        cancRemarksId:number;
+        cancelRsnId:number;
+        // cancRemarksId:string;
+        cancelRemarks:string;
+        refundApprovedBy:string;
 
           //////////////////////////////////
           displayInactive = true;
           Status1: any;
           inactiveDate: Date;
           display = true;
-          displayButton = true;
+          displayButton = false;
+          checkValidation=false;
+         
           //////////////////////////////////
   
 
@@ -280,7 +292,7 @@ export class McpCancellationComponent implements OnInit {
             searchEnrollDate:[],
 
 
-            mcpCancelCharges:[],
+            refundIncludeGst:[],
             mcpCancelValue:[],
             mcpCancelDate:[],
             mcpCancelReason:[],
@@ -298,8 +310,10 @@ export class McpCancellationComponent implements OnInit {
 
             labAmt:[],
             matAmt:[],
-            cancRsnId:[],
-            cancRemarksId:[],
+            cancelRsnId:[],
+            // cancRemarksId:[],
+            cancelRemarks:[],
+            refundApprovedBy:[],
 
 
           });
@@ -405,7 +419,7 @@ export class McpCancellationComponent implements OnInit {
 
           serchByRegNo(mRegNo) {
 
-            alert("REGNO : "+ mRegNo);
+            // alert("REGNO : "+ mRegNo);
             this.service.getVehRegDetails(mRegNo)
             .subscribe(
               data => {
@@ -443,14 +457,17 @@ export class McpCancellationComponent implements OnInit {
               // }
           
                this.getDiffDays(saleDate,mToday);
+               
             
            }
             );
+
+            
   
           }
 
           serchByVin(mVin) {
-            alert(mVin);
+            // alert(mVin);
             this.service.getVehVinDetails(mVin)
             .subscribe(
               data => {
@@ -472,7 +489,7 @@ export class McpCancellationComponent implements OnInit {
                   ewStatus:this.getVehVinDetails.ewStatus,
              });
              this.deliveryDate = this.pipe.transform(this.deliveryDate, 'y-MM-dd');
-             alert(this.deliveryDate);
+            //  alert(this.deliveryDate);
              this.GetVariantDeatils(this.variantCode);
              this.GetCustomerDetails(this.custId);
   
@@ -504,7 +521,7 @@ export class McpCancellationComponent implements OnInit {
           }
 
           GetCustomerDetails(mCustId :any){
-            alert("Customer Id: "+mCustId);
+            // alert("Customer Id: "+mCustId);
           this.service.ewInsSiteList(mCustId)
           .subscribe(
             data1 => {
@@ -545,7 +562,13 @@ export class McpCancellationComponent implements OnInit {
         delete val.ouId;
         delete val.deptId;
         delete val.orgId;
+
+        delete val.searchRegno;
+        delete val.searchEnrollDate;
+        delete val.searchEnrollNo;
         // delete val.emplId;
+
+
  
         return val;
       }
@@ -553,16 +576,19 @@ export class McpCancellationComponent implements OnInit {
 
       showPkgDetails(){alert ("Package Details......in.. WIP")}
 
-      newMast(){alert ("Save.....in.. WIP")
+      newMast(){
 
+        // alert("Cancel Mcp...wip");
+       
+        this.CheckDataValidations();
       
-        // this.CheckDataValidations();
-
-        // if (this.checkValidation===true) {
-        //   alert("Data Validation Sucessfull....\nPutting data to MCP ITEM MASTER  TABLE")
+        if (this.checkValidation) {
+          alert("Data Validation Sucessfull....\nPosting Cancellation details.")
 
           const formValue: IMcpCancel =this.transeData(this.mcpCancellationForm.value);
-          this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.refundAmt,formValue).subscribe((res: any) => {
+          this.displayButton=false;
+          // this.service.McpCancelUpdate(formValue.enrollmentNo,this.cancRsnId,formValue.netRefAmt,formValue).subscribe((res: any) => {
+            this.service.McpCancelUpdate(formValue).subscribe((res: any) => {
           if (res.code === 200) {
          
             alert('RECORD UPDATED SUCCESSFUILY');
@@ -571,17 +597,17 @@ export class McpCancellationComponent implements OnInit {
             if (res.code === 400) {
             
               alert('ERROR OCCOURED IN PROCEESS');
-              this.mcpCancellationForm.reset();
+              // this.mcpCancellationForm.reset();
             }
           }
         });
-      // }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
-      // }
+      }else{ alert("Data Validation Not Sucessfull....\nData not Saved...")  }
       }
+      
        
-      updateMast(){alert ("Update.....in.. WIP")
+     
     
-    }
+    
       searchMast(){alert ("Search.....in.. WIP")}
 
       resetMast() {
@@ -592,8 +618,8 @@ export class McpCancellationComponent implements OnInit {
         this.router.navigate(['admin']);
       }
 
-      SearchMcpByRegNo1() {
-        alert ("Search.....in.. WIP");
+      SearchMcpByEnrollNo(mEnrollNo) {
+        alert ("Search.....in.. WIP...."+mEnrollNo);
 
 
       }
@@ -621,22 +647,95 @@ export class McpCancellationComponent implements OnInit {
                 //   this.GetCustomerSiteDetails(this.customerId)
                 //   this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
                   this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+
+                  this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
+
+                  this.totLabAmt=this.lstMcplines.totLabAmt.toFixed(2);
+                  this.totMatAmt=this.lstMcplines.totMatAmt.toFixed(2);
+                  this.totLabDisc=this.lstMcplines.totLabDisc.toFixed(2);
+                  this.totMatDisc=this.lstMcplines.totMatDisc.toFixed(2);
+
                   
-                  this.totAvailed= (this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised);
-                  this.totBalance= (this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced);
-                  // this.mcpCancelValue=this.lstMcplines.refundAmt;
-                 
-                  this.refTotal1=(this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced);
-                  this.refTotal2=(this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax);
-                  // this.netRefAmt=this.lstMcplines.refundAmt;
-                  var xy=this.lstMcplines.refundAmt+this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax;
-                  this.netRefAmt=xy;
-              
-    
+                  this.totLabUtilised=this.lstMcplines.totLabUtilised.toFixed(2);
+                  this.totMatUtilised=this.lstMcplines.totMatUtilised.toFixed(2);
+
+                  this.totLabBalanced=this.lstMcplines.totLabBalanced.toFixed(2);
+                  this.totMatBalanced=this.lstMcplines.totMatBalanced.toFixed(2);
+                  this.totMatBalTax=this.lstMcplines.totMatBalTax.toFixed(2);
+                  this.totLabBalTax=this.lstMcplines.totLabBalTax.toFixed(2);
+
+
+
+                  this.totAvailed= (this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised).toFixed(2);
+                  this.totBalance= (this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced).toFixed(2);
+                  this.refTotal1=(this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced).toFixed(2);
+                  this.refTotal2=(this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax).toFixed(2);
+                  var xy=this.lstMcplines.refundTaxableAmt +this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax;
+                  this.netRefAmt=xy.toFixed(2);
+                  // this.refundApprovedBy='SYSTEM';
+
+                  // var eDate=new Date(this.lstMcplines.enrollmentDt);
+                  // var cDate=new Date(this.mcpCancelDate);
+                  this.mcpCancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+                  var eDate=this.lstMcplines.enrollmentDt;        
+                  var cDate=this.mcpCancelDate;
+
+
+                  var mTotAvailed=(this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised);
+                  // var mTotAvailed=1000;
+                  // alert(eDate +","+cDate  +","+mTotAvailed);
+
+                  if(eDate==cDate && mTotAvailed==0  ) 
+                  {
+                    alert ("MCP Unutilized - Same day Cancellation");
+                    this.refundIncludeGst='Y';
+                    this.refundApprovedBy='SYSTEM';
+                    this.cancelRemarks ='Unutilized MCP - Full Amt Refund with Taxes -Same day Cancellation';
+                    // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+                    // this.mcpCancellationForm.get('refundApprovedBy').enable();
+                    // this.mcpCancellationForm.get('mcpCancelCharges').enable();
+                    this.refundAmt=this.netRefAmt;
+
+                  }
+
+                  if(eDate<cDate && mTotAvailed==0) 
+                  {
+                    alert ("MCP Unutilized-Enroll Date is below Cancel Date");
+                    this.refundIncludeGst='N';
+                    this.refundApprovedBy='SYSTEM';
+                    this.cancelRemarks ='Unutilized MCP -  Full Amt Refund without Taxes';
+                    var zz=0;
+                   
+                    this.totLabBalTax=0;
+                    this.totMatBalTax=0.00;
+                    this.refTotal2=0.00;
+                    this.netRefAmt=this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced;
+                    // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+                    this.refundAmt=this.netRefAmt;
+                  }
+
+                  if(eDate<cDate && mTotAvailed>0) 
+                  {
+                    alert ("MCP Utilized-Partial Refund");
+                    this.refundIncludeGst='N';
+                    this.refundApprovedBy='SYSTEM';
+                    this.cancelRemarks ='Utilized MCP -  Blance Amt Refund without Taxes';
+                    this.totLabBalTax=0;
+                    this.totMatBalTax=0;
+                    this.refTotal2=0;
+                    this.netRefAmt=this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced;
+                    // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+                    this.refundAmt=this.netRefAmt;
+                  }
+           
                } ); 
+
+               this.displayButton=true;
+            
                }
 
-               GetVehicleRegInfomation(mRegNo){
+
+              GetVehicleRegInfomation(mRegNo){
                 // alert("REGNO:"+mRegNo)
                 this.service.getVehRegDetails(mRegNo)
         
@@ -682,6 +781,93 @@ export class McpCancellationComponent implements OnInit {
                 CalcNetRefund(cancCharges :number){
                   // this.netRefAmt=this.lstMcplines.refundAmt-this.mcpCancelValue;
                   this.netRefAmt=this.lstMcplines.refundAmt-cancCharges;
+                }
+
+                OnChargesSelected(xEvent:any){
+                  // alert("Cancel Charges Applicable :" +xEvent );
+
+                  // var eDate=new Date(this.lstMcplines.enrollmentDt);
+                  // var cDate=new Date(this.mcpCancelDate);
+
+                  var eDate=this.lstMcplines.enrollmentDt;        
+                  var cDate=this.mcpCancelDate;
+                  var mTotAvailed=(this.lstMcplines.totLabUtilised+this.lstMcplines.totMatUtilised);
+
+                  // alert( "Enroll Date :" +eDate  +  "   Cancel Date "+cDate  + " Total Availed :" +mTotAvailed + " Cancel Chrg:"+this.mcpCancelCharges);
+
+                  if(this.refundIncludeGst==='Y') {
+                      this.totLabBalTax=this.lstMcplines.totLabBalTax.toFixed(2);
+                      this.totMatBalTax=this.lstMcplines.totMatBalTax.toFixed(2);
+                      this.refTotal2=(this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax).toFixed(2);
+                      this.netRefAmt=(this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced+this.lstMcplines.totMatBalTax+this.lstMcplines.totLabBalTax).toFixed(2);
+                      this.refundAmt=this.netRefAmt;
+                      this.cancelRemarks ='Refund with Taxes';
+                    
+                    } 
+                    if(this.refundIncludeGst==='N') {
+                      this.totLabBalTax=0;
+                      this.totMatBalTax=0;
+                      this.refTotal2=0;;
+                      this.netRefAmt=(this.lstMcplines.totLabBalanced+this.lstMcplines.totMatBalanced).toFixed(2);
+                      this.refundAmt=this.netRefAmt;
+                      this.cancelRemarks ='Refund without Taxes';
+                    }
+
+
+                  }
+
+
+                CheckDataValidations(){
+    
+                  const formValue: IMcpCancel = this.mcpCancellationForm.value;
+                  // alert("CheckDataValidations -" +formValue.mcpCancelCharges);
+      
+                   if (formValue.enrollmentNo===undefined || formValue.enrollmentNo===null || formValue.enrollmentNo.trim()==='') 
+                  {
+                     this.checkValidation=false; 
+                     alert ("ENROLLMENT NO: Should not be null....");
+                      return;
+                   } 
+                   if (formValue.refundIncludeGst===undefined || formValue.refundIncludeGst===null || formValue.refundIncludeGst.trim()==='')
+                   {
+                       this.checkValidation=false; 
+                       alert ("MCP CANCEL CHARGES : Should not be null....");
+                       return;
+                     } 
+
+                   if (formValue.refundApprovedBy===undefined || formValue.refundApprovedBy===null || formValue.refundApprovedBy.trim()==='')
+                   {
+                       this.checkValidation=false; 
+                       alert ("APPROVED BY : Should not be null....");
+                       return;
+                     } 
+
+                   if (formValue.refundAmt < 0 || formValue.refundAmt===undefined || formValue.refundAmt===null )
+                   {
+                       this.checkValidation=false;  
+                       alert ("REFUND AMT: Should not be below Zero");
+                       return;
+                   } 
+      
+                  
+
+                   
+                      if (formValue.cancelRsnId < 0 || formValue.cancelRsnId===undefined || formValue.cancelRsnId===null )
+                      {
+                          this.checkValidation=false;  
+                          alert ("REASON: Should not be null");
+                          return;
+                      } 
+
+                      if (formValue.cancelRemarks===undefined || formValue.cancelRemarks===null || formValue.cancelRemarks.trim()==='')
+                      {
+                          this.checkValidation=false; 
+                          alert ("REMARKS : Should not be null....");
+                          return;
+                        } 
+                     
+                    this.checkValidation=true
+      
                 }
 
                

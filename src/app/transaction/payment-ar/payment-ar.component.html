@@ -15,8 +15,6 @@
                     <table class="center">
                         <tr>
 
-                        
-                      
                         <td>
                             <input   style="width:30px ;"  hidden type="text" formControlName="orgId"
                             class="form-control" [(ngModel)]="orgId" >
@@ -40,6 +38,9 @@
                         <!-- <td>
                             <input  disabled style="width:30px ;" type="text"  formControlName="status"  id="status" [(ngModel)]="status" class="form-control" >
                         </td> -->
+
+
+
                                             
                       </tr>
                     </table>
@@ -461,7 +462,7 @@
             
                                     <td>
                                         <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
-                                        <input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" >
+                                        <input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" (change)="glPrdValidate(glDate)">
                                     </td>
 
                                             <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
@@ -995,7 +996,7 @@
                                                     <td><input style="width: 100px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
                                                     <td><input style="width: 140px;height: 25px;text-align: right; " disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                                    <td><input style="width: 140px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine" [(ngModel)]="glDateLine" class="form-control"></td>
+                                                    <td><input style="width: 140px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine"  class="form-control" (change)="glPrdValidateLine(k)"></td>
                                                     <td><input style="width: 110px;height: 25px;text-align: right;background-color: yellow;"    type="number" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="balance Due" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled hidden  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
@@ -1037,9 +1038,18 @@
                                                                 <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlagRefund($event,k)"></td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: center;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: right;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                                                <td><input style="width: 150px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine" [(ngModel)]="glDateLine" class="form-control"></td>
+                                                                <td><input style="width: 150px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: right;background-color: yellow;"    type="number" formControlName="applAmtNew" (change)="validateLineRefAmt(k)" class="form-control" > </td>
-                                                                <td><input style="width: 480px;height: 25px;text-align: left;background-color: yellow;"    type="text" formControlName="refReasonCode" class="form-control" > </td>
+                                                                <!-- <td><input style="width: 480px;height: 25px;text-align: left;background-color: yellow;"    type="text" formControlName="refReasonCode" class="form-control" > </td> -->
+                                                                <td>
+                                                                    <select formControlName="refReasonCode" id="refReasonCode" [(ngModel)]="refReasonCode" class="form-control"  style="width: 480px;height: 25px;text-align: left;background-color: yellow;">
+                                                                                             <!-- (ngModelChange)='onReasonSelected($event)'> -->
+                                                                        <option disabled>--Select--</option>
+                                                                        <option *ngFor="let sc of  RefReasonList" [ngValue]="sc.cmnTypeId"  >
+                                                                            {{sc.cmnTypeId}}-{{sc.code}}-{{sc.cmnDesc}}
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
                                                                 </tr>
                                                             </ng-container>
                                                             </ng-container>
@@ -1057,7 +1067,7 @@
                                   <!-- <button type="button" class="btn btn-info"  >Save</button> -->
                                   <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
                                   <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                                  <button type="button" class="btn btn-info" (click)="resetModalMast()">Reset</button>
+                                  <!-- <button type="button" class="btn btn-info" (click)="resetModalMast()">Reset</button> -->
                             
                                 </div>
                               </div>

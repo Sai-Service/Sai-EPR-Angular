@@ -198,7 +198,7 @@ export class StockTakingComponent implements OnInit {
     this.approvedBy=(sessionStorage.getItem('name'));
     this.addnewcycleLinesList();
     this.trans='Adjustment';
-    this.service.subInvCode(this.deptId).subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {this.subInvCode = data;
          console.log(data);
          this.subInventory=this.subInvCode.subInventoryCode;

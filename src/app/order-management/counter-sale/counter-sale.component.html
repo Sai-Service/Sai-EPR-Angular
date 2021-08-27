@@ -649,7 +649,8 @@
                                         <td>
                                             <!-- <input disabled type="text" formControlName="invType" value="invType"
                                             [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
-                                            <select formControlName="invType" id="invType{{i}}"
+                                            <!-- id="invType{{i}}" -->
+                                            <select formControlName="invType" 
                                             (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                             class="form-control"
                                             style="width: 160px;height: 25px;font-size: 10px;">
@@ -661,7 +662,8 @@
                                         </td>
                                         <td>
                                            
-                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;"  (ngModelChange)='onOptionsSelectedDescription($event,i)' />
+                                                <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;" 
+                                                 (ngModelChange)='onOptionsSelectedDescription($event,i)' >
                                                 <datalist id="dynmicUserIds1">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let item of  itemMap2.get(i) | keyvalue" [value]="item.value.segment">
@@ -719,7 +721,7 @@
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </ng-template>
                                         <ng-template #elsedisAmt>
-                                        <input  type="number" formControlName="disAmt"   class="form-control" 
+                                        <input  formControlName="disAmt"   class="form-control" 
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </ng-template>
                                     </td>
@@ -733,7 +735,7 @@
                                             {{sc.taxCategoryName}}
                                         </option>
                                     </select>
-                                    <input  type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
+                                    <input hidden type="number" formControlName="taxCategoryId"   class="form-control"  style="height: 20px;width: 70px;">
                                     </td>
                                    
                                     <td>
@@ -795,6 +797,7 @@
                                                 (change)="onKey(i)" style="height: 20px;width: 70px;">
                                             </ng-template>
                                         </td> -->
+                                       
                                         <td>
                                             
                                             <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
@@ -809,6 +812,14 @@
                                         <input disabled type="number" formControlName="baseAmt"  class="form-control"
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
+                                    <!-- <td>
+                                    <input disabled  type="number" formControlName="disPer"  class="form-control"
+                                    style="height: 20px;width: 70px;">
+                            </td>
+                            <td>
+                                <input disabled  type="number" formControlName="disPer"  class="form-control"
+                                    style="height: 20px;width: 70px;">
+                            </td> -->
                                     <td>
                                         <input disabled type="number" formControlName="taxAmt" class="form-control"
                                             style="height: 20px;width: 70px;">
@@ -1691,7 +1702,7 @@
                         <select formControlName="paymentType" id="paymentType" class="form-control" [ngModel]="paymentType">
                         <option>--Select--</option>
                         <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.cmnTypeId">
-                            {{sc.codeDesc}}
+                            {{sc.lookupValue}}
                         </option>
                     </select>
                     

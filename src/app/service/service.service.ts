@@ -60,6 +60,9 @@ groupIdListFN(locId,deptId) : Observable<any> {
 RegNoListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/regList`);
 } 
+RegNoListDividionwiseFN(divisionId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemMst/regList/${divisionId}`);
+} 
 billableTyIdListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy`);
 } 
@@ -68,6 +71,9 @@ billableTyIdLstFN(type,regno) : Observable<any> {
 } 
 LaborItemListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);
+} 
+LaborItemListDivisionFN(divisionId,deptname) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&divisionId=${divisionId}&dept=${deptname}`);
 } 
 splitRatioListFN() : Observable<any> {
   return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
@@ -81,6 +87,9 @@ TechnicianListFN(locId) : Observable<any> {
 } 
 priceListFN(locId,segment) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`);
+} 
+priceListDivisionFN(segment,serModel,locId,ouId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`);
 } 
 MatImptWipFn(jobCardNum,locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/partLines?jobNum=${jobCardNum}&locId=${locId}`);

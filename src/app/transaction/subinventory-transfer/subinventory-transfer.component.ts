@@ -156,7 +156,7 @@ lastkeydown1: number = 0;
     this.issueBy = (sessionStorage.getItem('name'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
-    this.service.subInvCode().subscribe(
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {
         this.subInvCode = data;
       });
