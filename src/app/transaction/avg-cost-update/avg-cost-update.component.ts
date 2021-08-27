@@ -85,8 +85,9 @@ export class AvgCostUpdateComponent implements OnInit {
   
   public DivisionIDList : Array<string>=[];
   public itemIdList : Array<string>=[];
+  public subinventoryIdList: Array<string> = [];
   
-  public subInvCode:any[];
+  // public subInvCode:any[];
   public itemNameList: any;
   public priceListNameList: any;
 
@@ -228,9 +229,17 @@ export class AvgCostUpdateComponent implements OnInit {
 
     //  alert("ouid= "+ this.ouId);
 
-    this.service.subInvCode1().subscribe(
-      data => {this.subInvCode = data;
-    });
+    // this.service.subInvCode1().subscribe(
+    //   data => {this.subInvCode = data;
+    // });
+
+    this.service.subinventoryIdList()
+    .subscribe(
+      data => {
+        this.subinventoryIdList = data;
+        console.log(this.subinventoryIdList);
+      }
+    );
 
      this.service.invItemList1()
       .subscribe(

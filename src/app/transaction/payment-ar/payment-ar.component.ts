@@ -64,18 +64,26 @@ export class PaymentArComponent implements OnInit {
   public ReceiptStatusList: Array<string> = [];
   public ReverseReasonList: Array<string> = [];
   public ReceiptTypeArList: Array<string> = [];
-  public VehRegNoList       : Array<string> = [];
+  public VehRegNoList     : Array<string> = [];
+  public RefReasonList    : Array<string> = [];
+
+  
   accountNoSearch:any;
   getVehRegDetails:any;
   CustomerDetailsList:any;
   CustomerSiteDetails:any;
+  GLPeriodCheck:any;
 
   userList1: any[] = [];
   lastkeydown1: number = 0;
-
+ 
   lstcomments: any[];
   lstinvoices: any[];
   lstCustomer: any[];
+
+  glPrdStartDate :string;
+  glPrdEndDate:string;
+
   ouId :number;
   deptId:number; 
 
@@ -117,14 +125,10 @@ export class PaymentArComponent implements OnInit {
   customerType:string;
   custTaxCategoryName:string;
 
-
-
-
   accountNo:number;
   vehRegNo : string;
   attribute1:string;
- 
- 
+  
   // billToSiteId:number;
   custAddr:string;
   custSiteAddress : string 
@@ -211,10 +215,10 @@ export class PaymentArComponent implements OnInit {
   ouName : string;
   locId: number;
   locName : string;
-  // emplId :number;
+  emplId :number;
   orgId:number;
 
-  public emplId =26;
+  // public emplId =26;
   // customerId:number;
   public billToSiteId=101;
   // public billToSiteId=107; 
@@ -325,6 +329,9 @@ export class PaymentArComponent implements OnInit {
       totAppliedtAmount:[],
       totUnAppliedtAmount:[],
 
+      glPrdStartDate :[],
+      glPrdEndDate:[],
+
       // applyrcptFlag: ['', [Validators.required]],
 
       invLine: this.fb.array([this.invLineDetails()]),
@@ -343,12 +350,15 @@ export class PaymentArComponent implements OnInit {
         balDueAmt:[],
         balance1: [],
         applAmtNew:[],
+        paymentAmt:[],
         applDate:[],
+        glDate:[],
         glDateLine:[],
         billToCustId:[],
         billToSiteId:[],
         invCurrancyCode:[],
         refReasonCode:[],
+        // emplId:[],
 
       })
     }
@@ -446,6 +456,25 @@ export class PaymentArComponent implements OnInit {
             }
           );
 
+          this.service.RefReasonLst()
+          .subscribe(
+            data => {
+              this.RefReasonList = data;
+              console.log(this.RefReasonList);
+            }
+          );
+
+          this.service.GLperiod()
+          .subscribe(
+            data => {
+              this.GLPeriodCheck = data.obj;
+              console.log(this.GLPeriodCheck);
+            }
+          );
+
+          this.glPrdStartDate=this.GLPeriodCheck.startDate;
+          this.glPrdEndDate=this.GLPeriodCheck.endDate
+
 
       }
 
@@ -457,6 +486,42 @@ export class PaymentArComponent implements OnInit {
              return;}
 
           }
+
+          glPrdValidate(glDt :any) {
+          
+            var tglDate=new Date(glDt);
+            var sDate=new Date(this.GLPeriodCheck.startDate);
+            var tDate=new Date(this.GLPeriodCheck.endDate);
+            // alert("GlDate :"+glDt +" GL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
+            // alert("GlDate :"+tglDate +" GL Period : "+sDate +" - "+ tDate);
+
+            if(tglDate<sDate || tglDate >tDate) {
+              alert ("GL date is not valid.. should be within GL period.\nGL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
+              this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+              return;
+            } 
+
+          }
+
+          glPrdValidateLine(i:any) {
+           
+            var patch = this.paymentArForm.get('invLine') as FormArray;
+            var applLineArr = this.paymentArForm.get('invLine').value;
+            var gld=applLineArr[i].glDateLine;
+            // alert("index :"+i + "  gl date - " +gld);
+            var tglDate=new Date(gld);
+            var sDate=new Date(this.GLPeriodCheck.startDate);
+            var tDate=new Date(this.GLPeriodCheck.endDate);
+            if(tglDate<sDate || tglDate >tDate) {
+              alert ("Line :"+ (i+1)+ " GL date is not valid.. should be within GL period\nGL Period : "+this.pipe.transform(this.GLPeriodCheck.startDate,'dd-MM-y') +" - "+ this.pipe.transform(this.GLPeriodCheck.endDate,'dd-MM-y'));
+              var z=this.pipe.transform(this.now, 'y-MM-dd');
+              patch.controls[i].patchValue({glDateLine:z})
+              return;
+            } 
+          }
+
+
+
 
       onOuIdSelected(ouId : any ){
         // alert('ouId id =' +ouId );
@@ -716,7 +781,7 @@ export class PaymentArComponent implements OnInit {
 
       LoadValues(){
 
-     
+        this.paymentArForm.get('applyTo').enable();
         this.invLineArray().clear(); 
         this.totUnAppliedtAmount=this.paymentAmt;
         this.totalUnappliedAmt=this.paymentAmt;
@@ -900,16 +965,12 @@ export class PaymentArComponent implements OnInit {
         var invLineArr = this.paymentArForm.get('invLine').value;
         var lineApplAmt= invLineArr[index].applAmtNew;
         var  ytotUnAppAmt =this.totUnAppliedtAmount;
-       
-       
-
         if(lineApplAmt > ytotUnAppAmt || lineApplAmt <=0 ) 
           { 
             alert ("Line: "+ (index+1) + "\nUnApplied  Amt :"+ytotUnAppAmt+"\n Refund Amt :"+ lineApplAmt+   "\nLine Refund Amt should be > 0 and <= Total Unapplied Amt");
             patch.controls[index].patchValue({applAmtNew:''})
             patch.controls[index].patchValue({applyrcptFlag:''})
           } 
-
        }
 
 
@@ -995,9 +1056,10 @@ export class PaymentArComponent implements OnInit {
       }
 
       SearchInvoices(custActNo : any,billToSiteId : any,applyTp : any , rcptNo: any) {
-      
-       
+        this.paymentArForm.get('applyTo').disable();
+         
          this.invLineArray().reset();
+
          if(applyTp==='INVOICE') {
 
            this.totUnAppliedtAmount=this.paymentAmt;
@@ -1029,6 +1091,9 @@ export class PaymentArComponent implements OnInit {
                     //  var z=invLineArr[i].trxDate;
                      var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
                      patch.controls[i].patchValue({trxDate:z})
+                     var z1=this.pipe.transform(this.now, 'y-MM-dd');
+                     patch.controls[i].patchValue({glDateLine:z1})
+
                     }
                     ///////////////////////////////////////////////////////
 
@@ -1040,11 +1105,30 @@ export class PaymentArComponent implements OnInit {
       
                   } else 
                   { 
+                    alert ("in Else part....")
                     this.invLineArray().clear(); 
 
                     this.invLineArray().push(this.invLineDetails());
                     this.applyTo=applyTp;
                     this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
+                    // this.glDateLine=this.pipe.transform(this.now, 'y-MM-dd');
+
+                      /////////////////////////////////////////////////////////
+                      var patch = this.paymentArForm.get('invLine') as FormArray;
+                      var invLineArr = this.paymentArForm.get('invLine').value;
+
+                      // alert("this.invLineArray().length  >>"+this.invLineArray().length);
+              
+                      for (let i = 0; i < this.invLineArray().length; i++) 
+                      {
+                    
+                      var z1=this.pipe.transform(this.now, 'y-MM-dd');
+                      //  patch.controls[i].patchValue({applDate:z1})
+                       patch.controls[i].patchValue({glDateLine:z1})
+                      }
+                      ///////////////////////////////////////////////////////
+
+
                   }
                
           }
@@ -1211,7 +1295,7 @@ export class PaymentArComponent implements OnInit {
         delete val.applyrcptFlag1;
         delete val.orgId;
         delete val.deptId;
-        delete val.emplId;
+        // delete val.emplId;
         delete val.payType;
         delete val.referenceNo;
         delete val.checkNo;
@@ -1227,6 +1311,24 @@ export class PaymentArComponent implements OnInit {
    
         return val;
       }
+
+      transeData2(val) {
+        
+       
+        delete val.invLine.applyTo;
+        delete val.invLine.applyrcptFlag;
+        delete val.invLine.trxNumber;
+        delete val.invLine.trxDate;
+        delete val.invLine.invoiceAmount;
+        delete val.invLine.applAmt;
+
+      
+
+        return val;
+      }
+
+
+
 
       CheckDataValidations1(){
         const formValue: IPaymentRcptAr = this.paymentArForm.value;
@@ -1276,6 +1378,9 @@ export class PaymentArComponent implements OnInit {
         }
         if(applType ==='REFUND') {
           alert("Application type :"+applType + " ....wip");
+          this.SaveRefReceipt();
+
+
         }
         if(applType ==='ON ACCOUNT') {
           alert("Application type :"+applType +" ....wip");
@@ -1312,6 +1417,74 @@ export class PaymentArComponent implements OnInit {
         this.service.ArReceipApplySubmit(invLine).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
+            // this.paymentArForm.reset();
+          } else {
+            if (res.code === 400) {
+              alert('Error While Saving Record:-'+res.obj);
+              // this.paymentArForm.reset();
+            }
+          }
+        });
+      }
+
+
+      
+      SaveRefReceipt() 
+      {
+        // alert ("Posting data  to AR RECEIPT appl......")
+
+        var patch = this.paymentArForm.get('invLine') as FormArray;
+        var applLineArr = this.paymentArForm.get('invLine').value;
+              
+
+        this.applLineValidation=false;
+        var len1=applLineArr.length;
+        
+        for (let i = 0; i < len1 ; i++) 
+          {
+            this.CheckLineValidationsRef(i);
+          }
+
+          if(this.applLineValidation===false ) { 
+            alert("Validation Failed... \nPosting not done....")
+            return;
+          }
+      
+        const formValue: IPaymentRcptAr =this.transeData2(this.paymentArForm.value);
+
+        // var invLine= this.paymentArForm.get('invLine').value;
+
+        let variants = <FormArray>this.invLineArray();
+        var receiptNumber = this.paymentArForm.get('receiptNumber').value;
+        var receiptDate = this.paymentArForm.get('receiptDate').value;
+        var payType = this.paymentArForm.get('payType').value;
+        var receiptMethodId= this.paymentArForm.get('receiptMethodId').value;
+        var receiptMethodName= this.paymentArForm.get('receiptMethodName').value;
+        // var empId= this.paymentArForm.get('emplId').value;
+        var empId= 26;
+        alert ("Empid =" +empId);
+         // var glDate= this.paymentArForm.get('glDateLine').value;
+
+        for (let i = 0; i < this.invLineArray().length; i++) {
+          let variantFormGroup = <FormGroup>variants.controls[i];
+          variantFormGroup.addControl('receiptNumber', new FormControl(receiptNumber, Validators.required));
+          variantFormGroup.addControl('receiptDate', new FormControl(receiptDate, Validators.required));
+          variantFormGroup.addControl('payType', new FormControl(payType, Validators.required));
+          variantFormGroup.addControl('receiptMethodId', new FormControl(receiptMethodId, Validators.required));
+          variantFormGroup.addControl('receiptMethodName', new FormControl(receiptMethodName, Validators.required));
+          variantFormGroup.addControl('emplId', new FormControl(empId, Validators.required));
+
+          patch.controls[i].patchValue({paymentAmt:applLineArr[i].applAmtNew});
+          patch.controls[i].patchValue({glDate:applLineArr[i].glDateLine});
+
+        }
+        console.log(variants.value);
+
+        // console.log();
+          // this.service.ArReceiptRefundSubmit(formValue).subscribe((res: any) => {
+            this.service.ArReceiptRefundSubmit(variants.value).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('RECORD INSERTED SUCCESSFUILY -' +res.obj);
             // this.paymentArForm.reset();
           } else {
             if (res.code === 400) {
@@ -1514,13 +1687,17 @@ export class PaymentArComponent implements OnInit {
                   return;
                 } 
 
-    
-                if(formValue.glDate===undefined || formValue.glDate===null ) 
+                var tglDate=new Date(formValue.glDate);
+                var sDate=new Date(this.GLPeriodCheck.startDate);
+                var tDate=new Date(this.GLPeriodCheck.endDate);
+                if(formValue.glDate===undefined || formValue.glDate===null || tglDate<sDate || tglDate >tDate ) 
                 {
                     this.checkValidation=false;
-                    alert ("GL DATE: Should not be null value");
+                    alert ("GL DATE: Should not be null / Should be within GL period.\nGL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
+                    this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
                     return; 
                  }
+
 
                 if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
                 {
@@ -1614,24 +1791,28 @@ export class PaymentArComponent implements OnInit {
           
             var applLineArr = this.paymentArForm.get('invLine').value;
             var lineValue1=applLineArr[i].applAmtNew;
-            var lineValue2=applLineArr[i].glDateLine;
+            var tglDate=new Date(applLineArr[i].glDateLine);
             var chkFlag =applLineArr[i].applyrcptFlag;
             var j=i+1;
     
-            // if(lineValue3===undefined || lineValue3===null || lineValue3==='' ){
-            //   alert("Line-"+j+ " ITEM CODE :  Should not be null value/ Select valid item from the list");
-            //   this.checkApplValidation=false;
-            //   return;
-            // } 
-
-           
-          //  alert ("Line-"+j+" Appl Flag >> " +applLineArr[i].applyrcptFlag + " "+chkFlag);
-
+       
             if(lineValue1===undefined || lineValue1===null || lineValue1<=0){
               alert("Line-"+j+ " APPL AMT :  Should  be grater than Zero");
               this.applLineValidation=false;
               return;
             } 
+
+       
+            var sDate=new Date(this.GLPeriodCheck.startDate);
+            var tDate=new Date(this.GLPeriodCheck.endDate);
+            if(tglDate===undefined || tglDate===null || tglDate<sDate || tglDate >tDate ) 
+            {
+                this.checkValidation=false;
+                alert ("GL DATE: Should not be null / Should be within GL period.\nGL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
+                this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+                return; 
+             }
+
 
             if(chkFlag ===false || chkFlag ===null ||chkFlag ===undefined) {
               alert("Line-"+j+ " : Line not Selected.Pls Check Mark the Line");
@@ -1641,6 +1822,48 @@ export class PaymentArComponent implements OnInit {
             
              this.applLineValidation =true;
             }
+
+
+            CheckLineValidationsRef(i) {
+              
+              var applLineArr = this.paymentArForm.get('invLine').value;
+              var lineValue1=applLineArr[i].applAmtNew;
+              var lineValue2=applLineArr[i].refReasonCode;
+              var tglDate=new Date(applLineArr[i].glDateLine);
+              var chkFlag =applLineArr[i].applyrcptFlag;
+              var j=i+1;
+      
+            
+              if(lineValue1===undefined || lineValue1===null || lineValue1<=0){
+                alert("Line-"+j+ " REFUND AMT :  Should  be grater than Zero");
+                this.applLineValidation=false;
+                return;
+              } 
+
+              if(lineValue2===undefined || lineValue2===null ){
+                alert("Line-"+j+ " REFUND REASON :  Should  not be null");
+                this.applLineValidation=false;
+                return;
+              } 
+
+              var sDate=new Date(this.GLPeriodCheck.startDate);
+              var tDate=new Date(this.GLPeriodCheck.endDate);
+              if(tglDate===undefined || tglDate===null || tglDate<sDate || tglDate >tDate ) 
+              {
+                  this.checkValidation=false;
+                  alert ("GL DATE: Should not be null / Should be within GL period.\nGL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
+                  this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+                  return; 
+               }
+  
+              if(chkFlag ===false || chkFlag ===null ||chkFlag ===undefined) {
+                alert("Line-"+j+ " : Line not Selected.Pls Check Mark the Line");
+                this.applLineValidation=false;
+                return;
+              }
+              
+               this.applLineValidation =true;
+              }
           
   
          

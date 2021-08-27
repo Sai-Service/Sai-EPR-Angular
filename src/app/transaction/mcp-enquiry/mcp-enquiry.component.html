@@ -88,7 +88,7 @@
                                 <div *ngIf="displayButton; then pYes; else pNo"></div>
                                 <ng-template #pYes>
                                 <td> 
-                                    <select  formControlName="sourceDesc" id="sourceDesc" [(ngModel)]="sourceDesc" class="form-control" (ngModelChange)="onSourceSelected(sourceDesc)">
+                                    <select  formControlName="sourceDesc" id="sourceDesc" [(ngModel)]="sourceDesc" class="form-control" (ngModelChange)="onSourceSelected(sourceDesc)" style="background-color: yellow">
                                         <!-- <option value=""></option> -->
                                         <option value="SERVICE">SERVICE</option>
                                         <option value="SALES">SALES</option>
@@ -98,7 +98,7 @@
         
                                 <ng-template #pNo>
                                 <td> 
-                                    <select disabled  formControlName="sourceDesc" id="sourceDesc" [(ngModel)]="sourceDesc" class="form-control" (ngModelChange)="onSourceSelected(paytmentSource)">
+                                    <select disabled  formControlName="sourceDesc" id="sourceDesc" [(ngModel)]="sourceDesc" class="form-control" (ngModelChange)="onSourceSelected(paytmentSource)"  >
                                         <option value="SERVICE">SERVICE</option>
                                         <option value="SALES">SALES</option>
                                     </select>
@@ -114,7 +114,8 @@
                                   <ng-template #ordBlockYes>
                                   <td style="width: 15%" class="LabelFontStyle">Order&nbsp;No:&nbsp;</td>
                                   <td>
-                                    <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" (change)="GetOrderDetails(orderNumber)" placeholder="Enter Order No & click click on button right ." >
+                                    <input   type="text"  formControlName="orderNumber"  id="orderNumber" [(ngModel)]="orderNumber" class="form-control" (change)="GetOrderDetails(orderNumber)" 
+                                                placeholder="Enter Order No & click click on button right ."  style="background-color: yellow">
                                   </td>
                                       <!-- <td>
                                           <table>
@@ -134,7 +135,7 @@
                                       <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
               
                                       <td>
-                                       <input disabled style="font-weight: bold;" type="text"
+                                       <input disabled style="font-weight: bold;" type="text" 
                                           formControlName="regNo"
                                           [(ngModel)]="regNo"
                                           (change)="serchByRegNo(regNo)"
@@ -163,7 +164,7 @@
                                       <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
               
                                       <td>
-                                       <input style="font-weight: bold;" type="text"
+                                       <input style="font-weight: bold;" type="text" style="background-color: yellow"
                                           formControlName="regNo"
                                           [(ngModel)]="regNo"
                                           (change)="serchByRegNo(regNo)"
@@ -194,7 +195,7 @@
                                       <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
               
                                       <td>
-                                       <input disabled style="font-weight: bold;" type="text"
+                                       <input disabled style="font-weight: bold;" type="text" style="background-color: yellow"
                                           formControlName="regNo"
                                           [(ngModel)]="regNo"
                                           (change)="serchByRegNo(regNo)"
@@ -506,7 +507,7 @@
 
                                 <td>
                                     <select type="text" class="form-control" formControlName="pkgEnquired" [(ngModel)]="pkgEnquired"
-                                        (ngModelChange)="onSelectPackageNumber($event)">
+                                        (ngModelChange)="onSelectPackageNumber($event)"  style="background-color: yellow">
                                     <option>--Select--</option>
                                     <option *ngFor="let pk of mcpPackageList" [ngValue]="pk.packageNumber" >
                                     <!-- {{pk.packageId}}- -->
@@ -536,7 +537,7 @@
                                     <td style="width: 15%" class="LabelFontStyle1">Executive&nbsp;:&nbsp;</td>
             
                                     <td>
-                                        <select type="number" class="form-control" formControlName="executive" [(ngModel)]="executive">
+                                        <select type="number" class="form-control" formControlName="executive" [(ngModel)]="executive" style="background-color: yellow">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
                                         {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
@@ -975,9 +976,8 @@
                                   <td >
                                       <table class="center">
                                           <tr>
-                                            <td  style="background-color: #FFE4B5;">
-                                                &nbsp;Enquiry&nbsp;No&nbsp;:&nbsp;
-                                            </td>
+                                            <td  style="background-color: #FFE4B5;">&nbsp;Enquiry&nbsp;No&nbsp;:&nbsp;</td>
+                                            
                                             <td style="background-color: #FFE4B5;">
                                                 <input class="form-control" formControlName="searchEnqNo" [(ngModel)]='searchEnqNo'
                                                     value={{searchEnqNo}} style="text-transform:uppercase;">
@@ -987,6 +987,7 @@
                                                 <button type="button" class="btn-primary" (click)="SearchByMcpEnqNo(searchEnqNo)"><i class="fa fa-search"
                                                         aria-hidden="true"></i></button>
                                             </td>
+
                                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
                                 
                                             <td>
