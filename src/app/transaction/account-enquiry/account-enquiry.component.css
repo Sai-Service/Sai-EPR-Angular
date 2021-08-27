@@ -8,6 +8,15 @@
     height: 18%;
    border-color: black;
   }
+
+  .grid_scroll2{
+    overflow: auto;
+     height: 300px; 
+    width: 100%;
+  }
+
+
+
   .form-control{
     height: 25px;
 }

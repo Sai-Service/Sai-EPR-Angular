@@ -236,8 +236,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
 
-  accountNoSearchFn2(accountNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}`);
+  accountNoSearchFn2(accountNo,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}&divisionId=${divisionId}`);
     // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
     // `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`
   }

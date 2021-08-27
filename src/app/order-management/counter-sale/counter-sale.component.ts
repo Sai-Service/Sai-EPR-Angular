@@ -632,7 +632,8 @@ export class CounterSaleComponent implements OnInit {
         this.subInvCode = data;
         console.log(this.subInventoryId);
         this.subInventoryId = this.subInvCode.subInventoryId;
-        // alert(this.subInventoryId);
+        alert('check hideloader'+' ' + this.subInventoryId);
+        this.hideloader();
       });
 
 
@@ -939,12 +940,13 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    this.orderManagementService.accountNoSearchFn2(custAccountNo)
+    this.orderManagementService.accountNoSearchFn2(custAccountNo,(sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           if (data.code === 200) {
             // this.accountNoSearch = data.obj;
             this.custSiteList = data.obj;
+            this.paymentType=data.obj.paymentType;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
           }
@@ -957,12 +959,12 @@ export class CounterSaleComponent implements OnInit {
         });
   }
 
-  onOptionsSelectedcustSiteName(name) {
-    // alert(name);
-    let select = this.custSiteList.find(d => d.name === name);
-    this.CounterSaleOrderBookingForm.patchValue({ id: select.id })
-    this.id = select.id;
-    // alert(this.id);
+  onOptionsSelectedcustSiteName(siteName) {
+    alert(siteName);
+    let select = this.custSiteList.find(d => d.siteName === siteName);
+    this.CounterSaleOrderBookingForm.patchValue({ id: select.customerSiteId })
+    this.id = select.customerSiteId;
+    alert(this.id);
     this.orderManagementService.custSideAddDet(this.id)
       .subscribe(
         data => {
@@ -1746,6 +1748,12 @@ export class CounterSaleComponent implements OnInit {
       pricingQty: '[0-9\.\,]'
     }
   }
+
+ hideloader() {
+    document.getElementById('loading')
+        .style.display = 'none';
+}
+
 }
 
 

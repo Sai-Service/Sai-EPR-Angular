@@ -115,15 +115,15 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
 
-  invItemList(itemType,deptName):Observable<any> {
+  invItemList(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
+    .set('divisionId',divisionId)
     const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
     });
   }
-
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)

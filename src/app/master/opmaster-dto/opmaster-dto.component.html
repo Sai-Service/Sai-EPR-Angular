@@ -909,7 +909,7 @@
                                                         <div *ngIf="displaygetInvItemId; then thengetInvItemId; else elsegetInvItemId"></div>
                                                         <ng-template #thengetInvItemId>
                                                         <input type="text" formControlName="segment"
-                                                            (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                                                            (keyup)="getInvItemId($event,i)" id="invItemIdFirstWay"
                                                             list="dynmicUserIds1" class="form-control"
                                                             (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                         <datalist id="dynmicUserIds1">
@@ -1010,12 +1010,12 @@
                                                             placeholder="Select Item Category" class="form-control">
                                                     </td> -->
                                                     <td>
-                                                        <input disabled formControlName="segmentName" value={{segmentName}}  class="form-control">
+                                                        <!-- <input  formControlName="segmentName" value={{segmentName}} id="modals" class="form-control"> -->
                                                         <!-- <div class="row" id="modals"> -->
-                                                        <!-- <input formControlName="segmentName" value={{segmentName}}
+                                                        <input formControlName="segmentName" value={{segmentName}}
                                                             data-toggle="modal" data-target="#myModel"
                                                             placeholder="Select Item Category" class="form-control"
-                                                            (click)="openCodeComb(i)"> -->
+                                                            (click)="openCodeComb(i)">
                                                         <!-- </div> -->
 
                                                         <!-- <a formControlName="segmentName" 
@@ -1026,8 +1026,7 @@
                                                         </a> -->
                                                     </td>
                                                     <input hidden formControlName="poChargeAcc">
-                                                    <!-- <div id="accordionExample2"> -->
-                                                    <!--  -->
+                                                
                                                     <td>
                                                         <button type="submit" class="btn btn-primary"
                                                             (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" 
