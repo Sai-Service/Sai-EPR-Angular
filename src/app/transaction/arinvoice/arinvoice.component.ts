@@ -50,6 +50,7 @@ interface IArInvoice {
 export class ARInvoiceComponent implements OnInit {
   arInvoiceForm: FormGroup;
   branch: any;
+  divisionId:number;
   itemId: number;
   taxCategoryId: number;
   accountDesc: string;
@@ -337,6 +338,7 @@ export class ARInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.ouId = Number(sessionStorage.getItem('ouId'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'))
     this.emplId=Number(sessionStorage.getItem('emplId'));;
     this.transactionService.paymentTermListFn()
       .subscribe(
@@ -1232,7 +1234,7 @@ export class ARInvoiceComponent implements OnInit {
         });
   }
   accountNoSearchfn(accountNo) {
-    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId)
+    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId,this.divisionId)
       .subscribe(
         data => {
           this.accountNoSearch = data.obj;

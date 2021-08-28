@@ -106,6 +106,7 @@ export class SalesOrderFormComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   public op: string;
   invLineNo: number;
+  divisionId:number;
   paymentTermId: number;
   deptName: string;
   exchange: string;
@@ -381,6 +382,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.locationId = Number(sessionStorage.getItem('locId'));
     this.deptName = (sessionStorage.getItem('deptName'));
     this.loginOuId1 = Number(sessionStorage.getItem('loginOuId1'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'))
 
 
     this.orderlineDetailsGroup();
@@ -598,7 +600,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   accountNoSearch(accountNo) {
-    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId)
+    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId,this.divisionId)
       .subscribe(
         data => {
           this.accountNoSearch = data.obj;
@@ -658,7 +660,8 @@ export class SalesOrderFormComponent implements OnInit {
             );
           }
           this.patchResultList(i, this.taxCalforItem, invLineNo, invLineItemId);
-
+          this.taxMap.set(i, data);
+          alert('map'+''+ this.taxMap.size)
         });
   }
 
@@ -747,6 +750,7 @@ export class SalesOrderFormComponent implements OnInit {
             }
             this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
             this.taxMap.set(index, data);
+            alert('map'+''+ this.taxMap.size)
           });
     }
     else {
@@ -912,6 +916,7 @@ export class SalesOrderFormComponent implements OnInit {
             console.log(Number(sessionStorage.getItem('ouId')));
             var controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
             var controlinv2 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          if (this.currentOpration != 'orderSearch'){
             for (let i = 0; i < controlinv1.length; i++) {
               if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
                 alert(controlinv1[i].segment + '--' + i);
@@ -943,7 +948,7 @@ export class SalesOrderFormComponent implements OnInit {
                 });
               }
             }
-
+          }
           }
         }
       )

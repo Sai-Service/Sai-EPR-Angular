@@ -1677,7 +1677,7 @@ export class CounterSaleComponent implements OnInit {
 
   accountNoSearch1(custAccountNo) {
     // alert(this.custAccountNo);
-    this.orderManagementService.accountNoSearchFn(this.custAccountNo, this.ouId)
+    this.orderManagementService.accountNoSearchFn(this.custAccountNo, this.ouId,(sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           if (data.code === 200) {
