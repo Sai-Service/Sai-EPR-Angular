@@ -228,7 +228,7 @@
                                         *ngIf="taxCategoryMasterForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                                     </div>
                                     <ng-template #thenBlock>
-                                        <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                        <td><input type="number" min="0"  formControlName="totTaxAmt" (change)="validateNum(i,j)"
                                                 class="form-control"
                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
                                                 class="form-control">

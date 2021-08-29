@@ -358,7 +358,7 @@
                                                     <tr>
                                                             <td style="width: 15%" class="LabelFontStyle">Current&nbsp;Cost&nbsp;:</td>
                                                             <td>  
-                                                                <input type="number" class="form-control" formControlName="costToClear" (change)='costCalculation($event)' [(ngModel)]="costToClear">
+                                                                <input type="number" min="0"  class="form-control" formControlName="costToClear" (change)='costCalculation($event)' [(ngModel)]="costToClear">
                                                              </td> 
                                                              <td style="width: 15%" class="LabelFontStyle">YTD&nbsp;Depriciation&nbsp;:</td>
                                                              <td>  
@@ -544,12 +544,12 @@
                                                                   <ng-container *ngFor="let assAddList of faDisHisLst().controls; let assLineIndex=index" [formGroupName]="assLineIndex">
                                                                 <tr>
                                                                     
-                                                                  <input type="number"  formControlName="faDistributionId">
+                                                                  <input type="number" min="0"   formControlName="faDistributionId">
                                                                   <td>
-                                                                        <input type="number"  class="form-control"  style="width: 150px;" formControlName="transactionUnits">
+                                                                        <input type="number" min="0"   class="form-control"  style="width: 150px;" formControlName="transactionUnits">
                                                                     </td> 
                                                                     <td>
-                                                                        <input type="number"  class="form-control"  style="width: 150px;" formControlName="unitsAssigned">
+                                                                        <input type="number" min="0"   class="form-control"  style="width: 150px;" formControlName="unitsAssigned">
                                                                     </td> 
                                                                     <td>
                                                                         <!-- <input  style="width: 150px;" type="text"  class="form-control" formControlName="employeeName"> -->
@@ -1019,7 +1019,7 @@
                                 Natural&nbsp;Account&nbsp;:
                             </td>
                             <td>
-                                 <input type="number" formControlName="segment4" id="segment4" class="form-control" [(ngModel)]="segment4">
+                                 <input type="number" min="0"  formControlName="segment4" id="segment4" class="form-control" [(ngModel)]="segment4">
                                     
                                    
                                  <!-- <input type="text" (keyup)="getNaturalAccount($event)" formControlName="segment4" id="NaturalAccountFirstWay" list="dynmicUserIds1" class="form-control"   (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')"/> -->
