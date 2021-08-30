@@ -11,8 +11,8 @@ export class MasterService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  // ServerUrl='http://localhost:8081';
-  ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl='http://localhost:8081';
+  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -1829,7 +1829,7 @@ PriceListIdList(): Observable<any> {
 
     getPriceListSearch(ouId,deptId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&deptId=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {

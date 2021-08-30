@@ -1837,9 +1837,12 @@ export class OPMasterDtoComponent implements OnInit {
               this.lineDetailsArray.controls[lineNum].get('hsnSacCode').enable();
               this.lineDetailsArray.controls[lineNum].get('segment').enable();
 
-              this.poMasterDtoForm.get('supplierSiteId').disable();
-              this.poMasterDtoForm.get('shipToLoc').disable();
-              this.poMasterDtoForm.get('billToLoc').disable();
+              // this.poMasterDtoForm.get('supplierSiteId').disable();
+              // this.poMasterDtoForm.get('shipToLoc').disable();
+              // this.poMasterDtoForm.get('billToLoc').disable();
+              // (document.getElementById("supplierSiteId") as any).disabled = false;
+              // (document.getElementById("shipToLoc") as any).disabled = false;
+              // (document.getElementById("billToLoc") as any).disabled = false;
             }
           );
       }
