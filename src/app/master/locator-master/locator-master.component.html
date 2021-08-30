@@ -26,9 +26,9 @@
                                 </select>
                                 <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
                                     <div *ngIf="f.locId.errors.required">Location is required</div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!locatorMasterForm.get('locId').valid && locatorMasterForm.get('locId').touched">Please
-                                        Enter Location Name </span>
+                                        Enter Location Name </span> -->
                                 </div>          
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
@@ -43,9 +43,9 @@
                                 </select>
                                 <div *ngIf="submitted && f.subinventoryId.errors" class="invalid-feedback">
                                     <div *ngIf="f.subinventoryId.errors.required">Subinventory is required</div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!locatorMasterForm.get('subinventoryId').valid && locatorMasterForm.get('subinventoryId').touched">Please
-                                        Enter Subinventory </span>
+                                        Enter Subinventory </span> -->
                                 </div>
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
@@ -62,9 +62,9 @@
                                 <div *ngIf="f.segment1.errors?.maxLength">Floor must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment1').valid && locatorMasterForm.get('segment1').touched">Please
-                                Enter Floor </span>    
+                                Enter Floor </span>     -->
                             </td>
                            
                         </tr>
@@ -83,9 +83,9 @@
                                 <div *ngIf="f.segment2.errors?.maxLength">Rack must be a valid for 5 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment2').valid && locatorMasterForm.get('segment2').touched">Please
-                                Enter Rack </span>    
+                                Enter Rack </span>     -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Rack&nbsp;Number&nbsp;:
@@ -101,9 +101,9 @@
                                 <div *ngIf="f.segment3.errors?.maxLength">Rack Number must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
-                                Enter Rack Number </span>    
+                                Enter Rack Number </span>     -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Row&nbsp;:
@@ -119,9 +119,9 @@
                                 <div *ngIf="f.segment4.errors?.maxLength">Row must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment4').valid && locatorMasterForm.get('segment4').touched">Please
-                                Enter Row </span>    
+                                Enter Row </span>     -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Row&nbsp;Number&nbsp;:
@@ -137,9 +137,9 @@
                                 <div *ngIf="f.segment5.errors?.maxLength">Row Number must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment5').valid && locatorMasterForm.get('segment5').touched">Please
-                                Enter Row Number </span>    
+                                Enter Row Number </span>     -->
                             </td>
                         </tr>
                         <tr>
@@ -170,9 +170,9 @@
                                 <input disabled formControlName="locId"  value={{locId}} class="form-control">
                                 <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
                                     <div *ngIf="f.locId.errors.required">Location is required</div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!locatorMasterForm.get('locId').valid && locatorMasterForm.get('locId').touched">Please
-                                        Enter Location Name </span>
+                                        Enter Location Name </span> -->
                                 </div>            
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
@@ -195,9 +195,9 @@
                                 <div *ngIf="f.segment1.errors?.maxLength">Floor must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment1').valid && locatorMasterForm.get('segment1').touched">Please
-                                Enter Floor </span>        
+                                Enter Floor </span>         -->
                             </td>
                         </tr>
                         <tr>
@@ -215,9 +215,9 @@
                         <div *ngIf="f.segment2.errors?.maxLength">Rack must be a valid for 5 digit
                         </div>
                     </div>
-                    <span
+                    <!-- <span
                         *ngIf="!locatorMasterForm.get('segment2').valid && locatorMasterForm.get('segment2').touched">Please
-                        Enter Rack </span>
+                        Enter Rack </span> -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Rack&nbsp;Number&nbsp;:
@@ -233,9 +233,9 @@
                                 <div *ngIf="f.segment3.errors?.maxLength">Rack Number must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
-                                Enter Rack Number </span>        
+                                Enter Rack Number </span>         -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Row&nbsp;:
@@ -251,9 +251,9 @@
                         <div *ngIf="f.segment4.errors?.maxLength">Row must be a valid for 1 digit
                         </div>
                     </div>
-                    <span
+                    <!-- <span
                         *ngIf="!locatorMasterForm.get('segment4').valid && locatorMasterForm.get('segment4').touched">Please
-                        Enter Row </span>
+                        Enter Row </span> -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Row&nbsp;Number&nbsp;:
@@ -269,9 +269,9 @@
                                 <div *ngIf="f.segment5.errors?.maxLength">Row Number must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment5').valid && locatorMasterForm.get('segment5').touched">Please
-                                Enter Row Number </span>        
+                                Enter Row Number </span>         -->
                             </td>
                         </tr>
                         <tr>
@@ -294,9 +294,9 @@
                                 </select>
                                 <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
                                     <div *ngIf="f.status.errors.required">status is required</div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!locatorMasterForm.get('status').valid && locatorMasterForm.get('status').touched">Please
-                                        Enter status </span>
+                                        Enter status </span> -->
                                 </div>        
                             </td> 
                             <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
@@ -322,7 +322,7 @@
                         <td>   
                             <!-- [disabled]="!locatorMasterForm.valid" -->
                             <button type="submit" class="btn btn-primary" id="register"
-                                (click)="newMast()">New</button>
+                                (click)="newMast()">Save</button> 
                         </td>
                         <td>
                             <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
