@@ -70,7 +70,7 @@ export class OrderManagementService {
   downloadCSPreINV(orderNumber) :Observable<any> {
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
-    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
+    const REQUEST_URI = `/orderHeader/cntrTaxPreInvPrint/${orderNumber}`;    
     return this.http.get(REQUEST_URI, { 
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -81,7 +81,7 @@ export class OrderManagementService {
   downloadCSINV(InvoiceNumber){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
+    const REQUEST_URI = `/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -92,7 +92,7 @@ export class OrderManagementService {
   downloadVehicleINV(InvoiceNumber){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081//orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    const REQUEST_URI = `/orderHeader/salesTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -105,7 +105,7 @@ export class OrderManagementService {
   downloadAddonINV(InvoiceNumber){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/addonTaxInv/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081//orderHeader/addonTaxInv/${InvoiceNumber}`;    
+    const REQUEST_URI = `/orderHeader/addonTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -128,9 +128,9 @@ export class OrderManagementService {
 
  
   downloadGatePass(InvoiceNumber){
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
+    const REQUEST_URI = `/salesGatePass/print/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -236,8 +236,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
 
-  accountNoSearchFn2(accountNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}`);
+  accountNoSearchFn2(accountNo,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}&divisionId=${divisionId}`);
     // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
     // `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`
   }
@@ -246,8 +246,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl + `/Customer/site/${id}`);
   }
 
-  accountNoSearchFn(accountNo,ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+  accountNoSearchFn(accountNo,ouId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divisionId}`);
     // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 

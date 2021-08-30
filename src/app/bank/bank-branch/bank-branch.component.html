@@ -145,7 +145,7 @@
                                                 <tr>
                                                     <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;No&nbsp;1&nbsp;:&nbsp; </td>
                                                     <td style="border: none;color: black;">
-                                                        <input type="number" formControlName="contact1"  [ngClass]="{ 'is-invalid': submitted && f.contact1.errors }"
+                                                        <input type="number" min="0"  formControlName="contact1"  [ngClass]="{ 'is-invalid': submitted && f.contact1.errors }"
                                                             class="form-control" placeholder="Enter contact no 1">
                                                             <div *ngIf="submitted && f. contact1.errors" class="invalid-feedback">
                                                                 <div *ngIf="f.contact1.errors.required">contact no must be required and valid for 10 digit
@@ -159,7 +159,7 @@
                                                     </td>
                                                     <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;No&nbsp;2&nbsp;:&nbsp; </td>
                                                     <td style="border: none;color: black;">
-                                                        <input type="number" formControlName="contact2" [ngClass]="{ 'is-invalid': submitted && f.contact2.errors }"
+                                                        <input type="number" min="0"  formControlName="contact2" [ngClass]="{ 'is-invalid': submitted && f.contact2.errors }"
                                                             class="form-control" placeholder="Enter contact no 2">
                                                             <div *ngIf="submitted && f. contact2.errors" class="invalid-feedback">
                                                                 <div *ngIf="f.contact2.errors.required">contact no must be required and valid for 10 digit

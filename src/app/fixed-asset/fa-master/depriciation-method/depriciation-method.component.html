@@ -92,17 +92,17 @@
                                     <td style="width: 15%" class="LabelFontStyle">Life&nbsp;Years&nbsp;:</td>
                             
                                     <td>  
-                                        <input type="number"   class="form-control">
+                                        <input type="number" min="0"    class="form-control">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Months&nbsp;:</td>
                             
                                     <td>  
-                                        <input type="number"   class="form-control">
+                                        <input type="number" min="0"    class="form-control">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Prorate&nbsp;Periods&nbsp;Per&nbsp;Year&nbsp;:</td>
                             
                                     <td>  
-                                        <input type="number"   class="form-control">
+                                        <input type="number" min="0"    class="form-control">
                                     </td>
                             </tr>
                         </ng-container>
@@ -156,7 +156,7 @@
                                                                                             
                                                                                           <!-- <input type="text" hidden formControlName="priceListLineId"> -->
                                                                                             <td>
-                                                                                                <input type="number"  class="form-control"  style="width: 80px;" formControlName="basicRate">
+                                                                                                <input type="number" min="0"   class="form-control"  style="width: 80px;" formControlName="basicRate">
                                                                                             </td> 
                                                                                             <td>
                                                                                                 <input  style="width: 80px;" type="number"  class="form-control" formControlName="adjustingRate">

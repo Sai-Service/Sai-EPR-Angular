@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControl
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 // import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -29,7 +30,7 @@ import { get } from 'jquery';
 interface IpostPO {
   poHeaderId: number;
   poLineId: number;
-  divisionId:number;
+  divisionId: number;
   ouId: number;
   poDate: Date;
   poType: string;
@@ -120,13 +121,14 @@ interface IpostPO {
 export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
+  docType:string;
   selectedLine = 0;
   clicked = false;
   public currentOp: string;
   showModal: boolean;
   content: number;
   title: string;
-  divisionId:number;
+  divisionId: number;
   mainType: string;
   userList1: any[] = [];
   userList2: any[] = [];
@@ -334,6 +336,11 @@ export class OPMasterDtoComponent implements OnInit {
     this.myInputField.nativeElement.focus();
   }
 
+
+  @ViewChild('fileInput') fileInput;
+    message: string;
+    allUsers: Observable<OPMasterDtoComponent[]>;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
 
@@ -352,7 +359,7 @@ export class OPMasterDtoComponent implements OnInit {
       currencyCode: [],
       authorizationStatus: [],
       totalAmt: [],
-      supplierAddress:[],
+      supplierAddress: [],
       suppInvNo: ['', [Validators.minLength(3)]],
       // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
@@ -411,20 +418,20 @@ export class OPMasterDtoComponent implements OnInit {
   ngOnInit(): void {
     this.currentOp = 'insert';
     this.hideArray[0] = true;
-
+    // this.loadAllUser();
     console.log(sessionStorage.getItem('emplId'));
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
-    console.log( this.dept);
+    console.log(this.dept);
     this.deptName = (sessionStorage.getItem('deptName'));
     var locCODE = sessionStorage.getItem('locCode')
     var temp = locCODE.split('.');
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.name = (sessionStorage.getItem('name'));
-    var divisionName=(sessionStorage.getItem('divisionName'));
-    this.divisionId=Number(sessionStorage.getItem('divisionId'));
-    this.poMasterDtoForm.patchValue({divisionName:(sessionStorage.getItem('divisionName'))})
+    var divisionName = (sessionStorage.getItem('divisionName'));
+    this.divisionId = Number(sessionStorage.getItem('divisionId'));
+    this.poMasterDtoForm.patchValue({ divisionName: (sessionStorage.getItem('divisionName')) })
     // if (this.deptName === 'Sales' || this.deptName === 'Service' || this.deptName === 'DP' || this.deptName === 'Spares') {
     //   this.displayDept = true;
     //   //  this.dept = this.deptName
@@ -1145,7 +1152,7 @@ export class OPMasterDtoComponent implements OnInit {
     const formValue: IpostPO = this.transData(this.poMasterDtoForm.value);
     formValue.authorizationStatus = 'Inprogress';
     formValue.ouId = this.ouId;
-  formValue.divisionId=this.divisionId;
+    formValue.divisionId = this.divisionId;
     formValue.currencyCode = 'INR';
     var arrayControl = this.poMasterDtoForm.get('poLines').value
     this.baseAmount = 0;
@@ -1356,22 +1363,23 @@ export class OPMasterDtoComponent implements OnInit {
                 this.ItemDetailsList = data;
                 console.log(this.ItemDetailsList);
                 var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-                this.taxCategoryId = this.ItemDetailsList.taxCategoryId
-
-                  (patch.controls[index]).patchValue(
-                    {
-                      diss1: 0,
-                      uom: this.ItemDetailsList.uom,
-                      invDescription: this.ItemDetailsList.invDescription,
-                      invCategory: this.ItemDetailsList.invCategory,
-                      hsnSacCode: this.ItemDetailsList.hsnSacCode,
-                      taxCategoryName: this.ItemDetailsList.taxCategoryName,
-                      segmentName: this.ItemDetailsList.segmentName,
-                      poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
-                      taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
-                      invItemId: this.invItemId,
-                    }
-                  );
+                if (this.ItemDetailsList.taxCategoryId != null) {
+                  this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+                }
+                (patch.controls[index]).patchValue(
+                  {
+                    diss1: 0,
+                    uom: this.ItemDetailsList.uom,
+                    invDescription: data.invDescription,
+                    invCategory: data.invCategory,
+                    hsnSacCode: this.ItemDetailsList.hsnSacCode,
+                    taxCategoryName: this.ItemDetailsList.taxCategoryName,
+                    segmentName: this.ItemDetailsList.segmentName,
+                    poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
+                    taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
+                    invItemId: this.invItemId,
+                  }
+                );
 
 
               }
@@ -1647,7 +1655,7 @@ export class OPMasterDtoComponent implements OnInit {
       });
       // }
     } else {
-     
+
       var itemId = this.ItemDetailsList.itemId;
       var taxCategoryId = taxCategoryId;
       this.taxCatId = taxCategoryId;
@@ -1772,65 +1780,68 @@ export class OPMasterDtoComponent implements OnInit {
     }
   }
 
+
   // checked
   onOptioninvitemTypeSelected(e: any, lineNum) {
-    // alert('---' + e.target.value);
+
     var itemType = e.target.value;
+    this.lineDetailsArray.controls[lineNum].get('segment').setValue('');
+    this.lineDetailsArray.controls[lineNum].get('segment').disable();
+    this.lineDetailsArray.controls[lineNum].reset();
+    this.lineDetailsArray.controls[lineNum].get('itemType').setValue(itemType);
+    this.invItemList = new Array();
     if (this.poMasterDtoForm.get('supplierCode').value === '') {
       alert('Please Select Supplier Code First !');
-      this.lineDetailsArray.controls[lineNum].get('segment').disable();
       this.lineDetailsArray.controls[lineNum].get('itemType').setValue('--Select--');
       (<any>this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
+      return;
     }
     else {
       if (itemType === 'GOODS') {
-        this.lineDetailsArray.controls[lineNum].get('segment').enable();
-        this.displaygetInvItemId = true;
-        this.displaysupplierSiteId = false;
-        this.displayBillShipList = false;
-        this.displayBillShipList1 = false
+       
         var deptName1 = this.poMasterDtoForm.get('dept').value;
-
-        if (this.invItemList.length <= 0) {
-
-
-          this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')),(sessionStorage.getItem('divisionId')))
+        this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
+        
+        // if (this.invItemList.length <= 0) {
+          this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')))
             .subscribe(
               data => {
                 this.invItemList = data;
                 console.log(this.invItemList);
+                this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
+                this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
+                this.lineDetailsArray.controls[lineNum].get('segment').enable();
+                var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
+                this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
+                
+                this.poMasterDtoForm.get('supplierSiteId').disable();
+                this.poMasterDtoForm.get('shipToLoc').disable();
+                this.poMasterDtoForm.get('billToLoc').disable();
               }
             );
-        }
-        // this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
-        // this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
-        // this.poMasterDtoForm.get('supplierSiteId').disable();
-        // this.poMasterDtoForm.get('shipToLoc').disable();
-        // this.poMasterDtoForm.get('billToLoc').disable();
+            
+ 
 
         // this.displaysupplierSiteId=false;
 
-        var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
-
-        this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
-        console.log(this.invItemList);
+      
       }
       if (itemType === 'EXPENCE') {
-        this.displaygetInvItemId = true;
-        this.displayHSN = false;
-        this.displayinvDesc = false;
-        (document.getElementById("invDescription") as any).disabled = false;
         var deptName = 'NA';
-        this.service.invItemList(itemType, deptName)
+        this.service.invItemList(itemType, deptName, (sessionStorage.getItem('divisionId')))
           .subscribe(
             data => {
               this.invItemList = data;
               console.log(this.invItemList);
+              this.lineDetailsArray.controls[lineNum].get('invDescription').enable();
+              this.lineDetailsArray.controls[lineNum].get('hsnSacCode').enable();
+              this.lineDetailsArray.controls[lineNum].get('segment').enable();
+
+              this.poMasterDtoForm.get('supplierSiteId').disable();
+              this.poMasterDtoForm.get('shipToLoc').disable();
+              this.poMasterDtoForm.get('billToLoc').disable();
             }
           );
-        // (document.getElementById("invDescription")as any).disabled= false;
-        // (document.getElementById("hsnSacCode")as any).disabled= false;
-
       }
 
     }
@@ -1924,7 +1935,7 @@ export class OPMasterDtoComponent implements OnInit {
     return matches;
   };
 
-  getInvItemId($event) {
+  getInvItemId($event, i) {
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
     this.userList2 = [];
 
@@ -1933,6 +1944,7 @@ export class OPMasterDtoComponent implements OnInit {
         this.userList2 = this.searchFromArray1(this.invItemList, userId);
       }
     }
+
   }
 
   searchFromArray1(arr, regex) {
@@ -1945,7 +1957,7 @@ export class OPMasterDtoComponent implements OnInit {
     return matches;
   };
 
-  
+
 
   openCodeComb(i) {
     let segmentName1 = this.lineDetailsArray.controls[i].get('segmentName').value;
@@ -2175,4 +2187,53 @@ export class OPMasterDtoComponent implements OnInit {
     this.displayTaxDetailData = false;
   }
 
+  loadAllUser() {
+    this.allUsers = this.service.BindUser();
+  }
+
+  uploadFile() {
+    // console.log('doctype-check'+this.docType)
+    let formData = new FormData();
+    formData.append('file', this.fileInput.nativeElement.files[0])
+    this.service.UploadExcel(formData,this.docType).subscribe(result => {
+      this.message = result.toString();
+      this.loadAllUser();
+      if (this.deptName=sessionStorage.getItem('Sales')){
+      this.service.bulkpouploadSales(formData).subscribe((res: any) => {
+        // this.router1.navigate(['usersummary']);
+        if (res.code === 200) {
+          alert('FILE UPLOADED SUCCESSFUILY');
+          window.location.reload();
+          // this.router1.navigate(['usersummary']);
+        } else {
+          if (res.code === 400) {
+            // alert(res.message)
+            alert('Error In File : \n' + res.obj);
+            window.location.reload();
+            // this.location.reset();
+          }
+        }
+      });
+    }
+    else{
+      // if (this.deptName=sessionStorage.getItem('Spares')){
+        this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
+          // this.router1.navigate(['usersummary']);
+          if (res.code === 200) {
+            alert('FILE UPLOADED SUCCESSFUILY');
+            window.location.reload();
+            // this.router1.navigate(['usersummary']);
+          } else {
+            if (res.code === 400) {
+              // alert(res.message)
+              alert('Error In File : \n' + res.obj);
+              window.location.reload();
+              // this.location.reset();
+            }
+          }
+        });
+      // }
+    }
+    });
+  }
 }

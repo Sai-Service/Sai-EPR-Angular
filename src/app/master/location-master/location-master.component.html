@@ -464,7 +464,7 @@
                                 Pin&nbsp;Code&nbsp;:
                             </td>
                             <td>
-                                <input type="number" formControlName="pinCd" value={{pinCd}} class="form-control"
+                                <input type="number" min="0"  formControlName="pinCd" value={{pinCd}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }" placeholder="Enter Pin Code">
                             <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
                                 <div *ngIf="f.pinCd.errors.required">Pin Code must be required and valid for 6 digit
@@ -518,7 +518,7 @@
                                 Phone 1&nbsp;:
                             </td>
                             <td>
-                                <input type="number" formControlName="phone1" value={{phone1}} class="form-control"
+                                <input type="number" min="0"  formControlName="phone1" value={{phone1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.phone1.errors }" placeholder="Enter Phone 1">
                             <div *ngIf="submitted && f.phone1.errors" class="invalid-feedback">
                                 <div *ngIf="f.phone1.errors.required">Phone 1 must be required and valid for 10 digit
@@ -534,7 +534,7 @@
                                 Phone 2&nbsp;:
                             </td>
                             <td>
-                                <input type="number" formControlName="phone2" value={{phone2}} class="form-control"
+                                <input type="number" min="0"  formControlName="phone2" value={{phone2}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.phone2.errors }" placeholder="Enter Phone 1">
                             <div *ngIf="submitted && f.phone2.errors" class="invalid-feedback">
                                 <div *ngIf="f.phone2.errors.required">Phone 2 must be required and valid for 10 digit

@@ -233,7 +233,7 @@
             </thead>
             <tbody>
               <!-- <tr>
-                <input type="number" hidden formControlName="trxLineId">
+                <input type="number" min="0"  hidden formControlName="trxLineId">
               </tr> -->
             <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
            <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
@@ -301,7 +301,7 @@
                <input hidden type="number" formControlName="onHandQty">
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="avlqty" ></td>
               <input hidden  type="number"  formControlName="resveQty">
-              <td><input type="number" class="form-control" style="height: 20px;width: 50px;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
+              <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 50px;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
                 <span
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>
