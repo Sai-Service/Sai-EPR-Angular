@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component'
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ export class MasterService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  // ServerUrl='http://localhost:8081';
+  ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -2006,7 +2007,28 @@ OrderCategoryList(): Observable<any> {
       // URL :- http://localhost:8081/pricelist/uploadprc
     }
 
+////////////////////////////// bulk po upload /////////
+bulkpouploadSales(formData: FormData) {
+  let headers1 = new HttpHeaders();  
+  var userId1=sessionStorage.getItem('userId');
+  // console.log(docType);
+  var docType1=formData.get('docType');
+    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData) 
+  }  
 
+  bulkpouploadSpares(formData: FormData) {
+    let headers1 = new HttpHeaders();  
+    var userId1=sessionStorage.getItem('userId');
+    // console.log(docType);
+    var docType1=formData.get('docType');
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData) 
+    }  
+
+  BindUser(): Observable<OPMasterDtoComponent[]> {  
+    var userId1=sessionStorage.getItem('userId');
+    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=`+userId1);  
+    // return this.http.get<HomePageComponent[]>(this.ServerUrl + `/header/FileList`);
+  }
     //////////////////////////EXTENDED WARRANTY/////////////////////////////
 
 

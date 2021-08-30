@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControl
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 // import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -120,6 +121,7 @@ interface IpostPO {
 export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
+  docType:string;
   selectedLine = 0;
   clicked = false;
   public currentOp: string;
@@ -334,6 +336,11 @@ export class OPMasterDtoComponent implements OnInit {
     this.myInputField.nativeElement.focus();
   }
 
+
+  @ViewChild('fileInput') fileInput;
+    message: string;
+    allUsers: Observable<OPMasterDtoComponent[]>;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
 
@@ -411,7 +418,7 @@ export class OPMasterDtoComponent implements OnInit {
   ngOnInit(): void {
     this.currentOp = 'insert';
     this.hideArray[0] = true;
-
+    // this.loadAllUser();
     console.log(sessionStorage.getItem('emplId'));
     this.empId = Number(sessionStorage.getItem('emplId'));
     this.dept = (sessionStorage.getItem('dept'));
@@ -2182,4 +2189,53 @@ export class OPMasterDtoComponent implements OnInit {
     this.displayTaxDetailData = false;
   }
 
+  loadAllUser() {
+    this.allUsers = this.service.BindUser();
+  }
+
+  uploadFile() {
+    // console.log('doctype-check'+this.docType)
+    let formData = new FormData();
+    formData.append('file', this.fileInput.nativeElement.files[0])
+    this.service.UploadExcel(formData,this.docType).subscribe(result => {
+      this.message = result.toString();
+      this.loadAllUser();
+      if (this.deptName=sessionStorage.getItem('Sales')){
+      this.service.bulkpouploadSales(formData).subscribe((res: any) => {
+        // this.router1.navigate(['usersummary']);
+        if (res.code === 200) {
+          alert('FILE UPLOADED SUCCESSFUILY');
+          window.location.reload();
+          // this.router1.navigate(['usersummary']);
+        } else {
+          if (res.code === 400) {
+            // alert(res.message)
+            alert('Error In File : \n' + res.obj);
+            window.location.reload();
+            // this.location.reset();
+          }
+        }
+      });
+    }
+    else{
+      // if (this.deptName=sessionStorage.getItem('Spares')){
+        this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
+          // this.router1.navigate(['usersummary']);
+          if (res.code === 200) {
+            alert('FILE UPLOADED SUCCESSFUILY');
+            window.location.reload();
+            // this.router1.navigate(['usersummary']);
+          } else {
+            if (res.code === 400) {
+              // alert(res.message)
+              alert('Error In File : \n' + res.obj);
+              window.location.reload();
+              // this.location.reset();
+            }
+          }
+        });
+      // }
+    }
+    });
+  }
 }

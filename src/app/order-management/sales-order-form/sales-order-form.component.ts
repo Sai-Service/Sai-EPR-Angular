@@ -661,7 +661,7 @@ export class SalesOrderFormComponent implements OnInit {
           }
           this.patchResultList(i, this.taxCalforItem, invLineNo, invLineItemId);
           this.taxMap.set(i, data);
-          alert('map'+''+ this.taxMap.size)
+          // alert('map'+''+ this.taxMap.size)
         });
   }
 
@@ -706,7 +706,7 @@ export class SalesOrderFormComponent implements OnInit {
 
   onKey(index) {
     console.log(index);
-    alert('call')
+    // alert('call')
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
     var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var taxcatName = arrayControl[index].taxCategoryName;
@@ -750,7 +750,7 @@ export class SalesOrderFormComponent implements OnInit {
             }
             this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
             this.taxMap.set(index, data);
-            alert('map'+''+ this.taxMap.size)
+            // alert('map'+''+ this.taxMap.size)
           });
     }
     else {
@@ -873,9 +873,9 @@ export class SalesOrderFormComponent implements OnInit {
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
-              alert(data.obj.flowStatusCode)
+              // alert(data.obj.flowStatusCode)
               if (data.obj.flowStatusCode === 'BOOKED') {
-                alert(this.op);
+                // alert(this.op);
                 this.op = 'insert';
                 this.displayLineTaxDetails = false;
                 this.orderlineDetailsGroup();
@@ -919,7 +919,7 @@ export class SalesOrderFormComponent implements OnInit {
           if (this.currentOpration != 'orderSearch'){
             for (let i = 0; i < controlinv1.length; i++) {
               if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
-                alert(controlinv1[i].segment + '--' + i);
+                // alert(controlinv1[i].segment + '--' + i);
                 this.orderManagementService.addonDescList(controlinv1[i].segment)
                   .subscribe(
                     data1 => {
@@ -927,7 +927,7 @@ export class SalesOrderFormComponent implements OnInit {
                       for (let j = 0; j < data1.length; j++) {
                         var taxCatNm: string = data1[j].taxCategoryName;
                         if (taxCatNm.includes('Sale')) {
-                          alert(taxCatNm);
+                          // alert(taxCatNm);
                           (controlinv2.controls[i]).patchValue({
                             taxCategoryId: data1[j].taxCategoryId,
                             taxCategoryName: data1[j].taxCategoryName,
@@ -961,7 +961,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   TaxCategoryupdate(index) {
-    alert(this.orderNumber)
+    // alert(this.orderNumber)
     const formValue: AccOrderLinesPost1 = this.transData(this.SalesOrderBookingForm.value);
     formValue.orderNumber = this.orderNumber;
     var accLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
