@@ -22,7 +22,7 @@
                                                 Customer&nbsp;Id&nbsp;:&nbsp;</td>
                                             <td>
                                                 <input formControlName="customerId1" value={{customerId1}}
-                                                    [(ngModel)]="customerId1" class="form-control"
+                                                     class="form-control"
                                                     placeholder="Enter Account No">
                                             </td>
                                             <td>
@@ -35,21 +35,21 @@
                             </tr>
                         </table>
                         <table class="center">
-                            <input hidden formControlName="ouId" [(ngModel)]="ouId" class="form-control">
+                            <input hidden formControlName="ouId"  class="form-control">
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input disabled formControlName="ouName" [(ngModel)]="ouName" class="form-control">
+                                    <input disabled formControlName="ouName" class="form-control">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input disabled formControlName="loginArray" [(ngModel)]="loginArray"
+                                    <input disabled formControlName="loginArray" 
                                         class="form-control">
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle1">&nbsp;Customer&nbsp;Type&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <select formControlName="custType" [(ngModel)]="custType"
+                                    <select formControlName="custType" 
                                         (ngModelChange)='onOptioncustTypeSelected($event)' class="form-control">
                                         <option value="Person">Person</option>
                                         <option value="Orgnization">Orgnization</option>
@@ -70,14 +70,14 @@
                                 <td style="width: 15%" class="LabelFontStyle1">
                                     &nbsp;Class&nbsp;Code&nbsp;Type&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="classCodeType" [(ngModel)]="classCodeType" value={{classCodeType}} class="form-control">
+                                    <!-- <input formControlName="classCodeType"  value={{classCodeType}} class="form-control"> -->
                                     <!-- [ngValue]="cmnTypeId" -->
-                                    <!-- <select formControlName="classCodeType" id="classCodeType" class="form-control">
+                                    <select formControlName="classCodeType" id="classCodeType" class="form-control">
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  classCodeTypeList">
                                             {{sc.code}}
                                         </option>
-                                    </select> -->
+                                    </select>
                                     <div *ngIf="submitted && f. classCodeType.errors" class="invalid-feedback">
                                         <div *ngIf="f.classCodeType.errors.required">classCodeType Name must be a valid
                                         </div>
@@ -90,7 +90,7 @@
                                 <td style="width: 15%" class="LabelFontStyle1">Account&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <!-- formControlName="accountNo" -->
-                                    <input formControlName="custAccountNo" [(ngModel)]='custAccountNo' value={{custAccountNo}}
+                                    <input formControlName="custAccountNo"  value={{custAccountNo}}
                                         class="form-control" placeholder="Enter Account Number">
                                     <div *ngIf="submitted && f. custAccountNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.custAccountNo.errors.required">Account Number must be a valid

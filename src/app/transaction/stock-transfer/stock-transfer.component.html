@@ -158,7 +158,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <!-- <input type="number" hidden formControlName="trxLineId"> -->
+                  <!-- <input type="number" min="0"  hidden formControlName="trxLineId"> -->
                 </tr>
               <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"> </div>
@@ -338,7 +338,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <input type="number" hidden formControlName="trxLineId">
+                    <input type="number" min="0"  hidden formControlName="trxLineId">
                   </tr>
                 <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                <tr>  <td><input hidden disabled type="text" class="form-control"  style="height: 20px;width: 50px;" >
