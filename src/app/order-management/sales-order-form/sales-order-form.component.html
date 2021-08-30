@@ -1186,7 +1186,7 @@
                                                             {{sc.taxCategoryName}}
                                                         </option>
                                                     </select>
-                                                    <input  type="number" formControlName="taxCategoryId"
+                                                    <input hidden type="number" formControlName="taxCategoryId"
                                                    class="form-control"
                                                     style="height: 20px;width: 160px;">
                                                         </ng-template>
@@ -1194,7 +1194,7 @@
                                                     <ng-template #elsetaxCategoryName>
                                                         <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
                                                     
-                                                        <input type="number" formControlName="taxCategoryId"
+                                                        <input hidden type="number" formControlName="taxCategoryId"
                                                             class="form-control"
                                                             style="height: 20px;width: 160px;">
                                                         <input hidden type="number" formControlName="orgId" [(ngModel)]='orgId'
