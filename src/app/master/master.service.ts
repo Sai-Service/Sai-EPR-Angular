@@ -226,7 +226,7 @@ custTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
 classCodeTypeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/classCode');
 }
 getTaxCat(ouId): Observable<any> {
  // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
