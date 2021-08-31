@@ -47,83 +47,50 @@
                                     <div *ngIf="f.description.errors.minlength">Minimum  5 characters required</div>
                                 </div>
                                 </td>
-                            <td style="width: 15%" class="LabelFontStyle1">
-                                Item&nbsp;Category&nbsp;:&nbsp;
-                            </td>
-                            <td>
-                                <input type="text" value="attribute1" formControlName="attribute1"
-                                                [(ngModel)]='attribute1' value={{attribute1}} class="form-control"
-                                                data-toggle="modal" data-target="#myModal"
-                                                placeholder="Select Item Category">
- <!-- The Modal -->
- <div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                                <td style="width: 15%" class="LabelFontStyle1">
+                                    Main&nbsp;Type:&nbsp;
+                                </td>
+                                <td>
+                                    <input formControlName="mainType" [(ngModel)]='mainType'
+                                    value={{mainType}} class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+                                    placeholder="Enter description">
+                                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                        <div *ngIf="f.description.errors.required">mainType cannot be blank</div>
+                                      
+                                    </div>
+                                    </td>
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <!-- <h4 class="modal-title">Modal Heading</h4> -->
-                <label> Item Category </label>
-                <button type="button" class="close"
-                    data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <table>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">
-                            Item&nbsp;Type&nbsp;:&nbsp;</td>
-                        <td>
-                            <select formControlName="mainType" id="mainType"
-                                [(ngModel)]='mainType' class="form-control" style="width: 120px;">
-                                <option></option>
-                                    <option *ngFor="let sc of  mainTypeList">
-                                        {{sc.codeDesc}}
-                                </option>
-                            </select>
-                            <div *ngIf="submitted && f.mainType.errors" class="invalid-feedback">
-                                <div *ngIf="f.mainType.errors.required">Item type cannot be blank</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">
-                            Item&nbsp;Sub&nbsp;Type&nbsp;&nbsp;:&nbsp;</td>
-                        <td>
-                            <select formControlName="subType" id="subType"
-                                [(ngModel)]='subType' class="form-control" style="width: 120px;">
-                                <option></option>
-                                <option *ngFor="let sc of  subTypeList">
-                                    {{sc.codeDesc}}
-                                    <!-- {{sc.divisionId}}-{{sc.divisionName}} -->
-                                </option>
-                            </select>
-                            <div *ngIf="submitted && f.subType.errors" class="invalid-feedback">
-                                <div *ngIf="f.subType.errors.required">Item Sub type cannot be blank</div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger"
-                    data-dismiss="modal"
-                    (click)="fnItemCategory(mainType, subType)">Ok</button>
-            </div>
-
-        </div>
-    </div>
-</div>
- <!-- Derina -->
-<div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
-    <div *ngIf="f.categoryId.errors.required">Category cannot be blank</div>  
-</div>
- </td>
+                                    <td style="width: 15%" class="LabelFontStyle1">
+                                        Sub&nbsp;Type:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input formControlName="subType" [(ngModel)]='subType'
+                                        value={{subType}} class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
+                                        placeholder="Enter description">
+                                        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                            <div *ngIf="f.description.errors.required">subType cannot be blank</div>
+                                          
+                                        </div>
+                                        </td>
+                            
                         </tr>
 <tr>
+    <td style="width: 15%" class="LabelFontStyle1">
+        Item&nbsp;Category&nbsp;:&nbsp;
+    </td>
+    <td>
+        <input type="text" value="attribute1" formControlName="attribute1"
+                        [(ngModel)]='attribute1' value={{attribute1}} class="form-control"
+                        data-toggle="modal" data-target="#myModal"
+                        placeholder="Select Item Category">
+
+<!-- Derina -->
+<div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
+<div *ngIf="f.categoryId.errors.required">Category cannot be blank</div>  
+</div>
+</td>
 <td style="width: 15%" class="LabelFontStyle">Principle&nbsp;Item&nbsp;:&nbsp;</td>
 <td>
     <select formControlName="princpleItem" id="princpleItem" class="form-control"
