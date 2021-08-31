@@ -25,6 +25,7 @@ const MIME_TYPES = {
 interface ISalesBookingForm {
   divisionName: string,
   ouName: string,
+  divisionId:number,
   fuelType: string;
   locCode: string,
   ticketNo: string,
@@ -632,12 +633,13 @@ export class SalesOrderFormComponent implements OnInit {
     let controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var invLineNo = controlinv1[i].lineNumber;
+    alert(invLineNo);
     var invLineItemId = controlinv1[i].itemId;
     var taxCategoryId = controlinv1[i].taxCategoryId;
     console.log(controlinv1[i].taxCategoryId);
     this.activeLineNo = invLineNo;
     var baseAmt = controlinv1[i].baseAmt;
-    alert(baseAmt);
+    // alert(baseAmt);
     var patch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var arrayControlTax = this.SalesOrderBookingForm.get('taxAmounts').value;
     var index = Number(arrayControlTax[1].invLineNo);
@@ -655,12 +657,13 @@ export class SalesOrderFormComponent implements OnInit {
             (patch.controls[i]).patchValue(
               {
                 amount: this.taxCalforItem[i].totTaxAmt,
-
+                invLineNo:invLineNo
               }
             );
           }
           this.patchResultList(i, this.taxCalforItem, invLineNo, invLineItemId);
-          this.taxMap.set(i, data);
+          var arrayupdateTaxLine = this.SalesOrderBookingForm.get('taxAmounts').value;
+          this.taxMap.set(i,arrayupdateTaxLine);
           // alert('map'+''+ this.taxMap.size)
         });
   }
@@ -697,7 +700,7 @@ export class SalesOrderFormComponent implements OnInit {
         selfAssesedFlag: x.selfAssesedFlag,
         inclusiveFlag: x.inclusiveFlag,
         invLineNo: invLineNo,
-        invLineItemId: invLineNo
+        // invLineItemId: itemId
       }));
     });
     console.log(control);
@@ -746,6 +749,9 @@ export class SalesOrderFormComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               controlinv1.push(invLnGrp);
+              (controlinv1.controls[i]).patchValue({
+                invLineNo: index + 1,
+              });
               data[i].invLineNo = invLineNo1;
             }
             this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
@@ -826,7 +832,8 @@ export class SalesOrderFormComponent implements OnInit {
     // alert(this.ouId)
     const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
     formValue.flowStatusCode = 'BOOKED';
-    formValue.ouId = Number(sessionStorage.getItem('ouId'))
+    formValue.ouId = Number(sessionStorage.getItem('ouId'));
+    formValue.divisionId=Number(sessionStorage.getItem('divisionId'))
     this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
@@ -860,6 +867,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.currentOpration = 'orderSearch';
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
+    this.TaxDetailsArray().clear();
     this.orderManagementService.getsearchByOrderNo(orderNumber)
       .subscribe(
         data => {
@@ -1041,7 +1049,7 @@ export class SalesOrderFormComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    for (let taxlinval of this.taxMap.values()) {
+    for (let taxlinval of this.taxMap.values()) { 
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
       }
@@ -1121,7 +1129,7 @@ export class SalesOrderFormComponent implements OnInit {
             recoverableFlag: x.recoverableFlag,
             selfAssesedFlag: x.selfAssesedFlag,
             inclusiveFlag: x.inclusiveFlag,
-
+            invLineNo:x.invLineNo,
           }));
         }
       });

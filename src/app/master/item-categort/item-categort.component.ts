@@ -141,6 +141,7 @@ export class ItemCategortComponent implements OnInit {
     return;
     } 
     const formValue: IItemCategory = this.transData(this.itemCategoryMasterForm.value);
+    formValue.attribute1 =  formValue.mainType + '.' + formValue.subType;
     this.service.ItemCatMastSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');

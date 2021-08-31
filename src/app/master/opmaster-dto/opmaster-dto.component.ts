@@ -1149,7 +1149,7 @@ export class OPMasterDtoComponent implements OnInit {
     this.displayNewButtonSave = false;
     this.displayNewButtonReset = false;
     this.authorizationStatus = 'Inprogress';
-    const formValue: IpostPO = this.transData(this.poMasterDtoForm.value);
+    const formValue: IpostPO = this.transData(this.poMasterDtoForm.getRawValue());
     formValue.authorizationStatus = 'Inprogress';
     formValue.ouId = this.ouId;
     formValue.divisionId = this.divisionId;
@@ -1814,6 +1814,7 @@ export class OPMasterDtoComponent implements OnInit {
                 var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
                 this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
                 
+                this.poMasterDtoForm.get('supplierCode').disable();
                 this.poMasterDtoForm.get('supplierSiteId').disable();
                 this.poMasterDtoForm.get('shipToLoc').disable();
                 this.poMasterDtoForm.get('billToLoc').disable();
@@ -1837,6 +1838,7 @@ export class OPMasterDtoComponent implements OnInit {
               this.lineDetailsArray.controls[lineNum].get('hsnSacCode').enable();
               this.lineDetailsArray.controls[lineNum].get('segment').enable();
 
+              this.poMasterDtoForm.get('supplierCode').disable();
               this.poMasterDtoForm.get('supplierSiteId').disable();
               this.poMasterDtoForm.get('shipToLoc').disable();
               this.poMasterDtoForm.get('billToLoc').disable();
