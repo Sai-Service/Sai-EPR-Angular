@@ -988,7 +988,7 @@
                                                                     (ngModelChange)='onOptionTaxCatSelected(i, $event)'
                                                                     class="form-control">
                                                                     <option>--Select--</option>
-                                                                    <option *ngFor="let sc of  taxCategoryList">
+                                                                    <option *ngFor="let sc of  taxCategoryList" [value]="sc.taxCategoryName">
                                                                         {{sc.taxCategoryName}}
                                                                     </option>
                                                                 </select>
