@@ -72,6 +72,8 @@ export class PoReceiptFormComponent implements OnInit {
   poReceiptForm: FormGroup;
   ouName:string;
   poNumber:string;
+  content:Number;
+  title:string;
   submitted = false;
   private sub: any;
   supplier:string;
@@ -91,6 +93,7 @@ export class PoReceiptFormComponent implements OnInit {
   disabledLine =true;
   disabledViewAccounting=true;
   DisplayqtyReceived=true;
+  displaylocatorDesc:Array<boolean>=[];;
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
@@ -184,6 +187,7 @@ export class PoReceiptFormComponent implements OnInit {
   poDate:Date;
 
   displaySaveButton =false;
+  displaysubInvDesc:Array<boolean>=[];
   TRUER=false; recFagDiss=true; 
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private router1: ActivatedRoute) {
@@ -233,6 +237,12 @@ export class PoReceiptFormComponent implements OnInit {
       runningTotalDr:[''],
       runningTotalCr:[''],
       shipmentNo:[''],
+      segment3:[],
+      segment11:[],
+      segment2:[],
+      segment4:[],
+      segment5:[],
+      locatorDesc:[],
       poLines: this.fb.array([this.lineDetailsGroup()]),
     })
    }
@@ -309,51 +319,7 @@ checkIfAllSelected() {
 }
 
 
-// selectAll(e)
-// {
-//   var patch = this.poReceiptForm.get('poLines') as FormArray;
-//   var invLineArr = this.poReceiptForm.get('poLines').value;
-//  alert("e.target.checked :"  +e.target.checked);
-//   if ( e.target.checked === true) {this.selectAllFlag=true; 
-//   //  alert("select All flag :"+this.selectAllflag);
- 
 
-// //  if(this.selectAllFlag===true) 
-// //   {
-//   this.recFagDiss=false;
-
-//     // for (let i = 0; i < this.lineDetailsArray.length ; i++) 
-//     //   {
-//     //     alert('in patch')
-//     //     patch.controls[i].patchValue({selectFlag:true});
-//     //   }
-//     }
-//   else { this.selectAllFlag=false; }
-//     //     if (invLineArr[i].selectFlag===true) 
-        
-//     //      { 
-           
-//     //        patch.controls[i].patchValue({applyrcptFlag:''})
-//     //       //  alert("inner loop");
-//     //        this.applyReceiptFlag(e,i);
-//     //      }
-
-//     //       patch.controls[i].patchValue({applyrcptFlag:true})
-//     //       this.applyReceiptFlag(e,i);
-//     //   }
-//   // }
-//   // else
-//   // {
-//   //   // alert("select All flag false :"+this.selectAllflag);
-
-//   //   for (let i = 0; i < this.lstcompolines.length ; i++) 
-//   //     {
-//   //       patch.controls[i].patchValue({applyrcptFlag:''})
-//   //       // this.applyReceiptFlag(e,i);
-//   //     }
-//   // }
-
-// }
 
 
 
@@ -411,7 +377,7 @@ checkIfAllSelected() {
           }
           if(data.code ===200){
             this.lstcompolines = data.obj;
-            alert(data.obj.poLines.length)
+            // alert(data.obj.poLines.length)
           if(this.lstcompolines.poStatus==='FULLY RECEIVED'){
             console.log(this.poStatus);
             this.displaySaveButton =true; 
@@ -422,6 +388,7 @@ checkIfAllSelected() {
           var length1=this.lstcompolines.poLines.length-1;
           this.lineDetailsArray.removeAt(length1);
           control.push(poLines);
+          
           this.displaySaveButton =false;
           this.poReceiptForm.patchValue(this.lstcompolines);
           
@@ -456,17 +423,19 @@ checkIfAllSelected() {
           for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
             var poLines:FormGroup=this.lineDetailsGroup();
             control.push(poLines);
-            // debugger;
+            if (data.obj.poLines[i].itemType==='EXPENCE'){
+              this.displaysubInvDesc[i]=true;
+              this.displaylocatorDesc[i]=true;
+            }
           }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
-
         }
         }
       }
     }
-      );
-      });
+  );
+  });
 
     
   }
@@ -579,7 +548,6 @@ checkIfAllSelected() {
           for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
             var poLines:FormGroup=this.lineDetailsGroup();
             control.push(poLines);
-            // debugger;
           }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
@@ -597,10 +565,14 @@ checkIfAllSelected() {
           for (let i=0 ; i<this.lstcompolines.poLines.length;i++){
             var poLines:FormGroup=this.lineDetailsGroup();
             control.push(poLines);
-            // debugger;
+            if (data.obj.poLines[i].itemType==='EXPENCE'){
+              this.displaysubInvDesc[i]=true;
+              this.displaylocatorDesc[i]=true;
+            }
           }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
+        
           // this.locatorDesc.push(this.lstcompolines.rcvLines[0].locatorDesc);
         }
         }
@@ -613,8 +585,6 @@ taxDeatils(poHeaderId,poLineId){
 if(this.lstcompolines.receiptNo===null){
   const trxId=this.lstcompolines.poLines[0].poHeaderId;
 const trxLineId=this.lstcompolines.poLines[0].poLineId;
-  // alert( 'trxId'+' '+trxId);
-  // alert('trxLineId'+' '+ trxLineId);
   this.service.receiptnotdonetaxDeatils(trxId,trxLineId)
   .subscribe((res: any) => {
     if (res.code === 200) {
@@ -650,7 +620,6 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
 }
  
     shipmentNoFind(shipmentNumber:String) {
-      // alert(segment1);
       console.log(this.poReceiptForm.value);
       this.service.getsearchByshipmentNo(shipmentNumber)
         .subscribe(
@@ -856,20 +825,22 @@ var jsonString = JSON.stringify(reqArr);
 
   okLocator(i){
     var poControls=this.poReceiptForm.get('poLines').value;
-    // alert( this.lineDetailsArray.controls[i].get('segment2').value);
-    poControls[i].locatorDesc=this.lineDetailsArray.controls[i].get('segment11').value+'.'+
-    this.lineDetailsArray.controls[i].get('segment2').value+'.'+
-    this.lineDetailsArray.controls[i].get('segment3').value+'.'+
-    // this.lineDetailsArray.controls[i].get('segment4').value;
-    this.lineDetailsArray.controls[i].get('segment4').value+'.'+
-    this.lineDetailsArray.controls[i].get('segment5').value;
-    this.locatorDesc=poControls[i].locatorDesc;
-    // alert(poControls[i].locatorDesc);
-    this.service.getLocatorPoLines(this.locatorDesc,this.locId)
+    poControls[i].locatorDesc=
+    this.poReceiptForm.get('segment11').value+'.'+
+    this.poReceiptForm.get('segment2').value+'.'+
+    this.poReceiptForm.get('segment3').value+'.'+
+    this.poReceiptForm.get('segment4').value+'.'+
+    this.poReceiptForm.get('segment5').value;
+    var locatorDesc=poControls[i].locatorDesc;
+    this.service.getLocatorPoLines(locatorDesc,this.locId)
     .subscribe((res: any) => {
           if (res.code === 200) {
-          this.lstcompolines1 = res.obj;
-          this.locatorId=res.obj.locatorId;
+            alert(res.message);
+          var patch = this.poReceiptForm.get('poLines') as FormArray;
+          (patch.controls[i]).patchValue({
+            locatorDesc: res.obj.segmentName,
+            locatorId:res.obj.locatorId,
+          });
           }
           else  { if (res.code === 400) {
             alert('Error : ' + res.message);
@@ -892,6 +863,9 @@ var jsonString = JSON.stringify(reqArr);
       this.segment4=temp[3];
       this.segment5=temp[4];
     }
+    this.content = i;
+    let a = i + 1
+    this.title = "Locator :" + a;
   }
 
   calculation(i,qty){
@@ -1015,7 +989,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
         // this.poReceiptForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.poReceiptForm.reset();
         }
       }
@@ -1042,7 +1016,7 @@ viewAccounting(receiptNo:any){
           alert(res.message);
         } else {
           if (res.code === 400) {
-            alert('Data already present in the data base');
+            alert(res.message);
           }
         }
       });
@@ -1073,7 +1047,7 @@ viewAccounting(receiptNo:any){
             // alert(res.message);
           } else {
             if (res.code === 400) {
-              alert('Data already present in the data base');
+              alert(res.message);
             }
           }
         });

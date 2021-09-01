@@ -231,7 +231,9 @@ voucherNo:[],
      this.displayouId=true;
      this.displaysiteAddress=true;
      this.displaystatus=true;
-     this.transactionService.getsearchByPayment(suppNo,this.ouId).subscribe((res: any) => {
+   //  this.transactionService.getsearchByPayment(suppNo).subscribe((res: any) => {
+
+    this.transactionService.getsearchByInvDtls(suppNo, sessionStorage.getItem('ouId')).subscribe((res: any) => {
       this.lstsearchpayminv=res.obj;
       console.log(res.obj);
       this.lstsearchpayminv.forEach(f => {
@@ -288,8 +290,8 @@ voucherNo:[],
 
 
     onOptionsSelected(bankAccountNo: string, index) {
-      // alert(bankAccountNo);
-      // if(bankAccountNo == undefined){
+      // add  check for cash payment
+       if(bankAccountNo != undefined){
         // alert(bankAccountNo);
         var value=bankAccountNo.split('/');
       // alert(value[0]);
@@ -305,7 +307,7 @@ voucherNo:[],
           console.log(this.docCategoryCodeList);
         }
       );
-      // }
+       }
       
     }
 
@@ -408,15 +410,16 @@ voucherNo:[],
 paymentSave(){
   this.totAmt=0; 
   const totlCalControls=this.paymentForm.get('obj').value;
-  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
+  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {          
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
   const formValue: Ipayment = this.paymentForm.value;
   console.log(formValue.suppId);
   var jsonData=this.paymentForm.value.obj1[0];
-  
+  if(jsonData.bankAccountNo != undefined){
   var value=jsonData.bankAccountNo.split('/');
   jsonData.bankAccountNo= value[0];
+  }
   jsonData.country ='India';
   jsonData.currency='INR';
   jsonData.ouId= this.ouId ;

@@ -1187,7 +1187,7 @@
                                                         </option>
                                                     </select>
                                                     <input hidden type="number" formControlName="taxCategoryId"
-                                                    [(ngModel)]='taxCategoryId' class="form-control"
+                                                   class="form-control"
                                                     style="height: 20px;width: 160px;">
                                                         </ng-template>
                                                         
@@ -1195,7 +1195,7 @@
                                                         <input disabled  type="text" formControlName="taxCategoryName"   class="form-control" style="height: 20px;width: 160px;">
                                                     
                                                         <input hidden type="number" formControlName="taxCategoryId"
-                                                            [(ngModel)]='taxCategoryId' class="form-control"
+                                                            class="form-control"
                                                             style="height: 20px;width: 160px;">
                                                         <input hidden type="number" formControlName="orgId" [(ngModel)]='orgId'
                                                             class="form-control" style="height: 20px;width: 160px;">
@@ -1422,7 +1422,7 @@
                                                     </div>
                                                     <ng-template #thenBlock>
                                                         <!-- (change)="validateNum(i,j)" -->
-                                                        <td><input type="number" formControlName="totTaxAmt"
+                                                        <td><input type="number" min="0"  formControlName="totTaxAmt"
                                                                  class="form-control"
                                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
                                                                 class="form-control">
@@ -1474,11 +1474,9 @@
                                                     </ng-template>
                                                 </tr>
                                                 <tr>
-                                                    <!-- <input hidden type="text" formControlName="itemId"
-                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
-                                                    <input hidden type="text" class="form-control"
+                                                    <input  type="number" class="form-control"
                                                         formControlName="invLineNo"
-                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"> -->
+                                                        style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                                 </tr>
                                             </ng-container>
                                         </ng-container>

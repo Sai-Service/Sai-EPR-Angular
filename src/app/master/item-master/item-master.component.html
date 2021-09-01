@@ -1037,7 +1037,7 @@
                                                 <tr>
                                                     <td width="15%" class="LabelFontStyle">
                                                         Temporary&nbsp;Registration&nbsp;No.&nbsp;:&nbsp;</td>
-                                                    <td><input type="number" formControlName="tempRegNo"
+                                                    <td><input type="number" min="0"  formControlName="tempRegNo"
                                                             class="form-control"></td>
                                                     <td style="width: 15%;  " class="LabelFontStyle">
                                                         Temporary&nbsp;Registration&nbsp;Date&nbsp;:&nbsp;</td>
@@ -1046,7 +1046,7 @@
                                                     <td style="width: 15%" class="LabelFontStyle">
                                                         Smart&nbsp;Card&nbsp;No&nbsp;:&nbsp;</td>
                                                     <td>
-                                                        <input type="number" formControlName="smartCardNumber"
+                                                        <input type="number" min="0"  formControlName="smartCardNumber"
                                                             value={{smartCardNumber}} class="form-control"
                                                             [ngClass]="{ 'is-invalid': submitted && f.date.errors }"
                                                             placeholder="Enter smart card number">
@@ -1080,7 +1080,7 @@
                                                             class="form-control"></td>
                                                     <td style="width: 15%" class="LabelFontStyle">
                                                         Loyalty&nbsp;card&nbsp;No&nbsp;:&nbsp;</td>
-                                                    <td><input type="number" formControlName="loyaltyCardNumber"
+                                                    <td><input type="number" min="0"  formControlName="loyaltyCardNumber"
                                                             class="form-control"></td>
                                                     <td style="width: 15%" class="LabelFontStyle">
                                                         Loyalty&nbsp;card&nbsp;Issue&nbsp;Date&nbsp;:&nbsp;</td>

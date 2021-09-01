@@ -266,7 +266,7 @@
                 <tr>
                     <td style="width: 15%"  class="LabelFontStyle1">&nbsp;Customer&nbsp;Account&nbsp;:</td>
             <td>
-                <input type="number" style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control">
+                <input type="number" min="0"  style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control">
             </td>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
             <td>
@@ -450,9 +450,9 @@
                                                 <td> <input disabled type="text" formControlName="uom"
                                                         style="width: 3rem;" class="form-control"></td>
                                                
-                                                <td> <input type="number"  formControlName="orderedQty"
+                                                <td> <input type="number" min="0"   formControlName="orderedQty"
                                                         style="width: 4rem;" class="form-control" ></td>
-                                                <!-- <td> <input type="number" formControlName="orderedQty"
+                                                <!-- <td> <input type="number" min="0"  formControlName="orderedQty"
                                                         style="width: 4rem;" class="form-control"
                                                         [ngClass]="{ 'is-invalid': submitted && f.orderedQty.errors }">
                                                     <div *ngIf="submitted && f. orderedQty.errors"
@@ -467,7 +467,7 @@
                                               
                                                     <input hidden formControlName="diss1" value={{diss1}}>
                                                
-                                                <td> <input type="number" formControlName="unitSellingPrice"
+                                                <td> <input type="number" min="0"  formControlName="unitSellingPrice"
                                                         style="width: 4rem;" class="form-control" 
                                                         (change)="onKey(i)"></td>
         
@@ -724,7 +724,7 @@
                                         <div *ngIf="arInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                                         </div>
                                         <ng-template #thenBlock>
-                                            <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                            <td><input type="number" min="0"  formControlName="totTaxAmt" (change)="validateNum(i,j)"
                                                     class="form-control" 
                                                     style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
                                                     class="form-control">
@@ -740,7 +740,7 @@
                                 <!-- <div *ngIf="arInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                             </div> -->
                             <!-- <ng-template #thenBlock>
-                                        <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                        <td><input type="number" min="0"  formControlName="totTaxAmt" (change)="validateNum(i,j)"
                                                 class="form-control" 
                                                 style="width: 4rem; text-align: right;"
                                                 class="form-control">
@@ -867,10 +867,10 @@
                                         <input disabled formControlName="lineNum" (keydown.shift.arrowdown)="addRowDistribution(k)" class="form-control" style="width: 40px;height: 25px;">
                                     </td>
                                     <!-- <td> -->
-                                        <input type="number" hidden formControlName="custTrxLineId"  class="form-control" style="width: 100px;height: 25px;">
+                                        <input type="number" min="0"  hidden formControlName="custTrxLineId"  class="form-control" style="width: 100px;height: 25px;">
                                     <!-- </td> -->
                                     <!-- <td>
-                                        <input type="number" formControlName="poSegment"  class="form-control" style="width: 100px;height: 25px;text-align: right;">
+                                        <input type="number" min="0"  formControlName="poSegment"  class="form-control" style="width: 100px;height: 25px;text-align: right;">
                                     </td>
                                     <td>
                                         <input type="text" disabled formControlName="accountingDate" [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control"  style="width: 140px;height: 25px;">
@@ -890,10 +890,10 @@
                                         <input  formControlName="glDate" [(ngModel)]="glDate" disabled  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                     </td>
                                     <td>
-                                        <input type="number" formControlName="percent"  class="form-control"  style="width: 160px;height: 25px;">
+                                        <input type="number" min="0"  formControlName="percent"  class="form-control"  style="width: 160px;height: 25px;">
                                     </td>
                                     <td>
-                                        <input type="number" formControlName="amount"  class="form-control"  style="width: 120px;height: 25px;">
+                                        <input type="number" min="0"  formControlName="amount"  class="form-control"  style="width: 120px;height: 25px;">
                                     </td>
                                     
                                     <td>

@@ -128,9 +128,9 @@ export class OrderManagementService {
 
  
   downloadGatePass(InvoiceNumber){
-    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
     // local
-    // const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -236,8 +236,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
 
-  accountNoSearchFn2(accountNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}`);
+  accountNoSearchFn2(accountNo,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountNo}&divisionId=${divisionId}`);
     // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
     // `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`
   }
@@ -246,8 +246,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl + `/Customer/site/${id}`);
   }
 
-  accountNoSearchFn(accountNo,ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+  accountNoSearchFn(accountNo,ouId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divisionId}`);
     // return this.http.get(this.ServerUrl + `/Customer/getBillToAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 

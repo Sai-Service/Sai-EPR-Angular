@@ -227,7 +227,7 @@
                             </span> -->
             </td>
             <td>
-                <input type="number"  class="form-control"  formControlName="invoiceId1" value={{invoiceId1}}   style="width: 120px;height: 25px;font-size: 10px;">
+                <input type="number" min="0"   class="form-control"  formControlName="invoiceId1" value={{invoiceId1}}   style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
                 <input  type="number" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;"(change)="prepaymentData($event)" #amt>
@@ -285,7 +285,7 @@
                 <input type="date" class="form-control" formControlName="termsDate" value={{termsDate}} style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
-                <input type="number" class="form-control" formControlName="terms" value={{terms}} style="width: 120px;height: 25px;font-size: 10px;">
+                <input type="number" min="0"  class="form-control" formControlName="terms" value={{terms}} style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
                 <!-- <input type="text" class="form-control" formControlName="paymentMethod" value={{paymentMethod}}  style="width: 120px;height: 25px;font-size: 10px;"> -->
@@ -411,10 +411,10 @@
                         <tr>
                             <td  class="LabelFontStyle">&nbsp;Supplier&nbsp;No&nbsp;:</td>
                             <td>
-                                <input type="number" formControlName="suppNo" value={{suppNo}} class="form-control">
+                                <input type="number" min="0"  formControlName="suppNo" value={{suppNo}} class="form-control">
                             </td>
                             <td  class="LabelFontStyle">&nbsp;Supplier&nbsp;Site&nbsp;:</td>
-                            <td><input type="number" formControlName="suppId" value={{suppId}} class="form-control"> </td>
+                            <td><input type="number" min="0"  formControlName="suppId" value={{suppId}} class="form-control"> </td>
                         </tr>
                         <tr>
                             <td  class="LabelFontStyle">&nbsp;PO&nbsp;No&nbsp;:</td>
@@ -441,18 +441,18 @@
                         </tr>
                         <tr>
                             <!-- <td  class="LabelFontStyle">&nbsp;Amount&nbsp;:</td> -->
-                            <!-- <td><input type="number" formControlName="invoiceAmt" value={{invoiceAmt}} class="form-control"> </td> -->
+                            <!-- <td><input type="number" min="0"  formControlName="invoiceAmt" value={{invoiceAmt}} class="form-control"> </td> -->
                             <td  class="LabelFontStyle">&nbsp;Amount&nbsp;:</td>
-                            <!-- <td><input type="number" class="form-control"> </td> -->
+                            <!-- <td><input type="number" min="0"  class="form-control"> </td> -->
                             <td>
                                <table>
                                    <tr>
                                        <td>
-                                        <input type="number" formControlName="invoiceAmt" value={{invoiceAmt}} name="greaterThanValue" class="form-control"  (change)="onChange1($event)"
+                                        <input type="number" min="0"  formControlName="invoiceAmt" value={{invoiceAmt}} name="greaterThanValue" class="form-control"  (change)="onChange1($event)"
                                         placeholder="0" style="width: 96px;">
                                        </td>
                                        <td>
-                                        <input type="number" name="lessThanValue"
+                                        <input type="number" min="0"  name="lessThanValue"
                                         class="form-control" (change)="onChange($event)" style="width: 96px;">
                                        </td>
                                    </tr>
@@ -535,7 +535,7 @@
                         </tr>
                         <tr style="border-bottom: solid 1px gray;">
                             <td  class="LabelFontStyle">&nbsp;Numbers&nbsp;:</td>
-                            <td><input type="number" formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td>
+                            <td><input type="number" min="0"  formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td>
 
                             <td  class="LabelFontStyle">&nbsp;Reason&nbsp;:</td>
                             <td><input type="text" formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td>
@@ -661,7 +661,7 @@
                                             </span> -->
                             </td>
                             <td>
-                                <input type="number" formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
+                                <input type="number" min="0"  formControlName="amount"  class="form-control" style="width: 100px;height: 25px;text-align: right;" (change)="amountmatch(k,$event)" >
                                 <!-- <span
                                 *ngIf="getGroupControl(k,'distribution', 'lineTypeLookupCode').touched && getGroupControl(k,'distribution', 'lineTypeLookupCode').invalid">Valid Number
                                             </span> -->
@@ -687,7 +687,7 @@
 
                             </td>
                             <td>
-                                <input type="number" formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
+                                <input type="number" min="0"  formControlName="baseAmount"  class="form-control"  style="width: 100px;height: 25px;text-align: right;">
                                 <!-- <span
                            *ngIf="getGroupControl(k,'distribution', 'baseAmount').touched && getGroupControl(k,'distribution', 'baseAmount').invalid">Valid Number
                                        </span> -->
@@ -898,7 +898,7 @@
                                     </td>
                                     <td>
                                         <!-- filed not available in json -->
-                                        <input type="number" class="form-control" formControlName="amount" value={{amount}} style="width: 80px;height: 25px;font-size: 10px;text-align: right;">
+                                        <input type="number" min="0"  class="form-control" formControlName="amount" value={{amount}} style="width: 80px;height: 25px;font-size: 10px;text-align: right;">
                                         <!-- <span
                                         *ngIf="getGroupControl(k,'invLines', 'amount').touched && getGroupControl(k,'invLines', 'amount').invalid">Valid Number
                                                     </span> -->
@@ -943,7 +943,7 @@
                                       <!-- </td>
                                       <td>
 
-                                          <input type="number" class="form-control" formControlName="poLineId" value={{poLineId}} style="width: 100px;height: 25px;font-size: 10px;">
+                                          <input type="number" min="0"  class="form-control" formControlName="poLineId" value={{poLineId}} style="width: 100px;height: 25px;font-size: 10px;">
                                       </td>
                                       <td>
 
@@ -1215,7 +1215,7 @@
                                     <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                                     </div>
                                     <ng-template #thenBlock>
-                                        <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                        <td><input type="number" min="0"  formControlName="totTaxAmt" (change)="validateNum(i,j)"
                                                 class="form-control"
                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
                                                 class="form-control">
@@ -1231,7 +1231,7 @@
                             <!-- <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                         </div> -->
                         <!-- <ng-template #thenBlock>
-                                    <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                    <td><input type="number" min="0"  formControlName="totTaxAmt" (change)="validateNum(i,j)"
                                             class="form-control"
                                             style="width: 4rem; text-align: right;"
                                             class="form-control">
@@ -1594,7 +1594,7 @@
                             <div *ngIf="poInvoiceForm.controls['taxLines'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                             </div>
                             <ng-template #thenBlock>
-                                <td><input type="number" formControlName="totTaxAmt" (change)="validateNum(i,j)"
+                                <td><input type="number" min="0"  formControlName="totTaxAmt" (change)="validateNum(i,j)"
                                         class="form-control"
                                         style="width: 6rem; text-align: right; height: 25px;font-size: 10px;"
                                         class="form-control">
@@ -1707,7 +1707,7 @@
                                         Line&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                        <input type="number"   formControlName="distLineNumber"  class="form-control" style="width: 100px;">
+                                        <input type="number" min="0"    formControlName="distLineNumber"  class="form-control" style="width: 100px;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Line&nbsp;Description&nbsp;:&nbsp;

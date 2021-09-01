@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component'
 
 @Injectable({
   providedIn: 'root'
@@ -118,15 +119,15 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
 
-  invItemList(itemType,deptName):Observable<any> {
+  invItemList(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
+    .set('divisionId',divisionId)
     const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
     });
   }
-
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
@@ -228,7 +229,7 @@ custTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
 classCodeTypeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/classCode');
 }
 getTaxCat(ouId): Observable<any> {
  // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
@@ -1174,6 +1175,7 @@ subInvCode2(deptId, divisionId) {
 subInvCode1():Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
 }
+
 issueByList(locId,deptId,divisionId):Observable<any>{
 return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
 }
@@ -1834,7 +1836,7 @@ PriceListIdList(): Observable<any> {
 
     getPriceListSearch(ouId,deptId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&deptId=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {
@@ -1888,6 +1890,15 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/ReversalReason');
   }
 
+  RefReasonLst(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/REFUND_REASON');
+  }
+
+  
+  GLperiod(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/glPeriod/currentMonthPeriod');
+  }
+
   public ArReceiptSubmit(ArReceiptRecord) {
     const options = {
       headers: this.headers
@@ -1916,6 +1927,16 @@ OrderCategoryList(): Observable<any> {
     };
     const url = this.ServerUrl + '/arCashReceipts/apply/inv';
     return this.http.post(url, ArReceiptApplyRecord, options);
+  }
+  ////////////////////////// ///////////////////////////////////////
+
+   ////////////////////////// RECEIPT REFUND SUBMIT /////////////////////
+   public ArReceiptRefundSubmit(ArReceiptRefundRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/arCashReceipts/ArReceiptRef';
+    return this.http.post(url, ArReceiptRefundRecord, options);
   }
   ////////////////////////// ///////////////////////////////////////
 
@@ -1993,7 +2014,28 @@ OrderCategoryList(): Observable<any> {
       // URL :- http://localhost:8081/pricelist/uploadprc
     }
 
+////////////////////////////// bulk po upload /////////
+bulkpouploadSales(formData: FormData) {
+  let headers1 = new HttpHeaders();  
+  var userId1=sessionStorage.getItem('userId');
+  // console.log(docType);
+  var docType1=formData.get('docType');
+    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData) 
+  }  
 
+  bulkpouploadSpares(formData: FormData) {
+    let headers1 = new HttpHeaders();  
+    var userId1=sessionStorage.getItem('userId');
+    // console.log(docType);
+    var docType1=formData.get('docType');
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData) 
+    }  
+
+  BindUser(): Observable<OPMasterDtoComponent[]> {  
+    var userId1=sessionStorage.getItem('userId');
+    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=`+userId1);  
+    // return this.http.get<HomePageComponent[]>(this.ServerUrl + `/header/FileList`);
+  }
     //////////////////////////EXTENDED WARRANTY/////////////////////////////
 
 
@@ -2050,7 +2092,7 @@ OrderCategoryList(): Observable<any> {
     }
 
     RegNoListFN() : Observable<any> {
-      return this.http.get(this.ServerUrl +`/itemMst/regList`);
+      return this.http.get(this.ServerUrl +`/itemMst/regList/1`);
     }
 
     VehVinList() : Observable<any> {
@@ -2081,7 +2123,7 @@ OrderCategoryList(): Observable<any> {
     }
 
     variantDetailsList(mVariant): Observable<any> {
-      alert(mVariant );
+      // alert(mVariant );
       return this.http.get(this.ServerUrl + `/VariantMst/VariantDesc/${mVariant}`);
     }
 
@@ -2343,11 +2385,11 @@ mcpRegSearch(mRegNo): Observable<any> {
    return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
  } 
 
- McpCancelUpdate(mEnrollNo,mRsnId,mRefAmt,McpCancelrRecord) {
+ McpCancelUpdate(McpCancelrRecord) {
   const options = {
     headers: this.headers
   };
-  const url = (this.ServerUrl + `/McpEnrollMst/mcpCancByEnroll?enrollmentNo=${mEnrollNo}&cancRsnId=${mRsnId}&refundAmt=${mRefAmt}`);
+  const url = (this.ServerUrl + `/McpEnrollMst/mcpCancByEnroll`);
   return this.http.put(url, McpCancelrRecord, options);
 
   // http://localhost:8081/McpEnrollMst/mcpCancByEnroll?enrollmentNo=ENR201-2&cancRsnId=461&refundAmt=6500

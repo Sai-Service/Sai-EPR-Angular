@@ -373,7 +373,7 @@
                     </thead>
                     <tbody>
                       <!-- <tr>
-                        <input type="number" hidden formControlName="trxLineId">
+                        <input type="number" min="0"  hidden formControlName="trxLineId">
                       </tr> -->
                     <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                    <tr>

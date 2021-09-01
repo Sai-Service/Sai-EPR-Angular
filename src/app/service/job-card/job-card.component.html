@@ -207,19 +207,19 @@
                                                                                     formControlName="itemId">
                                                                                 <input type="text" hidden
                                                                                     formControlName="customerSiteId">
-                                                                                <input type="number" hidden
+                                                                                <input type="number" min="0"  hidden
                                                                                     formControlName="ouId">
-                                                                                <input type="number" hidden
+                                                                                <input type="number" min="0"  hidden
                                                                                     formControlName="deptId">
-                                                                                <input type="number" hidden
+                                                                                <input type="number" min="0"  hidden
                                                                                     formControlName="locId">
                                                                                 <input type="text" hidden
                                                                                     formControlName="customerId">
-                                                                                <input type="number" hidden
+                                                                                <input type="number" min="0"  hidden
                                                                                     formControlName="emplId" value={{emplId}}>
-                                                                                    <input type="number" hidden
+                                                                                    <input type="number" min="0"  hidden
                                                                                     formControlName="deptName">
-                                                                                    <input type="number" hidden
+                                                                                    <input type="number" min="0"  hidden
                                                                                     formControlName="serviceModel">
                                                                             </td>
 
@@ -235,7 +235,7 @@
                                                                                 class="LabelFontStyle1">
                                                                                 OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     class="form-control" placeholder=""
                                                                                     formControlName="lastRunKms" (change)="validateKm($event)">
                                                                             </td>
@@ -496,11 +496,11 @@
                                                                                                 formControlName="itemId">
                                                                                             <input type="text" hidden
                                                                                                 formControlName="customerSiteId">
-                                                                                            <input type="number" hidden
+                                                                                            <input type="number" min="0"  hidden
                                                                                                 formControlName="ouId">
-                                                                                            <input type="number" hidden
+                                                                                            <input type="number" min="0"  hidden
                                                                                                 formControlName="deptId">
-                                                                                            <input type="number" hidden
+                                                                                            <input type="number" min="0"  hidden
                                                                                                 formControlName="locId">
                                                                                             <input type="text" hidden
                                                                                                 formControlName="customerId">
@@ -796,7 +796,7 @@
                                                                                                     DMS&nbsp;customer&nbsp;ID&nbsp;:
                                                                                                 </td>
                                                                                                 <td>
-                                                                                                    <input type="number"
+                                                                                                    <input type="number" min="0" 
                                                                                                         disabled
                                                                                                         class="form-control"
                                                                                                         formControlName="dmsCustId">
@@ -1221,7 +1221,7 @@
                                                                                     class="form-control"
                                                                                     style="width:2rem"> </td>
                                                                             <td>
-                                                                                <!-- <input type="number" formControlName="billableTyId"  class="form-control"  style="height: 25px;"> -->
+                                                                                <!-- <input type="number" min="0"  formControlName="billableTyId"  class="form-control"  style="height: 25px;"> -->
                                                                                 <select formControlName="billableTyId"
                                                                                     id="billableTyId"
                                                                                     style="width: fit-content;"
@@ -1236,7 +1236,7 @@
                                                                                 <input  type="number" formControlName="billableTyId" class="form-control"  style="height: 25px;">
                                                                             </td>
                                                                             <td>
-                                                                                <!-- <input type="number" formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
+                                                                                <!-- <input type="number" min="0"  formControlName="itemId"  class="form-control"  style="height: 25px;"> -->
                                                                                 <select formControlName="itemId"
                                                                                     id="itemId"
                                                                                     (ngModelChange)="serchByitemId($event, i)"
@@ -1257,21 +1257,21 @@
                                                                                     style="height: 25px;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     formControlName="qty"
                                                                                     (change)="onKey(i)"
                                                                                     class="form-control"
                                                                                     style="width: 3rem; height: 25px; text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     class="form-control" disabled
                                                                                     formControlName="unitPrice"
                                                                                     (change)="onKey(i)"
                                                                                     style="height: 25px; width: 5rem;  text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number" disabled
+                                                                                <input type="number" min="0"  disabled
                                                                                     formControlName="basicAmt"
                                                                                     class="form-control"
                                                                                     style="width: 5rem; height: 25px; text-align: right;">
@@ -1295,7 +1295,7 @@
 
                                                                             </td>
                                                                             <td>
-                                                                                <!-- <input type="number"  formControlName="splitRatio" class="form-control"  style="width: 160px;height: 25px;"> -->
+                                                                                <!-- <input type="number" min="0"   formControlName="splitRatio" class="form-control"  style="width: 160px;height: 25px;"> -->
                                                                                 <select formControlName="splitRatio"
                                                                                     id="splitRatio" style="width: 3rem;"
                                                                                     (ngModelChange)='onOptionsplitRatioSelect(i, $event)'
@@ -1309,36 +1309,36 @@
                                                                                 </select>
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     formControlName="custPer"
                                                                                     class="form-control" disabled
                                                                                     style="width: 3rem;height: 25px; text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     formControlName="insPer"
                                                                                     class="form-control" disabled
                                                                                     style="width: 3rem;height: 25px; text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     formControlName="dealerPer"
                                                                                     class="form-control" disabled
                                                                                     style="width: 3rem;height: 25px; text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     formControlName="oemPer"
                                                                                     class="form-control" disabled
                                                                                     style="width: 3rem;height: 25px; text-align: right;">
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     formControlName="laborAmt"
                                                                                     class="form-control" disabled
                                                                                     style="width: 5rem;height: 25px; text-align: right;">
                                                                             </td>
-                                                                            <td><input type="number" formControlName="frtHrs"  class="form-control" disabled style="width: 5rem;height: 25px; text-align: right;">
+                                                                            <td><input type="number" min="0"  formControlName="frtHrs"  class="form-control" disabled style="width: 5rem;height: 25px; text-align: right;">
                                                                             </td>
                                                                             <td>
                                                                                 <input type="text"
@@ -1483,14 +1483,14 @@
                                                                     [formGroupName]="k" class="auto-style5">
                                                                     <tr>
                                                                         <td>
-                                                                            <input type="number" disabled
+                                                                            <input type="number" min="0"  disabled
                                                                                 class="form-control"
                                                                                 style="width: 3rem;height: 25px;"
                                                                                 formControlName="lineNum">
                                                                                 <input  type="number" formControlName="trxLineId">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number"
+                                                                            <input type="number" min="0" 
                                                                                 formControlName="billableTyId" hidden
                                                                                 class="form-control"
                                                                                 style="width: 160px;height: 25px;">
@@ -1509,7 +1509,7 @@
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number"
+                                                                            <input type="number" min="0" 
                                                                                 formControlName="itemId" hidden
                                                                                 class="form-control"
                                                                                 style="width: 160px;height: 25px;">
@@ -1540,30 +1540,30 @@
                                                                         </td>
                                                                         <input hidden formControlName="taxPer">
                                                                         <td>
-                                                                            <input type="number" formControlName="qty"
+                                                                            <input type="number" min="0"  formControlName="qty"
                                                                                 disabled class="form-control"
                                                                                 style="width: 3rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number"
+                                                                            <input type="number" min="0" 
                                                                                 formControlName="unitPrice" disabled
                                                                                 class="form-control"
                                                                                 style="width: 5rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number"
+                                                                            <input type="number" min="0" 
                                                                                 formControlName="basicAmt" disabled
                                                                                 class="form-control"
                                                                                 style="width: 5rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number"
+                                                                            <input type="number" min="0" 
                                                                                 formControlName="taxAmt" disabled
                                                                                 class="form-control"
                                                                                 style="width: 5rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number"
+                                                                            <input type="number" min="0" 
                                                                                 formControlName="totAmt" disabled
                                                                                 class="form-control"
                                                                                 style="width: 5rem;height: 25px; text-align: right;">
@@ -1583,25 +1583,25 @@
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number" disabled
+                                                                            <input type="number" min="0"  disabled
                                                                                 formControlName="custPer"
                                                                                 class="form-control"
                                                                                 style="width: 3rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number" disabled
+                                                                            <input type="number" min="0"  disabled
                                                                                 formControlName="insPer"
                                                                                 class="form-control"
                                                                                 style="width: 3rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number" disabled
+                                                                            <input type="number" min="0"  disabled
                                                                                 formControlName="dealerPer"
                                                                                 class="form-control"
                                                                                 style="width: 3rem;height: 25px; text-align: right;">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="number" disabled
+                                                                            <input type="number" min="0"  disabled
                                                                                 formControlName="oemPer"
                                                                                 class="form-control"
                                                                                 style="width: 3rem;height: 25px; text-align: right;">
@@ -1798,7 +1798,7 @@
                                                                                                 DMS&nbsp;customer&nbsp;ID&nbsp;:
                                                                                             </td>
                                                                                             <td>
-                                                                                                <input type="number"
+                                                                                                <input type="number" min="0" 
                                                                                                     disabled
                                                                                                     class="form-control"
                                                                                                     formControlName="dmsCustId">
@@ -1885,7 +1885,7 @@
                                                                                 Insurance&nbsp;Account&nbsp;:
                                                                             </td>
                                                                             <td>
-                                                                                <input type="number"
+                                                                                <input type="number" min="0" 
                                                                                     class="form-control"
                                                                                     placeholder=""
                                                                                     formControlName="insurerCompNo"
@@ -2143,9 +2143,9 @@
                                                                         *ngIf="displayLabDiscount; then LabDiscoutthenBlock; else LabDiscoutelseBlock">
                                                                     </div>
                                                                     <ng-template #LabDiscoutthenBlock>
-                                                                        <td><input type="number"
+                                                                        <td><input type="number" min="0" 
                                                                                 formControlName="labDiscount" (change)="labDiscountAmtCal($event)"></td>
-                                                                        <td><input type="number"
+                                                                        <td><input type="number" min="0" 
                                                                                 formControlName="labDiscountPer"
                                                                                 disabled></td>
                                                                     </ng-template>
@@ -2159,15 +2159,15 @@
                                                                                     {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
-                                                                        <td><input type="number"
+                                                                        <td><input type="number" min="0" 
                                                                                 formControlName="labDiscount"></td>
                                                                     </ng-template>
                                                                     <!-- <td><input type="text"  formControlName="labDiscount"></td> -->
-                                                                    <td><input type="number" [(ngModel)]="labTaxableAmt"
+                                                                    <td><input type="number" min="0"  [(ngModel)]="labTaxableAmt"
                                                                             formControlName="labTaxableAmt"></td>
-                                                                    <td><input type="number" [(ngModel)]="labTotTaxAmt"
+                                                                    <td><input type="number" min="0"  [(ngModel)]="labTotTaxAmt"
                                                                             formControlName="labTotTaxAmt"></td>
-                                                                    <td><input type="number" formControlName="labTotAmt">
+                                                                    <td><input type="number" min="0"  formControlName="labTotAmt">
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
@@ -2199,9 +2199,9 @@
                                                                         *ngIf="displayMatDiscount; then matDiscoutthenBlock; else matDiscoutelseBlock">
                                                                     </div>
                                                                     <ng-template #matDiscoutthenBlock>
-                                                                        <td><input type="number" [(ngModel)]="matDiscout"
+                                                                        <td><input type="number" min="0"  [(ngModel)]="matDiscout"
                                                                                 formControlName="matDiscout" (change)="matDiscountAmtCal($event)"></td>
-                                                                        <td><input type="number" [(ngModel)]="matDiscountPer"
+                                                                        <td><input type="number" min="0"  [(ngModel)]="matDiscountPer"
                                                                                 formControlName="matDiscountPer"
                                                                                 disabled></td>
                                                                     </ng-template>
@@ -2215,15 +2215,15 @@
                                                                                     {{sc.code}}
                                                                                 </option>
                                                                             </select></td>
-                                                                        <td><input type="number"
+                                                                        <td><input type="number" min="0" 
                                                                                 formControlName="matDiscout"></td>
                                                                     </ng-template>
 
-                                                                    <td><input type="number" [(ngModel)]="matTaxableAmt"
+                                                                    <td><input type="number" min="0"  [(ngModel)]="matTaxableAmt"
                                                                             formControlName="matTaxableAmt"></td>
-                                                                    <td><input type="number"
+                                                                    <td><input type="number" min="0" 
                                                                             formControlName="matTotTaxAmt"></td>
-                                                                    <td><input type="number" formControlName="matTotAmt">
+                                                                    <td><input type="number" min="0"  formControlName="matTotAmt">
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="ItemStyle" style="text-decoration:none;">
@@ -2233,11 +2233,11 @@
                                                                     <td></td>
                                                                     <td>Total&nbsp;Amt</td>
                                                                     <!-- <td><input type="text"></td> -->
-                                                                    <td><input type="number" formControlName="totDis">
+                                                                    <td><input type="number" min="0"  formControlName="totDis">
                                                                     </td>
-                                                                    <td><input type="number" formControlName="totTaxAmt">
+                                                                    <td><input type="number" min="0"  formControlName="totTaxAmt">
                                                                     </td>
-                                                                    <td><input type="number" formControlName="invTotAmt">
+                                                                    <td><input type="number" min="0"  formControlName="invTotAmt">
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -2245,14 +2245,14 @@
                                                                     <td style="width: 15%" class="LabelFontStyle">
                                                                         Deductibles&nbsp;:</td>
                                                                     <td>
-                                                                        <input type="number" class="form-control"
+                                                                        <input type="number" min="0"  class="form-control"
                                                                             placeholder="" [(ngModel)]="deductibles"
                                                                             formControlName="deductibles">
                                                                     </td>
                                                                     <td style="width: 15%" class="LabelFontStyle">
                                                                         Salvage&nbsp;:</td>
                                                                     <td>
-                                                                        <input type="number" class="form-control"
+                                                                        <input type="number" min="0"  class="form-control"
                                                                             placeholder="" formControlName="salvage">
                                                                     </td>
                                                                     <div
@@ -2293,11 +2293,11 @@
                                                                 </div>
                                                                 <ng-template #InslinedetailsthenBlock></ng-template>
                                                                 <ng-template #InslinedetailselseBlock>
-                                                                    <td><input type="number" [(ngModel)]="insTaxableAmt"
+                                                                    <td><input type="number" min="0"  [(ngModel)]="insTaxableAmt"
                                                                         formControlName="insTaxableAmt"></td>
-                                                                <td><input type="number" [(ngModel)]="insTotTaxAmt"
+                                                                <td><input type="number" min="0"  [(ngModel)]="insTotTaxAmt"
                                                                         formControlName="insTotTaxAmt"></td>
-                                                                <td><input type="number" formControlName="insTotAmt">
+                                                                <td><input type="number" min="0"  formControlName="insTotAmt">
                                                                 </td>
                                                             </ng-template>
                                                                 </tr>
@@ -2608,10 +2608,10 @@
                                                                             </option>
                                                                         </select>
                                                                     </td>
-                                                                    <td> <input type="number" formControlName="techPer"
+                                                                    <td> <input type="number" min="0"  formControlName="techPer"
                                                                             class="form-control">
                                                                     </td>
-                                                                    <td> <input type="number" formControlName="techAmt"
+                                                                    <td> <input type="number" min="0"  formControlName="techAmt"
                                                                             class="form-control">
                                                                     </td>
                                                                     <!-- <td> <input  type="text"
