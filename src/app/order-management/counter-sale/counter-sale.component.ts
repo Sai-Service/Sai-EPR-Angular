@@ -1348,9 +1348,9 @@ export class CounterSaleComponent implements OnInit {
 
   pickTicketInvoiceFunction() {
     const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
-    // formValue.flowStatusCode = 'BOOKED';
-    this.ouId = Number(sessionStorage.getItem('ouId'));
-    this.emplId = Number(sessionStorage.getItem('emplId'));
+    formValue.ouId = Number(sessionStorage.getItem('ouId'));
+    formValue.emplId = Number(sessionStorage.getItem('emplId'));
+    formValue.divisionId= Number(sessionStorage.getItem('divisionId'));
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.InvoiceNumber = res.obj;

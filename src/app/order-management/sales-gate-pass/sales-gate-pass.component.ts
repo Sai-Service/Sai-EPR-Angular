@@ -168,6 +168,7 @@ export class SalesGatePassComponent implements OnInit {
       this.orderManagementService.orderNoPost(orderNumber,this.emplId).subscribe((res: any) => {
         if (res.code === 200) {
          alert(res.message);
+         this.gatepassNoSearch(this.orderNumber);
           //window.location.reload();
           this.gatepassNo=res.obj;
          } else {

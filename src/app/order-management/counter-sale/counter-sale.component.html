@@ -1143,6 +1143,12 @@
          </ng-template>
                 </td>
                 <td>
+                    <button type="button" class="btn btn-primary"  (click)=" pickTicketInvoiceFunction()">
+                       Invoice
+                       </button>
+                   
+                   </td>
+                <td>
                     <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate"></div>
                     <ng-template #thenpickTicketUpdate>
                     </ng-template>

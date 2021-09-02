@@ -2009,19 +2009,12 @@ OrderCategoryList(): Observable<any> {
 
 ////////////////////////////// bulk po upload /////////
 bulkpouploadSales(formData: FormData) {
-  let headers1 = new HttpHeaders();  
-  var userId1=sessionStorage.getItem('userId');
-  // console.log(docType);
-  var docType1=formData.get('docType');
     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData) 
   }  
 
   bulkpouploadSpares(formData: FormData) {
-    let headers1 = new HttpHeaders();  
-    var userId1=sessionStorage.getItem('userId');
-    // console.log(docType);
-    var docType1=formData.get('docType');
-      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData) 
+      // return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData)
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPo`, formData)  
     }  
 
   BindUser(): Observable<OPMasterDtoComponent[]> {  

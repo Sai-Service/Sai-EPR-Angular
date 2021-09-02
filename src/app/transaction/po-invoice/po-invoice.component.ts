@@ -1865,6 +1865,7 @@ export class PoInvoiceComponent implements OnInit {
 
   }
   Validate() {
+    // alert();
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
@@ -1880,13 +1881,13 @@ export class PoInvoiceComponent implements OnInit {
       totalOfDistributionAmout = totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)
     }
 
-    alert('Dist Amt'+ ' '+ totalOfDistributionAmout)
+    // alert('Dist Amt'+ ' '+ totalOfDistributionAmout)
     // alert('totalOfDistributionAmout ' + totalOfDistributionAmout);
 
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       // alert('in validate')
       var arrayControl = this.poInvoiceForm.get('obj').value;
-      var invoiceNum = arrayControl[0].invoiceNum;
+      var invoiceNum = arrayControl[this.selectedLine].invoiceNum;
       // alert(invoiceNum);
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
