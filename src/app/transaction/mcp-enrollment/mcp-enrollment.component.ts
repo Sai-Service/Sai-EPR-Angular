@@ -43,6 +43,7 @@ export class McpEnrollmentComponent implements OnInit {
   lstcomments: any;
   lstMcplines: any;
   lstMcpEnrolledEnq:any;
+  mcpStatusDetails:any;
  
 
 
@@ -142,6 +143,7 @@ export class McpEnrollmentComponent implements OnInit {
         dispCustButton=false;
         showDetailsButton=false;
         searchStatus =false;
+        isMcpActive=false;
         //////////////////////////////////
   
 
@@ -349,8 +351,10 @@ export class McpEnrollmentComponent implements OnInit {
                 console.log(this.getVehRegDetails);
                 if(this.getVehRegDetails !=null){
                   this.dispCustButton=true;
+                  this.getMcpStatus(mRegNo);
+              
+                if(this.mcpStatusDetails===false) {
                
-  
                 this.mcpEnrollmentForm.patchValue({
                   fuelType: this.getVehRegDetails.fuelType,
                   variantCode: this.getVehRegDetails.variantCode,
@@ -373,12 +377,26 @@ export class McpEnrollmentComponent implements OnInit {
                   var mToday   = new Date(Date.now());
                   this.getDiffDays(saleDate,mToday);
                   this.LoadMcpEnqList(mRegNo);
-
+                }else {  alert("MCP is Active for the Vehicle : "+mRegNo ); this.resetMast();return;}
+                  
                 }else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.mcpEnrollmentForm.reset();}
-          }
+              } 
+              
             );
            
           }
+
+          getMcpStatus(mRegNo:any) {
+               this.service.getMcpstatusVehcile(mRegNo)
+            .subscribe(
+              data => {
+                this.mcpStatusDetails = data
+                console.log(this.mcpStatusDetails);
+                // alert ("this.mcpStatusDetails  >> "+this.mcpStatusDetails)
+                if (this.mcpStatusDetails===true) { this.isMcpActive=true; } 
+                else {this.isMcpActive=false; } 
+     
+            });}
 
         
 
@@ -388,11 +406,15 @@ export class McpEnrollmentComponent implements OnInit {
             data => {
               this.lstMcpEnquiryList = data;
               console.log(this.lstMcpEnquiryList);
-                     
-        } );
-        
-          this.displayButton=true;
-      }   
+              //  alert("this.lstMcpEnquiryList.length : "+this.lstMcpEnquiryList.length);
+              if (this.lstMcpEnquiryList.length>0) {
+                 this.displayButton=true;
+              } else {
+                this.displayButton=false;
+                alert ("No Valid Enquires Exists against Registration No : "+mRegNo);
+              }
+         } );
+         }   
 
         LoadMcpEnrolledEnquiry(mEnqNo){
           // alert("Enroleld enq  :"+mEnqNo);
@@ -497,7 +519,7 @@ export class McpEnrollmentComponent implements OnInit {
           }
 
           GetCustomerDetails(mCustId :any){
-            alert("Customer Id: "+mCustId);
+            // alert("Customer Id: "+mCustId);
           this.service.ewInsSiteList(mCustId)
           .subscribe(
             data1 => {
@@ -714,19 +736,62 @@ export class McpEnrollmentComponent implements OnInit {
            //  else { alert("Header Validation Failed... Please Check");  return;   }
          }
 
+       
+         SearchByMcpRegNo(mRegNo:any){
+           
+          var mRegNo = mRegNo.toUpperCase();
+         //  alert("Enrollment No :"+mEnrollNo);
+           this.displayButton=false;
+         // console.log(this.mcpEnrollmentForm.value);
+        
+         this.service.getMcpSearchByRegNo(mRegNo)
+             .subscribe(
+             data => {
+               this.lstMcplines = data;
+               console.log(this.lstMcplines);
+               if(this.lstMcplines != null) {
+               this.mcpEnrollmentForm.patchValue(this.lstMcplines);
+             // ---------------------------Header Details--------------------------------
+                   this.GetVehicleRegInfomation(this.lstMcplines.regNo);
+                   this.GetVariantDeatils(this.lstMcplines.variantCode);
+                   this.GetCustomerDetails(this.customerId);
+                   this.GetCustomerSiteDetails(this.customerId)
+                   this.LoadMcpEnrolledEnquiry(this.lstMcplines.enqNo)
+                   this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
+             // ----------------------------LINE DETAILS----------------------------------------
+                 for(let i=0; i<this.invLineArray.length; i++){ 
+                   this.invLineArray().removeAt(i);
+                 }
+
+                 this.invLineArray().clear();
+                 var control = this.mcpEnrollmentForm.get('enqDtls') as FormArray;
+                 for (let i=0; i<this.lstMcplines.enqDtls.length;i++) 
+                   {
+                     var enqDtls:FormGroup=this.invLineDetails();
+                     control.push(enqDtls);
+                   }
+                       
+                 this.mcpEnrollmentForm.get('enqDtls').patchValue(this.lstMcplines.enqDtls);
+                 this.showDetailsButton=true
+                 // ----------------------------------------------------------------------------
+                 } else {alert("Enrollment No :" +mRegNo + " Not Found");}
+                } ); 
+                this.mcpEnrollmentForm.get('regNo').disable();
+                this.searchStatus=true;
+         }
+
+
          SearchByMcpEnrollNo(mEnrollNo:any){
            
            var mEnrollNo = mEnrollNo.toUpperCase();
-          //  alert("Enrollment No :"+mEnrollNo);
             this.displayButton=false;
           // console.log(this.mcpEnrollmentForm.value);
          
-          this.service.getsearchByEnrollNo(mEnrollNo)
+          this.service.getMcpSearchByEnrollNo(mEnrollNo)
             .subscribe(
               data => {
                 this.lstMcplines = data;
                 console.log(this.lstMcplines);
-                // alert( "this.lstMcplines >> "+this.lstMcplines);
                 if(this.lstMcplines != null) {
                 this.mcpEnrollmentForm.patchValue(this.lstMcplines);
                 // this.executive=this.lstMcplines.executive;
@@ -739,11 +804,7 @@ export class McpEnrollmentComponent implements OnInit {
                     this.GetCustomerSiteDetails(this.customerId)
                     this.LoadMcpEnrolledEnquiry(this.lstMcplines.enqNo)
                     this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
-                    
-                    // this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
-                    // this.discAmt= (this.lstMcplines.totMatDisc+this.lstMcplines.totLabDis),
-                    // this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
-
+                 
                   // ----------------------------LINE DETAILS----------------------------------------
                   for(let i=0; i<this.invLineArray.length; i++){ 
                     this.invLineArray().removeAt(i);
@@ -766,8 +827,12 @@ export class McpEnrollmentComponent implements OnInit {
                   // ----------------------------------------------------------------------------
                   } else {alert("Enrollment No :" +mEnrollNo + " Not Found");}
                  } ); 
+                 this.mcpEnrollmentForm.get('regNo').disable();
+                 this.searchStatus=true;
 
           }
+
+
 
           getPackageInfo(pkgNo,fType,){
             // alert(pkgNo + ","+fType);

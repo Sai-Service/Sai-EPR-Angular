@@ -192,7 +192,7 @@
                                                   <th style="width:10rem" scope="col">Item Code</th>
                                                   <th style="width:10rem" scope="col">Item Description</th>
                                                   <th style="width:10rem" scope="col">Item Category</th>
-                                                  <th style="width:5rem" scope="col">UOM</th>
+                                                  <!-- <th style="width:5rem" scope="col">UOM</th> -->
                                                   <th style="width:3rem" scope="col">Add+</th>
                                                   <th style="width:3rem" scope="col">Del-</th>
                                               </tr>
@@ -222,14 +222,14 @@
 
                                                                                    
                                             <td>
-                                                <input disabled style="width: 450px;"   type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
+                                                <input disabled style="width: 550px;"   type="text" formControlName="itemDescription"  class="form-control" placeholder=""  >
                                             </td>
                                             <td>
-                                                <input disabled style="width: 180px;"   type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                                <input disabled style="width: 180px;"   type="text" formControlName="itemCategory"  class="form-control" placeholder=""  >
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <input disabled style="width: 100px;"   type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
-                                            </td>
+                                            </td> -->
 
                                             <td>
                                                 <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i

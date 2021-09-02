@@ -618,34 +618,43 @@ export class McpCancellationComponent implements OnInit {
         this.router.navigate(['admin']);
       }
 
-      SearchMcpByEnrollNo(mEnrollNo) {
-        alert ("Search.....in.. WIP...."+mEnrollNo);
+    
+      searchMcpByRegNo(mRegNo,mEnrollNo){
 
-
-      }
-
-
-      SearchMcpByRegNo(mRegNo:any){
-        // this.mcpEnquiryForm.reset();
-        var xEnq = mRegNo.toUpperCase();
-        // this.resetSection1(); this.resetSection3(); this.resetSection3();
-        // this.addFlag=false;
-        // this.displayButton=false;
+        // alert ("Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
+        
+        if( (mRegNo===undefined || mRegNo.trim()==='') && (mEnrollNo===undefined || mEnrollNo.trim()==='') )
+        { 
+          alert ("Both Register No  and Enrollment No is blank.\nPlease enter REGNO or ENROLLMENT NO and  click on Search");
+          return;
+        }
+        
+        // mRegNo=mRegNo.toUpperCase();
+        // mEnrollNo=mEnrollNo.toUpperCase();
+        // var xEnr = mEnrollNo.toUpperCase();
+        //  alert(mRegNo );
 
         console.log(this.mcpCancellationForm.value);
-        this.service.mcpRegSearch(xEnq)
+        this.service.mcpRegSearch(mRegNo,mEnrollNo)
           .subscribe(
             data => {
-              this.lstMcplines = data;
-              this.mcpCancellationForm.patchValue(this.lstMcplines);
+              this.lstMcplines = data.obj;
+
+              // alert ("this.lstMcplines :" +this.lstMcplines );
+             
+              if (this.lstMcplines =='MCP Enrollment Not found !! ') {
+                alert ("MCP Enrollment Not found !!...\nRegistration No: " +mRegNo +"\nEnrollment No: " +mEnrollNo);
+                return;
+               }
+
+                
+               this.mcpCancellationForm.patchValue(this.lstMcplines);
               // this.executive=this.lstMcplines.executive;
               
               // ---------------------------Header Details--------------------------------
                   this.GetVehicleRegInfomation(this.lstMcplines.regNo);
                   this.GetVariantDeatils(this.lstMcplines.variantCode);
                   this.GetCustomerDetails(this.lstMcplines.customerId);
-                //   this.GetCustomerSiteDetails(this.customerId)
-                //   this.LoadPackage(this.lstMcplines.regNo,this.lstMcplines.startKms)
                   this.getPackageInfo(this.lstMcplines.packageNumber,this.lstMcplines.fuelType)
 
                   this.packageAmt=this.lstMcplines.packageAmt.toFixed(2);
@@ -727,12 +736,18 @@ export class McpCancellationComponent implements OnInit {
                     // this.cancelDate = this.pipe.transform(Date.now(), 'y-MM-dd');
                     this.refundAmt=this.netRefAmt;
                   }
+                  this.displayButton=true;
+
+                // } else {
+                // alert("MCP Enrollment Not found !! ");
+                
+                // }
            
                } ); 
 
-               this.displayButton=true;
-            
                }
+
+
 
 
               GetVehicleRegInfomation(mRegNo){

@@ -15,36 +15,36 @@
                      <table class="center">
                         <tr>
 
-                        <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td>
+                        <!-- <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td> -->
 
                         <td   style="border: none;color: black;">
-                            <input type="text" disabled formControlName="loginArray"
+                            <input type="text" hidden formControlName="loginArray"
                                 class="form-control" [(ngModel)]="loginArray" placeholder="">
                         </td>
                     
                         <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            <input   style="width:30px ;"  hidden type="text" formControlName="ouId"
                             class="form-control" [(ngModel)]="ouId" >
                         </td>
                     
                         <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                            <input  style="width:30px ;" hidden type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
                         </td>
 
                         <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            <input  style="width:30px ;"  type="text" hidden formControlName="deptId"
                             class="form-control" [(ngModel)]="deptId" placeholder="">
                         </td>
                         <td >
-                            <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
+                            <input  style="width: 20px;"  type="text" hidden formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
                         </td>
 
                         <td>
-                            <input disabled style="width:30px ;" type="number"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
+                            <input hidden style="width:30px ;" type="number"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
                         </td>
                         <td>
-                            <input disabled style="width:30px ;" type="number"  formControlName="customerSiteId"  id="customerSiteId" [(ngModel)]="customerSiteId" class="form-control" >
+                            <input hidden style="width:30px ;" type="number"  formControlName="customerSiteId"  id="customerSiteId" [(ngModel)]="customerSiteId" class="form-control" >
                         </td>
 
                         <td><input hidden  style="text-align: right;"  type="text"  formControlName="totLabAmt"  id="totLabAmt" [(ngModel)]="totLabAmt"  ></td>
@@ -68,7 +68,7 @@
                                     <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
         
                                     <td>
-                                     <input type="text"
+                                     <input type="text" style="background-color: yellow;"
                                         formControlName="regNo"
                                         [(ngModel)]="regNo"
                                         (change)="serchByRegNo(regNo)"
@@ -321,23 +321,23 @@
                                    
                                  
                                     <tr>
-                                        <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Period:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;Period:&nbsp;</td>
                                     
                                         <td>
                                             <input  disabled type="number"  formControlName="validMonths"  id="validMonths" [(ngModel)]="validMonths" class="form-control" >
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle1">Valid&nbsp;Kms:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">Valid&nbsp;Kms:&nbsp;</td>
                                     
                                         <td>
                                             <input disabled  type="number"  formControlName="pkgEndKms"  id="pkgEndKms" [(ngModel)]="pkgEndKms" class="form-control" >
                                         </td>
     
-                                        <td style="width: 15%" class="LabelFontStyle1">MCP&nbsp;Start&nbsp;Date:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Start&nbsp;Date:&nbsp;</td>
                                     
                                         <td>
                                             <input  disabled type="date"  formControlName="pkgStartDate"  id="pkgStartDate" [(ngModel)]="pkgStartDate" class="form-control" >
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle1">MCP&nbsp;End&nbsp;Date:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;End&nbsp;Date:&nbsp;</td>
                                     
                                         <td>
                                             <input disabled  type="date"  formControlName="pkgEndDate"  id="pkgEndDate" [(ngModel)]="pkgEndDate" class="form-control" >
@@ -350,7 +350,7 @@
 
                                     <tr>
 
-                                        <td style="width: 15%" class="LabelFontStyle1">Sales&nbsp;Person:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">Sales&nbsp;Person:&nbsp;</td>
             
                                         <td>
                                             <select disabled type="text" class="form-control" formControlName="executive" [(ngModel)]="executive" >
@@ -397,8 +397,8 @@
                         </fieldset>
 
                             
-                        <fieldset class="RFS">
-                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">CUSTOMER(BILL TO) DETAILS</legend>
+                        <!-- <fieldset class="RFS">
+                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">CUSTOMER(BILL TO) DETAILS</legend> -->
 
                               <!-- -----------------------------CUSTOMER MODAL FORM STARTS HERE--------------------- -->
   
@@ -435,7 +435,7 @@
                                                       <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
                                                   </td>
   
-                                                  <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+                                                  <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
                           
                                                   <td>
                                                       <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" >
@@ -519,8 +519,8 @@
                              </div>
   
                               <!-- -----------------------------CUSTOMER MODAL FORM ENDS HERE--------------------- -->
-  
-                        </fieldset>
+<!--   
+                        </fieldset> -->
 
 
                           <!-- =================modal================= -->
@@ -795,22 +795,27 @@
                                                 <input class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo'
                                                     value={{searchEnrollNo}} style="text-transform:uppercase;">
                                             </td>
+
+                                            <td style="background-color: #FFE4B5;">
+                                                <button type="button" class="btn-primary" (click)="SearchByMcpEnrollNo(searchEnrollNo)"><i class="fa fa-search"
+                                                        aria-hidden="true"></i></button>
+                                            </td>
                             
-                                            <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Reg&nbsp;No:&nbsp;</td>
+                                            <td style="width: 15%" class="LabelFontStyle">Registration&nbsp;No:&nbsp;</td>
                                 
                                             <td>
                                                 <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control" style="text-transform:uppercase;" >
                                             </td>
                             
-                                            <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
+                                            <!-- <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Enrollment&nbsp;Date:&nbsp;</td>
                                 
                                             <td>
                                                 <input   type="date"  formControlName="searchEnrollDate"  id="searchEnrollDate" [(ngModel)]="searchEnrollDate" class="form-control" style="text-transform:uppercase;">
-                                            </td>
+                                            </td> -->
                             
                             
                                             <td style="background-color: #FFE4B5;">
-                                                <button type="button" class="btn-primary" (click)="SearchByMcpEnrollNo(searchEnrollNo)"><i class="fa fa-search"
+                                                <button type="button" class="btn-primary" (click)="SearchByMcpRegNo(searchRegno)"><i class="fa fa-search"
                                                         aria-hidden="true"></i></button>
                                             </td>
                                           </tr>
@@ -830,7 +835,7 @@
 
 
 
-<div class="container1">
+<!-- <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
@@ -862,4 +867,4 @@
             </tr>
     </table>
 </div>
-</div>
+</div> -->
