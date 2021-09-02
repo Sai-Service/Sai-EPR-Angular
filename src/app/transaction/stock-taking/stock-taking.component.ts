@@ -111,6 +111,8 @@ export class StockTakingComponent implements OnInit {
   displayprocess:boolean=true;
   compileId1:number;
   currentop:string='process';
+  invItemId:number;
+  itemId:number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm=fb.group({
@@ -186,6 +188,7 @@ export class StockTakingComponent implements OnInit {
       srlNo: len,
     }
   );
+  // this.currentop='search';
    }
    removenewcycleLinesList(trxLineIndex){
     this.cycleLinesList().removeAt(trxLineIndex);
@@ -257,7 +260,7 @@ export class StockTakingComponent implements OnInit {
             this.TypeList=data;
           }
         )
-        this.service.ItemIdList().subscribe(
+        this.service.ItemIdDivisionList(this.divisionId).subscribe(
           data =>{ this.ItemIdList = data;
             console.log(this.ItemIdList);
 
@@ -382,6 +385,7 @@ export class StockTakingComponent implements OnInit {
         }
         this.viewdata(compNo,e.target.value);
       }
+      
       getInvItemId($event)
   {
     // alert('in getInvItemId')
@@ -402,9 +406,12 @@ export class StockTakingComponent implements OnInit {
     }
     return matches;
   };
-  onOptiongetItem(event:any,i)
+  onOptiongetItem(event:any,i,op)
   {
+    alert(event+'Item'+i);
+    this.currentop =  op;
     let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+    alert(select1.itemId);
     var trxLnArr1=this.StockTakingForm.get('cycleLinesList')as FormArray;
     var trxLnArr=this.StockTakingForm.get('cycleLinesList').value;
     trxLnArr1.controls[i].patchValue({invItemId:select1.itemId})
@@ -439,9 +446,13 @@ export class StockTakingComponent implements OnInit {
           }
           if(data.code===200)
           {
-            alert('hello');
+            alert('hello'+data.obj.length);
             // trxLnArr1.controls[i].patchValue({'compileLineId':data.obj[0].compileLineId,'uom':data.obj[0].uom,'itemUnitCost':data.obj[0].itemUnitCost,'description':data.obj[0].description,'LocatorSegment':data.obj[0].LocatorSegment,'systemQty':data.obj[0].systemQty,'entryStatusCode':data.obj[0].entryStatusCode})
-            if(data.obj.length>1)
+            if(data.obj.length==1)
+            {
+              trxLnArr1.controls[i].patchValue(data.obj[0]);
+            }
+            else if(data.obj.length>1)
             {
               for(let j=1;j<data.obj.length;j++)
               {
@@ -682,7 +693,7 @@ okLocator(i)
                    this.StockTakingForm.get('segmentName').disable();
                    this.StockTakingForm.get('approvedBy').disable();
                   //  this.displayprocess=false;
-                   
+                   this.currentop='search'
                  }
          })
        
