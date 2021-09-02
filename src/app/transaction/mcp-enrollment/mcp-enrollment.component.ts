@@ -702,6 +702,10 @@ export class McpEnrollmentComponent implements OnInit {
            return val;
           }
 
+          viewAccounting(){
+            alert ("View Accounting Details ..........WIP");
+          }
+
 
           newMast() {
             alert("in save....")
