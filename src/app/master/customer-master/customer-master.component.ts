@@ -70,7 +70,7 @@ export class CustomerMasterComponent implements OnInit {
   PersonType: any;
   taxCategoryName:string;
   displayPerson: boolean;
-  displayOrgnization: boolean;
+  displayOrgnization: boolean ;
   title: string;
   customerId1: number;
   fName: string;
@@ -372,12 +372,14 @@ export class CustomerMasterComponent implements OnInit {
   onOptioncustTypeSelected(event: any) {
     this.PersonType = this.customerMasterForm.get('custType').value;
     // alert(this.StatusPickUp);
-    if (this.custType === 'Person') {
+    if (event === 'Person') {
       this.displayPerson = true;
       this.displayOrgnization = false;
-    } if (this.custType === 'Orgnization') {
-      this.displayOrgnization = true;
+    //  this.customerMasterForm.get('custName').disable();
+    } if (event === 'Orgnization') {
+      //this.displayOrgnization = true;
       this.displayPerson = false;
+     // this.customerMasterForm.get('custName').enable();
     }
   }
   onKey(event: any) {
@@ -443,11 +445,11 @@ if (person === 'Person'){
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
-        this.customerMasterForm.reset();
+      //  this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
-          this.customerMasterForm.reset();
+          //this.customerMasterForm.reset();
         }
       }
     });
@@ -536,14 +538,15 @@ if (person === 'Person'){
   //       }
   //     );
   // }
-  searchByCustAccount(customerId1) {
+  searchByContact(contactNo) {
+    alert('---'+contactNo)
     this.displayNewButton =false;
-    this.service.getsearchByAccountNo(customerId1)
+    this.service.searchCustomerByContact(contactNo)
       .subscribe(
         data => {
-          this.lstcomments = data;
-          // console.log(this.lstcomments.supplierSiteMasterList);
-          this.customerMasterForm.patchValue(this.lstcomments);
+          this.lstcomments = data.obj;
+           console.log(this.lstcomments);
+          this.customerMasterForm.patchValue(this.lstcomments[0]);
           // this.city = this.lstcomments.city
         }
       );
@@ -581,6 +584,7 @@ if (person === 'Person'){
 
       onOptionsSelectedCity (city: any){
         // alert(city);
+        if(city != undefined){
         this.service.cityList1(city)
         .subscribe(
           data => {
@@ -591,5 +595,6 @@ if (person === 'Person'){
             // this.country = 'INDIA';
           }
         );
+        }
       }
 }
