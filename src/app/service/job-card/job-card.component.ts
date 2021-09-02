@@ -975,7 +975,7 @@ export class JobCardComponent implements OnInit {
             labTaxableAmt: this.lstcomments.labTaxableAmt,
             matTaxableAmt: this.lstcomments.matTaxableAmt,
             matTotTaxAmt: this.lstcomments.matTotTaxAmt,
-            matTotAmt: this.lstcomments.matTotAmt,
+            matTotAmt: Number(this.lstcomments.matTotAmt.toFixed(2)),
             // billableTyId:selectbilTy.billableTyName,
             actualBasicAmt: this.lstcomments.totBasicAmt,
             actualInsAmt: this.lstcomments.insTotBasicAmt,
@@ -992,27 +992,32 @@ export class JobCardComponent implements OnInit {
             // var labBasicAmt=control[i].get('basicAmt').value;
             totlabtaxamt = totlabtaxamt + (control[i].basicAmt * control[i].taxPer) / 100;
           }
+          this.labTotAmt=this.labTaxableAmt + totlabtaxamt
           this.jobcardForm.patchValue({
             labTotTaxAmt: totlabtaxamt,
-            labTotAmt: this.labTaxableAmt + totlabtaxamt
+            labTotAmt: this.labTotAmt,
           })
           var control = this.jobcardForm.get('jobCardMatLines').value;
           var totmattaxamt = 0;
           for (var i = 0; i < control.length; i++) {
             totmattaxamt = totmattaxamt + (control[i].basicAmt * control[i].taxPer) / 100;
           }
+          this.matTotAmt= this.matTaxableAmt + totmattaxamt;
           this.jobcardForm.patchValue({
             matTotTaxAmt: totmattaxamt,
             // labTotAmt:this.labTaxableAmt+totlabtaxamt
-            matTotAmt: this.matTaxableAmt + totmattaxamt
+            matTotAmt:this.matTotAmt
           })
-
+          // var laborAmt = this.jobcardForm.get('labTotAmt').value;
+          alert(this.matTotAmt+'Material Amt'+this.labTotAmt+'Labor Amt');
+          this.jobcardForm.patchValue({invTotAmt:this.matTotAmt+this.labTotAmt});
           // alert(perValueLab);
 
           // this.billableTyId= selectbilTy.billableTyName;
-
+         
         }
       );
+     
 
     // this.totalActualLabMat();
   }
@@ -1145,6 +1150,7 @@ export class JobCardComponent implements OnInit {
   }
   saveMaterial() {
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+    formValue.emplId = Number(sessionStorage.getItem('emplId'));
     this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);   //
@@ -1346,6 +1352,7 @@ export class JobCardComponent implements OnInit {
     var labBasicAmt = (this.jobcardForm.get('labBasicAmt').value)
     // var labtaxper=(this.jobcardForm.get('taxPer').value)
     var control = this.jobcardForm.get('jobCardLabLines').value;
+    var matTotAt = this.jobcardForm.get('matTotAmt').value;
     var totlabtaxamt = 0;
     for (var i = 0; i < control.length; i++) {
       var basictax = (control[i].basicAmt * event) / 100;
@@ -1362,6 +1369,7 @@ export class JobCardComponent implements OnInit {
       labTotTaxAmt: totlabtaxamt,
       // labTotTaxAmt:basictax,
       labTotAmt: totlabtaxamt + aaa,
+      invTotAmt: (totlabtaxamt + aaa) +matTotAt,
     })
   }
   labDiscountAmtCal(event) {
@@ -1371,6 +1379,7 @@ export class JobCardComponent implements OnInit {
     var labDisAmt = (this.jobcardForm.get('labDiscount').value)
     // var labtaxper=(this.jobcardForm.get('taxPer').value)
     var control = this.jobcardForm.get('jobCardLabLines').value;
+    var matTotAt = this.jobcardForm.get('matTotAmt').value;
     var perValueLab = (labDisAmt * 100) / labBasicAmt;
     var labTaxAmt = labBasicAmt - labDisAmt;
     var totlabtaxamt = 0;
@@ -1390,6 +1399,7 @@ export class JobCardComponent implements OnInit {
       labTaxableAmt: labTaxAmt,
       labTotTaxAmt: totlabtaxamt,
       labTotAmt: totlabtaxamt + labTaxAmt,
+      invTotAmt: (totlabtaxamt + labTaxAmt) +matTotAt,
     })
   }
   matDiscountPerCal(event) {
@@ -1399,7 +1409,7 @@ export class JobCardComponent implements OnInit {
     // var matTotTaxAmt= this.jobcardForm.get('matTotTaxAmt').value
     // var labDis =Number(this.jobcardForm.get('labDiscount').value);
     // var labTaxAmt = Number(this.jobcardForm.get('labTotTaxAmt').value);
-    // var labTotAt = Number(this.jobcardForm.get('labTotAmt').value);COMMENT BY VINITA
+    var labTotAt = Number(this.jobcardForm.get('labTotAmt').value);
     var control = this.jobcardForm.get('jobCardMatLines').value;
     var totmattaxamt = 0;
     for (var i = 0; i < control.length; i++) {
@@ -1417,7 +1427,7 @@ export class JobCardComponent implements OnInit {
       // matTotAmt:(matTotTaxAmt-temp)+(matBasicAmt-perValueLab),
       // totDis:perValueLab+labDis,
       // totTaxAmt:(matTotTaxAmt-temp)+labTaxAmt,
-      // invTotAmt:((matTotTaxAmt-temp)+(matBasicAmt-perValueLab))+labTotAt,
+      invTotAmt:((totmattaxamt-temp)+(matBasicAmt-perValueLab))+labTotAt,
 
     })
   }

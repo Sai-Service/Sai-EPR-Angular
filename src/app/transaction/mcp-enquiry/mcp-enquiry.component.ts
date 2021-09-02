@@ -546,8 +546,18 @@ export class McpEnquiryComponent implements OnInit {
                 var saleDate=new Date(this.deliveryDate);
                 var mToday   = new Date(Date.now());
                 this.getDiffDays(saleDate,mToday);
+              
               }
-          } ); }
+              if(this.vehicleAgeDays>7) {
+                alert ("Vehicle Aging : "+this.vehicleAgeDays  +" Days.\nNot Eligible to generate MCP enquiry through SALES source for Aging >7 Days.");
+                 this.mcpEnquiryForm.reset();
+                 this.resetSection1();
+              }
+             
+          } ); 
+
+      
+         }
 
           
 
@@ -769,12 +779,7 @@ export class McpEnquiryComponent implements OnInit {
          var mDays2=mDays1 / (1000 * 3600 * 24);
          var mDays3=Math.round(mDays2 - 0.5)
 
-        //  if (mDays3<=7)  {this.paytmentSource ='SALES'} 
-        //  else if (mDays3<=730) {this.paytmentSource ='SERVICE'} 
-        //  else {
-        //    alert("VEHICLE SALE DATE :"+this.pipe.transform(date1,'dd/MM/y') + " AGING : "+ mDays3 +" DAYS...NOT ELIGIBLE FOR AVAILING EXTENDED WARRANTY")
-        //    this.resetMast();
-        //   }
+        
         this.vehicleAgeDays=mDays3;
       }
 
@@ -1072,6 +1077,8 @@ export class McpEnquiryComponent implements OnInit {
                         
                         this.totBaseAmt= (this.lstMcplines.labAmt+this.lstMcplines.matAmt);
                         this.totTaxAmt= (this.lstMcplines.labTaxAmt+this.lstMcplines.matTaxAmt);
+                        var x=(this.lstMcplines.labAmt+this.lstMcplines.labTaxAmt)-this.lstMcplines.labDiscAmt;this.labNetAmt=x;
+                        var y=(this.lstMcplines.matAmt+this.lstMcplines.matTaxAmt)-this.lstMcplines.matDiscAmt;this.matNetAmt=y;
 
                       // ----------------------------LINE DETAILS----------------------------------------
                       for(let i=0; i<this.invLineArray.length; i++){ 
@@ -1115,7 +1122,7 @@ export class McpEnquiryComponent implements OnInit {
                      let select = this.lstMcplines.find(d => d.enqNo === mEnqNo);
                      this.mcpEnquiryForm.patchValue(select);
                      this.regNo=select.regNo;
-                     this.variantCode='AKA4CD2';
+                    //  this.variantCode='AKA4CD2';
                      this.enqNo=select.enqNo;
                      this.pkgEnquired=select.pkgEnquired;
                      this.fuelType=select.fuelType;
@@ -1286,6 +1293,12 @@ export class McpEnquiryComponent implements OnInit {
          } 
         
           this.headerValidation=true;
+      }
+
+      clearSearch() {
+        this.mcpEnquiryForm.get('searchRegno').reset();
+        this.mcpEnquiryForm.get('searchEnqNo').reset();
+        this.lstMcplines=null;
       }
 
 }

@@ -448,9 +448,11 @@
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>
 
+                                   
                                     <td>
-                                        <input  disabled style="font-weight: bold;"  type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control">
+                                        <input disabled  style="font-weight: bold;"  type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control">
                                     </td>
+                                   
                                 
                                     <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Date&nbsp;</td>
             
@@ -468,7 +470,7 @@
                                             <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
         
                                             <td>
-                                                <input style="font-weight: bold;text-align: right;"   type="number" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" placeholder="">
+                                                <input style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" placeholder="">
                                             </td>
 
                                    
@@ -615,11 +617,11 @@
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Applied&nbsp;&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalAppliedAmt"  id="totalAppliedAmt" [(ngModel)] ="totalAppliedAmt" class="form-control" placeholder="">
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="totAppliedtAmount"  id="totAppliedtAmount" [(ngModel)] ="totAppliedtAmount" class="form-control" placeholder="">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Unapplied&nbsp;&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input  disabled  style="text-align: right;" type="text" formControlName="totalUnappliedAmt"  id="totalUnappliedAmt" [(ngModel)] ="totalUnappliedAmt" class="form-control" placeholder="">
+                                        <input  disabled  style="text-align: right;" type="text" formControlName="totUnAppliedtAmount"  id="totUnAppliedtAmount" [(ngModel)] ="totUnAppliedtAmount" class="form-control" placeholder="">
                                     </td>
                                    
                                     <td style="width: 15%" class="LabelFontStyle">&nbsp;OnAct&nbsp;&nbsp;:&nbsp;</td>
@@ -654,8 +656,8 @@
                                     <select formControlName="reversalReasonCode" id="reversalReasonCode" [(ngModel)]="reversalReasonCode" class="form-control"
                                                              (ngModelChange)='onReasonSelected($event)'>
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.cmnTypeId"  >
-                                            {{sc.cmnTypeId}}-{{sc.code}}
+                                        <option *ngFor="let sc of  ReverseReasonList" [ngValue]="sc.code"  >
+                                           {{sc.code}}-{{sc.codeDesc}}
                                         </option>
                                     </select>
                                 </td>
@@ -664,7 +666,7 @@
                             <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
                                 
                             <td>
-                                <input disabled  type="date"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
+                                <input   type="date"  formControlName="reversalDate"  id="reversalDate"  [(ngModel)]="reversalDate" class="form-control" >
                             </td>
 
                           
@@ -789,28 +791,20 @@
 
                                         <!-- ==================================================== -->
 
-                                                    </ng-template>
-                                                    <ng-template #elseBlock1>
-                                                
-                                                            <!-- <td>
-                                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!paymentReceiptForm">Update</button>
-                                                            </td> -->
-                                                            <!-- <td>
-                                                                <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                                            </td>
-                                                         -->
-
-                                                            <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
-                                                            <ng-template #CancelButtonYes>
-                                                            <td>
-                                                                <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
-                                                            </td>
-                                                            </ng-template>
-                                                            <ng-template #CancelButtonNo>
-                                                                <td>
-                                                                    <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
-                                                                </td>
-                                                            </ng-template>
+                            </ng-template>
+                            <ng-template #elseBlock1>
+                        
+                                    <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
+                                    <ng-template #CancelButtonYes>
+                                    <td>
+                                        <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
+                                    </td>
+                                    </ng-template>
+                                    <ng-template #CancelButtonNo>
+                                        <td>
+                                            <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
+                                        </td>
+                                    </ng-template>
 
 
                                                              <!-- ==========================SEARCH & APPLY =============================== -->
@@ -873,7 +867,7 @@
                                         </td>
 
                                         <td>
-                                            <input readonly type="text" class="form-control" formControlName="receiptAmount"  [(ngModel)]="receiptAmount">
+                                            <input readonly type="number" class="form-control" formControlName="receiptAmount"  [(ngModel)]="receiptAmount">
                                         </td>
                                         
                                     </tr>
@@ -884,7 +878,7 @@
                                         </td>
 
                                         <td>
-                                            <input   type="text" class="form-control" formControlName="totAppliedtAmount"  [(ngModel)]="totAppliedtAmount">
+                                            <input   type="number" class="form-control" formControlName="tApplAmt"  [(ngModel)]="tApplAmt">
                                         </td>
 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -892,7 +886,7 @@
                                         </td>
 
                                         <td>
-                                            <input   type="text" class="form-control" formControlName="onAccountAmt"  [(ngModel)]="onAccountAmt">
+                                            <input   type="number" class="form-control" formControlName="onAccountAmt"  [(ngModel)]="onAccountAmt">
                                         </td> 
 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -900,10 +894,10 @@
                                         </td>
 
                                         <td>
-                                            <input readonly type="text" class="form-control" formControlName="totUnAppliedtAmount"  [(ngModel)]="totUnAppliedtAmount">
+                                            <input readonly type="number" class="form-control" formControlName="tUapplAmt"  [(ngModel)]="tUapplAmt">
                                         </td>
                                          <td>
-                                            <input hidden type="text" class="form-control" formControlName="balanceAmount"  [(ngModel)]="balanceAmount">
+                                            <input hidden type="number" class="form-control" formControlName="balanceAmount"  [(ngModel)]="balanceAmount">
                                         </td>
                                         
                                     </tr>
@@ -966,7 +960,10 @@
                                             <tr class="GridHeader">
                                               
                                                 <th style="width:6rem" scope="col">Srl#</th>
-                                                 <th style="width:3rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th>
+                                                <th style="width:3rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" (change)="applyReceiptFlagAll($event)"></th>
+                                                <!-- <th style="width:3rem;text-align: center;" scope="col"><button style="width: 8em;" type="button" class="btn btn-info" (click)="applyReceiptFlagAll101()">Select All</button></th> -->
+                                                <!-- <button style="width: 8em;" type="button" class="btn btn-info" (click)="AppliedDetails(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Apply&nbsp;Details</button> -->
+                                            
                                                 <th style="width:6rem" scope="col">Application Type</th>
                                                 <th style="width:6rem" scope="col">Invoice No</th>
                                                 <th style="width:6rem" scope="col">Invoice Date</th>
@@ -997,11 +994,11 @@
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
                                                     <td><input style="width: 140px;height: 25px;text-align: right; " disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
                                                     <td><input style="width: 140px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine"  class="form-control" (change)="glPrdValidateLine(k)"></td>
-                                                    <td><input style="width: 110px;height: 25px;text-align: right;background-color: yellow;"    type="number" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
+                                                    <td><input style="width: 110px;height: 25px;text-align: right;background-color: yellow;"    type="number" min="0" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="balance Due" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"  disabled hidden  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
-                                                    <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  hidden type="text" formControlName="billToCustId" class="form-control" placeholder="custid" ></td>
-                                                    <td><input style="width: 100px;height: 25px;text-align: right;"  disabled  hidden  type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" ></td>
+                                                    <td><input style="width: 100px;height: 25px;text-align: right;"  disabled hidden  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" ></td>
+                                                    <td><input style="width: 100px;height: 25px;text-align: right;"  disabled hidden    type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" ></td>
                                                     <!-- <td>  <button  class="btn btn-secondary" (click)="ApplyRcpt(com.trxNumber,receiptNumber)">Apply</button></td>   -->
                                                 </tr>
                                                 </ng-container>
@@ -1039,7 +1036,7 @@
                                                                 <td><input style="width: 150px;height: 25px;text-align: center;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: right;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
-                                                                <td><input style="width: 150px;height: 25px;text-align: right;background-color: yellow;"    type="number" formControlName="applAmtNew" (change)="validateLineRefAmt(k)" class="form-control" > </td>
+                                                                <td><input style="width: 150px;height: 25px;text-align: right;background-color: yellow;"    type="number" min="0" formControlName="applAmtNew" (change)="validateLineRefAmt(k)" class="form-control" > </td>
                                                                 <!-- <td><input style="width: 480px;height: 25px;text-align: left;background-color: yellow;"    type="text" formControlName="refReasonCode" class="form-control" > </td> -->
                                                                 <td>
                                                                     <select formControlName="refReasonCode" id="refReasonCode" [(ngModel)]="refReasonCode" class="form-control"  style="width: 480px;height: 25px;text-align: left;background-color: yellow;">
@@ -1065,7 +1062,14 @@
                                 </div>
                                 <div class="modal-footer">
                                   <!-- <button type="button" class="btn btn-info"  >Save</button> -->
-                                  <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                  <div *ngIf="disableApplySave ,then appSaveYes; else appSaveNo")></div>
+                                  <ng-template #appSaveYes>
+                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                  </ng-template>
+                                  <ng-template #appSaveNo>
+                                    <button  disabled style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                </ng-template>
+                                  
                                   <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                                   <!-- <button type="button" class="btn btn-info" (click)="resetModalMast()">Reset</button> -->
                             

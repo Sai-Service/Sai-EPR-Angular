@@ -206,7 +206,7 @@ export class StockTransferComponent implements OnInit {
         // alert('subInventoryCode');
       });
       
-    this.service.locationIdList().subscribe
+    this.service.TolocationIdList(this.locId).subscribe
       (data => {
         this.locIdList = data;
 
@@ -541,7 +541,7 @@ selectByShipNo(shipmentNumber:any)
 }
 
 onlocationissueselect(event){
-  // alert(event);
+  alert(event);
 
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
@@ -551,7 +551,7 @@ onlocationissueselect(event){
     this.issueByList = data;
     console.log(this.issueByList);
   });
-  this.service.ItemIdListDept(this.deptName,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+  this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
     data => {
       this.ItemIdList = data;
       // console.log(this.invItemId);
