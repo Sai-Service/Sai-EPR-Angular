@@ -792,6 +792,7 @@ export class OPMasterDtoComponent implements OnInit {
     var index = index + 1
 
     var aa = index + 1;
+    // alert('index value--' + '  '+index+' '+ aa);
     var patch = this.poMasterDtoForm.get('poLines') as FormArray;
     (patch.controls[index]).patchValue(
       {
@@ -1170,12 +1171,13 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.poType = this.poType;
     formValue.dept = Number(this.dept);
     formValue.supplierCode = this.supplierCode;
+    debugger;
     this.service.poSubmit(formValue).subscribe((res: any) => {
       var obj = res.obj;
       sessionStorage.setItem('poNo', obj);
 
       if (res.code === 200) {
-        alert('PO INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.segment1 = sessionStorage.getItem('poNo');
         this.Search(this.segment1);
         // this.displayNewButtonApprove =true;
@@ -1783,12 +1785,13 @@ export class OPMasterDtoComponent implements OnInit {
 
   // checked
   onOptioninvitemTypeSelected(e: any, lineNum) {
-
+    // alert(lineNum)
     var itemType = e.target.value;
     this.lineDetailsArray.controls[lineNum].get('segment').setValue('');
     this.lineDetailsArray.controls[lineNum].get('segment').disable();
     this.lineDetailsArray.controls[lineNum].reset();
     this.lineDetailsArray.controls[lineNum].get('itemType').setValue(itemType);
+    this.lineDetailsArray.controls[lineNum].get('polineNum').setValue(lineNum+1);
     this.invItemList = new Array();
     if (this.poMasterDtoForm.get('supplierCode').value === '') {
       alert('Please Select Supplier Code First !');
@@ -1893,7 +1896,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.currencyCode = 'INR';
     this.service.applyPOTax(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.poMasterDtoForm.reset();
       } else {
         if (res.code === 400) {
@@ -2197,41 +2200,26 @@ export class OPMasterDtoComponent implements OnInit {
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
-    // this.service.UploadExcel(formData,this.docType).subscribe(result => {
-    //   this.message = result.toString();
-      // this.loadAllUser();
-      alert(this.deptName);
+      // alert(this.deptName);
       if (this.deptName==='Sales'){
       this.service.bulkpouploadSales(formData).subscribe((res: any) => {
-        // this.router1.navigate(['usersummary']);
         if (res.code === 200) {
-          alert('FILE UPLOADED SUCCESSFUILY');
-          window.location.reload();
-          // this.router1.navigate(['usersummary']);
+          alert(res.obj);
+          // this.Search(this.segment1);
         } else {
           if (res.code === 400) {
-            // alert(res.message)
             alert('Error In File : \n' + res.obj);
-            // window.location.reload();
-            // this.location.reset();
           }
         }
       });
     }
     else{
-      // if (this.deptName=sessionStorage.getItem('Spares')){
         this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
-          // this.router1.navigate(['usersummary']);
           if (res.code === 200) {
-            alert('FILE UPLOADED SUCCESSFUILY');
-            window.location.reload();
-            // this.router1.navigate(['usersummary']);
+            alert(res.obj);
           } else {
             if (res.code === 400) {
-              // alert(res.message)
               alert('Error In File : \n' + res.obj);
-              window.location.reload();
-              // this.location.reset();
             }
           }
         });

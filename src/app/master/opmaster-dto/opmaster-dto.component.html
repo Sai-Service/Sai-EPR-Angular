@@ -864,7 +864,7 @@
                                                         <input type="text" hidden formControlName="taxCategoryId">
                                                         <input type="text" hidden formControlName="diss1"
                                                             value={{diss1}}>
-                                                        <input type="number" min="0" hidden formControlName="polineNum">
+                                                        <input type="number" min="0" hidden   formControlName="polineNum">
                                                         <div *ngIf="displayLine; then thenBlock; else elseBlock"></div>
                                                         <ng-template #thenBlock>
                                                             <!-- <td> taxDetails<input disabled type="number" formControlName="polineNum"
@@ -1082,7 +1082,7 @@
                                                         </ng-template>
                                                         <ng-template #elseBlock>
                                                             <input type="text" hidden formControlName="diss1">
-                                                            <td> <input disabled type="number" style="width: 2rem;"
+                                                            <td> <input disabled type="number" style="width: 2rem;" [(ngModel)]="poLineNum" value="{{poLineNum}}"
                                                                     formControlName="polineNum" class="form-control">
                                                             </td>
                                                             <td> <input disabled type="text" formControlName="itemType"
