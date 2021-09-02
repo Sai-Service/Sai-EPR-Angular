@@ -230,7 +230,7 @@
                 
                                     </table>
                                     <div class="modal-footer">
-                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button>
+                                      <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button> -->
                                       <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
                                       [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                                           (click)="fnCancatination()">OK</button>
@@ -266,7 +266,7 @@
      <table class="center">
        <tr>
           <td>
-           <button type="submit" class="btn btn-primary" >Close</button>
+           <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
          </td>
          <td>
            <button type="submit" class="btn btn-primary" style="width: fit-content;" (click)="showJournalDetail()">Show Journal Details</button>
@@ -275,13 +275,13 @@
      </table>
      <br>
      <div id="ouTable">
-            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+            <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;border-collapse:collapse;font-size: 14px;">
                <thead>
                    <tr class="GridHeader">
   
                         <th scope="col">Document Sequence</th>
                         <th scope="col">Journal Type</th>
-                        <th scope="col">name</th>
+                        <th scope="col">Name</th>
   
                         <th scope="col">Entered Debit</th>
                         <th scope="col">Entered Credit</th>
@@ -290,7 +290,7 @@
                               </tr>
                       </thead>
   
-                          <tr *ngFor="let com of JVdata" class="ItemStyle" style="text-decoration:none;">
+                          <tr *ngFor="let com of JVdata" class="ItemStyle" style="text-decoration:none;color: black;text-align: center;font-size: 12px;">
                           <td><a href="" data-toggle="modal" data-target="#exampleModalCenter5" (click)='viewAccounting(com.docSequenceValue)' value="{{com.docSequenceValue}}">  {{com.docSequenceValue}}</a> </td>
                           <!-- <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter5"
                             style="width: 8rem;" (click)="viewAccounting(com.docSequenceValue)" >
@@ -300,17 +300,15 @@
                           <td>{{com.jeCategory}}</td>
                           <td>{{com.name}}</td>
                           
-                          <td style="text-align: right;">{{com.enteredDr}}</td>
-                          <td style="text-align: right;">{{com.enteredCr}}</td>
+                          <td style="text-align: right;padding-right: 15px;">{{com.enteredDr}}</td>
+                          <td style="text-align: right;padding-right: 15px;">{{com.enteredCr}}</td>
                           
                         </tr>
-  
-  
   
           </table>
           </div>
           <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-xl" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Ledger Detail</h5>
@@ -362,14 +360,16 @@
                 </tr>
                 <br>
                 </table>
+                <div class="grid_scroll2">
                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
                     <thead>
                       <tr class="GridHeader">
-                      <th style="width: 2rem;">Line</th>
-                      <th style="width: 8rem;">Account</th>
-                      <th style="width: 8rem;">Debit(INR)</th>
-                      <th style="width: 8rem;">Credit(INR)</th>
-                      <th style="width: 8rem;">Description</th>
+                      <th>Line</th>
+                      <th>Account</th>
+                      <th>Debit(INR)</th>
+                      <th>Credit(INR)</th>
+                      <th>Description</th>
+                      <th>Account Description</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -378,15 +378,26 @@
                           <td>{{com.segmentName}}</td>
                           <td style="text-align: right;">{{com.enteredDr}}</td>
                           <td style="text-align: right;">{{com.enteredCr}}</td>
+                          <td>{{com.description}}</td>
                           <td>{{com.accountDesc}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Total:&nbsp;</td>
+                            <td>
+                                <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr"  style="text-align: right;height: 22px;width: 100px;padding-right: 5px;">
+                            </td>
+                            <td >
+                                <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;padding-right: 5px;">
+                            </td>
                         </tr>
                     </tbody>
                       </table>
-                      <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                    </div>
+                      <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
                         <tr class="ItemStyle">
                             <td style="width: 4rem;"></td>
                             <td  style="width: 8rem;">Total:&nbsp;</td>
-                            <!-- <td style="width: 6rem;"></td> -->
                             <td style="width: 4rem;">
                                 <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;">
                             </td>
@@ -394,26 +405,12 @@
                                 <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;">
                             </td>
                             <td style="width: 8rem;">
-                                <!-- 14.760000000000002 -->
                             </td>
                             <td style="width: 8rem;" hidden>	SS-C-GST Liability Standard-11PU</td>
                             <td style="width: 8rem;" hidden>	SS-C-GST Liability Standard-11PU</td>
                         </tr>
-                        <!-- <tr class="ItemStyle">
-                             
-                            <td colspan="2"  style="width: 10rem;text-align: right;" class="LabelFontStyle">
-                                Total:&nbsp;
-                            </td> 
-                             <td style="width: 8rem;">
-                                <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;">
-                             </td>
-                            
-                             <td style="width: 8rem;">
-                                <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;">
-                             </td>
-                             <td style="width: 8rem;"></td>
-                         </tr> -->
-                     </table> 
+                       
+                     </table>  -->
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

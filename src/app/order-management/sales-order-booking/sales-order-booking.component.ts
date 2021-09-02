@@ -95,6 +95,7 @@ export class SalesOrderBookingComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   divisionName: string;
   dept:number;
+  divisionId:number;
   itemId:number;
   ouName: string;
   locCode: string;
@@ -362,6 +363,7 @@ export class SalesOrderBookingComponent implements OnInit {
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locId = Number(sessionStorage.getItem('locId'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'))
 
 
     // this.orderlineDetailsArray();
@@ -804,7 +806,7 @@ export class SalesOrderBookingComponent implements OnInit {
 
 
   accountNoSearch(accountNo) {
-    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId)
+    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId,this.divisionId)
       .subscribe(
         data => {
           this.accountNoSearch = data;

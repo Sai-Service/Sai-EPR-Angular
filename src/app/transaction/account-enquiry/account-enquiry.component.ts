@@ -25,7 +25,9 @@ AccountEnquiryForm:FormGroup;
 ledgerName:string='SS Ledger';
 currencyCode:string='INR';
 periodNameFrm:string;
+enteredCr:number;
 periodNameTo:string;
+enteredDr:number;
  segment11:string;
   lookupValueDesc1:string;
   segment2:number;
@@ -264,22 +266,25 @@ viewAccounting(event:any){
       this.periodName=res.obj.periodName;
       this.postedDate=res.obj.postedDate;
       this.jeCategory=res.obj.jeCategory;
-      this.jeSource=res.obj.jeSource
-      // this.ledgerId=res.obj.ledgerId;
-      this.runningTotalDr=res.obj.runningTotalDr;
-      this.runningTotalCr=res.obj.runningTotalCr;
-      // console.log(this.description);
-      
+      this.jeSource=res.obj.jeSource;
+      this.runningTotalDr=res.obj.runningTotalDr.toFixed(2);
+      this.runningTotalCr=res.obj.runningTotalCr.toFixed(2);
            this.viewAccountingjvdata=res.obj.glLines;
-      // this.viewAccountingjvdata=res.obj;
-          console.log(this.viewAccountingjvdata);
+           for (let i; i<res.obj.glLines;i++){
+            alert(res.obj.glLines[i]);
+           }
+            console.log(this.viewAccountingjvdata);
           alert(res.message);
         } else {
           if (res.code === 400) {
-            alert('Data already present in the data base');
+            alert(res.message);
           }
         }
       });
   }
+  close() {
+    this.router.navigate(['admin']);
+  }
+
 }
 

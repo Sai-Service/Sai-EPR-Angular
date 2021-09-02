@@ -93,11 +93,11 @@ export class EpmloyeeMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.employeeMasterForm = fb.group({
       emplId: [],
-      ticketNo: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      ticketNo: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9.]*')]],
       divisionId: ['', [Validators.required,]],
       title: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10)]],
       fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
-      mname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
+      mname: ['', [Validators.maxLength(35)]],
       lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       fullName: ['', [Validators.required,Validators.maxLength(100)]],
       fullName1: [''],
@@ -199,6 +199,10 @@ export class EpmloyeeMasterComponent implements OnInit {
   }
 
   newMast() {
+    this.submitted = true;
+    if(this.employeeMasterForm.invalid){
+    return;
+    } 
     const formValue: IEmployeeMaster = this.transData(this.employeeMasterForm.value);
     this.service.EmployeeMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

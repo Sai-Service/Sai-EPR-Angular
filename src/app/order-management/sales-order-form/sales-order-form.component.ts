@@ -25,6 +25,7 @@ const MIME_TYPES = {
 interface ISalesBookingForm {
   divisionName: string,
   ouName: string,
+  divisionId:number,
   fuelType: string;
   locCode: string,
   ticketNo: string,
@@ -106,6 +107,7 @@ export class SalesOrderFormComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   public op: string;
   invLineNo: number;
+  divisionId:number;
   paymentTermId: number;
   deptName: string;
   exchange: string;
@@ -381,6 +383,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.locationId = Number(sessionStorage.getItem('locId'));
     this.deptName = (sessionStorage.getItem('deptName'));
     this.loginOuId1 = Number(sessionStorage.getItem('loginOuId1'));
+    this.divisionId=Number(sessionStorage.getItem('divisionId'))
 
 
     this.orderlineDetailsGroup();
@@ -598,7 +601,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   accountNoSearch(accountNo) {
-    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId)
+    this.orderManagementService.accountNoSearchFn(accountNo, this.ouId,this.divisionId)
       .subscribe(
         data => {
           this.accountNoSearch = data.obj;
@@ -630,12 +633,13 @@ export class SalesOrderFormComponent implements OnInit {
     let controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var invLineNo = controlinv1[i].lineNumber;
+    alert(invLineNo);
     var invLineItemId = controlinv1[i].itemId;
     var taxCategoryId = controlinv1[i].taxCategoryId;
     console.log(controlinv1[i].taxCategoryId);
     this.activeLineNo = invLineNo;
     var baseAmt = controlinv1[i].baseAmt;
-    alert(baseAmt);
+    // alert(baseAmt);
     var patch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var arrayControlTax = this.SalesOrderBookingForm.get('taxAmounts').value;
     var index = Number(arrayControlTax[1].invLineNo);
@@ -653,12 +657,14 @@ export class SalesOrderFormComponent implements OnInit {
             (patch.controls[i]).patchValue(
               {
                 amount: this.taxCalforItem[i].totTaxAmt,
-
+                invLineNo:invLineNo
               }
             );
           }
           this.patchResultList(i, this.taxCalforItem, invLineNo, invLineItemId);
-
+          var arrayupdateTaxLine = this.SalesOrderBookingForm.get('taxAmounts').value;
+          this.taxMap.set(i,arrayupdateTaxLine);
+          // alert('map'+''+ this.taxMap.size)
         });
   }
 
@@ -694,7 +700,7 @@ export class SalesOrderFormComponent implements OnInit {
         selfAssesedFlag: x.selfAssesedFlag,
         inclusiveFlag: x.inclusiveFlag,
         invLineNo: invLineNo,
-        invLineItemId: invLineNo
+        // invLineItemId: itemId
       }));
     });
     console.log(control);
@@ -703,7 +709,7 @@ export class SalesOrderFormComponent implements OnInit {
 
   onKey(index) {
     console.log(index);
-    alert('call')
+    // alert('call')
     var arrayControl = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value
     var patch = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var taxcatName = arrayControl[index].taxCategoryName;
@@ -743,10 +749,14 @@ export class SalesOrderFormComponent implements OnInit {
             for (let i = 0; i < data.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               controlinv1.push(invLnGrp);
+              (controlinv1.controls[i]).patchValue({
+                invLineNo: index + 1,
+              });
               data[i].invLineNo = invLineNo1;
             }
             this.SalesOrderBookingForm.get('taxAmounts').patchValue(data);
             this.taxMap.set(index, data);
+            // alert('map'+''+ this.taxMap.size)
           });
     }
     else {
@@ -822,7 +832,8 @@ export class SalesOrderFormComponent implements OnInit {
     // alert(this.ouId)
     const formValue: ISalesBookingForm = this.transData(this.SalesOrderBookingForm.value);
     formValue.flowStatusCode = 'BOOKED';
-    formValue.ouId = Number(sessionStorage.getItem('ouId'))
+    formValue.ouId = Number(sessionStorage.getItem('ouId'));
+    formValue.divisionId=Number(sessionStorage.getItem('divisionId'))
     this.orderManagementService.OrderBook(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
@@ -856,6 +867,7 @@ export class SalesOrderFormComponent implements OnInit {
     this.currentOpration = 'orderSearch';
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
+    this.TaxDetailsArray().clear();
     this.orderManagementService.getsearchByOrderNo(orderNumber)
       .subscribe(
         data => {
@@ -869,9 +881,9 @@ export class SalesOrderFormComponent implements OnInit {
               this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
               this.TaxDetailsArray().push(this.TaxDetailsGroup());
               this.displayLineTaxDetails = true;
-              alert(data.obj.flowStatusCode)
+              // alert(data.obj.flowStatusCode)
               if (data.obj.flowStatusCode === 'BOOKED') {
-                alert(this.op);
+                // alert(this.op);
                 this.op = 'insert';
                 this.displayLineTaxDetails = false;
                 this.orderlineDetailsGroup();
@@ -912,9 +924,10 @@ export class SalesOrderFormComponent implements OnInit {
             console.log(Number(sessionStorage.getItem('ouId')));
             var controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
             var controlinv2 = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          if (this.currentOpration != 'orderSearch'){
             for (let i = 0; i < controlinv1.length; i++) {
               if (controlinv1[i].invType === 'SS_VEHICLE' && controlinv1[i].flowStatusCode === 'ALLOTED') {
-                alert(controlinv1[i].segment + '--' + i);
+                // alert(controlinv1[i].segment + '--' + i);
                 this.orderManagementService.addonDescList(controlinv1[i].segment)
                   .subscribe(
                     data1 => {
@@ -922,7 +935,7 @@ export class SalesOrderFormComponent implements OnInit {
                       for (let j = 0; j < data1.length; j++) {
                         var taxCatNm: string = data1[j].taxCategoryName;
                         if (taxCatNm.includes('Sale')) {
-                          alert(taxCatNm);
+                          // alert(taxCatNm);
                           (controlinv2.controls[i]).patchValue({
                             taxCategoryId: data1[j].taxCategoryId,
                             taxCategoryName: data1[j].taxCategoryName,
@@ -943,7 +956,7 @@ export class SalesOrderFormComponent implements OnInit {
                 });
               }
             }
-
+          }
           }
         }
       )
@@ -956,7 +969,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   TaxCategoryupdate(index) {
-    alert(this.orderNumber)
+    // alert(this.orderNumber)
     const formValue: AccOrderLinesPost1 = this.transData(this.SalesOrderBookingForm.value);
     formValue.orderNumber = this.orderNumber;
     var accLines = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
@@ -1036,7 +1049,7 @@ export class SalesOrderFormComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    for (let taxlinval of this.taxMap.values()) {
+    for (let taxlinval of this.taxMap.values()) { 
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
       }
@@ -1077,7 +1090,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   taxDetails(op, i, taxCategoryId) {
-    // alert('hi'+' ' +op+'-' +i);
+    alert('hi'+' ' +op+'-' +i);
     // alert(this.displayCounterSaleLine[i]);
     this.selectedLine = i;
     if (op === 'Search') {
@@ -1116,7 +1129,7 @@ export class SalesOrderFormComponent implements OnInit {
             recoverableFlag: x.recoverableFlag,
             selfAssesedFlag: x.selfAssesedFlag,
             inclusiveFlag: x.inclusiveFlag,
-
+            invLineNo:x.invLineNo,
           }));
         }
       });

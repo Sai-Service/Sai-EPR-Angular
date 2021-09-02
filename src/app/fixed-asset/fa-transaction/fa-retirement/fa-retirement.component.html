@@ -28,7 +28,7 @@
                               <tr>
                           <td style="width: 15%" class="LabelFontStyle">Asset&nbsp;No:</td>
                       <td   style="border: none;color: black;">
-                          <input type="number" class="form-control" formControlName="assetId" [(ngModel)]="assetId">
+                          <input type="number" min="0"  class="form-control" formControlName="assetId" [(ngModel)]="assetId">
                       </td>
                       <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No:</td>
 
@@ -72,13 +72,13 @@
                                           Current&nbsp;Units:
                                       </td>
                                       <td >
-                                          <input type="number" class="form-control" formControlName="units">
+                                          <input type="number" min="0"  class="form-control" formControlName="units">
                                       </td>
                                       <td style="width: 15%"class="LabelFontStyle">
                                               Units&nbsp;Retired&nbsp;:
                                           </td>
                                           <td >
-                                              <input type="number" class="form-control" formControlName="unitsRetire">
+                                              <input type="number" min="0"  class="form-control" formControlName="unitsRetire">
                                           </td>
                                           <td style="width: 15%"class="LabelFontStyle">
                                               Retirement&nbsp;Type&nbsp;:
@@ -101,14 +101,14 @@
                                               Current&nbsp;Cost&nbsp;:
                                           </td>
                                           <td >
-                                              <input type="number" class="form-control" formControlName="nbvRetired" >
+                                              <input type="number" min="0"  class="form-control" formControlName="nbvRetired" >
                                           </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
                                                   Cost&nbsp;Retired&nbsp;:
                                               </td>
                                               <td >
-                                                  <input type="number" class="form-control" formControlName="costRetired">
+                                                  <input type="number" min="0"  class="form-control" formControlName="costRetired">
                                               </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
@@ -131,14 +131,14 @@
                                              AR&nbsp;Invoice&nbsp;No:
                                           </td>
                                           <td >
-                                              <input type="number" class="form-control" formControlName="arInvNo">
+                                              <input type="number" min="0"  class="form-control" formControlName="arInvNo">
                                           </td>
 
                                           <td style="width: 15%"class="LabelFontStyle">
                                                   Customer&nbsp;No&nbsp;:
                                               </td>
                                               <td >
-                                                  <input type="number" class="form-control" formControlName="customerNo">
+                                                  <input type="number" min="0"  class="form-control" formControlName="customerNo">
                                               </td>
                                               <input hidden formControlName="emplId" [(ngModel)]="emplId" >
                                           <td style="width: 15%"class="LabelFontStyle">

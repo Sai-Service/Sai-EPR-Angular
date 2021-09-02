@@ -1,4 +1,13 @@
 <form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)">
+    <!-- <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only" id="loading"></span>
+        </div>
+    </div> -->
+    <button class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" id="loading" role="status" aria-hidden="true"></span>
+        Loading...
+      </button>
     <input hidden  type="number" class="form-control" formControlName="emplId"  [(ngModel)]='emplId' style="width: 40px;">
     <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
     <input hidden class="form-control" formControlName="locId" [(ngModel)]='locId'>
@@ -158,7 +167,7 @@
                         <select formControlName="name" id="name" class="form-control" style="width: 160px;"    (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
                             <option>--Select--</option>
                             <option *ngFor="let custSite of custSiteList">
-                                {{custSite.name}}
+                                {{custSite.siteName}}
                             </option>
                         </select>
                         <input hidden disabled type="number" class="form-control" formControlName="id" [(ngModel)]='id'
@@ -662,6 +671,7 @@
                                         </td>
                                         <td>
                                            
+                                           
                                                 <input type="text"  formControlName="segment"   id="invItemIdFirstWay"    list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 160px;" 
                                                  (ngModelChange)='onOptionsSelectedDescription($event,i)' >
                                                 <datalist id="dynmicUserIds1">
@@ -1043,7 +1053,7 @@
                                                 *ngIf="CounterSaleOrderBookingForm.controls['taxAmounts'].controls[j].controls.totTaxPer.value === 0; then thenBlock; else elseBlock">
                                             </div>
                                             <ng-template #thenBlock>
-                                                <td><input type="number" formControlName="totTaxAmt"
+                                                <td><input type="number" min="0"  formControlName="totTaxAmt"
                                                         (change)="validateNum(i,j)" class="form-control"
                                                         style="width: 4rem; text-align: right; height: 25px;font-size: 10px;"
                                                         class="form-control">

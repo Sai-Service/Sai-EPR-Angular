@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component'
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +87,9 @@ export class MasterService {
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
+  TolocationIdList(locId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
+  }
   locationCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Location');
   }
@@ -115,15 +119,15 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/DeptList');
   }
 
-  invItemList(itemType,deptName):Observable<any> {
+  invItemList(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
+    .set('divisionId',divisionId)
     const REQUEST_URI = this.ServerUrl +'/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
     });
   }
-
   invItemList2(itemType,deptName,divisionId):Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
     .set('dept', deptName)
@@ -225,7 +229,7 @@ custTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
 classCodeTypeList(): Observable<any> {
-  return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
+  return this.http.get(this.ServerUrl +'/cmnLookup/classCode');
 }
 getTaxCat(ouId): Observable<any> {
  // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
@@ -1099,9 +1103,9 @@ getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
 }
-ItemIdListDept(deptname,locId,subId):Observable<any>
+ItemIdListDept(deptId,locId,subId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?dept=${deptname}&locationId=${locId}&subInventoryId=${subId}`)
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
 }
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
@@ -1129,8 +1133,8 @@ public reservePost(reserverecord)
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
 }
-getPriceDetail(locId,itemid,subInv,repNo):Observable<any>{
-  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}`)
+getPriceDetail(locId,itemid,subInv,repNo,divId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}&divisionId=${divId}`)
 }
 BillableType():Observable<any>{
   return this.http.get(this.ServerUrl+`/billableTy`);
@@ -1202,12 +1206,16 @@ issueReturn(locId1):Observable<any>{
 returnBillableType(repno):Observable<any>{
       return this.http.get(this.ServerUrl+`/mtrlIssue/jobBillable?repairNo=${repno}`);
     }
-    itemLst(jobno,typ):Observable<any>{
-      return this.http.get(this.ServerUrl+`/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}`);
+    itemLst(jobno,typ,subId):Observable<any>{
+      return this.http.get(this.ServerUrl+`/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}&subInventoryId=${subId}`);
     }
     getsubInv(subId):Observable<any>{
       return this.http.get(this.ServerUrl+`/subInvMst/subinvname/${subId}`);
     }
+    getdivsubInv(subId,divId):Observable<any>{
+      return this.http.get(this.ServerUrl+`/subInvMst/subinvname?subInventoryCode=${subId}&divisionId=${divId}`);
+    }
+    
     getretfrmSubLoc(locId,itemId,subId,jobno):Observable<any>{
       return this.http.get(this.ServerUrl+`/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
     }
@@ -1828,7 +1836,7 @@ PriceListIdList(): Observable<any> {
 
     getPriceListSearch(ouId,deptId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&deptId=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {
@@ -2007,7 +2015,28 @@ OrderCategoryList(): Observable<any> {
       // URL :- http://localhost:8081/pricelist/uploadprc
     }
 
+////////////////////////////// bulk po upload /////////
+bulkpouploadSales(formData: FormData) {
+  let headers1 = new HttpHeaders();  
+  var userId1=sessionStorage.getItem('userId');
+  // console.log(docType);
+  var docType1=formData.get('docType');
+    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData) 
+  }  
 
+  bulkpouploadSpares(formData: FormData) {
+    let headers1 = new HttpHeaders();  
+    var userId1=sessionStorage.getItem('userId');
+    // console.log(docType);
+    var docType1=formData.get('docType');
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData) 
+    }  
+
+  BindUser(): Observable<OPMasterDtoComponent[]> {  
+    var userId1=sessionStorage.getItem('userId');
+    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=`+userId1);  
+    // return this.http.get<HomePageComponent[]>(this.ServerUrl + `/header/FileList`);
+  }
     //////////////////////////EXTENDED WARRANTY/////////////////////////////
 
 

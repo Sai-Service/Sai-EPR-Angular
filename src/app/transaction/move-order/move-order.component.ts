@@ -113,6 +113,7 @@ export class MoveOrderComponent implements OnInit {
  public batchdata = [];
  pricedata:any[];
  regNo:string;
+ 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private serviceService: ServiceService) {
    this.moveOrderForm=fb.group({
@@ -203,7 +204,7 @@ export class MoveOrderComponent implements OnInit {
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.issueBy=(sessionStorage.getItem('name'));
     this.deptName=(sessionStorage.getItem('deptName'));
-
+    
     
     // alert(this.issueBy);
     console.log(this.divisionId);
@@ -381,7 +382,7 @@ onChangeRepairNo(event)
       console.log(this.Billabletype);
     }
      )
-     this.service.ItemIdListDept(this.deptName,this.locId,this.subInvCode.subInventoryId).subscribe(
+     this.service.ItemIdListDept(this.deptId,this.locId,this.subInvCode.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;
         // console.log(this.invItemId);
@@ -454,7 +455,7 @@ onChangeRepairNo(event)
       this.resrveqty=data;
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
     });
-    this.service.getPriceDetail(this.locId,itemid,subInv,repNo).subscribe
+    this.service.getPriceDetail(this.locId,itemid,subInv,repNo,this.divisionId).subscribe
     ((res: any) => {
       if (res.code === 200)
       {
