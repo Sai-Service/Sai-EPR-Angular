@@ -751,17 +751,16 @@
                                     <td></td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="matNetAmt"  id="matNetAmt" [(ngModel)]="matNetAmt" class="form-control" ></td>
                                  </tr>
-                                 <tr>
+                                 <!-- <tr>
                                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">Consumables&nbsp;:&nbsp;</td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="consAmt"  id="consAmt" [(ngModel)]="consAmt" class="form-control" >    </td>
                                     <td></td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="consDiscAmt"  id="consDiscAmt" [(ngModel)]="consDiscAmt" class="form-control" >    </td>
                                     <td></td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="consGstAmt"  id="consGstAmt" [(ngModel)]="consGstAmt" class="form-control" >    </td>
-                                    <!-- <td><input disabled  style="text-align: right;" type="text"  formControlName="consCessAmt"  id="consCessAmt" [(ngModel)]="consCessAmt" class="form-control" >    </td> -->
-                                    <td></td>
+                                     <td></td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="consNetAmt"  id="consNetAmt" [(ngModel)]="consNetAmt" class="form-control" >    </td>
-                                 </tr>
+                                 </tr> -->
                                  <tr>
                                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">Total&nbsp;Amt:&nbsp;</td>
                                     <td><input disabled style="text-align: right;"  type="text"  formControlName="totBaseAmt"  id="totBaseAmt" [(ngModel)]="totBaseAmt" class="form-control" > </td>
@@ -997,6 +996,10 @@
                                             <td style="background-color: #FFE4B5;">
                                                 <button type="button" class="btn-primary" (click)="SearchByMcpRegNo(searchRegno)"><i class="fa fa-search"
                                                         aria-hidden="true"></i></button>
+                                            </td>
+
+                                            <td>
+                                                <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Clear</button>
                                             </td>
                                           </tr>
                                       </table>

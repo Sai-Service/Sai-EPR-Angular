@@ -1941,9 +1941,8 @@ OrderCategoryList(): Observable<any> {
   ////////////////////////// ///////////////////////////////////////
 
   custAccountNoSearch(accountNo,ouId): Observable<any> {
-    // alert("ms >>account no:"+accountNo+","+ouId);
-    // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
+     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
@@ -1960,8 +1959,10 @@ OrderCategoryList(): Observable<any> {
       if(custActNo !=undefined || custActNo !=null){
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
     }
-      
-   
+
+    getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    }
 
   getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
@@ -2353,8 +2354,12 @@ getMcpEnrollmentSearch(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo//${mEnrollNo}`);
 }
 
-getsearchByEnrollNo(mEnrollNo): Observable<any> {
+getMcpSearchByEnrollNo(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`);
+}
+
+getMcpSearchByRegNo(mRegNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollSearchBy/${mRegNo}`);
 }
 
 ////////////////////////MCP ITEM MAPPING////////////////////////
@@ -2381,9 +2386,26 @@ public McpItemMappingSubmitMatrl(McpItemMappingrRecord) {
 
 //  ------------------------MCP TERMINATION--------------------------
 
-mcpRegSearch(mRegNo): Observable<any> {
+mcpRegSearch(mRegNo,mEnrollNo): Observable<any> {
+  // alert ("MS>> Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
+  if((mEnrollNo==undefined || mEnrollNo==null) && (mRegNo !=null)  ) {
    return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
  } 
+
+ if((mRegNo==undefined || mRegNo==null) && (mEnrollNo !=null)  ) {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
+} 
+
+if(( mRegNo !=null) && (mEnrollNo !=null)  ) {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}&enrollmentNo=${mEnrollNo}`);
+}
+}
+
+
+ mcpRegSearchByEnrollNo(mEnrollNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
+} 
+
 
  McpCancelUpdate(McpCancelrRecord) {
   const options = {

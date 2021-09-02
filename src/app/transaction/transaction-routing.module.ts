@@ -26,6 +26,7 @@ import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import {WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
 import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 import { InterStateComponent } from './inter-state/inter-state.component';
+import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transfer.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -55,7 +56,8 @@ const routes: Routes = [
  {path:'WorkshopReturn',component:WorkShopReturnComponent},
  {path:'ReturnToVendor',component:ReturnToVendorComponent},
  {path:'InterState',component:InterStateComponent},
-  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
+ {path:'CashBankTransfer',component:CashBankTransferComponent},
+ {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 
 
