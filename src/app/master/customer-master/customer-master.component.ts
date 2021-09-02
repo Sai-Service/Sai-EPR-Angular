@@ -438,6 +438,10 @@ if (person === 'Person'){
     });
   }
   newMast() {
+    this.submitted = true;
+    if(this.customerMasterForm.invalid){
+    return;
+    }
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
