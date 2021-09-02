@@ -132,14 +132,8 @@
                                             placeholder="Enter first name">
                                         <div *ngIf="submitted && f.fName.errors" class="invalid-feedback">
                                             <div *ngIf="f.fName.errors.required">First Name must be a valid</div>
-                                            <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
-                                    </div> -->
-                                            <div *ngIf="f.fName.errors.maxLength">First Name must be a valid
-                                            </div>
+                                            <div *ngIf="f.fName.errors.maxLength">First Name must be a valid </div>
                                         </div>
-                                        <!-- <span
-                                            *ngIf="!customerMasterForm.get('fName').valid && customerMasterForm.get('fName').touched">Please
-                                            First Name </span> -->
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Middle&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
@@ -173,18 +167,15 @@
                                     <input formControlName="custName" value="custName" [(ngModel)]='custName'
                                         (keyup)="onKey($event)" class="form-control" placeholder="Enter Full name"
                                         style="width: 100%;">
-                                    <div *ngIf="submitted && f. custName.errors" class="invalid-feedback">
+                                  
                                         <!-- (keyup)="onKey($event)"  (keyup)="onKey($event)"-->
                                     <div *ngIf="submitted && f.custName.errors" class="invalid-feedback">
                                         <div *ngIf="f.custName.errors.required">Full Name must be a valid</div>
-                                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
-                                </div> -->
+                                        
                                         <div *ngIf="f.custName.errors.maxLength">Full Name must be a valid
                                         </div>
                                     </div>
-                                    <!-- <span
-                                        *ngIf="!customerMasterForm.get('custName').valid && customerMasterForm.get('lName').touched">Please
-                                        Full Name </span> -->
+                                 
                                 </td>
                             </tr>
                           
