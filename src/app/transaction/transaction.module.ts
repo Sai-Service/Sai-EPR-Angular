@@ -32,6 +32,7 @@ import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.compo
 import { WorkShopReturnComponent } from './work-shop-return/work-shop-return.component';
 import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 import { InterStateComponent } from './inter-state/inter-state.component';
+import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transfer.component';
 
 
 
@@ -66,6 +67,7 @@ import { InterStateComponent } from './inter-state/inter-state.component';
     WorkShopReturnComponent,
     ReturnToVendorComponent,
     InterStateComponent,
+    CashBankTransferComponent,
    
   ],
   

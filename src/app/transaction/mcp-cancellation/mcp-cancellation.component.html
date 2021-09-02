@@ -64,25 +64,27 @@
                                     <td  style="background-color: #FFE4B5;">MCP&nbsp;Enrollment&nbsp;No:&nbsp;</td>
                                    <td style="background-color: #FFE4B5;">
                                         <input class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo'
-                                            value={{searchEnrollNo}} style="text-transform:uppercase;">
+                                            value={{searchEnrollNo}} >
+                                            <!-- style="text-transform:uppercase;" -->
                                     </td>
 
+                                                                        
                                     
-                                    <td style="background-color: #FFE4B5;">
-                                        <button type="button" class="btn-primary" (click)="SearchMcpByEnrollNo(searchEnrollNo)"><i class="fa fa-search"
-                                                aria-hidden="true"></i></button>
-                                    </td>
                     
                                     <td style="width: 15%" class="LabelFontStyle">Registration&nbsp;No:&nbsp;</td>
                         
                                     <td>
-                                        <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control" style="text-transform:uppercase;" >
+                                        <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control"  >
+                                        <!-- style="text-transform:uppercase;" -->
                                     </td>
-                    
-                                                              
+
+                                    <!-- <td style="background-color: #FFE4B5;">
+                                        <button type="button" class="btn-primary" (click)="SearchMcpByEnrollNo(searchRegno,searchEnrollNo)"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td> -->
                     
                                     <td style="background-color: #FFE4B5;">
-                                        <button type="button" class="btn-primary" (click)="SearchMcpByRegNo(searchRegno)"><i class="fa fa-search"
+                                        <button type="button" class="btn-primary" (click)="searchMcpByRegNo(searchRegno,searchEnrollNo)"><i class="fa fa-search"
                                                 aria-hidden="true"></i></button>
                                     </td>
                                   </tr>

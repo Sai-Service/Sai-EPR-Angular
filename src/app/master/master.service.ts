@@ -87,6 +87,9 @@ export class MasterService {
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
+  TolocationIdList(locId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
+  }
   locationCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Location');
   }
@@ -472,6 +475,9 @@ categoryIdList(category): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemCategory/type/${category}`);
 }
 
+getCategoryIdListByDivision(category): Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemCategory/type/`+sessionStorage.getItem('divisionId')+`/${category}`);
+}
 uomList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/UOM');
 }
@@ -859,8 +865,17 @@ public CustMasterSubmit(CustMasterRecord) {
   return this.http.post(url, CustMasterRecord, options);
 }
 getsearchByAccountNo(customerId1): Observable<any> {
-  return this.http.get(this.ServerUrl +  `/Customer/CustomerId1/${customerId1}`);
+  return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1/${customerId1}`);
 }
+
+getsearchByAccountNo1(accountId , divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
+}
+
+searchCustomerByContact(contactNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
+}
+
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
@@ -1100,9 +1115,9 @@ getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
 }
-ItemIdListDept(deptname,locId,subId):Observable<any>
+ItemIdListDept(deptId,locId,subId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?dept=${deptname}&locationId=${locId}&subInventoryId=${subId}`)
+  return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
 }
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
@@ -1130,8 +1145,8 @@ public reservePost(reserverecord)
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
 }
-getPriceDetail(locId,itemid,subInv,repNo):Observable<any>{
-  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}`)
+getPriceDetail(locId,itemid,subInv,repNo,divId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}&divisionId=${divId}`)
 }
 BillableType():Observable<any>{
   return this.http.get(this.ServerUrl+`/billableTy`);
@@ -1203,12 +1218,16 @@ issueReturn(locId1):Observable<any>{
 returnBillableType(repno):Observable<any>{
       return this.http.get(this.ServerUrl+`/mtrlIssue/jobBillable?repairNo=${repno}`);
     }
-    itemLst(jobno,typ):Observable<any>{
-      return this.http.get(this.ServerUrl+`/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}`);
+    itemLst(jobno,typ,subId):Observable<any>{
+      return this.http.get(this.ServerUrl+`/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}&subInventoryId=${subId}`);
     }
     getsubInv(subId):Observable<any>{
       return this.http.get(this.ServerUrl+`/subInvMst/subinvname/${subId}`);
     }
+    getdivsubInv(subId,divId):Observable<any>{
+      return this.http.get(this.ServerUrl+`/subInvMst/subinvname?subInventoryCode=${subId}&divisionId=${divId}`);
+    }
+    
     getretfrmSubLoc(locId,itemId,subId,jobno):Observable<any>{
       return this.http.get(this.ServerUrl+`/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
     }
@@ -1934,9 +1953,8 @@ OrderCategoryList(): Observable<any> {
   ////////////////////////// ///////////////////////////////////////
 
   custAccountNoSearch(accountNo,ouId): Observable<any> {
-    // alert("ms >>account no:"+accountNo+","+ouId);
-    // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+    // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
+     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
   }
 
   getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
@@ -1953,8 +1971,10 @@ OrderCategoryList(): Observable<any> {
       if(custActNo !=undefined || custActNo !=null){
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
     }
-      
-   
+
+    getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    }
 
   getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
@@ -2176,6 +2196,15 @@ EwClaimedCheck(mRegno): Observable<any> {
 }
 
 
+public saveWSVehicle(wsVehicleDetails) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/VehAddInfo/ws';
+  return this.http.post(url, wsVehicleDetails, options);
+}
+
+
 
    public SaiEwCustomerSubmit(EwCustomerMasterRecord) {
     const options = {
@@ -2339,8 +2368,12 @@ getMcpEnrollmentSearch(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo//${mEnrollNo}`);
 }
 
-getsearchByEnrollNo(mEnrollNo): Observable<any> {
+getMcpSearchByEnrollNo(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`);
+}
+
+getMcpSearchByRegNo(mRegNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollSearchBy/${mRegNo}`);
 }
 
 ////////////////////////MCP ITEM MAPPING////////////////////////
@@ -2367,9 +2400,26 @@ public McpItemMappingSubmitMatrl(McpItemMappingrRecord) {
 
 //  ------------------------MCP TERMINATION--------------------------
 
-mcpRegSearch(mRegNo): Observable<any> {
+mcpRegSearch(mRegNo,mEnrollNo): Observable<any> {
+  // alert ("MS>> Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
+  if((mEnrollNo==undefined || mEnrollNo==null) && (mRegNo !=null)  ) {
    return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
  } 
+
+ if((mRegNo==undefined || mRegNo==null) && (mEnrollNo !=null)  ) {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
+} 
+
+if(( mRegNo !=null) && (mEnrollNo !=null)  ) {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}&enrollmentNo=${mEnrollNo}`);
+}
+}
+
+
+ mcpRegSearchByEnrollNo(mEnrollNo): Observable<any> {
+  return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
+} 
+
 
  McpCancelUpdate(McpCancelrRecord) {
   const options = {
