@@ -2194,13 +2194,14 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   uploadFile() {
-    // console.log('doctype-check'+this.docType)
+    console.log('doctype-check'+this.docType)
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
-    this.service.UploadExcel(formData,this.docType).subscribe(result => {
-      this.message = result.toString();
-      this.loadAllUser();
-      if (this.deptName=sessionStorage.getItem('Sales')){
+    // this.service.UploadExcel(formData,this.docType).subscribe(result => {
+    //   this.message = result.toString();
+      // this.loadAllUser();
+      alert(this.deptName);
+      if (this.deptName==='Sales'){
       this.service.bulkpouploadSales(formData).subscribe((res: any) => {
         // this.router1.navigate(['usersummary']);
         if (res.code === 200) {
@@ -2211,7 +2212,7 @@ export class OPMasterDtoComponent implements OnInit {
           if (res.code === 400) {
             // alert(res.message)
             alert('Error In File : \n' + res.obj);
-            window.location.reload();
+            // window.location.reload();
             // this.location.reset();
           }
         }
@@ -2236,6 +2237,6 @@ export class OPMasterDtoComponent implements OnInit {
         });
       // }
     }
-    });
+    // });
   }
 }

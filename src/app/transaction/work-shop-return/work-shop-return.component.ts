@@ -170,7 +170,7 @@ reqNo:string;
     if(this.frmSubInvCode==='WIP')
     {
       alert('Hello');
-      this.service.getsubInv(this.frmSubInvCode).subscribe(
+      this.service.getdivsubInv(this.frmSubInvCode,this.divisionId).subscribe(
         data=>{
           this.subInvdetail=data;
         }
@@ -246,8 +246,9 @@ onSelectjob(event)
 onSelectType(event)
 {
   var jobno=this.WorkshopReturnForm.get('repairNo').value;
+  alert(this.subInvdetail.subInventoryId+'SubInv');
   alert(jobno+'job'+event);
-  this.service.itemLst(jobno,event).subscribe(
+  this.service.itemLst(jobno,event,this.subInvdetail.subInventoryId).subscribe(
     data=>{
       this.ItemIdList=data;
     }
