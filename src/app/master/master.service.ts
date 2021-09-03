@@ -479,6 +479,9 @@ categoryIdList(category): Observable<any> {
   return this.http.get(this.ServerUrl +`/itemCategory/type/${category}`);
 }
 
+getCategoryIdListByDivision(category): Observable<any> {
+  return this.http.get(this.ServerUrl +`/itemCategory/type/`+sessionStorage.getItem('divisionId')+`/${category}`);
+}
 uomList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/UOM');
 }
@@ -866,8 +869,17 @@ public CustMasterSubmit(CustMasterRecord) {
   return this.http.post(url, CustMasterRecord, options);
 }
 getsearchByAccountNo(customerId1): Observable<any> {
-  return this.http.get(this.ServerUrl +  `/Customer/CustomerId1/${customerId1}`);
+  return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1/${customerId1}`);
 }
+
+getsearchByAccountNo1(accountId , divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
+}
+
+searchCustomerByContact(contactNo): Observable<any> {
+  return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
+}
+
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
@@ -2022,19 +2034,12 @@ OrderCategoryList(): Observable<any> {
 
 ////////////////////////////// bulk po upload /////////
 bulkpouploadSales(formData: FormData) {
-  let headers1 = new HttpHeaders();  
-  var userId1=sessionStorage.getItem('userId');
-  // console.log(docType);
-  var docType1=formData.get('docType');
     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData) 
   }  
 
   bulkpouploadSpares(formData: FormData) {
-    let headers1 = new HttpHeaders();  
-    var userId1=sessionStorage.getItem('userId');
-    // console.log(docType);
-    var docType1=formData.get('docType');
-      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData) 
+      // return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData)
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPo`, formData)  
     }  
 
   BindUser(): Observable<OPMasterDtoComponent[]> {  
@@ -2193,6 +2198,15 @@ EwClaimedCheck(mRegno): Observable<any> {
   // alert("ms>>"+mRegno);
   return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
 
+}
+
+
+public saveWSVehicle(wsVehicleDetails) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/VehAddInfo/ws';
+  return this.http.post(url, wsVehicleDetails, options);
 }
 
 
