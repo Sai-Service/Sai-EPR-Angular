@@ -37,6 +37,10 @@ export class MasterService {
   OUIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/opUnit');
   }
+
+ 
+
+
   StateList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/States');
   }
@@ -1198,6 +1202,7 @@ ItemIdDivisionList(divisionId):Observable<any>{
   return this.http.get(this.ServerUrl+`/itemMst/SpAcItems/${divisionId}`);
 }
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
+  alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
 }
 getSearchByTrans(reqNo):Observable<any>{
@@ -2702,4 +2707,29 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     //   // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
     //   return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
     // }
+
+    ///////////////////////// CASH BANK TRANSFER //////////////////////
+
+    TransferTypeLst(): Observable<any> {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/TranType');
+      // http://localhost:8081/fndAcctLookup/lookupTypeWise/TranType
+    }
+
+    PeriodLst(): Observable<any> {
+      return this.http.get(this.ServerUrl +'/AccountTrf/glPayablePeriod');
+      // http://localhost:8081/AccountTrf/glPayablePeriod
+    }
+
+
+    fromAcctLst(mLocId): Observable<any> {
+          return this.http.get(this.ServerUrl+`/AccountTrf/fromAcctList?locId=${mLocId}`);
+      // http://localhost:8081/AccountTrf/fromAcctList?locId=124
+    }
+
+    toAcctLst(mLocId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
+      // http://localhost:8081/AccountTrf/toAcctList/124
+}
+   ///////////////////////////////////////////// //////////////////////
+    
 }

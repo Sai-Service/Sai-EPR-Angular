@@ -93,7 +93,7 @@ export class ReturnToVendorComponent implements OnInit {
       locatorDesc:string;
       
       searchBypoNumber=2181211101212100;
-      searchReceiptNo=1000156;
+      searchReceiptNo=1000158;
 
       poStatus:string;
       shipHeaderId:number
@@ -625,20 +625,21 @@ export class ReturnToVendorComponent implements OnInit {
       if ( e.target.checked) {
 
       var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
-      var tdsLineArr = this.returntoVendorForm.get('rcvLines').value;
-      var len1=tdsLineArr.length;
+      var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
+      var len1=rtvLineArr.length;
 
       // for (let i = 0; i < len1 ; i++)  {
 
-        var mItemId =tdsLineArr[0].invItemId;
-        var subinvId =tdsLineArr[0].subInventoryId;
+        var mItemId =rtvLineArr[index].invItemId;
+        var subinvId =rtvLineArr[index].subInventoryId;
     
         // alert("inv item id :"+ mItemId +","+subinvId +","+this.locId);
 
-        // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
-
-        this.service.getfrmSubLoc(120,42,1)
-        .subscribe(
+          // this.service.getfrmSubLoc(120,42,1)
+          alert ("inventoryId ,subInventoryId:" +mItemId  + " , "+subinvId);
+      
+        this.service.getfrmSubLoc(this.locId,mItemId,42)
+          .subscribe(
           data => {
             this.ItemLocatorList = data;
             console.log(this.ItemLocatorList);
@@ -763,6 +764,7 @@ export class ReturnToVendorComponent implements OnInit {
           // console.log(this.invItemId, this.taxCat);
           // alert("PO line id :"+selectedValue.poLineId);
           var pLineId=selectedValue.poLineId;
+          var subInvItemId=selectedValue.subInventoryId;
           (patch.controls[index]).patchValue(
             {
               qtyReceived: selectedValue.qtyReceived,
@@ -780,7 +782,7 @@ export class ReturnToVendorComponent implements OnInit {
               sacCode: selectedValue.hsnCode,
               hsnCode: selectedValue.hsnCode,
               invItemId:selectedValue.invItemId,
-              subInventoryId: selectedValue.subInventoryId,
+              subInventoryId:subInvItemId,
               defaultTaxCategory: selectedValue.defaultTaxCategory,
               polineNum: selectedValue.polineNum,
               poHeaderId: this.returntoVendorForm.get('poHeaderId').value,
