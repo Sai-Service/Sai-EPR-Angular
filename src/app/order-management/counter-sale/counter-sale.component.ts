@@ -11,6 +11,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { data } from 'jquery';
+import { SalesOrderobj } from 'src/app/order-management/sales-order-form/sales-orderobj'
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
 import { escapeRegExp } from '@angular/compiler/src/util';
@@ -130,6 +131,7 @@ export class CounterSaleComponent implements OnInit {
   // lnflowStatusCode:string;
   lnflowStatusCode: 'BOOKED'
   frmLocatorId: number;
+  activeLineNo: number = 1;
   divisionId: number;
   uom: string;
   pricingQty: number;
@@ -345,7 +347,7 @@ export class CounterSaleComponent implements OnInit {
   ngAfterViewInit() {
     // this.myInputField.nativeElement.focus();
   }
-
+  public taxMap = new Map<string, any>();
 
   constructor(private fb: FormBuilder, private location1: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.CounterSaleOrderBookingForm = fb.group({
@@ -632,8 +634,8 @@ export class CounterSaleComponent implements OnInit {
         this.subInvCode = data;
         console.log(this.subInventoryId);
         this.subInventoryId = this.subInvCode.subInventoryId;
-        alert('check hideloader'+' ' + this.subInventoryId);
-        this.hideloader();
+        // alert('check hideloader'+' ' + this.subInventoryId);
+        // this.hideloader();
       });
 
 
@@ -672,7 +674,6 @@ export class CounterSaleComponent implements OnInit {
 
 
   OrderFind(orderNumber) {
-    this.op = 'Search';
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
@@ -697,6 +698,7 @@ export class CounterSaleComponent implements OnInit {
           for (let j = 0; j <= this.lstgetOrderTaxDetails.length - 1; j++) {
             var orderTaxLinesList: FormGroup = this.TaxDetailsGroup();
             control1.push(orderTaxLinesList);
+            this.op = 'Search';
           }
           this.CounterSaleOrderBookingForm.patchValue(data.obj);
           this.salesRepName = data.obj.salesRepName;
@@ -809,8 +811,10 @@ export class CounterSaleComponent implements OnInit {
   }
 
   downloadCSINV() {
+    var invoiceNumber=this.CounterSaleOrderBookingForm.get('trxNumber').value;
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (this.divisionId===1){
     this.orderManagementService.downloadCSINV(this.orderNumber)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
@@ -819,6 +823,17 @@ export class CounterSaleComponent implements OnInit {
         printWindow.open
         // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
       });
+    }
+    else if (this.divisionId===2){
+      this.orderManagementService.downloadBajajCSINV(invoiceNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+        // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
+      });
+    }
   }
 
 
@@ -910,7 +925,7 @@ export class CounterSaleComponent implements OnInit {
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
     this.invType = orderType;
     this.disAmt=0;
-    alert(this.disAmt)
+    // alert(this.disAmt)
     if (this.itemMap.has(orderType)) {
       var itemsList = this.itemMap.get(orderType);
       this.itemMap2.set(lnNo, this.itemMap.get(orderType));
@@ -960,11 +975,11 @@ export class CounterSaleComponent implements OnInit {
   }
 
   onOptionsSelectedcustSiteName(siteName) {
-    alert(siteName);
+    // alert(siteName);
     let select = this.custSiteList.find(d => d.siteName === siteName);
     this.CounterSaleOrderBookingForm.patchValue({ id: select.customerSiteId })
     this.id = select.customerSiteId;
-    alert(this.id);
+    // alert(this.id);
     this.orderManagementService.custSideAddDet(this.id)
       .subscribe(
         data => {
@@ -1126,7 +1141,8 @@ export class CounterSaleComponent implements OnInit {
     if (disAmt1 === null && disPer === null) {
       return;
     }
-
+    var invLineNo1 = index + 1;
+    console.log(invLineNo1);
     var sum = 0;
     this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
       .subscribe(
@@ -1157,6 +1173,8 @@ export class CounterSaleComponent implements OnInit {
             });
           }
           this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
+          let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
+          this.taxMap.set(index, taxMapData);
 
         });
 
@@ -1373,11 +1391,22 @@ export class CounterSaleComponent implements OnInit {
 
 
   counterSaleOrderSave() {
-    const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
-    formValue.ouId = Number(sessionStorage.getItem('ouId'));
-    formValue.emplId = Number(sessionStorage.getItem('emplId'));
-    formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
-    this.orderManagementService.SaveCounterSaleOrder(formValue).subscribe((res: any) => {
+    // const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
+    // formValue.ouId = Number(sessionStorage.getItem('ouId'));
+    // formValue.emplId = Number(sessionStorage.getItem('emplId'));
+    // formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
+    var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    let jsonData = this.CounterSaleOrderBookingForm.value;
+    let salesObj = Object.assign(new SalesOrderobj(), jsonData);
+    salesObj.setoeOrderLinesAllList(orderLines);
+    var taxStr = [];
+    for (let taxlinval of this.taxMap.values()) { 
+      for (let i = 0; i < taxlinval.length; i++) {
+        taxStr.push(taxlinval[i]);
+      }
+    }
+    salesObj.settaxAmounts(taxStr);
+    this.orderManagementService.SaveCounterSaleOrder(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
         console.log(this.orderNumber);
@@ -1431,11 +1460,13 @@ export class CounterSaleComponent implements OnInit {
     var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
     // const invItemId = arrayControltaxAmounts[0].taxItemId
     // const lineNo = arrayControltaxAmounts[0].invLineNo
+    var invLineNo = invLine[i].lineNumber;
     var taxCategoryId = invLine[i].taxCategoryId;
     var disAmt1 = arrayControltaxAmounts[0].totTaxAmt;
     var baseAmt1 = invLine[i].baseAmt;
     var itemId = invLine[i].itemId;
-    let control = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
+    this.activeLineNo = invLineNo;
+    var patch = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
     // control.clear();
     this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt1)
       .subscribe(
@@ -1446,6 +1477,12 @@ export class CounterSaleComponent implements OnInit {
             if (this.taxCalforItem[i].totTaxPer != 0) {
               sum = sum + this.taxCalforItem[i].totTaxAmt
             }
+            (patch.controls[i]).patchValue(
+              {
+                amount: this.taxCalforItem[i].totTaxAmt,
+                invLineNo:invLineNo
+              }
+            );
           }
           this.TaxDetailsArray().clear()
           for (let i = 0; i < this.taxCalforItem.length; i++) {
@@ -1453,7 +1490,9 @@ export class CounterSaleComponent implements OnInit {
             this.TaxDetailsArray().push(invLnGrp);
             this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(this.taxCalforItem);
           }
-          // this.patchResultList(this.poLineTax, this.taxCalforItem);
+          this.patchResultList(this.poLineTax, this.taxCalforItem);
+          var arrayupdateTaxLine = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
+          this.taxMap.set(i,arrayupdateTaxLine);
         });
   }
 
@@ -1472,6 +1511,8 @@ export class CounterSaleComponent implements OnInit {
 
 
   taxDetails(op, i, taxCategoryId) {
+    alert(i);
+    let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
     // alert('hi'+' ' +op+'-' +i);
     // alert(this.displayCounterSaleLine[i]);
     if (op === 'Search') {
@@ -1518,15 +1559,20 @@ export class CounterSaleComponent implements OnInit {
     else {
       // alert('Hi');
       this.poLineTax = i;
-      var itemId = this.invItemList1[i].itemId;
-      var taxCategoryId = taxCategoryId;
-      this.taxCategoryId = taxCategoryId;
-      // var diss = 0;
-      var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value
-      var diss = arrayControl[i].diss1;
-      var baseAmount = arrayControl[this.poLineTax].baseAmtLineWise;
-
-      this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
+      // var itemId = this.invItemList1[i].itemId;
+      // var taxCategoryId = taxCategoryId;
+      // this.taxCategoryId = taxCategoryId;
+      // // var diss = 0;
+      // var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value
+      // var diss = arrayControl[i].diss1;
+      // var baseAmt = arrayControl[this.poLineTax].baseAmtLineWise;
+      var invLine = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
+    var taxCategoryId = invLine[i].taxCategoryId;
+    var disAmt1 = arrayControltaxAmounts[0].totTaxAmt;
+    var baseAmt1 = invLine[i].baseAmt;
+    var itemId = invLine[i].itemId;
+      this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt1)
         .subscribe(
           (data: any[]) => {
             this.taxCalforItem = data;
@@ -1545,8 +1591,11 @@ export class CounterSaleComponent implements OnInit {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
               this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(this.taxCalforItem);
+              // (controlinv1.controls[i]).patchValue({
+              //   invLineNo: i + 1,
+              // });
             }
-
+            this.taxMap.set(i, data);
           });
     }
   }
@@ -1580,6 +1629,7 @@ export class CounterSaleComponent implements OnInit {
         recoverableFlag: x.recoverableFlag,
         selfAssesedFlag: x.selfAssesedFlag,
         inclusiveFlag: x.inclusiveFlag,
+        invLineNo: x.invLineNo,
       }));
     });
     console.log(control);
@@ -1739,7 +1789,7 @@ export class CounterSaleComponent implements OnInit {
 
 
   qtyvalidation(i, uom, pricingQty) {
-    alert(i + ' ' + uom + ' ' + pricingQty);
+    // alert(i + ' ' + uom + ' ' + pricingQty);
     if (uom === 'NO') {
       alert(pricingQty);
       pricingQty: [0 - 9]

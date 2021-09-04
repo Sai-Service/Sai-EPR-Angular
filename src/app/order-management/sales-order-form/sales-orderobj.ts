@@ -36,16 +36,18 @@ export class SalesOrderobj {
     emi: number;
     tenure: number;
     downPayment: number;
-    emplId: number;
+    // emplId: number;
     priceListName: string;
     billLocName: string;
     shipLocName: string;
-    ouId: number;
     customerId: number;
     billToAddress: string;
     gstNo: string;
     panNo:string;
     tcs:string;
+    public ouId = Number(sessionStorage.getItem('ouId'));
+    public emplId = Number(sessionStorage.getItem('emplId'));
+   public divisionId = Number(sessionStorage.getItem('divisionId'));
     oeOrderLinesAllList:any[];
     taxAmounts:any[];
 

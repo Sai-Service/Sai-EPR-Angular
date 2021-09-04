@@ -4,10 +4,10 @@
             <span class="sr-only" id="loading"></span>
         </div>
     </div> -->
-    <button class="btn btn-primary" type="button" disabled>
+    <!-- <button class="btn btn-primary" type="button" disabled>
         <span class="spinner-grow spinner-grow-sm" id="loading" role="status" aria-hidden="true"></span>
         Loading...
-      </button>
+      </button> -->
     <input hidden  type="number" class="form-control" formControlName="emplId"  [(ngModel)]='emplId' style="width: 40px;">
     <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
     <input hidden class="form-control" formControlName="locId" [(ngModel)]='locId'>
@@ -642,7 +642,8 @@
                                     <tr>
                                         <td>
                                             <div  *ngIf="displayCounterSaleLine[i]; then thenBlockPoLine; else elseBlockPoLine"></div>
-                                            <ng-template #thenBlockPoLine>  
+                                            <ng-template #thenBlockPoLine> 
+                                                insert 
                                             <a [value]="i+1" class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab"  (click)="taxDetails('insert', i, taxCategoryId)">
                                                     {{i+1}}
                                                 </a>
@@ -1105,9 +1106,7 @@
                                             </ng-template>
                                         </tr>
                                         <tr>
-                                            <input hidden type="text" formControlName="itemId"
-                                                style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
-                                            <input hidden type="text" class="form-control"
+                                            <input type="number" class="form-control"
                                                 formControlName="invLineNo"
                                                 style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                         </tr>
