@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
+import { style } from '@angular/animations';
 
 interface IEmployeeMaster {
   emplId: number;
@@ -95,7 +96,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       emplId: [],
       ticketNo: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9.]*')]],
       divisionId: ['', [Validators.required,]],
-      title: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10)]],
+      title: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10)],[style]],
       fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       mname: ['', [Validators.maxLength(35)]],
       lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],

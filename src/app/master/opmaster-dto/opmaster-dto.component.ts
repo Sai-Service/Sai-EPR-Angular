@@ -226,6 +226,7 @@ export class OPMasterDtoComponent implements OnInit {
   public seriesList: Array<any> = [];
   public delearCodeList: Array<string> = [];
   public taxCategoryList: any;
+   public allTaxCategoryList: any[];
   public dispbut = true;
   lineNumber: number;
   taxRateName: string;
