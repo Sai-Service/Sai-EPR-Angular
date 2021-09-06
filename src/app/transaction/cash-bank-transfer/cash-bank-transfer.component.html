@@ -66,23 +66,19 @@
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Period:&nbsp;</td>
                                 <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
+                                    <select   formControlName="openPeriod" id="openPeriod" [(ngModel)]="openPeriod"  class="form-control" >                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
+                                    {{sc.periodName}}
                                     </option>
                                     </select>
                                 </td>
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Date:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
-                                    </option>
-                                    </select>
-                                </td>
-                                    
-                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Period:&nbsp;</td>
+                                 <td>
+                                        <input    type="date"  formControlName="transferDate"  id="transferDate" [(ngModel)]="transferDate" class="form-control" >
+                                 </td>
+  
+                                   <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Period:&nbsp;</td>
                                 <td>  
                                     <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >
                                     <!-- (ngModelChange)='onOuIdSelected($event)'  > -->
@@ -100,46 +96,31 @@
 
                             <tr>
 
-                                <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Date:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Type:&nbsp;</td>
                                 <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
+                                    <select   formControlName="transferCode" id="transferCode" [(ngModel)]="transferCode"  class="form-control" >                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  TransferTypeList" [ngValue]="sc.lookupValueId">
+                                    {{sc.lookupDesc}}
                                     </option>
                                     </select>
                                 </td>
 
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Doc&nbsp;Number:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
-                                    </option>
-                                    </select>
-                                </td>
+                                <td>
+                                    <input  disabled  type="text"  formControlName="docTrfNo"  id="docTrfNo" [(ngModel)]="docTrfNo" class="form-control" >
+                                 </td>
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Clearing&nbsp;Date:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
-                                    </option>
-                                    </select>
-                                </td>
+                                <td>
+                                    <input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" >
+                                 </td>
                                     
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Date:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >
-                                    <!-- (ngModelChange)='onOuIdSelected($event)'  > -->
-                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
-                                    </option>
-                                    </select>
-                                </td>
-                             
-                             
+                                <td>
+                                    <input    type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" >
+                                 </td>
+ 
     
                             </tr>
 
@@ -154,9 +135,9 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
                                 <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
+                                    <select   formControlName="fromAcctDescp" id="fromAcctDescp" [(ngModel)]="fromAcctDescp"  class="form-control" >                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.methodName">
+                                    {{sc.methodName}}
                                     </option>
                                     </select>
                                 </td>
@@ -164,31 +145,27 @@
                                     
                                 <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c:&nbsp;</td>
                                 <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
+                                    <select   formControlName="toAcctDescp" id="toAcctDescp" [(ngModel)]="toAcctDescp"  class="form-control" >                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  toAcctList" [ngValue]="sc.methodName">
+                                    {{sc.methodName}}
                                     </option>
                                     </select>
                                 </td>
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Amt:&nbsp;</td>
                                 <td>
-                                    <input     type="nunber"  min="1" formControlName="transferAmt"  id="transferAmt" [(ngModel)]="transferAmt" class="form-control" >
+                                    <input     type="nunber"  min="1" formControlName="transferAmt"  id="transferAmt" [(ngModel)]="transferAmt" class="form-control" style="background-color: yellow;" >
                                 </td>
                                     
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >
-                                    <!-- (ngModelChange)='onOuIdSelected($event)'  > -->
-                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
-                                    </option>
+                                <td>
+                                    <select  formControlName="status"  id ="status"  [(ngModel)]="status"  class="form-control"  >
+                                        <!-- (ngModelChange)='OnApplyTypeSelected($event)'  -->
+                                        <option value="SAVE">SAVE</option>
+                                        <option value="POST">POST</option>
                                     </select>
                                 </td>
-                             
-                             
-    
+                        
                             </tr>
 
 
@@ -205,15 +182,11 @@
                                     <input     type="text"  formControlName="recAcCode"  id="recAcCode" [(ngModel)]="recAcCode" class="form-control" >
                                 </td>
                                     
-                                <td style="width: 15%" class="LabelFontStyle">Clearing&nbsp;Date:&nbsp;</td>
-                                <td>
-                                    <input     type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" >
-                                </td>
-                                    
+                                  
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Amt&nbsp;In&nbsp;Words:&nbsp;</td>
                                
                                 <td>
-                                    <input     type="text"  formControlName="amtInWords"  id="amtInWords" [(ngModel)]="amtInWords" class="form-control" >
+                                    <input disabled  style="width: 260%"   type="text"  formControlName="amtInWords"  id="amtInWords" [(ngModel)]="amtInWords" class="form-control" >
                                 </td>
                              
     

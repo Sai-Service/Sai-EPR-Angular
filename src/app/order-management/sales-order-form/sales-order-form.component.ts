@@ -628,12 +628,12 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   addDiscount(i) {
-    alert(i);
+    // alert(i);
     console.log(this.SalesOrderBookingForm.get('oeOrderLinesAllList').value);
     let controlinv1 = this.SalesOrderBookingForm.get('oeOrderLinesAllList').value;
     let controlinv = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var invLineNo = controlinv1[i].lineNumber;
-    alert(invLineNo);
+    // alert(invLineNo);
     var invLineItemId = controlinv1[i].itemId;
     var taxCategoryId = controlinv1[i].taxCategoryId;
     console.log(controlinv1[i].taxCategoryId);
@@ -699,7 +699,7 @@ export class SalesOrderFormComponent implements OnInit {
         recoverableFlag: x.recoverableFlag,
         selfAssesedFlag: x.selfAssesedFlag,
         inclusiveFlag: x.inclusiveFlag,
-        invLineNo: invLineNo,
+        // invLineNo: invLineNo,
         // invLineItemId: itemId
       }));
     });
@@ -1090,7 +1090,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   taxDetails(op, i, taxCategoryId) {
-    alert('hi'+' ' +op+'-' +i);
+    // alert('hi'+' ' +op+'-' +i);
     // alert(this.displayCounterSaleLine[i]);
     this.selectedLine = i;
     if (op === 'Search') {
