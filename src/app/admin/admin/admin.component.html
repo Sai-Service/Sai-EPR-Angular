@@ -233,9 +233,20 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+          <div *ngIf="displayMaruti; then thenMaruti; else elseMaruti"></div>
+                <ng-template #thenMaruti>
           <li class="nav-item">
             <img id="sailogo" src="assets\images\Footer.jpg" style="width: 95%">
           </li>
+                </ng-template>
+                <ng-template #elseMaruti>
+                <!-- <li class="nav-item">
+                  <img id="bajajlogo" src="assets\images\bajajlogo.jpg" style="width: 100%;margin-right: 170px;" >
+                </li> -->
+                <li class="nav-item">
+                  <img id="bajajlogo" src="assets\images\bajajLogo1.jpg" style="width: 100%;margin-right: 170px;" >
+                </li>
+                </ng-template>
           <li class="nav-item dropdown">
             <a class="dropdown-item" (click)="close()" style="color: blue;"><u>Logout</u></a>
            <div >

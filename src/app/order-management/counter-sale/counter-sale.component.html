@@ -20,7 +20,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
-                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;Form&nbsp;
+                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;
             </td>
             <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
                 &nbsp;Order&nbsp;No&nbsp;&nbsp;
@@ -149,22 +149,15 @@
                 <td style="width: 15%" class="LabelFontStyle1">
                     Customer&nbsp;No&nbsp;:&nbsp;
                 </td>
-                <td>
-                    <!-- <div *ngIf="displaycustAccountNo; then thencustAccountNo; else elsecustAccountNo"></div>
-                    <ng-template #thencustAccountNo> -->
-                    <input type="text" class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
-                        value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)" style="width: 160px;" >
-                    <!-- </ng-template>
-                    <ng-template #elsecustAccountNo>
-                        <input disabled type="text" class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
-                        value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)" style="width: 160px;">
-                    </ng-template> -->
+                <td >
+                    <input type="number" style="width: 160px;background-color: #ffed49;"  class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
+                        value={{custAccountNo}} (keydown.tab)="accountNoSearch(custAccountNo)"  >
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
                         Customer&nbsp;Site&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <select formControlName="name" id="name" class="form-control" style="width: 160px;"    (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
+                        <select formControlName="name" id="name" class="form-control" style="width: 160px;background-color: #ffed49;"    (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
                             <option>--Select--</option>
                             <option *ngFor="let custSite of custSiteList">
                                 {{custSite.siteName}}
@@ -178,14 +171,14 @@
                 </td>
                 <td>
                     <input  type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
-                        value={{custName}} (keydown.tab)="custNameSearch(custName)"  style="width: 160px;">
+                        value={{custName}} (keydown.tab)="custNameSearch(custName)"  style="width: 160px;background-color: #ffed49;">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Contact&nbsp;No&nbsp;:&nbsp;
                 </td>
                 <td>
                     <input class="form-control" formControlName="mobile1" [(ngModel)]='mobile1'
-                    value={{mobile1}} (keydown.tab)="contactNoSearch(mobile1)" style="width: 160px;">
+                    value={{mobile1}} (keydown.tab)="contactNoSearch(mobile1)" style="width: 160px;background-color: #ffed49;">
                 </td>
             </tr>
             <tr>
@@ -194,7 +187,7 @@
                 </td>
                 <td colspan="5">
                     <input disabled type="text" class="form-control" formControlName="custAddress"
-                        [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;">
+                        [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;background-color: #9ac73e99;">
                 </td>
             </tr>
                 </ng-template>  
@@ -220,7 +213,7 @@
                     Order&nbsp;Number&nbsp;:&nbsp;
                 </td>
                 <td>
-                    <input disabled class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 160px;font-weight: bold;">
+                    <input disabled class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber' value={{orderNumber}} style="width: 160px;font-weight: bold;background-color: #b8f0b8;">
                 </td>
                 <td style="width: 18%" class="LabelFontStyle1">
                     Order&nbsp;Type&nbsp;:&nbsp;
