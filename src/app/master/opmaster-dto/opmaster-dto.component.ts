@@ -226,6 +226,7 @@ export class OPMasterDtoComponent implements OnInit {
   public seriesList: Array<any> = [];
   public delearCodeList: Array<string> = [];
   public taxCategoryList: any;
+   public allTaxCategoryList: any[];
   public dispbut = true;
   lineNumber: number;
   taxRateName: string;
@@ -1171,7 +1172,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.poType = this.poType;
     formValue.dept = Number(this.dept);
     formValue.supplierCode = this.supplierCode;
-    debugger;
+    // debugger;
     this.service.poSubmit(formValue).subscribe((res: any) => {
       var obj = res.obj;
       sessionStorage.setItem('poNo', obj);

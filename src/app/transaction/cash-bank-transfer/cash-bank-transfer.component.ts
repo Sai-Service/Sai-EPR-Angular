@@ -21,8 +21,15 @@ export class CashBankTransferComponent implements OnInit {
   cashBankTransferForm : FormGroup;
 
       pipe = new DatePipe('en-US');
-
+      now = Date.now();
       public OUIdList           : Array<string> = [];
+      public TransferTypeList    : Array<string> = [];
+      public PeriodList          : Array<string> = [];
+      public fromAcctList          : Array<string> = [];
+      public toAcctList          : Array<string> = [];
+      
+      
+      
     
       lstcomments: any;
 
@@ -40,14 +47,22 @@ export class CashBankTransferComponent implements OnInit {
 
       branch:number;
       period:number;
-      transferDate:Date;
+      openPeriod:string;
+      docTrfNo:string;
+      transferCode:string;
+      transferDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+      reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+      clearingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       reversalPeriod:number;
+      status:string;
 
+      fromAcctDescp:string;
+      toAcctDescp:string;
       transferAmt:number;
       amtInWords:string;
       recAcCode:string;
       payAcCode:string;
-      clearingDate:string;
+  
 
 
 
@@ -74,14 +89,22 @@ export class CashBankTransferComponent implements OnInit {
 
           branch:[],
           period:[],
+          openPeriod:[],
+          docTrfNo:[],
+          transferCode:[],
           transferDate:[],
+          reversalDate:[],
+          clearingDate:[],
           reversalPeriod:[],
+          fromAcctDescp:[],
+          toAcctDescp:[],
+          status:[],
 
           transferAmt:[],
           amtInWords:[],
           recAcCode:[],
           payAcCode:[],
-          clearingDate:[],
+      
 
 
         
@@ -113,6 +136,44 @@ export class CashBankTransferComponent implements OnInit {
               console.log(this.OUIdList);
             }
           );
+
+          this.service.TransferTypeLst()
+          .subscribe(
+            data => {
+              this.TransferTypeList = data;
+              console.log(this.TransferTypeList);
+            }
+          );
+
+          this.service.PeriodLst()
+          .subscribe(
+            data => {
+              this.PeriodList = data;
+              console.log(this.PeriodList);
+            }
+          );
+
+          this.service.fromAcctLst(this.locId)
+          .subscribe(
+            data => {
+              this.fromAcctList = data;
+              console.log(this.fromAcctList);
+            }
+          );
+
+          this.service.toAcctLst(this.locId)
+          .subscribe(
+            data => {
+              this.toAcctList = data;
+              console.log(this.toAcctList);
+            }
+          );
+
+
+
+          
+          
+          
 
         }
 
