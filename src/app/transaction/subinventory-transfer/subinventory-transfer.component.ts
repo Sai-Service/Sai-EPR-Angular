@@ -392,39 +392,39 @@ lastkeydown1: number = 0;
             VariantFormGroup.addControl('issueTo',new FormControl(issto,Validators.required));
               }
           
-              this.service.subInvTransferSubmit(variants.value).subscribe((res: any) => {
-                //  var obj=res;
-                // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
-                if (res.code === 200) {
-                  alert("Record inserted Successfully");
-                  // this.shipmentNumber =res.obj.shipmentNumber;
-                   this.SubinventoryTransferForm.patchValue(
-                  // //  'issueBy':res.obj[0].issueTo,
-                  { 'shipmentNumber':res.obj[0].shipmentNumber})
-                    this.SubinventoryTransferForm.disable();
+              // this.service.subInvTransferSubmit(variants.value).subscribe((res: any) => {
+              //   //  var obj=res;
+              //   // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
+              //   if (res.code === 200) {
+              //     alert("Record inserted Successfully");
+              //     // this.shipmentNumber =res.obj.shipmentNumber;
+              //      this.SubinventoryTransferForm.patchValue(
+              //     // //  'issueBy':res.obj[0].issueTo,
+              //     { 'shipmentNumber':res.obj[0].shipmentNumber})
+              //       this.SubinventoryTransferForm.disable();
 
-                  // // 'transReference':res.obj[0].transReference}
-                  // );
-                  //  var trxLnArr2 = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
-                  //  for(let i=0; i<res.obj.length; i++){
-                  //   // trxLnArr2.controls[i].patchValue(res.obj[i]);
+              //     // // 'transReference':res.obj[0].transReference}
+              //     // );
+              //     //  var trxLnArr2 = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
+              //     //  for(let i=0; i<res.obj.length; i++){
+              //     //   // trxLnArr2.controls[i].patchValue(res.obj[i]);
                   
-                  // trxLnArr2.controls[i].patchValue({'segment':res.obj[i].segment});
-                  // trxLnArr2.controls[i].patchValue({'locator':res.obj[i].locator});
-                  // trxLnArr2.controls[i].patchValue({'avlqty':res.obj[i].avlqty});
-                  // trxLnArr2.controls[i].patchValue({'primaryQty':res.obj[i].primaryQty});
-                  // }
+              //     // trxLnArr2.controls[i].patchValue({'segment':res.obj[i].segment});
+              //     // trxLnArr2.controls[i].patchValue({'locator':res.obj[i].locator});
+              //     // trxLnArr2.controls[i].patchValue({'avlqty':res.obj[i].avlqty});
+              //     // trxLnArr2.controls[i].patchValue({'primaryQty':res.obj[i].primaryQty});
+              //     // }
                   
-                  // this.display = false;
-                  // this.displayButton = false;
-                }
-                else {
-                  if (res.code === 400) {
-                    alert("Code already present in data base");
-                    this.SubinventoryTransferForm.reset();
-                  }
-                }
-              });
+              //     // this.display = false;
+              //     // this.displayButton = false;
+              //   }
+              //   else {
+              //     if (res.code === 400) {
+              //       alert("Code already present in data base");
+              //       this.SubinventoryTransferForm.reset();
+              //     }
+              //   }
+              // });
           
 
 

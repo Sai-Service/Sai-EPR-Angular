@@ -59,7 +59,7 @@
                       <option *ngFor="let ib of issueByList">{{ib.name}}</option>
                       </select>
                   </td>
-              <input hidden formControlName=locId [(ngModel)]='locId'>
+              <input hidden formControlName=locId >
               <td style="width: 15%" class="LabelFontStyle">
                Remark:
                </td>
@@ -112,7 +112,7 @@
                              </td>
                              <td>
                                  
-                                 <select class=" form-control" style="height: 20px; width: 110px;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trfLineIndex)">
+                                 <select class=" form-control" style="height: 20px; width: 110px;" formControlName="frmLocator" (change)="AvailQty($event,trfLineIndex)">
                                         <option>--Select--</option>
                                         <option *ngFor="let locId of  locData[trfLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                                         </select>
@@ -175,7 +175,7 @@
                                 Floor&nbsp;:
                             </td>
                             <td>
-                                <input type="text" formControlName="Floor"  value={{Floor}} [(ngModel)]="Floor" class="form-control"
+                                <input type="text" formControlName="Floor"  value={{Floor}} class="form-control"
                                                    placeholder="Floor" style="width: 52px;" >
                                 <!-- <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
                                     <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
@@ -190,7 +190,7 @@
                                 Rack&nbsp;:
                             </td>
                             <td>
-            <input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;">
+            <input formControlName="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;">
                             </td>
                         </tr>
                         <tr>
@@ -198,7 +198,7 @@
                                 Rack&nbsp;Number&nbsp;:
                             </td>
                             <td>
-                                <input formControlName="RackNo" [(ngModel)]="RackNo" value={{RackNo}} class="form-control"
+                                <input formControlName="RackNo" value={{RackNo}} class="form-control"
                                                    placeholder="Rack No" style="width: 52px;">
                             </td>
                         </tr>
@@ -207,7 +207,7 @@
                                 Row&nbsp;:
                             </td>
                             <td>
-                                <input formControlName="Row" [(ngModel)]="Row" value={{Row}} class="form-control"
+                                <input formControlName="Row"  value={{Row}} class="form-control"
                                                  placeholder="Row" style="width: 52px;">
                             </td>
                         </tr>
@@ -216,7 +216,7 @@
                                 Row&nbsp;Number&nbsp;:
                             </td>
                             <td>
-                                <input formControlName="RowNo" [(ngModel)]="RowNo" value={{RowNo}} class="form-control"
+                                <input formControlName="RowNo"  value={{RowNo}} class="form-control"
                                                    placeholder="Row No" style="width: 52px;">
                             </td>
                         </tr>
