@@ -138,12 +138,12 @@ export class PaymentArComponent implements OnInit {
   now = Date.now();
   checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  glDate = this.pipe.transform(this.now, 'y-MM-dd');
-  // trxDate= this.pipe.transform(this.now, 'dd-MM-y');
-  trxDate=this.pipe.transform(this.now, 'y-MM-dd');
-  applDate:string;
+  glDate = this.pipe.transform(this.now, 'y-MM-dd hh:mm:ss');
+   trxDate= this.pipe.transform(this.now, 'dd-MM-y hh:mm:ss');
+ // trxDate=this.pipe.transform(this.now, 'y-MM-dd');
+  //applDate:string;
   glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
-  // applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+   applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   // reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
   reversalDate :string;
   reversalComment: string;
@@ -1224,8 +1224,8 @@ export class PaymentArComponent implements OnInit {
                      y=invLineArr[i].balDueAmt;
                      patch.controls[i].patchValue({balance1:y})
                     //  var z=invLineArr[i].trxDate;
-                     var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
-                     patch.controls[i].patchValue({trxDate:z})
+                   //  var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd hh:mm:ss');
+                   var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
                      var z1=this.pipe.transform(this.now, 'y-MM-dd');
                      patch.controls[i].patchValue({glDateLine:z1})
 
@@ -1233,8 +1233,8 @@ export class PaymentArComponent implements OnInit {
                     ///////////////////////////////////////////////////////
 
                     this.applyTo=applyTp;
-                    // this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
+                    this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+                   // this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
                   }
                   );
       
@@ -1246,7 +1246,7 @@ export class PaymentArComponent implements OnInit {
 
                     this.invLineArray().push(this.invLineDetails());
                     this.applyTo=applyTp;
-                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
+                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd h:mm:ss');
                     // this.glDateLine=this.pipe.transform(this.now, 'y-MM-dd');
 
                       /////////////////////////////////////////////////////////
@@ -1554,7 +1554,7 @@ export class PaymentArComponent implements OnInit {
         console.log();
         // const formValue: IPaymentRcptAr =this.transeData1(this.paymentArForm.value);
         // debugger;
-        this.service.ArReceipApplySubmit(invLine).subscribe((res: any) => {
+        this.service.ArReceipApplySubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD INSERTED SUCCESSFUILY');
             // this.paymentArForm.reset();

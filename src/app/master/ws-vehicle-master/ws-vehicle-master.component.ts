@@ -30,6 +30,8 @@ interface IWsVehicleMaster {
   state: string;
   pinCd: string;
   custTaxCategoryName: string;
+  divisionId:number;
+  divisionName:string;
 
 
 }
@@ -601,6 +603,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
       // debugger;
       console.log(formValue);
+      formValue.divisionId =Number(sessionStorage.getItem('divisionId'));
+      formValue.divisionName =sessionStorage.getItem('divisionName');
       this.service.saveWSVehicle(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD INSERTED SUCCESSFUILY');
