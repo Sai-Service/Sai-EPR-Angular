@@ -1957,9 +1957,9 @@ OrderCategoryList(): Observable<any> {
   }
   ////////////////////////// ///////////////////////////////////////
 
-  custAccountNoSearch(accountNo,ouId): Observable<any> {
+  custAccountNoSearch(accountNo,ouId,divId): Observable<any> {
     // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
-     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
   getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>

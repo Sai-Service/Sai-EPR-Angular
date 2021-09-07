@@ -353,7 +353,7 @@ export class McpEnrollmentComponent implements OnInit {
                   this.dispCustButton=true;
                   this.getMcpStatus(mRegNo);
               
-                if(this.mcpStatusDetails===false) {
+                // if(this.mcpStatusDetails===false) {
                
                 this.mcpEnrollmentForm.patchValue({
                   fuelType: this.getVehRegDetails.fuelType,
@@ -377,7 +377,7 @@ export class McpEnrollmentComponent implements OnInit {
                   var mToday   = new Date(Date.now());
                   this.getDiffDays(saleDate,mToday);
                   this.LoadMcpEnqList(mRegNo);
-                }else {  alert("MCP is Active for the Vehicle : "+mRegNo ); this.resetMast();return;}
+                // }else {  alert("MCP is Active for the Vehicle : "+mRegNo ); this.resetMast();return;}
                   
                 }else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.mcpEnrollmentForm.reset();}
               } 
