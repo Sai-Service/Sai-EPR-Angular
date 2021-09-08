@@ -381,11 +381,11 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   //  var obj=res.obj;
    if(res.code===200)
    {
-    alert("Record inserted Successfully");
+    alert(res.message);
    }
    else{
     if(res.code === 400) {
-      alert("Code already present in data base");
+      alert(res.message);
       this.stockTranferForm.reset();
     }
    }
@@ -427,7 +427,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       //  var obj=res;
       // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
       if (res.code === 200) {
-        alert("Record inserted Successfully");
+        alert(res.message);
         this.shipmentNumber =res.obj[0].shipmentNumber;
         this.transferLoc=res.obj[0].transReference;
         // this.search(this.shipmentNumber);
@@ -452,7 +452,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       }
       else {
         if (res.code === 400) {
-          alert("Code already present in data base");
+          alert(res.message);
           //this.stockTranferForm.reset();
         }
       }
@@ -541,7 +541,7 @@ selectByShipNo(shipmentNumber:any)
 }
 
 onlocationissueselect(event){
-  alert(event);
+  // alert(event);
 
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
