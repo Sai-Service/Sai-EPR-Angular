@@ -44,6 +44,7 @@ export class McpEnrollmentComponent implements OnInit {
   lstMcplines: any;
   lstMcpEnrolledEnq:any;
   mcpStatusDetails:any;
+  public  mcpActive :number;
  
 
 
@@ -343,7 +344,16 @@ export class McpEnrollmentComponent implements OnInit {
 
           serchByRegNo(mRegNo) {
 
-            // alert("REGNO : "+ mRegNo);
+            // ------------------MCP STATUS checking (Active/Not Active)----------
+             this.service.getMcpstatusVehcile(mRegNo)
+            .subscribe(
+              data => {
+                this.mcpStatusDetails = data
+                console.log(this.mcpStatusDetails);
+                // alert ("this.mcpStatusDetails  >> "+this.mcpStatusDetails)
+            });
+            // --------------------------------------------------------------------
+
             this.service.getVehRegDetails(mRegNo)
             .subscribe(
               data => {
@@ -351,9 +361,8 @@ export class McpEnrollmentComponent implements OnInit {
                 console.log(this.getVehRegDetails);
                 if(this.getVehRegDetails !=null){
                   this.dispCustButton=true;
-                  this.getMcpStatus(mRegNo);
-              
-                // if(this.mcpStatusDetails===false) {
+                
+                if(this.mcpStatusDetails===false) {
                
                 this.mcpEnrollmentForm.patchValue({
                   fuelType: this.getVehRegDetails.fuelType,
@@ -377,7 +386,7 @@ export class McpEnrollmentComponent implements OnInit {
                   var mToday   = new Date(Date.now());
                   this.getDiffDays(saleDate,mToday);
                   this.LoadMcpEnqList(mRegNo);
-                // }else {  alert("MCP is Active for the Vehicle : "+mRegNo ); this.resetMast();return;}
+                }else {  alert("MCP is Active for the Vehicle : "+mRegNo ); this.resetMast();}
                   
                 }else { alert("Vehicle Regno. Not Found...."); this.dispCustButton=false; this.mcpEnrollmentForm.reset();}
               } 
@@ -387,13 +396,14 @@ export class McpEnrollmentComponent implements OnInit {
           }
 
           getMcpStatus(mRegNo:any) {
-               this.service.getMcpstatusVehcile(mRegNo)
+              this.service.getMcpstatusVehcile(mRegNo)
             .subscribe(
               data => {
                 this.mcpStatusDetails = data
                 console.log(this.mcpStatusDetails);
-                // alert ("this.mcpStatusDetails  >> "+this.mcpStatusDetails)
-                if (this.mcpStatusDetails===true) { this.isMcpActive=true; } 
+                alert ("this.mcpStatusDetails  >> "+this.mcpStatusDetails)
+                if (this.mcpStatusDetails) {
+                   this.isMcpActive=true; } 
                 else {this.isMcpActive=false; } 
      
             });}

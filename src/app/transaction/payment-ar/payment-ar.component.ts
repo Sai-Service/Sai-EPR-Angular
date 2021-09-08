@@ -106,7 +106,11 @@ export class PaymentArComponent implements OnInit {
   receiptMethodName:string;
   receiptNumber:number;
   orderNumber:string;
-  referenceNo:string ;
+  // referenceNo:string ;
+  // referenceDate:Date;
+
+  referenceNo=null;
+  referenceDate=null;
  
   // customerId:number=8
   // custId:number;
@@ -142,9 +146,9 @@ export class PaymentArComponent implements OnInit {
   // trxDate= this.pipe.transform(this.now, 'dd-MM-y');
   // trxDate=this.pipe.transform(this.now, 'y-MM-dd');
   // trxDate :Date;
-  applDate:string;
+  // applDate:string;
   glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
-  // applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+  applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
   // reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
   reversalDate :string;
   reversalComment: string;
@@ -279,6 +283,7 @@ export class PaymentArComponent implements OnInit {
 
       orderNumber:[],
       referenceNo:[],
+      referenceDate:[],
       custAddr:[],
       accountNo:[],
       vehRegNo:[],
@@ -389,6 +394,7 @@ export class PaymentArComponent implements OnInit {
           this.ouName = (sessionStorage.getItem('ouName'));
           this.ouId=Number(sessionStorage.getItem('ouId'));
           this.locId=Number(sessionStorage.getItem('locId'));
+
           this.locationId=Number(sessionStorage.getItem('locId'));
           // this.locName=(sessionStorage.getItem('locName'));
           this.deptId=Number(sessionStorage.getItem('dept'));
@@ -765,7 +771,7 @@ export class PaymentArComponent implements OnInit {
           this.receiptDetails = data.obj.oePayList[0];
           console.log(this.receiptDetails);
           this.paymentArForm.patchValue(this.receiptDetails);
-          this.locId=Number(this.locationId);
+          // this.locId=Number(this.locationId);
           //  alert("this.status  "+this.status);
         
           this.GetCustomerDetails(data.obj.oePayList[0].customerId)
@@ -1213,8 +1219,8 @@ export class PaymentArComponent implements OnInit {
                      y=invLineArr[i].balDueAmt;
                      patch.controls[i].patchValue({balance1:y})
                     //  var z=invLineArr[i].trxDate;
-                     var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
-                     patch.controls[i].patchValue({trxDate:z})
+                   //  var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd hh:mm:ss');
+                   var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
                      var z1=this.pipe.transform(this.now, 'y-MM-dd');
                      patch.controls[i].patchValue({glDateLine:z1})
                      patch.controls[i].patchValue({glDate:z1})
@@ -1222,8 +1228,8 @@ export class PaymentArComponent implements OnInit {
                     ///////////////////////////////////////////////////////
 
                     this.applyTo=applyTp;
-                    // this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
-                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
+                    this.applDate=this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+                   // this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
                   }
                   );
       
@@ -1235,7 +1241,7 @@ export class PaymentArComponent implements OnInit {
 
                     this.invLineArray().push(this.invLineDetails());
                     this.applyTo=applyTp;
-                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd');
+                    this.applDate=this.pipe.transform(this.now, 'y-MM-dd h:mm:ss');
                     // this.glDateLine=this.pipe.transform(this.now, 'y-MM-dd');
 
                       /////////////////////////////////////////////////////////
@@ -1350,7 +1356,7 @@ export class PaymentArComponent implements OnInit {
         // delete val.glDate;
         // delete val.receiptStatus;
         // delete val.checkDate;
-        delete val.locId;
+        delete val.locationId;
         delete val.srlNo;
         delete val.custName;
         delete val.customerSite;
@@ -1376,6 +1382,19 @@ export class PaymentArComponent implements OnInit {
         delete val.applyTo;
         delete val.totApplAmt;
         delete val.totUnApplAmt;
+        delete val.tApplAmt;
+        delete val.tUapplAmt;
+        delete val.glPrdStartDate;
+        delete val.glPrdEndDate;
+        delete val.vehRegNo;
+        delete val.insuranceFlag;
+        delete val.reversalComment;
+        delete val.reversalReasonCode;
+        delete val.reversalDate;
+        delete val.reversalCategory;
+
+
+
         delete val.invLine;
 
         return val;

@@ -534,7 +534,51 @@
                                     </ng-template>
 
 
+                                    <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date&nbsp;</td>
+                                    <td><input   type="date"  formControlName="referenceDate"  id="referenceDate" [(ngModel)]="referenceDate" class="form-control" ></td>
+                                   
+                                    </ng-template>
 
+
+                                    <ng-template #thenshowDet2No>
+
+                                        <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
+    
+                                        <td>  
+                                            <select disabled formControlName="refType" id="refType" [(ngModel)]="refType" class="form-control" style="background-color: yellow;"
+                                                                    (ngModelChange)='onRefTypeSelected($event)'>
+                                                <option disabled>--Select--</option>
+                                                <option *ngFor="let sc of  ReceiptTypeArList" [ngValue]="sc.code"  >
+                                                    {{sc.code}}
+                                                 </option>
+                                            </select>
+                                        </td>
+    
+                                        <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
+                                          <td> <input  disabled type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  >  </td>
+                                       
+                                        <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
+        
+                                        <td>  
+                                            <select  disabled  formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' style="background-color: yellow;" >
+                                                <option disabled>--Select--</option>
+                                                <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
+                                                    {{sc.lookupValue}} 
+                                                </option>
+                                            </select>
+                                        </td>
+
+                                        <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date&nbsp;</td>
+                                        <td><input disabled  type="date"  formControlName="referenceDate"  id="referenceDate" [(ngModel)]="referenceDate" class="form-control" ></td>
+                                       
+                                    </ng-template>
+                                    </tr>
+
+                                    
+                                    
+                                    <tr>
+                                    <div *ngIf="displayButton ,then thenshowDet21Yes; else thenshowDet21No")></div>
+                                    <ng-template #thenshowDet21Yes>
                                     <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
     
                                     <td>  
@@ -559,27 +603,13 @@
 
                                     </ng-template>
 
-                                    <ng-template #thenshowDet2No>
 
-                                        <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
-    
-                                        <td>  
-                                            <select disabled formControlName="refType" id="refType" [(ngModel)]="refType" class="form-control" style="background-color: yellow;"
-                                                                    (ngModelChange)='onRefTypeSelected($event)'>
-                                                <option disabled>--Select--</option>
-                                                <option *ngFor="let sc of  ReceiptTypeArList" [ngValue]="sc.code"  >
-                                                    {{sc.code}}
-                                                 </option>
-                                            </select>
-                                        </td>
-    
-                                        <td style="width: 15%" class="LabelFontStyle">Ref.&nbsp;No:&nbsp;</td>
-                                          <td> <input  disabled type="text" formControlName="referenceNo"  id="referenceNo"  [(ngModel)]="referenceNo" class="form-control"  style="background-color: yellow;">  </td>
-                                       
+                                    <ng-template #thenshowDet21No>
+
                                         <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
-        
+    
                                         <td>  
-                                            <select  disabled  formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' style="background-color: yellow;" >
+                                            <select   formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' style="background-color: yellow;" >
                                                 <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
                                                     {{sc.lookupValue}} 

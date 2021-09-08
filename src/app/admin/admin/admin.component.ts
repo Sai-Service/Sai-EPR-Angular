@@ -12,6 +12,8 @@ export class AdminComponent  {
   ticketNo:string;
   today= new Date();
   todaysDataTime = '';
+  divisionId:number;
+  displayMaruti: boolean;
   constructor(private router: Router) { 
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
   }
@@ -23,6 +25,7 @@ export class AdminComponent  {
     });
 
     this.ticketNo=sessionStorage.getItem('ticketNo');
+    this.divisionId=Number(sessionStorage.getItem('divisionId'));
 
     // $('[data-submenu]').submenupicker();
 
@@ -43,6 +46,13 @@ export class AdminComponent  {
     
       return false;
     });
+
+    if (this.divisionId===1){
+      this.displayMaruti=true;
+    }
+   else if (this.divisionId===2){
+      this.displayMaruti=false;
+    }
   }
 
   

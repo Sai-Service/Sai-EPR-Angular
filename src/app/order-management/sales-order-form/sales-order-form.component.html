@@ -1066,7 +1066,7 @@
                                                     <div *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
                                                     <ng-template #thensegmentInvType>
                                                         <td>
-                                                            insert
+                                                            <!-- insert -->
                                                             <input hidden type="number"  Value={{lineNumber}}  formControlName="lineNumber" class="form-control"
                                                             style="height: 20px;width: 40px;"> 
                                                             <a class="nav-link waves-light"  value="{{lineNumber}}" data-toggle="tab" href="#panel1006" role="tab"  (click)="taxDetails('insert', i, taxCategoryId)">
@@ -1474,7 +1474,7 @@
                                                     </ng-template>
                                                 </tr>
                                                 <tr>
-                                                    <input  type="number" class="form-control"
+                                                    <input hidden  type="number" class="form-control"
                                                         formControlName="invLineNo"
                                                         style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                                 </tr>

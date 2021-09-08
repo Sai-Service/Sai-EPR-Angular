@@ -92,7 +92,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.mname.errors }"
                             placeholder="Enter middle  name" uppercase  style="text-transform: uppercase;" (keyup)="onKey($event)">
                         <div *ngIf="submitted && f.mname.errors" class="invalid-feedback">
-                            <!-- <div *ngIf="f.mname.errors.required">Middle  Name must be a valid</div> -->
+                            <div *ngIf="f.mname.errors.required">Middle  Name must be a valid</div> 
                             <div *ngIf="f.mname.errors.maxLength">maximum 35 characters allowed </div>
                         </div>
                         <!-- <span

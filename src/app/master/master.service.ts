@@ -2038,9 +2038,8 @@ bulkpouploadSales(formData: FormData) {
   }  
 
   bulkpouploadSpares(formData: FormData) {
-      // return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcP`, formData)
-      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPo`, formData)  
-    }  
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)  
+  }  
 
   BindUser(): Observable<OPMasterDtoComponent[]> {  
     var userId1=sessionStorage.getItem('userId');
