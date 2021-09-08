@@ -55,7 +55,7 @@ interface IcustomerMaster {
   custAccountNo:number;
   divisionName: string;
   paymentType: string;
- 
+
 }
 
 @Component({
@@ -156,6 +156,7 @@ export class CustomerMasterComponent implements OnInit {
 
   public payTermDescList: any;
   paymentType: string;
+  // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -264,7 +265,7 @@ export class CustomerMasterComponent implements OnInit {
         data => {
           this.taxCategoryNameList = data;
           console.log(this.taxCategoryNameList);
-          
+
         }
       );
 
@@ -383,7 +384,7 @@ export class CustomerMasterComponent implements OnInit {
   }
   onKey(event: any) {
    // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
-  
+
 
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
@@ -391,7 +392,7 @@ export class CustomerMasterComponent implements OnInit {
 if (person === 'Person'){
   this.custName = aaa;
 }
-   
+
   }
   mergeCustName(fName, mName, lName) {
     const aaa = fName + ' ' + mName + ' ' + lName;
