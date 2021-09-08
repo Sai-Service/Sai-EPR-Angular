@@ -54,6 +54,8 @@ interface IcustomerMaster {
   sstatus: string;
   custAccountNo:number;
   divisionName: string;
+  paymentType: string;
+ 
 }
 
 @Component({
@@ -130,7 +132,7 @@ export class CustomerMasterComponent implements OnInit {
   displayButton = true;
   public minDate = new Date()  ;
   public minDateBirth   = new Date().setFullYear(new Date().getFullYear() -18);
-  public minDateWedding = new Date().setFullYear(new Date().getFullYear() -21);
+  public minDateWedding = new Date()
   public cityList1: any;
 
   public custTypeList: Array<string>[];
@@ -152,7 +154,8 @@ export class CustomerMasterComponent implements OnInit {
   loginArray:string;
   lstcomments2: any[];
 
-
+  public payTermDescList: any;
+  paymentType: string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -160,6 +163,7 @@ export class CustomerMasterComponent implements OnInit {
       customerId1: [''],
       title: ['', Validators.required],
       custType: ['', Validators.required],
+      paymentType: [''],
       fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
       mName: [''],
       lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
@@ -228,18 +232,7 @@ export class CustomerMasterComponent implements OnInit {
    this.ouId = (sessionStorage.getItem('ouId'));
    console.log(this.ouId);
    this.weddingDate = new Date();
-//   this.minDate = new Date();
-  //  this.ouId = Number(sessionStorage.getItem('ouId'));
-    // this.searchByAccount = [];
-    // this.searchByAccount.customerSiteMasterList = [];
-    // this.startDate = new Date();
-
-    this.startDate = new Date();
-    // var date = new Date();
-    console.log(this.startDate);
-    this.startDate.setMonth(this.startDate.getMonth()-216);
-    console.log(this.startDate);
-
+   this.startDate = new Date();
     this.service.custTypeList()
       .subscribe(
         data => {
@@ -312,7 +305,13 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.stateList);
         }
       );
-
+      this.service.payTermDescList()
+      .subscribe(
+        data => {
+          this.payTermDescList = data;
+          console.log(this.payTermDescList);
+        }
+      );
 
   }
 
@@ -383,7 +382,10 @@ export class CustomerMasterComponent implements OnInit {
     }
   }
   onKey(event: any) {
-    const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
+   // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
+  
+
+  const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
   // alert(person);
 if (person === 'Person'){
@@ -422,8 +424,6 @@ if (person === 'Person'){
     delete val.spinCd;
     delete val.sstartDate;
     delete val.sendDate;
-    delete val.custAccountNo;
-    return val;
   }
   newOnlySiteMast() {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
@@ -442,8 +442,10 @@ if (person === 'Person'){
   newMast() {
     this.submitted = true;
     if(this.customerMasterForm.invalid){
+      alert("Please fix the errors!!");
     return;
     }
+    debugger;
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
@@ -552,6 +554,10 @@ if (person === 'Person'){
            console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments[0]);
           // this.city = this.lstcomments.city
+          this.customerMasterForm.patchValue({
+            panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
+            gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo
+          });
         }
       );
   }

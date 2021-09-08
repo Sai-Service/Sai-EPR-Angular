@@ -32,6 +32,8 @@ import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.
 import { VariantMasterComponent } from './variant-master/variant-master.component';
 import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
 import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
+// import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
+
 
 
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
@@ -72,6 +74,7 @@ const routes: Routes = [
   {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
   {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
   {path:'SubinventoryMaster',component:SubinventoryMasterComponent},
+  // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

@@ -70,7 +70,7 @@
                 Transaction Type:
               </td>
               <td>
-              <input  formControlName="compileId" [(ngModel)]="compileId">
+              <input hidden  formControlName="compileId" [(ngModel)]="compileId">
               <select class="form-control" formControlName="compileType">
                 <option>--Select--</option>
                 <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
@@ -82,7 +82,7 @@
                 Subinventory:
               </td>
               <td>
-                <input type class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
+                <input type="text" disabled class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
                   <!-- <option>--Select--</option>
                   <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
                   <!-- </select> -->
@@ -256,7 +256,7 @@
                 Status:
               </td>
               <td>
-                <input disabled class="form-control"  formControlName="compileStatus" [(ngModel)]="compileStatus" >
+                <input type="text" disabled class="form-control"  formControlName="compileStatus" [(ngModel)]="compileStatus" >
       
               </td>
               <td style="width: 15%" class="LabelFontStyle">
@@ -277,7 +277,7 @@
                 Made By:
                </td>
                <td>
-                 <input  type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+                 <input  type="text" disabled class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
                  <!-- <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
                   <option>--Select--</option>
                   <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
@@ -320,7 +320,7 @@
                   <div  *ngIf="displayprocess; then thenvis; else elseinvs"></div>
                   <ng-template #thenvis>
               
-                  <fieldset class="RFS">
+                  <fieldset class="RFS" style="width: 40%;">
                       <legend id="FormsPH_LGAadhaar" class="RFSL"
                       style="font-size: 10px;color: black;">
                    Process to be done</legend>

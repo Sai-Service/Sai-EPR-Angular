@@ -363,12 +363,12 @@ export class CounterSaleComponent implements OnInit {
       ouId: [''],
       issuedBy: [''],
       orderTypeId: [''],
-      transactionTypeName: [''],
-      createOrderType: [''],
+      transactionTypeName: ['',[Validators.required]],
+      createOrderType: ['',[Validators.required]],
       custPoNumber: [''],
       orderedDate: [''],
       priceListId: [''],
-      priceListName: [''],
+      priceListName: ['',[Validators.required]],
       paymentTermId: [''],
       payTermDesc: [''],
       locationId: [''],
@@ -430,7 +430,9 @@ export class CounterSaleComponent implements OnInit {
       status: [''],
       discType: [''],
     })
+ 
   }
+ 
 
 
   orderlineDetailsArray(): FormArray {
@@ -439,7 +441,7 @@ export class CounterSaleComponent implements OnInit {
 
   orderlineDetailsGroup() {
     return this.fb.group({
-      frmLocatorId: [],
+      frmLocatorId: ['',[Validators.required]],
       onHandQty: [],
       discType: [],
       disPer: [],
@@ -451,22 +453,23 @@ export class CounterSaleComponent implements OnInit {
       frmLocatorName: [],
       itemId: [],
       orderedItem: [''],
-      pricingQty: [''],
+      pricingQty: ['',[Validators.required]],
       unitSellingPrice: [''],
-      taxCategoryName: [''],
+      taxCategoryName: ['',[Validators.required]],
       baseAmt: [],
       taxAmt: [''],
       totAmt: [''],
       flowStatusCode: [''],
       category: [''],
-      invType: [''],
+      invType: ['',[Validators.required]],
       hsnSacCode: [''],
+      id:[''],
       // invType:[''],
       taxCategoryId: [''],
       displaysegment: false,
       lineNumber: [''],
       orderNumber: [''],
-      segment: [''],
+      segment: ['',[Validators.required]],
       orgId: [''],
       adhocDiscount: [''],
       adhocConsu: [''],
@@ -1086,6 +1089,19 @@ export class CounterSaleComponent implements OnInit {
 
   get f() { return this.CounterSaleOrderBookingForm.controls; }
 
+
+  getGroupControl(fieldName) {
+    // alert('nam'+fieldName);
+    // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
+    return(this.CounterSaleOrderBookingForm.get(fieldName));
+  }
+   
+  getGroupControllinewise(index,fieldName) {
+    // alert('nam'+fieldName);
+    return (<FormArray>this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')).at(index).get(fieldName);
+    
+  }
+
   createNewCust() {
     this.displaycreateCustomer = true;
     this.accountNoSearch(this.custAccountNo);
@@ -1134,13 +1150,11 @@ export class CounterSaleComponent implements OnInit {
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
     var taxCategoryId = select.taxCategoryId;
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
-    // var taxCategoryId=arrayControl[index].taxCategoryId;
+    patch.controls[index].patchValue({ disAmt: 0});
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
     console.log(baseAmt);
     var disAmt1 = arrayControl[index].disAmt;
-
     var disPer = arrayControl[index].disPer;
-
     if (disAmt1 === null && disPer > 0) {
       disAmt1 = (disPer / 100) * baseAmt;
       (patch.controls[index]).patchValue({
@@ -1149,6 +1163,9 @@ export class CounterSaleComponent implements OnInit {
     }
     if (disAmt1 === null && disPer === null) {
       return;
+    }
+    if (disAmt1 === null) {
+      disAmt1=0;
     }
     var invLineNo1 = index + 1;
     console.log(invLineNo1);
@@ -1172,6 +1189,7 @@ export class CounterSaleComponent implements OnInit {
             disAmt: (disPer / 100) * baseAmt,
           });
           let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
+          let distAmtArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           console.log(controlinv1);
           this.TaxDetailsArray().clear();
           for (let i = 0; i < data.length; i++) {
@@ -1182,6 +1200,9 @@ export class CounterSaleComponent implements OnInit {
             });
           }
           this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
+          if (this.disAmt===0){
+          patch.controls[index].patchValue({ disAmt: data[0].totTaxAmt});
+        }
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
 

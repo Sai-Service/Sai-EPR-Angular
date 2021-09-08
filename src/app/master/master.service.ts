@@ -1105,6 +1105,20 @@ public completeInvoice(invoiceno)
   const url=this.ServerUrl+`/arInv/invComplete/${invoiceno}`;
   return this.http.put(url,option);
 }
+////////////Subinventory Transfer////////
+public subInvTransferSubmit(subInvTransferRecord)
+{
+  const option={
+    headers:this.headers
+  };
+  const url=this.ServerUrl+'/mmtTrx/subtransfer';
+  return this.http.post(url,subInvTransferRecord,option);
+}
+getsubTrfSubinventory(deptId,divId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/subInvMst/subIssue?deptId=${deptId}&divisionId=${divId}`)
+}
+
 ////////////Stock Transfer////////
 public stockTransferSubmit(stockTransferRecord)
 {
@@ -1123,6 +1137,7 @@ ItemIdListDept(deptId,locId,subId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
 }
+
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
 {

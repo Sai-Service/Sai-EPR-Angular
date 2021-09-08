@@ -23,7 +23,7 @@
                                             <td>
                                                 <input formControlName="customerId1" [(ngModel)]="customerId1" value={{customerId1}}
                                                      class="form-control"
-                                                    placeholder="Enter Account No">
+                                                    placeholder="Enter contact number">
                                             </td>
                                             <td>
                                                 <button type="submit" (click)="searchByContact(customerId1)"><i
@@ -101,6 +101,18 @@
                                         *ngIf="!customerMasterForm.get('custAccountNo').valid && customerMasterForm.get('custAccountNo').touched">Account
                                         Number must be a valid</span> -->
                                 </td>
+                                <td style="width: 15%" class="LabelFontStyle1">
+                                    Payment&nbsp;Term&nbsp;Type&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="paymentType" id="paymentType" class="form-control" [ngModel]="paymentType">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.lookupValueId">
+                                        {{sc.lookupValue}}
+                                    </option>
+                                </select>
+                                
+                                <!-- <input formControlName="cmnTypeId" value={{cmnTypeId}} class="form-control"> -->
+                                </td>
                             </tr>
                         </table>
                         <table class="center">
@@ -108,7 +120,7 @@
                              
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Title&nbsp;:&nbsp;</td>
                                 <td >
-                                    <select formControlName="title" id="title" [(ngModel)]='title' class="form-control"
+                                    <select formControlName="title" id="title"  class="form-control"
                                         style="width: 70px;">
                                         <option>-Title-</option>
                                         <option *ngFor="let sc of  titleList"> {{sc.code}}</option>
@@ -126,9 +138,9 @@
                                 </td>
                                  <td style="width: 15%" class="LabelFontStyle1">Firts&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input formControlName="fName" [(ngModel)]='fName' value={{fName}}
+                                        <input formControlName="fName" 
                                             (keyup)="onKey($event)" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                                            [ngClass]="{ 'is-invalid': submitted && f.fName.errors }"
                                             placeholder="Enter first name">
                                         <div *ngIf="submitted && f.fName.errors" class="invalid-feedback">
                                             <div *ngIf="f.fName.errors.required">First Name must be a valid</div>
@@ -137,16 +149,16 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Middle&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input formControlName="mName" [(ngModel)]='mName' value={{mName}}
+                                        <input formControlName="mName"
                                             (keyup)="onKey($event)" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                                            [ngClass]="{ 'is-invalid': submitted && f.mName.errors }"
                                             placeholder="Enter Middle name">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Last&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input formControlName="lName" [(ngModel)]='lName' value={{lName}}
+                                        <input formControlName="lName" 
                                             (keyup)="onKey($event)" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                                            [ngClass]="{ 'is-invalid': submitted && f.lName.errors }"
                                             placeholder="Enter last name">
                                         <div *ngIf="submitted && f.lName.errors" class="invalid-feedback">
                                             <div *ngIf="f.lName.errors.required">Last Name must be a valid</div>
@@ -184,7 +196,7 @@
                             <tr>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="address1" [(ngModel)]='address1' value={{address1}}
+                                    <input formControlName="address1" value={{address1}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter address" style="width: 250px;">
@@ -442,7 +454,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }"
                                         placeholder="Enter weddingDate" max="{{minDateWedding | date:'yyyy-MM-dd'}}">
                                 </td>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Start&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Creation&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>
                                     <input disabled type="text" formControlName="startDate" class="form-control"
                                         [ngModel]="startDate | date:'yyyy-MM-dd'">

@@ -4,7 +4,7 @@ td{
 
 .grid_scroll{
     overflow: auto;
-     height: 200px; 
+     height: 300px; 
     width: 100%;
     }
 
@@ -67,7 +67,20 @@ fieldset {
     color:rgb(252, 29, 29);
   }
 
-  .LabelFontStyle {
+  /* .LabelFontStyle {
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-weight: normal;
+    color: Black;
+    font-size: 11px;
+    text-align: right;
+    vertical-align: middle;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-color: Gray;
+    height: 15px;
+  } */
+  
+  /* .LabelFontStyle1 {
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-weight: normal;
     color: Black;
@@ -79,22 +92,7 @@ fieldset {
     border-color: Gray;
     height: 15px;
   }
-  
-  .LabelFontStyle1 {
-    font-family: Verdana,Sans-serif, Arial, Helvetica;
-    font-weight: normal;
-    color: Black;
-    font-size: 11px;
-    text-align: right;
-    vertical-align: middle;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-color: Gray;
-    height: 15px;
-    /* float: tofixed(2); */
-    
-  }
-  
+   */
 
   /* .currency:after{ content: '.00'; } */
 
