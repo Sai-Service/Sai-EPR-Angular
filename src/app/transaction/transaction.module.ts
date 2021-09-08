@@ -33,6 +33,7 @@ import { WorkShopReturnComponent } from './work-shop-return/work-shop-return.com
 import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 import { InterStateComponent } from './inter-state/inter-state.component';
 import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transfer.component';
+import { SubinventoryTransferComponent } from './subinventory-transfer/subinventory-transfer.component';
 
 
 
@@ -68,7 +69,7 @@ import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transf
     ReturnToVendorComponent,
     InterStateComponent,
     CashBankTransferComponent,
-   
+    SubinventoryTransferComponent,
   ],
   
   imports: [
