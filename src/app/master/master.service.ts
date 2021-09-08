@@ -1207,10 +1207,6 @@ subInvCode1():Observable<any>{
   return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
 }
 
-subInvTransferSubmit(variants):Observable<any>{
-  return this.http.get(this.ServerUrl +`/subInvMst/wipissue`);
-}
-
 issueByList(locId,deptId,divisionId):Observable<any>{
 return this.http.get(this.ServerUrl +`/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
 }

@@ -1,9 +1,17 @@
 <div class="center">
-    <table style="width: 100%;background-color: white;">
-        <tr>
-            <!-- class="PageHeader" -->
-            <td class="PageHeader">
-                &nbsp;&nbsp;subinventory Transfer&nbsp;
+  <table style="width: 100%;background-color: white;">
+      <tr>
+          <!-- class="PageHeader" -->
+          <td class="PageHeader">
+              &nbsp;&nbsp;subinventory Transfer&nbsp;
+          </td>
+      </tr>
+  </table>
+  <form [formGroup]="SubinventoryTransferForm" (ngSubmit)="subinventoryTransfer(SubinventoryTransferForm.value)">
+      <table class="center">
+          <tr>
+            <td style="width: 15%" class="LabelFontStyle">
+               Tansfer Number:
             </td>
              <td>
               <input disabled type="text" class="form-control"formControlName="shipmentNumber">
