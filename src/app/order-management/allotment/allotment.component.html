@@ -48,6 +48,7 @@
                                 <th scope="col" style="border: 1px solid black;">Order Number</th>
                                 <th scope="col" style="border: 1px solid black;">Ordered Date</th>
                                 <th scope="col" style="border: 1px solid black;">Order Type</th>
+                                <th scope="col" style="border: 1px solid black;">Cust Name</th>
                                 <th scope="col" style="border: 1px solid black;">Model</th>
                                 <th scope="col" style="border: 1px solid black;">Variant</th>
                                 <th scope="col" style="border: 1px solid black;">Color</th>
@@ -67,9 +68,11 @@
                                     <input  type="checkbox" formControlName="selectOrderNumber"
                                    (change)="selectOrderNumberEvent($event,com.orderNumber)">
                                 </td>
+                                
                                 <td style="border: 1px solid black;">{{com.orderNumber}}</td>
                                <td style="border: 1px solid black;">{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                                <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
+                               <td style="border: 1px solid black;">{{com.custName}}</td>
                                <td style="border: 1px solid black;">{{com.model}}</td>
                                <td style="border: 1px solid black;">{{com.variant}}</td>
                                <td style="border: 1px solid black;">{{com.color}}</td>

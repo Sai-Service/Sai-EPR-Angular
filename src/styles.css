@@ -19,8 +19,8 @@
 
 .LabelFontStyle {
   font-family: Verdana,Sans-serif, Arial, Helvetica;
-  font-weight: normal;
-  color: Black;
+  font-weight: bolder;
+  color: #000;
   font-size: 12px;
   text-align: right;
   vertical-align: middle;
@@ -32,8 +32,8 @@
 
 .LabelFontStyle1 {
   font-family: Verdana,Sans-serif, Arial, Helvetica;
-  font-weight: normal;
-  color: Black;
+  font-weight: bolder;
+  color: #000;
   font-size: 12px;
   text-align: right;
   vertical-align: middle;
@@ -49,12 +49,13 @@
   font-family: Verdana,Sans-serif, Arial, Helvetica;
   font-size: 11px;
   outline: medium none;
+  font-weight: bolder;
   padding: 3px;
   vertical-align: top;
   width: 190px;
   height: 20%;
   border-color: black;
-  
+  color: #000000;
 }
 
 .center {
@@ -115,12 +116,14 @@ span{
 .form-control {
   font-family: Verdana,Sans-serif, Arial, Helvetica;
   font-size: 11px;
+  font-weight: bolder;
   outline: medium none;
   padding: 3px;
   vertical-align: top;
   width: 190px;
   height: 18%;
  border-color: black;
+ color: #000000;
 }
 
 .center {
@@ -139,10 +142,7 @@ span{
   position: absolute;
 }
 
-.LabelFontStyle1:before{
-  content:"*";
-  color:rgb(252, 29, 29);
-}
+
 
 
 .btn-primary{
@@ -346,4 +346,50 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+
+
+input:disabled {
+  background: #a9b4a9;
+}
+
+input.ng-invalid{
+  background-color: rgb(240, 243, 63);
+  border: 1px solid rgb(81, 81, 251);
+}
+
+select.ng-invalid{
+  background-color: rgb(245, 235, 102);
+  border: 1px solid rgb(81, 81, 251);
+}
+ input:ng-valid[required], .ng-valid.required  {
+  background-color: rgb(66, 32, 189);
+  border: 1px solid rgb(81, 81, 251);
+}
+
+
+input[type="text"][disabled]{
+  background-color:lightgreen;
+  color: #000000;
+  font-weight: bolder;
+  border: 1px solid rgb(81, 81, 251);
+}
+
+input[type="number"][disabled]{
+  background-color:lightgreen;
+  color: #000000;
+  border: 1px solid rgb(81, 81, 251);
+}
+
+input[type="date"][disabled]{
+  background-color:lightgreen;
+  color: #000000;
+  border: 1px solid rgb(81, 81, 251);
+}
+
+input[disabled]{
+  background-color:lightgreen;
+  color: #000000;
+  border: 1px solid rgb(81, 81, 251);
 }

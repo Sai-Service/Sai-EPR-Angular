@@ -4,7 +4,7 @@
       <tr>
           <!-- class="PageHeader" -->
           <td class="PageHeader">
-              &nbsp;&nbsp;Stock Transfer Form &nbsp;
+              &nbsp;&nbsp;Stock&nbsp;Transfer&nbsp;
           </td>
 
 
@@ -29,20 +29,20 @@
      <table class="center">
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
-            Stock Transfer Number:
+            Stock&nbsp;Transfer&nbsp;Number&nbsp;:&nbsp;
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
             <input hidden formControlName="transactionTypeId">
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-              Date:
+              Date&nbsp;:&nbsp;
             </td>
             <td>
               <input  disabled type="text" class="form-control" formControlName="transDate"  [(ngModel)]="transDate">
             </td>
           <td style="width: 15%" class="LabelFontStyle1">
-            To Organization:
+            To&nbsp;Organization&nbsp;:&nbsp;
           </td>
           <td>
              <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId" (ngModelChange)="onlocationissueselect($event)">
@@ -73,13 +73,13 @@
                     select Organization Name </span>
               </td>
           <td style="width: 15%" class="LabelFontStyle">
-            Eway Bill Number:
+            Eway&nbsp;Bill&nbsp;Number&nbsp;:&nbsp;
           </td>
           <td>
             <input type="text" class="form-control" formControlName="ewayBill">
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-            Eway Bill Date:
+            Eway&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
           </td>
           <td>
               <input type="date" class="form-control" formControlName="ewayBillDate">
@@ -88,7 +88,7 @@
         </tr>
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
-            Request By:
+            Request&nbsp;By&nbsp;:&nbsp;
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
@@ -97,7 +97,7 @@
               </select> -->
           </td>
           <td style="width: 15%" class="LabelFontStyle1">
-            Request To:
+            Request&nbsp;To&nbsp;:&nbsp;
           </td>
           <td>
             <select type="text" class="form-control" formControlName="issueTo">
@@ -111,7 +111,7 @@
                  </span>
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-            Status:
+            Status&nbsp;:&nbsp;
           </td>
           <td>
             <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
@@ -121,7 +121,7 @@
 <tr>
    
       <td style="width: 15%" class="LabelFontStyle">
-        Remark:
+        Remark&nbsp;:&nbsp;
       </td>
 
       <td>
@@ -134,7 +134,7 @@
       <div formArrayName="trxLinesList">
       <div class="grid_scroll">
 
-        <table class="center">
+        <table class="center" style="width: 100%;">
           <tr>
             <td>
               <div class="grid_scroll">
@@ -142,14 +142,14 @@
           cellpadding="4" class="auto-style4" class="GridFont">
             <thead>
                 <tr class="GridHeader">
-                        <th scope="col">Srl No.</th>
-                        <th scope="col">Item Code</th>
-                        <th scope="col">Item Description</th>
+                        <th scope="col">Srl&nbsp;No.&nbsp;</th>
+                        <th scope="col">Item&nbsp;Code&nbsp;</th>
+                        <th scope="col">Item&nbsp;Description&nbsp;</th>
                         <th scope="col">UOM</th>
                         <!-- <th scope="col">Subinventory</th> -->
                         <th scope="col">Price</th>
                         <th scope="col">Locator</th>
-                        <th scope="col">Available Quantity</th>
+                        <th scope="col">Available&nbsp;Quantity</th>
                         <th scope="col">Quantity</th>
                         <!-- <th scope="col">Reason</th> -->
                         <th scope="col">Add</th>
@@ -163,21 +163,20 @@
               <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
                 <div *ngIf="displayButton; then thenBlock1; else elseBlock1"> </div>
                 <ng-template #thenBlock1>
-                <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber" >
+                <tr>  <td><input type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                  </td>
-                <td><select  class="form-control" style="height: 20px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'>
+                <td><select  class="form-control" style="height: 20px;width:100%;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'>
                   <option>--Select--</option>
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
                   </select>
-                  <span
-                  *ngIf="getGroupControllinewise(trxLineIndex,'itemId').touched && getGroupControllinewise(trxLineIndex,'itemId').invalid" class="error">Valid Item
+                  <span *ngIf="getGroupControllinewise(trxLineIndex,'itemId').touched && getGroupControllinewise(trxLineIndex,'itemId').invalid" class="error">Valid Item
                  </span>
                 </td>
-                <td><input disabled type="text" class="form-control" style="height: 20px;"formControlName="description"></td>
-                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
+                <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
                 
-                <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="transCost"></td>
-                <td><select class=" form-control" style="height: 20px; width: 110px;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
+                <td><input type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"></td>
+                <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
                 <option>--Select--</option>
                 <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
@@ -189,8 +188,8 @@
                 <input hidden type="number" formControlName="locatorId">
                 <input hidden  type="text" formControlName="resveQty">
                 </td>
-                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
-                <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" #qty>
+                <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="avlqty"></td>
+                <td><input type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" #qty>
                   <span
                   *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
                  </span>
