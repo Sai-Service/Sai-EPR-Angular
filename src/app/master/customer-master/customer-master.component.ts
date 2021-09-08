@@ -424,8 +424,6 @@ if (person === 'Person'){
     delete val.spinCd;
     delete val.sstartDate;
     delete val.sendDate;
-    delete val.custAccountNo;
-    return val;
   }
   newOnlySiteMast() {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
@@ -447,6 +445,7 @@ if (person === 'Person'){
       alert("Please fix the errors!!");
     return;
     }
+    debugger;
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {

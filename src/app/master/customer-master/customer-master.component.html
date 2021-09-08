@@ -106,7 +106,7 @@
                                 <td>
                                     <select formControlName="paymentType" id="paymentType" class="form-control" [ngModel]="paymentType">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.cmnTypeId">
+                                    <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.lookupValueId">
                                         {{sc.lookupValue}}
                                     </option>
                                 </select>
