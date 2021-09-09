@@ -53,7 +53,7 @@ export class CashBankTransferComponent implements OnInit {
       transferDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       clearingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-      reversalPeriod:number;
+      reversalPeriod:string;
       status:string;
 
       fromAcctDescp:string;
@@ -63,6 +63,7 @@ export class CashBankTransferComponent implements OnInit {
       recAcCode:string;
       payAcCode:string;
   
+      searchDocNo:string;
 
 
 
@@ -104,6 +105,8 @@ export class CashBankTransferComponent implements OnInit {
           amtInWords:[],
           recAcCode:[],
           payAcCode:[],
+
+          searchDocNo:[],
       
 
 
@@ -185,8 +188,13 @@ export class CashBankTransferComponent implements OnInit {
           this.router.navigate(['admin']);
         }
 
-        newMast() {}
+        cashBnkTrfSave() {alert("Cash Bank Transfer ....Save ...Wip");}
+        cashBnkTrfPost(){alert("Cash Bank Transfer ....Post ...Wip");}
+        cashBnkTrfCopy(){alert("Cash Bank Transfer ....Copy ...Wip");}
+        cashBnkTrfReversal(){alert("Cash Bank Transfer ....Reversal ...Wip");}
         searchMast(){}
+
+        SearchByDocNo(mDocNo){alert("Search By Document Number .... ...Wip " +mDocNo);}
 
       
 
