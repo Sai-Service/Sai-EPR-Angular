@@ -13,7 +13,7 @@ import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 import { PaymentReceiptComponent } from './payment-receipt/payment-receipt.component';
 import { PaymentArComponent } from './payment-ar/payment-ar.component';
 import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
-import { ReceiptArApplicationComponent } from './receipt-ar-application/receipt-ar-application.component';
+// import { ReceiptArApplicationComponent } from './receipt-ar-application/receipt-ar-application.component';
 import { SaiExtendedWarrantyComponent } from './sai-extended-warranty/sai-extended-warranty.component';
 import { SaiEwSchemeMasterComponent } from './sai-ew-scheme-master/sai-ew-scheme-master.component';
 import { McpItemMasterComponent } from './mcp-item-master/mcp-item-master.component';
@@ -51,7 +51,7 @@ import { SubinventoryTransferComponent } from './subinventory-transfer/subinvent
     PaymentReceiptComponent, 
     PaymentArComponent, 
     AvgCostUpdateComponent, 
-    ReceiptArApplicationComponent, 
+    // ReceiptArApplicationComponent, 
     SaiExtendedWarrantyComponent, 
     SaiEwSchemeMasterComponent, 
     McpItemMasterComponent, 

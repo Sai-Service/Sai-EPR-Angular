@@ -888,7 +888,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             this.customerSiteAddress=null;
           }else {
   
-            this.service.custAccountNoSearch(accountNo,this.ouId)
+            this.service.custAccountNoSearch(accountNo,this.ouId,this.divisionId)
           .subscribe(
             data => {
               this.CustomerSiteDetailsNew = data.obj;  

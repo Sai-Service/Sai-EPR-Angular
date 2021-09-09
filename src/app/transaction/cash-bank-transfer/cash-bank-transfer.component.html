@@ -79,12 +79,10 @@
                                  </td>
   
                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Period:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="orgId" id="orgId" [(ngModel)]="orgId"  class="form-control" >
-                                    <!-- (ngModelChange)='onOuIdSelected($event)'  > -->
-                                    <option disabled>--Select--</option>
-                                    <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                    {{sc.ouId}}-{{sc.ouName}}
+                                   <td>  
+                                    <select   formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" >                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
+                                    {{sc.periodName}}
                                     </option>
                                     </select>
                                 </td>
@@ -210,13 +208,22 @@
                               <ng-template #thenBlock1>
   
                                      <td>
-                                          <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!cashBankTransferForm">Save</button>
+                                          <button type="button" class="btn btn-info" (click)="cashBnkTrfSave()" [disabled]="!cashBankTransferForm">Save</button>
                                       </td>
-  
+                                      <td>
+                                        <button type="button" class="btn btn-info" (click)="cashBnkTrfPost()" [disabled]="!cashBankTransferForm">Post</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" [disabled]="!cashBankTransferForm">Copy</button>
+                                    </td>
+
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" [disabled]="!cashBankTransferForm">Reversal</button>
+                                    </td>
                                    
-                                  <td>
+                                  <!-- <td>
                                       <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                  </td>
+                                  </td> -->
   
                                       <!-- ====================Reset Dialog ======================== -->
   
@@ -287,10 +294,10 @@
                                               <td>
                                                   <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!cashBankTransferForm">Update</button>
                                               </td>
-                                              <td>
+                                              <!-- <td>
                                                   <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                               </td>
-  
+   -->
                                        
   
                           <td>
@@ -361,7 +368,32 @@
                               </table>
                    <!-- ==================================================== -->
                             
-                    
+                   <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                       SEARCH</legend>
+                <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                    <tr>
+                      <td >
+                          <table class="center">
+                              <tr>
+                                <td  style="background-color: #FFE4B5;">Document&nbsp;&nbsp;No:&nbsp;</td>
+                               <td style="background-color: #FFE4B5;">
+                                    <input class="form-control" formControlName="searchDocNo" [(ngModel)]='searchDocNo'
+                                        value={{searchDocNo}} style="text-transform:uppercase;">
+                                </td>
+
+                                <td style="background-color: #FFE4B5;">
+                                    <button type="button" class="btn-primary" (click)="SearchByDocNo(searchDocNo)"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                
+                              
+                              </tr>
+                          </table>
+                      </td>
+                    </tr>
+                </table>
+                </fieldset>
                     
                     
                     
