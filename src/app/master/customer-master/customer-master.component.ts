@@ -626,7 +626,7 @@ if (person === 'Person'){
       }
       onOptionWeddingDate(event)
       {
-        if(event>this.startDate ||event>this.birthDate)
+        if(event>this.startDate ||event<=this.birthDate)
         {
           alert("Please select Correct Wedding Date");
 
