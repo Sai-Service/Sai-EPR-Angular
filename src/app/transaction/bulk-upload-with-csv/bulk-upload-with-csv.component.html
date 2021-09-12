@@ -1,0 +1,35 @@
+<form [formGroup]="bulkUploadCSVForm" (ngSubmit)="bulkUploadCSV(bulkUploadCSVForm.value)">
+    <table style="width: 50%;">
+        <tr>
+          <td>
+              &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+          </td>
+          <td>
+              <input class="form-control" type="file" #fileInput style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+          </td>
+          <td>
+              <button  class="btn btn-primary" (click)="uploadFile();" style="width: 8rem;font-size: 11px;">Upload</button>
+          </td>
+        </tr>
+    </table>
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tr class="GridHeader">
+            <th scope="col">PO Number</th>
+            <th scope="col">Base Amount</th>
+            <th scope="col">Total Tax Amount</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">PO Status</th>
+            <th scope="col">PO Date</th>
+        </tr>
+        <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;">
+          <td>
+            <button type="button" class="btn-primary"  [routerLink]="['/OPMasterDto',com.segment1]"> {{com.segment1}}</button>
+          </td>
+            <td>{{com.baseAmount}}</td>
+            <td>{{com.totTaxAmt}}</td>
+            <td>{{com.totalAmt}}</td>
+            <td>{{com.authorizationStatus}}</td>
+            <td>{{com.approveDate | date:'dd-MM-yyyy hh:mm:ss'}}</td>
+        </tr>
+    </table>
+</form>
