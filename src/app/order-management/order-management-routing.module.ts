@@ -14,6 +14,7 @@ import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.com
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
   {path:'SalesOrderForm',component:SalesOrderFormComponent},
+  {path:'SalesOrderForm/:orderNumber',component:SalesOrderFormComponent},
   {path:'paymentReceipt/:orderNumber',component:PaymentReceiptComponent},
   {path:'allotment',component:AllotmentComponent},
   {path:'Deallotment',component:DeAllotmentComponent},

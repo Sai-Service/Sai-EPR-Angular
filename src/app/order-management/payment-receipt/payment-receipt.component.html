@@ -328,8 +328,11 @@
                                                         <div class="modal-footer">
                                                             <table class="center">
                                                                 <tr>
-                                                                    <td>
+                                                                    <!-- <td>
                                                                     <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                                    </td> -->
+                                                                     <td>
+                                                                    <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   [routerLink]="['/SalesOrderForm',orderNumber]">Yes</button>
                                                                     </td>
                                                                     <td>
                                                                     <button type="button" class="btn btn-info" data-dismiss="modal">No</button>

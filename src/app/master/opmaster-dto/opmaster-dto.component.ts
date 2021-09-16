@@ -5,7 +5,7 @@ import { from } from 'rxjs';
 import { Url } from 'url';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-// import { Validators, FormArray } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
@@ -122,6 +122,7 @@ export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
   docType:string;
+  private sub: any;
   selectedLine = 0;
   clicked = false;
   public currentOp: string;
@@ -342,7 +343,7 @@ export class OPMasterDtoComponent implements OnInit {
     message: string;
     allUsers: Observable<OPMasterDtoComponent[]>;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
 
       poHeaderId: [],
@@ -613,6 +614,13 @@ export class OPMasterDtoComponent implements OnInit {
         }
       );
 
+      this.sub = this.router1.params.subscribe(params => {
+        alert(this.segment1)
+        this.segment1 = params['segment1'];
+        if (this.segment1 != undefined)
+        this.Search(this.segment1);
+        // this.paymentReceiptForm.patchValue( this.lstcomments );
+        });
 
     // // this.onChanges();
     // var patch = this.poMasterDtoForm.get('poLines') as FormArray;

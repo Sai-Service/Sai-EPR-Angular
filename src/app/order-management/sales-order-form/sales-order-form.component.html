@@ -567,7 +567,7 @@
                             <td>
                                     <input disabled type="text" formControlName="fuelType" [(ngModel)]='fuelType' class="form-control" style="width: 150px;">
                             </td>
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                Taxi&nbsp;Flag&nbsp;:&nbsp;
                             </td>
                             <td>
@@ -577,7 +577,7 @@
                                         {{sc.cmnDesc}}
                                     </option>
                                 </select> 
-                            </td>
+                            </td> -->
                         </tr>
                     </table>
                     </ng-template>
@@ -1102,7 +1102,7 @@
                                                             style="height: 20px;width: 160px;">
                                                     </td>
                                                     <td>
-                                                        <input  type="text" formControlName="pricingQty" class="form-control"
+                                                        <input  type="number" formControlName="pricingQty" class="form-control"
                                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                                    
                                                 </td>
@@ -1157,7 +1157,7 @@
                                                                 style="height: 20px;width: 160px;">
                                                         </td>
                                                         <td>
-                                                            <input disabled  type="text" formControlName="pricingQty" class="form-control"
+                                                            <input disabled  type="number" formControlName="pricingQty" class="form-control"
                                                                 (change)="onKey(i)" style="height: 20px;width: 70px;">
                                                        
                                                     </td>
@@ -1474,7 +1474,7 @@
                                                     </ng-template>
                                                 </tr>
                                                 <tr>
-                                                    <input hidden  type="number" class="form-control"
+                                                    <input hidden type="number" class="form-control"
                                                         formControlName="invLineNo"
                                                         style="width: 4rem; text-align: right; height: 25px;font-size: 10px;">
                                                 </tr>
@@ -1518,20 +1518,20 @@
                                 <button type="submit" class="btn btn-primary" (click)="orderLineUpdate()">Save</button>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary" (click)="createInvoice()">Create Invoice</button>
+                                <button type="submit" class="btn btn-primary" (click)="createInvoice()" style="width: 8rem;">Create Invoice</button>
                             </td>
                             <!-- orderLineUpdate -->
-                            <td>
+                            <!-- <td>
                                 <button type="button" class="btn btn-primary"  (click)="downloadInvoice()">
                                    Download Invoice
                                   </button>
-                               </td>
+                               </td> -->
                                <td>
                                 <!-- <button type="button" class="btn btn-primary"  (click)="downloadAddonInvoice()">
                                    Download Addon Invoice
                                   </button> -->
                                   <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewInvoice" (click)="viewAllInvoice()">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewInvoice" style="width: 8rem;" (click)="viewAllInvoice()">
     View Invoice
   </button>
   <div class="modal" id="viewInvoice">
@@ -1549,7 +1549,7 @@
                         <th scope="col" style="border: 1px solid black;">Invoice Number</th>
                         <th scope="col" style="border: 1px solid black;">Invoice Date</th>
                         <th scope="col" style="border: 1px solid black;">Invoice Amount</th>
-                        <th scope="col" style="border: 1px solid black;">Download Invoice</th>
+                        <th scope="col" style="border: 1px solid black;">Display Invoice</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1559,7 +1559,7 @@
                    <td style="border: 1px solid black;color: black;">{{com.trxDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
                    <td style="border: 1px solid black;color: black;text-align: right;padding-right: 5px;">{{com.invoiceAmount}}</td>
                    <td style="border: 1px solid black;color: black;">
-                    <button type="button" class="btn btn-primary"   style="width: 8rem;" (click)="downloadAllInvoice(com.invType)">Download Invoice</button>
+                    <button type="button" class="btn btn-primary"   style="width: 8rem;" (click)="downloadAllInvoice(com.invType)">View Invoice</button>
                 </td>   
                 </tr>
                 </tbody>

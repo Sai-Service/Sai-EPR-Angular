@@ -34,6 +34,7 @@ import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.com
 import { InterStateComponent } from './inter-state/inter-state.component';
 import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transfer.component';
 import { SubinventoryTransferComponent } from './subinventory-transfer/subinventory-transfer.component';
+import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-with-csv.component';
 
 
 
@@ -70,6 +71,7 @@ import { SubinventoryTransferComponent } from './subinventory-transfer/subinvent
     InterStateComponent,
     CashBankTransferComponent,
     SubinventoryTransferComponent,
+    BulkUploadWithCsvComponent,
   ],
   
   imports: [
