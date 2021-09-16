@@ -680,7 +680,7 @@ export class CounterSaleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
-    alert(this.op)
+    // alert(this.op)
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
@@ -937,8 +937,8 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
-    this.invType = orderType;
-    this.disAmt=0;
+    // this.invType = orderType;
+    // this.disAmt=0;
     // alert(this.disAmt)
     if (this.itemMap.has(orderType)) {
       var itemsList = this.itemMap.get(orderType);
@@ -1167,7 +1167,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   onKey(index) {
-    alert('onKey' + index)
+    // alert('onKey' + index)
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var pricingQty = arrayControl[index].pricingQty;
     var isvalidqty=this.validate(index,pricingQty);
@@ -1272,7 +1272,7 @@ export class CounterSaleComponent implements OnInit {
               var taxCatNm: string = data[i].taxCategoryName;
               // alert(taxCatNm);
               if (taxCatNm.includes('Sale')) {
-                 alert('sale' + '-'+k);
+                //  alert('sale' + '-'+k);
                 (controlinv.controls[k]).patchValue({
                   itemId: data[i].itemId,
                   orderedItem: data[i].description,
@@ -1289,6 +1289,7 @@ export class CounterSaleComponent implements OnInit {
 
             if (itemType === 'SS_SPARES') {
               this.getLocatorDetails(k, select.itemId);
+              alert('Call getLocationDetails Call')
               if (this.deptName == 'Spares') {
                 // controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
               }
@@ -1308,7 +1309,7 @@ export class CounterSaleComponent implements OnInit {
 
   }
   getLocatorDetails(k, itemId) {
-    // alert('getLocatorDetails');
+    alert('Enter getLocatorDetails ');
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var invTp = controlinv.controls[k].get('invType').value;
     this.service.getfrmSubLoc(this.locId, itemId, this.subInventoryId).subscribe(
@@ -1838,7 +1839,7 @@ export class CounterSaleComponent implements OnInit {
   onOptionsSelectedDiscountPer(disPer) {
     // alert(disPer);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-  alert(patch.length)
+  // alert(patch.length)
     for (let i=0;i<patch.length;i++){
     (patch.controls[i]).patchValue({
       disPer: this.disPer,
@@ -1863,7 +1864,7 @@ export class CounterSaleComponent implements OnInit {
   qtyvalidation(i, uom, pricingQty) {
     // alert(i + ' ' + uom + ' ' + pricingQty);
     if (uom === 'NO') {
-      alert(pricingQty);
+      // alert(pricingQty);
       pricingQty: [0 - 9]
     }
     else {

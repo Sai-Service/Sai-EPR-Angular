@@ -12,8 +12,8 @@ export class MasterService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  // ServerUrl='http://localhost:8081';
-  ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl='http://localhost:8081';
+  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -89,6 +89,14 @@ export class MasterService {
   mainTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/MainCtg');
   }
+
+  mainTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=MainCtg&divisionId=${divisionId}`);
+  }
+  subTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=SubCtg&divisionId=${divisionId}`);
+  }
+
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
@@ -418,6 +426,10 @@ public GroupMasterSubmit(LocationMasterRecord) {
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/itemCategory');
+}
+
+getItemCategorySearchbydivisionId(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/itemCategory/div/${divisionId}`);
 }
 public ItemCatMastSubmit(ItemCategoryRecord) {
   const options = {
