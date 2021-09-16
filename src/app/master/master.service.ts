@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component'
+import { from, Observable } from 'rxjs';
+import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component';
+import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.component'
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,14 @@ export class MasterService {
   mainTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/MainCtg');
   }
+
+  mainTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=MainCtg&divisionId=${divisionId}`);
+  }
+  subTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=SubCtg&divisionId=${divisionId}`);
+  }
+
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
@@ -417,6 +426,10 @@ public GroupMasterSubmit(LocationMasterRecord) {
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/itemCategory');
+}
+
+getItemCategorySearchbydivisionId(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/itemCategory/div/${divisionId}`);
 }
 public ItemCatMastSubmit(ItemCategoryRecord) {
   const options = {
@@ -1751,6 +1764,19 @@ poAllRecFind(segment1): Observable<any> {
 }
 
 
+    
+downloadgrrPrint(receiptNo) :Observable<any> {
+  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`; 
+  // local
+  // const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;   
+  return this.http.get(REQUEST_URI, { 
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
 delearCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/DealerMst');
 }
@@ -1972,9 +1998,9 @@ OrderCategoryList(): Observable<any> {
   }
   ////////////////////////// ///////////////////////////////////////
 
-  custAccountNoSearch(accountNo,ouId): Observable<any> {
+  custAccountNoSearch(accountNo,ouId,divId): Observable<any> {
     // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
-     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
+     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
   getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>

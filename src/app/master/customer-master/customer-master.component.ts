@@ -55,7 +55,7 @@ interface IcustomerMaster {
   custAccountNo:number;
   divisionName: string;
   paymentType: string;
- 
+
 }
 
 @Component({
@@ -132,11 +132,11 @@ export class CustomerMasterComponent implements OnInit {
   displayButton = true;
   public minDate = new Date()  ;
   public minDateBirth   = new Date().setFullYear(new Date().getFullYear() -18);
-  public minDateWedding = new Date()
+  public minDateWedding = new Date();
   public cityList1: any;
 
   public custTypeList: Array<string>[];
-  public titleList: Array<string>[];
+  public titleList: any=[];
   public cityList: Array<string>[];
   public taxCategoryNameList : Array<string>[];
   public pinCdList: Array<string>[];
@@ -156,17 +156,20 @@ export class CustomerMasterComponent implements OnInit {
 
   public payTermDescList: any;
   paymentType: string;
+  // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
-      title: ['', Validators.required],
+      title: [''],
       custType: ['', Validators.required],
       paymentType: [''],
-      fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
+      // fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
+      fName:['',[Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
       mName: [''],
-      lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
+      // lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
+      lName:[''],
       custName: ['', Validators.required],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
@@ -181,8 +184,10 @@ export class CustomerMasterComponent implements OnInit {
       mobile3: ['',[Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
-      contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
+      contactPerson:[''],
+      contactNo:[''],
+      // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
       weddingDate: [''],
       startDate: ['', [Validators.required]],
@@ -209,7 +214,8 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
+      // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
+      custAccountNo:[''],
       ExeAddress: [],
       customerId:[],
       divisionName: [],
@@ -264,7 +270,7 @@ export class CustomerMasterComponent implements OnInit {
         data => {
           this.taxCategoryNameList = data;
           console.log(this.taxCategoryNameList);
-          
+
         }
       );
 
@@ -375,7 +381,7 @@ export class CustomerMasterComponent implements OnInit {
       this.displayPerson = true;
       this.displayOrgnization = false;
     //  this.customerMasterForm.get('custName').disable();
-    } if (event === 'Orgnization') {
+    } if (event === 'Organization') {
       //this.displayOrgnization = true;
       this.displayPerson = false;
      // this.customerMasterForm.get('custName').enable();
@@ -383,7 +389,7 @@ export class CustomerMasterComponent implements OnInit {
   }
   onKey(event: any) {
    // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
-  
+
 
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
@@ -391,7 +397,7 @@ export class CustomerMasterComponent implements OnInit {
 if (person === 'Person'){
   this.custName = aaa;
 }
-   
+
   }
   mergeCustName(fName, mName, lName) {
     const aaa = fName + ' ' + mName + ' ' + lName;
@@ -424,16 +430,17 @@ if (person === 'Person'){
     delete val.spinCd;
     delete val.sstartDate;
     delete val.sendDate;
+    return val;
   }
   newOnlySiteMast() {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.customerMasterForm.reset();
         }
       }
@@ -445,16 +452,25 @@ if (person === 'Person'){
       alert("Please fix the errors!!");
     return;
     }
-    debugger;
+    // debugger;
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
+    // debugger;
+    if(formValue.custType ==='Organization')
+    {
+      formValue.title='M/S';
+    }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
+        var mobile=this.customerMasterForm.get('mobile1').value;
+        this.searchByContact(mobile);
+        this.customerMasterForm.disable();
       //  this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert('Error ' + res.obj);
+          // alert('Data already present in the data base');
           //this.customerMasterForm.reset();
         }
       }
@@ -558,6 +574,9 @@ if (person === 'Person'){
             panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo
           });
+          var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
+          var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
+          this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValueId});
         }
       );
   }
@@ -605,6 +624,14 @@ if (person === 'Person'){
             // this.country = 'INDIA';
           }
         );
+        }
+      }
+      onOptionWeddingDate(event)
+      {
+        if(event>this.startDate ||event<=this.birthDate)
+        {
+          alert("Please select Correct Wedding Date");
+
         }
       }
 }

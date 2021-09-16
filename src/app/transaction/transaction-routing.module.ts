@@ -10,7 +10,7 @@ import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 import { PaymentReceiptComponent } from './payment-receipt/payment-receipt.component';
 import { PaymentArComponent } from './payment-ar/payment-ar.component';
 import { AvgCostUpdateComponent } from './avg-cost-update/avg-cost-update.component';
-import { ReceiptArApplicationComponent} from './receipt-ar-application/receipt-ar-application.component';
+// import { ReceiptArApplicationComponent} from './receipt-ar-application/receipt-ar-application.component';
 import { SaiExtendedWarrantyComponent } from './sai-extended-warranty/sai-extended-warranty.component';
 import { SaiEwSchemeMasterComponent } from './sai-ew-scheme-master/sai-ew-scheme-master.component';
 import { McpItemMasterComponent } from './mcp-item-master/mcp-item-master.component';
@@ -23,11 +23,13 @@ import { JournalVoucherComponent } from './journal-voucher/journal-voucher.compo
 import { AccountEnquiryComponent } from './account-enquiry/account-enquiry.component';
 import { OnHandDetailsComponent } from './on-hand-details/on-hand-details.component';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
-import {WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
+import { WorkShopReturnComponent} from './work-shop-return/work-shop-return.component';
 import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 import { InterStateComponent } from './inter-state/inter-state.component';
 import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transfer.component';
 import { SubinventoryTransferComponent } from './subinventory-transfer/subinventory-transfer.component';
+import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-with-csv.component';
+import { OPMasterDtoComponent } from '../master/opmaster-dto/opmaster-dto.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -40,7 +42,7 @@ const routes: Routes = [
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
   {path:'PaymentAr',component:PaymentArComponent},
-  {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
+  // {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},
   {path:'SaiEwSchemeMaster',component:SaiEwSchemeMasterComponent},
   {path:'McpItemMaster',component:McpItemMasterComponent},
@@ -59,6 +61,8 @@ const routes: Routes = [
  {path:'InterState',component:InterStateComponent},
  {path:'CashBankTransfer',component:CashBankTransferComponent},
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
+ {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
+ {path:'OPMasterDto/:segment',component:OPMasterDtoComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

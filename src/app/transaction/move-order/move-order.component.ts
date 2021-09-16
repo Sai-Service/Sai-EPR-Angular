@@ -391,7 +391,7 @@ onChangeRepairNo(event)
 
  onOptionSelectedSubInv(event:any,i)
  {
-   alert('----' + event +'*****');
+  //  alert('----' + event +'*****');
    if(event==='')
    {return;
    }
@@ -402,7 +402,7 @@ onChangeRepairNo(event)
   var trxLnArr1 = this.moveOrderForm.get('trxLinesList').value;
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
   var itemid=trxLnArr1[i].invItemId;
-  alert (itemid);
+  // alert (itemid);
   // var frmSubCode=trxLnArr1[i].frmSubInvCode;
   // alert("FromSub"+frmSubCode);
   // alert(select1);
@@ -485,10 +485,10 @@ onChangeRepairNo(event)
  }
 onOptionBatchCode(event,i)
 {
-  alert(event);
+  // alert(event);
   var selbatchCode=this.pricedata.find(d=>d.batchCode===event);
   var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-  alert(selbatchCode.priceValue+'Price');
+  // alert(selbatchCode.priceValue+'Price');
   trxLnArr2.controls[i].patchValue({priceValue:selbatchCode.priceValue});;
 }
 AvailQty(event:any,i:number) 

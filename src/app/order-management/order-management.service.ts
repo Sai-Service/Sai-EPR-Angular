@@ -316,9 +316,9 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
   
 
-  ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
+  ReceiptMethodList(mPaytype, mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
-    return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
+    return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&status=${mStatus}`);
   }
 
 
