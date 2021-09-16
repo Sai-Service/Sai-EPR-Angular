@@ -499,7 +499,6 @@ export class SalesOrderFormComponent implements OnInit {
         if (this.orderNumber!=undefined){
         this.OrderFind(this.orderNumber);
         }
-       
       });
     
   }

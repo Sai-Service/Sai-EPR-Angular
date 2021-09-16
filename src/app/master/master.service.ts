@@ -1752,6 +1752,19 @@ poAllRecFind(segment1): Observable<any> {
 }
 
 
+    
+downloadgrrPrint(receiptNo) :Observable<any> {
+  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`; 
+  // local
+  // const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;   
+  return this.http.get(REQUEST_URI, { 
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
 delearCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/DealerMst');
 }

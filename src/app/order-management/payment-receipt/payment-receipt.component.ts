@@ -272,7 +272,7 @@ export class PaymentReceiptComponent implements OnInit  {
 
       if (payType === 'CHECK') {   
         // alert("checque seleected")   ;    
-          this.orderManagementService.ReceiptMethodList(payType ,this.locId,rmStatus)
+          this.orderManagementService.ReceiptMethodList(payType,rmStatus)
           .subscribe(
             data => {
               this.ReceiptMethodList = data.obj;
@@ -283,7 +283,7 @@ export class PaymentReceiptComponent implements OnInit  {
           } else{
 
             // alert("cash selected");
-          this.orderManagementService.ReceiptMethodList(payType ,this.locId,rmStatus)
+          this.orderManagementService.ReceiptMethodList(payType ,rmStatus)
           .subscribe(
             data => {
               this.ReceiptMethodList = data.obj;

@@ -1054,6 +1054,19 @@ viewAccounting(receiptNo:any){
 
   }  
 
+
+  grrReceiptPrint(){
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.service.downloadgrrPrint(this.receiptNo)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      });
+  }
+
 }
 
 

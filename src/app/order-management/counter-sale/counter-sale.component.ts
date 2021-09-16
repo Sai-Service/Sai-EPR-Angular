@@ -718,6 +718,7 @@ export class CounterSaleComponent implements OnInit {
           this.totTax = data.obj.totTax.toFixed(2);
           this.totAmt = data.obj.totAmt.toFixed(2);
           this.subtotal = data.obj.subtotal.toFixed(2);
+          this.disPer=data.obj.disPer;
           // this.taxAmt=data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2)
           // alert(data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2))
 
@@ -730,6 +731,7 @@ export class CounterSaleComponent implements OnInit {
               baseAmt: data.obj.oeOrderLinesAllList[k].baseAmt.toFixed(2),
               taxAmt: data.obj.oeOrderLinesAllList[k].taxAmt.toFixed(2),
               totAmt: data.obj.oeOrderLinesAllList[k].totAmt.toFixed(2),
+              disPer: data.obj.oeOrderLinesAllList[k].disPer,
               unitSellingPrice: data.obj.oeOrderLinesAllList[k].unitSellingPrice.toFixed(2),
             });
           }
@@ -1139,14 +1141,45 @@ export class CounterSaleComponent implements OnInit {
       );
   }
 
+
+  validate(index:number,qty1)
+  {
+    var trxLnArr=this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1=this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+    var Avalqty=trxLnArr[index].Avalqty;  
+    if(qty1>Avalqty)
+    {
+      alert("You can not enter more than available quantity!..");
+      trxLnArr1.controls[index].patchValue({pricingQty:''});
+      // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
+     
+      return false;
+    }
+    if(qty1<=0)
+    {
+      alert("Please enter quantity more than zero");
+      trxLnArr1.controls[index].patchValue({quantity:''});
+      (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
+      return false;
+    }
+    return true;
+    // this.reservePos(i);
+  }
+
   onKey(index) {
-    // alert('onKey' + index)
-    console.log(index);
+    alert('onKey' + index)
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var pricingQty = arrayControl[index].pricingQty;
+    var isvalidqty=this.validate(index,pricingQty);
+    if (isvalidqty ==false){
+      return;
+    }    
+    console.log(index);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
+    
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
     var taxCategoryId = select.taxCategoryId;
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
@@ -1185,7 +1218,7 @@ export class CounterSaleComponent implements OnInit {
           (patch.controls[index]).patchValue({
             baseAmt: baseAmt,
             taxAmt: sum,
-            totAmt: baseAmt + sum - disAmt1,
+            totAmt: baseAmt + sum - disAmt1, 
             disAmt: (disPer / 100) * baseAmt,
           });
           let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -1200,14 +1233,17 @@ export class CounterSaleComponent implements OnInit {
             });
           }
           this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
-          if (this.disAmt===0){
+          var disValue=data[0].totTaxAmt;
+          if (disValue >0 && data[0].taxTypeName.includes('Discount')){
           patch.controls[index].patchValue({ disAmt: data[0].totTaxAmt});
+        }
+        else{
+          patch.controls[index].patchValue({ disAmt: 0});
         }
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
-
         });
-
+       
   }
 
 
@@ -1802,9 +1838,12 @@ export class CounterSaleComponent implements OnInit {
   onOptionsSelectedDiscountPer(disPer) {
     // alert(disPer);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    (patch.controls[0]).patchValue({
+  alert(patch.length)
+    for (let i=0;i<patch.length;i++){
+    (patch.controls[i]).patchValue({
       disPer: this.disPer,
     });
+  }
   }
 
   validateNumber(e: any) {
