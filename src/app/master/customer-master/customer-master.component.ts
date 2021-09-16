@@ -184,8 +184,10 @@ export class CustomerMasterComponent implements OnInit {
       mobile3: ['',[Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
-      contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
+      contactPerson:[''],
+      contactNo:[''],
+      // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
       weddingDate: [''],
       startDate: ['', [Validators.required]],
@@ -574,7 +576,7 @@ if (person === 'Person'){
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
-          this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValue});
+          this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValueId});
         }
       );
   }
