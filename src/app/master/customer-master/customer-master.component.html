@@ -21,12 +21,25 @@
                                             <td style="width: 20%;font-weight: bold;" class="LabelFontStyle">
                                                 Customer&nbsp;Contact&nbsp;No:&nbsp;</td>
                                             <td>
-                                                <input formControlName="customerId1" [(ngModel)]="customerId1" value={{customerId1}}
+                                                <input type="number" formControlName="customerId1" [(ngModel)]="customerId1" value={{customerId1}}
                                                      class="form-control"
                                                     placeholder="Enter contact number">
                                             </td>
                                             <td>
                                                 <button type="submit" (click)="searchByContact(customerId1)"><i
+                                                        class="fa fa-search"></i></button>
+                                            </td>
+                                        <!-- </tr>
+                                        <tr> -->
+                                            <td style="width: 20%;font-weight: bold;" class="LabelFontStyle">
+                                                Customer&nbsp;Account&nbsp;No:&nbsp;</td>
+                                            <td>
+                                                <input formControlName="customerAcc1" [(ngModel)]="customerAcc1" value={{customerAcc1}}
+                                                     class="form-control"
+                                                    placeholder="Enter Account number" style="width: 150px;">
+                                            </td>
+                                            <td>
+                                                <button type="submit" (click)="searchByAccount1(customerAcc1)"><i
                                                         class="fa fa-search"></i></button>
                                             </td>
                                         </tr>
@@ -91,6 +104,8 @@
                               </tr>
                               </table>
                             </td>
+                            <input type="number" min="0"  hidden
+                            formControlName="emplId" value={{emplId}}>
                               <td>
                                     <!-- <input formControlName="classCodeType"  value={{classCodeType}} class="form-control"> -->
                                     <!-- [ngValue]="cmnTypeId" -->
@@ -292,7 +307,7 @@
                                         Enter address </span> -->
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle1">
-                                    Location&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+                                    Area&nbsp;&nbsp;&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="location" value={{location}} class="form-control"
                                         placeholder="Enter location"
@@ -364,7 +379,7 @@
                                     <input formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter pin mobile1">
+                                        placeholder="Enter mobile1">
                                     <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback">
                                         <div *ngIf="f.mobile1.errors.required">mobile must be 10 digit</div>
                                         <div *ngIf="f.mobile1.errors.maxLength">mobile must be 10 digit
@@ -379,7 +394,7 @@
                                     <input formControlName="mobile2" [(ngModel)]='mobile2' value={{mobile2}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter pin mobile2">
+                                        placeholder="Enter  mobile2">
                                     <div *ngIf="submitted && f.mobile2.errors" class="invalid-feedback">
                                         <div *ngIf="f.mobile2.errors.required">mobile must be 10 digit</div>
                                         <div *ngIf="f.mobile2.errors.maxLength">mobile must be 10 digit
@@ -394,11 +409,11 @@
                                     <input formControlName="mobile3" [(ngModel)]='mobile3' value={{mobile3}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter pin mobile3">
+                                        placeholder="Enter mobile3">
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 10%" class="LabelFontStyle1">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
+                                <td style="width: 10%" class="LabelFontStyle">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
                                 </td>
                                 <td>
                                     <input formControlName="emailId" [(ngModel)]='emailId' value={{emailId}}
@@ -546,9 +561,9 @@
                                         <div *ngIf="f.panNo.errors.maxLength">pan No must
                                         </div>
                                     </div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!customerMasterForm.get('panNo').valid && customerMasterForm.get('panNo').touched">Please
-                                        Enter pan no must</span>
+                                        Enter pan no must</span> -->
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Tan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
@@ -591,7 +606,7 @@
 
                                   <td>
                                       <!-- <button disabled type="submit" class="btn btn-primary" id="register" -->
-                                      <button  type="submit" class="btn btn-primary" id="register"
+                                      <button disabled type="submit" class="btn btn-primary" id="register"
                                           (click)="updateMast()">Update</button>
                                   </td>
                               </ng-template>
@@ -706,6 +721,50 @@
                                 </table>
                                 <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                     <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                                        <td>
+                                           <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control" (ngModelChange)='SearchsiteTaxCat($event)'>
+                                                    <option disabled>--Select--</option>
+                                                    <option *ngFor="let sc of  ouIdList" [ngValue]="sc.ouId">
+                                                    {{sc.ouId}}-{{sc.ouName}}
+                                                    </option>
+                                                    </select>
+                                               </td>
+                                        <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td>
+                                            <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
+                                                class="form-control"
+                                                placeholder="Enter GSTN">
+                                            <!-- <span
+                                                *ngIf="!customerMasterForm.get('saddress2').valid && customerMasterForm.get('saddress2').touched">Please
+                                                Enter address </span> -->
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td>
+                                            <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
+                                                class="form-control"
+                                             placeholder="Enter Pan No">
+                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">Tan&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td>
+                                            <input formControlName="stanNo" value={{stanNo}} [(ngModel)]='stanNo'
+                                                class="form-control"
+                                             placeholder="Enter Tan No">
+                                         </td>
+                                         <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
+                                         <td>
+
+                                              <select formControlName="staxCatName" id="staxCatName" class="form-control" [ngModel]="staxCatName">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let taxcate of  taxCategoryList1">
+                                                        {{taxcate.taxCategoryName}}
+                                                    </option>
+                                                </select>
+                                          </td>
+                                    </tr>
+                                    <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                         <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
                                         <td>
                                             <input formControlName="saddress1" value={{saddress1}} [(ngModel)]='saddress1'
@@ -750,9 +809,16 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                            <td style="width: 15%" class="LabelFontStyle1">
+                                                    Area&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+                                                <td>
+                                                    <input formControlName="slocation" value={{slocation}} class="form-control"
+                                                        placeholder="Enter location">
+                                                       </td>
                                         <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
                                         <td>
-                                            <select formControlName="scity" id="scity" [(ngModel)]='scity' class="form-control">
+                                            <select formControlName="scity" id="scity" [(ngModel)]='scity' class="form-control"(ngModelChange)='onOptionsiteSelectedCity($event)'>
+
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  cityList">
                                                     {{sc.codeDesc}}
@@ -779,23 +845,26 @@
                                                 *ngIf="!customerMasterForm.get('pinCd').valid && customerMasterForm.get('pinCd').touched">Please
                                                 Enter pin code </span> -->
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
-                                        <td>
-                                            <select formControlName="sstate" id="sstate" [(ngModel)]='sstate'
-                                                class="form-control">
-                                                <option>--Select--</option>
-                                                <option *ngFor="let sc of stateList">
-                                                    {{sc.codeDesc}}
-                                                </option>
-                                            </select>
-                                            <div *ngIf="submitted && f.sstate.errors" class="invalid-feedback">
-                                                <div *ngIf="f.sstate.errors.required">Enter state </div>
-                                                <div *ngIf="f.sstate.errors.maxLength">Enter state</div>
-                                            </div>
-                                            <!-- <span
-                                                *ngIf="!customerMasterForm.get('sstate').valid && customerMasterForm.get('sstate').touched">Please
-                                                Enter state </span> -->
-                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                                            <td>
+                                                    <select formControlName="sstate" id="sstate" [(ngModel)]='sstate'
+                                                    class="form-control">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of stateList">
+                                                        {{sc.codeDesc}}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="submitted && f.sstate.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.sstate.errors.required">Enter state </div>
+                                                    <div *ngIf="f.sstate.errors.maxLength">Enter state</div>
+                                                </div>
+                                                <!-- <span
+                                                    *ngIf="!customerMasterForm.get('sstate').valid && customerMasterForm.get('sstate').touched">Please
+                                                    Enter state </span> -->
+                                            </td>
                                     </tr>
                                     <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                         <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>
@@ -887,7 +956,16 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
+                                            <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
+                                            <div *ngIf="displaystatus; then thenBlockStatus; else elseBlockStatus"></div>
+                                            <ng-template #thenBlockStatus>
+                                                <td>
+                                                    <input disabled type="text" [ngModel]="sstatus" formControlName="sstatus"
+                                                    class="form-control">
+                                                </td>
+                                            </ng-template>
+                                            <ng-template #elseBlockStatus>
+
                                         <td>
                                             <select formControlName="sstatus" id="sstatus" [ngModel]="sstatus"
                                                 (ngModelChange)='onOptionsSelected($event)' class="form-control">
@@ -900,6 +978,7 @@
                                                 *ngIf="!customerMasterForm.get('sstatus').valid && customerMasterForm.get('sstatus').touched">Please
                                                 Enter Status </span> -->
                                         </td>
+                                    </ng-template>
                                         <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                                         <ng-template #thenBlockInactive>
                                         </ng-template>
@@ -925,7 +1004,7 @@
                                                     EXSite</button>
                                             </td>
                                             <td>
-                                                <button type="submit" disabled class="btn btn-primary" id="register"
+                                                <button type="submit"  class="btn btn-primary" id="register"
                                                     (click)="newOnlySiteMast()">New Site</button>
                                             </td>
 
@@ -937,7 +1016,7 @@
                                                     EXSite</button>
                                             </td>
                                             <td>
-                                                <button type="submit" class="btn btn-primary" id="register"
+                                                <button disabled type="submit" class="btn btn-primary" id="register"
                                                     (click)="newOnlySiteMast()">New Site</button>
                                             </td>
 

@@ -881,6 +881,9 @@ searchCustomerByContact(contactNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
 }
 
+searchCustomerByAccount(accountNo): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
+}
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
