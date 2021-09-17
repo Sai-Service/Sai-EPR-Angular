@@ -824,6 +824,7 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.CustomerDetailsList);
          // this.wsVehicleMasterForm.patchValue(this.lstcomments[0]);
           this.wsVehicleMasterForm.patchValue({
+            customerId : this.CustomerDetailsList.  customerId,
             custAccountNo: this.CustomerDetailsList.custAccountNo,
             custName: this.CustomerDetailsList.custName,
             address1: this.CustomerDetailsList.address1,

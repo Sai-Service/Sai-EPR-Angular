@@ -93,6 +93,11 @@ export class DivisionMasterComponent implements OnInit {
   }
 
   newMast() {
+    this.submitted = true;
+    if(this.divisionMasterForm.invalid){
+    return;
+    }
+
     const formValue: IDivision = this.transData(this.divisionMasterForm.value);
     this.service.divisionMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -114,7 +119,7 @@ export class DivisionMasterComponent implements OnInit {
     const formValue: IDivision = this.divisionMasterForm.value;
     this.service.UpdateDivMasterById(formValue, formValue.divisionId).subscribe((res: any) => {
       if (res.code === 200) {
-        // alert('RECORD UPDATED SUCCESSFULLY');
+        alert('RECORD UPDATED SUCCESSFULLY');
         window.location.reload();
       } else {
         if (res.code === 400) {

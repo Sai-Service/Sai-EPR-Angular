@@ -283,7 +283,7 @@ export class CounterSaleComponent implements OnInit {
   createOrderTypeList: any;
   allDatastore: any;
   displayorderLineDetailsPart = true;
-  public payTermDescList: any;
+  public payTermDescList: any=[];
   public orderTypeList: any;
   public ticketNoSearch: any;
   public taxCalforItem: any;
@@ -434,9 +434,9 @@ export class CounterSaleComponent implements OnInit {
       status: [''],
       discType: [''],
     })
- 
+
   }
- 
+
 
 
   orderlineDetailsArray(): FormArray {
@@ -808,7 +808,7 @@ export class CounterSaleComponent implements OnInit {
           if (this.allDatastore.flowStatusCode === 'BOOKED' && this.allDatastore.paymentType === 'IMMEDIATE') {
             this.PaymentButton = false;
           }
-         
+
         });
 
 
@@ -973,13 +973,15 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
+    // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
+    this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {
           if (data.code === 200) {
             // this.accountNoSearch = data.obj;
-            this.custSiteList = data.obj;
-            this.paymentType = data.obj.paymentType;
+            this.custSiteList = data.obj.customerSiteMasterList;
+            let select = this.payTermDescList.find(d => d.lookupValueId === data.obj.termId);
+            this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
           }
@@ -1101,11 +1103,11 @@ export class CounterSaleComponent implements OnInit {
     // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
     return(this.CounterSaleOrderBookingForm.get(fieldName));
   }
-   
+
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);
     return (<FormArray>this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')).at(index).get(fieldName);
-    
+
   }
 
   createNewCust() {
@@ -1150,13 +1152,13 @@ export class CounterSaleComponent implements OnInit {
   {
     var trxLnArr=this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1=this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
-    var Avalqty=trxLnArr[index].Avalqty;  
+    var Avalqty=trxLnArr[index].Avalqty;
     if(qty1>Avalqty)
     {
       alert("You can not enter more than available quantity!..");
       trxLnArr1.controls[index].patchValue({pricingQty:''});
       // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
-     
+
       return false;
     }
     if(qty1<=0)
@@ -1177,13 +1179,13 @@ export class CounterSaleComponent implements OnInit {
     var isvalidqty=this.validate(index,pricingQty);
     if (isvalidqty ==false){
       return;
-    }    
+    }
     console.log(index);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
-    
+
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
     var taxCategoryId = select.taxCategoryId;
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
@@ -1222,7 +1224,7 @@ export class CounterSaleComponent implements OnInit {
           (patch.controls[index]).patchValue({
             baseAmt: baseAmt,
             taxAmt: sum,
-            totAmt: baseAmt + sum - disAmt1, 
+            totAmt: baseAmt + sum - disAmt1,
             disAmt: (disPer / 100) * baseAmt,
           });
           let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -1247,7 +1249,7 @@ export class CounterSaleComponent implements OnInit {
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
         });
-       
+
   }
 
 
@@ -1286,9 +1288,9 @@ export class CounterSaleComponent implements OnInit {
                   uom: data[i].uom,
                   unitSellingPrice: data[i].priceValue.toFixed(2),
                 });
-                
+
                 this.taxCategoryList = this.taxCategoryList.filter(function (d) { return  taxCatNm.includes(d.gstPercentage)});
-               
+
             }
 
             if (itemType === 'SS_SPARES') {
@@ -1303,7 +1305,7 @@ export class CounterSaleComponent implements OnInit {
             }
 
             }
-            
+
 
           });
 
@@ -1471,7 +1473,7 @@ export class CounterSaleComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    for (let taxlinval of this.taxMap.values()) { 
+    for (let taxlinval of this.taxMap.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
       }
@@ -1589,7 +1591,7 @@ export class CounterSaleComponent implements OnInit {
     // alert(i);
     let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
     if (op === 'Search') {
-     
+
       // .controls[i].get('taxAmounts')
       let taxControl = this.TaxDetailsArray() as FormArray
       if (taxControl != undefined) {
@@ -1626,7 +1628,7 @@ export class CounterSaleComponent implements OnInit {
             inclusiveFlag: x.inclusiveFlag,
             invLineNo:k,
           })
-          
+
           );
         }
       });

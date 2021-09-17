@@ -637,7 +637,7 @@ export class OPMasterDtoComponent implements OnInit {
   }
   //   onChanges(): void {
   //     this.poMasterDtoForm.valueChanges.subscribe(val => {
-  //     
+  //
   //   });
   // }
   // public fields: Object = { text: 'name', value: 'suppNo' };
@@ -1442,7 +1442,7 @@ export class OPMasterDtoComponent implements OnInit {
       + this.poMasterDtoForm.get('segment5').value;
     // + this.poMasterDtoForm.get('segment6').value;
     //  + this.poMasterDtoForm.get('segment7').value + '.'
-    //  + this.poMasterDtoForm.get('segment8').value + '.' 
+    //  + this.poMasterDtoForm.get('segment8').value + '.'
     //  + this.poMasterDtoForm.get('segment9').value  ;
     this.segmentName1 = arrayControl[index].segmentName
     console.log(this.segmentName1);
@@ -1811,10 +1811,10 @@ export class OPMasterDtoComponent implements OnInit {
     }
     else {
       if (itemType === 'GOODS') {
-       
+
         var deptName1 = this.poMasterDtoForm.get('dept').value;
         this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
-        
+
         // if (this.invItemList.length <= 0) {
           this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')))
             .subscribe(
@@ -1826,19 +1826,19 @@ export class OPMasterDtoComponent implements OnInit {
                 this.lineDetailsArray.controls[lineNum].get('segment').enable();
                 var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
                 this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
-                
+
                 this.poMasterDtoForm.get('supplierCode').disable();
                 this.poMasterDtoForm.get('supplierSiteId').disable();
                 this.poMasterDtoForm.get('shipToLoc').disable();
                 this.poMasterDtoForm.get('billToLoc').disable();
               }
             );
-            
- 
+
+
 
         // this.displaysupplierSiteId=false;
 
-      
+
       }
       if (itemType === 'EXPENCE') {
         var deptName = 'NA';
@@ -2076,10 +2076,10 @@ export class OPMasterDtoComponent implements OnInit {
 
   //   Keyboard({
   //     elm: document.querySelector('#input'),
-  //     props: {},                             
+  //     props: {},
   //     use: MyActions,    // import the actions from my-actions.js
-  //     actions: [            // extend/overwrite the imported actions with your own              
-  //       ['enter', {                          
+  //     actions: [            // extend/overwrite the imported actions with your own
+  //       ['enter', {
   //         fn: process
   //       }]
   //     ]
