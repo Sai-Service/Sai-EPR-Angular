@@ -424,6 +424,9 @@ if (person === 'Person'){
     delete val.spinCd;
     delete val.sstartDate;
     delete val.sendDate;
+    return val;
+
+
   }
   newOnlySiteMast() {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);

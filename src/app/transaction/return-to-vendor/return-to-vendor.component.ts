@@ -633,10 +633,10 @@ export class ReturnToVendorComponent implements OnInit {
         var mItemId =rtvLineArr[index].invItemId;
         var subinvId =rtvLineArr[index].subInventoryId;
     
-        alert("inv item id :"+ mItemId +","+subinvId +","+this.locId);
+        alert("itemid,subinvid,locid :"+ mItemId +","+subinvId +","+this.locId);
 
           // this.service.getfrmSubLoc(120,42,1)
-          alert ("inventoryId ,subInventoryId:" +mItemId  + " , "+subinvId);
+          // alert ("inventoryId ,subInventoryId:" +mItemId  + " , "+subinvId);
       
         this.service.getfrmSubLoc(this.locId,mItemId,42)
           .subscribe(

@@ -168,7 +168,7 @@ export class PoReceiptFormComponent implements OnInit {
    divisionId:any[];
    loginName:string;
    poLineId:number;
-    viewAccounting1:any[];
+   viewAccounting1:any[];
    viewAccounting2:any[];
    displayrecDate=false;
   

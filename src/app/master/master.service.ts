@@ -1953,11 +1953,11 @@ OrderCategoryList(): Observable<any> {
 
 
   ////////////////////////// RECEIPT APPLICATION /////////////////////
-  public ArReceipApplySubmit(ArReceiptApplyRecord) {
+  public ArReceipApplySubmit(ArReceiptApplyRecord,mRcptNo) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/arCashReceipts/apply/inv';
+    const url =(this.ServerUrl +`/arCashReceipts/apply/inv/${mRcptNo}`);
     return this.http.post(url, ArReceiptApplyRecord, options);
   }
   ////////////////////////// ///////////////////////////////////////
