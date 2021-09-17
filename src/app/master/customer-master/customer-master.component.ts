@@ -539,10 +539,10 @@ if (person === 'Person'){
       alert("Please fix the errors!!");
     return;
     }
-    // debugger;
+   
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
-    // debugger;
+    
     if(formValue.custType ==='Organization')
     {
       formValue.title='M/S';
@@ -564,7 +564,7 @@ if (person === 'Person'){
     });
   }
   UpdateSiteCustMastExeSite(){
-     debugger;
+   
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
