@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +9,7 @@ interface IcustomerMaster {
   customerId:number;
   title: string;
   customerId1: number;
+  customerAcc1:number;
   fName: string;
   mName: string;
   lName: string;
@@ -33,9 +35,16 @@ interface IcustomerMaster {
   gstNo: string;
   panNo: string;
   tanNo: string;
+  staxCatName:string;
+  stanNo:string;
+  spanNo:string;
+  sGstNo:string;
+  souId:number;
+  souName:string;
   status: string;
   classCodeType: string;
   ouId: string;
+  locId:string;
   taxCategoryName:string;
   location: string;
   saddress1: string;
@@ -55,7 +64,9 @@ interface IcustomerMaster {
   custAccountNo:number;
   divisionName: string;
   paymentType: string;
-
+  slocation:string;
+  emplId: number;
+  customerSiteId:number;
 }
 
 @Component({
@@ -66,6 +77,7 @@ interface IcustomerMaster {
 
 export class CustomerMasterComponent implements OnInit {
   customerMasterForm: FormGroup;
+  emplId: number;
   submitted = false;
   customerId:number;
   custType: string;
@@ -75,6 +87,7 @@ export class CustomerMasterComponent implements OnInit {
   displayOrgnization: boolean ;
   title: string;
   customerId1: number;
+  customerAcc1:number;
   fName: string;
   mName: string;
   lName: string;
@@ -102,6 +115,13 @@ export class CustomerMasterComponent implements OnInit {
   panNo: string;
   tanNo: string;
   ouId: string;
+  locId:string;
+  staxCatName:string;
+  stanNo:string;
+  spanNo:string;
+  sGstNo:string;
+  souId:number;
+  souName:string;
   location: string;
   saddress1: string;
   saddress2: string;
@@ -116,13 +136,15 @@ export class CustomerMasterComponent implements OnInit {
   semailId1: string;
   sstartDate: Date;
   sendDate: Date;
-  sstatus: string;
+  public sstatus="Active";
+  slocation:string;
   custAccountNo:number;
   ExeAddress: string;
   divisionName: string;
   name:string;
   public status = "Active";
   displayInactive = true;
+  displaystatus=true;
   displayNewButton = true;
   displayNewButton1=true;
   displayNewButtonWithSite=false;
@@ -133,7 +155,7 @@ export class CustomerMasterComponent implements OnInit {
   public minDate = new Date()  ;
   public minDateBirth   = new Date().setFullYear(new Date().getFullYear() -18);
   public minDateWedding = new Date();
-  public cityList1: any;
+  public cityList1: any=[];
 
   public custTypeList: Array<string>[];
   public titleList: any=[];
@@ -144,7 +166,7 @@ export class CustomerMasterComponent implements OnInit {
   public ouIdList: Array<string>[];
   public classCodeTypeList:Array<string>[];
   public taxCategoryList: Array<string>[];
-  public statusList: Array<string> = [];
+  public statusList: any= [];
   loginName:string;
   ouName:string;
   public maxDate = new Date();
@@ -156,12 +178,16 @@ export class CustomerMasterComponent implements OnInit {
 
   public payTermDescList: any;
   paymentType: string;
+  taxCategoryList1: any;
+  customerSiteId:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
+      emplId: [''],
+      customerAcc1:[''],
       title: [''],
       custType: ['', Validators.required],
       paymentType: [''],
@@ -171,7 +197,7 @@ export class CustomerMasterComponent implements OnInit {
       // lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
       lName:[''],
       custName: ['', Validators.required],
-      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address3: ['',[Validators.maxLength(100)]],
       address4: ['',[Validators.maxLength(100)]],
@@ -182,10 +208,11 @@ export class CustomerMasterComponent implements OnInit {
       mobile1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
       mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       mobile3: ['',[Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
-      emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      // emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      emailId:[''],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactPerson:[''],
+      contactPerson:['',[Validators.pattern('^[a-zA-Z]*')]],
       contactNo:[''],
       // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
@@ -199,6 +226,7 @@ export class CustomerMasterComponent implements OnInit {
       status: ['', [Validators.required]],
       classCodeType: [''],
       ouId: ['', [Validators.required]],
+      locId:[''],
       location: [''],
       saddress1: [''],
       saddress2: [''],
@@ -214,6 +242,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
+      customerSiteId:[],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -221,6 +250,13 @@ export class CustomerMasterComponent implements OnInit {
       divisionName: [],
       ouName:[],
       loginArray:[],
+      staxCatName:[],
+      stanNo:[],
+      spanNo:[],
+      sGstNo:[],
+      souId:[],
+      souName:[],
+      slocation:[],
     })
 
   }
@@ -236,6 +272,8 @@ export class CustomerMasterComponent implements OnInit {
    console.log(this.loginArray);
    this.ouName = (sessionStorage.getItem('ouName'));
    this.ouId = (sessionStorage.getItem('ouId'));
+   this.locId=(sessionStorage.getItem('locId'));
+   this.emplId=Number(sessionStorage.getItem('emplId'));
    console.log(this.ouId);
    this.weddingDate = new Date();
    this.startDate = new Date();
@@ -265,14 +303,16 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
 
-      this.service.taxCategoryNameList(this.ouId)
-      .subscribe(
-        data => {
-          this.taxCategoryNameList = data;
-          console.log(this.taxCategoryNameList);
+      // if (this.ouId != undefined){
+        // this.service.taxCategoryNameList(this.ouId)
+        // .subscribe(
+        //   data => {
+        //     this.taxCategoryNameList = data;
+        //     console.log(this.taxCategoryNameList);
 
-        }
-      );
+        //   }
+        // );
+    // }
 
     this.service.titleList()
       .subscribe(
@@ -352,6 +392,7 @@ export class CustomerMasterComponent implements OnInit {
   }
   SearchTaxCat(ouId) {
     // alert(locId);
+    if(ouId!=undefined){
     this.service.getTaxCat(ouId)
       .subscribe(
         data => {
@@ -360,8 +401,51 @@ export class CustomerMasterComponent implements OnInit {
           // this.allFunction(locId);
         }
       );
+    }
   }
+  // SearchsiteTaxCat(souId) {
+  //   // alert(locId);
+  //   this.service.getTaxCat(souId)
+  //     .subscribe(
+  //       data => {
+  //         this.taxCategoryList1 = data;
+  //         console.log(this.taxCategoryList);
+  //         // this.allFunction(locId);
+  //       }
+  //     );
+  // }
 
+onOptionStateSeleted(event:any)
+{
+      if(event!=undefined)
+      {
+       this.service.taxCategoryList1(this.locId,event)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            this.taxCategoryName=data.taxCategoryName;
+            // console.log(this.taxCategoryNameList);
+
+          }
+        );
+      }
+}
+onOptionSiteStateSeleted(event:any)
+{
+  alert(event);
+      if(event!=undefined)
+      {
+       this.service.taxCategoryList1(this.locId,event)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            this.staxCatName=data.taxCategoryName;
+            // console.log(this.taxCategoryNameList);
+
+          }
+        );
+      }
+}
   onOptionsSelected(event: any) {
     this.Status1 = this.customerMasterForm.get('status').value;
     // alert(this.Status1);
@@ -434,9 +518,12 @@ if (person === 'Person'){
   }
   newOnlySiteMast() {
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
+
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        var acctNo=this.customerMasterForm.get('custAccountNo').value;
+        this.searchByAccount1(acctNo);
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -477,6 +564,7 @@ if (person === 'Person'){
     });
   }
   UpdateSiteCustMastExeSite(){
+    // debugger;
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -561,7 +649,7 @@ if (person === 'Person'){
   //     );
   // }
   searchByContact(contactNo) {
-    alert('---'+contactNo)
+    // alert('---'+contactNo)
     this.displayNewButton =false;
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
@@ -580,15 +668,39 @@ if (person === 'Person'){
         }
       );
   }
+  searchByAccount1(accountNo) {
+    // alert('---'+accountNo)
+    this.displayNewButton =false;
+    this.service.searchCustomerByAccount(accountNo)
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+           console.log(this.lstcomments);
+          this.customerMasterForm.patchValue(this.lstcomments);
+          // this.city = this.lstcomments.city
+          this.customerMasterForm.patchValue({
+            panNo:this.lstcomments.customerSiteMasterList[0].panNo,
+            gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
+            taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName
+          });
+          var title1=this.titleList.find(d=>d.code===this.lstcomments.title);
+          var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments.termId);
+          this.customerMasterForm.patchValue({title:this.lstcomments.title,paymentType:payTerm.lookupValueId});
+        }
+      );
+  }
   Select(customerSiteId: number) {
 
     this.displayNewButton1=false;
+    this.displaystatus=false;
     alert(customerSiteId);
         this.lstcomments2 = this.lstcomments.customerSiteMasterList;
         console.log(this.lstcomments2);
         let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
         console.log(select);
-        if (select) {
+        console.log(select.status);
+
+        if (select!=undefined) {
           // this.customerSiteId = select.customerSiteId
           this.saddress1 = select.address1
           this.saddress2 = select.address2
@@ -605,10 +717,19 @@ if (person === 'Person'){
           this.ouId = select.ouId
           this.panNo = select.panNo
           this.tanNo = select.tanNo
+          this.souId=select.ouId
+          this.customerSiteId=select.customerSiteId;
+          this.slocation=select.location
+          // this.sstatus=select.status
           // ticketNo not in  json
-
+          let selstatus = this.statusList.find(d => d.codeDesc === select.status);
+          alert( selstatus.codeDesc)
+          this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc});
+          alert( select.status)
           // this.displayButton = false;
         }
+        console.log(select.status);
+
       }
 
       onOptionsSelectedCity (city: any){
@@ -626,12 +747,27 @@ if (person === 'Person'){
         );
         }
       }
+      onOptionsiteSelectedCity (event){
+        alert(event);
+        if(event != undefined){
+          var selcity=this.cityList1.find(d=>d.codeDesc===event);
+          // this.sstate=selcity.attribute1;
+        }
+      }
       onOptionWeddingDate(event)
       {
         if(event>this.startDate ||event<=this.birthDate)
         {
           alert("Please select Correct Wedding Date");
 
+        }
+      }
+      validation()
+      {
+        var type=this.customerMasterForm.get('custType').value;
+        if(type === 'Person')
+        {
+          alert('Please enter Birth Date');
         }
       }
 }

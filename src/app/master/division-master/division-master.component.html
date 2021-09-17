@@ -21,17 +21,20 @@
                                 <input formControlName="divisionCode" [(ngModel)]='divisionCode' value={{divisionCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
                                 placeholder="Enter division code" style="text-transform: uppercase;" uppercase>
-                                <div *ngIf="submitted && f. divisionCode.errors" class="invalid-feedback">
-                                    <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div>
-                                    <div *ngIf="f.divisionCode.errors?.pattern">Minimum Two characters and maximum Two characters</div>
-                                    <div *ngIf="f. divisionCode.errors?.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
+                            
+                                <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
+                                    <!-- <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div> -->
+                                    <div *ngIf="f.divisionCode.errors.pattern">Only 2 characters allowed</div>
+                                    <div *ngIf="f.divisionCode.errors.maxLength">Only 2 characters allowed</div>
+                                    <div *ngIf="f.divisionCode.errors.minLength">Only 2 characters allowed</div>
+                                   
                                 </div>
                             <!-- <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.divisionCode.errors.required">Division code cannot be blank, have spaces or have special characters.</div>
-                                <div *ngIf="f.divisionCode.errors?.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
-                                <div *ngIf="f.divisionCode.errors?.pattern">Minimum one characters and maximum 10 characters</div>
+                                <div *ngIf="f.divisionCode.errors.maxLength">Division code cannot be blank, have spaces or have special characters.</div>
+                                <div *ngIf="f.divisionCode.errors.pattern">Minimum one characters and maximum 10 characters</div>
                             </div> -->
-                            <span *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Division code cannot be blank, have spaces or have special characters.</span>    
+                            <!-- <span *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Division code cannot be blank, have spaces or have special characters.</span>     -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Division&nbsp;Name&nbsp;:
@@ -40,10 +43,12 @@
                                 <input formControlName="divisionName" value={{divisionName}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
                                 placeholder="Enter division name">
-                            <div *ngIf="submitted && f. divisionName.errors" class="invalid-feedback">
-                                <div *ngIf="f.divisionName.errors.required">Division Name cannot be blank or have special characters</div>
+                            <div *ngIf="submitted && f.divisionName.errors" class="invalid-feedback">
+                                <div *ngIf="f.divisionName.errors.pattern">Division Name cannot be blank</div>
+                                <div *ngIf="f.divisionName.errors.maxLength">Maximum 20 characters allowed</div>
+                                <div *ngIf="f.divisionName.errors.minLength">Minimum 5 characters required</div>
                             </div>
-                            <span *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span>
+                            <!-- <span *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span> -->
                             </td>
                         </tr>
                         <tr>
@@ -51,21 +56,25 @@
                                 Start&nbsp;Date&nbsp;:
                             </td>
                             <td>
-                                <input type="date" formControlName="startDate" class="form-control" placeholder="Enter Start date"  min="{{minDate | date:'yyyy-MM-dd'}}">
-                                <span
+                                <input type="date" formControlName="startDate" class="form-control" placeholder="Enter Start date"  min="{{minDate | date:'yyyy-MM-dd'}}"
+                                [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }">
+                                <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                                    <div *ngIf="f.divisionName.errors.required">Start date cannot be blank</div>
+                                </div>
+                                <!-- <span
                                     *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
-                                    Enter start date </span>                
+                                    Enter start date </span>                 -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle">
                                 Status&nbsp;:
                             </td>
                             <td>
                                 <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                                <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
                                     <div *ngIf="f.status.errors.required">status is required</div>
-                                    <span
+                                    <!-- <span
                                         *ngIf="!divisionMasterForm.get('status').valid && divisionMasterForm.get('status').touched">Please
-                                        Enter valid status </span>
+                                        Enter valid status </span> -->
                                 </div>        
                             </td> 
                         </tr>
@@ -79,14 +88,14 @@
                                 <input disabled formControlName="divisionCode" value={{divisionCode}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionCode.errors }"
                                 placeholder="Enter division code">
-                            <div *ngIf="submitted && f. divisionCode.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.divisionCode.errors" class="invalid-feedback">
                                 <div *ngIf="f.divisionCode.errors.required">Division code must be a valid for 1 digit</div>
-                                <div *ngIf="f.divisionCode.errors?.maxLength">Division code must be a valid for 1 digit
+                                <div *ngIf="f.divisionCode.errors.maxLength">Division code must be a valid for 1 digit
                                 </div>
                             </div>
-                            <span
+                            <!-- <span
                                 *ngIf="!divisionMasterForm.get('divisionCode').valid && divisionMasterForm.get('divisionCode').touched">Please
-                                Enter division code </span>    
+                                Enter division code </span>     -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Division&nbsp;Name&nbsp;:
@@ -95,12 +104,14 @@
                                 <input  formControlName="divisionName" value={{divisionName}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.divisionName.errors }"
                                 placeholder="Enter division name">
-                            <div *ngIf="submitted && f. divisionName.errors" class="invalid-feedback">
+                                
+                            <div *ngIf="submitted && f.divisionName.errors" class="invalid-feedback">
                                 <div *ngIf="f.divisionName.errors.required">Division Name cannot be blank or have special characters</div>
-                                <div *ngIf="f.locCode.errors?.pattern">Division Name cannot be blank or have special characters</div>
+                                <div *ngIf="f.locCode.errors.pattern">Division Name cannot be blank or have special characters</div>
+                           
                             </div>
-                            <span
-                                *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span>    
+                            <!-- <span
+                                *ngIf="!divisionMasterForm.get('divisionName').valid && divisionMasterForm.get('divisionName').touched">Division Name cannot be blank or have special characters</span>     -->
                             </td>
                         </tr>
                         <tr>
@@ -109,8 +120,8 @@
                             </td>
                             <td>
                                 <input type="date" disabled formControlName="startDate" class="form-control" placeholder="Enter Start date">
-                                <span *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
-                                    Enter start date </span>        
+                                <!-- <span *ngIf="!divisionMasterForm.get('startDate').valid && divisionMasterForm.get('startDate').touched">Please
+                                    Enter start date </span>         -->
                             </td>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Status&nbsp;:
@@ -123,11 +134,11 @@
                                 {{sc.codeDesc}}
                             </option>
                         </select>
-                        <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
                             <div *ngIf="f.status.errors.required">status is required</div>
-                            <span
+                            <!-- <span
                                 *ngIf="!divisionMasterForm.get('status').valid && divisionMasterForm.get('status').touched">Please
-                                Enter valid Company status </span>
+                                Enter valid Company status </span> -->
                         </div>
                             </td>
                         </tr>
@@ -153,7 +164,8 @@
                         <ng-template #thenBlock1>
                         <td>
                             <button type="submit" class="btn btn-primary" id="register"
-                                [disabled]="!divisionMasterForm.valid" (click)="newMast()">Save</button>
+                                (click)="newMast()">Save</button>
+                                <!-- [disabled]="!divisionMasterForm.valid"  -->
                         </td>
                         <td>
                             <!-- <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> -->
