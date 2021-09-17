@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -65,6 +66,7 @@ interface IcustomerMaster {
   paymentType: string;
   slocation:string;
   emplId: number;
+  customerSiteId:number;
 }
 
 @Component({
@@ -177,6 +179,7 @@ export class CustomerMasterComponent implements OnInit {
   public payTermDescList: any;
   paymentType: string;
   taxCategoryList1: any;
+  customerSiteId:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -239,6 +242,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
+      customerSiteId:[],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -560,6 +564,7 @@ if (person === 'Person'){
     });
   }
   UpdateSiteCustMastExeSite(){
+    // debugger;
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -713,6 +718,8 @@ if (person === 'Person'){
           this.panNo = select.panNo
           this.tanNo = select.tanNo
           this.souId=select.ouId
+          this.customerSiteId=select.customerSiteId;
+          this.slocation=select.location
           // this.sstatus=select.status
           // ticketNo not in  json
           let selstatus = this.statusList.find(d => d.codeDesc === select.status);

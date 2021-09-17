@@ -732,6 +732,7 @@
                                 </table>
                                 <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                     <tr>
+                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId">
                                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                         <td>
                                            <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control">
@@ -814,7 +815,7 @@
                                             <td style="width: 15%" class="LabelFontStyle1">
                                                     Area&nbsp;&nbsp;&nbsp;:&nbsp;</td>
                                                 <td>
-                                                    <input formControlName="slocation" value={{slocation}} class="form-control"
+                                                    <input type="text" formControlName="slocation" value={{slocation}} class="form-control"
                                                         placeholder="Enter location">
                                                        </td>
                                         <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
