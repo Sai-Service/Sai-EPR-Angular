@@ -564,7 +564,7 @@ if (person === 'Person'){
     });
   }
   UpdateSiteCustMastExeSite(){
-    // debugger;
+     debugger;
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -724,7 +724,7 @@ if (person === 'Person'){
           // ticketNo not in  json
           let selstatus = this.statusList.find(d => d.codeDesc === select.status);
           alert( selstatus.codeDesc)
-          this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc});
+          this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc,slocation:select.location});
           alert( select.status)
           // this.displayButton = false;
         }
