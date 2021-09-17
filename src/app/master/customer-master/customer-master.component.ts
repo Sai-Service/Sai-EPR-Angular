@@ -43,6 +43,7 @@ interface IcustomerMaster {
   status: string;
   classCodeType: string;
   ouId: string;
+  locId:string;
   taxCategoryName:string;
   location: string;
   saddress1: string;
@@ -112,6 +113,7 @@ export class CustomerMasterComponent implements OnInit {
   panNo: string;
   tanNo: string;
   ouId: string;
+  locId:string;
   staxCatName:string;
   stanNo:string;
   spanNo:string;
@@ -132,7 +134,7 @@ export class CustomerMasterComponent implements OnInit {
   semailId1: string;
   sstartDate: Date;
   sendDate: Date;
-  public sstatus="Active"; 
+  public sstatus="Active";
   slocation:string;
   custAccountNo:number;
   ExeAddress: string;
@@ -162,7 +164,7 @@ export class CustomerMasterComponent implements OnInit {
   public ouIdList: Array<string>[];
   public classCodeTypeList:Array<string>[];
   public taxCategoryList: Array<string>[];
-  public statusList: Array<string> = [];
+  public statusList: any= [];
   loginName:string;
   ouName:string;
   public maxDate = new Date();
@@ -207,7 +209,7 @@ export class CustomerMasterComponent implements OnInit {
       emailId:[''],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactPerson:[''],
+      contactPerson:['',[Validators.pattern('^[a-zA-Z]*')]],
       contactNo:[''],
       // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
@@ -221,6 +223,7 @@ export class CustomerMasterComponent implements OnInit {
       status: ['', [Validators.required]],
       classCodeType: [''],
       ouId: ['', [Validators.required]],
+      locId:[''],
       location: [''],
       saddress1: [''],
       saddress2: [''],
@@ -265,6 +268,7 @@ export class CustomerMasterComponent implements OnInit {
    console.log(this.loginArray);
    this.ouName = (sessionStorage.getItem('ouName'));
    this.ouId = (sessionStorage.getItem('ouId'));
+   this.locId=(sessionStorage.getItem('locId'));
    this.emplId=Number(sessionStorage.getItem('emplId'));
    console.log(this.ouId);
    this.weddingDate = new Date();
@@ -295,14 +299,16 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
 
-      this.service.taxCategoryNameList(this.ouId)
-      .subscribe(
-        data => {
-          this.taxCategoryNameList = data;
-          console.log(this.taxCategoryNameList);
+      // if (this.ouId != undefined){
+        // this.service.taxCategoryNameList(this.ouId)
+        // .subscribe(
+        //   data => {
+        //     this.taxCategoryNameList = data;
+        //     console.log(this.taxCategoryNameList);
 
-        }
-      );
+        //   }
+        // );
+    // }
 
     this.service.titleList()
       .subscribe(
@@ -382,6 +388,7 @@ export class CustomerMasterComponent implements OnInit {
   }
   SearchTaxCat(ouId) {
     // alert(locId);
+    if(ouId!=undefined){
     this.service.getTaxCat(ouId)
       .subscribe(
         data => {
@@ -390,20 +397,51 @@ export class CustomerMasterComponent implements OnInit {
           // this.allFunction(locId);
         }
       );
+    }
   }
-  SearchsiteTaxCat(souId) {
-    // alert(locId);
-    this.service.getTaxCat(souId)
-      .subscribe(
-        data => {
-          this.taxCategoryList1 = data;
-          console.log(this.taxCategoryList);
-          // this.allFunction(locId);
-        }
-      );
-  }
+  // SearchsiteTaxCat(souId) {
+  //   // alert(locId);
+  //   this.service.getTaxCat(souId)
+  //     .subscribe(
+  //       data => {
+  //         this.taxCategoryList1 = data;
+  //         console.log(this.taxCategoryList);
+  //         // this.allFunction(locId);
+  //       }
+  //     );
+  // }
 
+onOptionStateSeleted(event:any)
+{
+      if(event!=undefined)
+      {
+       this.service.taxCategoryList1(this.locId,event)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            this.taxCategoryName=data.taxCategoryName;
+            // console.log(this.taxCategoryNameList);
 
+          }
+        );
+      }
+}
+onOptionSiteStateSeleted(event:any)
+{
+  alert(event);
+      if(event!=undefined)
+      {
+       this.service.taxCategoryList1(this.locId,event)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            this.staxCatName=data.taxCategoryName;
+            // console.log(this.taxCategoryNameList);
+
+          }
+        );
+      }
+}
   onOptionsSelected(event: any) {
     this.Status1 = this.customerMasterForm.get('status').value;
     // alert(this.Status1);
@@ -606,7 +644,7 @@ if (person === 'Person'){
   //     );
   // }
   searchByContact(contactNo) {
-    alert('---'+contactNo)
+    // alert('---'+contactNo)
     this.displayNewButton =false;
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
@@ -626,7 +664,7 @@ if (person === 'Person'){
       );
   }
   searchByAccount1(accountNo) {
-    alert('---'+accountNo)
+    // alert('---'+accountNo)
     this.displayNewButton =false;
     this.service.searchCustomerByAccount(accountNo)
       .subscribe(
@@ -655,7 +693,9 @@ if (person === 'Person'){
         console.log(this.lstcomments2);
         let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
         console.log(select);
-        if (select) {
+        console.log(select.status);
+
+        if (select!=undefined) {
           // this.customerSiteId = select.customerSiteId
           this.saddress1 = select.address1
           this.saddress2 = select.address2
@@ -672,10 +712,17 @@ if (person === 'Person'){
           this.ouId = select.ouId
           this.panNo = select.panNo
           this.tanNo = select.tanNo
+          this.souId=select.ouId
+          // this.sstatus=select.status
           // ticketNo not in  json
-
+          let selstatus = this.statusList.find(d => d.codeDesc === select.status);
+          alert( selstatus.codeDesc)
+          this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc});
+          alert( select.status)
           // this.displayButton = false;
         }
+        console.log(select.status);
+
       }
 
       onOptionsSelectedCity (city: any){
@@ -697,7 +744,7 @@ if (person === 'Person'){
         alert(event);
         if(event != undefined){
           var selcity=this.cityList1.find(d=>d.codeDesc===event);
-          this.sstate=selcity.attribute1;
+          // this.sstate=selcity.attribute1;
         }
       }
       onOptionWeddingDate(event)

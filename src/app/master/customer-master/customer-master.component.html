@@ -34,7 +34,7 @@
                                             <td style="width: 20%;font-weight: bold;" class="LabelFontStyle">
                                                 Customer&nbsp;Account&nbsp;No:&nbsp;</td>
                                             <td>
-                                                <input formControlName="customerAcc1" [(ngModel)]="customerAcc1" value={{customerAcc1}}
+                                                <input type="number" formControlName="customerAcc1" [(ngModel)]="customerAcc1" value={{customerAcc1}}
                                                      class="form-control"
                                                     placeholder="Enter Account number" style="width: 150px;">
                                             </td>
@@ -62,6 +62,7 @@
                                 <div class="center" style="width: 100%;">
                         <table class="center">
                             <input hidden formControlName="ouId"  class="form-control"  [(ngModel)]='ouId' value={{ouId}}>
+                            <input hidden formControlName="locId"  class="form-control"  [(ngModel)]='locId' value={{locId}}>
                             <tr>
                                 <!-- <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                 <td>
@@ -218,11 +219,11 @@
 
                             </tr>
                             <tr >
-                                <td style="width: 15%" class="LabelFontStyle1">Full&nbsp;Name&nbsp;:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle1">Customer&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td colspan="8">
-                                    <input formControlName="custName" value="custName" [(ngModel)]='custName'
+                                    <input  formControlName="custName" value="custName" [(ngModel)]='custName'
                                         (keyup)="onKey($event)" class="form-control" placeholder="Enter Full name"
-                                        style="width: 100%;">
+                                        style="width: 60%;">
 
                                         <!-- (keyup)="onKey($event)"  (keyup)="onKey($event)"-->
                                     <div *ngIf="submitted && f.custName.errors" class="invalid-feedback">
@@ -323,13 +324,14 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
                                 <td>
-                                        <select formControlName="city" id="city" class="form-control" [ngModel]="city"
+                                  <input type="text" formControlName="city" id="city" class="form-control" [ngModel]="city">
+                                        <!-- <select formControlName="city" id="city" class="form-control" [ngModel]="city"
                                         (ngModelChange)='onOptionsSelectedCity($event)'>
                                         <option>--Select--</option>
                                         <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
                                             {{sc.codeDesc}}
                                         </option>
-                                    </select>
+                                    </select> -->
                                     <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                                         <div *ngIf="f.city.errors.required">City must be required
                                         </div>
@@ -345,7 +347,7 @@
                             <tr>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
+                                    <input type="number" formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter pin code">
@@ -360,23 +362,31 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;State&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="text" disabled formControlName="state" [ngModel]="state"
-                                        class="form-control">
+                                    <!-- <input type="text" disabled formControlName="state" [ngModel]="state"
+                                        class="form-control"> -->
+                                        <select formControlName="state" id="state" [(ngModel)]='state'
+                                        class="form-control" (ngModelChange)='onOptionStateSeleted($event)'>
+                                        <option>--Select--</option>
+                                        <option *ngFor="let sc of stateList">
+                                            {{sc.codeDesc}}
+                                        </option>
+                                    </select>
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control" [ngModel]="taxCategoryName">
+                                  <input disabled formControlName="taxCategoryName" id="taxCategoryName" class="form-control"  [ngModel]="taxCategoryName">
+                                    <!-- <select formControlName="taxCategoryName" id="taxCategoryName" class="form-control" [ngModel]="taxCategoryName">
                                     <option>--Select--</option>
                                     <option *ngFor="let taxcate of  taxCategoryNameList">
                                         {{taxcate.taxCategoryName}}
                                     </option>
-                                </select>
+                                </select> -->
                                 </td>
                             </tr>
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;1&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
+                                    <input type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter mobile1">
@@ -391,7 +401,7 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;2&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="mobile2" [(ngModel)]='mobile2' value={{mobile2}}
+                                    <input type="number" formControlName="mobile2" [(ngModel)]='mobile2' value={{mobile2}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter  mobile2">
@@ -406,7 +416,7 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;3&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="mobile3" [(ngModel)]='mobile3' value={{mobile3}}
+                                    <input type="number" formControlName="mobile3" [(ngModel)]='mobile3' value={{mobile3}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter mobile3">
@@ -458,7 +468,7 @@
                                 <td style="width: 10%" class="LabelFontStyle">
                                     &nbsp;Contact&nbsp;Person&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="contactNo" [(ngModel)]='contactNo' value={{contactNo}}
+                                    <input type="number" formControlName="contactNo" [(ngModel)]='contactNo' value={{contactNo}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter contact Person No">
@@ -656,9 +666,10 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
                                     id="ctl00_cpForm_grdActions"
-                                    style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                    style="border-color:#959595;width:100%;border-collapse:collapse;"> -->
+                                    <table class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
                                     <tbody>
                                         <tr class="GridHeader">
                                             <th scope="col">Customer Site Id</th>
@@ -684,23 +695,23 @@
                                         </tr>
                                         <tr *ngFor="let com of lstcomments.customerSiteMasterList" class="ItemStyle"
                                             style="text-decoration:none;">
-                                            <td>{{com.customerSiteId}}</td>
-                                            <td>{{com.ouId}}</td>
-                                            <td>{{com.address1}}</td>
-                                            <td>{{com.address2}}</td>
-                                            <td>{{com.address3}}</td>
-                                            <td>{{com.location}}</td>
-                                            <td>{{com.city}}</td>
-                                            <td>{{com.pinCd}}</td>
-                                            <td>{{com.state}}</td>
-                                            <td>{{com.mobile1}}</td>
-                                            <td>{{com.mobile2}}</td>
-                                            <td>{{com.mobile3}}</td>
-                                            <td>{{com.emailId}}</td>
-                                            <td>{{com.emailId1}}</td>
-                                            <td>{{com.gstNo}}</td>
-                                            <td>{{com.panNo}}</td>
-                                            <td>{{com.tanNo}}</td>
+                                            <td style="width: 195px;">{{com.customerSiteId}}</td>
+                                            <td style="width: 200px;">{{com.ouId}}</td>
+                                            <td style="width: 300px;">{{com.address1}}</td>
+                                            <td style="width: 300px;">{{com.address2}}</td>
+                                            <td style="width: 250px;">{{com.address3}}</td>
+                                            <td style="width: 250px;">{{com.location}}</td>
+                                            <td style="width: 250px;">{{com.city}}</td>
+                                            <td style="width: 250px;">{{com.pinCd}}</td>
+                                            <td style="width: 250px;">{{com.state}}</td>
+                                            <td style="width: 250px;">{{com.mobile1}}</td>
+                                            <td style="width: 250px;">{{com.mobile2}}</td>
+                                            <td style="width: 250px;">{{com.mobile3}}</td>
+                                            <td style="width: 250px;">{{com.emailId}}</td>
+                                            <td style="width: 250px;">{{com.emailId1}}</td>
+                                            <td style="width: 250px;">{{com.gstNo}}</td>
+                                            <td style="width: 250px;">{{com.panNo}}</td>
+                                            <td style="width: 250px;">{{com.tanNo}}</td>
                                             <td><button (click)="Select(com.customerSiteId)">Select</button></td>
                                         </tr>
                                     </tbody>
@@ -723,7 +734,7 @@
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                         <td>
-                                           <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control" (ngModelChange)='SearchsiteTaxCat($event)'>
+                                           <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control">
                                                     <option disabled>--Select--</option>
                                                     <option *ngFor="let sc of  ouIdList" [ngValue]="sc.ouId">
                                                     {{sc.ouId}}-{{sc.ouName}}
@@ -753,16 +764,7 @@
                                                 class="form-control"
                                              placeholder="Enter Tan No">
                                          </td>
-                                         <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
-                                         <td>
 
-                                              <select formControlName="staxCatName" id="staxCatName" class="form-control" [ngModel]="staxCatName">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let taxcate of  taxCategoryList1">
-                                                        {{taxcate.taxCategoryName}}
-                                                    </option>
-                                                </select>
-                                          </td>
                                     </tr>
                                     <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                         <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
@@ -851,7 +853,7 @@
                                             <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                                             <td>
                                                     <select formControlName="sstate" id="sstate" [(ngModel)]='sstate'
-                                                    class="form-control">
+                                                    class="form-control" (ngModelChange)='onOptionSiteStateSeleted($event)'>
                                                     <option>--Select--</option>
                                                     <option *ngFor="let sc of stateList">
                                                         {{sc.codeDesc}}
@@ -865,6 +867,16 @@
                                                     *ngIf="!customerMasterForm.get('sstate').valid && customerMasterForm.get('sstate').touched">Please
                                                     Enter state </span> -->
                                             </td>
+                                            <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
+                                         <td>
+                                            <input disabled formControlName="staxCatName" id="staxCatName" class="form-control" [ngModel]="staxCatName">
+                                              <!-- <select formControlName="staxCatName" id="staxCatName" class="form-control" [ngModel]="staxCatName">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let taxcate of  taxCategoryList1">
+                                                        {{taxcate.taxCategoryName}}
+                                                    </option>
+                                                </select> -->
+                                          </td>
                                     </tr>
                                     <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                         <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>
@@ -967,10 +979,10 @@
                                             <ng-template #elseBlockStatus>
 
                                         <td>
-                                            <select formControlName="sstatus" id="sstatus" [ngModel]="sstatus"
+                                            <select formControlName="sstatus" id="sstatus"
                                                 (ngModelChange)='onOptionsSelected($event)' class="form-control">
                                                 <option>--Select--</option>
-                                                <option *ngFor="let sc of statusList">
+                                                <option *ngFor="let sc of statusList" [value]="sc.codeDesc">
                                                     {{sc.codeDesc}}
                                                 </option>
                                             </select>
