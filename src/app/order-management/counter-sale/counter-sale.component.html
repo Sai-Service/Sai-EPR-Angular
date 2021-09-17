@@ -351,7 +351,7 @@
                     Invoice&nbsp;Number&nbsp;:&nbsp;
                 </td>
                 <td >
-                    <input disabled type="text" formControlName="trxNumber" [(ngModel)]='trxNumber' value={{trxNumber}}
+                    <input disabled type="number" formControlName="trxNumber" [(ngModel)]='trxNumber' value={{trxNumber}}
                         class="form-control" style="width: 100%;">
                 </td>
             </tr>
@@ -561,9 +561,8 @@
                      </ng-template>
                      <ng-template #elsedisPer>
                     <td>
-                        <input  type="text" formControlName="disPer"  value={{disPer}} [(ngModel)]="disPer" (ngModelChange)='onOptionsSelectedDiscountPer($event)'
+                        <input  type="number" formControlName="disPer" [(ngModel)]="disPer" value={{disPer}}  (ngModelChange)='onOptionsSelectedDiscountPer($event)'
                         class="form-control" style="width: 160px;font-weight: bold;">
-                        <!-- (keydown.tab)="disPerCal(disPer)" -->
                     </td>
                      </ng-template>
                 </tr>
@@ -723,7 +722,7 @@
                                             style="height: 20px;width: 70px;"  > -->
                                 <!-- </td> -->
                                         <td>
-                                            <input  type="number" formControlName="pricingQty" class="form-control"  
+                                            <input  type="number" formControlName="pricingQty" class="form-control" 
                                                 (change)="onKey(i)"   style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
                                        
                                     </td>
@@ -737,22 +736,14 @@
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
                                     <td>
-                                        <input disabled  type="number" formControlName="disPer" [(ngModel)]="disPer" class="form-control"
+                                        <input disabled  type="number" formControlName="disPer" value="disPer" class="form-control"
                                             (change)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
                                     <td>
-                                        <!-- <div *ngIf="displaydisAmt; then thendisAmt; else elsedisAmt"> </div>
-                                        <ng-template #thendisAmt>
-                                            <input disabled type="number" formControlName="disAmt"   class="form-control" 
-                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
-                                        </ng-template>
-                                        <ng-template #elsedisAmt> -->
                                         <input type="number" formControlName="disAmt"  class="form-control" 
-                                            (change)="onKey(i)" style="height: 20px;width: 70px;">
-                                        <!-- </ng-template> -->
+                                        (keydown.tab)="onKey(i)" style="height: 20px;width: 70px;">
                                     </td>
                                     <td>
-                                        <!-- (ngModelChange)='onOptionTaxCatSelected($event,i)' -->
                                         <select formControlName="taxCategoryName" id="taxCategoryName"
                                         (change)="onKey(i)" class="form-control"
                                         style="width: 160px;height: 25px;font-size: 10px;">
@@ -804,7 +795,7 @@
                                                  style="height: 20px;width: 70px;">
                                             </td>
                                             <td>
-                                                <input disabled  type="text" formControlName="pricingQty" class="form-control"
+                                                <input disabled  type="number" formControlName="pricingQty" class="form-control"
                                                     (change)="onKey(i)" style="height: 20px;width: 70px;">
                                            
                                         </td>
@@ -817,11 +808,11 @@
                                                 (change)="onKey(i)" style="height: 20px;width: 70px;">
                                         </td>    
                                         <td>
-                                            <input disabled type="number" formControlName="disPer" [(ngModel)] ="disPer" class="form-control"
+                                            <input disabled type="number" formControlName="disPer" [(ngModel)]="disPer" class="form-control"
                                               style="height: 20px;width: 70px;">
                                         </td>
                                         <td>
-                                            <input  type="number" formControlName="disAmt"  class="form-control"
+                                            <input  type="number" formControlName="disAmt"  (keydown.tab)="onKey(i)"   class="form-control"
                                               style="height: 20px;width: 70px;">
                                         </td>
                                         <td>

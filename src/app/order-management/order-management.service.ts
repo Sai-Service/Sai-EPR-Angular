@@ -68,9 +68,9 @@ export class OrderManagementService {
 
     
   downloadCSPreINV(orderNumber) :Observable<any> {
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
     // local
-    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;   
+    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxPreInvPrint/${orderNumber}`;   
     return this.http.get(REQUEST_URI, { 
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -79,9 +79,9 @@ export class OrderManagementService {
   }
 
   downloadCSINV(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;     
+    // const REQUEST_URI = `http://localhost:8081//orderHeader/cntrTaxInvPrint/${InvoiceNumber}`;     
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -90,9 +90,9 @@ export class OrderManagementService {
   }
   
   downloadBajajCSINV(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/bajajSpares/${InvoiceNumber}`;  
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/bajajSpares/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081/orderHeader/bajajSpares/${InvoiceNumber}`;    
+    // const REQUEST_URI = `http://localhost:8081/orderHeader/bajajSpares/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -102,9 +102,9 @@ export class OrderManagementService {
 
 
   downloadVehicleINV(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081/orderHeader/salesTaxInv/${InvoiceNumber}`;    
+    // const REQUEST_URI = `http://localhost:8081/orderHeader/salesTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -115,9 +115,9 @@ export class OrderManagementService {
 
 
   downloadAddonINV(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/addonTaxInv/${InvoiceNumber}`;  
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/addonTaxInv/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081/orderHeader/addonTaxInv/${InvoiceNumber}`;    
+    // const REQUEST_URI = `http://localhost:8081/orderHeader/addonTaxInv/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -316,9 +316,9 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
   
 
-  ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
+  ReceiptMethodList(mPaytype, mStatus): Observable<any> {
     // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
-    return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
+    return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&status=${mStatus}`);
   }
 
 

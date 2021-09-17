@@ -34,6 +34,7 @@ export class ItemCategortComponent implements OnInit {
   submitted = false;
   divisionId: number;
   attribute1: string;
+  divisionName:string;
   divisionId1: string;
   subType: string;
   mainType: string;
@@ -56,18 +57,20 @@ export class ItemCategortComponent implements OnInit {
   public mainTypeList: Array<string> = [];
   public YesNoList: Array<string> = [];
   public statusList: Array<string> = [];
+  public mainTypeNewList: Array<string> = [];
+  public subTypeNewList:Array<string>=[];
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.itemCategoryMasterForm = fb.group({
       description: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(50),Validators.pattern('[a-zA-Z0-9]*')]],
       divisionId: ['', [Validators.required]],
-      attribute1: ['', [Validators.required]],
+      attribute1: [''],
       princpleItem: ['', [Validators.required]],
-      status: ['', [Validators.required]],
+      status: [''],
       subType: ['', [Validators.required]],
       mainType: ['', [Validators.required]],
-      categoryId:['', [Validators.required]],
+      categoryId:[''],
       endDate:[],
       // divisionCode:[''],
     })
@@ -101,6 +104,14 @@ export class ItemCategortComponent implements OnInit {
         }
       );
 
+      this.service.mainTypeNewList((sessionStorage.getItem('divisionId')))
+      .subscribe(
+        data => {
+          this.mainTypeNewList = data;
+          console.log(this.mainTypeNewList);
+        }
+      );
+
     this.service.YesNoList()
       .subscribe(
         data => {
@@ -117,6 +128,15 @@ export class ItemCategortComponent implements OnInit {
         }
       );
 
+
+      this.service.subTypeNewList((sessionStorage.getItem('divisionId')))
+      .subscribe(
+        data => {
+          this.subTypeNewList = data;
+          console.log(this.subTypeNewList);
+        }
+      );
+  
   }
 
 
@@ -138,17 +158,19 @@ export class ItemCategortComponent implements OnInit {
   newItemCatMast() {
     this.submitted = true;
     if(this.itemCategoryMasterForm.invalid){
+      // alert('Invalid')
     return;
     } 
     const formValue: IItemCategory = this.transData(this.itemCategoryMasterForm.value);
     formValue.attribute1 =  formValue.mainType + '.' + formValue.subType;
     this.service.ItemCatMastSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.itemCategoryMasterForm.reset();
+        this.searchItemCatMast()
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           this.itemCategoryMasterForm.reset();
         }
       }
@@ -156,7 +178,7 @@ export class ItemCategortComponent implements OnInit {
   }
 
   searchItemCatMast() {
-    this.service.getItemCategorySearch()
+    this.service.getItemCategorySearchbydivisionId((sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -169,11 +191,11 @@ export class ItemCategortComponent implements OnInit {
     const formValue: IItemCategory = this.itemCategoryMasterForm.value;
     this.service.UpdateItemCatMastById(formValue, formValue.categoryId).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFULLY');
+        alert(res.message);
         window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message);
           this.itemCategoryMasterForm.reset();
         }
       }
@@ -194,6 +216,8 @@ export class ItemCategortComponent implements OnInit {
       this.itemCategoryMasterForm.patchValue(select);
       this.divisionId= select.divisionId.divisionId;
       this.divisionCode=select.divisionId.divisionCode;
+      this.divisionName=select.divisionId.divisionName;
+      // alert(this.divisionName)
       // this.divisionId= select.divisionId.divisionId;
       // this.compId= select.compId.compId;
       // this.mState =select.mState;
@@ -201,6 +225,18 @@ export class ItemCategortComponent implements OnInit {
       this.display = false;
     }
   }
+
+  // onOptionsSelectedSubType(event: any){
+  //   this.service.subTypeNewList((sessionStorage.getItem('divisionId')))
+  //   .subscribe(
+  //     data => {
+  //       this.subTypeNewList = data;
+  //       console.log(this.subTypeNewList);
+  //     }
+  //   );
+
+  // }
+
   onOptionsSelected(event: any) {
 
     this.Status1 = this.itemCategoryMasterForm.get('status').value;
@@ -214,6 +250,17 @@ export class ItemCategortComponent implements OnInit {
     }
   }
 
+
+  onKey(event: any) {
+    // alert(event);
+    // alert( this.itemCategoryMasterForm.get('mainType').value + '.' +this.itemCategoryMasterForm.get('subType').value)
+    const aaa = this.itemCategoryMasterForm.get('mainType').value + '.' +this.itemCategoryMasterForm.get('subType').value;
+    this.attribute1 = aaa;
+    console.log(this.itemCategoryMasterForm.get('mainType').value + '.' +this.itemCategoryMasterForm.get('subType').value);
+    
+  }
+
+  
 
 }
 

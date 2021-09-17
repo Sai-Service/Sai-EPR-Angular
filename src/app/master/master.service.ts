@@ -89,6 +89,14 @@ export class MasterService {
   mainTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/MainCtg');
   }
+
+  mainTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=MainCtg&divisionId=${divisionId}`);
+  }
+  subTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=SubCtg&divisionId=${divisionId}`);
+  }
+
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
@@ -418,6 +426,10 @@ public GroupMasterSubmit(LocationMasterRecord) {
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/itemCategory');
+}
+
+getItemCategorySearchbydivisionId(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/itemCategory/div/${divisionId}`);
 }
 public ItemCatMastSubmit(ItemCategoryRecord) {
   const options = {
@@ -1752,6 +1764,19 @@ public poinvCre(segment1) {
 
 poAllRecFind(segment1): Observable<any> {
   return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}`);
+}
+
+
+    
+downloadgrrPrint(receiptNo) :Observable<any> {
+  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`; 
+  // local
+  // const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;   
+  return this.http.get(REQUEST_URI, { 
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
 }
 
 

@@ -615,7 +615,8 @@ export class OPMasterDtoComponent implements OnInit {
       );
 
       this.sub = this.router1.params.subscribe(params => {
-        alert(this.segment1)
+        var segment1= this.segment1;
+        alert(segment1);
         this.segment1 = params['segment1'];
         if (this.segment1 != undefined)
         this.Search(this.segment1);

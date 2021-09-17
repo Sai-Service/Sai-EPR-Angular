@@ -32,6 +32,7 @@ interface IallotmentForm {
 export class AllotmentComponent implements OnInit {
   fileName= 'ExcelSheet.xlsx';
   allotmentForm: FormGroup;
+  public Deallotmentsearchlist=[];
   ouName:string;
   locId:number;
   orgId:number;
@@ -91,6 +92,14 @@ console.log(this.orgId);
       }
     );
  
+
+    this.orderManagementService.Deallotmentsearchlist(sessionStorage.getItem('ouId'))
+    .subscribe(
+      data => {
+        this.Deallotmentsearchlist = data;
+        console.log(this.Deallotmentsearchlist);
+      }
+    );
   }
 
   Select(model:any,color:any,variant:any,locId) {
