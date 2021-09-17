@@ -957,10 +957,12 @@ export class SalesOrderFormComponent implements OnInit {
                           });
 
                         }
+                        // this.onKey(i)
                       }
-                      if (controlinv1.taxCategoryName != null) {
+                    //   if (controlinv1[i].flowStatusCode === 'ALLOTED') {
+                    //  alert('hi')
                         this.onKey(i)
-                      }
+                      // }
                     }
                   );
               }

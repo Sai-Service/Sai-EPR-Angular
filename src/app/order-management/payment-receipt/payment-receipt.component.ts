@@ -270,7 +270,7 @@ export class PaymentReceiptComponent implements OnInit  {
   onPayTypeSelected(payType : any  , rmStatus : any){
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
 
-      if (payType === 'CHECK') {   
+      if (payType === 'CHEQUE') {   
         // alert("checque seleected")   ;    
           this.orderManagementService.ReceiptMethodList(payType,rmStatus)
           .subscribe(
@@ -278,6 +278,7 @@ export class PaymentReceiptComponent implements OnInit  {
               this.ReceiptMethodList = data.obj;
               console.log(this.ReceiptMethodList);
               this.showBankDetails=true;
+              alert(this.showBankDetails)
             }
           );
           } else{
@@ -409,6 +410,15 @@ export class PaymentReceiptComponent implements OnInit  {
   closeMast() {
     // this.router.navigate(['admin']);
     this.location.back();
+  }
+
+  routeOMAndCSPage(){
+   if (this.deptId=1){
+    this.router.navigate(['/SalesOrderForm',this.orderNumber]);
+   }
+    else if (this.deptId){
+      this.router.navigate(['/CounterSaleOrder',this.orderNumber]);
+    }
   }
 
   reverseReceipt(){

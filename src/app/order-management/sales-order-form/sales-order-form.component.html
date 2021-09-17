@@ -1556,7 +1556,7 @@
                     <tr *ngFor="let com of viewAllInvoiceData" class="ItemStyle" style="text-decoration:none;font-size: 12px;text-align: center;">
                    <td style="border: 1px solid black;color: black;">{{com.invType}}</td>
                    <td style="border: 1px solid black;color: black;">{{com.trxNumber}}</td>
-                   <td style="border: 1px solid black;color: black;">{{com.trxDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                   <td style="border: 1px solid black;color: black;">{{com.trxDate}}</td>
                    <td style="border: 1px solid black;color: black;text-align: right;padding-right: 5px;">{{com.invoiceAmount}}</td>
                    <td style="border: 1px solid black;color: black;">
                     <button type="button" class="btn btn-primary"   style="width: 8rem;" (click)="downloadAllInvoice(com.invType)">View Invoice</button>
