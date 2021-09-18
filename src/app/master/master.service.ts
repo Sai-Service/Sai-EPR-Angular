@@ -12,8 +12,8 @@ export class MasterService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  // ServerUrl='http://localhost:8081';
+  ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -1236,7 +1236,7 @@ ItemIdDivisionList(divisionId):Observable<any>{
   return this.http.get(this.ServerUrl+`/itemMst/SpAcItems/${divisionId}`);
 }
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
-  alert ("ms >> subInventoryId :" +subInventoryId);
+  // alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
 }
 getSearchByTrans(reqNo):Observable<any>{
@@ -1772,10 +1772,10 @@ poAllRecFind(segment1): Observable<any> {
 
 
 downloadgrrPrint(receiptNo) :Observable<any> {
-  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`; 
   // local
-  // const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
-  return this.http.get(REQUEST_URI, {
+  const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;   
+  return this.http.get(REQUEST_URI, { 
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
     headers: this.headers,
@@ -1974,7 +1974,7 @@ OrderCategoryList(): Observable<any> {
   // ReverseArReceipt
 
   ReverseArReceiptSubmit(ArReceiptReversalRecord) {
-    alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
+    // alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
     const options = {
       headers: this.headers
     };

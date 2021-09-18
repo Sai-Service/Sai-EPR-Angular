@@ -491,7 +491,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
                                         placeholder="Enter birthDate"
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
-                                        max="{{minDateBirth | date:'yyyy-MM-dd'}}">
+                                        max="{{minDateBirth | date:'yyyy-MM-dd'}}" (change)="onBirthgDateChange($event)" >
                                     <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
                                         <div *ngIf="f.birthDate.errors.required">birth date must</div>
                                         <div *ngIf="f.birthDate.errors.maxLength">birth date must
@@ -506,7 +506,7 @@
                                     <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate'
                                         value={{weddingDate}} (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }" (change)="onOptionWeddingDate($event)"
-                                        placeholder="Enter weddingDate" max="{{minDateWedding | date:'yyyy-MM-dd'}}">
+                                        placeholder="Enter weddingDate" max="{{minDate | date:'yyyy-MM-dd'}}" min="{{minDateWedding | date:'yyyy-MM-dd'}}">
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Creation&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>

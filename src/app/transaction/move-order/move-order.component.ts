@@ -493,8 +493,6 @@ onOptionBatchCode(event,i)
 }
 AvailQty(event:any,i:number) 
 {
-
-
   var trxLnArr =this.moveOrderForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].invItemId;
   var locId=trxLnArr[i].frmLocatorId;

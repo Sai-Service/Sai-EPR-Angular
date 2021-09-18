@@ -220,13 +220,14 @@
                 </td>
                 <td>
                     
-                    <!-- (ngModelChange)='onOptionsSelectedlncategoryType' -->
-                    <select formControlName="transactionTypeName" id="transactionTypeName" class="form-control" style="width: 160px;">
+                    <!-- (ngModelChange)='onOptionsSelectedlncategoryType'  (ngModelChange)="onOptionsSelectedTransactionType($event)"-->
+                    <select formControlName="transactionTypeName"  [(ngModel)]="transactionTypeName"  id="transactionTypeName" (ngModelChange)="onOptionsSelectedTransactionType($event)"  class="form-control" style="width: 160px;">
                     <option>--Select--</option>
                     <option *ngFor="let orderType of orderTypeList">
                         {{orderType.transactionTypeName}}
                     </option>
                 </select>
+                <input hidden type="number" formControlName="transactionTypeId"  value={{transactionTypeId}}  class="form-control" style="width: 160px;" >
                 <!-- <span  *ngIf="!CounterSaleOrderBookingForm.get('transactionTypeName').valid && CounterSaleOrderBookingForm.get('transactionTypeName').touched" class="cross-validation-error-message alert">
                     Select&nbsp;Transaction&nbsp;Type&nbsp;Name </span> -->
                 </td>
@@ -552,8 +553,9 @@
                     <td>
                         <select formControlName="discType" id="discType" class="form-control" style="width: 170px;"    (ngModelChange)='onOptionsSelectedDiscountType($event)'>
                         <option>--Select--</option>
-                        <option value="HeadLevelDisc">Header Level Discount</option>
-                        <option value="LineLevelDisc">Line Level Discount</option>
+                        <option value="Header Level Discount">Header Level Discount</option>
+                        <option value="Line Level Discount">Line Level Discount</option>
+                        <option value="No Discount">No Discount</option>
                     </select>
                     </td>
                     <div *ngIf="displaydisPer; then thendisPer; else elsedisPer"> </div>

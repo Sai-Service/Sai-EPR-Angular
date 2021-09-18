@@ -106,10 +106,7 @@ export class CustomerMasterComponent implements OnInit {
   emailId1: string;
   contactPerson: string;
   contactNo: number;
-  birthDate: Date;
-  weddingDate: Date;
-  startDate: Date;
-  endDate: Date;
+
   classCodeType: string;
   gstNo: string;
   panNo: string;
@@ -152,9 +149,13 @@ export class CustomerMasterComponent implements OnInit {
   lstcomments: any;
   searchByAccount: any;
   displayButton = true;
+  birthDate :Date;
+  weddingDate: Date;
+  startDate: Date;
+  endDate: Date
   public minDate = new Date()  ;
-  public minDateBirth   = new Date().setFullYear(new Date().getFullYear() -18);
-  public minDateWedding = new Date();
+  public minDateBirth = new Date().setFullYear(new Date().getFullYear() -18);
+  public minDateWedding = new Date().getFullYear();
   public cityList1: any=[];
 
   public custTypeList: Array<string>[];
@@ -391,7 +392,7 @@ export class CustomerMasterComponent implements OnInit {
 
   }
   SearchTaxCat(ouId) {
-    // alert(locId);
+
     if(ouId!=undefined){
     this.service.getTaxCat(ouId)
       .subscribe(
@@ -404,7 +405,7 @@ export class CustomerMasterComponent implements OnInit {
     }
   }
   // SearchsiteTaxCat(souId) {
-  //   // alert(locId);
+
   //   this.service.getTaxCat(souId)
   //     .subscribe(
   //       data => {
@@ -432,7 +433,7 @@ onOptionStateSeleted(event:any)
 }
 onOptionSiteStateSeleted(event:any)
 {
-  alert(event);
+
       if(event!=undefined)
       {
        this.service.taxCategoryList1(this.locId,event)
@@ -448,7 +449,7 @@ onOptionSiteStateSeleted(event:any)
 }
   onOptionsSelected(event: any) {
     this.Status1 = this.customerMasterForm.get('status').value;
-    // alert(this.Status1);
+
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
       this.endDate = new Date();
@@ -460,7 +461,7 @@ onOptionSiteStateSeleted(event:any)
 
   onOptioncustTypeSelected(event: any) {
     this.PersonType = this.customerMasterForm.get('custType').value;
-    // alert(this.StatusPickUp);
+
     if (event === 'Person') {
       this.displayPerson = true;
       this.displayOrgnization = false;
@@ -477,7 +478,7 @@ onOptionSiteStateSeleted(event:any)
 
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
-  // alert(person);
+
 if (person === 'Person'){
   this.custName = aaa;
 }
@@ -557,7 +558,7 @@ if (person === 'Person'){
       } else {
         if (res.code === 400) {
           alert('Error ' + res.obj);
-          // alert('Data already present in the data base');
+
           //this.customerMasterForm.reset();
         }
       }
@@ -649,7 +650,7 @@ if (person === 'Person'){
   //     );
   // }
   searchByContact(contactNo) {
-    // alert('---'+contactNo)
+
     this.displayNewButton =false;
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
@@ -669,7 +670,7 @@ if (person === 'Person'){
       );
   }
   searchByAccount1(accountNo) {
-    // alert('---'+accountNo)
+
     this.displayNewButton =false;
     this.service.searchCustomerByAccount(accountNo)
       .subscribe(
@@ -693,7 +694,7 @@ if (person === 'Person'){
 
     this.displayNewButton1=false;
     this.displaystatus=false;
-    alert(customerSiteId);
+
         this.lstcomments2 = this.lstcomments.customerSiteMasterList;
         console.log(this.lstcomments2);
         let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
@@ -723,9 +724,9 @@ if (person === 'Person'){
           // this.sstatus=select.status
           // ticketNo not in  json
           let selstatus = this.statusList.find(d => d.codeDesc === select.status);
-          alert( selstatus.codeDesc)
+
           this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc,slocation:select.location});
-          alert( select.status)
+
           // this.displayButton = false;
         }
         console.log(select.status);
@@ -733,7 +734,7 @@ if (person === 'Person'){
       }
 
       onOptionsSelectedCity (city: any){
-        // alert(city);
+
         if(city != undefined){
         this.service.cityList1(city)
         .subscribe(
@@ -748,24 +749,35 @@ if (person === 'Person'){
         }
       }
       onOptionsiteSelectedCity (event){
-        alert(event);
+
         if(event != undefined){
           var selcity=this.cityList1.find(d=>d.codeDesc===event);
           // this.sstate=selcity.attribute1;
         }
       }
+      onBirthgDateChange(event){
+
+
+        var birthdt  :Date= new Date(event.target.value);
+        this.minDateWedding = birthdt.setFullYear(birthdt.getFullYear()+18);
+        var birthdt1  :Date= new Date(this.minDateWedding);
+
+
+      }
       onOptionWeddingDate(event)
       {
-        alert(event.target.value)
+
          var weddate=event.target.value;
-         alert(weddate);
+
         var birthdat:Date=this.customerMasterForm.get('birthDate').value
+
         if(weddate>this.startDate ||weddate<=birthdat||weddate<=birthdat.setFullYear(birthdat.getFullYear()+18))
         {
           alert("Please select Correct Wedding Date");
 
         }
       }
+
       validation()
       {
         var type=this.customerMasterForm.get('custType').value;
