@@ -539,10 +539,10 @@ if (person === 'Person'){
       alert("Please fix the errors!!");
     return;
     }
-   
+
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
-    
+
     if(formValue.custType ==='Organization')
     {
       formValue.title='M/S';
@@ -564,7 +564,7 @@ if (person === 'Person'){
     });
   }
   UpdateSiteCustMastExeSite(){
-   
+
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -756,7 +756,11 @@ if (person === 'Person'){
       }
       onOptionWeddingDate(event)
       {
-        if(event>this.startDate ||event<=this.birthDate)
+        alert(event.target.value)
+         var weddate=event.target.value;
+         alert(weddate);
+        var birthdat:Date=this.customerMasterForm.get('birthDate').value
+        if(weddate>this.startDate ||weddate<=birthdat||weddate<=birthdat.setFullYear(birthdat.getFullYear()+18))
         {
           alert("Please select Correct Wedding Date");
 
