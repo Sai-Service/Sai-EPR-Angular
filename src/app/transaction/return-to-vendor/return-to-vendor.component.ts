@@ -629,7 +629,7 @@ export class ReturnToVendorComponent implements OnInit {
       var len1=rtvLineArr.length;
 
       // for (let i = 0; i < len1 ; i++)  {
-
+        debugger;
         var mItemId =rtvLineArr[index].invItemId;
         var subinvId =rtvLineArr[index].subInventoryId;
     
@@ -638,7 +638,7 @@ export class ReturnToVendorComponent implements OnInit {
           // this.service.getfrmSubLoc(120,42,1)
           alert ("inventoryId ,subInventoryId:" +mItemId  + " , "+subinvId);
       
-        this.service.getfrmSubLoc(this.locId,mItemId,42)
+        this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
           .subscribe(
           data => {
             this.ItemLocatorList = data;
