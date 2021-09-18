@@ -697,7 +697,7 @@ export class CounterSaleComponent implements OnInit {
           this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
           this.lstgetOrderTaxDetails = data.obj.taxAmounts;
           this.allDatastore = data.obj;
-          if (data.obj.discType==='HeadLevelDisc'){
+          if (data.obj.discType==='Header Level Discount'){
             this.onOptionsSelectedDiscountType(data.obj.discType);
             this.CounterSaleOrderBookingForm.patchValue({ disPer: data.obj.disPer })
             // this.displaydisAmt=f
@@ -1834,7 +1834,7 @@ export class CounterSaleComponent implements OnInit {
 
   onOptionsSelectedDiscountType(discType) {
     // alert(discType)
-    if (discType === 'HeadLevelDisc') {
+    if (discType === 'Header Level Discount') {
       this.displaydisPer = false;
       this.displaydisAmt = true;
     }
