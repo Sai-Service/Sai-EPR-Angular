@@ -67,6 +67,8 @@ interface IcustomerMaster {
   slocation:string;
   emplId: number;
   customerSiteId:number;
+  creditAmt:number;
+  highAmt:number;
 }
 
 @Component({
@@ -181,6 +183,8 @@ export class CustomerMasterComponent implements OnInit {
   paymentType: string;
   taxCategoryList1: any;
   customerSiteId:number;
+  creditAmt:number;
+  highAmt:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -258,6 +262,8 @@ export class CustomerMasterComponent implements OnInit {
       souId:[],
       souName:[],
       slocation:[],
+      creditAmt:[],
+      highAmt:[],
     })
 
   }
@@ -286,7 +292,7 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
 
-      this.service.classCodeTypeList()
+      this.service.classCodeTypeList(sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           this.classCodeTypeList = data;
@@ -550,9 +556,9 @@ if (person === 'Person'){
     }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        var mobile=this.customerMasterForm.get('mobile1').value;
-        this.searchByContact(mobile);
+        alert('RECORD INSERTED SUCCESSFULLY'+res.obj);
+        // var mobile=this.customerMasterForm.get('mobile1').value;
+        this.searchByAccount1(res.obj);
         this.customerMasterForm.disable();
       //  this.customerMasterForm.reset();
       } else {
@@ -604,7 +610,7 @@ if (person === 'Person'){
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
-        window.location.reload();
+        // window.location.reload();
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');

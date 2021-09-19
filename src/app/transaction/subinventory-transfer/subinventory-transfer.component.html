@@ -14,19 +14,19 @@
                Tansfer Number:
             </td>
              <td>
-              <input disabled type="text" class="form-control"formControlName="shipmentNumber">
+              <input disabled type="text" class="form-control"formControlName="shipmentNumber" style="width: 120px;">
             </td>
-            <td style="width: 15%" class="LabelFontStyle">
+            <td class="LabelFontStyle">
                 Date:
               </td>
               <td>
-                <input  type="date" class="form-control"formControlName="transDate">
+                <input  type="text" class="form-control"formControlName="transDate"[(ngModel)]="transDate" style="width: 120px;">
               </td>
-            <td style="width: 15%" class="LabelFontStyle">
-              From subinventory
+            <td class="LabelFontStyle">
+              From subinventory:
             </td>
             <td>
-                <input type="text" class="form-control"  formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
+                <input type="text" class="form-control" style="width: 120px;" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
                   <!-- <select class="form-control"  formControlName="subInventoryCode" >
                           <option>--Select--</option>
                           <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
@@ -34,11 +34,11 @@
             </td>
 
 
-            <td style="width: 15%" class="LabelFontStyle">
-              To subinventory
+            <td  class="LabelFontStyle">
+              To subinventory:
             </td>
             <td>
-                  <select class="form-control"  formControlName="transferSubInv" >
+                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" >
                           <option>--Select--</option>
 
           <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>
