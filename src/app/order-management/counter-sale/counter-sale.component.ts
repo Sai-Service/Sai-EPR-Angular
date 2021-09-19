@@ -35,6 +35,7 @@ interface ISalesBookingForm {
   headerId: number;
   divisionId: number;
   transactionTypeId:number;
+  customerSiteId:number;
   ouId: number;
   orderTypeId: string;
   transactionTypeName: string;
@@ -132,6 +133,7 @@ export class CounterSaleComponent implements OnInit {
   // lnflowStatusCode:string;
   lnflowStatusCode: 'BOOKED';
   transactionTypeId:number;
+  customerSiteId:number;
   reservedQty:number;
   frmLocatorId: number;
   activeLineNo: number = 1;
@@ -360,6 +362,7 @@ export class CounterSaleComponent implements OnInit {
       transactionTypeId:[''],
       InvoiceNumber: [''],
       name: [''],
+      customerSiteId:[''],
       id: [''],
       trxNumber: [''],
       headerId: [''],
@@ -1006,6 +1009,11 @@ export class CounterSaleComponent implements OnInit {
           // if (data.code===200){
           this.custSiteAddressList = data;
           this.ouId = data.ouId;
+          // alert(data.ouId+' '+ sessionStorage.getItem('ouId'))
+          if (data.ouId !=(sessionStorage.getItem('ouId'))){
+            alert('First Craete OU wise Side and then do the further process!')
+        }
+        else{
           this.CounterSaleOrderBookingForm.patchValue(this.custSiteAddressList);
           this.custName = data.customerId.custName;
           this.customerId = data.customerId.customerId;
@@ -1015,12 +1023,7 @@ export class CounterSaleComponent implements OnInit {
           console.log(this.custSiteAddressList.customerId.custName);
           this.birthDate = data.customerId.birthDate;
           this.weddingDate = data.customerId.weddingDate;
-          // }
-          // else {
-          //   if (data.code===400){
-          //     alert(data.message);
-          //   }
-          // }
+        }
         });
   }
 
@@ -1470,6 +1473,7 @@ export class CounterSaleComponent implements OnInit {
     // formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     let jsonData = this.CounterSaleOrderBookingForm.value;
+    jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
