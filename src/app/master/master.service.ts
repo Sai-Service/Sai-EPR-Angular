@@ -559,6 +559,13 @@ mainModelList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 }
 
+mainModelListByDivisionId(): Observable<any> {
+
+  //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2 
+  return this.http.get(this.ServerUrl +'/cmnLookup/Catgtype?cmnType=Model&divisionId='+sessionStorage.getItem('divisionId'));
+}
+
+
 mcpReasonLst(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/McpCancelRsn');
 }

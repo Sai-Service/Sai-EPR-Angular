@@ -840,7 +840,7 @@ else{
     }
     else{
       alert('catgory');
-      this.service.mainModelList()
+      this.service.mainModelListByDivisionId()
       .subscribe(
         data => {
           this.mainModelList = data;
