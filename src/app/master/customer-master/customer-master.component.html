@@ -1001,6 +1001,53 @@
                                                     placeholder="Enter end date" [ngModel]="sendDate | date:'yyyy-MM-dd'"></td>
                                         </ng-template>
                                     </tr>
+                                    <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
+                                      <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Limit&nbsp;:&nbsp;</td>
+                                      <td>
+                                          <input formControlName="creditAmt" value={{creditAmt}}
+                                              class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && f.smobile1.errors }"
+                                              placeholder="Enter mobile1">
+                                          <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
+                                              <div *ngIf="f.creditAmt.errors.required">Enter mobile1 </div>
+                                              <div *ngIf="f.creditAmt.errors.maxLength">Enter mobile1
+                                              </div>
+                                          </div>
+                                          <!-- <span
+                                              *ngIf="!customerMasterForm.get('smobile1').valid && customerMasterForm.get('smobile1').touched">Please
+                                              Enter mobile1 </span> -->
+                                      </td>
+                                      <td style="width: 15%" class="LabelFontStyle">Higher&nbsp;Amount&nbsp;:&nbsp;</td>
+                                      <td>
+                                          <input formControlName="highAmt" value={{highAmt}}
+                                              class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && f.smobile2.errors }"
+                                              placeholder="Enter mobile1">
+                                          <div *ngIf="submitted && f.smobile2.errors" class="invalid-feedback">
+                                              <div *ngIf="f.highAmt.errors.required">Enter mobile2 </div>
+                                              <div *ngIf="f.highAmt.errors.maxLength">Enter mobile2
+                                              </div>
+                                          </div>
+                                          <!-- <span
+                                              *ngIf="!customerMasterForm.get('smobile2').valid && customerMasterForm.get('smobile2').touched">Please
+                                              Enter mobile2 </span> -->
+                                      </td>
+                                      <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Discount&nbsp;:&nbsp;</td>
+                                      <td>
+                                          <input formControlName="smobile3" value={{smobile3}} [(ngModel)]='smobile3'
+                                              class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && f.smobile3.errors }"
+                                              placeholder="Enter mobile1">
+                                          <div *ngIf="submitted && f.smobile3.errors" class="invalid-feedback">
+                                              <div *ngIf="f.smobile3.errors.required">Enter mobile3 </div>
+                                              <div *ngIf="f.smobile3.errors.maxLength">Enter mobile3
+                                              </div>
+                                          </div>
+                                          <!-- <span
+                                              *ngIf="!customerMasterForm.get('smobile3').valid && customerMasterForm.get('smobile3').touched">Please
+                                              Enter mobile2 </span> -->
+                                      </td>
+                                  </tr>
                                 </table>
                                 <table class="center">
                                     <tr>
