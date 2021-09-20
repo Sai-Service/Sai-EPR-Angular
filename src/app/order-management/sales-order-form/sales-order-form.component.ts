@@ -664,11 +664,11 @@ public  searchByAccountNo(accountNo) {
     var patch = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
     var arrayControlTax = this.SalesOrderBookingForm.get('taxAmounts').value;
     var index = Number(arrayControlTax[1].invLineNo);
-    var diss1 = arrayControlTax[0].totTaxAmt.toFixed(2);
-    var diss2 = arrayControlTax[1].totTaxAmt.toFixed(2);
-    var diss3 = arrayControlTax[2].totTaxAmt.toFixed(2);
-    var diss4 = arrayControlTax[3].totTaxAmt.toFixed(2);
-    var diss5 = arrayControlTax[4].totTaxAmt.toFixed(2);
+    var diss1 = arrayControlTax[0].totTaxAmt;
+    var diss2 = arrayControlTax[1].totTaxAmt;
+    var diss3 = arrayControlTax[2].totTaxAmt;
+    var diss4 = arrayControlTax[3].totTaxAmt;
+    var diss5 = arrayControlTax[4].totTaxAmt;
     // var itemId = controlinv1[index - 1].itemId;
     this.service.taxCalforItemwithMulDisc(sessionStorage.getItem('ouId'), taxCategoryId, baseAmt, diss1, diss2, diss3, diss4, diss5)
       .subscribe(
@@ -677,7 +677,7 @@ public  searchByAccountNo(accountNo) {
           for (let i = 0, j = index; i < this.taxCalforItem.length; i++, j++) {
             (patch.controls[i]).patchValue(
               {
-                amount: this.taxCalforItem[i].totTaxAmt.toFixed(2),
+                amount: this.taxCalforItem[i].totTaxAmt,
                 invLineNo:i+1,
               }
             );
@@ -701,7 +701,7 @@ public  searchByAccountNo(accountNo) {
       console.log('in patch' + taxCalforItem);
       console.log(x.taxRateName);
       control.push(this.fb.group({
-        totTaxAmt: x.totTaxAmt.toFixed(2),
+        totTaxAmt: x.totTaxAmt,
         lineNumber: x.lineNumber,
         taxRateName: x.taxRateName,
         taxTypeName: x.taxTypeName,
@@ -753,13 +753,13 @@ public  searchByAccountNo(accountNo) {
             for (let i = 0; i < this.taxCalforItem.length; i++) {
 
               if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt.toFixed(2)
+                sum = sum + this.taxCalforItem[i].totTaxAmt
               }
             }
             (patch.controls[index]).patchValue({
-              baseAmt: baseAmt.toFixed(2),
-              taxAmt: sum.toFixed(2),
-              totAmt: baseAmt + sum.toFixed(2),
+              baseAmt: baseAmt,
+              taxAmt: sum,
+              totAmt: baseAmt + sum,
             });
 
             let controlinv1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
@@ -785,9 +785,9 @@ public  searchByAccountNo(accountNo) {
       // alert(taxCatNm+ ' '+ 'NULL CON');
       this.displaysegmentInvType[index] = false;
       (patch.controls[index]).patchValue({
-        baseAmt: baseAmt.toFixed(2),
-        taxAmt: sum.toFixed(2),
-        totAmt: baseAmt + sum.toFixed(2),
+        baseAmt: baseAmt,
+        taxAmt: sum,
+        totAmt: baseAmt + sum,
       });
     }
   }
@@ -1147,7 +1147,7 @@ public  searchByAccountNo(accountNo) {
           console.log('in patch' + taxItems);
           console.log(x.totTaxAmt);
           taxControl.push(this.fb.group({
-            totTaxAmt: x.totTaxAmt.toFixed(2),
+            totTaxAmt: x.totTaxAmt,
             lineNumber: x.lineNumber,
             taxRateName: x.taxRateName,
             taxTypeName: x.taxTypeName,
@@ -1194,7 +1194,7 @@ public  searchByAccountNo(accountNo) {
             var sum = 0;
             for (i = 0; i < this.taxCalforItem.length; i++) {
               if (this.taxCalforItem[i].totTaxPer != 0) {
-                sum = sum + this.taxCalforItem[i].totTaxAmt.toFixed(2)
+                sum = sum + this.taxCalforItem[i].totTaxAmt
               }
             }
             this.TaxDetailsArray().clear()

@@ -688,7 +688,7 @@ export class JobCardComponent implements OnInit {
             taxCategoryName: data1.taxCategoryName,
             taxCategoryId: data1.taxCategoryId,
           })
-          alert(this.taxCategoryName);
+          // alert(this.taxCategoryName);
         }
       );
   }
@@ -776,7 +776,7 @@ export class JobCardComponent implements OnInit {
         }
       );
     var regno = this.jobcardForm.get('regNo').value;
-    alert(regno);
+    // alert(regno);
     if (regno != undefined) {
       this.serviceService.billableTyIdLstFN(event, regno)
         .subscribe(
@@ -785,7 +785,7 @@ export class JobCardComponent implements OnInit {
             this.billableTyIdList = data1;
             console.log(data1);
             console.log(this.billableTyIdList);
-            alert("-----"+jcStatus);
+            // alert("-----"+jcStatus);
             if (jcStatus === 'New') {
               let selectbilTy = this.billableTyIdList.find(d => d.billableTyName === 'Customer');
               this.lineDetailsGroup();
@@ -856,7 +856,7 @@ export class JobCardComponent implements OnInit {
     this.lineDetailsArray.removeAt(index);
   }
   serchByRegNo(RegNo) {
-    alert(RegNo);
+    // alert(RegNo);
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
@@ -921,7 +921,7 @@ export class JobCardComponent implements OnInit {
           if (this.lstcomments.lineCnt > 0) {
             this.dispReadyInvoice = true;
           }
-          alert('status' + ' ' + this.lstcomments.matStatus + ' ' + this.jobStatus)
+          // alert('status' + ' ' + this.lstcomments.matStatus + ' ' + this.jobStatus)
           // // || this.lstcomments.matStatus === 'Compeleted'
           // if(this.jobStatus ==='Ready for Invoice'){
           //   alert('In If');
@@ -963,10 +963,10 @@ export class JobCardComponent implements OnInit {
           this.jobcardForm.patchValue(this.lstcomments);
 
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-          alert('jobCardLabLines length---'+data.jobCardLabLines.length)
+          // alert('jobCardLabLines length---'+data.jobCardLabLines.length)
 
           for (let ln=0; ln < data.jobCardLabLines.length; ln++) {
-            alert('inside loop'+ln)
+            // alert('inside loop'+ln)
             // let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === data.jobCardLabLines[ln].billableTyId);
             // patch.controls[ln].patchValue({ billableTyId: selectbilTy.billableTyName });
             this.onOptionsplitRatioSelect(ln,data.jobCardLabLines[ln].splitCateId);
@@ -1014,7 +1014,7 @@ export class JobCardComponent implements OnInit {
             matTotAmt:this.matTotAmt
           })
           // var laborAmt = this.jobcardForm.get('labTotAmt').value;
-          alert(this.matTotAmt+'Material Amt'+this.labTotAmt+'Labor Amt');
+          // alert(this.matTotAmt+'Material Amt'+this.labTotAmt+'Labor Amt');
           this.jobcardForm.patchValue({invTotAmt:this.matTotAmt+this.labTotAmt});
           // alert(perValueLab);
 
@@ -1380,7 +1380,7 @@ export class JobCardComponent implements OnInit {
     })
   }
   labDiscountAmtCal(event) {
-    alert(event);
+    // alert(event);
 
     var labBasicAmt = (this.jobcardForm.get('labBasicAmt').value)
     var labDisAmt = (this.jobcardForm.get('labDiscount').value)
