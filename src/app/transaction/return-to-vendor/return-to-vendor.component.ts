@@ -670,13 +670,8 @@ export class ReturnToVendorComponent implements OnInit {
       var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
       var len1=rtvLineArr.length;
 
-<<<<<<< HEAD
-         // for (let i = 0; i < len1 ; i++)  {
-
-=======
       // for (let i = 0; i < len1 ; i++)  {
         debugger;
->>>>>>> e1300606f657692626d35de9557699aa0c7c40c2
         var mItemId =rtvLineArr[index].invItemId;
         var subinvId =rtvLineArr[index].subInventoryId;
               // alert("itemid,subinvid,locid :"+ mItemId +","+subinvId +","+this.locId);
