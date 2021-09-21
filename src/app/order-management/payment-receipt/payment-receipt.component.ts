@@ -44,6 +44,7 @@ interface IPaymentRcpt {
 export class PaymentReceiptComponent implements OnInit  {
   paymentReceiptForm : FormGroup;
   paymentAmt:number;
+  balancePay:number;
     public DivisionIDList : Array<string>=[];
     public OUIdList: Array<string> = [];
     public DepartmentList: Array<string> = [];
@@ -144,6 +145,7 @@ export class PaymentReceiptComponent implements OnInit  {
       searchValue :[],
       deptName:[],
       searchBy :[],
+      balancePay:[],
       comment: ['', [Validators.required]],
       cancelReason:[],
       cancelDate:[],
@@ -251,6 +253,7 @@ export class PaymentReceiptComponent implements OnInit  {
         // this.lstcomments1=data.obj.orderNumber;
         this.custName=data.obj.custName;
         this.customerId=data.obj.customerId;
+        this.balancePay=data.obj.balancePay.toFixed(2);
         // this.lstcomments.push('orderNumber',data.obj.orderNumber);
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
@@ -270,7 +273,7 @@ export class PaymentReceiptComponent implements OnInit  {
   onPayTypeSelected(payType : any  , rmStatus : any){
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
 
-      if (payType === 'CHECK') {   
+      if (payType === 'CHEQUE') {   
         // alert("checque seleected")   ;    
           this.orderManagementService.ReceiptMethodList(payType,rmStatus)
           .subscribe(
@@ -278,6 +281,7 @@ export class PaymentReceiptComponent implements OnInit  {
               this.ReceiptMethodList = data.obj;
               console.log(this.ReceiptMethodList);
               this.showBankDetails=true;
+              alert(this.showBankDetails)
             }
           );
           } else{
@@ -409,6 +413,15 @@ export class PaymentReceiptComponent implements OnInit  {
   closeMast() {
     // this.router.navigate(['admin']);
     this.location.back();
+  }
+
+  routeOMAndCSPage(){
+   if (this.deptId=1){
+    this.router.navigate(['/SalesOrderForm',this.orderNumber]);
+   }
+    else if (this.deptId){
+      this.router.navigate(['/CounterSaleOrder',this.orderNumber]);
+    }
   }
 
   reverseReceipt(){

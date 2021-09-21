@@ -97,83 +97,130 @@
                 </legend>
                 <div class="grid_scroll">
                 <table class="center" style="width: 100%;">
-                    <tr>
-                        <td>
-                            <table class="center">
                                 <tr>
-                                    <td style="width: 25%" class="LabelFontStyle1">
-                                        Customer&nbsp;No&nbsp;:&nbsp;
-                                    </td>
-                                   
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td class="LabelFontStyle1"></td>
+                                                <td style="width: 25%" class="LabelFontStyle">
+                                                    Account&nbsp;No&nbsp;:&nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>                                   
                                     <td>
                                             <input type="text" class="form-control" formControlName="accountNo"
                                             [(ngModel)]='accountNo' value={{accountNo}}
-                                            (keydown.tab)="accountNoSearch(accountNo)" style="width: 170px;">
+                                            (keydown.tab)="searchByAccountNo(accountNo)" style="width: 170px;">
                                         </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Customer&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" formControlName="custName"
-                                            [(ngModel)]='custName' value={{custName}} style="width: 170px;">
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td>
-                            <table class="center">
+                                           <td>
+                                               <table style="width: 20%;">
+                                                   <tr>
+                                                    <td style="width: 10%" class="LabelFontStyle">
+                                                        &nbsp;Contact&nbsp;No&nbsp;:&nbsp;</td>
+                                                    <td>
+                                                        <input  type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
+                                                        class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#contactNoSearchModel">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary"  (click)="searchByContact(mobile1)" data-toggle="modal" data-target="#contactNoSearchModel"
+                                                        style="width: 2rem;color: white;"> <i class="fa fa-search"></i> </button>
+                                                    <div class="modal fade" id="contactNoSearchModel" tabindex="-1" role="dialog"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                   <table>
+                                                                       <tr>
+                                                                           <table class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
+                                                                               <tbody>
+                                                                                   <tr class="GridHeader">
+                                                       <th scope="col">Customer No</th>
+                                                       <th scope="col">Customer Name</th>
+                                                       <th scope="col">Address1</th>
+                                                       <th scope="col">Address2</th>
+                                                       <th scope="col">Address3</th>
+                                                       <th scope="col">Location</th>
+                                                       <th scope="col">City</th>
+                                                       <th scope="col">Pin Code</th>
+                                                       <th scope="col">State</th>
+                                                       <th scope="col">Mobile1</th>
+                                                       <th scope="col">Mobile2</th>
+                                                       <th scope="col">Email ID1</th>
+                                                       <th scope="col">Email ID2</th>
+                                                       <th scope="col">Select</th>
+                                                        </tr>
+                                                        <tr  *ngFor="let com of accountNoSearch" class="ItemStyle" style="text-decoration:none;">
+                                                           <td style="width: 195px;">{{com.custAccountNo}}</td>
+                                                           <td style="width: 195px;">{{com.custName}}</td>
+                                                           <td style="width: 195px;">{{com.address1}}</td>
+                                                           <td style="width: 195px;">{{com.address2}}</td>
+                                                           <td style="width: 195px;">{{com.address3}}</td>
+                                                           <td style="width: 195px;">{{com.address4}}</td>
+                                                           <td style="width: 195px;">{{com.city}}</td>
+                                                           <td style="width: 195px;">{{com.pinCd}}</td>
+                                                           <td style="width: 195px;">{{com.state}}</td>
+                                                           <td style="width: 195px;">{{com.mobile1}}</td>
+                                                           <td style="width: 195px;">{{com.mobile2}}</td>
+                                                           <td style="width: 195px;">{{com.emailId}}</td>
+                                                           <td style="width: 195px;">{{com.emailId1}}</td>
+                                                           <td><button class="btn-primary" (click)="Select(com.custAccountNo)">Select</button></td>
+                                                       </tr>
+                                                                               </tbody>
+                                                                           </table>
+                                                                       </tr>
+                                                                   </table>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary">Ok</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                                                   
+                                                       </td>
+               
+                                                   </tr>
+                                               </table>
+                                           </td>
+                                            <td  class="LabelFontStyle">
+                                                Name&nbsp;:&nbsp;
+                                            </td>
+                                            <td colspan="2">
+                                                <input disabled type="text" class="form-control" formControlName="custName"
+                                                    [(ngModel)]='custName' value={{custName}} style="width: 500px">
+                                            </td>   
+                                    </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         Biil&nbsp;To&nbsp;Address&nbsp;:&nbsp;
                                     </td>
-                                    <td>
-                                        <input disabled type="text" class="form-control" formControlName="custAddress"
-                                            [(ngModel)]='custAddress' value={{custAddress}} style="width: 170px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <!-- custAddress -->
+                                    <td colspan="4">
                                         <input disabled type="text" class="form-control" formControlName="billToAddress"
-                                            [(ngModel)]='custAddress' value={{billToAddress}} style="width: 170px;">
+                                            value={{billToAddress}} style="width: 100%">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Lessee&nbsp;Account&nbsp;No:&nbsp;
-                                    </td>
-                                    <td>
-                                        <!-- <textarea  class="form-control"></textarea> -->
-                                        <input type="text" class="form-control" style="width: 170px;">
-                                    </td>
+                                    
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        <!-- Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp; -->
+                                        Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp;
                                     </td>
-                                    <td>
-                                        <!-- <textarea  class="form-control"></textarea> -->
-                                        <input disabled type="text" class="form-control" style="width: 170px;">
+                                    <td colspan="4">   
+                                        <input disabled type="text" class="form-control" formControlName="shipToAddress"
+                                            value={{shipToAddress}} style="width: 100%;">
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        <!-- Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp; -->
-                                    </td>
-                                    <td>
-                                        <!-- <textarea  class="form-control"></textarea> -->
-                                        <input disabled type="text" class="form-control" style="width: 170px;">
-                                    </td>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Lessee&nbsp;Address&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <!-- <textarea  class="form-control"></textarea> -->
-                                        <input type="text" class="form-control" style="width: 170px;">
-                                    </td>
+                                   
                                 </tr>
-                            </table>
-                        </td>
-                    </tr>
+                               
+                        
+                  
                 </table>
             </div>
             </fieldset>
@@ -226,14 +273,7 @@
                             Payment&nbsp;Term&nbsp;:&nbsp;
                         </td>
                         <td>
-                            <!-- <select formControlName="payTermDesc" id="payTermDesc" class="form-control"
-                                style="width: 170px;">
-                                <option>--Select--</option>
-                                <option *ngFor="let pt of payTermDescList">
-                                    {{pt.codeDesc}}
-                                </option>
-                            </select> [(ngModel)]='paymentType'-->
-                            <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 160px;">
+                            <input disabled type="text" formControlName="payTermDesc" [(ngModel)]='payTermDesc' value={{payTermDesc}}  class="form-control" style="width: 170px;">
                             <input  hidden disabled type="text" formControlName="paymentTermId" [(ngModel)]='paymentTermId' value={{paymentTermId}}
                             class="form-control" style="width: 160px;">
                         </td>
@@ -641,7 +681,7 @@
                                        Finance&nbsp;Type&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                            <select formControlName="financeType" id="financeType" class="form-control"
+                                            <select type="text" formControlName="financeType" id="financeType" class="form-control"
                                                 style="width: 170px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  financeTypeList">{{sc.codeDesc}}</option>
@@ -651,7 +691,7 @@
                                        Financer&nbsp;:&nbsp;
                                     </td>
                                     <td>
-                                            <select formControlName="financerName" id="financerName" class="form-control"
+                                            <select type="text" formControlName="financerName" id="financerName" class="form-control"
                                                 style="width: 170px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  financerNameList">{{sc.codeDesc}}</option>
@@ -702,7 +742,7 @@
                                             </td>
                                             <td>
                                                 <!-- <input  type="text"  formControlName="exchange"  class="form-control" style="width: 120px;"> -->
-                                                <select formControlName="exchange" id="exchange" class="form-control" style="width: 120px;">
+                                                <select type="text" formControlName="exchange" id="exchange" class="form-control" style="width: 120px;">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  YesNoList" [ngValue]="sc.cmnDesc">
                                                     {{sc.cmnDesc}}
@@ -1556,7 +1596,7 @@
                     <tr *ngFor="let com of viewAllInvoiceData" class="ItemStyle" style="text-decoration:none;font-size: 12px;text-align: center;">
                    <td style="border: 1px solid black;color: black;">{{com.invType}}</td>
                    <td style="border: 1px solid black;color: black;">{{com.trxNumber}}</td>
-                   <td style="border: 1px solid black;color: black;">{{com.trxDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                   <td style="border: 1px solid black;color: black;">{{com.trxDate}}</td>
                    <td style="border: 1px solid black;color: black;text-align: right;padding-right: 5px;">{{com.invoiceAmount}}</td>
                    <td style="border: 1px solid black;color: black;">
                     <button type="button" class="btn btn-primary"   style="width: 8rem;" (click)="downloadAllInvoice(com.invType)">View Invoice</button>
@@ -1580,5 +1620,6 @@
             </ng-template>
             </div>
     </div>
-</form>
+    </form>
+
 

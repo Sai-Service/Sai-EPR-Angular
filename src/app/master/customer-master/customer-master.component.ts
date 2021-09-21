@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -65,6 +66,9 @@ interface IcustomerMaster {
   paymentType: string;
   slocation:string;
   emplId: number;
+  customerSiteId:number;
+  creditAmt:number;
+  highAmt:number;
 }
 
 @Component({
@@ -104,10 +108,7 @@ export class CustomerMasterComponent implements OnInit {
   emailId1: string;
   contactPerson: string;
   contactNo: number;
-  birthDate: Date;
-  weddingDate: Date;
-  startDate: Date;
-  endDate: Date;
+
   classCodeType: string;
   gstNo: string;
   panNo: string;
@@ -150,9 +151,13 @@ export class CustomerMasterComponent implements OnInit {
   lstcomments: any;
   searchByAccount: any;
   displayButton = true;
+  birthDate :Date;
+  weddingDate: Date;
+  startDate: Date;
+  endDate: Date
   public minDate = new Date()  ;
-  public minDateBirth   = new Date().setFullYear(new Date().getFullYear() -18);
-  public minDateWedding = new Date();
+  public minDateBirth = new Date().setFullYear(new Date().getFullYear() -18);
+  public minDateWedding = new Date().getFullYear();
   public cityList1: any=[];
 
   public custTypeList: Array<string>[];
@@ -177,6 +182,9 @@ export class CustomerMasterComponent implements OnInit {
   public payTermDescList: any;
   paymentType: string;
   taxCategoryList1: any;
+  customerSiteId:number;
+  creditAmt:number;
+  highAmt:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -239,6 +247,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
+      customerSiteId:[],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -253,6 +262,8 @@ export class CustomerMasterComponent implements OnInit {
       souId:[],
       souName:[],
       slocation:[],
+      creditAmt:[],
+      highAmt:[],
     })
 
   }
@@ -281,7 +292,7 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
 
-      this.service.classCodeTypeList()
+      this.service.classCodeTypeList(sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           this.classCodeTypeList = data;
@@ -387,7 +398,7 @@ export class CustomerMasterComponent implements OnInit {
 
   }
   SearchTaxCat(ouId) {
-    // alert(locId);
+
     if(ouId!=undefined){
     this.service.getTaxCat(ouId)
       .subscribe(
@@ -400,7 +411,7 @@ export class CustomerMasterComponent implements OnInit {
     }
   }
   // SearchsiteTaxCat(souId) {
-  //   // alert(locId);
+
   //   this.service.getTaxCat(souId)
   //     .subscribe(
   //       data => {
@@ -428,7 +439,7 @@ onOptionStateSeleted(event:any)
 }
 onOptionSiteStateSeleted(event:any)
 {
-  alert(event);
+
       if(event!=undefined)
       {
        this.service.taxCategoryList1(this.locId,event)
@@ -444,7 +455,7 @@ onOptionSiteStateSeleted(event:any)
 }
   onOptionsSelected(event: any) {
     this.Status1 = this.customerMasterForm.get('status').value;
-    // alert(this.Status1);
+
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
       this.endDate = new Date();
@@ -456,7 +467,7 @@ onOptionSiteStateSeleted(event:any)
 
   onOptioncustTypeSelected(event: any) {
     this.PersonType = this.customerMasterForm.get('custType').value;
-    // alert(this.StatusPickUp);
+
     if (event === 'Person') {
       this.displayPerson = true;
       this.displayOrgnization = false;
@@ -473,7 +484,7 @@ onOptionSiteStateSeleted(event:any)
 
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
-  // alert(person);
+
 if (person === 'Person'){
   this.custName = aaa;
 }
@@ -535,31 +546,32 @@ if (person === 'Person'){
       alert("Please fix the errors!!");
     return;
     }
-    // debugger;
+
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1=this.custAccountNo;
-    // debugger;
+
     if(formValue.custType ==='Organization')
     {
       formValue.title='M/S';
     }
     this.service.CustMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
-        var mobile=this.customerMasterForm.get('mobile1').value;
-        this.searchByContact(mobile);
+        alert('RECORD INSERTED SUCCESSFULLY'+res.obj);
+        // var mobile=this.customerMasterForm.get('mobile1').value;
+        this.searchByAccount1(res.obj);
         this.customerMasterForm.disable();
       //  this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
           alert('Error ' + res.obj);
-          // alert('Data already present in the data base');
+
           //this.customerMasterForm.reset();
         }
       }
     });
   }
   UpdateSiteCustMastExeSite(){
+
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -598,7 +610,7 @@ if (person === 'Person'){
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
-        window.location.reload();
+        // window.location.reload();
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
@@ -644,7 +656,7 @@ if (person === 'Person'){
   //     );
   // }
   searchByContact(contactNo) {
-    // alert('---'+contactNo)
+
     this.displayNewButton =false;
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
@@ -664,7 +676,7 @@ if (person === 'Person'){
       );
   }
   searchByAccount1(accountNo) {
-    // alert('---'+accountNo)
+
     this.displayNewButton =false;
     this.service.searchCustomerByAccount(accountNo)
       .subscribe(
@@ -688,7 +700,7 @@ if (person === 'Person'){
 
     this.displayNewButton1=false;
     this.displaystatus=false;
-    alert(customerSiteId);
+
         this.lstcomments2 = this.lstcomments.customerSiteMasterList;
         console.log(this.lstcomments2);
         let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
@@ -713,12 +725,14 @@ if (person === 'Person'){
           this.panNo = select.panNo
           this.tanNo = select.tanNo
           this.souId=select.ouId
+          this.customerSiteId=select.customerSiteId;
+          this.slocation=select.location
           // this.sstatus=select.status
           // ticketNo not in  json
           let selstatus = this.statusList.find(d => d.codeDesc === select.status);
-          alert( selstatus.codeDesc)
-          this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc});
-          alert( select.status)
+
+          this.customerMasterForm.patchValue({sstatus:selstatus.codeDesc,slocation:select.location});
+
           // this.displayButton = false;
         }
         console.log(select.status);
@@ -726,7 +740,7 @@ if (person === 'Person'){
       }
 
       onOptionsSelectedCity (city: any){
-        // alert(city);
+
         if(city != undefined){
         this.service.cityList1(city)
         .subscribe(
@@ -741,20 +755,35 @@ if (person === 'Person'){
         }
       }
       onOptionsiteSelectedCity (event){
-        alert(event);
+
         if(event != undefined){
           var selcity=this.cityList1.find(d=>d.codeDesc===event);
           // this.sstate=selcity.attribute1;
         }
       }
+      onBirthgDateChange(event){
+
+
+        var birthdt  :Date= new Date(event.target.value);
+        this.minDateWedding = birthdt.setFullYear(birthdt.getFullYear()+18);
+        var birthdt1  :Date= new Date(this.minDateWedding);
+
+
+      }
       onOptionWeddingDate(event)
       {
-        if(event>this.startDate ||event<=this.birthDate)
+
+         var weddate=event.target.value;
+
+        var birthdat:Date=this.customerMasterForm.get('birthDate').value
+
+        if(weddate>this.startDate ||weddate<=birthdat||weddate<=birthdat.setFullYear(birthdat.getFullYear()+18))
         {
           alert("Please select Correct Wedding Date");
 
         }
       }
+
       validation()
       {
         var type=this.customerMasterForm.get('custType').value;

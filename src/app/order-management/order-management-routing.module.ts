@@ -19,6 +19,7 @@ const routes: Routes = [
   {path:'allotment',component:AllotmentComponent},
   {path:'Deallotment',component:DeAllotmentComponent},
   {path:'CounterSaleOrder',component:CounterSaleComponent},
+  {path:'CounterSaleOrder/:orderNumber',component:CounterSaleComponent},
   {path:'ReversalOrder',component:ReversalOrderComponent},
   {path:'GatePass',component:SalesGatePassComponent},
   {path:'OMSalesOrder',component:OmSalesOrderFormComponent},

@@ -39,7 +39,7 @@
               Date&nbsp;:&nbsp;
             </td>
             <td>
-              <input  disabled type="text" class="form-control" formControlName="transDate"  [(ngModel)]="transDate">
+              <input  disabled type="text" class="form-control" formControlName="transDate"[(ngModel)]="transDate">
             </td>
           <td style="width: 15%" class="LabelFontStyle1">
             To&nbsp;Organization&nbsp;:&nbsp;
@@ -84,7 +84,7 @@
           <td>
               <input type="date" class="form-control" formControlName="ewayBillDate">
             </td>
-          
+
         </tr>
         <tr>
           <td style="width: 15%" class="LabelFontStyle">
@@ -119,7 +119,7 @@
         </tr>
         <input hidden formControlName='deptName'[(ngModel)]='deptName'>
 <tr>
-   
+
       <td style="width: 15%" class="LabelFontStyle">
         Remark&nbsp;:&nbsp;
       </td>
@@ -149,7 +149,7 @@
                         <!-- <th scope="col">Subinventory</th> -->
                         <th scope="col">Price</th>
                         <th scope="col">Locator</th>
-                        <th scope="col">Available&nbsp;Quantity</th>
+                        <th scope="col" rowspan="2">Available Qty</th>
                         <th scope="col">Quantity</th>
                         <!-- <th scope="col">Reason</th> -->
                         <th scope="col">Add</th>
@@ -165,7 +165,7 @@
                 <ng-template #thenBlock1>
                 <tr>  <td><input type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                  </td>
-                <td><select  class="form-control" style="height: 20px;width:100%;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'>
+                <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'>
                   <option>--Select--</option>
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
                   </select>
@@ -173,8 +173,8 @@
                  </span>
                 </td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
-                <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
-                
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
+
                 <td><input type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"></td>
                 <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
                 <option>--Select--</option>
@@ -194,7 +194,7 @@
                   *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
                  </span>
                 </td>
-                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()"></button></td>
+                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
                 <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
               </tr>
               </ng-template>
@@ -211,7 +211,7 @@
                </td>
                <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="avlqty"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="primaryQty" ></td>
-               <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()"></button></td>
+               <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
                <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
              </tr>
               </ng-template>
@@ -241,14 +241,14 @@
                     Date:
                   </td>
                   <td>
-                    <input disabled type="date" class="form-control" formControlName="transDate" >
+                    <input disabled type="text" class="form-control" formControlName="transDate" >
                   </td>
                 <td style="width: 15%" class="LabelFontStyle1">
                   To Organization:
                 </td>
                 <td>
                    <input disabled type="text"  class="form-control" formControlName="transferLoc" [(ngModel)]="transferLoc">
-                        
+
                 </td>
                           <td>
                   <input type="hidden" formControlName="locId" [(ngModel)]="locId">
@@ -257,7 +257,7 @@
               <tr>
                 <td style="width: 15%" class="LabelFontStyle">SubInventory</td>
                   <td><input disabled type="text" class="form-control"  formControlName="subInventoryCode" >
-                     
+
                     </td>
                 <td style="width: 15%" class="LabelFontStyle">
                   Eway Bill Number:
@@ -271,7 +271,7 @@
                 <td>
                     <input disabled type="date" class="form-control" formControlName="ewayBillDate">
                   </td>
-                
+
               </tr>
               <tr>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -301,11 +301,11 @@
               </tr>
               <input hidden formControlName='deptName'[(ngModel)]='deptName'>
       <tr>
-         
+
             <td style="width: 15%" class="LabelFontStyle">
               Remark:
             </td>
-      
+
             <td>
                 <input disabled type="text" class="form-control" formControlName="remarks">
               </td>
@@ -404,7 +404,7 @@
     <!-- </form> -->
     <br>
 
- 
+
 <!-- card code  -->
 <!-- Card -->
 <div class="card chart-card">
@@ -414,7 +414,7 @@
 
     <!-- Title -->
     <h4 class="card-title font-weight-bold" style="background-color: #FFE4B5;width: 100%;">Pending Data</h4>
-   
+
   </div>
 
   <!-- Classic tabs -->
@@ -424,7 +424,7 @@
     <ul class="nav tabs-white nav-fill" role="tablist">
       <li class="nav-item ml-0">
          <a class="nav-link waves-light active" data-toggle="tab" href="#panel1001" role="tab">Receiving at other Location</a>
-                
+
       </li>
       <li class="nav-item">
         <a class="nav-link waves-light" data-toggle="tab" href="#panel1002" role="tab">Receiving at this Location</a>
@@ -458,7 +458,7 @@
               </table>
               </div>
             </div>
-            
+
       </div>
       <!--/.Panel 1-->
       <!--Panel 2-->

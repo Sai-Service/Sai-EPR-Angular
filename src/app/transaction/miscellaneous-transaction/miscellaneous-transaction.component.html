@@ -53,7 +53,7 @@
                 IC Date:
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
+                <input disabled type="text" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
               </td>
         <td style="width: 15%" class="LabelFontStyle">
           Transaction Type:
@@ -80,7 +80,7 @@
               Stock Adjustment Date:
             </td>
             <td>
-              <input type="date" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
+              <input disabled type="text" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate">
               <span
                 *ngIf="getGroupControl('compileDate').touched && getGroupControl('compileDate').invalid">Valid Transaction Type
                </span>
@@ -129,10 +129,10 @@
           <td style="width: 15%" class="LabelFontStyle">
               Account Code:
              </td>
-       
-       
+
+
                <input hidden type="number" formControlName="codeCombinationId">
-       
+
              <td>
                 <input formControlName="segmentName" value={{segmentName}}
                                                                     class="form-control"
@@ -141,7 +141,7 @@
                                                                     *ngIf="getGroupControl('segmentName').touched && getGroupControl('segmentName').invalid">Valid Transaction Type
                                                                    </span>
               </td>
-        
+
       </tr>
       <tr>
         <td style="width: 15%" class="LabelFontStyle">
@@ -149,7 +149,7 @@
         </td>
         <td>
           <input disabled class="form-control"  formControlName="compileStatus" [(ngModel)]="compileStatus" >
-  
+
         </td>
         <td style="width: 15%" class="LabelFontStyle">
           Total Item:
@@ -171,7 +171,7 @@
             <td>
               <input type="text" class="form-control" formControlName="description"[(ngModel)]="description">
             </td>
-     
+
         <td style="width: 15%" class="LabelFontStyle">
           Made By:
          </td>
@@ -184,8 +184,8 @@
          </td>
          <!-- (click)="process()" -->
           <td>
-  
-  
+
+
            <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
          </td>
       </tr>
@@ -196,7 +196,7 @@
           <td style="width: 15%" class="LabelFontStyle">Item &nbsp;&nbsp;Name&nbsp;:</td>
           <td>
             <select  type="text"  formControlName="itemId"   class="form-control"  style="height: 20px;width: 100px;" [(ngModel)]="itemId">
-  
+
               <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
                 </option>
               </select>
@@ -209,7 +209,7 @@
   <br>
     <div formArrayName="cycleLinesList">
     <div class="grid_scroll">
-  
+
       <table class="center">
         <tr>
           <td>
@@ -225,7 +225,7 @@
                       <th scope="col">Average Rate</th>
                       <th scope="col">Subinventory</th>
                       <th scope="col">Locator</th>
-                      <th scope="col">Available Quantity</th>
+                      <th scope="col" rowspan="2">Available Quantity</th>
                       <th scope="col">Transaction Quantity</th>
                       <th scope="col">Add</th>
                       <th scope="col">Delete</th>
@@ -268,7 +268,7 @@
               <!-- <option>--Select--</option> -->
               <!-- <!- <option *ngFor="let locId of getfrmSubLoc" [ngValue]="locId.id">{{locId.segmentName}}--{{locId.onHandQty}}</option> -->
               <!-- </select> -->
-              
+
               <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock">
               </div>
               <ng-template #thenBlock>
@@ -277,7 +277,7 @@
                 <option>--Select--</option>
                 <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId"  >{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 <!-- [ngValue]="locId.locatorId" -->
-                
+
                 <input hidden formControlName="locatorId">
                 <input hidden formControlName="id">
               </select>
@@ -290,7 +290,7 @@
                 <td>
               <input   data-toggle="modal" data-target="#myModal1"
               formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)"
-              class="form-control" style="height: 20px;width: 100px;">
+              class="form-control" style="height: 20px;width: 110px;">
                   <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
                   <span
               *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid" class="error">Valid Item
@@ -299,9 +299,9 @@
                 </ng-template>
                <!-- </td> -->
                <input hidden type="number" formControlName="onHandQty">
-              <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="avlqty" ></td>
+              <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="avlqty" ></td>
               <input hidden  type="number"  formControlName="resveQty">
-              <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 50px;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
+              <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
                 <span
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>
@@ -345,7 +345,7 @@
         <ng-template #elseBlock2>
           <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
       </ng-template>
-  
+
       </tr>
     </table>
     <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
@@ -415,7 +415,6 @@
         </div>
       </div>
     </div>
-  
+
     </form>
     </div>
-  

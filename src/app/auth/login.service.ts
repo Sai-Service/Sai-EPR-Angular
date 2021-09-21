@@ -17,8 +17,8 @@ export class LoginService {
   }
   public login(username: string, password: string) {
     const body = {
-      'ticketNo': username, 
-      'loginPass': password, 
+      'ticketNo': username,
+      'loginPass': password,
     };
     let options = {
       headers: this.headers
@@ -45,5 +45,5 @@ export class LoginService {
   //   window.alert(errorMessage);
   //   return throwError(errorMessage);
   // }
-  
+
 }

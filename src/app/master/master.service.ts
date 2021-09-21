@@ -244,8 +244,11 @@ export class MasterService {
 custTypeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
 }
-classCodeTypeList(): Observable<any> {
+classCodeTypeList1(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/classCode');
+}
+classCodeTypeList(divId): Observable<any> {
+  return this.http.get(this.ServerUrl +`/cmnLookup/CmnTypeDivision?cmnType=ClassCode&divisionId=${divId}`);
 }
 getTaxCat(ouId): Observable<any> {
  // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
@@ -1772,9 +1775,9 @@ poAllRecFind(segment1): Observable<any> {
 
 
 downloadgrrPrint(receiptNo) :Observable<any> {
-  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
   // local
-  // const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
+  const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1974,7 +1977,7 @@ OrderCategoryList(): Observable<any> {
   // ReverseArReceipt
 
   ReverseArReceiptSubmit(ArReceiptReversalRecord) {
-    alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
+    // alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
     const options = {
       headers: this.headers
     };
