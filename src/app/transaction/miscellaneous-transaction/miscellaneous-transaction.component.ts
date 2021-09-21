@@ -1,5 +1,5 @@
 
-import { PathLocationStrategy } from '@angular/common';
+import { DatePipe, PathLocationStrategy } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -156,7 +156,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   click : boolean = false;
   totalCompileItems:number;
   totalItemValue:number;
-  compileDate:Date;
+  // compileDate:Date;
   lstcomment:any;
   segment:string;
   lineNumber:number;
@@ -172,7 +172,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
   type1:string;
   dispheader:boolean=false;
   displable: boolean=false;
-
+  pipe = new DatePipe('en-US');
+  now=new Date();
+  compileDate=this.pipe.transform(this.now,'dd-MM-yyyy')
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
   {
     this.miscellaneousForm=fb.group({
@@ -249,7 +251,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
   addnewcycleLinesList(i:number){
     //alert('hi');
-    alert(this.miscellaneousForm.get('compileType').value+'value');
+    // alert(this.miscellaneousForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
      if(i>-1 && this.miscellaneousForm.get('compileType').value===4)
     {
@@ -284,14 +286,14 @@ console.log(this.route1.queryParams+'hell');
       this.dispheader=true;
       this.displable=true;
       }
-      }); 
+      });
 
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
     this.approvedBy=(sessionStorage.getItem('name'));
-     
+
      this.displayLocator[0]=false;
 
 
@@ -381,8 +383,8 @@ console.log(this.route1.queryParams+'hell');
     // );
 
     //  alert('sub'+this.sub);
-     
-  
+
+
   }
   miscellaneous(miscellaneousForm:any){}
 
@@ -406,11 +408,11 @@ console.log(this.route1.queryParams+'hell');
     }
     return matches;
   };
-  
+
 close(){
 this.router.navigate(['admin']);
 }
-  
+
   onOptionItemDetails(event:any,i){
 
      var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
@@ -524,7 +526,7 @@ this.router.navigate(['admin']);
           avlqty1= getfrmSubLoc[0].onHandQty-reserve;
           trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
           trxLnArr1.controls[i].patchValue({resveQty: reserve});
-    
+
           }
           else
           {
@@ -540,9 +542,9 @@ this.router.navigate(['admin']);
 
 
   }
-  AvailQty(event:any,i) 
+  AvailQty(event:any,i)
 {
-  
+
   // alert(event.target.value);
   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
   var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
@@ -558,18 +560,18 @@ this.router.navigate(['admin']);
   //alert(event);
   // var onHand1:number;
   this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
-    (data =>{ 
+    (data =>{
       this.onhand = data;
       console.log(this.onhand);
       trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
       // onHand1=data.obj.onHandQty;
 
-      
+
       let reserve=trxLnArr[i].resveQty;
       // alert(onHand1+'OnHand');
       // alert(reserve+'reserve');
       let avlqty1=0;
-      alert(data.obj+'qty');
+      // alert(data.obj+'qty');
       avlqty1= data.obj-reserve;
       trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
       trxLnArr1.controls[i].patchValue({resveQty: reserve});
@@ -578,7 +580,7 @@ this.router.navigate(['admin']);
     });
     console.log(this.onhand);
     //  var trxLnarronha = this.miscellaneousForm.get('cycleLinesList').value;
- 
+
 }
   resetMiscTrans()
   {
@@ -789,7 +791,7 @@ this.router.navigate(['admin']);
           let variants = <FormArray>this.cycleLinesList();
           var transtypeid = this.miscellaneousForm.get('compileType').value;
           var locId1=this.miscellaneousForm.get('locId').value
-         
+
             let variantFormGroup = <FormGroup>variants.controls[i];
             variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, []));
             variantFormGroup.addControl('locId', new FormControl(locId1, []));
@@ -797,10 +799,10 @@ this.router.navigate(['admin']);
             variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].physicalQty, []));
             variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
             variantFormGroup.addControl('transactionNumber',new FormControl(transtypeid.locCode,[]));
-         
-         
+
+
         // var reserveinfo=formValue[0];
-      
+
         this.service.reservePost(variants.value[i]).subscribe((res:any)=>{
         //  var obj=res.obj;
          if(res.code===200)
@@ -822,7 +824,7 @@ this.router.navigate(['admin']);
   var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
-  let qty=trxLnArr[i].physicalQty;  
+  let qty=trxLnArr[i].physicalQty;
  //alert(avalqty+'avalqty');
  //alert(trxLnArr[i].physicalQty +' qty');
   if(qty>avalqty  && this.miscellaneousForm.get('compileType').value!==13)
@@ -837,7 +839,7 @@ this.router.navigate(['admin']);
     trxLnArr1.controls[i].patchValue({physicalQty:''});
     qty1.focus();
   }
-  
+
 }
 
       searchByCompileID(itemId)
@@ -929,7 +931,7 @@ this.router.navigate(['admin']);
                       this.miscellaneousForm.disable();
                     }
             })
-          
+
       }
 
       saveMisc()
@@ -971,22 +973,22 @@ this.router.navigate(['admin']);
         })
       }
       else{
-  
-        alert('else');
+
+        // alert('else');
         this.HeaderValidation();
-      
+
     }
       }
 
-     
+
       onSelectReason(event){
-        alert(event);
+        // alert(event);
         // var reasname=this.miscellaneousForm.get('reason').value;
         // this.service.reasonaccCode(this.locId,reasname).subscribe(
           var reasonArr  = event.split('-');
-          alert(reasonArr.length);
+          // alert(reasonArr.length);
           this.service.reasonaccCode(this.locId,reasonArr[0], reasonArr[1]).subscribe(
-          
+
           data => {
             this.acccodedesc = data;
             // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
@@ -994,40 +996,40 @@ this.router.navigate(['admin']);
 
           }
         );
-      }  
-      
+      }
+
       HeaderValidation() {
         var isValid:boolean=false;
       Object.keys(this.miscellaneousForm.controls).forEach(
-        (key) => { 
+        (key) => {
           const control=this.miscellaneousForm.controls[key] as FormControl|FormArray|FormGroup
-          
+
           if(control instanceof FormControl){
             control.markAsTouched();
           }
           else if (control instanceof FormArray){
-              
+
       (<FormArray>this.miscellaneousForm.get('cycleLinesList')).controls.forEach((group: FormGroup) => {
-        (<any>Object).values(group.controls).forEach((control: FormControl) => { 
+        (<any>Object).values(group.controls).forEach((control: FormControl) => {
             control.markAsTouched();
-        }) 
+        })
       });
           }
           else if  (control instanceof FormGroup){}
-           
+
       }) ;
-    
+
       }
-      
-      
-      
+
+
+
       getGroupControl(fieldName) {
         return(this.miscellaneousForm.get(fieldName));
       }
-       
+
       getGroupControllinewise(index,fieldName) {
         // alert('nam'+fieldName);
         return (<FormArray>this.miscellaneousForm.get('cycleLinesList')).at(index).get(fieldName);
-        
+
       }
 }

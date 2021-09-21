@@ -33,7 +33,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute,private service: MasterService) { 
     this.bulkUploadCSVForm = this.fb.group({
       deptName: [],
-      segment1:[],
+      segment1:[''],
     })
   }
   bulkUploadCSV(bulkUploadCSVForm) {}
@@ -58,7 +58,10 @@ export class BulkUploadWithCsvComponent implements OnInit {
         if (res.code === 200) {
           alert(res.message);
           this.poDetails=res.obj;
-          this.segment1=res.obj.segment1;
+          for (let i=0;i<res.obj;i++){
+            this.bulkUploadCSVForm.patchValue({ segment1: res[i].obj.segment1 })
+          }
+          // this.segment1=res.obj.segment1;
           // this.Search(this.segment1);
         } else {
           if (res.code === 400) {
@@ -81,4 +84,10 @@ export class BulkUploadWithCsvComponent implements OnInit {
     }
     // });
   }
+
+  routeOMAndCSPage(poNo){
+    // alert(poNo)
+    this.router.navigate(['/OPMasterDto',poNo]);
+  }
+
 }

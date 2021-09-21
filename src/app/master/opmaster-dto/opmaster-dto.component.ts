@@ -615,11 +615,11 @@ export class OPMasterDtoComponent implements OnInit {
       );
 
       this.sub = this.router1.params.subscribe(params => {
-        var segment1= this.segment1;
-        alert(segment1);
-        this.segment1 = params['segment1'];
-        if (this.segment1 != undefined)
-        this.Search(this.segment1);
+        this.poNo = params['segment1'];
+        // alert(this.poNo);
+        if (this.poNo != undefined){
+        this.Search(this.poNo);
+      }
         // this.paymentReceiptForm.patchValue( this.lstcomments );
         });
 
@@ -830,7 +830,7 @@ export class OPMasterDtoComponent implements OnInit {
 
 
   Search(poNo) {
-    alert(poNo);
+    // alert(poNo);
     this.poMasterDtoForm.reset();
     this.currentOp = 'Search';
     console.log(this.poMasterDtoForm.value);
@@ -1590,7 +1590,7 @@ export class OPMasterDtoComponent implements OnInit {
     formValue.currencyCode = 'INR';
     this.service.ApprovePo(formValue, formValue.segment1).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('PO APPROVED SUCCESSFULLY');
+        alert(res.message);
         this.displayNewButtonApprove = false;
         this.displayNewButtonUpdate = false;
         this.displayNewButtonSave = false;
@@ -1603,7 +1603,7 @@ export class OPMasterDtoComponent implements OnInit {
         this.Search(this.segment1);
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message);
           this.poMasterDtoForm.reset();
         }
       }
@@ -1778,11 +1778,11 @@ export class OPMasterDtoComponent implements OnInit {
 
         this.service.addDiscount(this.totTaxAmt, taxTypeName).subscribe((res: any) => {
           if (res.code === 200) {
-            alert('RECORD INSERTED SUCCESSFULLY');
+            alert(res.message);
             // this.operatingUnitMasterForm.reset();
           } else {
             if (res.code === 400) {
-              alert('Data already present in the data base');
+              alert(res.message);
               // this.operatingUnitMasterForm.reset();
             }
           }

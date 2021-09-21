@@ -7,12 +7,12 @@
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
-              <td style="width: 15%" class="LabelFontStyle">Compile&nbsp;&nbsp;Number&nbsp;:</td>
+              <td style="width: 15%" class="LabelFontStyle">Compile&nbsp;&nbsp;Number&nbsp;&nbsp;:&nbsp;</td>
               <td>
-                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo">
+                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" style="width: 120px;">
               </td>
               <td colspan="8" style="text-align: left; width: 100%;">
-                  <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
+                  <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter" style="width: 80%;"><i class="fa fa-search"></i></button>
                   <!-- Modal -->
                   <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -38,14 +38,14 @@
                                       <td>
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="search(compNo)">Ok</button>
                                       </td>
-   
+
                                  </tr>
                               </table>
                             </div>
                         </div>
                       </div>
                     </div> -->
-              
+
               </td>
           </tr>
       </table>
@@ -55,19 +55,19 @@
         <table class="center">
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
-                Stock Taking No:
+                Stock Taking No&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
                 <input disabled type="text" class="form-control" formControlName="compileName" [(ngModel)]="compileName">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
-                Transaction Date:
+                Transaction Date&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
-                <input type="date" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate" min="{{minDate | date:'yyyy-MM-dd'}}">
+                <input disabled type="text" class="form-control" formControlName="compileDate"[(ngModel)]="compileDate" min="{{minDate | date:'yyyy-MM-dd'}}">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
-                Transaction Type:
+                Transaction Type&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
               <input hidden  formControlName="compileId" [(ngModel)]="compileId">
@@ -79,7 +79,7 @@
             </tr>
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
-                Subinventory:
+                Subinventory&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
                 <input type="text" disabled class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
@@ -88,10 +88,10 @@
                   <!-- </select> -->
               </td>
               <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
-                      
-                      
+
+
               <td style="width: 15%" class="LabelFontStyle">
-                Reason:
+                Reason&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
                 <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
@@ -101,18 +101,18 @@
               </td>
               <input hidden type="number" formControlName="codeCombinationId">
               <td style="width: 15%" class="LabelFontStyle">
-                Account Code:
+                Account Code&nbsp;&nbsp;:&nbsp;
                </td>
-      
+
               <td>
                 <input formControlName="segmentName" value={{segmentName}}
                                                                     data-toggle="modal" data-target="#myModel"
                                                                     placeholder="Select Item Category" class="form-control"
                                                                     (click)="openCodeCombination()">
-      
+
                 <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
                 aria-hidden="true" style="width: 500px; margin-left:350px">
-      
+
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -126,7 +126,7 @@
                             <table>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Branch&nbsp;:
+                                        Branch&nbsp;&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <select formControlName="segment11" id="segment11" [(ngModel)]="segment11"
@@ -146,7 +146,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        &nbsp;Location&nbsp;:
+                                        &nbsp;Location&nbsp;&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <select formControlName="segment2" id="segment2" [(ngModel)]="segment2"
@@ -167,7 +167,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Cost&nbsp;Center&nbsp;:
+                                        Cost&nbsp;Center&nbsp;&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <select formControlName="segment3" id="segment3" class="form-control"
@@ -188,7 +188,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Natural&nbsp;Account&nbsp;:
+                                        Natural&nbsp;Account&nbsp;&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <select formControlName="segment4" id="segment4" class="form-control"
@@ -209,8 +209,8 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Inter&nbsp;Branch&nbsp;:
-      
+                                        Inter&nbsp;Branch&nbsp;&nbsp;:&nbsp;
+
                                     </td>
                                     <td>
                                         <select formControlName="segment5" id="segment5" class="form-control"
@@ -229,18 +229,18 @@
                                         <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
                                     </td>
                                 </tr>
-      
+
                             </table>
                             <div class="modal-footer">
                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button>
                               <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
                               [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                                   (click)="fnCancatination()">OK</button>
-      
+
                           </div>
-      
+
                         </div>
-      
+
                     </div>
                 </div>
             </div>
@@ -249,24 +249,24 @@
                 placeholder="Select Item Category" class="form-control"
                 (click)="openCodeComb(i)"> -->
               </td>
-      
+
             </tr>
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
-                Status:
+                Status&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
                 <input type="text" disabled class="form-control"  formControlName="compileStatus" [(ngModel)]="compileStatus" >
-      
+
               </td>
               <td style="width: 15%" class="LabelFontStyle">
-                Total Item:
+                Total Item&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
                 <input disabled type="number" class="form-control" formControlName="totalCompileItems" [(ngModel)]="totalCompileItems">
               </td>
               <td style="width: 15%" class="LabelFontStyle">
-                Total Value:
+                Total Value&nbsp;&nbsp;:&nbsp;
               </td>
               <td>
                 <input disabled type="number" class="form-control" formControlName="totalItemValue" [(ngModel)]="totalItemValue">
@@ -274,7 +274,7 @@
             </tr>
             <tr>
               <td style="width: 15%" class="LabelFontStyle">
-                Made By:
+                Made By&nbsp;&nbsp;:&nbsp;
                </td>
                <td>
                  <input  type="text" disabled class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
@@ -284,7 +284,7 @@
                   </select> -->
                </td>
                <td style="width: 15%" class="LabelFontStyle">
-                Description:
+                Description&nbsp;&nbsp;:&nbsp;
               </td>
               <td >
               <input type="text" class="form-control" formControlName="description"[(ngModel)]="description">
@@ -306,20 +306,20 @@
                      </td>
                  </tr>
                     </fieldset>
-                         
+
                         </td> -->
-                     
-                      <!-- <div class="radio"> 
-                       
+
+                      <!-- <div class="radio">
+
                          </div> -->
-              
+
             </tr>
             <tr>
               <td  style="width: 15%" class="LabelFontStyle"></td>
               <td rowspan="2" style="width: 18%;margin-right: 30px;">
                   <div  *ngIf="displayprocess; then thenvis; else elseinvs"></div>
                   <ng-template #thenvis>
-              
+
                   <fieldset class="RFS">
                       <legend id="FormsPH_LGAadhaar" class="RFSL"
                       style="font-size: 12px;color: #000;font-weight: bolder;">
@@ -334,7 +334,7 @@
                         <input type="radio" class="form-check-input" formControlName="trans" id =Approve  value="Approve" [(ngModel)]="Approve" (click)="postAdjustment($event,compNo)">
                         <label for ="Approve" style="width: 15%" class="LabelFontStyle" style="font-size: 10px;">Approve</label>
                  </td>
-                    
+
              </tr>
             </table>
                 </fieldset>
@@ -347,7 +347,7 @@
           <br>
           <div formArrayName="cycleLinesList">
             <div class="grid_scroll">
-      
+
               <table class="center">
                 <tr>
                   <td>
@@ -387,7 +387,7 @@
                         <option *ngFor="let type of TypeList" [ngValue]="type.cmnTypeId">{{type.code}}</option>
                        </select>
                        </td>
-      
+
                        <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 130px;" (change)="onOptiongetItem($event,trxLineIndex,'search')" />
                         <datalist id="dynmicUserIds1">
                           <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
@@ -426,9 +426,9 @@
                         </td>
                         </ng-template>
                        <!-- </td> -->
-                      <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="systemQty" ></td>
-                      <td><input type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty" (ngModelChange)="CalculateAdjQuantity(trxLineIndex)" ></td>
-                      <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="adjustmentQty"></td>
+                      <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="systemQty" ></td>
+                      <td><input type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty" (ngModelChange)="CalculateAdjQuantity(trxLineIndex)" ></td>
+                      <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="adjustmentQty"></td>
                       <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList()"></button></td>
                       <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                     </tr>
@@ -463,13 +463,13 @@
                 <ng-template #elseBlock2>
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="UpdateMiscData()" >Update</button>
-      
+
                 </td>
                 <td>
                   <button type="submit" class="btn btn-primary"(click)="Approval()" >Approve</button>
                 </td>
               </ng-template>
-      
+
               </tr>
             </table>
             <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
@@ -483,7 +483,7 @@
                     <table class="center" style="width: 100%;">
                       <tr>
                           <td style="width: 35%" class="LabelFontStyle1">
-                              Floor&nbsp;:
+                              Floor&nbsp;&nbsp;:&nbsp;
                           </td>
                           <td>
                               <input type="text" formControlName="Floor"  value={{Floor}} [(ngModel)]="Floor" class="form-control"
@@ -498,7 +498,7 @@
                       </tr>
                       <tr>
                           <td style="width: 35%" class="LabelFontStyle1">
-                              Rack&nbsp;:
+                              Rack&nbsp;&nbsp;:&nbsp;
                           </td>
                           <td>
           <input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;">
@@ -506,7 +506,7 @@
                       </tr>
                       <tr>
                           <td style="width: 35%" class="LabelFontStyle1">
-                              Rack&nbsp;Number&nbsp;:
+                              Rack&nbsp;Number&nbsp;&nbsp;:&nbsp;
                           </td>
                           <td>
                               <input formControlName="RackNo" [(ngModel)]="RackNo" value={{RackNo}} class="form-control"
@@ -515,7 +515,7 @@
                       </tr>
                       <tr>
                           <td style="width: 35%" class="LabelFontStyle1">
-                              Row&nbsp;:
+                              Row&nbsp;&nbsp;:&nbsp;
                           </td>
                           <td>
                               <input formControlName="Row" [(ngModel)]="Row" value={{Row}} class="form-control"
@@ -524,7 +524,7 @@
                       </tr>
                       <tr>
                           <td style="width: 45%" class="LabelFontStyle1">
-                              Row&nbsp;Number&nbsp;:
+                              Row&nbsp;Number&nbsp;&nbsp;:&nbsp;
                           </td>
                           <td>
                               <input formControlName="RowNo" [(ngModel)]="RowNo" value={{RowNo}} class="form-control"
@@ -539,7 +539,7 @@
                 </div>
               </div>
             </div>
-      
-      
+
+
     </form>
 </div>

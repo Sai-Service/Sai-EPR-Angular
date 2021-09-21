@@ -1,4 +1,4 @@
-import { PathLocationStrategy } from '@angular/common';
+import { DatePipe, PathLocationStrategy } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -46,7 +46,7 @@ export class StockTakingComponent implements OnInit {
   StockTakingForm: FormGroup;
   compileName: String;
   compNo: string;
-  compileDate: Date;
+  // compileDate: Date;
   segmentName: string;
   public minDate = new Date();
   compileId: number;
@@ -112,6 +112,10 @@ export class StockTakingComponent implements OnInit {
   currentop: string = 'process';
   invItemId: number;
   itemId: number;
+
+  pipe = new DatePipe('en-US');
+  now=new Date();
+  compileDate=this.pipe.transform(this.now,'dd-MM-yyyy')
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.StockTakingForm = fb.group({
@@ -295,7 +299,7 @@ export class StockTakingComponent implements OnInit {
     }
     if (SegmentName1 != null) {
       var temp = SegmentName1.split('.');
-   
+
       this.segment11 = temp[0];
       this.segment2 = temp[1];
       this.segment3 = temp[2];
@@ -373,7 +377,7 @@ export class StockTakingComponent implements OnInit {
 
   }
   postAdjustment(e, compNo) {
-    alert(e.target.checked + 'Radio');
+    // alert(e.target.checked + 'Radio');
     if (e.target.checked) {
       this.Adjustment = 'Y'
     }
@@ -384,7 +388,7 @@ export class StockTakingComponent implements OnInit {
   }
 
   getInvItemId($event) {
-  
+
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
     this.userList2 = [];
     if (userId.length > 2) {
@@ -404,7 +408,7 @@ export class StockTakingComponent implements OnInit {
   };
 
   onOptiongetItem(event: any, i, op) {
-   
+
     this.currentop = op;
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event.target.value);
 
@@ -440,17 +444,19 @@ export class StockTakingComponent implements OnInit {
               });
           }
           if (data.code === 200) {
-
+            // alert(data.obj.length +'Length');
             // trxLnArr1.controls[i].patchValue({'compileLineId':data.obj[0].compileLineId,'uom':data.obj[0].uom,'itemUnitCost':data.obj[0].itemUnitCost,'description':data.obj[0].description,'LocatorSegment':data.obj[0].LocatorSegment,'systemQty':data.obj[0].systemQty,'entryStatusCode':data.obj[0].entryStatusCode})
             if (data.obj.length == 1) {
               trxLnArr1.controls[i].patchValue(data.obj[0]);
             }
             else if (data.obj.length > 1) {
+              trxLnArr1.controls[i].patchValue(data.obj[0]);
               for (let j = 1; j < data.obj.length; j++) {
+                // debugger;
                 var trxlist: FormGroup = this.newcycleLinesList();
                 this.cycleLinesList().push(trxlist);
                 trxLnArr1.controls[i + j].patchValue(data.obj[j]);
-                              
+
             }}
               this.currentop = 'process';
             }
@@ -471,7 +477,7 @@ export class StockTakingComponent implements OnInit {
     }
     if (LocSegment != null) {
       var temp = LocSegment.split('.');
-     
+
       this.Floor = temp[0];
       this.Rack = temp[1];
       this.RackNo = temp[2];
@@ -487,7 +493,7 @@ export class StockTakingComponent implements OnInit {
   }
 
   okLocator(i) {
-   
+
     var LocSegment = this.StockTakingForm.get('cycleLinesList').value;
     var patch = this.StockTakingForm.get('cycleLinesList') as FormArray;
     LocSegment[i].LocatorSegment = this.StockTakingForm.get('Floor').value + '.' +
@@ -498,7 +504,7 @@ export class StockTakingComponent implements OnInit {
 
 
     var LocatorSegment1 = LocSegment[i].LocatorSegment;
-    
+
     patch.controls[i].patchValue({ 'LocatorSegment': LocSegment[i].LocatorSegment })
 
     this.service.LocatorNameList(LocatorSegment1, Number(sessionStorage.getItem('locId'))).subscribe
@@ -546,7 +552,7 @@ export class StockTakingComponent implements OnInit {
     // ( (this.StockTakingForm.get('cycleLinesList'))as FormArray).controls[0].patchValue({'compileId1':comId})
     var formValue: IStockaking = this.StockTakingForm.get('cycleLinesList').value
     var comId = this.StockTakingForm.get('compileId').value;
-   
+
     // formValue.compileId1=comId;
     this.service.miscellaneousUpdate(comId, formValue).subscribe
       ((res: any) => {
@@ -618,14 +624,15 @@ export class StockTakingComponent implements OnInit {
           }
           this.StockTakingForm.patchValue(res.obj);
           for (let i = 0; i < this.cycleLinesList().length; i++) {
-          
+
             this.StockTakingForm.patchValue({ 'srlNo': i + 1 })
             control.controls[i].patchValue({ srlNo: i + 1 })
             this.StockTakingForm.patchValue({ 'segment': res.obj.cycleLinesList[i].segment });
             this.StockTakingForm.patchValue({ 'subInventory': res.obj.cycleLinesList[i].subInventory });
           }
           this.StockTakingForm.disable();
-          document.getElementById("processButton").removeAttribute("Enabled");
+          document.getElementById("processButton").removeAttribute("Enabled");;
+          this.displayButton=false;
         }
         else {
           if (res.code === 400) {
@@ -673,7 +680,7 @@ export class StockTakingComponent implements OnInit {
     var compno = this.StockTakingForm.get('compileName').value;
     //  var appflag=this.StockTakingForm.get('trans').value;
     // var adjFlag=this.miscellaneousForm.get('Adjustment').value;
- 
+
     if ('Adjustment' === tranVal) {
       this.service.getSearchByNo(compno)
         .subscribe(data => {
@@ -709,7 +716,7 @@ export class StockTakingComponent implements OnInit {
 
             this.StockTakingForm.patchValue(data.obj);
             for (let i = 0; i < this.cycleLinesList().length; i++) {
-          
+
               // this.StockTakingForm.patchValue({'srlNo':i+1})
               // control.controls[i].patchValue({srlNo:i+1  })
               this.StockTakingForm.patchValue({ 'segment': data.obj.cycleLinesList[i].segment });
@@ -723,11 +730,11 @@ export class StockTakingComponent implements OnInit {
   }
 
   onSelectReason(event) {
- 
+
     // var reasname=this.miscellaneousForm.get('reason').value;
     // this.service.reasonaccCode(this.locId,reasname).subscribe(
     var reasonArr = event.split('-');
-  
+
     this.service.reasonaccCode(this.locId, reasonArr[0], reasonArr[1]).subscribe(
 
       data => {

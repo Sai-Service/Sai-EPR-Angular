@@ -5,6 +5,7 @@ import { controllers } from 'chart.js';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import { stringify } from 'querystring';
+import { DatePipe } from '@angular/common';
 
 interface IsubinventoryTransfer
 {
@@ -66,7 +67,7 @@ divisionId:number;
 
 subInventoryCode:string;
 transferSubInv:string;
-transDate:Date;
+// transDate:Date;
 remarks:string;
 issueBy:string;
 Rack:string;
@@ -97,6 +98,10 @@ lastkeydown1: number = 0;
   tosubInvCode: any;
   resrveqty: any;
 
+  pipe = new DatePipe('en-US');
+  now=new Date();
+  transDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.SubinventoryTransferForm=fb.group({
 
@@ -109,14 +114,14 @@ lastkeydown1: number = 0;
       Floor:[''],
       Rack:[''],
       RackNo:[''],
-      Row:[''], 
+      Row:[''],
       RowNo:[''],
       locId:[],
       issueTo:[],
       trfLinesList: this.fb.array([]),
     })
    }
-  
+
    trfLinesList():FormArray{
      return this.SubinventoryTransferForm.get("trfLinesList") as FormArray
    }
@@ -169,7 +174,7 @@ lastkeydown1: number = 0;
             // console.log(this.invItemId);
           });
       });
-      
+
       this.service.getsubTrfSubinventory(this.deptId,this.divisionId).subscribe(
         data => {
           this.tosubInvCode = data;
@@ -178,7 +183,7 @@ lastkeydown1: number = 0;
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
-      
+
       // this.service.ItemIdList().subscribe(
       //   data => {
       //     this.ItemIdList = data;
@@ -200,7 +205,7 @@ lastkeydown1: number = 0;
     //      this.ItemIdList = data;
     //      // console.log(this.invItemId);
     //    });
-    //  }  
+    //  }
   }
 
   subinventoryTransfer(SubinventoryTransferForm:any)
@@ -238,7 +243,7 @@ lastkeydown1: number = 0;
     let select1=this.ItemIdList.find(d=>d.SEGMENT == segment);
       // var itemId= select1.itemId
       console.log(select1.itemId);
-      
+
       alert(select1.itemId)
       var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
       trxLnArr1.controls[i].patchValue({itemId:select1.itemId});
@@ -251,13 +256,13 @@ lastkeydown1: number = 0;
           trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
         }
       } );
-      
+
       this.service.getfrmSubLoc(this.locId, select1.itemId, this.subInvCode.subInventoryId).subscribe(
         data => {
           this.getfrmSubLoc = data;
           console.log(data);
           var getfrmSubLoc =data;
-          
+
             alert(i +'i'+'lOCATOR');
             this.locData[i] = data;
             if(getfrmSubLoc.length==1)
@@ -268,7 +273,7 @@ lastkeydown1: number = 0;
             trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
             trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
             }
-            
+
             else
             {
               // this.getfrmSubLoc=data;
@@ -276,9 +281,9 @@ lastkeydown1: number = 0;
           //  trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
            trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
             }
-    
+
         });
-   
+
         this.service.getreserqty( this.locId,select1.itemId).subscribe
         (data=>{
           this.resrveqty=data;
@@ -288,9 +293,9 @@ lastkeydown1: number = 0;
   }
   OpenLocator(i)
         {
-  
+
           var LocSegment=this.trfLinesList().controls[i].get('LocatorSegment').value;
-  
+
           if (LocSegment===null)
           {
             this.SubinventoryTransferForm.get('Floor').reset();
@@ -313,13 +318,13 @@ lastkeydown1: number = 0;
               this.content = i;
               let a = i + 1
               this.title = "Locator :" + a;
-  
-  
+
+
         }
-  
+
         okLocator(i)
         {
-  
+
           // alert(i);
           var LocSegment=this.SubinventoryTransferForm.get('trfLinesList').value;
           var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
@@ -328,20 +333,20 @@ lastkeydown1: number = 0;
                                        this.SubinventoryTransferForm.get('RackNo').value+'.'+
                                        this.SubinventoryTransferForm.get('Row').value+'.'+
                                        this.SubinventoryTransferForm.get('RowNo').value;
-  
-  
+
+
           var LocatorSegment1=LocSegment[i].LocatorSegment;
           // alert(this.LocatorSegment1);
           patch.controls[i].patchValue({'LocatorSegment': LocSegment[i].LocatorSegment})
-  
+
           this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId'))).subscribe
           (data =>{
              this.LocatorList = data
-  
+
              if(this.LocatorList.code===200)
              {
               (patch.controls[i]).patchValue({ transferLocatorId: this.LocatorList.obj.locatorId })
-  
+
              if(this.LocatorList.lengh==0)
              {
                alert('Invalid Code Combination');
@@ -354,7 +359,7 @@ lastkeydown1: number = 0;
               var arraycontrol =this.SubinventoryTransferForm.get('trfLinesList').value;
               patch.controls[i].patchValue({LocatorSegment : ''});
             }
-  
+
             });
             this.SubinventoryTransferForm.get('Floor').reset();
             this.SubinventoryTransferForm.get('Rack').reset();
@@ -371,7 +376,7 @@ lastkeydown1: number = 0;
           window.location.reload();
         }
 
-        AvailQty(event:any,i:number) 
+        AvailQty(event:any,i:number)
         {
           alert(event);
           var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
@@ -386,7 +391,7 @@ lastkeydown1: number = 0;
           // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
           // alert(select2.subInventoryId+'Id')
           this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
-            (data =>{ 
+            (data =>{
               this.onhand = data;
               console.log(this.onhand);
               trxLnArr1.controls[i].patchValue({onHandQty:data.obj.onHandQty});
@@ -401,7 +406,7 @@ lastkeydown1: number = 0;
               // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
               trxLnArr1.controls[i].patchValue({onHandQty: avlqty1});
            })
-        
+
         }
 
         newSubtrf()
@@ -427,7 +432,7 @@ lastkeydown1: number = 0;
             VariantFormGroup.addControl('transferOrgId',new FormControl(locId1,Validators.required));
             VariantFormGroup.addControl('issueTo',new FormControl(issto,Validators.required));
               }
-          
+
               this.service.subInvTransferSubmit(variants.value).subscribe((res: any) => {
                 //  var obj=res;
                 // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
@@ -444,13 +449,13 @@ lastkeydown1: number = 0;
                   //  var trxLnArr2 = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
                   //  for(let i=0; i<res.obj.length; i++){
                   //   // trxLnArr2.controls[i].patchValue(res.obj[i]);
-                  
+
                   // trxLnArr2.controls[i].patchValue({'segment':res.obj[i].segment});
                   // trxLnArr2.controls[i].patchValue({'locator':res.obj[i].locator});
                   // trxLnArr2.controls[i].patchValue({'avlqty':res.obj[i].avlqty});
                   // trxLnArr2.controls[i].patchValue({'primaryQty':res.obj[i].primaryQty});
                   // }
-                  
+
                   // this.display = false;
                   // this.displayButton = false;
                 }
@@ -461,7 +466,7 @@ lastkeydown1: number = 0;
                   }
                 }
               });
-          
+
 
 
         }

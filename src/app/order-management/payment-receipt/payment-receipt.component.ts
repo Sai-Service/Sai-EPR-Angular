@@ -44,6 +44,7 @@ interface IPaymentRcpt {
 export class PaymentReceiptComponent implements OnInit  {
   paymentReceiptForm : FormGroup;
   paymentAmt:number;
+  balancePay:number;
     public DivisionIDList : Array<string>=[];
     public OUIdList: Array<string> = [];
     public DepartmentList: Array<string> = [];
@@ -144,6 +145,7 @@ export class PaymentReceiptComponent implements OnInit  {
       searchValue :[],
       deptName:[],
       searchBy :[],
+      balancePay:[],
       comment: ['', [Validators.required]],
       cancelReason:[],
       cancelDate:[],
@@ -251,6 +253,7 @@ export class PaymentReceiptComponent implements OnInit  {
         // this.lstcomments1=data.obj.orderNumber;
         this.custName=data.obj.custName;
         this.customerId=data.obj.customerId;
+        this.balancePay=data.obj.balancePay.toFixed(2);
         // this.lstcomments.push('orderNumber',data.obj.orderNumber);
         // this.lstcomments = data.obj;
         // this.lstcomments = data;

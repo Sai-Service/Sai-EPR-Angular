@@ -65,7 +65,7 @@ fieldset {
 
 
 
-    .LabelFontStyle1:before{
+    /* .LabelFontStyle1:before{
         content:"*";
         color:rgb(252, 29, 29);
       }
@@ -81,9 +81,9 @@ fieldset {
         padding-bottom: 0px;
         border-color: Gray;
         height: 15px;
-      }
+      } */
       
-      .LabelFontStyle1 {
+      /* .LabelFontStyle1 {
         font-family: Verdana,Sans-serif, Arial, Helvetica;
         font-weight: normal;
         color: Black;
@@ -94,7 +94,7 @@ fieldset {
         padding-bottom: 0px;
         border-color: Gray;
         height: 15px;
-      }
+      } */
 
 
 .href{
