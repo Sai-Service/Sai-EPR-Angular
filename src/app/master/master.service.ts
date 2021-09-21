@@ -587,6 +587,10 @@ colorCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulColour');
 }
 
+colorCodeListByVariant(variant): Observable<any> {
+  return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
+}
+
 transactionTypeNameList(deptId,locId,ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/otList?deptId=${deptId}&locId=${locId}&ouId=${ouId}`);
 }

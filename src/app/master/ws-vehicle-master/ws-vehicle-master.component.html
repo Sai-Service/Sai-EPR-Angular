@@ -95,6 +95,7 @@
                                    <td>
                                         <input class="form-control" formControlName="vehRegNo" [(ngModel)]='vehRegNo'
                                             value={{vehRegNo}} style="text-transform:uppercase;">
+                                         
                                     </td>
 
                                     <td>
@@ -182,7 +183,7 @@
                      
                        <option >--Select--</option>
                         <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
-                            {{mv.variant}}
+                            {{mv.variant}}-{{mv.varDescription}}
                         </option>
                     </select>
                 </td>
@@ -200,11 +201,11 @@
                     <td style="width: 12%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
 
                     <td>
-                        <select formControlName="colorCode" id="colorCode" class="form-control" [(ngModel)]="colorCode" 
-                        (ngModelChange)="onOptionsSelectedVariant($event)" style="background-color: yellow"  >
-                           <option disabled>--Select--</option>
-                            <option *ngFor="let mc of colorCodeList" [ngValue]="mc.code">
-                                {{mc.code}}-{{mc.codeDesc}}
+                        <select formControlName="colorCode" id="colorCode" class="form-control" 
+                         style="background-color: yellow"  >
+                           <option >--Select--</option>
+                            <option *ngFor="let mc of colorCodeList" [ngValue]="mc.ColorCode">
+                                {{mc.ColorCode}}-{{mc.colorDesc}}
                             </option>
                         </select>
                     </td>
@@ -223,12 +224,20 @@
                 </tr>
                
                 <tr>
+                    <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                    <td>  
+                        <input disabled type="text" formControlName="fuelType" class="form-control" >
+                        <!-- <select   formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" style="background-color: yellow" >
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
+                              {{sc.code}}
+                            </option>
+                        </select> -->
+                    </td>
+                    <!-- <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
 
-                    <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
-
-                    <td>
-                        <!-- <input  disabled type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" > -->
-                        <select   formControlName="serviceModel" id="serviceModel" [(ngModel)]="serviceModel" class="form-control" style="background-color: yellow" >
+                 <td>
+                         <select   formControlName="serviceModel" id="serviceModel" [(ngModel)]="serviceModel" class="form-control" style="background-color: yellow" >
                             <option disabled>--Select--</option>
                             <option *ngFor="let sc of  ServiceModelList" [ngValue]="sc.code">
                               {{sc.code}}- {{sc.codeDesc}}
@@ -236,25 +245,24 @@
                         </select>
                     
                     
-                    </td>
-                   
-            
-                    <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                    </td> --> 
+                    <td style="width: 12%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
 
-                    <td>  
-                        <select   formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" style="background-color: yellow" >
-                            <option disabled>--Select--</option>
-                            <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
-                              {{sc.code}}
-                            </option>
-                        </select>
+                    <td>
+                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
                     </td>
+                    <td style="width: 12%" class="LabelFontStyle">Manuf&nbsp;Year&nbsp;:&nbsp;</td>
 
-                    <td style="width: 12%" class="LabelFontStyle">RF&nbsp;ID:&nbsp;</td>
+                    <td>
+                        <input   type="text"  formControlName="monthYrManf"  id="monthYrManf" [(ngModel)]="monthYrManf" class="form-control" >
+                    </td>
+                 
+
+                    <!-- <td style="width: 12%" class="LabelFontStyle">RF&nbsp;ID:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="rfId"  id="rfId" [(ngModel)]="rfId" class="form-control" >
-                    </td>
+                    </td> -->
                     </tr>
                    
                     <tr>
@@ -340,21 +348,7 @@
 
                 </tr>
                 <tr>
-                   
-
-                    
-                    <td style="width: 12%" class="LabelFontStyle">Manufacturing&nbsp;Year&nbsp;:&nbsp;</td>
-
-                    <td>
-                        <input   type="text"  formControlName="monthYrManf"  id="monthYrManf" [(ngModel)]="monthYrManf" class="form-control" >
-                    </td>
-
-                    <td style="width: 12%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
-
-                    <td>
-                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
-                    </td>
-
+             
                     <!-- <td style="width: 12%" class="LabelFontStyle">Site.&nbsp;Id&nbsp;:&nbsp;</td>
 
                     <td >

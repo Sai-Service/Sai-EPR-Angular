@@ -244,9 +244,7 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
 
 
 
-  // ColourSearchFn(variant): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
-  // }
+
 
 
 
