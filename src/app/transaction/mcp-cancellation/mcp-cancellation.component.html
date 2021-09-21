@@ -15,39 +15,39 @@
                      <table class="center">
                         <tr>
 
-                        <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td>
+                        <!-- <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td> -->
 
                         <td   style="border: none;color: black;">
-                            <input type="text" disabled formControlName="loginArray"
+                            <input hidden type="text" disabled formControlName="loginArray"
                                 class="form-control" [(ngModel)]="loginArray" placeholder="">
                         </td>
                     
                         <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            <input hidden  style="width:30px ;"  disabled type="text" formControlName="ouId"
                             class="form-control" [(ngModel)]="ouId" >
                         </td>
                     
                         <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                            <input hidden style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
                         </td>
 
                         <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            <input hidden style="width:30px ;"  type="text" disabled formControlName="deptId"
                             class="form-control" [(ngModel)]="deptId" placeholder="">
 
                         </td>
 
                         <td >
-                            <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
+                            <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
                         </td>
 
                         <td>
-                            <input disabled style="width:30px ;" type="text"  formControlName="custId"  id="custId" [(ngModel)]="custId" class="form-control" >
+                            <input hidden style="width:30px ;" type="text"  formControlName="custId"  id="custId" [(ngModel)]="custId" class="form-control" >
                         </td>
 
                         <td>
-                            <input disabled style="width:100px ;" type="number"  formControlName="refundAmt"  id="refundAmt" [(ngModel)]="refundAmt" class="form-control" >
+                            <input hidden style="width:100px ;" type="number"  formControlName="refundAmt"  id="refundAmt" [(ngModel)]="refundAmt" class="form-control" >
                         </td>
                         
                         </tr>
@@ -552,7 +552,7 @@
                                     </td> -->
 
                                     <td>
-                                        <input  style="width: 275%;background-color: yellow;"  type="text"  formControlName="cancelRemarks"  id="cancelRemarks" [(ngModel)]="cancelRemarks" class="form-control" >
+                                        <input  style="width: 250%;background-color: yellow;"  type="text"  formControlName="cancelRemarks"  id="cancelRemarks" [(ngModel)]="cancelRemarks" class="form-control" >
                                     </td>
     
 

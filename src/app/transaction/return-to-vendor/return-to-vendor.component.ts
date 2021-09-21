@@ -74,6 +74,7 @@ export class ReturnToVendorComponent implements OnInit {
   // public ItemLocatorList: Array<string> = [];
 
   ItemLocatorList:any;
+  OnHandQty1:any;
 
   // locatorId:string;
       loginName:string;
@@ -93,7 +94,9 @@ export class ReturnToVendorComponent implements OnInit {
       locatorDesc:string;
       
       searchBypoNumber=2181211101212100;
-      searchReceiptNo=1000158;
+      // searchReceiptNo=1000158;
+
+      searchReceiptNo=22111727;
 
       poStatus:string;
       shipHeaderId:number
@@ -122,6 +125,7 @@ export class ReturnToVendorComponent implements OnInit {
       suppInvDate:Date;
       taxAmt:number;
       public itemType= 'RETURN';
+      
 
                
       returnTo='Supplier'
@@ -147,6 +151,9 @@ export class ReturnToVendorComponent implements OnInit {
       showAllLines: string;
       showAllItem=false;
       headerFound=false;
+      showQtyRtncol=false;
+      lineValidation=false;
+      lineItemRepeated=false;
 
    constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.returntoVendorForm = fb.group({ 
@@ -205,7 +212,7 @@ export class ReturnToVendorComponent implements OnInit {
        
 
         lineDetailsGroup() {
-          return this.fb.group({
+            return this.fb.group({
             shipLineId:[],
             parentShipHeaderId:[],
             parentShipLineId:[],
@@ -232,6 +239,7 @@ export class ReturnToVendorComponent implements OnInit {
             poChargeAcc:[],
             qtyReceived:[],
             qtyReturn:[],
+            qtyOnHand:[],
             locId:[],
             baseAmount:[],
             totAmount:[],
@@ -241,8 +249,9 @@ export class ReturnToVendorComponent implements OnInit {
             polineNum:[],
             locatorId:[],
             selectFlag:[],
-          });
-        }
+           
+        } );
+      }
 
 
         // lineDetailsArray() :FormArray{
@@ -322,28 +331,29 @@ export class ReturnToVendorComponent implements OnInit {
           var lineRcdQty  = qtyLineArr[index].qtyReceived;
           var uPrice= qtyLineArr[index].unitPrice;
           var taxP= qtyLineArr[index].taxPercentage;
-          
+          var avlQty = qtyLineArr[index].qtyOnHand;
           this.showLocator=true;
           this.validQtyEntered=true;
           
           var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
         
-          if (lineRtnQty <=0 || lineRtnQty>lineRcdQty ) 
+          if (lineRtnQty <=0 || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
           {
-             alert ("Invalid Quantity.[RETURN QTY] should be above zero and Should not be grater than [QTY RECEIVED]")
+             alert ("Invalid Quantity.[RETURN QTY] should be above zero / Should not be grater than [QTY RECEIVED] or [ON HAND QTY]")
       
              patch.controls[index].patchValue({qtyReturn:''})
              patch.controls[index].patchValue({baseAmount:0})
              patch.controls[index].patchValue({taxAmount:0})
              patch.controls[index].patchValue({totAmount:0})
- 
+             patch.controls[index].patchValue({selectFlag:''})
+            //  this.showQtyRtncol=false;
 
              this.showLocator=false;
              this.validQtyEntered=false;
             } 
             else 
             {
-              var baseAmt =lineRtnQty *uPrice;
+           var baseAmt =lineRtnQty *uPrice;
               var taxAmt   =baseAmt * taxP/100;
               var totAmt   =baseAmt+taxAmt;
             // alert ("base amt,taxamt.totamt :" +baseAmt+","+taxAmt +","+totAmt);
@@ -370,6 +380,8 @@ export class ReturnToVendorComponent implements OnInit {
                   this.totalAmt=netTotalAmt;
 
         }
+
+         
 
 
         SelectFlag1(e,index) {
@@ -441,7 +453,10 @@ export class ReturnToVendorComponent implements OnInit {
 
      
        SearchByPoRcptNumberHeader(mRcptNumber:any){
-       
+          // this.resetMast();
+          // this.lineDetailsArray.reset();
+           this.returntoVendorForm.get("searchReceiptNo").disable();
+        
           this.service.getsearchByReceiptNo(mRcptNumber)
           .subscribe(
             data => {
@@ -472,7 +487,7 @@ export class ReturnToVendorComponent implements OnInit {
                 this.gstDocDate=this.lstReceiptHeader.gstDocDate;
             
 
-                // this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
+                this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
                            
@@ -505,9 +520,23 @@ export class ReturnToVendorComponent implements OnInit {
                   for ( var i=0;i<this.lstReceiptLines.length-len;i++){
                       control.push(rcvLines);
                     }
- 
-                  this.returntoVendorForm.get('rcvLines').patchValue(this.lstReceiptLines);
 
+                    this.returntoVendorForm.get('rcvLines').patchValue(this.lstReceiptLines);
+
+
+                    var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
+                    var varLineArr = this.returntoVendorForm.get('rcvLines').value;
+            
+                    for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
+                    {
+                      var x=varLineArr[i].invItemId;
+                      var y=varLineArr[i].subInventoryId;
+                      this.OnhandQtyCheck(x,y,i)
+                      
+                    }
+                   
+ 
+                 
                   this.updateShipId()
 
        
@@ -539,6 +568,8 @@ export class ReturnToVendorComponent implements OnInit {
               patch.controls[i].patchValue({baseAmount:0})
               patch.controls[i].patchValue({taxAmount:0})
               patch.controls[i].patchValue({totAmount:0})
+              patch.controls[i].patchValue({totAmount:0})
+              patch.controls[i].patchValue({locId:billToLoc})
          
             }
           }
@@ -579,7 +610,7 @@ export class ReturnToVendorComponent implements OnInit {
 
         CheckRtnLineValidations(index) {
 
-          // alert('addrow index '+i);
+        //  alert('addrow index '+index);
          var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
          var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
          var len1=rtnLineArr.length;
@@ -588,20 +619,30 @@ export class ReturnToVendorComponent implements OnInit {
 
           var rcdQty =rtnLineArr[index].qtyReceived;
           var rtnQty =rtnLineArr[index].qtyReturn;
-          var itmId =rtnLineArr[index].itemId;
+          var avlQty=rtnLineArr[index].qtyOnHand;
+          var itmName =rtnLineArr[index].itemName;
           var chkFlag   = rtnLineArr[index].selectFlag;
 
-          if(chkFlag===true) {
-            if(rtnQty ===null ||rtnQty ===undefined || rtnQty<=0 || rtnQty>rcdQty ) {
-              alert("Line-"+(index+1)+ "RETURN QTY :  Should be above Zero And should not be above Received Qty .");
+          if(itmName ===null ||itmName ===undefined ) {
+            alert("Line-"+(index+1)+ " ITEM NUMBER :  Should not be null");
+            this.rtnLineValidation=false;
+            // e.target.checked=false;
+            return;}
+
+          // if(chkFlag===true) {
+            if(rtnQty ===null ||rtnQty ===undefined || rtnQty<=0 || rtnQty>rcdQty || rtnQty>avlQty) {
+              alert("Line-"+(index+1)+ " RETURN QTY :  Should be above Zero And should not be above Received Qty/Onhand Qty .");
               this.rtnLineValidation=false;
               // e.target.checked=false;
               return;}
-           }
+
+          //  }
 
           }
+          this.rtnLineValidation=true;
         
           }
+
 
         selectFlagCheck() {
 
@@ -623,6 +664,7 @@ export class ReturnToVendorComponent implements OnInit {
     LineSelectFlag(e,index) {
 
       if ( e.target.checked) {
+        this.showQtyRtncol =true;
 
       var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
       var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
@@ -632,22 +674,28 @@ export class ReturnToVendorComponent implements OnInit {
         debugger;
         var mItemId =rtvLineArr[index].invItemId;
         var subinvId =rtvLineArr[index].subInventoryId;
-    
-        alert("inv item id :"+ mItemId +","+subinvId +","+this.locId);
-
+              // alert("itemid,subinvid,locid :"+ mItemId +","+subinvId +","+this.locId);
           // this.service.getfrmSubLoc(120,42,1)
-          alert ("inventoryId ,subInventoryId:" +mItemId  + " , "+subinvId);
-      
+          // alert ("inventoryId ,subInventoryId:" +mItemId  + " , "+subinvId);
+        // var avlQty=0;
         this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
           .subscribe(
           data => {
             this.ItemLocatorList = data;
             console.log(this.ItemLocatorList);
-          }
+            var avlQty=this.ItemLocatorList[0].onHandQty
+            // alert("Available Qty :" +avlQty)
+            patch.controls[index].patchValue({qtyOnHand:avlQty})
+            }
+        
         );
 
-    } else { this.ItemLocatorList=null;}
+       
+    } else { this.ItemLocatorList=null;this.showQtyRtncol =false;}
   }
+
+
+   
 
 
     rtvSave(){
@@ -709,8 +757,16 @@ export class ReturnToVendorComponent implements OnInit {
 
   
  addRow(index) {
-        this.lineDetailsArray.push(this.lineDetailsGroup());
-    }
+
+  // this.CheckRtnLineValidations(index);
+
+  if (this.rtnLineValidation==true) 
+   {
+    this.lineDetailsArray.push(this.lineDetailsGroup());
+   }
+      
+  }
+
 
     RemoveRow(index) {
       if (index===0){
@@ -728,7 +784,7 @@ export class ReturnToVendorComponent implements OnInit {
                 this.showAllItem=true;
                 this.SearchByPoRcptNumberLine()   }
               else { 
-                this.lineDetailsArray.reset();   
+                // this.lineDetailsArray.reset();   
                 this.showAllItem=false;
                 this.showLineLov(this.segment1,this.receiptNo);
               } 
@@ -738,6 +794,7 @@ export class ReturnToVendorComponent implements OnInit {
 
       showLineLov(mPonumber,mRcptNumber) {
         // alert("in showlov...");
+        // this.lineDetailsArray.reset()
         this.service.getsearchByReceiptNoLine(mPonumber,mRcptNumber)
         .subscribe(
           data => {
@@ -748,19 +805,50 @@ export class ReturnToVendorComponent implements OnInit {
 
       }
 
+      CheckForitemRepeat(mItem,index) {
+
+        alert ("index, itemid :" +index +" ,"+mItem);
+        alert("this.lineDetailsArray.length  :" +this.lineDetailsArray.length);
+
+      var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
+      var varLineArr = this.returntoVendorForm.get('rcvLines').value;
+
+      for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
+      {
+        var x=varLineArr[i].itemName;
+        if( i !=index && x===mItem) {
+
+          alert("Item Already in the List .Check Line :"+i);
+          this.lineItemRepeated=true;
+          break;
+        } 
+        }
+                    
+      
+    }
+
      
 
 
       onItemSelected(mItem, index) {
- 
+
+        // alert ("in ItemSelect....");
+
+       
           let selectedValue = this.PoRcptLineItemList.find(v => v.itemName === mItem);
+          // alert('Item Id :' +selectedValue.invItemId);
           if( selectedValue != undefined){
-          // alert('Item Id :' +selectedValue.itemId);
+         
+         
           console.log(selectedValue);
-          
-          var arrayControl = this.returntoVendorForm.get('rcvLines').value
+
+          // this.OnhandQtyCheck(selectedValue.invItemId,selectedValue.subInventoryId,index);
+          // this.CheckForitemRepeat(mItem,index);
+
+
+          // var arrayControl = this.returntoVendorForm.get('rcvLines').value
           var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
-          // this.itemId = selectedValue.itemId;
+           // this.itemId = selectedValue.itemId;
           // console.log(this.invItemId, this.taxCat);
           // alert("PO line id :"+selectedValue.poLineId);
           var pLineId=selectedValue.poLineId;
@@ -795,9 +883,31 @@ export class ReturnToVendorComponent implements OnInit {
             }
           );
 
-      
         }
       }
+
+      OnhandQtyCheck(mItemId,subinvId,index) {
+          var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
+          var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
+          var avlQty=0;
+          this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+            .subscribe(
+            data => {
+              this.ItemLocatorList = data;
+              console.log(this.ItemLocatorList);
+              avlQty=this.ItemLocatorList[0].onHandQty
+              }
+          
+          );
+          patch.controls[index].patchValue({qtyOnHand:avlQty})
+      
+    }
+    clearSearch() {
+     this.resetMast();
+     this.returntoVendorForm.get("searchReceiptNo").enable();
+    }
+
+      
     
 
  
