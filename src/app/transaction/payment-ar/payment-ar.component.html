@@ -978,7 +978,7 @@
                                         </td>
 
                                         <td>
-                                            <input   type="number" class="form-control" formControlName="tApplAmt"  [(ngModel)]="tApplAmt">
+                                            <input readonly  type="number" class="form-control" formControlName="tApplAmt"  [(ngModel)]="tApplAmt">
                                         </td>
 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -986,7 +986,7 @@
                                         </td>
 
                                         <td>
-                                            <input   type="number" class="form-control" formControlName="onAccountAmt"  [(ngModel)]="onAccountAmt">
+                                            <input readonly  type="number" class="form-control" formControlName="onAccountAmt"  [(ngModel)]="onAccountAmt">
                                         </td> 
 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -997,7 +997,7 @@
                                             <input readonly type="number" class="form-control" formControlName="tUapplAmt"  [(ngModel)]="tUapplAmt">
                                         </td>
                                          <td>
-                                            <input hidden type="number" class="form-control" formControlName="balanceAmount"  [(ngModel)]="balanceAmount">
+                                            <input readonly hidden type="number" class="form-control" formControlName="balanceAmount"  [(ngModel)]="balanceAmount">
                                         </td>
                                         
                                     </tr>
@@ -1164,9 +1164,11 @@
                                   <!-- <button type="button" class="btn btn-info"  >Save</button> -->
                                   <div *ngIf="disableApplySave ,then appSaveYes; else appSaveNo")></div>
                                   <ng-template #appSaveYes>
-                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                     <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
+                                     <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
                                   </ng-template>
                                   <ng-template #appSaveNo>
+                                    <button  disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
                                     <button  disabled style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
                                 </ng-template>
                                   

@@ -5,7 +5,7 @@ import { from } from 'rxjs';
 import { Url } from 'url';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-// import { Validators, FormArray } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
@@ -122,6 +122,7 @@ export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
   docType:string;
+  private sub: any;
   selectedLine = 0;
   clicked = false;
   public currentOp: string;
@@ -342,7 +343,7 @@ export class OPMasterDtoComponent implements OnInit {
     message: string;
     allUsers: Observable<OPMasterDtoComponent[]>;
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
 
       poHeaderId: [],
@@ -613,6 +614,14 @@ export class OPMasterDtoComponent implements OnInit {
         }
       );
 
+      this.sub = this.router1.params.subscribe(params => {
+        var segment1= this.segment1;
+        alert(segment1);
+        this.segment1 = params['segment1'];
+        if (this.segment1 != undefined)
+        this.Search(this.segment1);
+        // this.paymentReceiptForm.patchValue( this.lstcomments );
+        });
 
     // // this.onChanges();
     // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
@@ -628,7 +637,7 @@ export class OPMasterDtoComponent implements OnInit {
   }
   //   onChanges(): void {
   //     this.poMasterDtoForm.valueChanges.subscribe(val => {
-  //     
+  //
   //   });
   // }
   // public fields: Object = { text: 'name', value: 'suppNo' };
@@ -1433,7 +1442,7 @@ export class OPMasterDtoComponent implements OnInit {
       + this.poMasterDtoForm.get('segment5').value;
     // + this.poMasterDtoForm.get('segment6').value;
     //  + this.poMasterDtoForm.get('segment7').value + '.'
-    //  + this.poMasterDtoForm.get('segment8').value + '.' 
+    //  + this.poMasterDtoForm.get('segment8').value + '.'
     //  + this.poMasterDtoForm.get('segment9').value  ;
     this.segmentName1 = arrayControl[index].segmentName
     console.log(this.segmentName1);
@@ -1802,10 +1811,10 @@ export class OPMasterDtoComponent implements OnInit {
     }
     else {
       if (itemType === 'GOODS') {
-       
+
         var deptName1 = this.poMasterDtoForm.get('dept').value;
         this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
-        
+
         // if (this.invItemList.length <= 0) {
           this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')))
             .subscribe(
@@ -1817,19 +1826,19 @@ export class OPMasterDtoComponent implements OnInit {
                 this.lineDetailsArray.controls[lineNum].get('segment').enable();
                 var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
                 this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
-                
+
                 this.poMasterDtoForm.get('supplierCode').disable();
                 this.poMasterDtoForm.get('supplierSiteId').disable();
                 this.poMasterDtoForm.get('shipToLoc').disable();
                 this.poMasterDtoForm.get('billToLoc').disable();
               }
             );
-            
- 
+
+
 
         // this.displaysupplierSiteId=false;
 
-      
+
       }
       if (itemType === 'EXPENCE') {
         var deptName = 'NA';
@@ -2067,10 +2076,10 @@ export class OPMasterDtoComponent implements OnInit {
 
   //   Keyboard({
   //     elm: document.querySelector('#input'),
-  //     props: {},                             
+  //     props: {},
   //     use: MyActions,    // import the actions from my-actions.js
-  //     actions: [            // extend/overwrite the imported actions with your own              
-  //       ['enter', {                          
+  //     actions: [            // extend/overwrite the imported actions with your own
+  //       ['enter', {
   //         fn: process
   //       }]
   //     ]

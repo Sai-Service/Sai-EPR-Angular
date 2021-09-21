@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -106,6 +107,7 @@ interface AccOrderLinesPost1 {
 export class SalesOrderFormComponent implements OnInit {
   SalesOrderBookingForm: FormGroup;
   public op: string;
+  private sub: any;
   invLineNo: number;
   divisionId:number;
   paymentTermId: number;
@@ -236,7 +238,7 @@ export class SalesOrderFormComponent implements OnInit {
   public itemMap = new Map<string, any[]>();
   public taxMap = new Map<string, any>();
 
-  constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
+  constructor(private fb: FormBuilder,private router1: ActivatedRoute, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.SalesOrderBookingForm = fb.group({
       divisionName: [''],
       ouName: [''],
@@ -399,8 +401,6 @@ export class SalesOrderFormComponent implements OnInit {
       .subscribe(
         data1 => {
           this.taxCategoryList = data1;
-          console.log(this.taxCategoryList);
-          data1 = this.taxCategoryList;
         }
       );
 
@@ -477,8 +477,11 @@ export class SalesOrderFormComponent implements OnInit {
       .subscribe(
         data1 => {
           this.categoryList = data1;
-          console.log(this.categoryList);
-          data1 = this.categoryList;
+          for (let i = 0; i < data1.length; i++) {
+            if (data1[i].itemType === 'SS_VEHICLE') {
+              this.categoryList.splice(i, 1)
+            }
+          }
         }
       );
 
@@ -489,7 +492,15 @@ export class SalesOrderFormComponent implements OnInit {
           console.log(this.YesNoList);
         }
       );
-
+    
+    
+      this.sub = this.router1.params.subscribe(params => {
+        this.orderNumber = params['orderNumber'];
+        if (this.orderNumber!=undefined){
+        this.OrderFind(this.orderNumber);
+        }
+      });
+    
   }
 
 
@@ -560,6 +571,7 @@ export class SalesOrderFormComponent implements OnInit {
 
   onOptionsSelectedTL(ticketNo: any) {
     this.dept = Number(sessionStorage.getItem('deptId'));
+    if (ticketNo!=null){
     this.orderManagementService.ticketNoSearchFn(ticketNo, this.dept)
       .subscribe(
         data => {
@@ -568,7 +580,9 @@ export class SalesOrderFormComponent implements OnInit {
           this.tlName = this.ticketNoSearch.leadTicketNo;
         }
       );
+    }
   }
+
 
   onOptionsSelectedColor(variant) {
     if (this.currentOpration != 'orderSearch') {
@@ -657,7 +671,7 @@ export class SalesOrderFormComponent implements OnInit {
             (patch.controls[i]).patchValue(
               {
                 amount: this.taxCalforItem[i].totTaxAmt,
-                invLineNo:invLineNo
+                invLineNo:i+1,
               }
             );
           }
@@ -671,6 +685,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   patchResultList(i, taxCalforItem, invLineNo, invLineItemId) {
+    // alert(i)
     alert('Tax has been applied.')
     let control = this.SalesOrderBookingForm.get('taxAmounts') as FormArray
     control.clear();
@@ -699,7 +714,7 @@ export class SalesOrderFormComponent implements OnInit {
         recoverableFlag: x.recoverableFlag,
         selfAssesedFlag: x.selfAssesedFlag,
         inclusiveFlag: x.inclusiveFlag,
-        // invLineNo: invLineNo,
+        invLineNo: i+1,
         // invLineItemId: itemId
       }));
     });
@@ -1213,7 +1228,7 @@ export class SalesOrderFormComponent implements OnInit {
     }
   }
   createInvoice() {
-    this.orderManagementService.createInvoiceAll(this.orderNumber, this.emplId).subscribe((res: any) => {
+    this.orderManagementService.createInvoiceAll(this.orderNumber, (sessionStorage.getItem('emplId'))).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.OrderFind(this.orderNumber);

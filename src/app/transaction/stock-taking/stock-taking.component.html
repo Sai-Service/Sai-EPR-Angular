@@ -320,19 +320,19 @@
                   <div  *ngIf="displayprocess; then thenvis; else elseinvs"></div>
                   <ng-template #thenvis>
               
-                  <fieldset class="RFS" style="width: 40%;">
+                  <fieldset class="RFS">
                       <legend id="FormsPH_LGAadhaar" class="RFSL"
-                      style="font-size: 10px;color: black;">
-                   Process to be done</legend>
+                      style="font-size: 12px;color: #000;font-weight: bolder;">
+                      &nbsp;Process&nbsp;To&nbsp;Be&nbsp;Done&nbsp;</legend>
                    <table>
              <tr>
-                 <td>&nbsp;&nbsp;&nbsp;&nbsp;
+                 <td colspan="2" style="width: 100%;">&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="radio" class="form-check-input" formControlName="trans" id =Adjustment  value="Adjustment" [(ngModel)]="Adjustment" (click)="postAdjustment($event,compNo)">
-                        <label for ="Adjustment"  class="LabelFontStyle">Adjustment</label>
+                        <label for ="Adjustment"  class="LabelFontStyle" style="font-size: 10px;" >Adjustment</label>
                  </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <td>
                         <input type="radio" class="form-check-input" formControlName="trans" id =Approve  value="Approve" [(ngModel)]="Approve" (click)="postAdjustment($event,compNo)">
-                        <label for ="Approve" style="width: 15%" class="LabelFontStyle">Approve</label>
+                        <label for ="Approve" style="width: 15%" class="LabelFontStyle" style="font-size: 10px;">Approve</label>
                  </td>
                     
              </tr>
@@ -382,28 +382,28 @@
                        <input hidden formControlName="compileId1" [(ngModel)]="compileId1">
                        <input hidden formControlName="compileLineId">
                          <td>
-                       <select type="text"  class="form-control"  style="height: 20px;width: 70px;" formControlName="entryStatusCode" >
+                       <select type="text"  class="form-control"  style="height: 20px;width: 100px;" formControlName="entryStatusCode" >
                         <option>--Select--</option>
                         <option *ngFor="let type of TypeList" [ngValue]="type.cmnTypeId">{{type.code}}</option>
                        </select>
                        </td>
       
-                       <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (change)="onOptiongetItem($event,trxLineIndex,'search')" />
+                       <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 130px;" (change)="onOptiongetItem($event,trxLineIndex,'search')" />
                         <datalist id="dynmicUserIds1">
                           <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
                             </option>
                            </datalist>
                       </td>
                                     <input hidden type="number" formControlName="itemId">
-                                    <input  type="number" formControlName="invItemId">
+                                    <input hidden type="number" formControlName="invItemId">
                       <!-- </td> -->
                       <!-- <td> -->
                         <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
                       <!-- </td> -->
                       <td><input type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                      <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
-                      <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
-                      <td><input class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
+                      <td><input type="text" class="form-control" style="height: 20px;width: 40px;" formControlName="uom" ></td>
+                      <td><input type="number" class="form-control" style="height: 20px;width: 70px;padding-right: 5px;" formControlName="itemUnitCost" ></td>
+                      <td><input type="text" disabled class="form-control" style="height: 20px; width: 80px;" formControlName="subInventory" [(ngModel)]="subInventory" >
                       </td>
                       <input hidden type="number" formControlName="locatorId">
                       <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock">
@@ -426,9 +426,9 @@
                         </td>
                         </ng-template>
                        <!-- </td> -->
-                      <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="systemQty" ></td>
-                      <td><input type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="physicalQty" (ngModelChange)="CalculateAdjQuantity(trxLineIndex)" ></td>
-                      <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="adjustmentQty"></td>
+                      <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="systemQty" ></td>
+                      <td><input type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty" (ngModelChange)="CalculateAdjQuantity(trxLineIndex)" ></td>
+                      <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="adjustmentQty"></td>
                       <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList()"></button></td>
                       <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                     </tr>

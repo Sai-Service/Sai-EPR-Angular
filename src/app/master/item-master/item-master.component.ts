@@ -1227,8 +1227,14 @@ else{
 
   }
   onKey(event: any) {
+    if (Number(sessionStorage.getItem('divisionId'))===1){
     const aaa ='MV'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
     this.itemMasterForm.patchValue({segment:aaa})
+  }
+  else if  (Number(sessionStorage.getItem('divisionId'))===2){
+    const aaa ='BV'+this.variantCode+'-'+ this.colorCode+'-'+this.chassisNo ;
+    this.itemMasterForm.patchValue({segment:aaa})
+  }
   }
 
 

@@ -28,6 +28,8 @@ import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.com
 import { InterStateComponent } from './inter-state/inter-state.component';
 import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transfer.component';
 import { SubinventoryTransferComponent } from './subinventory-transfer/subinventory-transfer.component';
+import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-with-csv.component';
+import { OPMasterDtoComponent } from '../master/opmaster-dto/opmaster-dto.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -59,6 +61,8 @@ const routes: Routes = [
  {path:'InterState',component:InterStateComponent},
  {path:'CashBankTransfer',component:CashBankTransferComponent},
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
+ {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
+ {path:'OPMasterDto/:segment',component:OPMasterDtoComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

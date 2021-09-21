@@ -280,7 +280,7 @@ export class CounterSaleComponent implements OnInit {
   createOrderTypeList: any;
   allDatastore: any;
   displayorderLineDetailsPart = true;
-  public payTermDescList: any;
+  public payTermDescList: any=[];
   public orderTypeList: any;
   public ticketNoSearch: any;
   public taxCalforItem: any;
@@ -430,9 +430,9 @@ export class CounterSaleComponent implements OnInit {
       status: [''],
       discType: [''],
     })
- 
+
   }
- 
+
 
 
   orderlineDetailsArray(): FormArray {
@@ -680,7 +680,7 @@ export class CounterSaleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
-    alert(this.op)
+    // alert(this.op)
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
     this.TaxDetailsArray().clear();
@@ -718,6 +718,7 @@ export class CounterSaleComponent implements OnInit {
           this.totTax = data.obj.totTax.toFixed(2);
           this.totAmt = data.obj.totAmt.toFixed(2);
           this.subtotal = data.obj.subtotal.toFixed(2);
+          this.disPer=data.obj.disPer;
           // this.taxAmt=data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2)
           // alert(data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2))
 
@@ -730,6 +731,7 @@ export class CounterSaleComponent implements OnInit {
               baseAmt: data.obj.oeOrderLinesAllList[k].baseAmt.toFixed(2),
               taxAmt: data.obj.oeOrderLinesAllList[k].taxAmt.toFixed(2),
               totAmt: data.obj.oeOrderLinesAllList[k].totAmt.toFixed(2),
+              disPer: data.obj.oeOrderLinesAllList[k].disPer,
               unitSellingPrice: data.obj.oeOrderLinesAllList[k].unitSellingPrice.toFixed(2),
             });
           }
@@ -802,7 +804,7 @@ export class CounterSaleComponent implements OnInit {
           if (this.allDatastore.flowStatusCode === 'BOOKED' && this.allDatastore.paymentType === 'IMMEDIATE') {
             this.PaymentButton = false;
           }
-         
+
         });
 
 
@@ -935,8 +937,8 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
-    this.invType = orderType;
-    this.disAmt=0;
+    // this.invType = orderType;
+    // this.disAmt=0;
     // alert(this.disAmt)
     if (this.itemMap.has(orderType)) {
       var itemsList = this.itemMap.get(orderType);
@@ -967,13 +969,15 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
+    // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
+    this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {
           if (data.code === 200) {
             // this.accountNoSearch = data.obj;
-            this.custSiteList = data.obj;
-            this.paymentType = data.obj.paymentType;
+            this.custSiteList = data.obj.customerSiteMasterList;
+            let select = this.payTermDescList.find(d => d.lookupValueId === data.obj.termId);
+            this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
           }
@@ -1095,11 +1099,11 @@ export class CounterSaleComponent implements OnInit {
     // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
     return(this.CounterSaleOrderBookingForm.get(fieldName));
   }
-   
+
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);
     return (<FormArray>this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')).at(index).get(fieldName);
-    
+
   }
 
   createNewCust() {
@@ -1139,14 +1143,45 @@ export class CounterSaleComponent implements OnInit {
       );
   }
 
+
+  validate(index:number,qty1)
+  {
+    var trxLnArr=this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnArr1=this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
+    var Avalqty=trxLnArr[index].Avalqty;
+    if(qty1>Avalqty)
+    {
+      alert("You can not enter more than available quantity!..");
+      trxLnArr1.controls[index].patchValue({pricingQty:''});
+      // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
+
+      return false;
+    }
+    if(qty1<=0)
+    {
+      alert("Please enter quantity more than zero");
+      trxLnArr1.controls[index].patchValue({quantity:''});
+      (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
+      return false;
+    }
+    return true;
+    // this.reservePos(i);
+  }
+
   onKey(index) {
     // alert('onKey' + index)
-    console.log(index);
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var pricingQty = arrayControl[index].pricingQty;
+    var isvalidqty=this.validate(index,pricingQty);
+    if (isvalidqty ==false){
+      return;
+    }
+    console.log(index);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
+
     let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
     var taxCategoryId = select.taxCategoryId;
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
@@ -1200,12 +1235,15 @@ export class CounterSaleComponent implements OnInit {
             });
           }
           this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(data);
-          if (this.disAmt===0){
+          var disValue=data[0].totTaxAmt;
+          if (disValue >0 && data[0].taxTypeName.includes('Discount')){
           patch.controls[index].patchValue({ disAmt: data[0].totTaxAmt});
+        }
+        else{
+          patch.controls[index].patchValue({ disAmt: 0});
         }
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
-
         });
 
   }
@@ -1236,7 +1274,7 @@ export class CounterSaleComponent implements OnInit {
               var taxCatNm: string = data[i].taxCategoryName;
               // alert(taxCatNm);
               if (taxCatNm.includes('Sale')) {
-                 alert('sale' + '-'+k);
+                //  alert('sale' + '-'+k);
                 (controlinv.controls[k]).patchValue({
                   itemId: data[i].itemId,
                   orderedItem: data[i].description,
@@ -1246,13 +1284,14 @@ export class CounterSaleComponent implements OnInit {
                   uom: data[i].uom,
                   unitSellingPrice: data[i].priceValue.toFixed(2),
                 });
-                
+
                 this.taxCategoryList = this.taxCategoryList.filter(function (d) { return  taxCatNm.includes(d.gstPercentage)});
-               
+
             }
 
             if (itemType === 'SS_SPARES') {
               this.getLocatorDetails(k, select.itemId);
+              alert('Call getLocationDetails Call')
               if (this.deptName == 'Spares') {
                 // controlinv.controls[k].patchValue({ invType: 'SS_SPARES' });
               }
@@ -1264,7 +1303,7 @@ export class CounterSaleComponent implements OnInit {
             }
 
             }
-            
+
 
           });
 
@@ -1272,7 +1311,7 @@ export class CounterSaleComponent implements OnInit {
 
   }
   getLocatorDetails(k, itemId) {
-    // alert('getLocatorDetails');
+    alert('Enter getLocatorDetails ');
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var invTp = controlinv.controls[k].get('invType').value;
     this.service.getfrmSubLoc(this.locId, itemId, this.subInventoryId).subscribe(
@@ -1432,7 +1471,7 @@ export class CounterSaleComponent implements OnInit {
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
-    for (let taxlinval of this.taxMap.values()) { 
+    for (let taxlinval of this.taxMap.values()) {
       for (let i = 0; i < taxlinval.length; i++) {
         taxStr.push(taxlinval[i]);
       }
@@ -1546,7 +1585,7 @@ export class CounterSaleComponent implements OnInit {
     // alert(i);
     let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
     if (op === 'Search') {
-     
+
       // .controls[i].get('taxAmounts')
       let taxControl = this.TaxDetailsArray() as FormArray
       if (taxControl != undefined) {
@@ -1583,7 +1622,7 @@ export class CounterSaleComponent implements OnInit {
             inclusiveFlag: x.inclusiveFlag,
             invLineNo:k,
           })
-          
+
           );
         }
       });
@@ -1802,9 +1841,12 @@ export class CounterSaleComponent implements OnInit {
   onOptionsSelectedDiscountPer(disPer) {
     // alert(disPer);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    (patch.controls[0]).patchValue({
+  // alert(patch.length)
+    for (let i=0;i<patch.length;i++){
+    (patch.controls[i]).patchValue({
       disPer: this.disPer,
     });
+  }
   }
 
   validateNumber(e: any) {
@@ -1824,7 +1866,7 @@ export class CounterSaleComponent implements OnInit {
   qtyvalidation(i, uom, pricingQty) {
     // alert(i + ' ' + uom + ' ' + pricingQty);
     if (uom === 'NO') {
-      alert(pricingQty);
+      // alert(pricingQty);
       pricingQty: [0 - 9]
     }
     else {

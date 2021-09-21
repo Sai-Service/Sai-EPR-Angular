@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component'
+import { from, Observable } from 'rxjs';
+import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component';
+import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.component'
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,9 @@ export class MasterService {
   taxCategoryNameList(ouId): Observable<any> {
     return this.http.get(this.ServerUrl +`/taxCtgHeader/${ouId}`);
   }
+  taxCategoryList1(locId,state):Observable<any>{
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`)
+  }
 
   memberTicketNo(locCode, deptId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
@@ -38,7 +42,7 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/opUnit');
   }
 
- 
+
 
 
   StateList(): Observable<any> {
@@ -88,6 +92,14 @@ export class MasterService {
   mainTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/MainCtg');
   }
+
+  mainTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=MainCtg&divisionId=${divisionId}`);
+  }
+  subTypeNewList(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/Catgtype?cmnType=SubCtg&divisionId=${divisionId}`);
+  }
+
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
@@ -165,7 +177,7 @@ export class MasterService {
   }
 
 
- 
+
   taxCategoryListForSALESwithstatetcs(customerId,loginOuId1,itemId,custOuId,deptName,tcs): Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('customerId', customerId)
     .set('loginOuId1', loginOuId1)
@@ -176,7 +188,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl +'/poHdr/potaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-  
+
     });
   }
 
@@ -417,6 +429,10 @@ public GroupMasterSubmit(LocationMasterRecord) {
 ////////////////// Item Category Master /////////////////////////////////////////////////////////
 getItemCategorySearch(): Observable<any> {
   return this.http.get(this.ServerUrl + '/itemCategory');
+}
+
+getItemCategorySearchbydivisionId(divisionId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/itemCategory/div/${divisionId}`);
 }
 public ItemCatMastSubmit(ItemCategoryRecord) {
   const options = {
@@ -880,6 +896,9 @@ searchCustomerByContact(contactNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
 }
 
+searchCustomerByAccount(accountNo): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
+}
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
@@ -1217,7 +1236,7 @@ ItemIdDivisionList(divisionId):Observable<any>{
   return this.http.get(this.ServerUrl+`/itemMst/SpAcItems/${divisionId}`);
 }
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
-  alert ("ms >> subInventoryId :" +subInventoryId);
+  // alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
 }
 getSearchByTrans(reqNo):Observable<any>{
@@ -1247,7 +1266,7 @@ returnBillableType(repno):Observable<any>{
     getdivsubInv(subId,divId):Observable<any>{
       return this.http.get(this.ServerUrl+`/subInvMst/subinvname?subInventoryCode=${subId}&divisionId=${divId}`);
     }
-    
+
     getretfrmSubLoc(locId,itemId,subId,jobno):Observable<any>{
       return this.http.get(this.ServerUrl+`/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
     }
@@ -1679,7 +1698,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 getsearchByReceiptNo(segment1): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
 //  return this.http.get(this.ServerUrl + `/rcvShipment/receiptHdr/${segment1}`);
-  
+
 }
 
 getsearchByReceiptNoLine(mPoNumber,mRcptNumber): Observable<any> {
@@ -1751,6 +1770,19 @@ poAllRecFind(segment1): Observable<any> {
 }
 
 
+
+downloadgrrPrint(receiptNo) :Observable<any> {
+  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
+  // local
+  // const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
 delearCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/DealerMst');
 }
@@ -1783,7 +1815,7 @@ public poSaveSubmit(poRecord) {
   };
   const url = this.ServerUrl + '/rcvShipment';
   return this.http.post(url, poRecord, options);
-  
+
 }
 
 //////////////////////////////////RTV///////////////////////////////////////////////////////////
@@ -1926,7 +1958,7 @@ OrderCategoryList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/REFUND_REASON');
   }
 
-  
+
   GLperiod(): Observable<any> {
     return this.http.get(this.ServerUrl +'/glPeriod/currentMonthPeriod');
   }
@@ -1980,10 +2012,10 @@ OrderCategoryList(): Observable<any> {
   getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
-     
+
     if(rcptDate !=undefined || rcptDate !=null){
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`) 
-      } 
+        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
+      }
       if( rcptNumber !=undefined || rcptNumber !=null) {
       return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
       }
@@ -2049,16 +2081,16 @@ OrderCategoryList(): Observable<any> {
 
 ////////////////////////////// bulk po upload /////////
 bulkpouploadSales(formData: FormData) {
-    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData) 
-  }  
+    return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
+  }
 
   bulkpouploadSpares(formData: FormData) {
-      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)  
-  }  
+      return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
+  }
 
-  BindUser(): Observable<OPMasterDtoComponent[]> {  
+  BindUser(): Observable<OPMasterDtoComponent[]> {
     var userId1=sessionStorage.getItem('userId');
-    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=`+userId1);  
+    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=`+userId1);
     // return this.http.get<HomePageComponent[]>(this.ServerUrl + `/header/FileList`);
   }
     //////////////////////////EXTENDED WARRANTY/////////////////////////////
@@ -2163,11 +2195,11 @@ bulkpouploadSales(formData: FormData) {
       return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`);
     }
 
-    
+
     getWsVehRegDetails(mRegNumber): Observable<any> {
       // alert("MS:>> " +mRegNumber );
       return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
-    } 
+    }
 
     getVehVinDetails(mVin): Observable<any> {
       // alert("master >> " +mVin );
@@ -2186,7 +2218,7 @@ bulkpouploadSales(formData: FormData) {
   getVehicleOrderDetails(mOrderNumber): Observable<any> {
     // alert("ms order number>>"+mOrderNumber);
     return this.http.get(this.ServerUrl + `/SsMcpEnqMst/Sales/${mOrderNumber}`);
-    // http://localhost:8081/SsMcpEnqMst/Sales/2111242168 
+    // http://localhost:8081/SsMcpEnqMst/Sales/2111242168
 
     }
 
@@ -2291,18 +2323,18 @@ getMcpPackageSearchNew2(mPkgNo,mFuelType,mOuId): Observable<any>
   //  http://localhost:8081//PackageMst/PkgNoFuelOuId?packageNumber=PKG00018&fuelType=Petrol&ouId=81
  }
 
-getMcpPackageSearchByPkgId(mPkgId): Observable<any> 
+getMcpPackageSearchByPkgId(mPkgId): Observable<any>
 {
    return this.http.get(this.ServerUrl + `/PackageMst/${mPkgId}`);
 }
 
-getMcpPackagePriceDetails(mPkgNo,mFuelType,mPtype,mOuId,mVariant,mCustSite,mLocId): Observable<any> 
+getMcpPackagePriceDetails(mPkgNo,mFuelType,mPtype,mOuId,mVariant,mCustSite,mLocId): Observable<any>
 {
   // alert(mPkgNo +","+mFuelType+","+mPtype+","+mOuId+","+mVariant+","+mCustSite+","+mLocId);
    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpPrcDetails?packageNumber=${mPkgNo}&fuelType=${mFuelType}&packageType=${mPtype}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId} `);
  }
 
- getMcpPackageLineDetails(mPkgNo,mFuelType,mOuId,mVariant,mCustSite,mLocId): Observable<any> 
+ getMcpPackageLineDetails(mPkgNo,mFuelType,mOuId,mVariant,mCustSite,mLocId): Observable<any>
 {
   // alert(mPkgNo +","+mFuelType+","+mOuId+","+mVariant+","+mCustSite+","+mLocId);
    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/PkgLineDtls?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId} `);
@@ -2338,7 +2370,7 @@ UpdateMcpPackageMaster(McpPkgMasterRecord) {
 mcpSchemeList(mRegNo,mKms): Observable<any> {
   // http://localhost:8081/SsMcpEnqMst/validPkgDtls?regNo=MH12EM6011
    return this.http.get(this.ServerUrl +`/SsMcpEnqMst/validPkgDtls?regNo=${mRegNo}&currKms=${mKms}`);
- } 
+ }
 
  public McpEnquiryMasterSubmit(McpEnquiryMasterRecord) {
   const options = {
@@ -2364,13 +2396,13 @@ getValidMcpEnqList(mRegno): Observable<any> {
   // alert("ms>>MCP Enq No"+mEnqNo);
   return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqList/${mRegno}`);
   // /McpEnrollMst/McpEnqList/MH12EM6011
- 
+
 }
 getEnrolledMcpEnqList(mEnqNo): Observable<any> {
   // alert("ms>>MCP Enq No"+mEnqNo);
   return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqDtls/${mEnqNo}`);
   // /McpEnrollMst/McpEnqList/MH12EM6011
- 
+
 }
 
 
@@ -2398,7 +2430,7 @@ getMcpSearchByRegNo(mRegNo): Observable<any> {
 ////////////////////////MCP ITEM MAPPING////////////////////////
 mcpItemMappingSearch1(mItemNum,mFtype,mSrvModel,mOuId): Observable<any> {
     return this.http.get(this.ServerUrl +`/SsErpItemMst/ItemSearch?itemNumber=${mItemNum}&serviceModel=${mSrvModel}&fuelType=${mFtype}&ouId=${mOuId}`);
- } 
+ }
 
  public McpItemMappingSubmitLbr(McpItemMappingrRecord) {
   const options = {
@@ -2423,11 +2455,11 @@ mcpRegSearch(mRegNo,mEnrollNo): Observable<any> {
   // alert ("MS>> Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
   if((mEnrollNo==undefined || mEnrollNo==null) && (mRegNo !=null)  ) {
    return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
- } 
+ }
 
  if((mRegNo==undefined || mRegNo==null) && (mEnrollNo !=null)  ) {
   return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
-} 
+}
 
 if(( mRegNo !=null) && (mEnrollNo !=null)  ) {
   return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?regNo=${mRegNo}&enrollmentNo=${mEnrollNo}`);
@@ -2437,7 +2469,7 @@ if(( mRegNo !=null) && (mEnrollNo !=null)  ) {
 
  mcpRegSearchByEnrollNo(mEnrollNo): Observable<any> {
   return this.http.get(this.ServerUrl +`/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
-} 
+}
 
 
  McpCancelUpdate(McpCancelrRecord) {
@@ -2746,5 +2778,5 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       // http://localhost:8081/AccountTrf/toAcctList/124
 }
    ///////////////////////////////////////////// //////////////////////
-    
+
 }

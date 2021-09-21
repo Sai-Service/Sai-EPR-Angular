@@ -1054,7 +1054,7 @@ export class PaymentArComponent implements OnInit {
           
           
             if(this.tApplAmt>=0){ totAppAmt=this.tApplAmt;} else {totAppAmt=0;}
-            if(this.tUapplAmt<=0){alert("Unapplied Balance not availabe to apply to all Invoices"); e.target.checked=false ;return}
+            if(this.tUapplAmt<=0){alert("Unapplied Balance not availabe to apply to Invoice"); e.target.checked=false ;return}
           
                   if(totUnAppAmt>=lineBalDueAmt)
                   {
@@ -1066,6 +1066,10 @@ export class PaymentArComponent implements OnInit {
                       invBalAmt =0;
                       var ibalAmt=invBalAmt.toFixed(2);
                       patch.controls[index].patchValue({balDueAmt:ibalAmt})
+
+                        var z1=this.pipe.transform(this.now, 'y-MM-dd');
+                        patch.controls[index].patchValue({glDateLine:z1})
+                        // patch.controls[i].patchValue({glDate:z1})
                     }
                   else 
                   {
@@ -1077,6 +1081,9 @@ export class PaymentArComponent implements OnInit {
                       invBalAmt =lineBalDueAmt-totUnAppAmt;
                       var newBal=Number(invBalAmt.toFixed(2));
                       patch.controls[index].patchValue({balDueAmt:newBal})
+
+                      var z1=this.pipe.transform(this.now, 'y-MM-dd');
+                      patch.controls[index].patchValue({glDateLine:z1})
                   }
                   this.CalculateBalance();
           } 
@@ -1146,6 +1153,8 @@ export class PaymentArComponent implements OnInit {
             var invBalAmt=0;
             var applyReceiptFlag;
             var invLineArr = this.paymentArForm.get('invLine').value;
+            var patch = this.paymentArForm.get('invLine') as FormArray;
+
             var lineApplAmt= Number(invLineArr[index].applAmtNew);
             var applyReceiptFlag=invLineArr[index].applyrcptFlag;
             var  ytotUnAppAmt =Number(this.totUnAppliedtAmount);
@@ -1158,7 +1167,7 @@ export class PaymentArComponent implements OnInit {
 
                 var LineinvAmt = Number(invLineArr[index].invoiceAmount);
                 var LineDueAmt = Number(invLineArr[index].balance1);
-                var patch = this.paymentArForm.get('invLine') as FormArray;
+                // var patch = this.paymentArForm.get('invLine') as FormArray;
 
                 if(lineApplAmt > LineDueAmt || lineApplAmt <=0  || lineApplAmt >ytotUnAppAmt  ) 
               { 
@@ -1182,8 +1191,9 @@ export class PaymentArComponent implements OnInit {
              }
 
               /////////////////////////////////////////////////////////
-              var patch = this.paymentArForm.get('invLine') as FormArray;
-              var invLineArr = this.paymentArForm.get('invLine').value;
+              // var patch = this.paymentArForm.get('invLine') as FormArray;
+              // var invLineArr = this.paymentArForm.get('invLine').value;
+
               var totAppAmt=0;
               
               for (let i = 0; i < this.lstinvoices.length ; i++) 
@@ -1191,12 +1201,16 @@ export class PaymentArComponent implements OnInit {
                totAppAmt=totAppAmt+Number(invLineArr[i].applAmtNew);
               //  alert("totAppAmt :"+totAppAmt);
               }
-              this.tApplAmt=totAppAmt+ytotAppAmt;
+              this.tApplAmt=(totAppAmt+ytotAppAmt);
+              this.tApplAmt=Number(this.tApplAmt.toFixed(2));
               this.tUapplAmt=ytotUnAppAmt-totAppAmt;
+              this.tUapplAmt=Number(this.tUapplAmt.toFixed(2));
 
               ///////////////////////////////////////////////////////
             }
-            else {alert("Apply Falg not selected...Select Apply First...");}
+            else {alert("Apply Falg not selected...Select Apply First...Line" +index);
+               patch.controls[index].patchValue({applAmtNew:''})
+               }
 
           } 
           
@@ -1353,6 +1367,7 @@ export class PaymentArComponent implements OnInit {
             {
               this.custName=null;
               this.custSiteAddress=null;
+              alert("Customer Account no doesn't Exists.\nDivision/OpUnit -"+this.loginArray+"("+this.divisionId+") / "+this.ouName+"("+this.ouId+")")
             }
             else 
             {
@@ -1606,6 +1621,21 @@ export class PaymentArComponent implements OnInit {
         this.balanceAmount=this.tUapplAmt;
       }
 
+      validateSave(mType){
+
+        if(mType ==='INVOICE'){
+      
+        var applLineArr = this.paymentArForm.get('invLine').value;
+        var len1=applLineArr.length;
+        alert ( "Array Length :" +len1);
+        for (let i = 0; i < len1 ; i++) 
+        {
+          // alert( "Line : " + i +" applyrcptFlag : " +applLineArr[i].applyrcptFlag);
+          if(applLineArr[i].applyrcptFlag !=true) {this.invLineArray().removeAt(i)}
+        }
+      }
+      }
+
 
       SaveApplyReceipt() 
       {
@@ -1616,12 +1646,14 @@ export class PaymentArComponent implements OnInit {
 
         this.applLineValidation=false;
         var len1=applLineArr.length;
+        // alert ("this.invLineArray().length b4 removing unchecked lines  :" +len1);
+
         
         for (let i = 0; i < len1 ; i++) 
           {
         
-            if(applLineArr[i].applyrcptFlag==true) {
-            this.CheckLineValidations(i);
+            if(applLineArr[i].applyrcptFlag===true) {
+                  this.CheckLineValidations(i);
             }
           }
 
@@ -1634,6 +1666,8 @@ export class PaymentArComponent implements OnInit {
        
         const formValue: IPaymentRcptAr =this.transeData1(this.paymentArForm.value);
 
+      
+        // alert ("this.invLineArray().length after removing unchecked lines  :" +this.invLineArray().length);
 
         let variants = <FormArray>this.invLineArray();
         var receiptNumber = this.paymentArForm.get('receiptNumber').value;
@@ -1644,6 +1678,8 @@ export class PaymentArComponent implements OnInit {
         var custName= this.paymentArForm.get('custName').value;
          
         for (let i = 0; i < this.invLineArray().length; i++) {
+          //  let variants = <FormArray>this.invLineArray();
+         
           let variantFormGroup = <FormGroup>variants.controls[i];
           variantFormGroup.addControl('receiptNumber', new FormControl(receiptNumber, Validators.required));
           variantFormGroup.addControl('receiptDate', new FormControl(receiptDate, Validators.required));
@@ -1653,8 +1689,7 @@ export class PaymentArComponent implements OnInit {
           variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
           patch.controls[i].patchValue({applAmt:applLineArr[i].applAmtNew});
           patch.controls[i].patchValue({glDate:applLineArr[i].glDateLine});
-          
-
+      
         }
 
         console.log(variants.value);
