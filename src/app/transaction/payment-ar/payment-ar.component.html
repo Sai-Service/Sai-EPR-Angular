@@ -1163,8 +1163,9 @@
                                 <div class="modal-footer">
                                   <!-- <button type="button" class="btn btn-info"  >Save</button> -->
                                   <div *ngIf="disableApplySave ,then appSaveYes; else appSaveNo")></div>
-                                  <ng-template #appSaveYes>
+                                  
                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
+                                     <ng-template #appSaveYes>
                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
                                   </ng-template>
                                   <ng-template #appSaveNo>

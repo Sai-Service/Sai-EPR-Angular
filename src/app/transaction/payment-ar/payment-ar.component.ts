@@ -1628,10 +1628,14 @@ export class PaymentArComponent implements OnInit {
         var applLineArr = this.paymentArForm.get('invLine').value;
         var len1=applLineArr.length;
         alert ( "Array Length :" +len1);
-        for (let i = 0; i < len1 ; i++) 
+       // for (let i = 0; i < len1 ; i++) 
+       for (let i=len1-1; i >= 0 ; i--) 
         {
           // alert( "Line : " + i +" applyrcptFlag : " +applLineArr[i].applyrcptFlag);
-          if(applLineArr[i].applyrcptFlag !=true) {this.invLineArray().removeAt(i)}
+          if(this.invLineArray().controls[i].get('applyrcptFlag').value !=true) {
+           // alert(i + applLineArr[i].applyrcptFlag);
+            this.invLineArray().removeAt(i);
+          }
         }
       }
       }
