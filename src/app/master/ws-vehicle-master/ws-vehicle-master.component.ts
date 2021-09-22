@@ -275,7 +275,8 @@ export class WsVehicleMasterComponent implements OnInit {
       /////////////////////SEARCH/////
       mainModelName: [],
       chassisNum: [],
-      vehRegNo: [],
+      //emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      vehRegNo: [[Validators.required,Validators.pattern('^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}')]],
       ///////////////////////////////
 
       ////////////////////////////////////
@@ -447,45 +448,45 @@ export class WsVehicleMasterComponent implements OnInit {
     }
   );
 
-    this.service.PaymentModeList()
-      .subscribe(
-        data => {
-          this.PaymentModeList = data;
-          console.log(this.PaymentModeList);
-        }
-      );
+    // this.service.PaymentModeList()
+    //   .subscribe(
+    //     data => {
+    //       this.PaymentModeList = data;
+    //       console.log(this.PaymentModeList);
+    //     }
+    //   );
 
-    this.service.OUIdList()
-      .subscribe(
-        data => {
-          this.OUIdList = data;
-          console.log(this.OUIdList);
-        }
-      );
+    // this.service.OUIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.OUIdList = data;
+    //       console.log(this.OUIdList);
+    //     }
+    //   );
 
-    this.service.EwTypeList()
-      .subscribe(
-        data => {
-          this.EwTypeList = data;
-          console.log(this.EwTypeList);
-        }
-      );
+    // this.service.EwTypeList()
+    //   .subscribe(
+    //     data => {
+    //       this.EwTypeList = data;
+    //       console.log(this.EwTypeList);
+    //     }
+    //   );
 
-    this.service.EwSourceList()
-      .subscribe(
-        data => {
-          this.EwSourceList = data;
-          console.log(this.EwSourceList);
-        }
-      );
+    // this.service.EwSourceList()
+    //   .subscribe(
+    //     data => {
+    //       this.EwSourceList = data;
+    //       console.log(this.EwSourceList);
+    //     }
+    //   );
 
-    this.service.ewInsNameList()
-      .subscribe(
-        data => {
-          this.ewInsNameList = data;
-          console.log(this.ewInsNameList);
-        }
-      );
+    // this.service.ewInsNameList()
+    //   .subscribe(
+    //     data => {
+    //       this.ewInsNameList = data;
+    //       console.log(this.ewInsNameList);
+    //     }
+    //   );
 
 
     this.service.issueByList(this.locId, this.deptId, this.divisionId)
@@ -495,31 +496,31 @@ export class WsVehicleMasterComponent implements OnInit {
           console.log(this.issueByList);
         });
 
-    this.service.RegNoListFN()
-      .subscribe(
-        data1 => {
-          this.VehRegNoList = data1;
-          console.log(this.VehRegNoList);
-        }
-      );
+    // this.service.RegNoListFN()
+    //   .subscribe(
+    //     data1 => {
+    //       this.VehRegNoList = data1;
+    //       console.log(this.VehRegNoList);
+    //     }
+    //   );
 
-    this.service.VehVinList()
-      .subscribe(
-        data1 => {
-          this.VehVinList = data1;
-          console.log(this.VehVinList);
-        }
-      );
+    // this.service.VehVinList()
+    //   .subscribe(
+    //     data1 => {
+    //       this.VehVinList = data1;
+    //       console.log(this.VehVinList);
+    //     }
+    //   );
 
-    this.service.itemIdList()
-      .subscribe(
-        data => {
-          this.ItemEWList = data;
-          console.log(this.ItemEWList);
-        }
-      );
+    // this.service.itemIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.ItemEWList = data;
+    //       console.log(this.ItemEWList);
+    //     }
+    //   );
 
-    this.service.mainModelList()
+    this.service.mainModelListByDivisionId()
       .subscribe(
         data => {
           this.mainModelList = data;
@@ -528,13 +529,7 @@ export class WsVehicleMasterComponent implements OnInit {
       );
 
 
-    this.service.colorCodeList()
-      .subscribe(
-        data => {
-          this.colorCodeList = data;
-          console.log(this.colorCodeList);
-        }
-      );
+    
 
     this.service.fuelTypeList()
       .subscribe(
@@ -544,13 +539,13 @@ export class WsVehicleMasterComponent implements OnInit {
         }
       );
 
-    this.service.SSitemTypeListFn()
-      .subscribe(
-        data => {
-          this.SSitemTypeList = data;
-          console.log(this.SSitemTypeList);
-        }
-      );
+    // this.service.SSitemTypeListFn()
+    //   .subscribe(
+    //     data => {
+    //       this.SSitemTypeList = data;
+    //       console.log(this.SSitemTypeList);
+    //     }
+    //   );
     this.service.getCategoryIdListByDivision(this.itemTypeForCat)
       .subscribe(
         data => {
@@ -570,36 +565,14 @@ export class WsVehicleMasterComponent implements OnInit {
 
   }
 
-
-  // ========================================================
-
-  // onOptionsSelectedItemType(category:any){
-
-  //  }
-
-
-
-
-
-
-
-  transeData(formValue) {
-
-    // delete formValue.regNo;
-
-
-    return formValue;
-  }
-
-
   newMast() {
 
-    const formValue: IWsVehicleMaster = this.transeData(this.wsVehicleMasterForm.value);
+    const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
 
     this.CheckDataValidations()
 
     if (this.checkValidation) {
-      alert("Data Validation Sucessfull....\nPosting data  to WS Customer Master")
+      alert("Data Validation Sucessfully....\nPosting data  to WS Customer Master")
 
       // debugger;
       console.log(formValue);
@@ -624,7 +597,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   updateMast() {
 
-    const formValue: IWsVehicleMaster = this.transeData(this.wsVehicleMasterForm.value);
+    const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value ;
     this.CheckDataValidations()
 
     if (this.checkValidation) {
@@ -729,7 +702,8 @@ export class WsVehicleMasterComponent implements OnInit {
               custPhone2: this.CustomerDetailsList.mobile2,
               custPhone3: this.CustomerDetailsList.mobile3,
               custEmail: this.CustomerDetailsList.emailId,
-              // custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
+              customerType: this.CustomerDetailsList.custType,
+              custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
 
             });
           }
@@ -837,8 +811,9 @@ export class WsVehicleMasterComponent implements OnInit {
             custPhone1: this.CustomerDetailsList.mobile1,
             custPhone2: this.CustomerDetailsList.mobile2,
             custPhone3: this.CustomerDetailsList.mobile3,
-            custEmail: this.CustomerDetailsList.emailId,
-            // custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
+            customerType: this.CustomerDetailsList.custType,
+            custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList[0].taxCategoryName,
+            
 
           });
         }
@@ -851,7 +826,9 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   CreateItemCode() {
-    this.segment = this.variantCode + "-" + this.colorCode + "-" + this.chassisNo
+
+    var colorCode1 = this.wsVehicleMasterForm.get('colorCode').value;
+    this.segment = this.variantCode + "-" + colorCode1 + "-" + this.chassisNo
     this.wsVehicleMasterForm.patchValue({segment:this.segment});
 
   }
@@ -878,7 +855,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   onOptionsSelectedVariant(modelVariant) {
-
+    if(modelVariant != undefined){
     this.service.variantDetailsList(modelVariant)
       .subscribe(
         data => {
@@ -888,10 +865,21 @@ export class WsVehicleMasterComponent implements OnInit {
           this.wsVehicleMasterForm.patchValue({
             variantDesc: this.variantDetailsList.varDescription,
             serviceModel: this.variantDetailsList.serviceModel,
+            fuelType : this.variantDetailsList.fuelType,
 
           });
+          this.service.colorCodeListByVariant(modelVariant)
+          .subscribe(
+            data => {
+              this.colorCodeList = data;
+              console.log(this.colorCodeList);
+            }
+          );
+          
         }
       );
+
+      }
   }
 
   onChangeDelDate(mDelDate) {
@@ -1059,11 +1047,11 @@ export class WsVehicleMasterComponent implements OnInit {
       return;
     }
 
-    if (formValue.address3 === undefined || formValue.address3 === null || formValue.address3.trim() === '') {
-      this.checkValidation = false;
-      alert("ADDRESS3 : Should not be null....");
-      return;
-    }
+    // if (formValue.address3 === undefined || formValue.address3 === null || formValue.address3.trim() === '') {
+    //   this.checkValidation = false;
+    //   alert("ADDRESS3 : Should not be null....");
+    //   return;
+    // }
 
     if (formValue.city === undefined || formValue.city === null || formValue.city.trim() === '') {
       this.checkValidation = false;

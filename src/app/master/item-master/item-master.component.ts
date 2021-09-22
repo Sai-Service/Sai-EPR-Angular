@@ -782,11 +782,12 @@ taxCategorySale:[],
   }
 
   onOptionsSelectedColor(variant){
-    alert('----'+variant+'&&&&')
+    // alert('----'+variant+'&&&&')
       if(variant ===undefined || variant=== ''){
-     alert('IF')}
+    //  alert('IF')
+  }
 else{
-     alert('in else')
+    //  alert('in else')
     this.orderManagementService.ColourSearchFn(variant)
     .subscribe(
       data => {
@@ -839,8 +840,8 @@ else{
     if(category===undefined){
     }
     else{
-      alert('catgory');
-      this.service.mainModelList()
+      
+      this.service.mainModelListByDivisionId()
       .subscribe(
         data => {
           this.mainModelList = data;
@@ -1063,7 +1064,7 @@ else{
     // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         this.itemMasterForm.disable();
         // this.itemMasterForm.reset();
       } else {
@@ -1081,11 +1082,12 @@ else{
     const formValue: IItemMaster = this.itemMasterForm.value;
     this.service.UpdateItemMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD UPDATED SUCCESSFUlLY');
+        alert(res.message);
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('ERROR OCCOURED IN PROCEESS');
+          alert(res.message
+            );
           // this.CompanyMasterForm.reset();
           // window.location.reload();
         }

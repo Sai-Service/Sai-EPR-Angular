@@ -24,8 +24,9 @@
         <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;">
           <td>
             <!-- <button type="button" class="btn-primary"  [routerLink]="['/OPMasterDto',com.segment1]"> {{com.segment1}}</button> -->
-            <a formControlName="segment1" [(ngModel)]='segment1' [routerLink]="['/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
-          </td>
+            <!-- <a  [(ngModel)]='segment1' (click)="routeOMAndCSPage()" href="{{segment1}}">{{com.segment1}}</a> -->
+            <button class="btn btn-primary" (click)="routeOMAndCSPage(com.segment1)" style="width: fit-content;">{{com.segment1}}</button> 
+        </td>
             <td>{{com.baseAmount}}</td>
             <td>{{com.totTaxAmt}}</td>
             <td>{{com.totalAmt}}</td>

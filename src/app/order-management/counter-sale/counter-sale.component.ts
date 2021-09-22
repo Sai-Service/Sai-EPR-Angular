@@ -35,6 +35,7 @@ interface ISalesBookingForm {
   headerId: number;
   divisionId: number;
   transactionTypeId:number;
+  customerSiteId:number;
   ouId: number;
   orderTypeId: string;
   transactionTypeName: string;
@@ -132,6 +133,7 @@ export class CounterSaleComponent implements OnInit {
   // lnflowStatusCode:string;
   lnflowStatusCode: 'BOOKED';
   transactionTypeId:number;
+  customerSiteId:number;
   reservedQty:number;
   frmLocatorId: number;
   activeLineNo: number = 1;
@@ -360,6 +362,7 @@ export class CounterSaleComponent implements OnInit {
       transactionTypeId:[''],
       InvoiceNumber: [''],
       name: [''],
+      customerSiteId:[''],
       id: [''],
       trxNumber: [''],
       headerId: [''],
@@ -719,31 +722,31 @@ export class CounterSaleComponent implements OnInit {
           this.salesRepName = data.obj.salesRepName;
           this.createOrderType = data.obj.createOrderType;
           this.priceListName = data.obj.priceListName;
-          this.totTax = data.obj.totTax.toFixed(2);
-          this.totAmt = data.obj.totAmt.toFixed(2);
-          this.subtotal = data.obj.subtotal.toFixed(2);
+          this.totTax = data.obj.totTax;
+          this.totAmt = data.obj.totAmt;
+          this.subtotal = data.obj.subtotal;
           this.disPer=data.obj.disPer;
           // this.taxAmt=data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2)
           // alert(data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2))
 
           this.transactionTypeName = data.obj.transactionTypeName;
           for (let k = 0; k < data.obj.oeOrderLinesAllList.length; k++) {
-            this.CounterSaleOrderBookingForm.patchValue({ baseAmt: this.lstgetOrderLineDetails[k].baseAmt.toFixed(2) });
+            this.CounterSaleOrderBookingForm.patchValue({ baseAmt: this.lstgetOrderLineDetails[k].baseAmt });
             // this.CounterSaleOrderBookingForm.patchValue({taxAmt:this.lstgetOrderLineDetails[k].taxAmt});
             let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             (controlinv.controls[k]).patchValue({
-              baseAmt: data.obj.oeOrderLinesAllList[k].baseAmt.toFixed(2),
-              taxAmt: data.obj.oeOrderLinesAllList[k].taxAmt.toFixed(2),
-              totAmt: data.obj.oeOrderLinesAllList[k].totAmt.toFixed(2),
+              baseAmt: data.obj.oeOrderLinesAllList[k].baseAmt,
+              taxAmt: data.obj.oeOrderLinesAllList[k].taxAmt,
+              totAmt: data.obj.oeOrderLinesAllList[k].totAmt,
               disPer: data.obj.oeOrderLinesAllList[k].disPer,
-              unitSellingPrice: data.obj.oeOrderLinesAllList[k].unitSellingPrice.toFixed(2),
+              unitSellingPrice: data.obj.oeOrderLinesAllList[k].unitSellingPrice,
             });
           }
 
           for (let k = 0; k < data.obj.taxAmounts.length; k++) {
             let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
             (controlinv.controls[k]).patchValue({
-              totTaxAmt: data.obj.taxAmounts[k].totTaxAmt.toFixed(2),
+              totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
             });
           }
           this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
@@ -1006,6 +1009,11 @@ export class CounterSaleComponent implements OnInit {
           // if (data.code===200){
           this.custSiteAddressList = data;
           this.ouId = data.ouId;
+          // alert(data.ouId+' '+ sessionStorage.getItem('ouId'))
+          if (data.ouId !=(sessionStorage.getItem('ouId'))){
+            alert('First Craete OU wise Side and then do the further process!')
+        }
+        else{
           this.CounterSaleOrderBookingForm.patchValue(this.custSiteAddressList);
           this.custName = data.customerId.custName;
           this.customerId = data.customerId.customerId;
@@ -1015,12 +1023,7 @@ export class CounterSaleComponent implements OnInit {
           console.log(this.custSiteAddressList.customerId.custName);
           this.birthDate = data.customerId.birthDate;
           this.weddingDate = data.customerId.weddingDate;
-          // }
-          // else {
-          //   if (data.code===400){
-          //     alert(data.message);
-          //   }
-          // }
+        }
         });
   }
 
@@ -1286,7 +1289,7 @@ export class CounterSaleComponent implements OnInit {
                   taxCategoryId: data[i].taxCategoryId,
                   taxCategoryName: data[i].taxCategoryName,
                   uom: data[i].uom,
-                  unitSellingPrice: data[i].priceValue.toFixed(2),
+                  unitSellingPrice: data[i].priceValue,
                 });
 
                 this.taxCategoryList = this.taxCategoryList.filter(function (d) { return  taxCatNm.includes(d.gstPercentage)});
@@ -1470,6 +1473,7 @@ export class CounterSaleComponent implements OnInit {
     // formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     let jsonData = this.CounterSaleOrderBookingForm.value;
+    jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
     var taxStr = [];
@@ -1606,7 +1610,7 @@ export class CounterSaleComponent implements OnInit {
           console.log('in patch' + taxItems);
           console.log(x.totTaxAmt);
           taxControl.push(this.fb.group({
-            totTaxAmt: x.totTaxAmt.toFixed(2),
+            totTaxAmt: x.totTaxAmt,
             lineNumber: x.lineNumber,
             taxRateName: x.taxRateName,
             taxTypeName: x.taxTypeName,
@@ -1687,7 +1691,7 @@ export class CounterSaleComponent implements OnInit {
       console.log('in patch' + taxCalforItem);
       console.log(x.taxRateName);
       control.push(this.fb.group({
-        totTaxAmt: x.totTaxAmt.toFixed(2),
+        totTaxAmt: x.totTaxAmt,
         lineNumber: x.lineNumber,
         taxRateName: x.taxRateName,
         taxTypeName: x.taxTypeName,
