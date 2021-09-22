@@ -69,6 +69,10 @@ interface IcustomerMaster {
   customerSiteId:number;
   creditAmt:number;
   highAmt:number;
+  disPer:number;
+  screditAmt:number;
+  shighAmt:number;
+  sdisPer:number;
 }
 
 @Component({
@@ -185,6 +189,10 @@ export class CustomerMasterComponent implements OnInit {
   customerSiteId:number;
   creditAmt:number;
   highAmt:number;
+  screditAmt:number;
+  shighAmt:number;
+  disPer:number;
+  sdisPer:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -264,6 +272,10 @@ export class CustomerMasterComponent implements OnInit {
       slocation:[],
       creditAmt:[],
       highAmt:[],
+      screditAmt:[],
+      shighAmt:[],
+      disPer:[],
+      sdisPer:[],
     })
 
   }
@@ -284,7 +296,7 @@ export class CustomerMasterComponent implements OnInit {
    console.log(this.ouId);
    this.weddingDate = new Date();
    this.startDate = new Date();
-    this.service.custTypeList()
+       this.service.custTypeList()
       .subscribe(
         data => {
           this.custTypeList = data;
@@ -365,7 +377,7 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.payTermDescList);
         }
       );
-
+        // this.PersonType='Person';
   }
 
   customerMaster(customerMaster: any) {
@@ -466,6 +478,15 @@ onOptionSiteStateSeleted(event:any)
   }
 
   onOptioncustTypeSelected(event: any) {
+    // alert(this.PersonType+'Type');
+    if(this.PersonType!=undefined){
+    if(event!=this.PersonType){
+      // this.customerMasterForm.reset();
+      window.location.reload();
+      // this.customerMasterForm.patchValue({custType:event});
+      // return;
+    }}
+
     this.PersonType = this.customerMasterForm.get('custType').value;
 
     if (event === 'Person') {
@@ -476,6 +497,8 @@ onOptionSiteStateSeleted(event:any)
       //this.displayOrgnization = true;
       this.displayPerson = false;
      // this.customerMasterForm.get('custName').enable();
+     this.customerMasterForm.get('birthDate').disable();
+     this.customerMasterForm.get('weddingDate').disable();
     }
   }
   onKey(event: any) {
@@ -542,6 +565,7 @@ if (person === 'Person'){
   }
   newMast() {
     this.submitted = true;
+    this.validation();
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
     return;
@@ -667,7 +691,10 @@ if (person === 'Person'){
           // this.city = this.lstcomments.city
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
-            gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo
+            gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
+            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
+            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
+            disPer:this.lstcomments.customerSiteMasterList[0].disPer
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
@@ -688,7 +715,10 @@ if (person === 'Person'){
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments.customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
-            taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName
+            taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
+            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
+            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
+            disPer:this.lstcomments.customerSiteMasterList[0].disPer
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments.title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments.termId);
@@ -786,10 +816,30 @@ if (person === 'Person'){
 
       validation()
       {
-        var type=this.customerMasterForm.get('custType').value;
-        if(type === 'Person')
+        // alert('in Validation');
+        const formValue:IcustomerMaster = this.customerMasterForm.value;
+        // var type=this.customerMasterForm.get('custType').value;
+        // alert(formValue.birthDate);
+        if(formValue.custType ==='Person')
         {
+          if(formValue.birthDate===undefined)
           alert('Please enter Birth Date');
+
+        }
+        if(formValue.custType ==='Organization')
+        {
+
+          if(formValue.contactNo ===undefined)
+          {
+            alert('Please enter Contact  No');
+
+
+          }
+          if(formValue.contactPerson ===undefined)
+          {
+            alert('Please enter Contact  Person Name');
+            // this.customerMasterForm.get('contactPerson')
+          }
         }
       }
 }
