@@ -169,6 +169,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/AccOrderType');
   }
 
+  issueCodeFunction(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/CmnTypeDivision?cmnType=IssueCode&divisionId=${divisionId}`);
+  }
+
   taxCategoryListForSALES(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
   }
