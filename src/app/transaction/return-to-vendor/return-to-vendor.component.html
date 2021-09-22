@@ -419,13 +419,14 @@
                                         </td>
                                         
                                         <td>
-                                            <div *ngIf="recFagDiss; then thenBlock; else elseBlock"></div>
+                                            <div *ngIf="enableCheckBox; then thenBlock; else elseBlock"></div>
                                             <ng-template #thenBlock>
                                                 <input style="text-align: center;width: 3rem;" type="checkbox"  name="selectFlag" formControlName="selectFlag" ([ngModel])="selectFlag"  (change)="LineSelectFlag($event,i)">
                                                
                                             </ng-template>
                                             <ng-template #elseBlock>
-                                                <input  style="text-align: center;width: 3rem;" type="checkbox" checked   id="selectFlag" [formControl]="selectFlag"   value="selectFlag"  (change)="selectFlag=$event.target.checked?'Y':'N'">
+                                                <input disabled style="text-align: center;width: 3rem;" type="checkbox" checked   id="selectFlag" [formControl]="selectFlag"   value="selectFlag" (change)="LineSelectFlag($event,i)" >
+                                                <!-- (change)="selectFlag=$event.target.checked?'Y':'N'"> -->
                                             </ng-template>
                                         </td>
 
