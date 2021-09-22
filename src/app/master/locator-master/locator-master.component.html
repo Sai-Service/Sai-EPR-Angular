@@ -18,12 +18,14 @@
                                 Location&nbsp;:
                             </td>
                             <td>
-                                <select formControlName="locId" id="locId" class="form-control">
-                                    <option>--Select--</option>
+                                <select formControlName="locId" id="locId" class="form-control" 
+                                [ngClass]="{ 'is-invalid': submitted && f.locId.errors }">
+                                    <option></option>
                                     <option *ngFor="let sc of  locationIdList" [ngValue]="sc.locId"  >
                                         {{sc.locCode}}
                                     </option>
                                 </select>
+                              
                                 <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
                                     <div *ngIf="f.locId.errors.required">Location is required</div>
                                     <!-- <span
@@ -31,36 +33,52 @@
                                         Enter Location Name </span> -->
                                 </div>          
                             </td>
-                            <td style="width: 18%" class="LabelFontStyle1">
-                                Subinventory&nbsp;:
+                            
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td class="LabelFontStyle1"></td>
+                                        <td style="width: 18%" class="LabelFontStyle" >
+                                            Subinventory&nbsp;:
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
-                                <select formControlName="subinventoryId" id="subinventoryId" class="form-control">
-                                    <option>--Select--</option>
+                                <select formControlName="subinventoryId" id="subinventoryId" class="form-control"
+                                  [ngClass]="{'is-invalid': submitted && f.subinventoryId.errors}">
+                                    <option></option>
                                     <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryId"  >
                                        {{sc.subInventoryId}}-{{sc.subInventoryCode}}
                                     </option>
                                 </select>
                                 <div *ngIf="submitted && f.subinventoryId.errors" class="invalid-feedback">
                                     <div *ngIf="f.subinventoryId.errors.required">Subinventory is required</div>
+                                    
                                     <!-- <span
                                         *ngIf="!locatorMasterForm.get('subinventoryId').valid && locatorMasterForm.get('subinventoryId').touched">Please
                                         Enter Subinventory </span> -->
                                 </div>
                             </td>
-                            <td style="width: 18%" class="LabelFontStyle1">
-                                Floor&nbsp;:
-                            </td>
                             <td>
-                                <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control"
+                                <table>
+                                    <tr>
+                                        <td class="LabelFontStyle1"></td>
+                                        <td style="width: 18%" class="LabelFontStyle">
+                                            Floor&nbsp;:
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                           
+                            <td>
+                                <input type="text" formControlName="segment1"  value={{segment1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment1.errors }"
-                                placeholder="Enter Floor">
-                            <div *ngIf="submitted && f. segment1.errors" class="invalid-feedback">
-                                <div *ngIf="f.segment1.errors.required">Floor must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                        </div> -->
-                                <div *ngIf="f.segment1.errors?.maxLength">Floor must be a valid for 1 digit
-                                </div>
+                                placeholder="Enter Floor" style="text-transform: uppercase;">
+                            <div *ngIf="submitted && f.segment1.errors" class="invalid-feedback">
+                                <div *ngIf="f.segment1.errors.required">Floor cannot be blank</div>
+                                <div *ngIf="f.segment1.errors.maxlength">Maximum 5 characters allowed</div>
+                                <!-- Derina - Max length errro not worksing -->
                             </div>
                             <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment1').valid && locatorMasterForm.get('segment1').touched">Please
@@ -76,12 +94,9 @@
                                 <input formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
                                 placeholder="Enter Rack">
-                            <div *ngIf="submitted && f. segment2.errors" class="invalid-feedback">
-                                <div *ngIf="f.segment2.errors.required">Rack must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                        </div> -->
-                                <div *ngIf="f.segment2.errors?.maxLength">Rack must be a valid for 5 digit
-                                </div>
+                            <div *ngIf="submitted && f.segment2.errors" class="invalid-feedback">
+                                <div *ngIf="f.segment2.errors.required">Rack cannot be blank</div>
+                                <div *ngIf="f.segment2.errors.maxLength">Maximum 5 Characters allowed</div>
                             </div>
                             <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment2').valid && locatorMasterForm.get('segment2').touched">Please
@@ -94,12 +109,9 @@
                                 <input formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
                                 placeholder="Enter Rack Number">
-                            <div *ngIf="submitted && f. segment3.errors" class="invalid-feedback">
-                                <div *ngIf="f.segment3.errors.required">Rack Number must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                        </div> -->
-                                <div *ngIf="f.segment3.errors?.maxLength">Rack Number must be a valid for 1 digit
-                                </div>
+                            <div *ngIf="submitted && f.segment3.errors" class="invalid-feedback">
+                                <div *ngIf="f.segment3.errors.required">Rack Number cannot be blank</div>
+                                 <div *ngIf="f.segment3.errors.maxLength">Maximum 5 Characters allowed</div>
                             </div>
                             <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment3').valid && locatorMasterForm.get('segment3').touched">Please
@@ -112,12 +124,9 @@
                                 <input formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
                                 placeholder="Enter Row">
-                            <div *ngIf="submitted && f. segment4.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.segment4.errors" class="invalid-feedback">
                                 <div *ngIf="f.segment4.errors.required">Row must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                        </div> -->
-                                <div *ngIf="f.segment4.errors?.maxLength">Row must be a valid for 1 digit
-                                </div>
+                              <div *ngIf="f.segment4.errors.maxlength">Maximum 5 Characters allowed</div>
                             </div>
                             <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment4').valid && locatorMasterForm.get('segment4').touched">Please
@@ -130,12 +139,9 @@
                                 <input formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
                                 placeholder="Enter Row Number">
-                            <div *ngIf="submitted && f. segment5.errors" class="invalid-feedback">
-                                <div *ngIf="f.segment5.errors.required">Row Number must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                        </div> -->
-                                <div *ngIf="f.segment5.errors?.maxLength">Row Number must be a valid for 1 digit
-                                </div>
+                            <div *ngIf="submitted && f.segment5.errors" class="invalid-feedback">
+                                <div *ngIf="f.segment5.errors.required">Row number cannot be blank</div>
+                               <div *ngIf="f.segment5.errors.maxLength">Maximum 5 Characters allowed</div>
                             </div>
                             <!-- <span
                                 *ngIf="!locatorMasterForm.get('segment5').valid && locatorMasterForm.get('segment5').touched">Please
@@ -144,8 +150,8 @@
                         </tr>
                         <tr>
                            
-                           
                         </tr>
+                        
                         <tr>
                             <td style="width: 18%" class="LabelFontStyle1">
                                 Concatenated&nbsp;Locator&nbsp;:
@@ -188,11 +194,11 @@
                                 <input disabled formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment1.errors }"
                                 placeholder="Enter Floor">
-                            <div *ngIf="submitted && f. segment1.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.segment1.errors" class="invalid-feedback">
                                 <div *ngIf="f.segment1.errors.required">Floor must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                                <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                         </div> -->
-                                <div *ngIf="f.segment1.errors?.maxLength">Floor must be a valid for 1 digit
+                                <div *ngIf="f.segment1.errors.maxLength">Floor must be a valid for 1 digit
                                 </div>
                             </div>
                             <!-- <span
@@ -208,11 +214,11 @@
                                 <input disabled formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
                         placeholder="Enter Rack">
-                    <div *ngIf="submitted && f. segment2.errors" class="invalid-feedback">
+                    <div *ngIf="submitted && f.segment2.errors" class="invalid-feedback">
                         <div *ngIf="f.segment2.errors.required">Rack must be a valid for 5 digit</div>
-                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                 </div> -->
-                        <div *ngIf="f.segment2.errors?.maxLength">Rack must be a valid for 5 digit
+                        <div *ngIf="f.segment2.errors.maxLength">Rack must be a valid for 5 digit
                         </div>
                     </div>
                     <!-- <span
@@ -226,11 +232,11 @@
                                 <input disabled formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
                                 placeholder="Enter Rack Number">
-                            <div *ngIf="submitted && f. segment3.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.segment3.errors" class="invalid-feedback">
                                 <div *ngIf="f.segment3.errors.required">Rack Number must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                                <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                         </div> -->
-                                <div *ngIf="f.segment3.errors?.maxLength">Rack Number must be a valid for 1 digit
+                                <div *ngIf="f.segment3.errors.maxLength">Rack Number must be a valid for 1 digit
                                 </div>
                             </div>
                             <!-- <span
@@ -244,11 +250,11 @@
                                 <input disabled formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
                         placeholder="Enter Row">
-                    <div *ngIf="submitted && f. segment4.errors" class="invalid-feedback">
+                    <div *ngIf="submitted && f.segment4.errors" class="invalid-feedback">
                         <div *ngIf="f.segment4.errors.required">Row must be a valid for 5 digit</div>
-                        <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                 </div> -->
-                        <div *ngIf="f.segment4.errors?.maxLength">Row must be a valid for 1 digit
+                        <div *ngIf="f.segment4.errors.maxLength">Row must be a valid for 1 digit
                         </div>
                     </div>
                     <!-- <span
@@ -262,11 +268,11 @@
                                 <input disabled formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
                                 placeholder="Enter Row Number">
-                            <div *ngIf="submitted && f. segment5.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.segment5.errors" class="invalid-feedback">
                                 <div *ngIf="f.segment5.errors.required">Row Number must be a valid for 5 digit</div>
-                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                                <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                         </div> -->
-                                <div *ngIf="f.segment5.errors?.maxLength">Row Number must be a valid for 1 digit
+                                <div *ngIf="f.segment5.errors.maxLength">Row Number must be a valid for 1 digit
                                 </div>
                             </div>
                             <!-- <span
@@ -292,7 +298,7 @@
                                         {{sc.codeDesc}}
                                     </option>
                                 </select>
-                                <div *ngIf="submitted && f. status.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
                                     <div *ngIf="f.status.errors.required">status is required</div>
                                     <!-- <span
                                         *ngIf="!locatorMasterForm.get('status').valid && locatorMasterForm.get('status').touched">Please
