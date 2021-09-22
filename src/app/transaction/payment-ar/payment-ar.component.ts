@@ -1631,7 +1631,7 @@ export class PaymentArComponent implements OnInit {
        // for (let i = 0; i < len1 ; i++) 
        for (let i=len1-1; i >= 0 ; i--) 
         {
-          // alert( "Line : " + i +" applyrcptFlag : " +applLineArr[i].applyrcptFlag);
+          
           if(this.invLineArray().controls[i].get('applyrcptFlag').value !=true) {
            // alert(i + applLineArr[i].applyrcptFlag);
             this.invLineArray().removeAt(i);
