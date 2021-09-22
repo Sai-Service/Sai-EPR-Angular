@@ -566,6 +566,13 @@ mainModelList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulModel');
 }
 
+mainModelListByDivisionId(): Observable<any> {
+
+  //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2 
+  return this.http.get(this.ServerUrl +'/cmnLookup/Catgtype?cmnType=Model&divisionId='+sessionStorage.getItem('divisionId'));
+}
+
+
 mcpReasonLst(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/type/McpCancelRsn');
 }
@@ -585,6 +592,10 @@ VariantSearchFn(mainModel): Observable<any> {
 
 colorCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/cmnLookup/MulColour');
+}
+
+colorCodeListByVariant(variant): Observable<any> {
+  return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
 }
 
 transactionTypeNameList(deptId,locId,ouId): Observable<any> {
@@ -1992,11 +2003,11 @@ OrderCategoryList(): Observable<any> {
 
 
   ////////////////////////// RECEIPT APPLICATION /////////////////////
-  public ArReceipApplySubmit(ArReceiptApplyRecord) {
+  public ArReceipApplySubmit(ArReceiptApplyRecord,mRcptNo) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/arCashReceipts/apply/inv';
+    const url =(this.ServerUrl +`/arCashReceipts/apply/inv/${mRcptNo}`);
     return this.http.post(url, ArReceiptApplyRecord, options);
   }
   ////////////////////////// ///////////////////////////////////////

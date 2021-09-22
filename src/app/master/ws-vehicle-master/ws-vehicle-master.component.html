@@ -95,6 +95,7 @@
                                    <td>
                                         <input class="form-control" formControlName="vehRegNo" [(ngModel)]='vehRegNo'
                                             value={{vehRegNo}} style="text-transform:uppercase;">
+                                         
                                     </td>
 
                                     <td>
@@ -102,7 +103,7 @@
                                                 aria-hidden="true"></i></button>
                                     </td>
                     
-                                    <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                                    <td style="width: 12%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
                         
                                     <td>  
                                         <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  >
@@ -114,7 +115,7 @@
                                         </select>
                                     </td>
                     
-                                    <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td style="width: 12%" class="LabelFontStyle">Chassis&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
                                         <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" style="text-transform:uppercase;" >
                                     </td>
@@ -162,7 +163,7 @@
                 <tr>
 
                    
-                    <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
 
                     <td>  
                         <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  
@@ -174,7 +175,7 @@
                         </select>
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Variant&nbsp;Code:</td>
+                    <td style="width: 12%" class="LabelFontStyle">&nbsp;Variant&nbsp;Code:</td>
 
                    <td>
                     <select formControlName="variantCode" id="variantCode" class="form-control" [(ngModel)]="variantCode" 
@@ -182,13 +183,13 @@
                      
                        <option >--Select--</option>
                         <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
-                            {{mv.variant}}
+                            {{mv.variant}}-{{mv.varDescription}}
                         </option>
                     </select>
                 </td>
 
     
-                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Variant&nbsp;Desc:&nbsp;</td>
     
                     <td>
                         <input disabled  type="text"  formControlName="variantDesc"  id="variantDesc" [(ngModel)]="variantDesc" class="form-control" >
@@ -197,25 +198,25 @@
 
                 <tr>
 
-                    <td style="width: 15%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
 
                     <td>
-                        <select formControlName="colorCode" id="colorCode" class="form-control" [(ngModel)]="colorCode" 
-                        (ngModelChange)="onOptionsSelectedVariant($event)" style="background-color: yellow"  >
-                           <option disabled>--Select--</option>
-                            <option *ngFor="let mc of colorCodeList" [ngValue]="mc.code">
-                                {{mc.code}}-{{mc.codeDesc}}
+                        <select formControlName="colorCode" id="colorCode" class="form-control" 
+                         style="background-color: yellow"  >
+                           <option >--Select--</option>
+                            <option *ngFor="let mc of colorCodeList" [ngValue]="mc.ColorCode">
+                                {{mc.ColorCode}}-{{mc.colorDesc}}
                             </option>
                         </select>
                     </td>
 
 
-                    <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" (change)="CreateItemCode()" style="background-color: yellow" >
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" class="form-control" style="background-color: yellow"  >
@@ -223,12 +224,20 @@
                 </tr>
                
                 <tr>
+                    <td style="width: 12%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                    <td>  
+                        <input disabled type="text" formControlName="fuelType" class="form-control" >
+                        <!-- <select   formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" style="background-color: yellow" >
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
+                              {{sc.code}}
+                            </option>
+                        </select> -->
+                    </td>
+                    <!-- <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
 
-                    <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
-
-                    <td>
-                        <!-- <input  disabled type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" > -->
-                        <select   formControlName="serviceModel" id="serviceModel" [(ngModel)]="serviceModel" class="form-control" style="background-color: yellow" >
+                 <td>
+                         <select   formControlName="serviceModel" id="serviceModel" [(ngModel)]="serviceModel" class="form-control" style="background-color: yellow" >
                             <option disabled>--Select--</option>
                             <option *ngFor="let sc of  ServiceModelList" [ngValue]="sc.code">
                               {{sc.code}}- {{sc.codeDesc}}
@@ -236,43 +245,42 @@
                         </select>
                     
                     
-                    </td>
-                   
-            
-                    <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+                    </td> --> 
+                    <td style="width: 12%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
 
-                    <td>  
-                        <select   formControlName="fuelType" id="fuelType" [(ngModel)]="fuelType" class="form-control" style="background-color: yellow" >
-                            <option disabled>--Select--</option>
-                            <option *ngFor="let sc of  FuelTypeList" [ngValue]="sc.code">
-                              {{sc.code}}
-                            </option>
-                        </select>
+                    <td>
+                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
                     </td>
+                    <td style="width: 12%" class="LabelFontStyle">Manuf&nbsp;Year&nbsp;:&nbsp;</td>
 
-                    <td style="width: 15%" class="LabelFontStyle">RF&nbsp;ID:&nbsp;</td>
+                    <td>
+                        <input   type="text"  formControlName="monthYrManf"  id="monthYrManf" [(ngModel)]="monthYrManf" class="form-control" >
+                    </td>
+                 
+
+                    <!-- <td style="width: 12%" class="LabelFontStyle">RF&nbsp;ID:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="rfId"  id="rfId" [(ngModel)]="rfId" class="form-control" >
-                    </td>
+                    </td> -->
                     </tr>
                    
                     <tr>
 
                    
 
-                    <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
 
                     <td>
                         <input   type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control"  (change)="onChangeDelDate(deliveryDate)" >
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">Dlr&nbsp;Invoice&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Dlr&nbsp;Invoice&nbsp;No:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="dlrInvoiceNo"  id="dlrInvoiceNo" [(ngModel)]="dlrInvoiceNo" class="form-control" >
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;Invoice&nbsp;No:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">DMS&nbsp;Invoice&nbsp;No:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="dmsInvoiceNo"  id="dmsInvoiceNo" [(ngModel)]="dmsInvoiceNo" class="form-control" >
@@ -282,18 +290,18 @@
                 <tr>
                     
                     
-                    <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Name:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Name:&nbsp;</td>
 
                     <td>
                         <input    disabled   type="text"  formControlName="dealerName"  id="dealerName" [(ngModel)]="dealerName" class="form-control" >
                     </td>
 
-                    <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
 
                     <td>
                         <input    type="text"  formControlName="dealerSite"  id="dealerSite" [(ngModel)]="dealerSite" class="form-control" >
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">Dealer&nbsp;Code:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Code:&nbsp;</td>
 
                     <td>
                         <input   type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
@@ -305,14 +313,14 @@
                 <tr>
 
                     
-                    <td style="width: 15%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Expiry:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">OEM&nbsp;WR&nbsp;Expiry:&nbsp;</td>
 
                     <td>
                         <input disabled  type="date"  formControlName="oemWarrentyEndDate"  id="oemWarrentyEndDate" [(ngModel)]="oemWarrentyEndDate" class="form-control" >
                     </td>
 
                       
-                    <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Type&nbsp;:&nbsp;</td>
+                    <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Type&nbsp;:&nbsp;</td>
 
                       
                         <!-- <select disabled formControlName="itemTypeForCat" id="itemTypeForCat" [(ngModel)]="itemTypeForCat" class="form-control"
@@ -340,22 +348,8 @@
 
                 </tr>
                 <tr>
-                   
-
-                    
-                    <td style="width: 15%" class="LabelFontStyle">Manufacturing&nbsp;Year&nbsp;:&nbsp;</td>
-
-                    <td>
-                        <input   type="text"  formControlName="monthYrManf"  id="monthYrManf" [(ngModel)]="monthYrManf" class="form-control" >
-                    </td>
-
-                    <td style="width: 15%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
-
-                    <td>
-                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
-                    </td>
-
-                    <!-- <td style="width: 15%" class="LabelFontStyle">Site.&nbsp;Id&nbsp;:&nbsp;</td>
+             
+                    <!-- <td style="width: 12%" class="LabelFontStyle">Site.&nbsp;Id&nbsp;:&nbsp;</td>
 
                     <td >
                         <input  style="width:30px ;"   type="text" disabled formControlName="customerSiteId"
@@ -383,11 +377,11 @@
 
                     <tr>
                        
-                        <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                         <td>
                             <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="background-color: greenyellow;" >
                         </td>
-                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
                         <td>
                             <input   hidden  type="text"  formControlName="customerId"/>
                             <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
@@ -420,18 +414,18 @@
 
              <tr>
 
-                <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Policy&nbsp;No:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Policy&nbsp;No:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="policyNo"  id="policyNo" [(ngModel)]="policyNo" class="form-control" >
                 </td>
 
-                <td style="width: 15%" class="LabelFontStyle">Policy&nbsp;Expiry:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Policy&nbsp;Expiry:&nbsp;</td>
 
                 <td>
                     <input   type="date"  formControlName="insuDate"  id="insuDate" [(ngModel)]="insuDate" class="form-control" >
                 </td>
-                <td style="width: 15%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="insCompanyName"  id="insCompanyName" [(ngModel)]="insCompanyName" class="form-control" >
@@ -439,7 +433,7 @@
              </tr>
              <tr>
              
-                <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Site:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">Insurance&nbsp;Site:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="inscompanySite"  id="inscompanySite" [(ngModel)]="inscompanySite" class="form-control" >
@@ -449,7 +443,7 @@
              <tr>
 
 
-                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Status&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Status&nbsp;:&nbsp;</td>
                 <td>
                 <select formControlName="ewStatus" id="ewStatus" class="form-control"  
                                         [ngModel]="ewStatus" >
@@ -459,14 +453,14 @@
                     </option>
                 </select>
                 </td>
-                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Booklet&nbsp;No:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="ewBookletNo"  id="ewBookletNo" [(ngModel)]="ewBookletNo" class="form-control" >
                 </td>
 
                 
-                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Insurer&nbsp;:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="ewInsurerId"  id="ewInsurerId" [(ngModel)]="ewInsurerId" class="form-control" >
@@ -475,18 +469,18 @@
              </tr>
 
              <tr>
-                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Expiry&nbsp;:&nbsp;</td>
 
                 <td>
                     <input   type="date"  formControlName="ewEndDate"  id="ewEndDate" [(ngModel)]="ewEndDate" class="form-control" >
                 </td>
 
-                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Balance&nbsp;Days:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Balance&nbsp;Days:&nbsp;</td>
 
                 <td>
                     <input   type="number"  formControlName="ewBalanceDays"  id="ewBalanceDays" [(ngModel)]="ewBalanceDays" class="form-control" >
                 </td>
-                <td style="width: 15%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">EW&nbsp;Ins&nbsp;Site:&nbsp;</td>
 
                 <td>
                     <input   type="text"  formControlName="ewInsurerSite"  id="ewInsurerSite" [(ngModel)]="ewInsurerSite" class="form-control" >
@@ -495,7 +489,7 @@
              </tr>
              <tr>
                     
-                <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;Status:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;Status:&nbsp;</td>
 
                 <td>
                 <select formControlName="mcpStatus" id="mcpStatus" class="form-control"  
@@ -507,7 +501,7 @@
                 </select>
                 </td>
 
-                <td style="width: 15%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">MCP&nbsp;No:&nbsp;</td>
 
                 <td>
                     <input     type="text"  formControlName="mcpNo"  id="mcpNo" [(ngModel)]="mcpNo" class="form-control" >
@@ -523,13 +517,13 @@
 
                 <tr>
                     
-                <td style="width: 15%" class="LabelFontStyle">CNG&nbsp;Cylinder&nbsp;No:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">CNG&nbsp;Cylinder&nbsp;No:&nbsp;</td>
 
                 <td>
                     <input    type="text"  formControlName="cngCylinderNo"  id="cngCylinderNo" [(ngModel)]="cngCylinderNo" class="form-control" >
                 </td>
 
-                <td style="width: 15%" class="LabelFontStyle">CNG&nbsp;Kit&nbsp;No:&nbsp;</td>
+                <td style="width: 12%" class="LabelFontStyle">CNG&nbsp;Kit&nbsp;No:&nbsp;</td>
 
                 <td>
                     <input     type="text"  formControlName="cngKitNumber"  id="cngKitNumber" [(ngModel)]="cngKitNumber" class="form-control" >
@@ -560,31 +554,31 @@
            
                     <table class="center">
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Re-Sale&nbsp;Date&nbsp;:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Re-Sale&nbsp;Date&nbsp;:&nbsp;</td>
                         <td>
                             <input     type="date"  formControlName="tvReSaleDate"  id="tvReSaleDate" [(ngModel)]="tvReSaleDate" class="form-control" >
                         </td>
-                        <td style="width: 15%" class="LabelFontStyle">Warrnay&nbsp;Exp&nbsp;Date:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Warrnay&nbsp;Exp&nbsp;Date:&nbsp;</td>
                         <td>
                             <input     type="date"  formControlName="tvWrExpDate"  id="tvWrExpDate" [(ngModel)]="tvWrExpDate" class="form-control" >
                         </td>
-                        <td style="width: 15%" class="LabelFontStyle">Warrany&nbsp;Exp&nbsp;Mileage:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Warrany&nbsp;Exp&nbsp;Mileage:&nbsp;</td>
                         <td>
                             <input     type="number"  formControlName="tvWrExpMileage"  id="tvWrExpMileage" [(ngModel)]="tvWrExpMileage" class="form-control" >
                         </td>
                     </tr>
 
                     <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Certificate&nbsp;No:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Certificate&nbsp;No:&nbsp;</td>
                         <td>
                             <input     type="text"  formControlName="tvCertificateNo"  id="tvCertificateNo" [(ngModel)]="tvCertificateNo" class="form-control" >
                         </td>
-                        <td style="width: 15%" class="LabelFontStyle">Re-Sale&nbsp;Dealer&nbsp;:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Re-Sale&nbsp;Dealer&nbsp;:&nbsp;</td>
                         <td>
                             <input     type="text"  formControlName="tvSaleDealer"  id="tvSaleDealer" [(ngModel)]="tvSaleDealer" class="form-control" >
                         </td>
 
-                        <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Location&nbsp;:&nbsp;</td>
+                        <td style="width: 12%" class="LabelFontStyle">Sale&nbsp;Location&nbsp;:&nbsp;</td>
                         <td>
                             <input     type="text"  formControlName="tvSaleLocation"  id="tvSaleLocation" [(ngModel)]="tvSaleLocation" class="form-control" >
                         </td>
@@ -634,7 +628,7 @@
                                   <table class="center">
                                       <tr>
         
-                                        <td style="width: 15%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
+                                        <td style="width: 12%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
                             
                                         <td>
                                             <input class="form-control" formControlName="custPhone1" [(ngModel)]='custPhone1'
@@ -676,25 +670,25 @@
                                      <tr>
               
                                       
-                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
               
                                       <td>
                                           <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
                                       </td>
-                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                                       <td>
                                           <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
                                       </td>
               
                                   </tr>
                                   <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
                           
                                       <td>
                                           <input  disabled  type="text"  formControlName="address1"  id="address1" [(ngModel)]="address1" class="form-control"  >
                                       </td>
               
-                                      <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
               
                                       <td>
                                           <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
@@ -704,12 +698,12 @@
                                       <tr>
                                          
                                       
-                                          <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input disabled  type="text"  formControlName="address2"  id="address2" [(ngModel)]="address2" class="form-control"  >
                                           </td>
-                                          <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="city"  id="city" [(ngModel)]="city" class="form-control" style="width: 130px;">
@@ -717,13 +711,13 @@
               
                                       </tr>
                                       <tr>
-                                          <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input disabled type="text"  formControlName="address3"  id="address3" [(ngModel)]="address3" class="form-control"  >
                                           </td>
                                       
-                                          <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input  disabled  type="text"  formControlName="state"  id="state" [(ngModel)]="state" class="form-control" style="width: 130px;">
@@ -731,12 +725,12 @@
                                          
                                       </tr>
                                       <tr>
-                                          <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
                                           </td>
-                                          <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="pinCd"  id="pinCd" [(ngModel)]="pinCd" class="form-control" style="width: 130px;" >
@@ -746,12 +740,12 @@
                                       <tr>
                                          
                           
-                                          <td style="width: 15%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
                                           </td>
-                                          <td style="width: 15%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
@@ -763,13 +757,13 @@
                                          
                                          
                           
-                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
                           
                                           <td>
                                               <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
                                           </td>
               
-                                          <td style="width: 15%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
@@ -777,13 +771,13 @@
                                          
                                     </tr>
                                     <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
                               
                                       <td>
                                           <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
                                       </td>
               
-                                      <td style="width: 15%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
@@ -791,18 +785,18 @@
                           
                                     </tr>
                                     <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
                                       <td> <input disabled  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
                                        
                                       
                            
-                                       <td style="width: 15%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
+                                       <td style="width: 12%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
                            
                                        <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
                                     </tr>
               
                                     <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
                   
                                       <td >
                                           <input style="width: 195%;"    type="text" disabled formControlName="billToAddress"
@@ -835,25 +829,25 @@
                                      <tr>
               
                                       
-                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">&nbsp;Name:&nbsp;</td>
               
                                       <td>
                                           <input disabled type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
                                       </td>
-                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
                                       <td>
                                           <input   disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" style="width: 130px;background-color: greenyellow;" >
                                       </td>
               
                                   </tr>
                                   <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
                           
                                       <td>
                                           <input  disabled  type="text"  formControlName="address1"  id="address1" [(ngModel)]="address1" class="form-control"  >
                                       </td>
               
-                                      <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">DMS&nbsp;No:&nbsp;</td>
               
                                       <td>
                                           <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" style="width: 130px;" >
@@ -863,12 +857,12 @@
                                       <tr>
                                          
                                       
-                                          <td style="width: 15%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Address2&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input disabled  type="text"  formControlName="address2"  id="address2" [(ngModel)]="address2" class="form-control"  >
                                           </td>
-                                          <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="city"  id="city" [(ngModel)]="city" class="form-control" style="width: 130px;">
@@ -876,13 +870,13 @@
               
                                       </tr>
                                       <tr>
-                                          <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input disabled type="text"  formControlName="address3"  id="address3" [(ngModel)]="address3" class="form-control" >
                                           </td>
                                       
-                                          <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input  disabled  type="text"  formControlName="state"  id="state" [(ngModel)]="state" class="form-control" style="width: 130px;">
@@ -890,12 +884,12 @@
                                          
                                       </tr>
                                       <tr>
-                                          <td style="width: 15%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Address4&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input disabled  type="text"  formControlName="custAddress4"  id="custAddress4" [(ngModel)]="custAddress4" class="form-control" >
                                           </td>
-                                          <td style="width: 15%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">PIN&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="pinCd"  id="pinCd" [(ngModel)]="pinCd" class="form-control" style="width: 130px;" >
@@ -905,12 +899,12 @@
                                       <tr>
                                          
                           
-                                          <td style="width: 15%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
                           
                                           <td>
                                               <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
                                           </td>
-                                          <td style="width: 15%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
@@ -922,13 +916,13 @@
                                          
                                          
                           
-                                          <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
                           
                                           <td>
                                               <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
                                           </td>
               
-                                          <td style="width: 15%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
+                                          <td style="width: 12%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
@@ -936,13 +930,13 @@
                                          
                                     </tr>
                                     <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Tax&nbsp;Category:&nbsp;</td>
                               
                                       <td>
                                           <input disabled    type="text"  formControlName="custTaxCategoryName"  id="custTaxCategoryName" [(ngModel)]="custTaxCategoryName" class="form-control" >
                                       </td>
               
-                                      <td style="width: 15%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
               
                                           <td>
                                               <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
@@ -951,12 +945,12 @@
                                     </tr>
               
                                     <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Valid&nbsp;Upto:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">&nbsp;Valid&nbsp;Upto:&nbsp;</td>
                                       <td> <input  disabled type="date"  name="contractEndDate" formControlName="contractEndDate"  [(ngModel)]="contractEndDate" class="form-control"  style="height: 25px;"></td>
                                   </tr>
               
                                   <tr>
-                                      <td style="width: 15%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
+                                      <td style="width: 12%" class="LabelFontStyle">Site&nbsp;Addr&nbsp;:&nbsp;</td>
                   
                                       <td >
                                           <input style="width: 195%;"    type="text" disabled formControlName="billToAddress"
