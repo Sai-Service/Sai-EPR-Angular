@@ -44,6 +44,9 @@ export class McpEnrollmentComponent implements OnInit {
   lstMcplines: any;
   lstMcpEnrolledEnq:any;
   mcpStatusDetails:any;
+
+  viewAccounting1:any[];
+  viewAccounting2:any[];
   public  mcpActive :number;
  
 
@@ -146,6 +149,21 @@ export class McpEnrollmentComponent implements OnInit {
         searchStatus =false;
         isMcpActive=false;
         //////////////////////////////////
+
+        ledgerId:number;
+        runningTotalDr:number;
+        ctgDescription:string;
+      
+      
+        selectAllFlag:string;
+        selectFlag:string;
+        rcvSupp1:number;
+        description:string;
+        periodName:string;
+        postedDate:Date;
+        jeCategory:string;
+        name1:string;
+        runningTotalCr:number;
   
 
   get f() { return this.mcpEnrollmentForm.controls; }
@@ -712,10 +730,7 @@ export class McpEnrollmentComponent implements OnInit {
            return val;
           }
 
-          viewAccounting(){
-            alert ("View Accounting Details ..........WIP");
-          }
-
+        
 
           newMast() {
             alert("in save....")
@@ -890,7 +905,31 @@ export class McpEnrollmentComponent implements OnInit {
             }
         
         
-   
+            viewAccounting(receiptNo:any){
+              // alert(receiptNo);
+              this.service.viewAccounting1(receiptNo).subscribe((res: any) => {
+                if (res.code === 200) {
+                  this.viewAccounting2=res.obj;
+                  this.description=res.obj.description;
+                  this.periodName=res.obj.periodName;
+                  this.postedDate=res.obj.postedDate;
+                  this.jeCategory=res.obj.jeCategory;
+                  this.name1=res.obj.name;
+                  this.ledgerId=res.obj.ledgerId;
+                  this.runningTotalDr=res.obj.runningTotalDr;
+                  this.runningTotalCr=res.obj.runningTotalCr;
+                  console.log(this.description);
+                  
+                      this.viewAccounting1=res.obj.glLines;
+                      console.log(this.viewAccounting1);
+                      alert(res.message);
+                    } else {
+                      if (res.code === 400) {
+                        alert(res.message);
+                      }
+                    }
+                  });
+              }
 
 
      

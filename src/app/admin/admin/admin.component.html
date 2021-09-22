@@ -235,20 +235,31 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-          <div *ngIf="displayMaruti; then thenMaruti; else elseMaruti"></div>
-                <ng-template #thenMaruti>
-          <li class="nav-item">
-            <img id="sailogo" src="assets\images\Footer.jpg" style="width: 95%">
-          </li>
-                </ng-template>
-                <ng-template #elseMaruti>
-                <!-- <li class="nav-item">
-                  <img id="bajajlogo" src="assets\images\bajajlogo.jpg" style="width: 100%;margin-right: 170px;" >
-                </li> -->
-                <li class="nav-item">
-                  <img id="bajajlogo" src="assets\images\bajajLogo1.jpg" style="width: 100%;margin-right: 170px;" >
-                </li>
-                </ng-template>
+                <table class="center" style="width: 100%;">
+                <tr>
+                  <td colspan="4" style="width: 10%;">
+                    <img id="bajajlogo" src="assets\images\Saifinal.jpg" >
+                  </td>
+                </tr>
+              <tr>
+                <table>
+                  <tr>
+                    <td style="font-size: 11px;color: blue;">
+                      Login&nbsp;Name&nbsp;&nbsp;:
+                    </td> <td style="font-size: 11px;color: black;font-weight: bold;">{{fullName}}</td>&nbsp;&nbsp;
+                    <td style="font-size: 11px;color: blue;">
+                      Department&nbsp;&nbsp;:
+                    </td> <td style="font-size: 11px;color: black;font-weight: bold;">{{deptName}}</td>&nbsp;&nbsp;
+                    <td style="font-size: 11px;color: blue;">
+                      Location&nbsp;&nbsp;:
+                    </td> <td style="font-size: 11px;color: black;font-weight: bold;">{{locName}}</td>&nbsp;&nbsp;
+                    <td style="font-size: 11px;color: blue;">
+                      OU&nbsp;Name&nbsp;:
+                    </td> <td style="font-size: 11px;color: black;font-weight: bold;">{{ouName}}</td>&nbsp;&nbsp;
+                  </tr>
+                </table>
+              </tr>
+              </table>
           <li class="nav-item dropdown">
             <a class="dropdown-item" (click)="close()" style="color: blue;"><u>Logout</u></a>
            <div >
@@ -260,7 +271,7 @@
               <td style="font-size: 11px;color: black;font-weight: bold;text-align: left;">{{ticketNo}}</td>
             </tr>
             <tr>
-             <td colspan="2" style="font-size: 10px;width: 100%;font-weight: bold;"> {{todaysDataTime}}</td>
+             <td colspan="2" style="font-size: 10px;width: 200px;font-weight: bold;"> {{todaysDataTime}}</td>
             </tr>
             </table>
            </div>

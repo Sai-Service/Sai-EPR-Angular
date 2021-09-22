@@ -1,6 +1,7 @@
 export class SalesOrderobj {
     divisionName: string;
     ouName: string;
+    refCustNo:string;
     exchange:string;
     taxiYN:string;
     loyaltyBonus:string;
@@ -23,6 +24,7 @@ export class SalesOrderobj {
     tlName: string;
     remarks: string;
     subtotal: string;
+    issueCodeType:string;
     fuelType:string;
     totTax: string;
     totAmt: string;
@@ -42,6 +44,7 @@ export class SalesOrderobj {
     shipLocName: string;
     customerId: number;
     billToAddress: string;
+    custAccountNo:number;
     gstNo: string;
     panNo:string;
     tcs:string;
