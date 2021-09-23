@@ -566,17 +566,12 @@ if (person === 'Person'){
     });
   }
   newMast() {
-<<<<<<< HEAD
-    this.submitted = false;
-    this.validation();
-=======
     this.submitted = true;
     var isvaliddata=this.validation();
     if(isvaliddata===false)
     {
       return;
     }
->>>>>>> 0404b249ed828f8d45503c6d7bcde589313fdb9a
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
     return;
@@ -846,11 +841,8 @@ if (person === 'Person'){
           if(formValue.contactNo ===undefined)
           {
             alert('Please enter Contact  No');
-<<<<<<< HEAD
-=======
             validdata=false;
 
->>>>>>> 0404b249ed828f8d45503c6d7bcde589313fdb9a
           }
           if(formValue.contactPerson ===undefined)
           {
