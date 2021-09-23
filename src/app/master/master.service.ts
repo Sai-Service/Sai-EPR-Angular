@@ -169,6 +169,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/AccOrderType');
   }
 
+  issueCodeFunction(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/CmnTypeDivision?cmnType=IssueCode&divisionId=${divisionId}`);
+  }
+
   taxCategoryListForSALES(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
   }
@@ -2795,6 +2799,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
       // http://localhost:8081/AccountTrf/toAcctList/124
 }
-   ///////////////////////////////////////////// //////////////////////
+   ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
+   getShipmentList(locId,subInv): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+}
 }

@@ -283,6 +283,7 @@ export class CustomerMasterComponent implements OnInit {
   get f() { return this.customerMasterForm.controls; }
 
   ngOnInit(): void {
+    
     this.lstcomments= [];
     this.lstcomments.customerSiteMasterList=[];
     this.name=  sessionStorage.getItem('name');
