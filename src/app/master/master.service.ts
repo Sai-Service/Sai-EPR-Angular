@@ -2795,6 +2795,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
       // http://localhost:8081/AccountTrf/toAcctList/124
 }
-   ///////////////////////////////////////////// //////////////////////
+   ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
+   getShipmentList(locId,subInv): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+}
 }
