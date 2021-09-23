@@ -1093,8 +1093,8 @@
                                                     <td><input style="width: 95px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
                                                     <td><input style="width: 95px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
                                                     <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                                    <td><input style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control" (change)="glPrdValidateLine(k)"></td>
-                                                    <td><input style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
+                                                    <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control" (change)="glPrdValidateLine(k)"></td>
+                                                    <td><input disabled style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
                                                     <td><input style="width: 98px;height: 25px;text-align: right;" disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"    disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" ></td>
@@ -1162,12 +1162,11 @@
                                 </div>
                                 <div class="modal-footer">
                                   <!-- <button type="button" class="btn btn-info"  >Save</button> -->
-                                  <div *ngIf="disableApplySave ,then appSaveYes; else appSaveNo")></div>
-                                  
-                                     <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
+                                  <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo")></div>
                                      <ng-template #appSaveYes>
+                                    <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
-                                  </ng-template>
+                                    </ng-template>
                                   <ng-template #appSaveNo>
                                     <button  disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
                                     <button  disabled style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
