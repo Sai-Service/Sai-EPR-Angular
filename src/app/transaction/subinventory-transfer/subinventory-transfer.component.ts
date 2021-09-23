@@ -385,7 +385,7 @@ lastkeydown1: number = 0;
           var locId=trxLnArr[i].frmLocator;
           var onhandid=trxLnArr[i].onHandId;
           // trxLnArr1.controls[i].patchValue({locatorId:locId});
-          alert(locId+'locatorID');
+          alert(locId+'locatorID'+onhandid);
           var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
           alert(subcode);
           // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
