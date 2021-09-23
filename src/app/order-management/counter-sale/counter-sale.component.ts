@@ -1716,6 +1716,11 @@ export class CounterSaleComponent implements OnInit {
             this.taxMap.set(i, arrayupdateTaxLine);
           });
     }
+    let linkId = "line"+i;
+    document.getElementById(linkId).classList.remove("active"); 
+    document.getElementById("lineTab").classList.remove("active"); 
+    document.getElementById("taxTab").classList.add("active"); 
+    
   }
 
 
