@@ -467,7 +467,7 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           this.DepartmentListById = data;
           console.log(this.DepartmentListById);
-          console.log(this.DepartmentListById.divisionName);
+       //   console.log(this.DepartmentListById.divisionName);
           // this.poMasterDtoForm.patchValue(this.DepartmentListById.divisionName);
           // this.divisionName = this.DepartmentListById.divisionName
         }
@@ -620,9 +620,9 @@ export class OPMasterDtoComponent implements OnInit {
         this.poMasterDtoForm.patchValue({segment1:this.poNo})
         // alert(this.poNo+'----Param----'+params['poNo']);
         // alert(this.poNo);
-        // if (this.poNo != undefined){
+         if (this.poNo != undefined){
         this.Search(this.poNo);
-      // }
+       }
       
         });
 
