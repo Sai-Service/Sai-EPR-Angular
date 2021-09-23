@@ -62,7 +62,6 @@ const routes: Routes = [
  {path:'CashBankTransfer',component:CashBankTransferComponent},
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
  {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
- {path:'OPMasterDto/:segment',component:OPMasterDtoComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

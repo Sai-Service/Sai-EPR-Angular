@@ -12,6 +12,7 @@ import{MasterService} from 'src/app/master/master.service'
 import { DatePipe } from '@angular/common';
 import { get } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-bulk-upload-with-csv',
@@ -30,7 +31,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   message: string;
   allUsers: Observable<BulkUploadWithCsvComponent[]>;
-  constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute,private service: MasterService) { 
+  constructor(private fb: FormBuilder, private router: Router,private location: Location, private router1: ActivatedRoute,private service: MasterService) { 
     this.bulkUploadCSVForm = this.fb.group({
       deptName: [],
       segment1:[''],
@@ -71,6 +72,8 @@ export class BulkUploadWithCsvComponent implements OnInit {
       });
     }
     else{
+      alert(Number(sessionStorage.getItem('divisionId')));
+      if (Number(sessionStorage.getItem('divisionId'))==1){
         this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
           if (res.code === 200) {
             alert(res.obj);
@@ -80,14 +83,34 @@ export class BulkUploadWithCsvComponent implements OnInit {
             }
           }
         });
-      // }
+      }
+      else if (Number(sessionStorage.getItem('divisionId'))==2){
+        alert(Number(sessionStorage.getItem('divisionId')))
+        this.service.bulkpouploadSparesBajaj(formData).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.obj);
+          } else {
+            if (res.code === 400) {
+              alert('Error In File : \n' + res.obj);
+            }
+          }
+        }); 
+      }
     }
-    // });
+   
   }
 
-  routeOMAndCSPage(poNo){
+  routeOMAndCSPage(segment1){
     // alert(poNo)
-    this.router.navigate(['/OPMasterDto',poNo]);
+    this.router.navigate(['/OPMasterDto',segment1]);
+    // this.router.navigate(['/OPMasterDto',2111022111889]);
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
+  close() {
+    this.location.back();
+  }
 }
