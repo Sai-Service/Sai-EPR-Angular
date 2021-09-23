@@ -61,14 +61,14 @@ export class LocatorMasterComponent implements OnInit {
       locatorId :[],
       locId: ['', [Validators.required]],
       subinventoryId: ['', [Validators.required]],
-      segment1: ['', [ Validators.maxLength(5)]],
-      segment2: ['', [Validators.maxLength(5)]],
-      segment3: ['', [Validators.maxLength(5)]],
-      segment4: ['', [Validators.maxLength(5)]],
-      segment5: ['', [ Validators.maxLength(5)]],
-      segmentName: ['', [Validators.required]],
+      segment1: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      segment2: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      segment3: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      segment4: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      segment5: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
       status: ['', [Validators.required]],
       endDate: ['', [Validators.nullValidator]],
+      segmentName:[],
       // copyAddv:[],
     });
   }
@@ -127,8 +127,16 @@ export class LocatorMasterComponent implements OnInit {
   }
 
   onKey(event: any) {
-    const aaa = this.segment1 + '.' + this.segment2 + '.' + this.segment3 + '.' + this.segment4 + '.' + this.segment5;
-    this.segmentName = aaa;
+    var segment1=this.locatorMasterForm.get('segment1').value;
+    var segment2=this.locatorMasterForm.get('segment2').value;
+    var segment3=this.locatorMasterForm.get('segment3').value;
+    var segment4=this.locatorMasterForm.get('segment4').value;
+    var segment5=this.locatorMasterForm.get('segment5').value;
+    // alert(segment1 + '.' + segment2 + '.' + segment3 + '.' + segment4 + '.' + segment5);
+    // var segment1=this.locatorMasterForm.get('')
+    const aaa = segment1 + '.' + segment2 + '.' + segment3 + '.' + segment4 + '.' + segment5;
+    // this.segmentName = aaa;
+    this.locatorMasterForm.patchValue({segmentName:aaa})
   }
   transData(val) {
     delete val.locatorId;
@@ -138,18 +146,19 @@ export class LocatorMasterComponent implements OnInit {
   newMast() {
     this.submitted = true;
     if(this.locatorMasterForm.invalid){
-    return;
+      return;
     } 
-    
     const formValue: ILocatorMaster = this.transData(this.locatorMasterForm.value);
     this.service.LocatorMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
-        this.locatorMasterForm.reset();
+        // this.locatorMasterForm.reset();
+        window.location.reload();
       } else {
         if (res.code === 400) {
           alert('Data already present in the data base');
-          this.locatorMasterForm.reset();
+          // this.locatorMasterForm.reset();
+          // window.location.reload();
         }
       }
     });

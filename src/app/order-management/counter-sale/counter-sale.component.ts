@@ -185,6 +185,7 @@ export class CounterSaleComponent implements OnInit {
   orderStatus: string;
   public currentCS: string;
   customerNameSearch: any[];
+  accountNoSearchdata:any[];
   public op: string;
   // divisionName: string;
   submitted = false;
@@ -205,7 +206,7 @@ export class CounterSaleComponent implements OnInit {
   selectedLine = 0;
   categoryList: any[];
   custSiteList: any[];
-  orderedDate:Date;
+  // orderedDate:Date;
   diss: number;
   InvoiceNumber: number;
   locId: number;
@@ -357,16 +358,16 @@ export class CounterSaleComponent implements OnInit {
   public taxMap = new Map<string, any>();
   pipe = new DatePipe('en-US');
   now=new Date();
-  // orderedDate=this.pipe.transform(this.now,'dd-MM-yyyy');
+  orderedDate=this.pipe.transform(this.now,'dd-MM-yyyy');
 
   constructor(private fb: FormBuilder, private location1: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
       disPer: [''],
-      refCustNo:[''],
+      refCustNo:['',[Validators.required]],
       transactionTypeId:[''],
       InvoiceNumber: [''],
-      name: [''],
+      name: ['',[Validators.required]],
       customerSiteId:[''],
       id: [''],
       trxNumber: [''],
@@ -387,7 +388,7 @@ export class CounterSaleComponent implements OnInit {
       locationId: [''],
       billToLocId: [''],
       locId: [''],
-      mobile1: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
+      mobile1: ['', [Validators.required,Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
       paymentType: [''],
       shipToLocId: [''],
       billLocName: [''],
@@ -395,7 +396,7 @@ export class CounterSaleComponent implements OnInit {
       locCode: [''],
       customerId: [''],
       custType: [''],
-      custAccountNo: [''],
+      custAccountNo: ['',[Validators.required]],
       custName: [''],
       custAddress: [''],
       salesRepName: [''],
@@ -1002,6 +1003,7 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
+    alert('hi')
     // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
@@ -1125,14 +1127,10 @@ export class CounterSaleComponent implements OnInit {
       );
   }
 
-  get f() { return this.CounterSaleOrderBookingForm.controls; }
+  get f() { return this.CounterSaleOrderBookingForm.controls || this.orderlineDetailsGroup().controls }
 
 
-  getGroupControl(fieldName) {
-    // alert('nam'+fieldName);
-    // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
-    return(this.CounterSaleOrderBookingForm.get(fieldName));
-  }
+
 
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);
@@ -1503,6 +1501,10 @@ export class CounterSaleComponent implements OnInit {
 
 
   counterSaleOrderSave() {
+    this.submitted = true;
+    if(this.CounterSaleOrderBookingForm.invalid){
+    return;
+    } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // let jsonData = this.CounterSaleOrderBookingForm.value;
     let jsonData=this.CounterSaleOrderBookingForm.getRawValue();
@@ -1674,7 +1676,7 @@ export class CounterSaleComponent implements OnInit {
       });
     }
     else {
-      // alert('Hi');
+      alert('Hi');
       this.poLineTax = i;
       // var itemId = this.invItemList1[i].itemId;
       // var taxCategoryId = taxCategoryId;
@@ -1977,6 +1979,28 @@ var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').valu
   }
   // this.cs
 }
+
+searchByContact(contactNo) {
+  this.service.searchCustomerByContact(contactNo)
+    .subscribe(
+      data => {
+        this.accountNoSearchdata = data.obj;
+        this.CounterSaleOrderBookingForm.patchValue({custAccountNo:data.obj.custAccountNo})
+        });
+}
+
+Select(custAccountNo) {
+  alert(custAccountNo)
+  if (custAccountNo !=undefined){
+    this.CounterSaleOrderBookingForm.patchValue({custAccountNo:custAccountNo});
+  this.accountNoSearch(custAccountNo);
+
+}
+}
+
+
+
+
 }
 
 

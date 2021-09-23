@@ -568,7 +568,7 @@ mainModelList(): Observable<any> {
 
 mainModelListByDivisionId(): Observable<any> {
 
-  //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2 
+  //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2
   return this.http.get(this.ServerUrl +'/cmnLookup/Catgtype?cmnType=Model&divisionId='+sessionStorage.getItem('divisionId'));
 }
 
@@ -1114,7 +1114,7 @@ public addDiscount(totTaxAmt: number, taxTypeName: string) {
     headers: this.headers
   };
   // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
-  const url = 'http://saihorizon.com:8080/taxDetails';
+  const url = '/taxDetails';
   // const url = 'http://localhost:8081/taxDetails';
   console.log(body);
   return this.httpclient.post(url, body, options);
@@ -1173,6 +1173,10 @@ getsearchByShipmentNo(shipNo):Observable<any>
 ItemIdListDept(deptId,locId,subId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
+}
+Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
 
 ///////////OnHand////////////
@@ -2106,6 +2110,11 @@ bulkpouploadSales(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
 
+  bulkpouploadSparesBajaj(formData: FormData) {
+    return this.http.post(this.ServerUrl + `/fileImport/uploadBjSpPO`, formData)
+}
+
+
   BindUser(): Observable<OPMasterDtoComponent[]> {
     var userId1=sessionStorage.getItem('userId');
     return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=`+userId1);
@@ -2795,6 +2804,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
       // http://localhost:8081/AccountTrf/toAcctList/124
 }
-   ///////////////////////////////////////////// //////////////////////
+   ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
+   getShipmentList(locId,subInv): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+}
 }

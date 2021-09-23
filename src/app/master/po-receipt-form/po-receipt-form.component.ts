@@ -76,6 +76,7 @@ export class PoReceiptFormComponent implements OnInit {
   title:string;
   submitted = false;
   private sub: any;
+  private sub1:any;
   supplier:string;
   item:string;
   segment1:string;
@@ -363,7 +364,18 @@ checkIfAllSelected() {
     );
 
 
+    this.sub1 = this.router1.queryParams.subscribe(params => { 
+      // this.shipmentNumber = params.get('shipmentNumber');
+      this.shipmentNumber=this.router1.snapshot.queryParamMap.get('shipmentNumber')||'0';
+      // alert(this.shipmentNumber);
+      this.poReceiptForm.patchValue({shipmentNumber:this.shipmentNumber})
+      this.shipmentNoFind(this.shipmentNumber);
+    })
+    
+    
+   
 
+    
     this.sub = this.router1.params.subscribe(params => {
       this.segment1 = params['segment1'];
       // alert(this.segment1);
