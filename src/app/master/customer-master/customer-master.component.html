@@ -49,14 +49,20 @@
                         </table>
 
                         <!-- <section class="mx-2 pb-3"> -->
-                            
+
                           <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
                             <li class="nav-item waves-effect waves-light">
                               <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md" role="tab" aria-controls="home-md" aria-selected="true">Customer Info</a>
                             </li>
+                            <div *ngIf="displayadditional; then thenBlockaddInfo; else elseBlockaddInfo"></div>
+                            <ng-template #thenBlockaddInfo>
+
+                            </ng-template>
+                            <ng-template #elseBlockaddInfo>
                             <li class="nav-item waves-effect waves-light">
                               <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false">Customer Additional Info</a>
                             </li>
+                          </ng-template>
                             </ul>
                             <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
                               <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
@@ -453,12 +459,12 @@
                                 <td>
                                     <input formControlName="contactPerson" [(ngModel)]='contactPerson'
                                         value={{contactPerson}} (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.contactPerson.errors }"
                                         placeholder="Enter contact Person" >
                                     <div *ngIf="submitted && f.contactPerson.errors" class="invalid-feedback">
-                                        <div *ngIf="f.contactPerson.errors.required">contactPerson must</div>
-                                        <div *ngIf="f.contactPerson.errors.maxLength">contactPerson must
-                                        </div>
+                                        <!-- <div *ngIf="f.contactPerson.errors.required">contactPerson must</div> -->
+                                        <!-- <div *ngIf="f.contactPerson.errors.maxLength">contactPerson must -->
+                                        <!-- </div> -->
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('contactPerson').valid && customerMasterForm.get('contactPerson').touched">Please
@@ -473,11 +479,11 @@
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter contact Person No">
-                                    <div *ngIf="submitted && f.contactNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.contactNo.errors.required">contact Person No must</div>
-                                        <div *ngIf="f.contactNo.errors.maxLength">contact Person No must
-                                        </div>
-                                    </div>
+                                    <!-- <div *ngIf="submitted && f.contactNo.errors" class="invalid-feedback"> -->
+                                        <!-- <div *ngIf="f.contactNo.errors.required">contact Person No must</div>
+                                        <div *ngIf="f.contactNo.errors.maxLength">contact Person No must -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('contactNo').valid && customerMasterForm.get('contactNo').touched">Please
                                         Enter contact Person no must</span> -->

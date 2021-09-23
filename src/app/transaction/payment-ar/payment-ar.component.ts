@@ -166,7 +166,7 @@ export class PaymentArComponent implements OnInit {
  
   public srlNo =1;
 
-  public searchByRcptNo =211100020000018;
+  public searchByRcptNo =211100020000017;
   // public searchByOrderNo =2111202148;
   // public searchByCustNo =1212;
   // searchByRcptNo:number;
@@ -210,7 +210,7 @@ export class PaymentArComponent implements OnInit {
   enableCancelButton=true;
   enableApplyButton=true;
   cancelValidation=false;
-  disableApplySave =true;
+  applySaveButton =true;
   showRefYellow =false;
 
   showInvoiceGrid=false;
@@ -1054,11 +1054,20 @@ export class PaymentArComponent implements OnInit {
           
           
             if(this.tApplAmt>=0){ totAppAmt=this.tApplAmt;} else {totAppAmt=0;}
-            if(this.tUapplAmt<=0){alert("Unapplied Balance not availabe to apply to Invoice"); e.target.checked=false ;return}
-          
+            if(this.tUapplAmt<=0){alert("Unapplied Balance not availabe to apply to Invoice");
+             e.target.checked=false ;
+             patch.controls[index].patchValue({applyrcptFlag:false})
+             this.invLineArray().controls[index].get('applAmtNew').disable();
+             this.invLineArray().controls[index].get('glDateLine').disable();
+             return;
+            }
+                   this.invLineArray().controls[index].get('applAmtNew').enable();
+                   this.invLineArray().controls[index].get('glDateLine').enable();
                   if(totUnAppAmt>=lineBalDueAmt)
                   {
                     //  alert ("in if section")
+
+                      // this.invLineArray().controls[index].get('applAmtNew').enable();
                       xyz=LineinvAmt;
                       var lbDueAmt=lineBalDueAmt.toFixed(2)
                       patch.controls[index].patchValue({applAmtNew:lbDueAmt})
@@ -1092,6 +1101,8 @@ export class PaymentArComponent implements OnInit {
                   // this.applyrcptFlag = 'N';
                   // alert("no:"+this.applyrcptFlag);
                   // alert("applyReceiptFlag-ELSE selected ");
+                  this.invLineArray().controls[index].get('applAmtNew').disable();
+                  this.invLineArray().controls[index].get('glDateLine').disable();
                   xyz=LineinvAmt;
                   lineBalDueAmt=Number(invLineArr[index].balance1);
                   LineApplAmount=Number(invLineArr[index].applAmtNew);
@@ -1162,7 +1173,7 @@ export class PaymentArComponent implements OnInit {
 
             // alert("Apply Flag : "+index+","+ applyReceiptFlag);
 
-            if (applyReceiptFlag == true) {
+            if (applyReceiptFlag === true) {
               // alert("true");
 
                 var LineinvAmt = Number(invLineArr[index].invoiceAmount);
@@ -1177,7 +1188,8 @@ export class PaymentArComponent implements OnInit {
               } 
               else 
               {
-                  
+                // alert("else part");
+
                   LineinvAmt=invLineArr[index].invoiceAmount;
                   LineApplAmount=invLineArr[index].applAmtNew;
                   invBalAmt =invLineArr[index].balance1;
@@ -1194,21 +1206,23 @@ export class PaymentArComponent implements OnInit {
               // var patch = this.paymentArForm.get('invLine') as FormArray;
               // var invLineArr = this.paymentArForm.get('invLine').value;
 
+              // alert ("Summary....calc...invLineArray.length :"+this.invLineArray().length );
               var totAppAmt=0;
               
-              for (let i = 0; i < this.lstinvoices.length ; i++) 
+              // for (let i = 0; i < this.lstinvoices.length ; i++) 
+              for (let i = 0; i < this.invLineArray().length ; i++) 
               {
                totAppAmt=totAppAmt+Number(invLineArr[i].applAmtNew);
-              //  alert("totAppAmt :"+totAppAmt);
               }
+
+              // alert ( "totAppAmt :"+totAppAmt+". ytotAppAmt  :"+ytotAppAmt + "  ytotUnAppAmt : "+ytotUnAppAmt);
               this.tApplAmt=(totAppAmt+ytotAppAmt);
               this.tApplAmt=Number(this.tApplAmt.toFixed(2));
               this.tUapplAmt=ytotUnAppAmt-totAppAmt;
               this.tUapplAmt=Number(this.tUapplAmt.toFixed(2));
-
               ///////////////////////////////////////////////////////
             }
-            else {alert("Apply Falg not selected...Select Apply First...Line" +index);
+            else {alert("Line-" +index+" : Apply Flag not selected...Select Apply Flag First.");
                patch.controls[index].patchValue({applAmtNew:''})
                }
 
@@ -1271,7 +1285,7 @@ export class PaymentArComponent implements OnInit {
                   
                     //  var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
                     //  var z1=this.pipe.transform(this.now, 'y-MM-dd');
-
+                      // alert(invLineArr[i].trxDate);
                     
                     //  patch.controls[i].patchValue({trxDate:z})
                     //  patch.controls[i].patchValue({glDateLine:z1})
@@ -1627,13 +1641,15 @@ export class PaymentArComponent implements OnInit {
       
         var applLineArr = this.paymentArForm.get('invLine').value;
         var len1=applLineArr.length;
-        alert ( "Array Length :" +len1);
+        // alert ( "Array Length :" +len1);
        // for (let i = 0; i < len1 ; i++) 
        for (let i=len1-1; i >= 0 ; i--) 
         {
+
+          // alert("index :"+i + " Apply RctFalg : " + applLineArr[i].applyrcptFlag);
           
           if(this.invLineArray().controls[i].get('applyrcptFlag').value !=true) {
-           // alert(i + applLineArr[i].applyrcptFlag);
+          //  alert(i + applLineArr[i].applyrcptFlag);
             this.invLineArray().removeAt(i);
           }
         }
@@ -1666,7 +1682,7 @@ export class PaymentArComponent implements OnInit {
             return;
           }
           this.CalculateRcptBalances();
-          this.disableApplySave =false;
+          this.applySaveButton =false;;
        
         const formValue: IPaymentRcptAr =this.transeData1(this.paymentArForm.value);
 
@@ -1693,7 +1709,8 @@ export class PaymentArComponent implements OnInit {
           variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
           patch.controls[i].patchValue({applAmt:applLineArr[i].applAmtNew});
           patch.controls[i].patchValue({glDate:applLineArr[i].glDateLine});
-      
+          // patch.controls[i].patchValue({trxDate: this.pipe.transform(applLineArr[i].trxDate,'y-MM-dd')});
+         
         }
 
         console.log(variants.value);
@@ -1735,7 +1752,7 @@ export class PaymentArComponent implements OnInit {
             alert("Validation Failed... \nPosting not done....")
             return;
           }
-          this.disableApplySave =false;
+          this.applySaveButton =false;
           const formValue: IPaymentRcptAr =this.transeData2(this.paymentArForm.value);
 
         // var invLine= this.paymentArForm.get('invLine').value;
