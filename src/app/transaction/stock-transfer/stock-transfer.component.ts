@@ -552,7 +552,23 @@ onlocationissueselect(event){
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
   else{
-  this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
+    this.service.Shipmentdue(Number(sessionStorage.getItem('locId')),loc,this.subInvCode.subInventoryCode).subscribe
+    ((res:any)=>{
+      //  var obj=res.obj;
+       if(res.code===200)
+       {
+        alert(res.message);
+       }
+       else{
+        if(res.code === 400) {
+          alert(res.message);
+          this.stockTranferForm.reset();
+        }
+       }
+      }
+    )
+
+    this.service.issueByList(loc, this.deptId, this.divisionId).subscribe
   (data => {
     this.issueByList = data;
     console.log(this.issueByList);
@@ -562,6 +578,7 @@ onlocationissueselect(event){
       this.ItemIdList = data;
       // console.log(this.invItemId);
     });
+
 
 }
 }

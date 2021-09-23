@@ -100,7 +100,7 @@ lastkeydown1: number = 0;
 
   pipe = new DatePipe('en-US');
   now=new Date();
-  transDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+  transDate=this.pipe.transform(this.now,'dd-MM-yyyy');
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.SubinventoryTransferForm=fb.group({
@@ -163,6 +163,7 @@ lastkeydown1: number = 0;
     this.issueBy = (sessionStorage.getItem('name'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
+
     this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
       data => {
         this.subInvCode = data;
@@ -197,15 +198,7 @@ lastkeydown1: number = 0;
          lineNumber: 1,
        }
      );
-    //  alert('this.subInvCode.subInventoryId'+this.subInvCode[0].subInventoryId);
-    //  if(this.subInvCode.subInventoryId!=undefined)
-    //  {
-    //  this.service.ItemIdListDept(this.deptId,this.locId,this.subInvCode.subInventoryId).subscribe(
-    //    data => {
-    //      this.ItemIdList = data;
-    //      // console.log(this.invItemId);
-    //    });
-    //  }
+   
   }
 
   subinventoryTransfer(SubinventoryTransferForm:any)
@@ -385,7 +378,7 @@ lastkeydown1: number = 0;
           var locId=trxLnArr[i].frmLocator;
           var onhandid=trxLnArr[i].onHandId;
           // trxLnArr1.controls[i].patchValue({locatorId:locId});
-          alert(locId+'locatorID');
+          alert(locId+'locatorID'+onhandid);
           var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
           alert(subcode);
           // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);

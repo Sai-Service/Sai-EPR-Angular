@@ -17,12 +17,6 @@ import { Location } from "@angular/common";
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver';
 
-
-
-
-
-
-
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -32,6 +26,7 @@ const MIME_TYPES = {
 
 interface ISalesBookingForm {
   emplId: number;
+  issueCodeType:string;
   headerId: number;
   divisionId: number;
   transactionTypeId:number;
@@ -64,6 +59,7 @@ interface ISalesBookingForm {
   remarks: string;
   subtotal: number;
   totTax: number;
+  refCustNo:string;
   totAmt: number;
   othRefNo: number;
   orderNumber: number;
@@ -132,12 +128,14 @@ export class CounterSaleComponent implements OnInit {
   CounterSaleOrderBookingForm: FormGroup;
   // lnflowStatusCode:string;
   lnflowStatusCode: 'BOOKED';
+  refCustNo:string;
   transactionTypeId:number;
   customerSiteId:number;
   reservedQty:number;
   frmLocatorId: number;
   activeLineNo: number = 1;
   divisionId: number;
+  issueCodeType:string;
   uom: string;
   pricingQty: number;
   disAmt1: number;
@@ -171,6 +169,7 @@ export class CounterSaleComponent implements OnInit {
   displayPerson: boolean;
   public minDate = new Date();
   public cityList: Array<string>[];
+  public issueCodeTypeList:any[];
   public status = "Active";
   public titleList: Array<string>[];
   displayOrgnization: boolean;
@@ -179,12 +178,14 @@ export class CounterSaleComponent implements OnInit {
   public cityList1: any;
   location: string;
   displaydisAmt = false;
+  displayDMSCDMS:boolean;
 
 
   trxNumber: number;
   orderStatus: string;
   public currentCS: string;
   customerNameSearch: any[];
+  accountNoSearchdata:any[];
   public op: string;
   // divisionName: string;
   submitted = false;
@@ -193,6 +194,7 @@ export class CounterSaleComponent implements OnInit {
   displayorderHedaerDetails = true;
   displayCSOrderAndLineDt = true;
   displaypickTicketUpdate = true;
+  displayCustomerSite=true;
   displaysegmentInvType: Array<boolean> = [];
   displayRemoveRow: Array<boolean> = [];
   displayLineflowStatusCode: Array<boolean> = [];
@@ -204,7 +206,7 @@ export class CounterSaleComponent implements OnInit {
   selectedLine = 0;
   categoryList: any[];
   custSiteList: any[];
-  orderedDate = new Date();
+  // orderedDate:Date;
   diss: number;
   InvoiceNumber: number;
   locId: number;
@@ -354,14 +356,18 @@ export class CounterSaleComponent implements OnInit {
     // this.myInputField.nativeElement.focus();
   }
   public taxMap = new Map<string, any>();
+  pipe = new DatePipe('en-US');
+  now=new Date();
+  orderedDate=this.pipe.transform(this.now,'dd-MM-yyyy');
 
   constructor(private fb: FormBuilder, private location1: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
       disPer: [''],
+      refCustNo:['',[Validators.required]],
       transactionTypeId:[''],
       InvoiceNumber: [''],
-      name: [''],
+      name: ['',[Validators.required]],
       customerSiteId:[''],
       id: [''],
       trxNumber: [''],
@@ -370,6 +376,7 @@ export class CounterSaleComponent implements OnInit {
       ouId: [''],
       issuedBy: [''],
       orderTypeId: [''],
+      issueCodeType:['',[Validators.required]],
       transactionTypeName: ['',[Validators.required]],
       createOrderType: ['',[Validators.required]],
       custPoNumber: [''],
@@ -381,7 +388,7 @@ export class CounterSaleComponent implements OnInit {
       locationId: [''],
       billToLocId: [''],
       locId: [''],
-      mobile1: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
+      mobile1: ['', [Validators.required,Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
       paymentType: [''],
       shipToLocId: [''],
       billLocName: [''],
@@ -389,7 +396,7 @@ export class CounterSaleComponent implements OnInit {
       locCode: [''],
       customerId: [''],
       custType: [''],
-      custAccountNo: [''],
+      custAccountNo: ['',[Validators.required]],
       custName: [''],
       custAddress: [''],
       salesRepName: [''],
@@ -451,7 +458,7 @@ export class CounterSaleComponent implements OnInit {
       frmLocatorId: ['',[Validators.required]],
       onHandQty: [],
       discType: [],
-      disPer: [],
+      disPer: ['0'],
       disAmt: [],
       uom: [],
       lnflowStatusCode: [''],
@@ -520,6 +527,13 @@ export class CounterSaleComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (Number(sessionStorage.getItem('divisionId'))===1){
+      this.displayDMSCDMS=true;
+    }
+    else if (Number(sessionStorage.getItem('divisionId'))===2){
+      this.displayDMSCDMS=false;
+    }
+    this.orderlineDetailsArray().controls[0].patchValue({invType: 'SS_SPARES' });
     this.CounterSaleOrderBookingForm.patchValue({ disAmt: 0 })
     this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount'})
     this.op = 'insert';
@@ -541,9 +555,8 @@ export class CounterSaleComponent implements OnInit {
     this.deptName = (sessionStorage.getItem('deptName'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.invType = 'SS_SPARES';
-
-
-
+    this.onOptionsSelectedCategory(this.invType,0);
+    this.disPer=0.00;
     this.service.payTermDescList()
       .subscribe(
         data => {
@@ -563,7 +576,7 @@ export class CounterSaleComponent implements OnInit {
       );
 
 
-    this.orderManagementService.categoryList()
+    this.orderManagementService.categoryList1()
       .subscribe(
         data1 => {
           this.categoryList = data1;
@@ -585,6 +598,14 @@ export class CounterSaleComponent implements OnInit {
         data1 => {
           this.createOrderTypeList = data1;
           console.log(this.createOrderTypeList);
+        }
+      );
+
+      
+      this.service.issueCodeFunction(sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data1 => {
+          this.issueCodeTypeList = data1;
         }
       );
 
@@ -628,6 +649,8 @@ export class CounterSaleComponent implements OnInit {
         data => {
           this.priceListNameList = data;
           console.log(this.priceListNameList);
+          this.CounterSaleOrderBookingForm.patchValue({ priceListName: data.priceListName })
+          this.CounterSaleOrderBookingForm.patchValue({ priceListId: data.priceListHeaderId })
         }
       );
 
@@ -693,7 +716,8 @@ export class CounterSaleComponent implements OnInit {
     this.TaxDetailsArray().clear();
     this.displaycustAccountNo = false;
     this.displaycreateOrderType = false;
-
+    this.displayCustomerSite=false;
+    alert(this.displayCustomerSite);
     this.orderManagementService.counterSaleOrderSearch(orderNumber)
       .subscribe(
         data => {
@@ -726,6 +750,7 @@ export class CounterSaleComponent implements OnInit {
           this.totAmt = data.obj.totAmt;
           this.subtotal = data.obj.subtotal;
           this.disPer=data.obj.disPer;
+          this.CounterSaleOrderBookingForm.patchValue({name:data.obj.billLocName})
           // this.taxAmt=data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2)
           // alert(data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2))
 
@@ -758,6 +783,7 @@ export class CounterSaleComponent implements OnInit {
           if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
+            this.CounterSaleOrderBookingForm.get('refCustNo').disable();
             this.displayorderHedaerDetails = false;
             this.displaycounterSaleOrderSave = false;
             this.displaypickTicketInvoice = false;
@@ -799,6 +825,7 @@ export class CounterSaleComponent implements OnInit {
             // this.displaytaxCategoryName=true;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
+            this.CounterSaleOrderBookingForm.get('refCustNo').disable();
             this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
             this.CounterSaleOrderBookingForm.get('custAddress').disable();
             if (this.createOrderType === 'Sales Order') {
@@ -917,7 +944,7 @@ export class CounterSaleComponent implements OnInit {
 
   onOptionsSelectedTL(createOrderType) {
     // alert(createOrderType);
-    if (createOrderType === 'Pick Ticket') {
+    if (createOrderType === 'Pick Ticket' ||createOrderType === 'Direct Invoice' ) {
       // Sales Order
       this.displaysalesRepName = true;
     }
@@ -935,7 +962,7 @@ export class CounterSaleComponent implements OnInit {
     let select = this.priceListNameList.find(d => d.priceListName === priceListName);
     // alert(select);
     this.priceListId = select.priceListHeaderId;
-    this.displayCSOrderAndLineDt = false;
+    // this.displayCSOrderAndLineDt = false;
   }
 
 
@@ -976,6 +1003,7 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
+    alert('hi')
     // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
@@ -983,6 +1011,7 @@ export class CounterSaleComponent implements OnInit {
           if (data.code === 200) {
             // this.accountNoSearch = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
+            this.CounterSaleOrderBookingForm.patchValue({disPer:data.obj.disPer})
             let select = this.payTermDescList.find(d => d.lookupValueId === data.obj.termId);
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
@@ -1098,14 +1127,10 @@ export class CounterSaleComponent implements OnInit {
       );
   }
 
-  get f() { return this.CounterSaleOrderBookingForm.controls; }
+  get f() { return this.CounterSaleOrderBookingForm.controls || this.orderlineDetailsGroup().controls }
 
 
-  getGroupControl(fieldName) {
-    // alert('nam'+fieldName);
-    // return (<FormArray>this.poInvoiceForm.get('obj')).at(index).get(fieldName);
-    return(this.CounterSaleOrderBookingForm.get(fieldName));
-  }
+
 
   getGroupControllinewise(index,fieldName) {
     // alert('nam'+fieldName);
@@ -1195,6 +1220,7 @@ export class CounterSaleComponent implements OnInit {
     patch.controls[index].patchValue({ disAmt: 0});
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
     console.log(baseAmt);
+    // debugger;
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
     if (disAmt1 === null && disPer > 0) {
@@ -1212,6 +1238,7 @@ export class CounterSaleComponent implements OnInit {
     var invLineNo1 = index + 1;
     console.log(invLineNo1);
     var sum = 0;
+    alert(itemId+'---'+ taxCategoryId+'----'+disAmt1+'----'+baseAmt);
     this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
       .subscribe(
         (data: any[]) => {
@@ -1259,6 +1286,12 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedDescription(segment: any, k) {
+    this.displayorderHedaerDetails=false;
+    this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+    this.CounterSaleOrderBookingForm.get('name').disable();
+    this.CounterSaleOrderBookingForm.get('custName').disable();
+    this.CounterSaleOrderBookingForm.get('mobile1').disable();
+    this.CounterSaleOrderBookingForm.get('refCustNo').disable();
     if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
       alert('Please Enter Reference Number First !');
       this.CounterSaleOrderBookingForm.get('segment').disable();
@@ -1270,6 +1303,7 @@ export class CounterSaleComponent implements OnInit {
       //let select = this.invItemList1.find(d => d.segment === segment);
       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var itemType = (controlinv.controls[k]).get('invType').value;
+      // alert(itemType)
       let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
       this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
       this.itemId = select.itemId;
@@ -1467,12 +1501,15 @@ export class CounterSaleComponent implements OnInit {
 
 
   counterSaleOrderSave() {
-    // const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
-    // formValue.ouId = Number(sessionStorage.getItem('ouId'));
-    // formValue.emplId = Number(sessionStorage.getItem('emplId'));
-    // formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
+    this.submitted = true;
+    if(this.CounterSaleOrderBookingForm.invalid){
+    return;
+    } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    let jsonData = this.CounterSaleOrderBookingForm.value;
+    // let jsonData = this.CounterSaleOrderBookingForm.value;
+    let jsonData=this.CounterSaleOrderBookingForm.getRawValue();
+    jsonData.refCustNo=this.CounterSaleOrderBookingForm.get('refCustNo').value;
+    alert(jsonData.refCustNo);
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
@@ -1520,6 +1557,7 @@ export class CounterSaleComponent implements OnInit {
         lineNumber: len,
         flowStatusCode: 'BOOKED',
         disPer: this.disPer,
+        invType:'SS_SPARES',
       }
     );
     this.displaysegmentInvType.push(true);
@@ -1638,7 +1676,7 @@ export class CounterSaleComponent implements OnInit {
       });
     }
     else {
-      // alert('Hi');
+      alert('Hi');
       this.poLineTax = i;
       // var itemId = this.invItemList1[i].itemId;
       // var taxCategoryId = taxCategoryId;
@@ -1928,12 +1966,36 @@ var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').valu
 
   onOptionsSelectedTransactionType(transactionTypeName){ 
     if (transactionTypeName != undefined){
+      this.displayCSOrderAndLineDt=false;
     let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
           console.log(select);
           // alert(select.transactionTypeId)
           this.CounterSaleOrderBookingForm.patchValue({transactionTypeId:select.transactionTypeId})
   }
+  // this.cs
 }
+
+searchByContact(contactNo) {
+  this.service.searchCustomerByContact(contactNo)
+    .subscribe(
+      data => {
+        this.accountNoSearchdata = data.obj;
+        this.CounterSaleOrderBookingForm.patchValue({custAccountNo:data.obj.custAccountNo})
+        });
+}
+
+Select(custAccountNo) {
+  alert(custAccountNo)
+  if (custAccountNo !=undefined){
+    this.CounterSaleOrderBookingForm.patchValue({custAccountNo:custAccountNo});
+  this.accountNoSearch(custAccountNo);
+
+}
+}
+
+
+
+
 }
 
 

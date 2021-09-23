@@ -82,7 +82,7 @@ export class LocationMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.LocationMasterForm = fb.group({
       locId: [],
-      locCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(35),Validators.pattern('[a-zA-Z0-9.]*')]],
+      locCode: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9.]*')]],
       locName: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(240),Validators.pattern('[a-zA-Z 0-9]*')]],
       ouId: ['', [Validators.required]],
       address1: ['',[Validators.required, Validators.minLength(5),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9]*')]],

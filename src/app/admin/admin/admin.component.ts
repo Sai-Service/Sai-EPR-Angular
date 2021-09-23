@@ -14,6 +14,10 @@ export class AdminComponent  {
   todaysDataTime = '';
   divisionId:number;
   displayMaruti: boolean;
+  fullName:string;
+  deptName:string;
+  locName:string;
+  ouName:string;
   constructor(private router: Router) { 
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
   }
@@ -26,7 +30,10 @@ export class AdminComponent  {
 
     this.ticketNo=sessionStorage.getItem('ticketNo');
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
-
+    this.fullName=(sessionStorage.getItem('fullName'));
+    this.deptName=(sessionStorage.getItem('deptName'));
+    this.locName=(sessionStorage.getItem('locName'));
+    this.ouName=(sessionStorage.getItem('ouName'));
     // $('[data-submenu]').submenupicker();
 
 

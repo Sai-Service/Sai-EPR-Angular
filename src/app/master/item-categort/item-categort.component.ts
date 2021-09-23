@@ -171,7 +171,7 @@ export class ItemCategortComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert(res.message);
-          this.itemCategoryMasterForm.reset();
+          // this.itemCategoryMasterForm.reset();
         }
       }
     });

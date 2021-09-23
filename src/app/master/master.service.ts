@@ -169,6 +169,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/cmnLookup/CmnType/AccOrderType');
   }
 
+  issueCodeFunction(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/cmnLookup/CmnTypeDivision?cmnType=IssueCode&divisionId=${divisionId}`);
+  }
+
   taxCategoryListForSALES(): Observable<any> {
     return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/SALES');
   }
@@ -564,7 +568,7 @@ mainModelList(): Observable<any> {
 
 mainModelListByDivisionId(): Observable<any> {
 
-  //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2 
+  //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2
   return this.http.get(this.ServerUrl +'/cmnLookup/Catgtype?cmnType=Model&divisionId='+sessionStorage.getItem('divisionId'));
 }
 
@@ -1169,6 +1173,10 @@ getsearchByShipmentNo(shipNo):Observable<any>
 ItemIdListDept(deptId,locId,subId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
+}
+Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
 
 ///////////OnHand////////////
@@ -2791,6 +2799,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
       // http://localhost:8081/AccountTrf/toAcctList/124
 }
-   ///////////////////////////////////////////// //////////////////////
+   ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
+   getShipmentList(locId,subInv): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+}
 }
