@@ -565,7 +565,7 @@ if (person === 'Person'){
     });
   }
   newMast() {
-    this.submitted = true;
+    this.submitted = false;
     this.validation();
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
@@ -833,8 +833,6 @@ if (person === 'Person'){
           if(formValue.contactNo ===undefined)
           {
             alert('Please enter Contact  No');
-
-
           }
           if(formValue.contactPerson ===undefined)
           {
