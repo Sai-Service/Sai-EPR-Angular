@@ -193,6 +193,7 @@ export class CustomerMasterComponent implements OnInit {
   shighAmt:number;
   disPer:number;
   sdisPer:number;
+  displayadditional=true;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -225,7 +226,7 @@ export class CustomerMasterComponent implements OnInit {
       emailId:[''],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
-      contactPerson:['',[Validators.pattern('^[a-zA-Z]*')]],
+      contactPerson:['',[Validators.pattern('^[a-z A-Z ]*')]],
       contactNo:[''],
       // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
@@ -283,6 +284,7 @@ export class CustomerMasterComponent implements OnInit {
   get f() { return this.customerMasterForm.controls; }
 
   ngOnInit(): void {
+
     this.lstcomments= [];
     this.lstcomments.customerSiteMasterList=[];
     this.name=  sessionStorage.getItem('name');
@@ -565,7 +567,11 @@ if (person === 'Person'){
   }
   newMast() {
     this.submitted = true;
-    this.validation();
+    var isvaliddata=this.validation();
+    if(isvaliddata===false)
+    {
+      return;
+    }
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
     return;
@@ -584,6 +590,7 @@ if (person === 'Person'){
         // var mobile=this.customerMasterForm.get('mobile1').value;
         this.searchByAccount1(res.obj);
         this.customerMasterForm.disable();
+        this.displayadditional=false;
       //  this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -723,6 +730,7 @@ if (person === 'Person'){
           var title1=this.titleList.find(d=>d.code===this.lstcomments.title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments.termId);
           this.customerMasterForm.patchValue({title:this.lstcomments.title,paymentType:payTerm.lookupValueId});
+          this.displayadditional=false;
         }
       );
   }
@@ -814,8 +822,9 @@ if (person === 'Person'){
         }
       }
 
-      validation()
+      public validation():boolean
       {
+        var  validdata:boolean;
         // alert('in Validation');
         const formValue:IcustomerMaster = this.customerMasterForm.value;
         // var type=this.customerMasterForm.get('custType').value;
@@ -832,14 +841,16 @@ if (person === 'Person'){
           if(formValue.contactNo ===undefined)
           {
             alert('Please enter Contact  No');
-
+            validdata=false;
 
           }
           if(formValue.contactPerson ===undefined)
           {
             alert('Please enter Contact  Person Name');
             // this.customerMasterForm.get('contactPerson')
+            validdata=false;
           }
+          return validdata;
         }
       }
 }

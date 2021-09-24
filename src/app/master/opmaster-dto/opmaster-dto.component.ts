@@ -467,7 +467,7 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           this.DepartmentListById = data;
           console.log(this.DepartmentListById);
-          console.log(this.DepartmentListById.divisionName);
+       //   console.log(this.DepartmentListById.divisionName);
           // this.poMasterDtoForm.patchValue(this.DepartmentListById.divisionName);
           // this.divisionName = this.DepartmentListById.divisionName
         }
@@ -615,12 +615,15 @@ export class OPMasterDtoComponent implements OnInit {
       );
 
       this.sub = this.router1.params.subscribe(params => {
-        this.poNo = params['segment1'];
+      //  alert(params);
+        this.poNo = params['poNo'];
+        this.poMasterDtoForm.patchValue({segment1:this.poNo})
+        // alert(this.poNo+'----Param----'+params['poNo']);
         // alert(this.poNo);
-        if (this.poNo != undefined){
+         if (this.poNo != undefined){
         this.Search(this.poNo);
-      }
-        // this.paymentReceiptForm.patchValue( this.lstcomments );
+       }
+      
         });
 
     // // this.onChanges();
@@ -839,6 +842,7 @@ export class OPMasterDtoComponent implements OnInit {
         data => {
           console.log(data);
           if (data.code === 400) {
+            alert(data.message)
             this.displayNewButtonApprove = false;
             this.displayNewButtonUpdate = false;
             this.displayNewButtonSave = false;

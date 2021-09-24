@@ -32,6 +32,7 @@ import { WsVehicleMasterComponent } from './ws-vehicle-master/ws-vehicle-master.
 import { VariantMasterComponent } from './variant-master/variant-master.component';
 import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
 import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
+import { PendingShipmentListComponent } from './pending-shipment-list/pending-shipment-list.component';
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
 
@@ -58,6 +59,7 @@ const routes: Routes = [
   {path: 'GlCodeCombination', component:GlCodeCombinationComponent},
   {path:'HsnSacMaster', component:HsnSacMasterComponent},
   {path:'OPMasterDto',component:OPMasterDtoComponent},
+  {path:'OPMasterDto/:poNo',component:OPMasterDtoComponent},
   {path:'JaiRegimeMaster', component:JaiRegimeMasterComponent},
   {path:'TaxAccounts', component:TaxAccountsComponent},
   {path:'taxCategoryMaster', component:TaxCategoryMasterComponent},
@@ -74,6 +76,8 @@ const routes: Routes = [
   {path:'TaxThresholdSetup', component:TaxThresholdSetupComponent  },
   {path:'PoReceiptForm/:segment1',component:PoReceiptFormComponent},
   {path:'SubinventoryMaster',component:SubinventoryMasterComponent},
+  {path:'PendingShipmentList',component:PendingShipmentListComponent},
+  {path:'PoReceiptForm/:shipmentNumber',component:PoReceiptFormComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

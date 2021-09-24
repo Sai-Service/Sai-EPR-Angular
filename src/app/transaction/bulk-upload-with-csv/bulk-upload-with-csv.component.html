@@ -13,25 +13,38 @@
         </tr>
     </table>
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
-        <tr class="GridHeader">
-            <th scope="col">PO Number</th>
-            <th scope="col">Base Amount</th>
-            <th scope="col">Total Tax Amount</th>
-            <th scope="col">Total Amount</th>
-            <th scope="col">PO Status</th>
-            <th scope="col">PO Date</th>
+        <tr class="GridHeader" style="font-size: 14px;">
+            <th scope="col" style="border: 1px solid black;">PO Number</th>
+            <th scope="col" style="border: 1px solid black;">Base Amount</th>
+            <th scope="col" style="border: 1px solid black;">Total Tax Amount</th>
+            <th scope="col" style="border: 1px solid black;">Total Amount</th>
+            <th scope="col" style="border: 1px solid black;">PO Status</th>
+            <th scope="col" style="border: 1px solid black;">PO Date</th>
         </tr>
-        <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;">
-          <td>
+        <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+          <td style="border: 1px solid black;padding-left: 5px;padding-top: 10px;">
             <!-- <button type="button" class="btn-primary"  [routerLink]="['/OPMasterDto',com.segment1]"> {{com.segment1}}</button> -->
-            <!-- <a  [(ngModel)]='segment1' (click)="routeOMAndCSPage()" href="{{segment1}}">{{com.segment1}}</a> -->
-            <button class="btn btn-primary" (click)="routeOMAndCSPage(com.segment1)" style="width: fit-content;">{{com.segment1}}</button> 
+            <a  [(ngModel)]='segment1' [routerLink]="['/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
+            <!-- <button class="btn btn-primary" (click)="routeOMAndCSPage(com.segment1)" style="width: fit-content;">{{com.segment1}}</button>  -->
         </td>
-            <td>{{com.baseAmount}}</td>
-            <td>{{com.totTaxAmt}}</td>
-            <td>{{com.totalAmt}}</td>
-            <td>{{com.authorizationStatus}}</td>
-            <td>{{com.approveDate | date:'dd-MM-yyyy hh:mm:ss'}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;">{{com.baseAmount}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;">{{com.totTaxAmt}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;">{{com.totalAmt}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;">{{com.authorizationStatus}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;">{{com.approveDate | date:'dd-MM-yyyy hh:mm:ss'}}</td>
         </tr>
     </table>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+    <!-- <button class="btn btn-primary" (click)="routeOMAndCSPage(2111022111889)" style="width: fit-content;">2111022111889</button>  -->
 </form>
