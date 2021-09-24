@@ -1114,7 +1114,7 @@ public addDiscount(totTaxAmt: number, taxTypeName: string) {
     headers: this.headers
   };
   // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
-  const url = 'http://saihorizon.com:8080/taxDetails';
+  const url = '/taxDetails';
   // const url = 'http://localhost:8081/taxDetails';
   console.log(body);
   return this.httpclient.post(url, body, options);
@@ -2109,6 +2109,12 @@ bulkpouploadSales(formData: FormData) {
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
+
+  bulkpouploadSparesBajaj(formData: FormData ,location:number,invcNo:string,supplierNo:string,supplierSite:string,userName:string) {
+    let headers1 = new HttpHeaders();  
+    return this.http.post(this.ServerUrl + `/fileImport/uploadBjSpPO`, formData)
+}
+
 
   BindUser(): Observable<OPMasterDtoComponent[]> {
     var userId1=sessionStorage.getItem('userId');

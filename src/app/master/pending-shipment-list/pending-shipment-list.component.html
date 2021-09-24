@@ -5,42 +5,57 @@
                 &nbsp;Pending&nbsp;Shipment&nbsp;List
             </td>
         </tr>
-        </table>
-        <table style="background-color: #FFE4B5;" align="center">
-            <tr>
-                <td>
-                    &nbsp;Sub-Inventory&nbsp;:&nbsp;  
-                </td>
-                <td>
-                   <select class="form-control" formControlName="subInv" [(ngModel)]="subInv">
+    </table>
+    <table style="background-color: #FFE4B5;" align="center">
+        <tr>
+            <td>
+                &nbsp;Sub-Inventory&nbsp;:&nbsp;
+            </td>
+            <td>
+                <select class="form-control" formControlName="subInv" [(ngModel)]="subInv">
                     <option value="SP">SP</option>
                     <option value="AC">AC</option>
-                   </select>
-                </td>
-                <td>
-                    <button type="button" class="btn-primary"  (click)="pendingList(subInv)" ><i class="fa fa-search" aria-hidden="true"></i></button>
-                </td>
-            </tr>
-        </table>
-        <table  class="GridFont" id="excel-table" style="width: 50%;" cellspacing="0" cellpadding="4">
+                </select>
+            </td>
+            <td>
+                <button type="button" class="btn-primary" (click)="pendingList(subInv)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+    <div class="grid_scroll">
+        <table class="GridFont" id="excel-table" style="width: 40%;" cellspacing="0" cellpadding="4">
             <thead>
-                <tr class="GridHeader">
+                <tr class="GridHeader" style="font-size: 14px;">
                     <th scope="col" style="border: 1px solid black;">Shipment Number</th>
                     <th scope="col" style="border: 1px solid black;">Transaction Date</th>
                     <!-- <th scope="col" style="border: 1px solid black;">Sub-Inventory Code</th> -->
                     <th scope="col" style="border: 1px solid black;">Location</th>
                     <th scope="col" style="border: 1px solid black;">View</th>
                 </tr>
-                <tr *ngFor="let com of ShipPendingList let i= index" class="ItemStyle" style="text-decoration:none;">
-                    <!-- <td style="border: 1px solid black;padding-left: 5px;">{{com.shipmentNumber}}</td> -->
-                    <input type="text" disabled formControlName="shipmentNumber" class="form-control" [(ngModel)]="shipmentNumber" style="height: 25px;color: black;">
+                <tr *ngFor="let com of ShipPendingList" class="ItemStyle" style="text-decoration:none;font-size: 12px;">
+                    <td style="border: 1px solid black;padding-left: 5px;">{{com.shipmentNumber}}</td>
                     <td style="border: 1px solid black;padding-left: 5px;">{{com.transDate}}</td>
                     <!-- <td style="border: 1px solid black;">{{com.subInventoryCode}}</td> -->
                     <td style="border: 1px solid black;padding-left: 5px;">{{com.locCode}}</td>
-                    <td class="center">
-                        <button type="button" class="btn-primary"  (click)="viewShipDetails(shipmentNumber)" >View</button>
+                    <td class="center" style="border: 1px solid black;padding-left: 5px;">
+                        <button type="button" class="btn-primary"
+                            (click)="viewShipDetails(com.shipmentNumber)">View</button>
                     </td>
                 </tr>
             </thead>
         </table>
+        <table class="center">
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                        Clear
+                    </button>
+                </td>
+                <td>
+                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </form>

@@ -59,6 +59,7 @@ const routes: Routes = [
   {path: 'GlCodeCombination', component:GlCodeCombinationComponent},
   {path:'HsnSacMaster', component:HsnSacMasterComponent},
   {path:'OPMasterDto',component:OPMasterDtoComponent},
+  {path:'OPMasterDto/:poNo',component:OPMasterDtoComponent},
   {path:'JaiRegimeMaster', component:JaiRegimeMasterComponent},
   {path:'TaxAccounts', component:TaxAccountsComponent},
   {path:'taxCategoryMaster', component:TaxCategoryMasterComponent},
