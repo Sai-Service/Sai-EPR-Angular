@@ -2110,7 +2110,8 @@ bulkpouploadSales(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
 
-  bulkpouploadSparesBajaj(formData: FormData) {
+  bulkpouploadSparesBajaj(formData: FormData ,location:number,invcNo:string,supplierNo:string,supplierSite:string,userName:string) {
+    let headers1 = new HttpHeaders();  
     return this.http.post(this.ServerUrl + `/fileImport/uploadBjSpPO`, formData)
 }
 

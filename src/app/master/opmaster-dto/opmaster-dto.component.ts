@@ -990,7 +990,7 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   goReceiptForm(segment1) {
-    this.router.navigate(['/PoReceiptForm', segment1]);
+    this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
     // alert(segment1);
   }
 

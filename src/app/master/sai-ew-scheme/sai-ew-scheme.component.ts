@@ -191,7 +191,7 @@ export class SaiEwSchemeComponent implements OnInit {
         }
 
         searchMast() {
-          this.service.getEWSchemeSearch()
+          this.service.getEWSchemeSearch(this.ouId)
             .subscribe(
               data => {
                 this.lstcomments = data;

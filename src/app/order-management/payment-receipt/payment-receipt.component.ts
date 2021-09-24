@@ -417,10 +417,10 @@ export class PaymentReceiptComponent implements OnInit  {
 
   routeOMAndCSPage(){
    if (this.deptId=1){
-    this.router.navigate(['/SalesOrderForm',this.orderNumber]);
+    this.router.navigate(['/admin/OrderManagement/SalesOrderForm',this.orderNumber]);
    }
     else if (this.deptId){
-      this.router.navigate(['/CounterSaleOrder',this.orderNumber]);
+      this.router.navigate(['/admin/OrderManagement/CounterSaleOrder',this.orderNumber]);
     }
   }
 
