@@ -90,10 +90,10 @@ export class ReturnToVendorComponent implements OnInit {
       public emplId =6;
 
       // searchReceiptNo: number;
-      // searchBypoNumber:number;
+      searchBypoNumber:number;
       locatorDesc:string;
       
-      searchBypoNumber=2181211101212100;
+      // searchBypoNumber=2181211101212100;
       // searchReceiptNo=1000158;
 
       searchReceiptNo=22111720;
@@ -662,7 +662,7 @@ export class ReturnToVendorComponent implements OnInit {
          var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
          var len1=rtnLineArr.length;
 
-         for (let i = 0; i < len1 ; i++)  {
+        //  for (let i = 0; i < len1 ; i++)  {
 
           var rcdQty =rtnLineArr[index].qtyReceived;
           var rtnQty =rtnLineArr[index].qtyReturn;
@@ -685,7 +685,7 @@ export class ReturnToVendorComponent implements OnInit {
 
           //  }
 
-          }
+          // }
           this.rtnLineValidation=true;
         
           }
@@ -766,12 +766,23 @@ export class ReturnToVendorComponent implements OnInit {
 
 
     rtvSave(){
-      alert("RTV pposting....wip");
+      
+      var rtnLineArr = this.returntoVendorForm.get('rcvLines').value;
+
+      var len1=rtnLineArr.length;
+
+       for (let i = 0; i < len1 ; i++)  {
+        this.CheckRtnLineValidations(i)
+       }
+
+       if ( this.rtnLineValidation) {
       const formValue: IRtnToVendor = this.transeData(this.returntoVendorForm.value);
       this.locId=Number(sessionStorage.getItem('locId'));
 
         console.log(this.lstReceiptLines);
         this.shipHeaderId=null;
+
+        
    
         this.service.rtvSaveSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
@@ -788,7 +799,8 @@ export class ReturnToVendorComponent implements OnInit {
             }
           }
         });
-    }
+    } else { alert ("Validation Failed ... \nPosting not done...");} 
+  }
 
     onSelectionLocatorId(mLocatorId:number,index:number){
 
