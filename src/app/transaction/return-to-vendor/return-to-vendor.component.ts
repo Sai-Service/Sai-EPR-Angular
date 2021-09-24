@@ -107,6 +107,7 @@ export class ReturnToVendorComponent implements OnInit {
       supplierName:string;
       shipmentNo:number;
       receiptNo:number;
+      poReceiptAmt:number;
       billToLocId:number;
       shipmentDate:Date;
       receiptDate:Date;
@@ -125,6 +126,9 @@ export class ReturnToVendorComponent implements OnInit {
       suppInvDate:Date;
       taxAmt:number;
       public itemType= 'RETURN';
+
+      rtnDocNo:string;
+      rtnDocDate:Date;
       
 
                
@@ -151,7 +155,7 @@ export class ReturnToVendorComponent implements OnInit {
       showAllLines: string;
       showAllItem=false;
       headerFound=false;
-      showQtyRtncol=false;
+      showQtyRtncol=true;
       lineValidation=false;
       lineItemRepeated=false;
       enableCheckBox=true;
@@ -183,6 +187,7 @@ export class ReturnToVendorComponent implements OnInit {
             supplierName:[],
             shipmentNo:[],
             receiptNo:[],
+            poReceiptAmt:[],
             billToLocId:[],
             shipmentDate:[],
             receiptDate:[],
@@ -203,6 +208,9 @@ export class ReturnToVendorComponent implements OnInit {
 
             showAllLines:[],
             itemType:[],
+
+            rtnDocNo:[],
+            rtnDocDate:[],
           
             rcvLines: this.fb.array([this.lineDetailsGroup()]), 
             // poLines: this.fb.array([this.lineDetailsGroup()]),
@@ -348,7 +356,8 @@ export class ReturnToVendorComponent implements OnInit {
              patch.controls[index].patchValue({totAmount:0})
              patch.controls[index].patchValue({selectFlag:''})
 
-             this.showQtyRtncol=false;
+            //  this.showQtyRtncol=false;
+             this.lineDetailsArray.controls[index].get('qtyReturn').disable();
              this.showLocator=false;
              this.validQtyEntered=false;
             } 
@@ -726,7 +735,8 @@ export class ReturnToVendorComponent implements OnInit {
 
 
       if ( e.target.checked) {
-        this.showQtyRtncol =true;
+        // this.showQtyRtncol =true;
+        this.lineDetailsArray.controls[index].get('qtyReturn').enable();
         var len1=rtvLineArr.length;
 
         this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
@@ -736,11 +746,18 @@ export class ReturnToVendorComponent implements OnInit {
             console.log(this.ItemLocatorList);
             var avlQty=this.ItemLocatorList[0].onHandQty
             patch.controls[index].patchValue({qtyOnHand:avlQty})
+            if (avlQty <=0 ) {
+              alert ("Onhand Quantity not Available - Avaialable Qty : " +avlQty);
+              // this.lineDetailsArray.removeAt(index);
+              patch.controls[index].patchValue({selectFlag:''})
+              this.lineDetailsArray.controls[index].get('qtyReturn').disable();
+              return;
+             }
+
             }
-        
         );
 
-       
+            
     } else { 
          
       patch.controls[index].patchValue({qtyReturn:''})
@@ -750,7 +767,8 @@ export class ReturnToVendorComponent implements OnInit {
       
       this.CalculateTotal();
      
-      this.showQtyRtncol =false;
+      // this.showQtyRtncol =false;
+      this.lineDetailsArray.controls[index].get('qtyReturn').disable();
       // this.ItemLocatorList=null;
       
     
@@ -911,7 +929,8 @@ export class ReturnToVendorComponent implements OnInit {
         // alert ("in ItemSelect....");
         // patch.controls[index].patchValue({selectFlag:''})
 
-         this.showQtyRtncol=false;
+        //  this.showQtyRtncol=false;
+         this.lineDetailsArray.controls[index].get('qtyReturn').disable();
           let selectedValue = this.PoRcptLineItemList.find(v => v.itemName === mItem);
           // alert('Item Id :' +selectedValue.invItemId);
           if( selectedValue != undefined){
