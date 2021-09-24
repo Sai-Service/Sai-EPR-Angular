@@ -27,7 +27,8 @@
                            
                             <td>
                                 <select formControlName="divisionId" id="divisionId" class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.divisionId.errors }">
+                                [ngClass]="{ 'is-invalid': submitted && f.divisionId.errors }"
+                                placeholder="Enter Division code">
                                     <option></option>
                                     <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
                                         {{sc.divisionId}}-{{sc.divisionName}}
@@ -50,7 +51,7 @@
                                 [ngClass]="{ 'is-invalid': submitted && f.description.errors }"
                                 placeholder="Enter description">
                                 <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                                    <div *ngIf="f.description.errors.required">Digision cannot be blank</div>
+                                    <div *ngIf="f.description.errors.required">Description cannot be blank</div>
                                     <div *ngIf="f.description.errors.maxlength">Maximum 50 characters allowed</div>
                                     <div *ngIf="f.description.errors.minlength">Minimum  5 characters required</div>
                                 </div>
