@@ -806,6 +806,11 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
     return this.http.get(this.ServerUrl +`/locationMst/locListOuwise/${orgCode}`);
   }
 
+  getLocationById(locId):Observable<any>{
+    return this.http.get(this.ServerUrl +`/locationMst/${locId}`);
+  }
+
+
   getOrganizationId(divCode):Observable<any>{
     return this.http.get(this.ServerUrl +`/docsrlmst/divName/${divCode}`);
   }
