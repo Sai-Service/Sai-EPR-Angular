@@ -1061,6 +1061,7 @@ else{
     formValue.assetItem= this.assetItem;
     formValue.purchasable= this.purchasable;
     formValue.isTaxable= this.isTaxable;
+    formValue.costCenter= this.segment3;
     // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

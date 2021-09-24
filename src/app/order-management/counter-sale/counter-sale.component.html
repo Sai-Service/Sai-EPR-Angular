@@ -743,65 +743,26 @@
                         </ng-template>
                     </tr>
                 </table>
-                <div class="classic-tabs">
-                    <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
+                <div >
+                    <ul class="nav tabs-white nav-fill" style="padding: 0px;">
                         <li class="nav-item">
-                            <a class="nav-link waves-light active" data-toggle="tab" href="#panel1002"
-                                role="tab">Lines</a>
+                            <a id="lineTab" class="nav-link waves-light active" data-toggle="tab" href="#panel1002"
+                                >Lines</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link waves-light" data-toggle="tab" href="#panel1006" role="tab">Tax
+                            <a id="taxTab" class="nav-link waves-light" data-toggle="tab" href="#panel1006" >Tax
                                 Details</a>
                         </li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
-                        <li class="nav-item"></li>
+                       
                     </ul>
+
+                    <!-- <ul class="nav nav-tabs">
+                        <li class="nav-link active"><a id="lineTab" data-toggle="tab" href="#panel1002">Lines</a></li>
+                        <li><a id="taxTab" data-toggle="tab" href="#panel1006">Tax-Details</a></li>
+                    </ul> -->
                     <!-- <div class="grid_scroll"> -->
                     <div class="tab-content rounded-bottom">
-                        <div class="tab-pane fade in show active" id="panel1002" role="tabpanel">
+                        <div class="tab-pane fade in show active" id="panel1002" >
                             <div class="grid_scroll">
                                 <table class="auto-style4" class="GridFont"
                                     style="border-color:#959595;width:100%;border-collapse:collapse;">
@@ -840,18 +801,20 @@
                                                         </div>
                                                         <ng-template #thenBlockPoLine>
                                                             <!-- insert  -->
-                                                            <a [value]="i+1" class="nav-link waves-light"
-                                                                data-toggle="tab" href="#panel1006" role="tab"
+                                                            <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
+                                                                data-toggle="tab" href="#panel1006" 
                                                                 (click)="taxDetails('insert', i, taxCategoryId)">
                                                                 {{i+1}}
                                                             </a>
                                                         </ng-template>
                                                         <ng-template #elseBlockPoLine>
-                                                            <a [value]="i+1" class="nav-link waves-light"
-                                                                data-toggle="tab" href="#panel1006" role="tab"
+                                                            <!-- <a [value]="i+1" class="nav-link waves-light"
+                                                                data-toggle="tab" href="#panel1006" 
                                                                 (click)="taxDetails('Search', i, taxCategoryId)">
                                                                 {{i+1}}
-                                                            </a>
+                                                            </a> -->
+                                                            <a id="line{{i}}" data-toggle="tab" href="#panel1006"  [value]="i+1" 
+                                                            (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
                                                         </ng-template>
                                                     </td>
                                                     <div
@@ -1118,7 +1081,8 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="panel1006" role="tabpanel">
+                        <div class="tab-pane fade" id="panel1006" >
+                            <!-- role="tabpanel" -->
                             <div class="grid_scroll">
                                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"
                                     style="width:100%;border-collapse:collapse;">
@@ -1387,7 +1351,7 @@
                         </ng-template>
                         <ng-template #elseBlockPaymentButton>
                             <button class="btn btn-primary"
-                                [routerLink]="['/paymentReceipt',orderNumber]">Payment</button>
+                                [routerLink]="['/admin/transaction/paymentReceipt',orderNumber]">Payment</button>
                         </ng-template>
                     </td>
                 </tr>

@@ -1,10 +1,10 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
 import { Router } from '@angular/router';
-import { Validators,FormArray } from '@angular/forms';
+import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from 'src/app/master/master.service';
@@ -13,7 +13,7 @@ import { OrderManagementService } from 'src/app/order-management/order-managemen
 import { data } from 'jquery';
 import { DatePipe } from '@angular/common';
 import { Location } from "@angular/common";
-import * as XLSX from 'xlsx'; 
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-pending-shipment-list',
@@ -22,13 +22,13 @@ import * as XLSX from 'xlsx';
 })
 export class PendingShipmentListComponent implements OnInit {
   pendingShipmentListForm: FormGroup;
-  subInv:string;
-  ShipPendingList:any[];
-  shipmentNumber:string;
-  constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private orderManagementService:OrderManagementService,private transactionService :TransactionService) { 
+  subInv: string;
+  ShipPendingList: any[];
+  shipmentNumber: string;
+  constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.pendingShipmentListForm = fb.group({
-      subInv:[''],
-      shipmentNumber:[''],
+      subInv: [''],
+      shipmentNumber: [''],
     })
   }
 
@@ -39,26 +39,33 @@ export class PendingShipmentListComponent implements OnInit {
   pendingShipmentList(pendingShipmentListForm: any) {
   }
 
-  pendingList(subInv){
-alert(subInv);
-this.service.getShipmentList(sessionStorage.getItem('locId'),subInv)
-.subscribe(
-  (data:any)=> {
-    this.ShipPendingList = data.obj;
-    alert(data.message)
-    console.log(this.ShipPendingList);
-    for (let i=0;i<data.obj.length;i++){
-      // alert(data.obj.length +'---'+ data.obj[i].shipmentNumber)
-    this.pendingShipmentListForm.patchValue({shipmentNumber:data.obj[i].shipmentNumber})
+  pendingList(subInv) {
+    // alert(subInv);
+    this.service.getShipmentList(sessionStorage.getItem('locId'), subInv)
+      .subscribe(
+        (data: any) => {
+          this.ShipPendingList = data.obj;
+          // alert(data.message)
+          console.log(this.ShipPendingList);
+        }
+      );
   }
-  }
-);
-}
 
 
-viewShipDetails(shipmentNumber){
- this.router.navigate(['/PoReceiptForm', shipmentNumber]);
-  // alert(segment1);
-}
+
+  viewShipDetails(shipmentNumber) {
+    this.router.navigate(['/PoReceiptForm'], { queryParams: { shipmentNumber: shipmentNumber } });
+    // alert(segment1);
   }
+
+  refresh() {
+    window.location.reload();
+  }
+
+  close() {
+    this.location.back();
+  }
+
+
+}
 
