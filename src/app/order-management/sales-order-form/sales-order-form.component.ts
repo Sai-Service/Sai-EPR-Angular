@@ -1283,7 +1283,7 @@ public  searchByAccountNo(accountNo) {
   }
 
   Select(custAccountNo) {
-    alert(custAccountNo)
+    // alert(custAccountNo)
     if (custAccountNo !=undefined){
     this.searchByAccountNo(custAccountNo)
   }

@@ -103,6 +103,16 @@ export class OrderManagementService {
     });
   }
 
+  viewReceipt(InvoiceNumber){
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/bajajSpares/${InvoiceNumber}`;  
+    // local
+    const REQUEST_URI = `http://localhost:8081/omPayment/omReceipt/${InvoiceNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   downloadVehicleINV(InvoiceNumber){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/salesTaxInv/${InvoiceNumber}`;  

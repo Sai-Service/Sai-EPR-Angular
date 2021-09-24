@@ -12,7 +12,7 @@ import{MasterService} from 'src/app/master/master.service'
 import { DatePipe } from '@angular/common';
 import { get } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Location } from "@angular/common";
+import { Location, } from "@angular/common";
 
 @Component({
   selector: 'app-bulk-upload-with-csv',
@@ -23,14 +23,19 @@ export class BulkUploadWithCsvComponent implements OnInit {
   bulkUploadCSVForm: FormGroup;
   docType:string;
   deptName: any;
-  public poDetails: any[];
+  poDetails: any=[];
   private sub: any;
   segment1:string;
-  location:number;
+  location:string;
   invcNo:string;
   supplierNo:string;
   userName:string;  
   supplierSite:string;
+  invcDt1:Date;
+
+  // pipe = new DatePipe('en-US');
+  // now=new Date();
+  // invcDt1=this.pipe.transform(this.now,'dd-MM-yyyy');
 
   @ViewChild('fileInput') fileInput;
   message: string;
@@ -44,12 +49,15 @@ export class BulkUploadWithCsvComponent implements OnInit {
       supplierNo:[''],
       userName:[''],
       supplierSite:[''],
+      invcDt1:[''],
     })
   }
   bulkUploadCSV(bulkUploadCSVForm) {}
   ngOnInit(): void {
     this.deptName = (sessionStorage.getItem('deptName'));
-    this.bulkUploadCSVForm.patchValue({location:sessionStorage.getItem('locId')})
+    this.bulkUploadCSVForm.patchValue({location:sessionStorage.getItem('locCode')})
+    console.log(sessionStorage.getItem('locCode'));
+    
   }
 
   closeMast() {
@@ -82,7 +90,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
       });
     }
     else{
-      alert(Number(sessionStorage.getItem('divisionId')));
+      // alert(Number(sessionStorage.getItem('divisionId')));
       if (Number(sessionStorage.getItem('divisionId'))==1){
         this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
           if (res.code === 200) {
@@ -95,10 +103,20 @@ export class BulkUploadWithCsvComponent implements OnInit {
         });
       }
       else if (Number(sessionStorage.getItem('divisionId'))==2){
-        alert(Number(sessionStorage.getItem('divisionId')))
-        this.service.bulkpouploadSparesBajaj(formData,this.location,this.invcNo,this.supplierNo,this.supplierSite,this.userName).subscribe((res: any) => {
+        // let location=this.bulkUploadCSVForm.get('locCode').value;
+        var location= (sessionStorage.getItem('locCode'));
+        // alert(location);
+        var invcNo=this.bulkUploadCSVForm.get('invcNo').value;
+        var supplierNo=this.bulkUploadCSVForm.get('supplierNo').value;
+        var supplierSite=this.bulkUploadCSVForm.get('supplierSite').value;
+        var userName=this.bulkUploadCSVForm.get('userName').value;
+        var invcDt1=this.bulkUploadCSVForm.get('invcDt1').value;
+        // alert(location+'  '+invcNo+' '+supplierNo+' '+ supplierSite+' '+ userName+' '+ invcDt1)
+        this.service.bulkpouploadSparesBajaj(formData,location,invcNo,supplierNo,supplierSite,userName,invcDt1).subscribe((res: any) => {
           if (res.code === 200) {
-            alert(res.obj);
+            alert(res.message);
+            this.poDetails[0]=res.obj;
+            console.log(this.poDetails);
           } else {
             if (res.code === 400) {
               alert('Error In File : \n' + res.obj);
