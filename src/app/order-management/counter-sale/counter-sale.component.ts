@@ -1127,7 +1127,7 @@ export class CounterSaleComponent implements OnInit {
       );
   }
 
-  get f() { return this.CounterSaleOrderBookingForm.controls || this.orderlineDetailsGroup().controls }
+  get f() { return this.CounterSaleOrderBookingForm.controls}
 
 
 
@@ -1501,10 +1501,10 @@ export class CounterSaleComponent implements OnInit {
 
 
   counterSaleOrderSave() {
-    this.submitted = true;
-    if(this.CounterSaleOrderBookingForm.invalid){
-    return;
-    } 
+    // this.submitted = false;
+    // if(this.CounterSaleOrderBookingForm.invalid){
+    // return;
+    // } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // let jsonData = this.CounterSaleOrderBookingForm.value;
     let jsonData=this.CounterSaleOrderBookingForm.getRawValue();

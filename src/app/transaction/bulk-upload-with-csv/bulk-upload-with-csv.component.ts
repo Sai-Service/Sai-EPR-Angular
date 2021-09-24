@@ -26,20 +26,30 @@ export class BulkUploadWithCsvComponent implements OnInit {
   public poDetails: any[];
   private sub: any;
   segment1:string;
-    
+  location:number;
+  invcNo:string;
+  supplierNo:string;
+  userName:string;  
+  supplierSite:string;
 
   @ViewChild('fileInput') fileInput;
   message: string;
   allUsers: Observable<BulkUploadWithCsvComponent[]>;
-  constructor(private fb: FormBuilder, private router: Router,private location: Location, private router1: ActivatedRoute,private service: MasterService) { 
+  constructor(private fb: FormBuilder, private router: Router,private location1: Location, private router1: ActivatedRoute,private service: MasterService) { 
     this.bulkUploadCSVForm = this.fb.group({
       deptName: [],
       segment1:[''],
+      location:[''],
+      invcNo:[''],
+      supplierNo:[''],
+      userName:[''],
+      supplierSite:[''],
     })
   }
   bulkUploadCSV(bulkUploadCSVForm) {}
   ngOnInit(): void {
     this.deptName = (sessionStorage.getItem('deptName'));
+    this.bulkUploadCSVForm.patchValue({location:sessionStorage.getItem('locId')})
   }
 
   closeMast() {
@@ -86,7 +96,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
       }
       else if (Number(sessionStorage.getItem('divisionId'))==2){
         alert(Number(sessionStorage.getItem('divisionId')))
-        this.service.bulkpouploadSparesBajaj(formData).subscribe((res: any) => {
+        this.service.bulkpouploadSparesBajaj(formData,this.location,this.invcNo,this.supplierNo,this.supplierSite,this.userName).subscribe((res: any) => {
           if (res.code === 200) {
             alert(res.obj);
           } else {
@@ -111,6 +121,6 @@ export class BulkUploadWithCsvComponent implements OnInit {
   }
 
   close() {
-    this.location.back();
+    this.location1.back();
   }
 }

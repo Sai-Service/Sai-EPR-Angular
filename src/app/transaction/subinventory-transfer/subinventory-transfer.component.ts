@@ -30,7 +30,7 @@ interface IsubinventoryTransfer
   description:string;
   uom:string;
   issueTo:string;
-  frmLocator:number;
+  locatorId:number;
   transferLocatorId:number;
   onHandId:number;
   primaryQty:number;
@@ -86,7 +86,7 @@ segment:string;
 onHandId:number;
 description:string;
 uom:string;
-frmLocator:number;
+locatorId:number;
 transferLocatorId:number;
 primaryQty:number;
 onHandQty:number;
@@ -132,13 +132,14 @@ lastkeydown1: number = 0;
       segment:[],
       description:[],
       uom:[],
-      frmLocator:[],
+      locatorId:[],
       transferLocatorId:[],
       primaryQty:[],
       onHandQty:[],
       LocatorSegment:[],
       lineNumber:[],
       onHandId:[],
+      resveQty:[''],
      })
    }
 
@@ -198,7 +199,7 @@ lastkeydown1: number = 0;
          lineNumber: 1,
        }
      );
-   
+
   }
 
   subinventoryTransfer(SubinventoryTransferForm:any)
@@ -261,7 +262,7 @@ lastkeydown1: number = 0;
             if(getfrmSubLoc.length==1)
             {
             // this.displayLocator[i]=false;
-            trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
+            trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].segmentName});
             // trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
             trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
             trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
@@ -270,8 +271,8 @@ lastkeydown1: number = 0;
             else
             {
               // this.getfrmSubLoc=data;
-           trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
-          //  trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
+           trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].segmentName});
+           trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty})
            trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
             }
 
@@ -371,11 +372,11 @@ lastkeydown1: number = 0;
 
         AvailQty(event:any,i:number)
         {
-          alert(event);
+          alert(event+'Loca');
           var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
           var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
           var itemid=trxLnArr[i].itemId;
-          var locId=trxLnArr[i].frmLocator;
+          var locId=trxLnArr[i].locatorId;
           var onhandid=trxLnArr[i].onHandId;
           // trxLnArr1.controls[i].patchValue({locatorId:locId});
           alert(locId+'locatorID'+onhandid);
@@ -383,22 +384,23 @@ lastkeydown1: number = 0;
           alert(subcode);
           // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
           // alert(select2.subInventoryId+'Id')
+          if(locId!=undefined){
           this.service.getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid).subscribe
             (data =>{
               this.onhand = data;
               console.log(this.onhand);
-              trxLnArr1.controls[i].patchValue({onHandQty:data.obj.onHandQty});
+              trxLnArr1.controls[i].patchValue({onHandQty:data.obj});
               // trxLnArr1.controls[i].patchValue({onHandId:data.obj.id});
 
               let onHand=data.obj;
               let reserve=trxLnArr[i].resveQty;
               //alert(onHand+'OnHand');
-              //alert(reserve+'reserve');
+              alert(reserve+'reserve');
               let avlqty1=0;
               avlqty1= onHand-reserve;
               // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
               trxLnArr1.controls[i].patchValue({onHandQty: avlqty1});
-           })
+           })}
 
         }
 
