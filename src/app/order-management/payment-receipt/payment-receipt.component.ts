@@ -281,7 +281,7 @@ export class PaymentReceiptComponent implements OnInit  {
               this.ReceiptMethodList = data.obj;
               console.log(this.ReceiptMethodList);
               this.showBankDetails=true;
-              alert(this.showBankDetails)
+              // alert(this.showBankDetails)
             }
           );
           } else{
@@ -299,7 +299,7 @@ export class PaymentReceiptComponent implements OnInit  {
   }
 
   searchMastNew(rcptNo ,ordNo,custNo) {
-    alert("Receipt No : "+ rcptNo + " Order no :"+ordNo + " Cust Ac No :" + custNo);
+    // alert("Receipt No : "+ rcptNo + " Order no :"+ordNo + " Cust Ac No :" + custNo);
     this.orderManagementService.getOmReceiptSearchBy(rcptNo,ordNo,custNo)
     .subscribe(
     data => {
@@ -312,7 +312,7 @@ export class PaymentReceiptComponent implements OnInit  {
 
   searchMast(refNumber : any , searchBy : any)
   {
-      alert("Search Value: " +refNumber + "  Search Type : "+ searchBy);
+      // alert("Search Value: " +refNumber + "  Search Type : "+ searchBy);
       
       if (searchBy === 'ORDER NUMBER') {
         this.orderManagementService.getOmReceiptSearchByOrdNo(refNumber)
@@ -416,10 +416,11 @@ export class PaymentReceiptComponent implements OnInit  {
   }
 
   routeOMAndCSPage(){
-   if (this.deptId=1){
+   if (Number(sessionStorage.getItem('divisionId'))===1){
+    //  alert(Number(sessionStorage.getItem('divisionId')))
     this.router.navigate(['/admin/OrderManagement/SalesOrderForm',this.orderNumber]);
    }
-    else if (this.deptId){
+    else if (Number(sessionStorage.getItem('divisionId'))===2){
       this.router.navigate(['/admin/OrderManagement/CounterSaleOrder',this.orderNumber]);
     }
   }

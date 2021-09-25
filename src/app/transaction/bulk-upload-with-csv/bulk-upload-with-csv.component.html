@@ -1,48 +1,133 @@
 <form [formGroup]="bulkUploadCSVForm" (ngSubmit)="bulkUploadCSV(bulkUploadCSVForm.value)">
-    <br>
-    <table style="width: 50%;">
+    <!-- <br> -->
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Purchase&nbsp;Order&nbsp;Upload&nbsp;
+            </td>
+        </tr>
+        </table>
+    <table class="center">
         <tr>
             <td class="LabelFontStyle">
                 &nbsp;&nbsp;Location&nbsp;ID&nbsp;:&nbsp;
             </td>
             <td>
-                <input type="number" class="form-control" disabled formControlName="location" style="width: 50px;" >
-            </td>
-            <td class="LabelFontStyle">
-                &nbsp;&nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
-            </td>
-            <td>
-                <input type="text" class="form-control"  formControlName="invcNo" style="width:100px;" >
-            </td>
-            <td class="LabelFontStyle">
-                &nbsp;&nbsp;Supplier&nbsp;No&nbsp;:&nbsp;
-            </td>
-            <td>
-                <input type="text" class="form-control"  formControlName="supplierNo" style="width: 100px;" >
-            </td>
-            <td class="LabelFontStyle">
-                &nbsp;&nbsp;Supplier&nbsp;Site&nbsp;:&nbsp;
-            </td>
-            <td>
-                <input type="text" class="form-control"  formControlName="supplierSite" style="width: 100px;" >
+                <input type="text" class="form-control" disabled formControlName="location" style="width: 100px;" >
             </td>
             <td class="LabelFontStyle">
                 &nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;
             </td>
             <td>
-                <input type="text" class="form-control"  formControlName="userName" style="width: 100px;" >
+                <input disabled type="text" class="form-control"  formControlName="userName"  >
+            </td>
+        </tr>
+        <tr>  
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control"  formControlName="invcNo"  >
+            </td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="date" class="form-control"  formControlName="invcDt1"  >
             </td>
         </tr>
         <tr>
-          <td class="LabelFontStyle">
-              &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
-          </td>
-          <td colspan="4">
-              <input class="form-control" type="file" #fileInput style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
-          </td>
-          <td>
-              <button  class="btn btn-primary" (click)="uploadFile();" style="width: 8rem;font-size: 11px;">Upload</button>
-          </td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Supplier&nbsp;No&nbsp;:&nbsp;
+            </td>
+                        <td>
+                <input type="text" formControlName="supplierNo"
+                    (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
+                    list="dynmicUserIds" class="form-control" placeholder="Supplier details"
+                    (ngModelChange)="onSupplierCodeSelected($event)" />
+                <datalist id="dynmicUserIds">
+                    <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
+                        {{item.name}}@{{item.suppNo}}</option>
+                </datalist>
+
+            </td>
+       
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Supplier&nbsp;Site&nbsp;:&nbsp;
+            </td>
+            <td>
+                <select formControlName="supplierSite" id="supplierSite" #myinput
+                data-live-search="true" 
+                class="form-control">
+                <option>--Select--</option>
+                <option *ngFor="let sc of  suppIdList">
+                    {{sc.siteName}}
+                </option>
+            </select>
+            </td>
+            
+          
+        </tr>
+        <tr>
+         <td colspan="6" style="width: 100%;padding-top: 0px;">
+            <table style="width: 50%;padding-top: 0px;">
+                <tr>
+                   <td class="LabelFontStyle">
+                       &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+                   </td>
+                   <td colspan="3">
+                       <input class="form-control" type="file" #fileInput style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                   </td>
+                   <td>
+                       <button  class="btn btn-primary" (click)="uploadFile();" style="width: 100%;font-size: 11px;">Upload</button>
+                   </td>
+                    <div *ngIf="itemButton1; then thenBlockitemButton; else elseBlockitemButton"></div>
+                        <ng-template #thenBlockitemButton>
+                        </ng-template>
+                        <ng-template #elseBlockitemButton>    
+         <td>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: 8rem;">
+                Item&nbsp;Not&nbsp;Found&nbsp;List
+              </button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                     <table style="width: 100%;">
+                    <tr>
+                        <td colspan="4" style="color: black;">
+                            ErrorCode-101&nbsp;:&nbsp;Item&nbsp;Not&nbsp;found&nbsp;in&nbsp;Master
+                        </td>
+                    </tr>
+                    </table>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                            <tr class="GridHeader" style="font-size: 14px;">
+                                <th scope="col" >Item</th>
+                                <th scope="col">Item&nbsp;Description</th> 
+                            </tr>
+                            <tr *ngFor="let com of itemList" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.segment}}</td>  
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.description}}</td>         
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                     </td>
+                    </ng-template>
+                </tr>
+            </table>
+         </td>
+        
         </tr>
     </table>
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
@@ -55,10 +140,8 @@
             <th scope="col" style="border: 1px solid black;">PO Date</th>
         </tr>
         <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
-          <td style="border: 1px solid black;padding-left: 5px;padding-top: 10px;">
-            <!-- <button type="button" class="btn-primary"  [routerLink]="['/OPMasterDto',com.segment1]"> {{com.segment1}}</button> -->
-            <a  [(ngModel)]='segment1' [routerLink]="['/admin/master/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
-            <!-- <button class="btn btn-primary" (click)="routeOMAndCSPage(com.segment1)" style="width: fit-content;">{{com.segment1}}</button>  -->
+          <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
+            <a   [routerLink]="['/admin/master/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
         </td>
             <td style="border: 1px solid black;padding-left: 5px;">{{com.baseAmount}}</td>
             <td style="border: 1px solid black;padding-left: 5px;">{{com.totTaxAmt}}</td>

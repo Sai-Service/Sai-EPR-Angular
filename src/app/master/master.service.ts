@@ -806,6 +806,11 @@ cmnTypeList(): Observable<any>{return this.http.get(this.ServerUrl +'/cmnLookup/
     return this.http.get(this.ServerUrl +`/locationMst/locListOuwise/${orgCode}`);
   }
 
+  getLocationById(locId):Observable<any>{
+    return this.http.get(this.ServerUrl +`/locationMst/${locId}`);
+  }
+
+
   getOrganizationId(divCode):Observable<any>{
     return this.http.get(this.ServerUrl +`/docsrlmst/divName/${divCode}`);
   }
@@ -2110,9 +2115,15 @@ bulkpouploadSales(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
 
-  bulkpouploadSparesBajaj(formData: FormData ,location:number,invcNo:string,supplierNo:string,supplierSite:string,userName:string) {
-    let headers1 = new HttpHeaders();  
-    return this.http.post(this.ServerUrl + `/fileImport/uploadBjSpPO`, formData)
+  bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
+    formData.append('location', location);
+    formData.append('invcNo', invcNo);
+    formData.append('supplierNo', supplierNo);
+    formData.append('suppSite', suppSite);
+    formData.append('userName', userName);
+    formData.append('invcDt1',invcDt1);
+    const REQUEST_URI = this.ServerUrl +'/fileImport/uploadBjSpPO';
+    return this.http.post(REQUEST_URI, formData);
 }
 
 
