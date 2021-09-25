@@ -21,7 +21,7 @@ interface IRtnToVendor {
   ouId:number;
   totalAmt:number;
   supplierName:string;
-  // totalAmt:number;
+  PoRctTotalAmt:number;
   baseAmount:number;
   taxAmt:number;
   recDate:Date;
@@ -52,6 +52,7 @@ interface IRtnToVendor {
   locatorDesc:string;
   shipmentNumber:string;
   // qtyReturn:number;
+  
  }
 
 @Component({
@@ -107,7 +108,8 @@ export class ReturnToVendorComponent implements OnInit {
       supplierName:string;
       shipmentNo:number;
       receiptNo:number;
-      poReceiptAmt:number;
+      totalAmt:number;
+      PoRctTotalAmt:number;
       billToLocId:number;
       shipmentDate:Date;
       receiptDate:Date;
@@ -117,7 +119,6 @@ export class ReturnToVendorComponent implements OnInit {
       gstDocNo:string;
       gstDocDate:Date;
       baseAmount:number;
-      totalAmt:number;
       apInvNum:string;
       apInvDate:Date;
 
@@ -128,9 +129,9 @@ export class ReturnToVendorComponent implements OnInit {
       public itemType= 'RETURN';
 
       rtnDocNo:string;
-      rtnDocDate:Date;
-      
-
+      rtnDocDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+      rtnFromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+      rtnToDate=this.pipe.transform(Date.now(), 'y-MM-dd');
                
       returnTo='Supplier'
 
@@ -187,7 +188,7 @@ export class ReturnToVendorComponent implements OnInit {
             supplierName:[],
             shipmentNo:[],
             receiptNo:[],
-            poReceiptAmt:[],
+            totalAmt:[],
             billToLocId:[],
             shipmentDate:[],
             receiptDate:[],
@@ -197,7 +198,7 @@ export class ReturnToVendorComponent implements OnInit {
             gstDocNo:[],
             gstDocDate:[],
             baseAmount:[],
-            totalAmt:[],
+            PoRctTotalAmt:[],
             apInvNum:[],
             apInvDate:[],
       
@@ -211,6 +212,8 @@ export class ReturnToVendorComponent implements OnInit {
 
             rtnDocNo:[],
             rtnDocDate:[],
+            rtnFromDate:[],
+            rtnToDate:[],
           
             rcvLines: this.fb.array([this.lineDetailsGroup()]), 
             // poLines: this.fb.array([this.lineDetailsGroup()]),
@@ -249,7 +252,7 @@ export class ReturnToVendorComponent implements OnInit {
             qtyReceived:[],
             qtyReturn:[],
             qtyOnHand:[],
-            locId:[],
+             locId:[],
             baseAmount:[],
             totAmount:[],
             invItemId:[],
@@ -341,14 +344,16 @@ export class ReturnToVendorComponent implements OnInit {
           var uPrice= qtyLineArr[index].unitPrice;
           var taxP= qtyLineArr[index].taxPercentage;
           var avlQty = qtyLineArr[index].qtyOnHand;
+          var  mUom = qtyLineArr[index].uom;
           this.showLocator=true;
           this.validQtyEntered=true;
           
           var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
+           
         
-          if (lineRtnQty <=0 || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
+          if ((mUom==='NO' && lineRtnQty < 1)  || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
           {
-             alert ("Invalid Quantity.[RETURN QTY] should be above zero / Should not be grater than [QTY RECEIVED] or [ON HAND QTY]")
+             alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [QTY RECEIVED] Or [ON HAND QTY]")
       
              patch.controls[index].patchValue({qtyReturn:''})
              patch.controls[index].patchValue({baseAmount:0})
@@ -512,6 +517,7 @@ export class ReturnToVendorComponent implements OnInit {
                 this.poDate=this.lstReceiptHeader.poDate;
                 this.receiptNo=this.lstReceiptHeader.receiptNo;
                 this.receiptDate=this.lstReceiptHeader.receiptDate;
+                this.PoRctTotalAmt=this.lstReceiptHeader.totalAmt.toFixed(2);
                 this.suppNo=this.lstReceiptHeader.suppNo;
                 this.suppInvNo=this.lstReceiptHeader.suppInvNo;
                 this.suppInvDate=this.lstReceiptHeader.suppInvDate;
@@ -804,16 +810,17 @@ export class ReturnToVendorComponent implements OnInit {
    
         this.service.rtvSaveSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
-            this.receiptNo=res.obj;
+            this.rtnDocNo=res.obj;
             this.disabled = false;
             this.disabledLine=false;
+            this.displayButton=false;
             alert(res.message);
             // this.returntoVendorForm.reset();
             this.returntoVendorForm.disable();
           } else {
             if (res.code === 400) {
               alert('Data already present in the data base');
-              this.returntoVendorForm.reset();
+              // this.returntoVendorForm.reset();
             }
           }
         });
@@ -987,7 +994,15 @@ export class ReturnToVendorComponent implements OnInit {
      this.returntoVendorForm.get("searchReceiptNo").enable();
     }
 
-      
+    rtnSearchByDate(mFromDate,mToDate){
+      alert ("WIP.... Return List....." + this.pipe.transform(mFromDate,'dd/MMM/yyyy') +" To "+this.pipe.transform(mToDate,'dd/MMM/yyyy'));
+
+    }
+
+    rtnSearchByDocNo(mRtnNumber){
+      alert ("WIP.... Return Number....." +mRtnNumber);
+
+    }
     
 
  

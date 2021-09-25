@@ -21,11 +21,12 @@
     height: 250px;
 
 }
-.grid_scroll{
+
+/* .grid_scroll{
   overflow: auto;
-   height: 250px; 
+   height: 650px; 
   width: 100%;
-}
+} */
 
 /* input.ng-invalid{
   background-color:yellow;
@@ -96,8 +97,8 @@ input.ng-valid{
     overflow: auto;
     /* width: 800px; */
     width: 100%;
-    height: 200px;
-    width: 100%;
+    height: 300px;
+    /* width: 100%; */
 }
 
 .grid_scroll_3{

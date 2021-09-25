@@ -286,14 +286,22 @@
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Receipt&nbsp;Amt:&nbsp;
                         </td>  
-
                         <td>
-                            <input   type ="number" disabled formControlName="poReceiptAmt" [(ngModel)]='poReceiptAmt'
-                                                    value={{poReceiptAmt}} class="form-control"
+                            <input   type ="number" disabled formControlName="PoRctTotalAmt" [(ngModel)]='PoRctTotalAmt'
+                                                    value={{PoRctTotalAmt}} class="form-control"
                                                     style="text-align: right;" >
                         </td>
 
-                        
+                     
+                        </tr>
+                    </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Return  Details</legend>
+                    <table class="center" style="width: 100;" style="width: 100%;">
+                        <tr>
+
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Return&nbsp;No:&nbsp;
                         </td>  
@@ -303,6 +311,28 @@
                                                     value={{rtnDocNo}} class="form-control"
                                                     placeholder="" >
                         </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Return&nbsp;Date:&nbsp;
+                        </td>  
+
+                        <td>
+                        <input  type ="date" disabled formControlName="rtnDocDate" [(ngModel)]='rtnDocDate'
+                                                value={{rtnDocDate}} class="form-control"
+                                                placeholder="" >
+                        </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">Rtn&nbsp;Amount&nbsp;:&nbsp;</td>
+                        <td>
+                            <input disabled formControlName="baseAmount" [(ngModel)]="baseAmount" value={{baseAmount}}
+                                   class="form-control"  placeholder="00.00" style="text-align: right;">
+                        </td>
+
+                        <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
+                        <td>
+                            <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt"
+                                value={{taxAmt}} class="form-control" placeholder="00.00" style="text-align: right;" >
+                        </td>
     
                         </tr>
 
@@ -310,17 +340,7 @@
                             <tr>
 
            
-                            <td style="width: 15%" class="LabelFontStyle">Rtn&nbsp;Amount&nbsp;:&nbsp;</td>
-                            <td>
-                                <input disabled formControlName="baseAmount" [(ngModel)]="baseAmount" value={{baseAmount}}
-                                       class="form-control"  placeholder="00.00" style="text-align: right;">
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
-                            <td>
-                                <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt"
-                                    value={{taxAmt}} class="form-control" placeholder="00.00" style="text-align: right;" >
-                            </td>
+                          
                         
 
                             <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Total&nbsp;Amt&nbsp;:&nbsp;</td>
@@ -329,20 +349,12 @@
                                     class="form-control" style="text-align: right;" >
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Return&nbsp;Date:&nbsp;
-                            </td>  
-    
-                            <td>
-                            <input  type ="date" disabled formControlName="rtnDocDate" [(ngModel)]='rtnDocDate'
-                                                    value={{rtnDocDate}} class="form-control"
-                                                    placeholder="" >
-                            </td>
+                          
 
                         </tr>
                     </table>
 
-                    <table style="width: 50%;">
+                    <!-- <table style="width: 50%;">
                         <tr>
                             <td>
                            <div class="form-check">
@@ -352,9 +364,10 @@
                                <input type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
                                  [(ngModel)]="showAllLines" (change)="showAll($event)">
                            </div>
+                            </td>
                         
                        </tr>
-                    </table>
+                    </table> -->
 
                     </fieldset>
 
@@ -362,11 +375,25 @@
                         <fieldset class="RFS" style="background-color: white;">
                             <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Line Item Details</legend>
                             
+                            <table style="width: 50%;">
+                                <tr>
+                                    <td>
+                                   <div class="form-check">
+                                    <label class="form-check-label" style="color: black;font-size: small;font-weight: bold">
+                                        Show&nbsp;All&nbsp;Item&nbsp;Lines&nbsp;:&nbsp;
+                                    </label>
+                                       <input type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
+                                         [(ngModel)]="showAllLines" (change)="showAll($event)">
+                                   </div>
+                                    </td>
+                                
+                               </tr>
+                            </table>
                             <table class="auto-style4" class="GridFont" cellspacing="0"
                             cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
                             style="border-color:#959595;width:100%;border-collapse:collapse;">
 
-                           
+                            
 
                             <thead>
                                 <tr class="GridHeader">
@@ -386,6 +413,7 @@
                                     <th scope="col" style="width: 5rem;">Return Qty </th>
                                     <th scope="col" style="width: 5rem;">Received Qty</th>
                                     <th scope="col" style="width: 5rem;">OnHand Qty</th>
+                                    <th scope="col" style="width: 5rem;">Uom</th>
                                     <!-- <th scope="col">Stock Locator</th> -->
                                     <th scope="col">Item Description</th>
                                     <th scope="col">Inv. Category</th>
@@ -500,6 +528,11 @@
                                            <td>
                                             <input disabled type="number" formControlName="qtyOnHand" class="form-control" style="height: 25px;width: 80px;" >
                                            </td> 
+
+                                           <td>
+                                            <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 40px;" >
+                                           </td> 
+
 
                                             <!-- <td>
                                                 
@@ -771,51 +804,50 @@
 
                     
 
+                                      
                     <fieldset class="RFS">
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Search</legend>
-                    <table class="center" style="width: 100;" style="width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                           SEARCH</legend>
+                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
                         <tr>
+                          <td >
+                              <table class="center">
+                                  <tr>
+                                    <td  style="background-color: #FFE4B5;">Return&nbsp;Number:&nbsp;</td>
+                                    <td style="background-color: #FFE4B5;">
+                                        <input type="number" class="form-control" formControlName="rtnDocNo" [(ngModel)]='rtnDocNo'
+                                            value={{rtnDocNo}} style="text-transform:uppercase;">
+                                    </td>
+                             
+                                    <td style="background-color: #FFE4B5;">
+                                        <button type="button" class="btn-primary" (click)="rtnSearchByDocNo(rtnDocNo)"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td>
 
-                          
+                                    <td></td><td></td>
+
+                                    <td  style="background-color: #FFE4B5;">Return&nbsp;Date: From :&nbsp;</td>
+                                   <td style="background-color: #FFE4B5;">
+                                        <input type="date" class="form-control" formControlName="rtnFromDate" [(ngModel)]='rtnFromDate'
+                                            value={{rtnFromDate}} style="text-transform:uppercase;">
+                                    </td>
+                                    <td  style="background-color: #FFE4B5;"> To :&nbsp;</td>
+                                    <td style="background-color: #FFE4B5;">
+                                        <input type="date" class="form-control" formControlName="rtnToDate" [(ngModel)]='rtnToDate'
+                                            value={{rtnToDate}} style="text-transform:uppercase;">
+                                    </td>
+                             
+                                    <td style="background-color: #FFE4B5;">
+                                        <button type="button" class="btn-primary" (click)="rtnSearchByDate(rtnFromDate,rtnToDate)"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td>
+
+                                  
 
 
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;PO&nbsp;No&nbsp;:&nbsp;
-                            </td>  
-
-                            <td>
-                            <input formControlName="searchBypoNumber" [(ngModel)]='searchBypoNumber'
-                                                    value={{searchBypoNumber}} class="form-control"
-                                                    placeholder="Enter PO No" style="width: 200px;">
-                            </td>
-
-                                <td colspan="8" style="text-align: left; width: 100%;">
-                                    <button type="submit"  (click)="SearchByPONumber(searchBypoNumber)" class="btn btn-primary"><i
-                                            class="fa fa-search"></i></button> 
-
-                                </td>
-                            
-                             <!-- <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
-                                &nbsp;Date:&nbsp;
-                            </td>  
-
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;From&nbsp;:&nbsp;
-                            </td> 
-
-                            <td>
-                                <input type ="date"  formControlName="frmDate" [(ngModel)]='frmDate'class="form-control">
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;To&nbsp;:&nbsp;
-                            </td>  
-                            <td>
-                                <input type ="date"  formControlName="toDate" [(ngModel)]='toDate'class="form-control">
-                            </td> -->
-
-                            
-
+                                  </tr>
+                              </table>
+                          </td>
                         </tr>
                     </table>
                     </fieldset>
@@ -837,7 +869,8 @@
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
-                <!-- <th style="width:10rem"  scope="col">Order&nbsp;Type</th>    -->
+                <th style="width:5rem"  scope="col">Return&nbsp;No&nbsp;</th>
+                <th style="width:10rem" scope="col">Return&nbsp;Date</th>
                 <th style="width:5rem"  scope="col">Receipt&nbsp;No&nbsp;</th>
                 <th style="width:10rem" scope="col">Receipt&nbsp;Date</th>
                 <th style="width:10rem" scope="col">PO&nbsp;No</th>
@@ -851,6 +884,8 @@
         </tbody>
         <tr *ngFor="let com of lstcomments let i= index" class="ItemStyle" style="text-decoration:none;" >
                 <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;">{{com.receiptNo}}</td>
+                <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>
                 <td style="text-align: center;">{{com.receiptNo}}</td>
                 <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>   
                 <td style="text-align: center;">{{com.segment1 }}</td>  
