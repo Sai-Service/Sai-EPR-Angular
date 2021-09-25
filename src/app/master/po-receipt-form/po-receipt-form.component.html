@@ -474,7 +474,7 @@
                                             Amount&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled formControlName="baseAmount"
+                                            <input disabled type="number" formControlName="baseAmount"
                                                 [(ngModel)]="baseAmount" value={{baseAmount}}
                                                 class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
@@ -517,7 +517,7 @@
                                             Tax&nbsp;Amount&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt"
+                                            <input disabled type="number" formControlName="taxAmt" [(ngModel)]="taxAmt"
                                                 value={{taxAmt}} class="form-control" placeholder="00.00"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
                                         </td>
@@ -554,7 +554,7 @@
                                             Total&nbsp;Amount&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                            <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
                                                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
                                         </td>
                                     </tr>
@@ -639,7 +639,7 @@
                                                 Total&nbsp;Amount&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input disabled formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
                                                     class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
                                             </td>
                                         </tr>
@@ -803,7 +803,7 @@
                                             class="form-control" style="height: 20px;width: 50px;" >
                                         </ng-template>
                                         <ng-template #elseBlockqtyReceived>
-                                        <input type="number"
+                                        <input disabled type="number"
                                             formControlName="qtyReceived"  (change)="calculation(i,qty)" #qty
                                             class="form-control" style="height: 20px;width: 50px;" >
                                             <!-- [(ngModel)]='qtyReceived' value="qtyReceived"  -->
