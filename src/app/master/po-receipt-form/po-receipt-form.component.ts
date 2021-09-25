@@ -506,7 +506,7 @@ checkIfAllSelected() {
           this.poReceiptForm.patchValue(this.lstcompolines);
           this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
-
+          this.poReceiptForm.patchValue({taxAmt:this.lstcompolines.totalTax})
         // }
       }
       
