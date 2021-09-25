@@ -202,28 +202,31 @@ export class CustomerMasterComponent implements OnInit {
       customerId1: [''],
       emplId: [''],
       customerAcc1:[''],
-      title: [''],
+      title: ['', Validators.required],
       custType: ['', Validators.required],
-      paymentType: [''],
+      classCodeType: ['', Validators.required],
+      paymentType: ['', Validators.required],
       // fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      fName:['',[Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      mName: [''],
+      fName:['',[Validators.required, Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
+      mName: ['',[ Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(50)]],
       // lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      lName:[''],
-      custName: ['', Validators.required],
+      lName:['',[Validators.required, Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
+      custName: ['', [ Validators.required, Validators.maxLength(150)]],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      // address2: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
+      address2:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address3: ['',[Validators.maxLength(100)]],
       address4: ['',[Validators.maxLength(100)]],
-      city: ['', Validators.required],
+      location:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      city:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       taxCategoryName: ['', Validators.required],
       pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
       state: ['', Validators.required],
-      mobile1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
+      mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       mobile3: ['',[Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       // emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
-      emailId:[''],
+      emailId:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
       contactPerson:['',[Validators.pattern('^[a-z A-Z ]*')]],
@@ -238,10 +241,9 @@ export class CustomerMasterComponent implements OnInit {
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [''],
       status: ['', [Validators.required]],
-      classCodeType: [''],
+      // classCodeType: [''],
       ouId: ['', [Validators.required]],
       locId:[''],
-      location: [''],
       saddress1: [''],
       saddress2: [''],
       saddress3: [''],
@@ -503,13 +505,22 @@ onOptionSiteStateSeleted(event:any)
      this.customerMasterForm.get('weddingDate').disable();
     }
   }
+
+  gstVerification(event: any) {
+    const gstNo1 = this.gstNo.substr(3,10);
+    // this.panNo = gstNo1;
+    this.customerMasterForm.patchValue({panNo:gstNo1});
+    alert('Gst verificaition');
+  }
+  
   onKey(event: any) {
    // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
 
-
+  //  alert('On key press');
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
 
+  
 if (person === 'Person'){
   this.custName = aaa;
 }
@@ -567,11 +578,16 @@ if (person === 'Person'){
   }
   newMast() {
     this.submitted = true;
-    var isvaliddata=this.validation();
-    if(isvaliddata===false)
-    {
-      return;
-    }
+    if(this.customerMasterForm.invalid){
+    return;
+    } 
+    // this.submitted = true;
+    // var isvaliddata=this.validation();
+    // if(isvaliddata===false)
+    // {
+    //   return;
+    // }
+
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
     return;
