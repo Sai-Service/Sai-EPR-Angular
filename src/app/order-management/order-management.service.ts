@@ -104,7 +104,7 @@ export class OrderManagementService {
   }
 
   viewReceipt(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/bajajSpares/${InvoiceNumber}`;  
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/omReceipt/${InvoiceNumber}`;  
     // local
     const REQUEST_URI = `http://localhost:8081/omPayment/omReceipt/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
@@ -153,9 +153,9 @@ export class OrderManagementService {
 
  
   downloadGatePass(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
+    const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
+    // const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
