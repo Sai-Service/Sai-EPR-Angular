@@ -151,11 +151,11 @@ export class StockTransferComponent implements OnInit {
   }
 
   addnewtrxLinesList(i:number) {
-    alert(i+'i');
+    // alert(i+'i');
     if(i>-1)
     {
 
-      alert('reservecall'+i);
+      // alert('reservecall'+i);
       this.reservePos(i);
     }
 
@@ -305,6 +305,7 @@ export class StockTransferComponent implements OnInit {
   }
   AvailQty(event:any,i:number)
 {
+  // alert(event+'Loca');
   var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
   var itemid=trxLnArr[i].itemId;
@@ -368,7 +369,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     let variants = <FormArray>this.trxLinesList();
     var transtypeid = this.stockTranferForm.get('transactionTypeId').value;
     let toorg=this.stockTranferForm.get('transferOrgId').value;
-    alert(toorg+'toOrg');
+    // alert(toorg+'toOrg');
     let todesc=this.locIdList.find(d=>d.toLocationId===toorg);
     var locId1=this.stockTranferForm.get('locId').value
 
@@ -381,7 +382,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
        variantFormGroup.addControl('transactionNumber',new FormControl(todesc.toLocationId,[]));
 
   // var reserveinfo=formValue[0];
-  alert('reservecall2'+i);
+  // alert('reservecall2'+i);
   this.service.reservePost(variants.value[i]).subscribe((res:any)=>{
   //  var obj=res.obj;
    if(res.code===200)
@@ -562,7 +563,8 @@ onlocationissueselect(event){
        else{
         if(res.code === 400) {
           alert(res.message);
-          this.stockTranferForm.reset();
+          // this.stockTranferForm.reset();
+          window.location.reload();
         }
        }
       }

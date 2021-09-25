@@ -1063,7 +1063,7 @@
                                                         </div>
                                                         <ng-template #thenRemoveRow>
                                                             <button type="submit" class="btn btn-primary"
-                                                                (click)="RemoveRow(OrderLineIndex)"
+                                                                (click)="RemoveRow(i)"
                                                                 style="width: min-content;"><i
                                                                     class="fa fa-trash"></i></button>
                                                         </ng-template>
@@ -1310,20 +1310,28 @@
                                 Preview</button>
                         </ng-template>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" (click)=" pickTicketInvoiceFunction()">
-                            Invoice
-                        </button>
-
-                    </td>
+                   
                     <td>
                         <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate">
                         </div>
                         <ng-template #thenpickTicketUpdate>
                         </ng-template>
                         <ng-template #elsepickTicketUpdate>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="pickTicketupdateFunction()" style="width: 10rem;">Update</button>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary" id="register"
+                                        (click)="pickTicketupdateFunction()" style="width: 6rem;">Update</button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" (click)=" pickTicketInvoiceFunction()">
+                                            Invoice
+                                        </button>
+                
+                                    </td>
+                                </tr>
+                            </table>
+                           
                         </ng-template>
                     </td>
                     <td>
@@ -1350,8 +1358,8 @@
                         <ng-template #thenBlockPaymentButton>
                         </ng-template>
                         <ng-template #elseBlockPaymentButton>
-                            <button class="btn btn-primary"
-                                [routerLink]="['/paymentReceipt',orderNumber]">Payment</button>
+                            <button class="btn btn-primary"  id="paymentButton" #paymentButton
+                                [routerLink]="['/admin/transaction/paymentReceipt',orderNumber]">Payment</button>
                         </ng-template>
                     </td>
                 </tr>
@@ -1372,8 +1380,13 @@
                         <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                     </td>
                     <td>
-                        <button class="btn btn-primary" [routerLink]="['/paymentReceipt',orderNumber]">Payment</button>
+                        <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
+                            View&nbsp;Receipt
+                        </button>
                     </td>
+                    <!-- <td>
+                        <button class="btn btn-primary" [routerLink]="['/paymentReceipt',orderNumber]">Payment</button>
+                    </td> -->
                 </tr>
             </table>
         </ng-template>

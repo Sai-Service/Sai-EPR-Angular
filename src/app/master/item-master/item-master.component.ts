@@ -229,11 +229,11 @@ export class ItemMasterComponent implements OnInit {
   public twoToneList:Array<string>[];
   public holdList:Array<string>[];
   public holdReasonList:Array<string>[];
-  public BranchList: Array<string> = [];
+  public BranchList: any =  [];
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
-  public locIdList: Array<string> = [];
+  public locIdList: any = [];
   public taxCategoryListS: Array<string> = [];
   public taxCategoryListP: Array<string> = [];
 
@@ -994,6 +994,14 @@ else{
         data => {
           this.lstcomments = data;
       this.itemMasterForm.patchValue(this.lstcomments);
+
+      let selloc = sessionStorage.getItem('locCode');
+      
+      this.segmentName = selloc + '.'
+      + this.costCenter + '.'
+      + this.poChargeAccount +'.'
+      + '0000'; //this.lookupValueDesc5
+
       if(data.itemTypeForCat=='ss_vehicle'){
         this.ssVehical=true;
       }
@@ -1061,7 +1069,7 @@ else{
     formValue.assetItem= this.assetItem;
     formValue.purchasable= this.purchasable;
     formValue.isTaxable= this.isTaxable;
-    formValue.costCenter= this.segment3;
+   // formValue.costCenter= this.segment3;
     // formValue.purchasable= this.purchasable;
     this.service.VehItemSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -1103,7 +1111,7 @@ else{
       this.endDate = new Date();
     }
     else if (this.Status1 === 'Active') {
-      this.itemMasterForm.get('endDate').reset();
+     // this.itemMasterForm.get('endDate').reset();
     }
   }
   fnCancatination(index) {
@@ -1219,12 +1227,14 @@ else{
             this.lookupValueDesc1 = this.branch.lookupValueDesc;
           }
         }
-        // }else if(this.branch.code === 400){
-        //   alert(this.branch.message);
 
-        // }
-
-
+        //let selBranch = this.BranchList.find(d1=> d1.parentValue === Number(sessionStorage.getItem('ouId')));
+        let selloc = sessionStorage.getItem('locCode');
+      
+        this.segmentName = selloc + '.'
+        + this.costCenter + '.'
+        + this.poChargeAccount +'.'
+        + '0000'; //this.lookupValueDesc5
       }
     );
 

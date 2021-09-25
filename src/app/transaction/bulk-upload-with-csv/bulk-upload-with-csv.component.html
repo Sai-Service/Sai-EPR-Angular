@@ -1,10 +1,51 @@
 <form [formGroup]="bulkUploadCSVForm" (ngSubmit)="bulkUploadCSV(bulkUploadCSVForm.value)">
-    <table style="width: 50%;">
+    <br>
+    <table class="center">
         <tr>
-          <td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Location&nbsp;ID&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control" disabled formControlName="location" style="width: 100px;" >
+            </td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control"  formControlName="invcNo" style="width:170px;" >
+            </td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Supplier&nbsp;No&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control"  formControlName="supplierNo" style="width: 170px;" >
+            </td>
+        </tr>
+        <tr>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Supplier&nbsp;Site&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control"  formControlName="supplierSite" style="width: 170px;" >
+            </td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control"  formControlName="userName" style="width: 170px;" >
+            </td>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
+            </td>
+            <td>
+                <input type="text" class="form-control"  formControlName="invcDt1" style="width: 170px;" >
+            </td>
+        </tr>
+        <tr>
+          <td class="LabelFontStyle">
               &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
           </td>
-          <td>
+          <td colspan="3">
               <input class="form-control" type="file" #fileInput style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
           </td>
           <td>
@@ -22,10 +63,8 @@
             <th scope="col" style="border: 1px solid black;">PO Date</th>
         </tr>
         <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
-          <td style="border: 1px solid black;padding-left: 5px;padding-top: 10px;">
-            <!-- <button type="button" class="btn-primary"  [routerLink]="['/OPMasterDto',com.segment1]"> {{com.segment1}}</button> -->
-            <a  [(ngModel)]='segment1' [routerLink]="['/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
-            <!-- <button class="btn btn-primary" (click)="routeOMAndCSPage(com.segment1)" style="width: fit-content;">{{com.segment1}}</button>  -->
+          <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
+            <a   [routerLink]="['/admin/master/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
         </td>
             <td style="border: 1px solid black;padding-left: 5px;">{{com.baseAmount}}</td>
             <td style="border: 1px solid black;padding-left: 5px;">{{com.totTaxAmt}}</td>
