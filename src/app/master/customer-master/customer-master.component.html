@@ -564,8 +564,8 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (keyup)="gstVerification($event)"
                                         placeholder="Please enter GSTN no">    
                                     <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.gstNo.errors.pattern">Pattern error</div>
-                                        <div *ngIf="f.gstNo.errors.required">GST required</div>
+                                        <div *ngIf="f.gstNo.errors.pattern">Invalid GSTIN number format</div>
+                                        <div *ngIf="f.gstNo.errors.required">GST number cannot be blank</div>
                                         <div *ngIf="f.gstNo.errors.maxlength">GSTIN Max lenght error</div>
                                     </div>
                                     <!-- <span
@@ -574,12 +574,14 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
+                                    <!-- (keyup)="onKey($event)"  -->
                                     <input formControlName="panNo"  value={{panNo}}
-                                        (keyup)="onKey($event)" class="form-control"
+                                        class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                         placeholder="Enter panNo">
                                     <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.panNo.errors.required">pan No must</div>
+                                        <div *ngIf="f.panNo.errors.required">PAN numbher cannot be blank</div>
+                                        <div *ngIf="f.panNo.errors.pattern">Invalid PAN format</div>
                                         <div *ngIf="f.panNo.errors.maxlength">pan No must
                                         </div>
                                     </div>
@@ -792,15 +794,21 @@
                                 </table>
                                 <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                     <tr>
-                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId">
+                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId"
+                                      [ngClass]="{ 'is-invalid': submitted && f.customerSiteId.errors }" >
                                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                         <td>
                                            <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control">
-                                                    <option disabled>--Select--</option>
+                                                    <option disabled></option>
                                                     <option *ngFor="let sc of  ouIdList" [ngValue]="sc.ouId">
                                                     {{sc.ouId}}-{{sc.ouName}}
                                                     </option>
                                                     </select>
+                                                    <div *ngIf="submitted && f.customerSiteId.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.customerSiteId.errors.required">Site ID cannot be blank</div>
+                                                        <!-- <div *ngIf="f.customerSiteId.errors.maxlength">GstNo must be a valid and of 15 charecter </div>
+                                                        <div *ngIf="f.customerSiteId.errors.pattern">GstNo must be a valid and of 15 charecter</div> -->
+                                                    </div>
                                                </td>
                                         <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                                         <td>

@@ -258,7 +258,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      customerSiteId:[],
+      customerSiteId:['', [Validators.required]],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -560,6 +560,10 @@ if (person === 'Person'){
     return val;
   }
   newOnlySiteMast() {
+    this.submitted = true;
+    if(this.customerMasterForm.invalid){
+    return;
+    } 
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
