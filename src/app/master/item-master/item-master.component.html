@@ -524,7 +524,7 @@
                                                                     Natural&nbsp;Account&nbsp;:
                                                                 </td>
                                                                 <td>
-                                                                    <select  style="width:fit-content" formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
+                                                                    <select  formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
                                                                         [(ngModel)]="poChargeAccount"
                                                                         (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
                                                                         <option>--Select--</option>
@@ -546,7 +546,7 @@
                                                                 Natural&nbsp;Account&nbsp;:
                                                             </td>
                                                             <td>
-                                                                <select  style="width:fit-content" formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
+                                                                <select formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
                                                                     [(ngModel)]="poChargeAccount"
                                                                     (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
                                                                     <option>--Select--</option>
@@ -590,7 +590,7 @@
                                                         <td style="width: 12%" class="LabelFontStyle">
                                                             Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
                                                         <td>
-                                                            <select  style="width:fit-content" formControlName="taxCategorySale"
+                                                            <select  formControlName="taxCategorySale"
                                                                 id="taxCategorySale" class="form-control">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryListS"
@@ -600,7 +600,7 @@
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <select  style="width:fit-content" formControlName="taxCategoryPur" id="taxCategoryPur"
+                                                            <select  formControlName="taxCategoryPur" id="taxCategoryPur"
                                                                 class="form-control">
                                                                 <option>--Select--</option>
                                                                 <option *ngFor="let sc of  taxCategoryListP"
