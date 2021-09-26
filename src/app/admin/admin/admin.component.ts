@@ -18,6 +18,7 @@ export class AdminComponent  {
   deptName:string;
   locName:string;
   ouName:string;
+ 
   constructor(private router: Router) { 
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
   }
