@@ -410,20 +410,20 @@
                                     <th scope="col">INV ITMID</th>
                                     <th scope="col">SUB INVID</th> -->
                                     <th scope="col">Item Number</th>
-                                    <th scope="col" style="width: 5rem;">Return Qty </th>
-                                    <th scope="col" style="width: 5rem;">Received Qty</th>
-                                    <th scope="col" style="width: 5rem;">OnHand Qty</th>
-                                    <th scope="col" style="width: 5rem;">Uom</th>
+                                    <th scope="col" style="width: 3rem;">Return Qty </th>
+                                    <th scope="col" style="width: 3rem;">Received Qty</th>
+                                    <th scope="col" style="width: 3rem;">OnHand Qty</th>
+                                    <th scope="col" style="width: 3rem;">UOM</th>
                                     <!-- <th scope="col">Stock Locator</th> -->
                                     <th scope="col">Item Description</th>
-                                    <th scope="col">Inv. Category</th>
-                                    <th scope="col">Destination Type</th>
+                                    <!-- <th scope="col">Inv. Category</th> -->
+                                    <!-- <th scope="col">Destination Type</th> -->
                                     <th scope="col">Location</th>
-                                    <th scope="col">Sub-Inventory</th>
-                                    <th scope="col">UOM</th>
-                                    <th scope="col">HSN/SAC code</th>
-                                    <th scope="col">Tax Category</th>
-                                    <th scope="col">Tax Percentage</th>
+                                    <th scope="col">Sub Inventory</th>
+                                    <!-- <th scope="col">UOM</th> -->
+                                    <!-- <th scope="col">HSN/SAC code</th> -->
+                                    <!-- <th scope="col">Tax Category</th> -->
+                                    <th scope="col">Tax %</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Base Amount</th>
                                     <th scope="col">Tax& Amount</th>
@@ -494,7 +494,7 @@
                                             <ng-template #BlockShowAll1>
                                                 <td> <input disabled type="text"
                                                     formControlName="itemName"
-                                                    class="form-control" style="height: 25px;width: 200px;">
+                                                    class="form-control" style="height: 25px;width: 250px;">
                                                 </td>
                                             </ng-template>
                                             <ng-template #BlockShowAll2>
@@ -512,25 +512,25 @@
 
                                             <div *ngIf ="showQtyRtncol;then showqtyRtnYes;else showqtyRtnNo"></div>
                                             <ng-template #showqtyRtnYes>
-                                               <td><input  type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 80px;background-color: yellow;" (change)="validateQty(i)" > </td> 
+                                               <td><input  type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 50px;background-color: yellow;" (change)="validateQty(i)" > </td> 
                                            </ng-template>
                                            <ng-template #showqtyRtnNo>
-                                             <td><input disabled type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 80px;background-color: yellow;" (change)="validateQty(i)" > </td> 
+                                             <td><input disabled type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 50px;background-color: yellow;" (change)="validateQty(i)" > </td> 
                                            </ng-template>
                                            
                                     
                                             <td> 
                                              <input disabled type="number"
                                                     formControlName="qtyReceived"  
-                                                    class="form-control" style="height: 25px;width: 80px;" >
+                                                    class="form-control" style="height: 25px;width: 50px;" >
                                            </td>
 
                                            <td>
-                                            <input disabled type="number" formControlName="qtyOnHand" class="form-control" style="height: 25px;width: 80px;" >
+                                            <input disabled type="number" formControlName="qtyOnHand" class="form-control" style="height: 25px;width: 50px;" >
                                            </td> 
 
                                            <td>
-                                            <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 40px;" >
+                                            <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 45px;" >
                                            </td> 
 
 
@@ -549,17 +549,12 @@
 
                                         <td> <input disabled type="text"
                                             formControlName="itemDesc"
-                                            class="form-control" style="height: 25px;">
+                                            class="form-control" style="height: 25px; width:250px">
                                         </td>
                                        
-                                        <td> <input disabled type="text"
-                                                formControlName="ctgDescription"
-                                                class="form-control" style="height: 25px;width: 100px;">
-                                        </td>
-                                        <td> <input disabled type="text"
-                                            formControlName="itemType" [(ngModel)]="itemType"
-                                            class="form-control" style="height: 25px;width: 100px;">
-                                        </td>
+                                        <input hidden disabled type="text" formControlName="ctgDescription" class="form-control" style="height: 25px;width: 100px;">
+                                        <input  hidden disabled type="text" formControlName="itemType" [(ngModel)]="itemType"  class="form-control" style="height: 25px;width: 100px;">
+                                      
                                       
                                         <td>
                                             <input type="text" disabled formControlName="locId" class="form-control"
@@ -567,25 +562,13 @@
                                         </td>
                                         <td> <input disabled type="text"
                                                 formControlName="subInvDesc"
-                                                class="form-control" style="height: 25px;width:60px;">
+                                                class="form-control" style="height: 25px;width:50px;">
                                         </td>
 
-                                       
 
-
-                                        <td> <input disabled type="text"
-                                                formControlName="uom" class="form-control"
-                                                style="height: 25px;width: 40px;"></td>
-
-                                        <td> <input disabled type="text"
-                                            formControlName="sacCode"
-                                            class="form-control" style="height: 25px;width: 80px;">
-                                        </td>
-
-                                        <td> <input disabled type="text"
-                                                formControlName="taxCategoryName"
-                                                class="form-control" style="height: 25px;">
-                                        </td>
+                                        <input hidden disabled type="text" formControlName="sacCode" class="form-control" style="height: 25px;width: 80px;">
+                                        <input hidden disabled type="text" formControlName="taxCategoryName"  class="form-control" style="height: 25px;">
+                                        
 
                                         <td>  <input disabled type="text"
                                             formControlName="taxPercentage" 
