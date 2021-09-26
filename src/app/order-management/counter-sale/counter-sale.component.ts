@@ -535,6 +535,7 @@ export class CounterSaleComponent implements OnInit {
     //  // e.preventDefault();
     //   $("#wrapper").toggleClass("toggled");
     // });
+
     $("#wrapper").toggleClass("toggled");
 
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
@@ -2047,7 +2048,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   Select(custAccountNo) {
-     alert(custAccountNo)
+     //alert(custAccountNo)
     if (custAccountNo != undefined) {
       let currCustomer = this.accountNoSearchdata.filter((customer)=>(customer.custAccountNo === custAccountNo));
       this.selCustomer = currCustomer[0];
