@@ -100,7 +100,7 @@ export class PaymentArComponent implements OnInit {
   rmStatus :string
   paymentMethod : string;
   receiptAmount:number;
-  receiptStatus:string;
+  receiptStatus='Open';
 
   receiptMethodId : number;
   // paymentCollection: string;
@@ -141,6 +141,7 @@ export class PaymentArComponent implements OnInit {
   
   // glDate:Date;
   now = Date.now();
+  public minDate = new Date()  ;
   checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   glDate = this.pipe.transform(this.now, 'y-MM-dd');
@@ -155,7 +156,8 @@ export class PaymentArComponent implements OnInit {
   reversalComment: string;
   reversalReasonCode:number;
   reversalCategory:string;
-  status : string;
+  // status : string;
+  status='Open';
   cancelDate =null;
  
 
@@ -166,10 +168,10 @@ export class PaymentArComponent implements OnInit {
  
   public srlNo =1;
 
-  public searchByRcptNo =211100020000022;
+  // public searchByRcptNo =211100020000022;
   // public searchByOrderNo =2111202148;
   // public searchByCustNo =1212;
-  // searchByRcptNo:number;
+  searchByRcptNo:number;
   searchByCustNo:number;
   
   searchByDate :Date;
@@ -508,6 +510,17 @@ export class PaymentArComponent implements OnInit {
               alert("RECEIPT AMOUNT :  Should be above Zero.");
               this.paymentAmt=null;
              return;}
+
+          }
+
+          validateChqDate(chqDate) {
+            var currDate = new Date();
+            var chDate =new Date(chqDate);
+            if(chDate >currDate) {
+              alert ("CHEQUE DATE :" + "Should not be above Today's Date");
+              this.checkDate = this.pipe.transform(this.now, 'y-MM-dd');
+            }
+
 
           }
 
@@ -1827,6 +1840,8 @@ export class PaymentArComponent implements OnInit {
              this.paymentArForm.get('searchByCustNo').enable();  
               this.paymentArForm.get('searchByDate').enable();  
               this.totUnAppliedtAmount=this.paymentAmt;
+              this.totAppliedtAmount=0;
+              this.balanceAmount==this.paymentAmt;
 
             // this.paymentArForm.reset();
             this.displayButton=false;

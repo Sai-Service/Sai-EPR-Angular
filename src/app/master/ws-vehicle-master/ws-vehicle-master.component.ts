@@ -66,7 +66,8 @@ export class WsVehicleMasterComponent implements OnInit {
   /////////////////////SEARCH/////
   mainModelName: string;
   chassisNum: string;
-  vehRegNo: string = 'MH12EM6011';
+  vehRegNo: string ;
+  // = 'MH12EM6011';
   ///////////////////////////////
   categoryIdList: any;
   SSitemTypeList: any;
@@ -206,7 +207,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
 
   now = Date.now();
-  deliveryDate = this.pipe.transform(this.now, 'y-MM-dd');
+  deliveryDate : string;
+  // = this.pipe.transform(this.now, 'y-MM-dd');
   oemWarrentyEndDate: string;
   regDate: string;
   contractEndDate = this.pipe.transform(this.now, 'y-MM-dd');
