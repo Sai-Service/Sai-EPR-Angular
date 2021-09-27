@@ -17,7 +17,7 @@
 
 
 
-.LabelFontStyle {
+/* .LabelFontStyle {
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-weight: normal;
     color: Black;
@@ -28,9 +28,9 @@
     padding-bottom: 0px;
     border-color: Gray;
     height: 15px;
-  }
+  } */
 
-.LabelFontStyle1 {
+/* .LabelFontStyle1 {
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-weight: normal;
     color: Black;
@@ -41,10 +41,10 @@
     padding-bottom: 0px;
     border-color: Gray;
     height: 15px;
-  }
+  } */
 
 
-  .form-control {
+  /* .form-control {
     font-family: Verdana,Sans-serif, Arial, Helvetica;
     font-size: 11px;
     outline: medium none;
@@ -53,7 +53,7 @@
     width: 150px;
     height: 18%;
    border-color: black;
-  }
+  } */
 
   .center {
     margin-left: auto;
