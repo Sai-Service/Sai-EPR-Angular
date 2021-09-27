@@ -33,6 +33,7 @@ import { VariantMasterComponent } from './variant-master/variant-master.componen
 import { TaxThresholdSetupComponent } from './tax-threshold-setup/tax-threshold-setup.component';
 import { SubinventoryMasterComponent } from './subinventory-master/subinventory-master.component';
 import { PendingShipmentListComponent } from './pending-shipment-list/pending-shipment-list.component';
+import { ItemMasterLocatorComponent } from './item-master-locator/item-master-locator.component';
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
 
@@ -78,6 +79,7 @@ const routes: Routes = [
   {path:'SubinventoryMaster',component:SubinventoryMasterComponent},
   {path:'PendingShipmentList',component:PendingShipmentListComponent},
   {path:'PoReceiptForm/:shipmentNumber',component:PoReceiptFormComponent},
+  {path:'ItemMasterLocator',component:ItemMasterLocatorComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

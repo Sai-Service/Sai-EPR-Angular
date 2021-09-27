@@ -147,7 +147,7 @@ export class LocatorMasterComponent implements OnInit {
     this.submitted = true;
     if(this.locatorMasterForm.invalid){
       return;
-    } 
+    }
     const formValue: ILocatorMaster = this.transData(this.locatorMasterForm.value);
     this.service.LocatorMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

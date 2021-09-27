@@ -73,6 +73,7 @@ interface IcustomerMaster {
   screditAmt:number;
   shighAmt:number;
   sdisPer:number;
+  termId:number;
 }
 
 @Component({
@@ -194,6 +195,7 @@ export class CustomerMasterComponent implements OnInit {
   disPer:number;
   sdisPer:number;
   displayadditional=true;
+  termId:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -277,6 +279,7 @@ export class CustomerMasterComponent implements OnInit {
       shighAmt:[],
       disPer:[],
       sdisPer:[],
+      termId:[],
     })
 
   }
@@ -601,9 +604,18 @@ if (person === 'Person'){
       }
     });
   }
+
+  onOptionsPaymentTyp(paymentType){
+    // alert(paymentType);
+    this.customerMasterForm.patchValue({termId:paymentType})
+    // let select = this.payTermDescList.find(d => d.paymentType === paymentType);
+
+  }
+
   UpdateSiteCustMastExeSite(){
 
     const formValue: IcustomerMaster = this.customerMasterForm.value;
+    formValue.termId=this.customerMasterForm.get('paymentType').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -636,8 +648,11 @@ if (person === 'Person'){
     return val;
   }
 
+
   updateMast() {
-    const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.value);
+
+
+    const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.getRawValue());
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -699,13 +714,25 @@ if (person === 'Person'){
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
-            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
-            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
-            disPer:this.lstcomments.customerSiteMasterList[0].disPer
+            highAmt:this.lstcomments[0].customerSiteMasterList[0].highAmt,
+            creditAmt:this.lstcomments[0].customerSiteMasterList[0].creditAmt,
+            disPer:this.lstcomments[0].customerSiteMasterList[0].disPer
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
           this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValueId});
+          this.displayadditional=false;
+          this.customerMasterForm.get('address1').disable();
+    this.customerMasterForm.get('address2').disable();
+    this.customerMasterForm.get('address3').disable();
+    this.customerMasterForm.get('address4').disable();
+    this.customerMasterForm.get('location').disable();
+    this.customerMasterForm.get('city').disable();
+    this.customerMasterForm.get('pinCd').disable();
+    this.customerMasterForm.get('state').disable();
+    this.customerMasterForm.get('creditAmt').disable();
+    this.customerMasterForm.get('highAmt').disable();
+    this.customerMasterForm.get('disPer').disable();
         }
       );
   }
@@ -731,6 +758,17 @@ if (person === 'Person'){
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments.termId);
           this.customerMasterForm.patchValue({title:this.lstcomments.title,paymentType:payTerm.lookupValueId});
           this.displayadditional=false;
+          this.customerMasterForm.get('address1').disable();
+    this.customerMasterForm.get('address2').disable();
+    this.customerMasterForm.get('address3').disable();
+    this.customerMasterForm.get('address4').disable();
+    this.customerMasterForm.get('location').disable();
+    this.customerMasterForm.get('city').disable();
+    this.customerMasterForm.get('pinCd').disable();
+    this.customerMasterForm.get('state').disable();
+    this.customerMasterForm.get('creditAmt').disable();
+    this.customerMasterForm.get('highAmt').disable();
+    this.customerMasterForm.get('disPer').disable();
         }
       );
   }
