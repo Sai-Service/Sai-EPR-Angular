@@ -41,6 +41,7 @@ const routes: Routes = [
   {path:'ARInvoice', component:ARInvoiceComponent},
   {path:'AvgCostUpdate',component:AvgCostUpdateComponent},
   {path:'PaymentReceipt',component:PaymentReceiptComponent},
+  {path:'PaymentReceipt/:orderNumber',component:PaymentReceiptComponent},
   {path:'PaymentAr',component:PaymentArComponent},
   // {path:'ReceiptArApplication',component:ReceiptArApplicationComponent},
   {path:'SaiExtendedWarranty',component:SaiExtendedWarrantyComponent},

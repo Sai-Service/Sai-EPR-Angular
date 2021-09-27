@@ -25,7 +25,7 @@ interface IPaymentRcpt {
     bankBranch:string;
     checkNo:string;
     checkDate:string;
-
+  receiptMethodName:string;
    
   }
 
@@ -44,7 +44,8 @@ export class PaymentReceiptComponent implements OnInit  {
     public statusList: Array<string> = [];
     public locIdList: Array<string> = [];
     public PaymentModeList : Array<string> = [];
-    public ReceiptMethodList: Array<string> = [];
+    // public ReceiptMethodList: Array<string> = [];
+    ReceiptMethodList:any=[];
     public ReverseReasonList: Array<string> = [];
     lstcomments: any[];
   
@@ -369,7 +370,7 @@ export class PaymentReceiptComponent implements OnInit  {
     delete val.loginArray;
     delete val.loginName;
     delete val.ouName;
-
+    delete val.receiptDate;
     delete val.searchByCustNo;
     delete val.searchByOrderNo;
     delete val.searchByRcptNo;
@@ -379,10 +380,10 @@ export class PaymentReceiptComponent implements OnInit  {
   }
 
   newMast() {
-    // alert ("Posting data  to PL mater......")
-    // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
     const formValue: IPaymentRcpt =this.transeData(this.paymentReceiptForm.value);
-    // debugger;
+   let selectReceipt=this.ReceiptMethodList.find(d=>d.receiptMethodId===this.receiptMethodId);
+    formValue.receiptMethodName = selectReceipt.receiptMethodName;
+    alert(selectReceipt.receiptMethodName +'----'+ this.receiptMethodId );
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFUILY');

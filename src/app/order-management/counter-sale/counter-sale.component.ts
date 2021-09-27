@@ -566,6 +566,7 @@ export class CounterSaleComponent implements OnInit {
     this.deptName = (sessionStorage.getItem('deptName'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.invType = 'SS_SPARES';
+
     this.onOptionsSelectedCategory(this.invType, 0);
     this.disPer = 0.00;
     this.service.payTermDescList()
@@ -736,7 +737,6 @@ export class CounterSaleComponent implements OnInit {
           if (data.obj.discType === 'Header Level Discount') {
             this.onOptionsSelectedDiscountType(data.obj.discType);
             this.CounterSaleOrderBookingForm.patchValue({ disPer: data.obj.disPer })
-            // this.displaydisAmt=f
           }
           let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -759,7 +759,8 @@ export class CounterSaleComponent implements OnInit {
           this.totAmt = data.obj.totAmt;
           this.subtotal = data.obj.subtotal;
           this.disPer = data.obj.disPer;
-          this.CounterSaleOrderBookingForm.patchValue({ name: data.obj.billLocName })
+          this.CounterSaleOrderBookingForm.patchValue({ name: data.obj.billLocName });
+          this.CounterSaleOrderBookingForm.patchValue({ trxNumber: data.obj.trxNumber })
           // this.taxAmt=data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2)
           // alert(data.obj.oeOrderLinesAllList[0].taxAmt.toFixed(2))
 
@@ -774,14 +775,17 @@ export class CounterSaleComponent implements OnInit {
               totAmt: data.obj.oeOrderLinesAllList[k].totAmt,
               disPer: data.obj.oeOrderLinesAllList[k].disPer,
               unitSellingPrice: data.obj.oeOrderLinesAllList[k].unitSellingPrice,
+             taxCategoryId:data.obj.oeOrderLinesAllList[k].taxCategoryId,
             });
           }
 
           for (let k = 0; k < data.obj.taxAmounts.length; k++) {
+            alert('check for tax details')
             let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
             (controlinv.controls[k]).patchValue({
               totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
             });
+            this.TaxDetailsArray().disabled;
           }
           this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
           this.CounterSaleOrderBookingForm.get('orderedDate').disable();
@@ -915,10 +919,10 @@ export class CounterSaleComponent implements OnInit {
   }
 
   viewReceipt() {
-    var invoiceNumber = this.CounterSaleOrderBookingForm.get('trxNumber').value;
+    var orderNumber = this.CounterSaleOrderBookingForm.get('orderNumber').value;
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.orderManagementService.viewReceipt(invoiceNumber)
+    this.orderManagementService.viewReceipt(orderNumber)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
@@ -1027,15 +1031,14 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    // alert('hi')
+    alert('hi')
     // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {
           if (data.code === 200) {
             this.selCustomer = data.obj;
-            this.custSiteList = data.obj.customerSiteMasterList;
-        
+            this.custSiteList = data.obj.customerSiteMasterList;    
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.paymentType = select.lookupValue;
@@ -1057,11 +1060,14 @@ export class CounterSaleComponent implements OnInit {
 
   onOptionsSelectedcustSiteName(siteName) {
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
+    console.log(selSite);
+    
              if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
             alert('First Create OU wise Site to continue process!')
           }
           else {
             this.CounterSaleOrderBookingForm.patchValue(selSite);
+            alert(selSite.siteName +'---'+ selSite.disPer);
             this.custName =  this.selCustomer.custName;
             this.customerId =  this.selCustomer.customerId;
             this.custAddress = ( this.selCustomer.address1 + ', ' 
@@ -1071,11 +1077,22 @@ export class CounterSaleComponent implements OnInit {
                               +  this.selCustomer.city + ', '
                               +  this.selCustomer.pinCd + ', '
                               + this.selCustomer.state);
-      
             this.birthDate = this.selCustomer.birthDate;
             this.weddingDate = this.selCustomer.weddingDate;
-            
+            if (selSite.disPer != null){
+              alert(selSite.disPer)
+              this.CounterSaleOrderBookingForm.patchValue({discType:'Header Level Discount'})
             this.CounterSaleOrderBookingForm.patchValue({disPer: selSite.disPer })
+            this.orderlineDetailsGroup().patchValue({disPer: selSite.disPer})
+            this.displaydisPer=false;
+            var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+            // alert(patch.length)
+            for (let i = 0; i < patch.length; i++) {
+              (patch.controls[i]).patchValue({
+                disPer: selSite.disPer,
+              });
+            }
+          }
            }
 
   }
@@ -1592,9 +1609,11 @@ export class CounterSaleComponent implements OnInit {
   addRow(i) {
     if (i > -1) {
       this.reservePos(i);
-
     }
     // this.displaysegmentInvType.push(true);
+    var disPer=this.CounterSaleOrderBookingForm.get('disPer').value;
+    alert(this.CounterSaleOrderBookingForm.get('disPer').value)
+   
     this.displayRemoveRow.push(true);
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
@@ -1605,10 +1624,17 @@ export class CounterSaleComponent implements OnInit {
       {
         lineNumber: len,
         flowStatusCode: 'BOOKED',
-        disPer: this.disPer,
+        disPer:disPer,
         invType: 'SS_SPARES',
       }
     );
+    if (disPer===null){
+      (patch.controls[len - 1]).patchValue(
+        {
+          disPer:0,
+        }
+      );
+    }
     this.displaysegmentInvType.push(true);
     this.displayRemoveRow.push(true);
     this.displayCounterSaleLine.push(true);
@@ -1680,11 +1706,13 @@ export class CounterSaleComponent implements OnInit {
   }
 
 
+
   taxDetails(op, i, taxCategoryId) {
     // alert(i);
+    this.TaxDetailsArray().disable();
     let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
     if (op === 'Search') {
-      // alert(op);
+      alert(op);
       // .controls[i].get('taxAmounts')
       let taxControl = this.TaxDetailsArray() as FormArray
       if (taxControl != undefined) {
@@ -1727,7 +1755,7 @@ export class CounterSaleComponent implements OnInit {
       });
     }
     else {
-      // alert('Hi');
+      alert('Hi');
       this.poLineTax = i;
       // var itemId = this.invItemList1[i].itemId;
       // var taxCategoryId = taxCategoryId;
@@ -1746,17 +1774,14 @@ export class CounterSaleComponent implements OnInit {
         .subscribe(
           (data: any[]) => {
             this.taxCalforItem = data;
-
             var sum = 0;
-
             for (i = 0; i < this.taxCalforItem.length; i++) {
-
               if (this.taxCalforItem[i].totTaxPer != 0) {
                 sum = sum + this.taxCalforItem[i].totTaxAmt
               }
             }
-
             this.TaxDetailsArray().clear()
+            this.TaxDetailsArray().disable()
             for (let i = 0; i < this.taxCalforItem.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
@@ -1806,7 +1831,7 @@ export class CounterSaleComponent implements OnInit {
         recoverableFlag: x.recoverableFlag,
         selfAssesedFlag: x.selfAssesedFlag,
         inclusiveFlag: x.inclusiveFlag,
-        invLineNo: x.invLineNo,
+        invLineNo: i+1,
       }));
     });
     console.log(control);

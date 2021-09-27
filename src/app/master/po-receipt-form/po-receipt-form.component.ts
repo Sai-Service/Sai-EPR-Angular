@@ -487,7 +487,7 @@ checkIfAllSelected() {
     this.displaySaveButton =false;
     // alert(segment1);
     console.log(this.poReceiptForm.value);
-    this.service.getsearchByReceiptNo(segment1)
+    this.service.getsearchByReceiptNo1(segment1,(sessionStorage.getItem('locId')))
       .subscribe(
         data => {
           this.lstcompolines = data;
@@ -1055,7 +1055,7 @@ viewAccounting(receiptNo:any){
   poAllFind(segment1 : any){
     // alert(this.segment1);
     // this.poNumber=this.poNumber;
-    this.service.poAllRecFind(segment1).subscribe((res: any) => {
+    this.service.poAllRecFind(segment1,(sessionStorage.getItem('locId'))).subscribe((res: any) => {
       if (res.code === 200) {
         this.poAllRecFind=res.obj;
         console.log(this.poAllRecFind);
