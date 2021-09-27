@@ -140,7 +140,8 @@
                             <select  disabled formControlName="locId" id="locId" class="form-control" >
                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
-                                    {{sc.locCode}}-{{sc.locName}}
+                                    <!-- {{sc.locCode}}- -->
+                                    {{sc.locName}}
                                 </option>
                             </select>
                            </td>
@@ -160,7 +161,8 @@
                                 <select disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
-                                    {{sc.cmnTypeId}}-{{sc.code}}
+                                    <!-- {{sc.cmnTypeId}}- -->
+                                    {{sc.code}}
                                     </option>
                                 </select>
                             </td>
@@ -209,7 +211,7 @@
                             <td>
                             <input  type ="text" disabled formControlName="supplierName" [(ngModel)]='supplierName'
                                                     value={{supplierName}} class="form-control"
-                                                    style="width:275%" >
+                                                    style="width:268%" >
                             </td>
 
                         </tr>
