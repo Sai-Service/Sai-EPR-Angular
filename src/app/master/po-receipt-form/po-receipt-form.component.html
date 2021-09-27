@@ -487,14 +487,14 @@
                                         Supplier&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled formControlName="supplierName"
+                                            <input type="text" disabled formControlName="supplierName"
                                                 [(ngModel)]="supplierName" value={{supplierName}}  class="form-control">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Receipt&nbsp;Number&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled formControlName="receiptNo" [(ngModel)]="receiptNo"
+                                            <input type="text" disabled formControlName="receiptNo" [(ngModel)]="receiptNo"
                                                 value={{receiptNo}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -508,7 +508,7 @@
                                                 value={{recDate}} class="form-control"  >
                                               </ng-template>
                                               <ng-template #elserecDate> -->
-                                                <input disabled formControlName="recDate"  value={{recDate}} [(ngModel)]="recDate"
+                                                <input type="date" disabled formControlName="recDate"  value={{recDate}} [(ngModel)]="recDate"
                                                 class="form-control">
                                               <!-- </ng-template>   -->
                                               <!-- value={{recDate}} [(ngModel)]="recDate" -->
@@ -538,7 +538,7 @@
                                            GST&nbsp;Document&nbsp;No&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input formControlName="gstDocNo" [(ngModel)]='gstDocNo'
+                                            <input type="text" formControlName="gstDocNo" [(ngModel)]='gstDocNo'
                                                 value={{gstDocNo}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -563,7 +563,7 @@
                                             E-Way&nbsp;Bill&nbsp;No&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input formControlName="ewayBillNo" [(ngModel)]='ewayBillNo'
+                                            <input type="text" formControlName="ewayBillNo" [(ngModel)]='ewayBillNo'
                                                 value={{ewayBillNo}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -580,7 +580,7 @@
                                             Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                            <input type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
                                                 value={{suppInvNo}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -588,7 +588,7 @@
                                             Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                            <input type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
                                                 value={{suppInvDate}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -598,7 +598,7 @@
                                             Comments&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input formControlName="Comments" [(ngModel)]='Comments'
+                                            <input type="text" formControlName="Comments" [(ngModel)]='Comments'
                                                 value={{Comments}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -623,7 +623,7 @@
                                                 GST&nbsp;Document&nbsp;No&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input disabled formControlName="gstDocNo" [(ngModel)]='gstDocNo'
+                                                <input disabled type="text" formControlName="gstDocNo" [(ngModel)]='gstDocNo'
                                                     value={{gstDocNo}} class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
@@ -648,7 +648,7 @@
                                                 E-Way&nbsp;Bill&nbsp;No&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input disabled formControlName="ewayBillNo" [(ngModel)]='ewayBillNo'
+                                                <input disabled type="text" formControlName="ewayBillNo" [(ngModel)]='ewayBillNo'
                                                     value={{ewayBillNo}} class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
@@ -662,10 +662,28 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
+                                                Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                    value={{suppInvNo}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                                    value={{suppInvDate}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
                                                 Comments&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input disabled formControlName="Comments" [(ngModel)]='Comments'
+                                                <input disabled type="text" formControlName="Comments" [(ngModel)]='Comments'
                                                     value={{Comments}} class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
