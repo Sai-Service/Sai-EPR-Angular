@@ -141,7 +141,7 @@
                         Customer&nbsp;No&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input type="number" style="width: 160px;" class="form-control" formControlName="custAccountNo"
+                        <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
                             [(ngModel)]='custAccountNo' value={{custAccountNo}}
                             [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
                             (keydown.tab)="accountNoSearch(custAccountNo)">
@@ -156,7 +156,7 @@
                         <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
                           <ng-template #thenCustomerSite>
                               <td>
-                        <select formControlName="name" id="name" class="form-control" style="width: 160px;"
+                        <select formControlName="name" id="name" class="form-control" style="width: 200px;"
                         [ngClass]="{ 'is-invalid': submitted && f.name.errors }"  
                         (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
                             <option>--Select--</option>
@@ -183,7 +183,7 @@
                     </td>
                     <td>
                         <input type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'
-                            value={{custName}} (keydown.tab)="custNameSearch(custName)" style="width: 160px;">
+                            value={{custName}} (keydown.tab)="custNameSearch(custName)" style="width: 200px;">
                     </td>
                     <td style="width: 15%" class="LabelFontStyle">
                         Contact&nbsp;No&nbsp;:&nbsp;
@@ -191,7 +191,7 @@
                     <td>
                         <input  type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
                         [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }" 
-                        class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#contactNoSearchModel">
+                        class="form-control" style="width: 120px;" data-bs-toggle="modal" data-bs-target="#contactNoSearchModel">
                         <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback">
                             <div *ngIf="f.mobile1.errors.required">Code cannot be blank</div>
                         </div>

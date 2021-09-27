@@ -191,6 +191,9 @@ export class PoReceiptFormComponent implements OnInit {
   displaysubInvDesc:Array<boolean>=[];
   TRUER=false; recFagDiss=true; 
 
+
+  // recDate=this.pipe.transform(this.recDate,'dd-MM-yyyy');
+
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private router1: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName : [''],
@@ -366,7 +369,7 @@ checkIfAllSelected() {
 
     this.sub1 = this.router1.queryParams.subscribe(params => { 
       // this.shipmentNumber = params.get('shipmentNumber');
-      this.shipmentNumber=this.router1.snapshot.queryParamMap.get('shipmentNumber')||'0';
+      this.shipmentNumber=this.router1.snapshot.queryParamMap.get('shipmentNumber');
       // alert(this.shipmentNumber);
       this.poReceiptForm.patchValue({shipmentNumber:this.shipmentNumber})
       this.shipmentNoFind(this.shipmentNumber);

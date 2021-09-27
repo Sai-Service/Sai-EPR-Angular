@@ -84,17 +84,16 @@
                                 <td style="width: 15%" class="LabelFontStyle1">&nbsp;Customer&nbsp;Type&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <select formControlName="custType"
+                                    <select formControlName="custType" 
+                                       [ngClass]="{ 'is-invalid': submitted && f.custType.errors }"
                                         (ngModelChange)='onOptioncustTypeSelected($event)' class="form-control" style="width: fit-content;">
                                         <option value="Person" selected>Person</option>
                                         <option value="Organization">Organization</option>
                                     </select>
                                     <div *ngIf="submitted && f.custType.errors" class="invalid-feedback">
-                                        <div *ngIf="f.custType.errors.required">classCodeType must be a valid</div>
-                                        <div *ngIf="f.custType.errors.pattern">orgId must be a valid for 3 digit
-                                        </div>
-                                        <div *ngIf="f.custType.errors.maxLength">classCodeType Name must be a valid
-                                        </div>
+                                        <div *ngIf="f.custType.errors.required">Customer Type cannot be blank</div>
+                                        <!-- <div *ngIf="f.custType.errors.pattern">orgId must be a valid for 3 digit</div>
+                                        <div *ngIf="f.custType.errors.maxlength">classCodeType Name must be a valid</div> -->
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('custType').valid && customerMasterForm.get('custType').touched">Please
@@ -117,17 +116,17 @@
                               <td>
                                     <!-- <input formControlName="classCodeType"  value={{classCodeType}} class="form-control"> -->
                                     <!-- [ngValue]="cmnTypeId" -->
-                                    <select formControlName="classCodeType" id="classCodeType" class="form-control" style="width: fit-content;">
-                                        <option>--Select--</option>
+                                    <select formControlName="classCodeType" id="classCodeType" class="form-control" style="width: fit-content;"
+                                    [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }">
+                                        <option></option>
                                         <option *ngFor="let sc of  classCodeTypeList">
                                             {{sc.code}}
                                         </option>
                                     </select>
                                     <div *ngIf="submitted && f.classCodeType.errors" class="invalid-feedback">
-                                        <div *ngIf="f.classCodeType.errors.required">classCodeType Name must be a valid
-                                        </div>
-                                        <div *ngIf="f.classCodeType.errors.maxLength">classCodeType Name must be a
-                                            valid </div>
+                                        <div *ngIf="f.classCodeType.errors.required">Class CodeType Cannot be blank</div>
+                                        <!-- <div *ngIf="f.classCodeType.errors.maxlength">classCodeType Name must be a
+                                            valid </div> -->
                                     </div>
                                     <!-- <span *ngIf="!customerMasterForm.get('classCodeType').valid && customerMasterForm.get('classCodeType').touched">classCodeType
                                         Name must be a valid </span> -->
@@ -140,7 +139,7 @@
                                     <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.custAccountNo.errors.required">Account Number must be a valid
                                         </div>
-                                        <div *ngIf="f.custAccountNo.errors.maxLength">Account Number must be a valid</div>
+                                        <div *ngIf="f.custAccountNo.errors.maxlength">Account Number must be a valid</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('custAccountNo').valid && customerMasterForm.get('custAccountNo').touched">Account
@@ -156,13 +155,25 @@
                                     </table>
                                     </td>
                                 <td>
+<<<<<<< HEAD
                                     <select formControlName="paymentType" id="paymentType"  (ngModelChange)="onOptionsPaymentTyp($event)" class="form-control"  style="width: fit-content;">
                                     <option>--Select--</option>
+=======
+                                    <select formControlName="paymentType" id="paymentType" class="form-control"  style="width: fit-content;"
+                                    [ngClass]="{ 'is-invalid': submitted && f.paymentType.errors }">
+                                    <option></option>
+>>>>>>> 6f3d88862d0ba0eafbc3c79d03d9fca6248bbf7b
                                     <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.lookupValueId">
                                         {{sc.lookupValue}}
                                     </option>
                                 </select>
+<<<<<<< HEAD
                                 <input hidden formControlName="termId">
+=======
+                                <div *ngIf="submitted && f.paymentType.errors" class="invalid-feedback">
+                                    <div *ngIf="f.paymentType.errors.required">Payment Type cannot be blank</div>
+                                </div>
+>>>>>>> 6f3d88862d0ba0eafbc3c79d03d9fca6248bbf7b
                                 <!-- <input formControlName="cmnTypeId" value={{cmnTypeId}} class="form-control"> -->
                                 </td>
                             </tr>
@@ -173,16 +184,14 @@
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Title&nbsp;:&nbsp;</td>
                                 <td >
                                     <select formControlName="title" id="title"  class="form-control"
-                                        style="width: 70px;">
+                                        style="width: 70px;"
+                                        [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
                                         <!-- <option>-Title-</option> -->
                                         <option *ngFor="let sc of  titleList" [ngValue]="sc.code"> {{sc.code}}</option>
                                     </select>
                                     <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                                        <div *ngIf="f.title.errors.required">Title must be a valid</div>
-                                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
-                                    </div> -->
-                                        <div *ngIf="f.title.errors.maxLength">Title must be a valid
-                                        </div>
+                                        <div *ngIf="f.title.errors.required">Title cannot be blank</div>
+                                        <!-- <div *ngIf="f.title.errors.maxlength">Title must be a valid </div> -->
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('title').valid && customerMasterForm.get('title').touched">Please
@@ -195,8 +204,8 @@
                                             [ngClass]="{ 'is-invalid': submitted && f.fName.errors }"
                                             placeholder="Enter first name">
                                         <div *ngIf="submitted && f.fName.errors" class="invalid-feedback">
-                                            <div *ngIf="f.fName.errors.required">First Name must be a valid</div>
-                                            <div *ngIf="f.fName.errors.maxLength">First Name must be a valid </div>
+                                            <div *ngIf="f.fName.errors.required">First Name cannot be blank</div>
+                                            <div *ngIf="f.fName.errors.maxlength">Maximum 50 Characters allowed </div>
                                         </div>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Middle&nbsp;Name&nbsp;:&nbsp;</td>
@@ -205,6 +214,9 @@
                                             (keyup)="onKey($event)" class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.mName.errors }"
                                             placeholder="Enter Middle name">
+                                            <div *ngIf="submitted && f.mName.errors" class="invalid-feedback">
+                                              <div *ngIf="f.mName.errors.maxlength">Maximum 50 Characters allowed</div>
+                                            </div>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Last&nbsp;Name&nbsp;:&nbsp;</td>
                                     <td>
@@ -213,11 +225,10 @@
                                             [ngClass]="{ 'is-invalid': submitted && f.lName.errors }"
                                             placeholder="Enter last name">
                                         <div *ngIf="submitted && f.lName.errors" class="invalid-feedback">
-                                            <div *ngIf="f.lName.errors.required">Last Name must be a valid</div>
+                                            <div *ngIf="f.lName.errors.required">Last Name cannot be blank</div>
                                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                                     </div> -->
-                                            <div *ngIf="f.lName.errors.maxLength">Last Name must be a valid
-                                            </div>
+                                            <div *ngIf="f.lName.errors.maxlength">Maximum 50 Characters allowed</div>
                                         </div>
                                         <!-- <span
                                             *ngIf="!customerMasterForm.get('lName').valid && customerMasterForm.get('lName').touched">Please
@@ -230,14 +241,13 @@
                                 <td colspan="8">
                                     <input  formControlName="custName" value="custName" [(ngModel)]='custName'
                                         (keyup)="onKey($event)" class="form-control" placeholder="Enter Full name"
-                                        style="width: 60%;">
+                                        style="width: 60%;"
+                                        [ngClass]="{ 'is-invalid': submitted && f.custName.errors }">
 
                                         <!-- (keyup)="onKey($event)"  (keyup)="onKey($event)"-->
                                     <div *ngIf="submitted && f.custName.errors" class="invalid-feedback">
-                                        <div *ngIf="f.custName.errors.required">Full Name must be a valid</div>
-
-                                        <div *ngIf="f.custName.errors.maxLength">Full Name must be a valid
-                                        </div>
+                                        <div *ngIf="f.custName.errors.required">Full Name cannot be blank</div>
+                                        <div *ngIf="f.custName.errors.maxlength">Full Name can have maximum 150 characters</div>
                                     </div>
 
                                 </td>
@@ -253,11 +263,9 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                         placeholder="Enter address" style="width: 250px;">
                                     <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
-                                        <div *ngIf="f.address1.errors.required">address must be a valid</div>
-                                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
-                            </div> -->
-                                        <div *ngIf="f.address1.errors.maxLength">address Name must be a valid
-                                        </div>
+                                        <div *ngIf="f.address1.errors.required">Address must be a valid</div>
+                                        <div *ngIf="f.address1.errors.maxlength">Maximum 100 characters allowed</div>
+                                        <div *ngIf="f.address1.errors.minlength">Minimum 10 characters required</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('address1').valid && customerMasterForm.get('address1').touched">Please
@@ -267,14 +275,12 @@
                                 <td>
                                     <input formControlName="address2" [(ngModel)]='address2' value={{address2}}
                                         (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
                                         placeholder="Enter address">
                                     <div *ngIf="submitted && f.address2.errors" class="invalid-feedback">
-                                        <div *ngIf="f.address2.errors.required">address must be a valid</div>
-                                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
-                            </div> -->
-                                        <div *ngIf="f.address2.errors.maxLength">address Name must be a valid
-                                        </div>
+                                        <div *ngIf="f.address2.errors.required">Address 1 cannot be blank</div>
+                                       <div *ngIf="f.address2.errors.maxlength">Maximum 100 characters allowed</div>
+                                       <div *ngIf="f.address2.errors.minlength">Minimum 3 characters required</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('address2').valid && customerMasterForm.get('address2').touched">Please
@@ -284,14 +290,11 @@
                                 <td>
                                     <input formControlName="address3" [(ngModel)]='address3' value={{address3}}
                                         (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.address3.errors }"
                                         placeholder="Enter address">
                                     <div *ngIf="submitted && f.address3.errors" class="invalid-feedback">
-                                        <div *ngIf="f.address3.errors.required">address must be a valid</div>
-                                        <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
-                            </div> -->
-                                        <div *ngIf="f.address3.errors.maxLength">address Name must be a valid
-                                        </div>
+                                        <!-- <div *ngIf="f.address3.errors.required">address must be a valid</div> -->
+                                        <div *ngIf="f.address3.errors.maxlength">Maximum 100 characters allowed</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('address3').valid && customerMasterForm.get('address3').touched">Please
@@ -303,12 +306,11 @@
                                 <td>
                                     <input formControlName="address4" [(ngModel)]='address4' value={{address4}}
                                         (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.address4.errors }"
                                         placeholder="Enter address">
                                     <div *ngIf="submitted && f.address4.errors" class="invalid-feedback">
-                                        <div *ngIf="f.address4.errors.required">address must be a valid</div>
-                                        <div *ngIf="f.address4.errors.maxLength">address Name must be a valid
-                                        </div>
+                                        <!-- <div *ngIf="f.address4.errors.required">address must be a valid</div> -->
+                                        <div *ngIf="f.address4.errors.maxlength">Maximum 100 characters allowed</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('address4').valid && customerMasterForm.get('address4').touched">Please
@@ -321,9 +323,9 @@
                                         placeholder="Enter location"
                                         [ngClass]="{ 'is-invalid': submitted && f.location.errors }">
                                     <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
-                                        <div *ngIf="f.location.errors.required">Enter location </div>
-                                        <div *ngIf="f.location.errors.maxLength">Enter location
-                                        </div>
+                                        <div *ngIf="f.location.errors.required">Area cannot be blank</div>
+                                        <div *ngIf="f.location.errors.minlength">Minimum 3 characters required</div>
+                                        <div *ngIf="f.location.errors.maxlength">Maximum 100 characters allowed</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('location').valid && customerMasterForm.get('location').touched">Please
@@ -331,7 +333,8 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
                                 <td>
-                                  <input type="text" formControlName="city" id="city" class="form-control" [ngModel]="city">
+                                  <input type="text" formControlName="city" id="city" class="form-control" [ngModel]="city"
+                                  [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
                                         <!-- <select formControlName="city" id="city" class="form-control" [ngModel]="city"
                                         (ngModelChange)='onOptionsSelectedCity($event)'>
                                         <option>--Select--</option>
@@ -340,10 +343,10 @@
                                         </option>
                                     </select> -->
                                     <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                                        <div *ngIf="f.city.errors.required">City must be required
-                                        </div>
-                                        <div *ngIf="f.city.errors.maxLength">City must be required
-                                        </div>
+                                        <div *ngIf="f.city.errors.required">City cannot be blank </div>
+                                        <div *ngIf="f.city.errors.minlength">Minimum 3 characters required</div>
+                                        <div *ngIf="f.city.errors.maxlength">Maximum 50 characters allowed</div>
+
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('city').valid && customerMasterForm.get('city').touched">Please
@@ -356,28 +359,30 @@
                                 <td>
                                     <input type="number" formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
                                         (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }"
                                         placeholder="Enter pin code">
                                     <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
-                                        <div *ngIf="f.pinCd.errors.required">pin code must be a valid</div>
-                                        <div *ngIf="f.pinCd.errors.maxLength">pin code Name must be a valid
-                                        </div>
+                                        <div *ngIf="f.pinCd.errors.required">Pin code cannot be blank</div>
+                                        <div *ngIf="f.pinCd.errors.maxlength">Please enter valid 6 digit Pin code number</div>
+                                        <div *ngIf="f.pinCd.errors.minlength">Please enter valid 6 digit Pin code number</div>
+                                        <!-- <div *ngIf="f.pinCd.errors.pattern">Pin code format is invalid</div> -->
                                     </div>
-                                    <!-- <span
-                                        *ngIf="!customerMasterForm.get('pinCd').valid && customerMasterForm.get('pinCd').touched">Please
-                                        Enter pin code </span> -->
-                                </td>
+                                  </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;State&nbsp;:&nbsp;</td>
                                 <td>
                                     <!-- <input type="text" disabled formControlName="state" [ngModel]="state"
                                         class="form-control"> -->
                                         <select formControlName="state" id="state" [(ngModel)]='state'
-                                        class="form-control" (ngModelChange)='onOptionStateSeleted($event)'>
-                                        <option>--Select--</option>
+                                        class="form-control" (ngModelChange)='onOptionStateSeleted($event)'
+                                        [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                                        <option></option>
                                         <option *ngFor="let sc of stateList">
                                             {{sc.codeDesc}}
                                         </option>
                                     </select>
+                                    <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                        <div *ngIf="f.state.errors.required">State cannot be blank</div>
+                                    </div>
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
                                 <td>
@@ -393,14 +398,16 @@
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;1&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
+                                    <!-- <input type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
                                         (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter mobile1">
+                                        [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }"
+                                        placeholder="Enter mobile1"> -->
+                                    <input  formControlName="mobile1" value={{mobile1}} class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }" placeholder="Enter Mobile 1">
                                     <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback">
-                                        <div *ngIf="f.mobile1.errors.required">mobile must be 10 digit</div>
-                                        <div *ngIf="f.mobile1.errors.maxLength">mobile must be 10 digit
-                                        </div>
+                                        <div *ngIf="f.mobile1.errors.required">Mobile 1 cannot be blank</div>
+                                        <div *ngIf="f.mobile1.errors.maxlength">Please enter 10 digit mobile no</div>
+                                        <div *ngIf="f.mobile1.errors.minlength">Please enter 10 digit mobile no</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('mobile1').valid && customerMasterForm.get('mobile1').touched">Please
@@ -408,14 +415,12 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;2&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="number" formControlName="mobile2" [(ngModel)]='mobile2' value={{mobile2}}
-                                        (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter  mobile2">
-                                    <div *ngIf="submitted && f.mobile2.errors" class="invalid-feedback">
-                                        <div *ngIf="f.mobile2.errors.required">mobile must be 10 digit</div>
-                                        <div *ngIf="f.mobile2.errors.maxLength">mobile must be 10 digit
-                                        </div>
+                                    <input  formControlName="mobile2" value={{mobile2}} class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.mobile2.errors }" placeholder="Enter Mobile 2">
+                                <div *ngIf="submitted && f.mobile2.errors" class="invalid-feedback">
+                                        <!-- <div *ngIf="f.mobile2.errors.required">mobile must be 10 digit</div> -->
+                                        <div *ngIf="f.mobile2.errors.maxlength">Please enter 10 digit mobile no</div>
+                                        <div *ngIf="f.mobile2.errors.minlength">Please enter 10 digit mobile no</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('mobile2').valid && customerMasterForm.get('mobile2').touched">Please
@@ -423,36 +428,42 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Mobile&nbsp;3&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="number" formControlName="mobile3" [(ngModel)]='mobile3' value={{mobile3}}
-                                        (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter mobile3">
+                                    <input  formControlName="mobile3" value={{mobile3}} class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.mobile3.errors }" placeholder="Enter Mobile 3">
+                                    <div *ngIf="submitted && f.mobile3.errors" class="invalid-feedback">
+                                        <!-- <div *ngIf="f.mobile2.errors.required">mobile must be 10 digit</div> -->
+                                        <div *ngIf="f.mobile3.errors.maxlength">Please enter 10 digit mobile no</div>
+                                        <div *ngIf="f.mobile3.errors.minlength">Please enter 10 digit mobile no</div>
+                                    </div>
+                                        
                                 </td>
                             </tr>
                             <tr>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <input formControlName="emailId" [(ngModel)]='emailId' value={{emailId}}
-                                        (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
-                                        placeholder="Enter emailId">
-                                    <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
-                                        <div *ngIf="f.emailId.errors.required">Email id must</div>
-                                        <div *ngIf="f.emailId.errors.maxLength">Email id must
-                                        </div>
-                                    </div>
-                                    <!-- <span
-                                        *ngIf="!customerMasterForm.get('emailId').valid && customerMasterForm.get('emailId').touched">Please
-                                        Enter Email id must</span> -->
+                                    <input type="emailId" formControlName="emailId" value={{emailId}} class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                                     placeholder="Enter Email id">
+                                     <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
+                                       <div *ngIf="f.emailId.errors.required">Email ID 1 cannot be blank </div>
+                                       <div *ngIf="f.emailId.errors.email">Email ID must be in valid  format. eg abc@xyz.com</div>
+                                   </div>
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Email&nbsp;ID&nbsp;2&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <input formControlName="emailId1" [(ngModel)]='emailId1' value={{emailId1}}
+                                    <!-- <input formControlName="emailId1" [(ngModel)]='emailId1' value={{emailId1}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.emailId1.errors }"
-                                        placeholder="Enter emailId">
+                                        placeholder="Enter emailId"> -->
+                                        <input type="emailId1" formControlName="emailId1" value={{emailId1}} class="form-control"
+                                         [ngClass]="{ 'is-invalid': submitted && f.emailId1.errors }"
+                                          placeholder="Enter Email id">
+                                          <div *ngIf="submitted && f.emailId1.errors" class="invalid-feedback">
+                                            <div *ngIf="f.emailId1.errors.required">Email ID 1 cannot be blank </div>
+                                            <div *ngIf="f.emailId1.errors.email">Email ID must be in valid  format. eg abc@xyz.com</div>
+                                        </div>
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">
                                     &nbsp;Contact&nbsp;Person&nbsp;Name&nbsp;:&nbsp;</td>
@@ -463,7 +474,7 @@
                                         placeholder="Enter contact Person" >
                                     <div *ngIf="submitted && f.contactPerson.errors" class="invalid-feedback">
                                         <!-- <div *ngIf="f.contactPerson.errors.required">contactPerson must</div> -->
-                                        <!-- <div *ngIf="f.contactPerson.errors.maxLength">contactPerson must -->
+                                        <!-- <div *ngIf="f.contactPerson.errors.maxlength">contactPerson must -->
                                         <!-- </div> -->
                                     </div>
                                     <!-- <span
@@ -477,11 +488,11 @@
                                 <td>
                                     <input type="number" formControlName="contactNo" [(ngModel)]='contactNo' value={{contactNo}}
                                         (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }"
                                         placeholder="Enter contact Person No">
                                     <!-- <div *ngIf="submitted && f.contactNo.errors" class="invalid-feedback"> -->
                                         <!-- <div *ngIf="f.contactNo.errors.required">contact Person No must</div>
-                                        <div *ngIf="f.contactNo.errors.maxLength">contact Person No must -->
+                                        <div *ngIf="f.contactNo.errors.maxlength">contact Person No must -->
                                         <!-- </div> -->
                                     <!-- </div> -->
                                     <!-- <span
@@ -500,9 +511,8 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
                                         max="{{minDateBirth | date:'yyyy-MM-dd'}}" (change)="onBirthgDateChange($event)" >
                                     <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
-                                        <div *ngIf="f.birthDate.errors.required">birth date must</div>
-                                        <div *ngIf="f.birthDate.errors.maxLength">birth date must
-                                        </div>
+                                        <div *ngIf="f.birthDate.errors.required">Birthdate cannot be blank</div>
+                                        <!-- <div *ngIf="f.birthDate.errors.maxlength">birth date must</div> -->
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('birthDate').valid && customerMasterForm.get('birthDate').touched">Please
@@ -554,14 +564,18 @@
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="gstNo" [(ngModel)]='gstNo' value={{gstNo}}
+                                    <!-- <input formControlName="gstNo" [(ngModel)]='gstNo' value={{gstNo}}
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
-                                        placeholder="Enter gstNo">
+                                        placeholder="Enter gstNo"> -->
+
+                                    <input formControlName="gstNo" value={{gstNo}} class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (keyup)="gstVerification($event)"
+                                        placeholder="Please enter GSTN no">    
                                     <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.gstNo.errors.required">gst No must</div>
-                                        <div *ngIf="f.gstNo.errors.maxLength">gst No must
-                                        </div>
+                                        <div *ngIf="f.gstNo.errors.pattern">Invalid GSTIN number format</div>
+                                        <div *ngIf="f.gstNo.errors.required">GST number cannot be blank</div>
+                                        <div *ngIf="f.gstNo.errors.maxlength">GSTIN Max lenght error</div>
                                     </div>
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('gstNo').valid && customerMasterForm.get('gstNo').touched">Please
@@ -569,13 +583,15 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
+                                    <!-- (keyup)="onKey($event)"  -->
                                     <input formControlName="panNo"  value={{panNo}}
-                                        (keyup)="onKey($event)" class="form-control"
+                                        class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                         placeholder="Enter panNo">
                                     <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.panNo.errors.required">pan No must</div>
-                                        <div *ngIf="f.panNo.errors.maxLength">pan No must
+                                        <div *ngIf="f.panNo.errors.required">PAN numbher cannot be blank</div>
+                                        <div *ngIf="f.panNo.errors.pattern">Invalid PAN format</div>
+                                        <div *ngIf="f.panNo.errors.maxlength">pan No must
                                         </div>
                                     </div>
                                     <!-- <span
@@ -600,7 +616,7 @@
                                       placeholder="Enter  Credit Amount">
                                   <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
                                       <div *ngIf="f.creditAmt.errors.required">Enter Credit Amount </div>
-                                      <div *ngIf="f.creditAmt.errors.maxLength">Enter Credit Amount
+                                      <div *ngIf="f.creditAmt.errors.maxlength">Enter Credit Amount
                                       </div>
                                   </div>
                                   <!-- <span
@@ -615,7 +631,7 @@
                                       placeholder="Enter Higher Amount">
                                   <div *ngIf="submitted && f.highAmt.errors" class="invalid-feedback">
                                       <div *ngIf="f.highAmt.errors.required">Enter  Higher Amount </div>
-                                      <div *ngIf="f.highAmt.errors.maxLength">Enter  Higher Amount
+                                      <div *ngIf="f.highAmt.errors.maxlength">Enter  Higher Amount
                                       </div>
                                   </div>
                                   <!-- <span
@@ -630,7 +646,7 @@
                                       placeholder="Enter discount Percentage">
                                   <div *ngIf="submitted && f.disPer.errors" class="invalid-feedback">
                                       <div *ngIf="f.disPer.errors.required">Enter discount Percentage </div>
-                                      <div *ngIf="f.disPer.errors.maxLength">Enter discount Percentage
+                                      <div *ngIf="f.disPer.errors.maxlength">Enter discount Percentage
                                       </div>
                                   </div>
                                   <!-- <span
@@ -649,7 +665,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.location.errors }">
                                     <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
                                         <div *ngIf="f.location.errors.required">Enter location </div>
-                                        <div *ngIf="f.location.errors.maxLength">Enter location
+                                        <div *ngIf="f.location.errors.maxlength">Enter location
                                         </div>
                                     </div>
                                     <span
@@ -787,15 +803,21 @@
                                 </table>
                                 <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                     <tr>
-                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId">
+                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId"
+                                      [ngClass]="{ 'is-invalid': submitted && f.customerSiteId.errors }" >
                                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                         <td>
                                            <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control">
-                                                    <option disabled>--Select--</option>
+                                                    <option disabled></option>
                                                     <option *ngFor="let sc of  ouIdList" [ngValue]="sc.ouId">
                                                     {{sc.ouId}}-{{sc.ouName}}
                                                     </option>
                                                     </select>
+                                                    <div *ngIf="submitted && f.customerSiteId.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.customerSiteId.errors.required">Site ID cannot be blank</div>
+                                                        <!-- <div *ngIf="f.customerSiteId.errors.maxlength">GstNo must be a valid and of 15 charecter </div>
+                                                        <div *ngIf="f.customerSiteId.errors.pattern">GstNo must be a valid and of 15 charecter</div> -->
+                                                    </div>
                                                </td>
                                         <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                                         <td>
@@ -831,7 +853,7 @@
                                                 placeholder="Enter address">
                                             <div *ngIf="submitted && f.saddress1.errors" class="invalid-feedback">
                                                 <div *ngIf="f.saddress1.errors.required">Enter address </div>
-                                                <div *ngIf="f.saddress1.errors.maxLength">Enter address</div>
+                                                <div *ngIf="f.saddress1.errors.maxlength">Enter address</div>
                                             </div>
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('saddress1').valid && customerMasterForm.get('saddress1').touched">Please
@@ -845,7 +867,7 @@
                                                 placeholder="Enter address">
                                             <div *ngIf="submitted && f.saddress2.errors" class="invalid-feedback">
                                                 <div *ngIf="f.saddress2.errors.required">Enter address </div>
-                                                <div *ngIf="f.saddress2.errors.maxLength">Enter address</div>
+                                                <div *ngIf="f.saddress2.errors.maxlength">Enter address</div>
                                             </div>
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('saddress2').valid && customerMasterForm.get('saddress2').touched">Please
@@ -859,7 +881,7 @@
                                                 placeholder="Enter address">
                                             <div *ngIf="submitted && f.saddress3.errors" class="invalid-feedback">
                                                 <div *ngIf="f.saddress3.errors.required">Enter address </div>
-                                                <div *ngIf="f.saddress3.errors.maxLength">Enter address</div>
+                                                <div *ngIf="f.saddress3.errors.maxlength">Enter address</div>
                                             </div>
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('saddress3').valid && customerMasterForm.get('saddress3').touched">Please
@@ -884,7 +906,7 @@
                                             </select>
                                             <div *ngIf="submitted && f.scity.errors" class="invalid-feedback">
                                                 <div *ngIf="f.scity.errors.required">Enter City </div>
-                                                <div *ngIf="f.scity.errors.maxLength">Enter City </div>
+                                                <div *ngIf="f.scity.errors.maxlength">Enter City </div>
                                             </div>
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('scity').valid && customerMasterForm.get('scity').touched">Please
@@ -897,7 +919,7 @@
                                                 placeholder="Enter Pin code">
                                             <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
                                                 <div *ngIf="f.pinCd.errors.required">Enter pin code </div>
-                                                <div *ngIf="f.pinCd.errors.maxLength">Enter pin code </div>
+                                                <div *ngIf="f.pinCd.errors.maxlength">Enter pin code </div>
                                             </div>
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('pinCd').valid && customerMasterForm.get('pinCd').touched">Please
@@ -917,7 +939,7 @@
                                                 </select>
                                                 <div *ngIf="submitted && f.sstate.errors" class="invalid-feedback">
                                                     <div *ngIf="f.sstate.errors.required">Enter state </div>
-                                                    <div *ngIf="f.sstate.errors.maxLength">Enter state</div>
+                                                    <div *ngIf="f.sstate.errors.maxlength">Enter state</div>
                                                 </div>
                                                 <!-- <span
                                                     *ngIf="!customerMasterForm.get('sstate').valid && customerMasterForm.get('sstate').touched">Please
@@ -943,7 +965,7 @@
                                                 placeholder="Enter mobile1">
                                             <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
                                                 <div *ngIf="f.smobile1.errors.required">Enter mobile1 </div>
-                                                <div *ngIf="f.smobile1.errors.maxLength">Enter mobile1
+                                                <div *ngIf="f.smobile1.errors.maxlength">Enter mobile1
                                                 </div>
                                             </div>
                                             <!-- <span
@@ -958,7 +980,7 @@
                                                 placeholder="Enter mobile1">
                                             <div *ngIf="submitted && f.smobile2.errors" class="invalid-feedback">
                                                 <div *ngIf="f.smobile2.errors.required">Enter mobile2 </div>
-                                                <div *ngIf="f.smobile2.errors.maxLength">Enter mobile2
+                                                <div *ngIf="f.smobile2.errors.maxlength">Enter mobile2
                                                 </div>
                                             </div>
                                             <!-- <span
@@ -973,7 +995,7 @@
                                                 placeholder="Enter mobile1">
                                             <div *ngIf="submitted && f.smobile3.errors" class="invalid-feedback">
                                                 <div *ngIf="f.smobile3.errors.required">Enter mobile3 </div>
-                                                <div *ngIf="f.smobile3.errors.maxLength">Enter mobile3
+                                                <div *ngIf="f.smobile3.errors.maxlength">Enter mobile3
                                                 </div>
                                             </div>
                                             <!-- <span
@@ -990,7 +1012,7 @@
                                                 placeholder="Enter emailId">
                                             <div *ngIf="submitted && f.semailId.errors" class="invalid-feedback">
                                                 <div *ngIf="f.semailId.errors.required">Enter email Id </div>
-                                                <div *ngIf="f.semailId.errors.maxLength">Enter email Id
+                                                <div *ngIf="f.semailId.errors.maxlength">Enter email Id
                                                 </div>
                                             </div>
                                             <!-- <span
@@ -1005,7 +1027,7 @@
                                                 placeholder="Enter emailId">
                                             <div *ngIf="submitted && f.semailId1.errors" class="invalid-feedback">
                                                 <div *ngIf="f.semailId1.errors.required">Enter email Id </div>
-                                                <div *ngIf="f.semailId1.errors.maxLength">Enter email Id
+                                                <div *ngIf="f.semailId1.errors.maxlength">Enter email Id
                                                 </div>
                                             </div>
                                             <!-- <span
@@ -1065,7 +1087,7 @@
                                               placeholder="Enter  Credit Amount">
                                           <div *ngIf="submitted && f.screditAmt.errors" class="invalid-feedback">
                                               <div *ngIf="f.creditAmt.errors.required">Enter Credit Amount </div>
-                                              <div *ngIf="f.creditAmt.errors.maxLength">Enter Credit Amount
+                                              <div *ngIf="f.creditAmt.errors.maxlength">Enter Credit Amount
                                               </div>
                                           </div>
                                           <!-- <span
@@ -1080,7 +1102,7 @@
                                               placeholder="Enter Higher Amount">
                                           <div *ngIf="submitted && f.shighAmt.errors" class="invalid-feedback">
                                               <div *ngIf="f.shighAmt.errors.required">Enter  Higher Amount </div>
-                                              <div *ngIf="f.shighAmt.errors.maxLength">Enter  Higher Amount
+                                              <div *ngIf="f.shighAmt.errors.maxlength">Enter  Higher Amount
                                               </div>
                                           </div>
                                           <!-- <span
@@ -1095,7 +1117,7 @@
                                               placeholder="Enter discount Percentage">
                                           <div *ngIf="submitted && f.sdisPer.errors" class="invalid-feedback">
                                               <div *ngIf="f.sdisPer.errors.required">Enter discount Percentage </div>
-                                              <div *ngIf="f.sdisPer.errors.maxLength">Enter discount Percentage
+                                              <div *ngIf="f.sdisPer.errors.maxlength">Enter discount Percentage
                                               </div>
                                           </div>
                                           <!-- <span
