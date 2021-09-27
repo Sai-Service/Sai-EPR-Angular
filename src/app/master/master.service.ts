@@ -455,6 +455,21 @@ UpdateItemCatMastById(ItemCategoryRecord,categoryId) {
   const url = (this.ServerUrl + `/itemCategory/${categoryId}`);
   return this.http.put(url, ItemCategoryRecord, options);
 }
+///////////////Item Locator Master///////////////////////
+public ItemLocatorMasterSubmit(ItemLocatorMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/itemlctrmst';
+  return this.http.post(url, ItemLocatorMasterRecord, options);
+}
+UpdateItemLocatorMaster(LocatorMasterRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/itemlctrmst`);
+  return this.http.put(url, LocatorMasterRecord, options);
+}
 ////////////////////////////////Locator Master/////////////////////////////
 
  getLocatorMasterSearch(): Observable<any> {

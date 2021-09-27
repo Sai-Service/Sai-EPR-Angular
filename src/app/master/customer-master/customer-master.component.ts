@@ -73,6 +73,7 @@ interface IcustomerMaster {
   screditAmt:number;
   shighAmt:number;
   sdisPer:number;
+  termId:number;
 }
 
 @Component({
@@ -194,6 +195,7 @@ export class CustomerMasterComponent implements OnInit {
   disPer:number;
   sdisPer:number;
   displayadditional=true;
+  termId:number;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -202,15 +204,15 @@ export class CustomerMasterComponent implements OnInit {
       customerId1: [''],
       emplId: [''],
       customerAcc1:[''],
-      title: ['', Validators.required],
+      title: [''],
       custType: ['', Validators.required],
       classCodeType: ['', Validators.required],
       paymentType: ['', Validators.required],
       // fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      fName:['',[Validators.required, Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
+      fName:['',[ Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
       mName: ['',[ Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(50)]],
       // lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      lName:['',[Validators.required, Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
+      lName:['',[Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
       custName: ['', [ Validators.required, Validators.maxLength(150)]],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       // address2: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
@@ -240,9 +242,9 @@ export class CustomerMasterComponent implements OnInit {
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [''],
-      status: ['', [Validators.required]],
+      status: [''],
       // classCodeType: [''],
-      ouId: ['', [Validators.required]],
+      ouId: [''],
       locId:[''],
       saddress1: [''],
       saddress2: [''],
@@ -258,7 +260,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      customerSiteId:['', [Validators.required]],
+      customerSiteId:[''],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -279,6 +281,7 @@ export class CustomerMasterComponent implements OnInit {
       shighAmt:[],
       disPer:[],
       sdisPer:[],
+      termId:[],
     })
 
   }
@@ -512,7 +515,7 @@ onOptionSiteStateSeleted(event:any)
     this.customerMasterForm.patchValue({panNo:gstNo1});
     alert('Gst verificaition');
   }
-  
+
   onKey(event: any) {
    // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
 
@@ -520,7 +523,7 @@ onOptionSiteStateSeleted(event:any)
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
 
-  
+
 if (person === 'Person'){
   this.custName = aaa;
 }
@@ -563,7 +566,7 @@ if (person === 'Person'){
     this.submitted = true;
     if(this.customerMasterForm.invalid){
     return;
-    } 
+    }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
@@ -581,16 +584,19 @@ if (person === 'Person'){
     });
   }
   newMast() {
+    var isvaliddata=this.validation();
+    if(isvaliddata===false)
+    {
+      return;
+    }
+
     this.submitted = true;
     if(this.customerMasterForm.invalid){
-    return;
-    } 
+    alert('In Validation');
+      return;
+    }
     // this.submitted = true;
-    // var isvaliddata=this.validation();
-    // if(isvaliddata===false)
-    // {
-    //   return;
-    // }
+
 
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
@@ -621,9 +627,18 @@ if (person === 'Person'){
       }
     });
   }
+
+  onOptionsPaymentTyp(paymentType){
+    // alert(paymentType);
+    this.customerMasterForm.patchValue({termId:paymentType})
+    // let select = this.payTermDescList.find(d => d.paymentType === paymentType);
+
+  }
+
   UpdateSiteCustMastExeSite(){
 
     const formValue: IcustomerMaster = this.customerMasterForm.value;
+    formValue.termId=this.customerMasterForm.get('paymentType').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -656,8 +671,11 @@ if (person === 'Person'){
     return val;
   }
 
+
   updateMast() {
-    const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.value);
+
+
+    const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.getRawValue());
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -719,13 +737,25 @@ if (person === 'Person'){
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
-            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
-            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
-            disPer:this.lstcomments.customerSiteMasterList[0].disPer
+            highAmt:this.lstcomments[0].customerSiteMasterList[0].highAmt,
+            creditAmt:this.lstcomments[0].customerSiteMasterList[0].creditAmt,
+            disPer:this.lstcomments[0].customerSiteMasterList[0].disPer
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
           this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValueId});
+          this.displayadditional=false;
+          this.customerMasterForm.get('address1').disable();
+    this.customerMasterForm.get('address2').disable();
+    this.customerMasterForm.get('address3').disable();
+    this.customerMasterForm.get('address4').disable();
+    this.customerMasterForm.get('location').disable();
+    this.customerMasterForm.get('city').disable();
+    this.customerMasterForm.get('pinCd').disable();
+    this.customerMasterForm.get('state').disable();
+    this.customerMasterForm.get('creditAmt').disable();
+    this.customerMasterForm.get('highAmt').disable();
+    this.customerMasterForm.get('disPer').disable();
         }
       );
   }
@@ -751,6 +781,17 @@ if (person === 'Person'){
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments.termId);
           this.customerMasterForm.patchValue({title:this.lstcomments.title,paymentType:payTerm.lookupValueId});
           this.displayadditional=false;
+          this.customerMasterForm.get('address1').disable();
+    this.customerMasterForm.get('address2').disable();
+    this.customerMasterForm.get('address3').disable();
+    this.customerMasterForm.get('address4').disable();
+    this.customerMasterForm.get('location').disable();
+    this.customerMasterForm.get('city').disable();
+    this.customerMasterForm.get('pinCd').disable();
+    this.customerMasterForm.get('state').disable();
+    this.customerMasterForm.get('creditAmt').disable();
+    this.customerMasterForm.get('highAmt').disable();
+    this.customerMasterForm.get('disPer').disable();
         }
       );
   }
@@ -852,8 +893,15 @@ if (person === 'Person'){
         if(formValue.custType ==='Person')
         {
           if(formValue.birthDate===undefined)
+          {
           alert('Please enter Birth Date');
-
+          }
+          if(formValue.title===undefined)
+          {
+            alert('Please select Title');
+            validdata=false;
+          }
+          return validdata;
         }
         if(formValue.custType ==='Organization')
         {
