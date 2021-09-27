@@ -204,15 +204,15 @@ export class CustomerMasterComponent implements OnInit {
       customerId1: [''],
       emplId: [''],
       customerAcc1:[''],
-      title: ['', Validators.required],
+      title: [''],
       custType: ['', Validators.required],
       classCodeType: ['', Validators.required],
       paymentType: ['', Validators.required],
       // fName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      fName:['',[Validators.required, Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
+      fName:['',[ Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
       mName: ['',[ Validators.pattern('[a-zA-Z ]*'), Validators.maxLength(50)]],
       // lName: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1)]],
-      lName:['',[Validators.required, Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
+      lName:['',[Validators.pattern('[a-zA-Z ]*'),Validators.minLength(1), Validators.maxLength(50)]],
       custName: ['', [ Validators.required, Validators.maxLength(150)]],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       // address2: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
@@ -242,9 +242,9 @@ export class CustomerMasterComponent implements OnInit {
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [''],
-      status: ['', [Validators.required]],
+      status: [''],
       // classCodeType: [''],
-      ouId: ['', [Validators.required]],
+      ouId: [''],
       locId:[''],
       saddress1: [''],
       saddress2: [''],
@@ -260,7 +260,7 @@ export class CustomerMasterComponent implements OnInit {
       sstartDate: [''],
       sendDate: [''],
       sstatus: [''],
-      customerSiteId:['', [Validators.required]],
+      customerSiteId:[''],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -515,7 +515,7 @@ onOptionSiteStateSeleted(event:any)
     this.customerMasterForm.patchValue({panNo:gstNo1});
     alert('Gst verificaition');
   }
-  
+
   onKey(event: any) {
    // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
 
@@ -523,7 +523,7 @@ onOptionSiteStateSeleted(event:any)
   const aaa = this.customerMasterForm.get('title').value + '. ' + this.customerMasterForm.get('fName').value + ' ' + this.customerMasterForm.get('mName').value+ ' ' +this.customerMasterForm.get('lName').value;
   var person = this.customerMasterForm.get('custType').value;
 
-  
+
 if (person === 'Person'){
   this.custName = aaa;
 }
@@ -566,7 +566,7 @@ if (person === 'Person'){
     this.submitted = true;
     if(this.customerMasterForm.invalid){
     return;
-    } 
+    }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
 
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
@@ -584,16 +584,19 @@ if (person === 'Person'){
     });
   }
   newMast() {
+    var isvaliddata=this.validation();
+    if(isvaliddata===false)
+    {
+      return;
+    }
+
     this.submitted = true;
     if(this.customerMasterForm.invalid){
-    return;
-    } 
+    alert('In Validation');
+      return;
+    }
     // this.submitted = true;
-    // var isvaliddata=this.validation();
-    // if(isvaliddata===false)
-    // {
-    //   return;
-    // }
+
 
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
@@ -890,8 +893,15 @@ if (person === 'Person'){
         if(formValue.custType ==='Person')
         {
           if(formValue.birthDate===undefined)
+          {
           alert('Please enter Birth Date');
-
+          }
+          if(formValue.title===undefined)
+          {
+            alert('Please select Title');
+            validdata=false;
+          }
+          return validdata;
         }
         if(formValue.custType ==='Organization')
         {

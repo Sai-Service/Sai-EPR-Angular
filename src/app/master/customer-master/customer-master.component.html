@@ -84,7 +84,7 @@
                                 <td style="width: 15%" class="LabelFontStyle1">&nbsp;Customer&nbsp;Type&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <select formControlName="custType" 
+                                    <select formControlName="custType"
                                        [ngClass]="{ 'is-invalid': submitted && f.custType.errors }"
                                         (ngModelChange)='onOptioncustTypeSelected($event)' class="form-control" style="width: fit-content;">
                                         <option value="Person" selected>Person</option>
@@ -155,25 +155,13 @@
                                     </table>
                                     </td>
                                 <td>
-<<<<<<< HEAD
                                     <select formControlName="paymentType" id="paymentType"  (ngModelChange)="onOptionsPaymentTyp($event)" class="form-control"  style="width: fit-content;">
                                     <option>--Select--</option>
-=======
-                                    <select formControlName="paymentType" id="paymentType" class="form-control"  style="width: fit-content;"
-                                    [ngClass]="{ 'is-invalid': submitted && f.paymentType.errors }">
-                                    <option></option>
->>>>>>> 6f3d88862d0ba0eafbc3c79d03d9fca6248bbf7b
                                     <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.lookupValueId">
                                         {{sc.lookupValue}}
                                     </option>
                                 </select>
-<<<<<<< HEAD
                                 <input hidden formControlName="termId">
-=======
-                                <div *ngIf="submitted && f.paymentType.errors" class="invalid-feedback">
-                                    <div *ngIf="f.paymentType.errors.required">Payment Type cannot be blank</div>
-                                </div>
->>>>>>> 6f3d88862d0ba0eafbc3c79d03d9fca6248bbf7b
                                 <!-- <input formControlName="cmnTypeId" value={{cmnTypeId}} class="form-control"> -->
                                 </td>
                             </tr>
@@ -435,7 +423,7 @@
                                         <div *ngIf="f.mobile3.errors.maxlength">Please enter 10 digit mobile no</div>
                                         <div *ngIf="f.mobile3.errors.minlength">Please enter 10 digit mobile no</div>
                                     </div>
-                                        
+
                                 </td>
                             </tr>
                             <tr>
@@ -571,7 +559,7 @@
 
                                     <input formControlName="gstNo" value={{gstNo}} class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (keyup)="gstVerification($event)"
-                                        placeholder="Please enter GSTN no">    
+                                        placeholder="Please enter GSTN no">
                                     <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.gstNo.errors.pattern">Invalid GSTIN number format</div>
                                         <div *ngIf="f.gstNo.errors.required">GST number cannot be blank</div>
