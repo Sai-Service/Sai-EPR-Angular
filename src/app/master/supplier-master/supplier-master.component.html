@@ -290,7 +290,7 @@
                             </td>
                         </tr>
                         <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
-                            <td style="width: 15%" class="LabelFontStyle1">&nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle1">&nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                             <td>
                                 <select formControlName="ouId" id="ouId" class="form-control"  [(ngModel)]='ouId'  (ngModelChange)='onOuIdSelected($event)'>
                                     <option>--Select--</option>
@@ -305,7 +305,8 @@
                                 </div>
                                 <span *ngIf="!supplierMasterForm.get('ouId').valid && supplierMasterForm.get('ouId').touched">Please
                                     Operating Unit </span>
-                            </td>
+                            </td> -->
+                            <!-- comment by vinita -->
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Tax&nbsp;Category&nbsp;:&nbsp;</td>
                             <td>
                                 <select formControlName="taxCategoryName" id="taxCategoryName" [(ngModel)]='taxCategoryName' class="form-control" >
@@ -416,8 +417,9 @@
                     <table class="center">
                         <tr>
                             <td>
+                                    <!-- [disabled]="!supplierMasterForm.valid" -->
                                 <button type="submit" class="btn btn-primary" id="register"
-                                [disabled]="!supplierMasterForm.valid" (click)="newsupplierMast()">New supp</button>
+                                (click)="newsupplierMast()">New supp</button>
                                  
                             </td>
                             
