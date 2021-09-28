@@ -1076,6 +1076,8 @@ export class WsVehicleMasterComponent implements OnInit {
 
   }
 
-
+  createCustomer(){
+    this.router.navigate(['/admin/master/customerMaster']);
+  }
 
 }

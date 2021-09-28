@@ -518,7 +518,7 @@
                                         </td>
                                         <td>
                                             <input disabled type="number" formControlName="taxAmt" [(ngModel)]="taxAmt"
-                                                value={{taxAmt}} class="form-control" placeholder="00.00"
+                                                value={{taxAmt}}  class="form-control" placeholder="00.00"  oninput="this.value = Math.abs(this.value)"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
                                         </td>
 

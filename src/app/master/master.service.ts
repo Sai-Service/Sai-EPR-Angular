@@ -2837,7 +2837,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 }
    ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
-   getShipmentList(locId,subInv): Observable<any> {
-    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+   getShipmentList(locId,deptId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
 }
 }
