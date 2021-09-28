@@ -63,7 +63,7 @@ onhandDetailsForm:FormGroup;
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
 
-    this.service.ItemIdList().subscribe(
+    this.service.ItemIdDivisionList(this.divisionId).subscribe(
       data =>{ this.ItemIdList = data;
         console.log(this.ItemIdList);
 
