@@ -117,7 +117,7 @@
                                     <!-- <input formControlName="classCodeType"  value={{classCodeType}} class="form-control"> -->
                                     <!-- [ngValue]="cmnTypeId" -->
                                     <select formControlName="classCodeType" id="classCodeType" class="form-control" style="width: fit-content;"
-                                    [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }">
+                                    [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }" (ngModelChange)="onOptionClassCode($event)">
                                         <option></option>
                                         <option *ngFor="let sc of  classCodeTypeList">
                                             {{sc.code}}
@@ -240,7 +240,22 @@
 
                                 </td>
                             </tr>
-
+                           <tr *ngIf="dispDealer">
+                                    <td style="width: 10%" class="LabelFontStyle1">&nbsp;Dealer&nbsp;Code&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input type="text"  formControlName="dealerCode" value={{dealerCode}}
+                                             class="form-control"
+                                            placeholder="Enter Dealer Code" style="width: 250px;">
+                                    </td>
+                                    <td style="width: 10%" class="LabelFontStyle1">&nbsp;Dealer&nbsp;Type&nbsp;:&nbsp;</td>
+                                    <td>
+                                            <select formControlName="dealerType" id="dealerType"  class="form-control"
+                                            style="width: 100px;">
+                                            <option value="Sai" selected>SAI</option>
+                                            <option value="Other">OTHER</option>
+                                        </select>
+                                    </td>
+                            </tr>
                         </table>
                         <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                             <tr>
