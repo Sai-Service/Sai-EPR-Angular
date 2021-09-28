@@ -470,6 +470,9 @@ UpdateItemLocatorMaster(LocatorMasterRecord) {
   const url = (this.ServerUrl + `/itemlctrmst`);
   return this.http.put(url, LocatorMasterRecord, options);
 }
+getItemLocatorMasterSearch(locId):Observable<any>{
+  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocation/${locId}`);
+}
 ////////////////////////////////Locator Master/////////////////////////////
 
  getLocatorMasterSearch(): Observable<any> {
@@ -1737,17 +1740,12 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
   return this.http.get(this.ServerUrl +`/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=RCV_TRANSACTION`);
 }
 
-getsearchByReceiptNo(segment1): Observable<any> {
-  return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
-//  return this.http.get(this.ServerUrl + `/rcvShipment/receiptHdr/${segment1}`);
+getsearchByReceiptNo(segment1,mLocId): Observable<any> {
+  // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
 
-}
+ }
 
-getsearchByReceiptNo1(segment1,shipFromLocId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${shipFromLocId}`);
-//  return this.http.get(this.ServerUrl + `/rcvShipment/receiptHdr/${segment1}`);
-
-}
 
 getsearchByReceiptNoLine(mPoNumber,mRcptNumber): Observable<any> {
   // alert("Po/Rct :"+mPoNumber +","+mRcptNumber);
@@ -1814,7 +1812,7 @@ public poinvCre(segment1) {
 
 
 poAllRecFind(segment1,billToLoc): Observable<any> {
-  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber?segment1=${segment1}&billToLoc=${billToLoc}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}&billToLoc=${billToLoc}`);
 }
 
 
@@ -2839,7 +2837,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 }
    ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
-   getShipmentList(locId,subInv): Observable<any> {
-    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+   getShipmentList(locId,deptId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
 }
 }

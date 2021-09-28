@@ -45,7 +45,7 @@ interface IRtnToVendor {
   categoryId:number;
   qtyReceived:number;
   polineNum:number;
-  locatorId:number;
+  // locatorId:number;
   poType:string;
   poStatus:string;
   // locatorDesc:any[];
@@ -77,7 +77,7 @@ export class ReturnToVendorComponent implements OnInit {
   ItemLocatorList:any;
   OnHandQty1:any;
 
-  // locatorId:string;
+      // locatorId:string;
       loginName:string;
       loginArray:string;
       name:string;
@@ -240,6 +240,7 @@ export class ReturnToVendorComponent implements OnInit {
             itemDesc:[],
             subInvDesc:[],
             subInventoryId:[],
+            locatorId:[],
             locatorDesc:[],
             uom:[],
             unitPrice:[],
@@ -259,7 +260,6 @@ export class ReturnToVendorComponent implements OnInit {
             billToLocId:[],
             // categoryId:[''],
             polineNum:[],
-            locatorId:[],
             selectFlag:[],
            
         } );
@@ -503,7 +503,7 @@ export class ReturnToVendorComponent implements OnInit {
           // this.lineDetailsArray.reset();
            this.returntoVendorForm.get("searchReceiptNo").disable();
         
-          this.service.getsearchByReceiptNo(mRcptNumber)
+          this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
             data => {
               this.lstReceiptHeader = data;
@@ -527,17 +527,13 @@ export class ReturnToVendorComponent implements OnInit {
                 this.billToLocId=this.lstReceiptHeader.billToLocId;
                 this.shipToLocId=this.lstReceiptHeader.shipToLocId;
                 this.poHeaderId=this.lstReceiptHeader.poHeaderId;
-
                 this.ewayBillNo=this.lstReceiptHeader.ewayBillNo;
                 this.ewayBillDate=this.lstReceiptHeader.ewayBillDate;
                 this.gstDocNo=this.lstReceiptHeader.gstDocNo;
                 this.gstDocDate=this.lstReceiptHeader.gstDocDate;
-            
-
                 this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
-                           
               } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found / doesn't exists.");
                 this.headerFound=false;this.resetMast();}
                
@@ -728,6 +724,8 @@ export class ReturnToVendorComponent implements OnInit {
 
       var mItemId =rtvLineArr[index].invItemId;
       var subinvId =rtvLineArr[index].subInventoryId;
+      var mLocatorId=rtvLineArr[index].locatorId;
+      mLocatorId=101;
       // alert ("Item Id :" +mItemId  + " Index : "+ index + " Repeat Status :" +this.lineItemRepeated);
       
        if(mItemId >0) {
@@ -745,17 +743,22 @@ export class ReturnToVendorComponent implements OnInit {
         this.lineDetailsArray.controls[index].get('qtyReturn').enable();
         var len1=rtvLineArr.length;
 
-        this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+        // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+          this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
           .subscribe(
           data => {
-            this.ItemLocatorList = data;
+            // this.ItemLocatorList = data;
+            this.ItemLocatorList = data.obj;
             console.log(this.ItemLocatorList);
-            var avlQty=this.ItemLocatorList[0].onHandQty
+
+            // var avlQty=this.ItemLocatorList[0].onHandQty
+            var avlQty=this.ItemLocatorList;
+            alert ("Onhand Quantity Available in Locator :" +mLocatorId+" - Avaialable Qty : " +avlQty);
             patch.controls[index].patchValue({qtyOnHand:avlQty})
+
             if (avlQty <=0 ) {
               alert ("Onhand Quantity not Available - Avaialable Qty : " +avlQty);
-              // this.lineDetailsArray.removeAt(index);
-              patch.controls[index].patchValue({selectFlag:''})
+               patch.controls[index].patchValue({selectFlag:''})
               this.lineDetailsArray.controls[index].get('qtyReturn').disable();
               return;
              }
@@ -979,6 +982,8 @@ export class ReturnToVendorComponent implements OnInit {
               billToLocId:this.returntoVendorForm.get('billToLocId').value,
               parentShipHeaderId:  this.lstReceiptHeader.shipHeaderId,
               parentShipLineId:selectedValue.shipLineId,
+              locatorDesc:selectedValue.locatorDesc,
+              locatorId:selectedValue.locatorId,
         
             }
           );

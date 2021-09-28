@@ -809,9 +809,8 @@
                                       <div *ngIf="showCreateCustButton; then CustYes; else CustNo"></div>
                                       <ng-template #CustYes>
                                       <td>
-                                        <!-- <a   [routerLink]="['/admin/master/customerMaster']" >Create&nbsp;Customer</a> -->
                                           <button type="button"  class="btn btn-primary" 
-                                           style="width: 8rem;color: black;" [routerLink]="['/admin/master/customerMaster']"> Create&nbsp;Customer </button>
+                                           style="width: 8rem;color: black;" data-dismiss="modal" (click)="createCustomer()"> Create&nbsp;Customer </button>
                                      </td>
                                       </ng-template>
                                       <ng-template #CustNo></ng-template>
@@ -967,7 +966,7 @@
                                       <td>
                                           <button type="button"  class="btn btn-primary" 
                                            style="width: 10rem;color: black;"
-                                           [routerLink]="['/admin/master/customerMaster']"> Create&nbsp;Billing Customer</button>
+                                          (click)="CreateNewCustomer()"> Create&nbsp;Billing Customer</button>
                                       </ng-template>
                                       <ng-template #CustBNo></ng-template>
                                     </tr>
