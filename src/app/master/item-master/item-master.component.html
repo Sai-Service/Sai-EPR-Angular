@@ -33,27 +33,32 @@
                             <tr>
                                 <td style="width:12%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
                                 <td>
+                         
                                     <select style="width:fit-content" formControlName="itemTypeForCat"
                                         id="itemTypeForCat" class="form-control"
-                                        (ngModelChange)='onOptionsSelectedItemType($event)'>
-                                        <option>--Select--</option>
+                                         [ngClass]="{ 'is-invalid': submitted && f.itemTypeForCat.errors }"
+                                         (ngModelChange)='onOptionsSelectedItemType($event)'>
+                                        <option></option>
                                         <option *ngFor="let sc of  SSitemTypeList">
                                             {{sc.itemType}}
                                         </option>
                                     </select>
+                                    <div *ngIf="submitted && f.itemTypeForCat.errors" class="invalid-feedback">
+                                        <div *ngIf="f.itemTypeForCat.errors.required">Please select Item type</div>
+                                    </div>
                                 </td>
                                 <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
                                 <td>
-                                    <select  style="width:fit-content" formControlName="categoryId" id="categoryId" class="form-control">
-                                        <option>--Select--</option>
+                                    <select  style="width:fit-content" formControlName="categoryId" id="categoryId" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f.categoryId.errors }">
+                                        <option></option>
                                         <option *ngFor="let sc of  categoryIdList" [ngValue]="sc.categoryId">
                                             {{sc.attribute1}}
                                         </option>
                                     </select>
                                     <div *ngIf="submitted && f.categoryId.errors" class="invalid-feedback">
                                         <div *ngIf="f.categoryId.errors.required">Enter Item Category </div>
-                                        <div *ngIf="f.categoryId.errors?.maxLength">Enter Item Category
-                                        </div>
+                                      
                                     </div>
                                     <!--<span
                                         *ngIf="!itemMasterForm.get('categoryId').valid && itemMasterForm.get('categoryId').touched">Please
@@ -62,12 +67,14 @@
                                 <td style="width: 12%" class="LabelFontStyle">HSN&nbsp;/&nbsp;SAC&nbsp;:&nbsp;</td>
                                 <td>
                                     <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
-                                        (ngModelChange)='onHsnCodeSelected($event)'>
-                                        <option>--Select--</option>
+                                        (ngModelChange)='onHsnCodeSelected($event)'
+                                        [ngClass]="{ 'is-invalid': submitted && f.hsnSacCode.errors }">
+                                        <option></option>
                                         <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
                                             {{sc.hsnsaccode}}-{{sc.description}}
                                         </option>
                                     </select>
+              
                                     <!-- <input type="text" formControlName="hsnSacCode"
                                     (keyup)="getHSCSACCODE($event)" id="invItemIdFirstWay"
                                     list="dynmicUserIds1" class="form-control"
@@ -78,9 +85,8 @@
                                     </option>
                                 </datalist> -->
                                     <div *ngIf="submitted && f.hsnSacCode.errors" class="invalid-feedback">
-                                        <div *ngIf="f.hsnSacCode.errors.required">Enter hsn/sac </div>
-                                        <div *ngIf="f.hsnSacCode.errors?.maxLength">Enter hsn/sac
-                                        </div>
+                                        <div *ngIf="f.hsnSacCode.errors.required">HSN / SAC code cannot be blank </div>
+                                        <!-- <div *ngIf="f.hsnSacCode.errors?.maxLength">Enter hsn/sac</div> -->
                                     </div>
                                     <!--<span
                                         *ngIf="!itemMasterForm.get('hsnSacCode').valid && itemMasterForm.get('hsnSacCode').touched">Please
@@ -90,16 +96,16 @@
                                 <td>
                                     <!-- <input type="checkbox" formControlName="uom" [(ngModel)]='uom'(change)="UomEvent($event)"> -->
                                     <select style="width:fit-content" formControlName="uom" id="uom"
-                                        class="form-control">
-                                        <option>--Select--</option>
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.uom.errors }">
+                                        <option></option>
                                         <option *ngFor="let sc of uomList" [ngValue]="sc.code">
                                             {{sc.code}}
                                         </option>
                                     </select>
                                     <div *ngIf="submitted && f.uom.errors" class="invalid-feedback">
-                                        <div *ngIf="f.uom.errors.required">Enter UOM </div>
-                                        <div *ngIf="f.uom.errors?.maxLength">Enter UOM
-                                        </div>
+                                        <div *ngIf="f.uom.errors.required">Please enter UOM </div>
+                                        <!-- <div *ngIf="f.uom.errors?.maxLength">Enter UOM</div> -->
                                     </div>
                                     <!--<span
                                         *ngIf="!itemMasterForm.get('uom').valid && itemMasterForm.get('uom').touched">Please
@@ -112,6 +118,7 @@
                                 <td>
                                     <select style="width:fit-content" formControlName="status" id="status"
                                         class="form-control" [ngModel]="status"
+                                        [ngClass]="{ 'is-invalid': submitted && f.status.errors }"
                                         (ngModelChange)='onOptionsSelected($event)'>
                                         <option *ngFor="let sc of  statusList">
                                             {{sc.codeDesc}}
@@ -133,9 +140,9 @@
                                             [ngClass]="{ 'is-invalid': submitted && f.segment.errors }"
                                             placeholder="Enter Item code" style="width: 100%;">
                                         <div *ngIf="submitted && f.segment.errors" class="invalid-feedback">
-                                            <div *ngIf="f.segment.errors.required">Enter Item Code </div>
-                                            <div *ngIf="f.segment.errors?.maxLength">Enter Item Code
-                                            </div>
+                                            <div *ngIf="f.segment.errors.required">Item code cannot be blank </div>
+                                            <div *ngIf="f.segment.errors.maxLength">Maximum 20 characters allowed</div>
+                                            <div *ngIf="f.segment.errors.minLength">Maximum 4 characters required</div>
                                         </div>
                                         <!--<span
                                             *ngIf="!itemMasterForm.get('segment').valid && itemMasterForm.get('segment').touched">Please
@@ -157,8 +164,8 @@
                                         placeholder="Enter Item Description" style="width: 100%;">
                                     <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
                                         <div *ngIf="f.description.errors.required">Enter Item Description </div>
-                                        <div *ngIf="f.description.errors?.maxLength">Enter Item Description
-                                        </div>
+                                        <div *ngIf="f.description.errors.maxLength">Maximum 150 characters allowed</div>
+                                        <div *ngIf="f.description.errors.minLength">Maximum 4 characters required</div>
                                     </div>
                                     <!--<span
                                         *ngIf="!itemMasterForm.get('description').valid && itemMasterForm.get('description').touched">Please
@@ -259,7 +266,10 @@
                                     </td>
                                     <td>
                                         <input type="text" style="width: 150px;" formControlName="lookupValueDesc3"
-                                            [(ngModel)]="segment3" value="{{segment3}}" class="form-control">
+                                            [(ngModel)]="segment3" value="{{segment3}}" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
+                                            >
+
                                         <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
                                     </td>
                                 </tr>
@@ -502,7 +512,8 @@
                                                     <td >
                                                         <select  style="width:fit-content" formControlName="costCenter" id="costCenter"
                                                             class="form-control" [(ngModel)]="costCenter"
-                                                            (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                                            (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.costCenter.errors }">
                                                             <option *ngFor="let sc of  CostCenterList" [ngValue] = "sc.lookupValue">
                                                                 {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                                             </option>

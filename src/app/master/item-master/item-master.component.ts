@@ -292,11 +292,11 @@ export class ItemMasterComponent implements OnInit {
       orgId:[],
       divisionId:[],
 
-
-      segment:['', [Validators.required]],
-      description:['', [Validators.required]],
+      itemType:['', [Validators.required]],
+      segment:['', [Validators.required,Validators.minLength(4),Validators.maxLength(20),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      description:['', [Validators.required,Validators.minLength(4),Validators.maxLength(150),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       categoryId:['', [Validators.required]],
-      itemTypeForCat:[],
+      itemTypeForCat:['', [Validators.required]],
       uom:['', [Validators.required]],
       costing:['', [Validators.required]],
       stockable:['', [Validators.required]],
@@ -334,7 +334,6 @@ export class ItemMasterComponent implements OnInit {
       smartCardNumber:[''],
       ewInsurerId:[''],
       ewInsurerSite:[''],
-      itemType:[''],
       insurerCompId:[''],
       fuelType:[],
       insurerSiteId:[''],
@@ -1061,6 +1060,12 @@ else{
     return val;
   }
   newItemMast(){
+    this.submitted = true;
+    
+    if(this.itemMasterForm.invalid){
+      // alert('Error');
+    return;
+    } 
     const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
     // alert(this.stockable)
     formValue.stockable= this.stockable;
