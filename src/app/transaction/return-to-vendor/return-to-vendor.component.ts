@@ -506,7 +506,7 @@ export class ReturnToVendorComponent implements OnInit {
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
             data => {
-              this.lstReceiptHeader = data;
+              this.lstReceiptHeader = data.obj;
               console.log(this.lstReceiptHeader);
               // alert(this.lstReceiptHeader.receiptNo);
               // alert("PO /Receipt Number :"+this.lstReceiptHeader.segment1+"," +mRcptNumber);

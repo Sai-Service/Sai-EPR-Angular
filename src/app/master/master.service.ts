@@ -1743,6 +1743,12 @@ getsearchByReceiptNo(segment1,mLocId): Observable<any> {
 
  }
 
+ getsearchByReceiptNo1(segment1,mLocId): Observable<any> {
+  // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+
+ }
+
 
 getsearchByReceiptNoLine(mPoNumber,mRcptNumber): Observable<any> {
   // alert("Po/Rct :"+mPoNumber +","+mRcptNumber);
@@ -1808,9 +1814,10 @@ public poinvCre(segment1) {
 }
 
 
-poAllRecFind(segment1): Observable<any> {
+poAllRecFind(segment1,locId): Observable<any> {
   return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}`);
 }
+
 
 
 

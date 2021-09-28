@@ -393,6 +393,9 @@
                             data-toggle="modal" data-target="#CustomerInfo"  style="width: 10rem;color: black;">
                             &nbsp;Customer Details</button>
                         </td>
+
+                      
+
                 </tr>
               
                
@@ -401,6 +404,14 @@
           <!-- </div> -->
 
           </div>
+
+            <!--           
+          <div class="tab-pane fade" id="panel103" role="tabpanel">
+
+
+
+          </div> -->
+
          
 
 
@@ -603,6 +614,9 @@
     </div>
 </div>
 
+
+
+
 <!-- ------------------------------------Modal form Start - Customer Details--------------------------------- -->
 <!-- CustomerInfo -->
 
@@ -787,12 +801,10 @@
                                     <tr>
                                       <td style="width: 12%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
                                       <td> <input disabled  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
-                                       
-                                      
                            
-                                       <td style="width: 12%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
-                           
-                                       <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
+                                    <td style="width: 12%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
+                        
+                                    <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
                                     </tr>
               
                                     <tr>
@@ -812,6 +824,12 @@
                                           <button type="button"  class="btn btn-primary" 
                                            style="width: 8rem;color: black;"
                                           (click)="CreateNewCustomer()"> Create&nbsp;Customer </button>
+
+                                          <!-- <button type="button"  class="btn btn-primary" 
+                                          style="width: 8rem;color: black;"
+                                          [routerLink]="['/customerMaster']" > Create&nbsp;Customer </button>
+                                          -->
+                                        
                                      </td>
                                       </ng-template>
                                       <ng-template #CustNo></ng-template>
