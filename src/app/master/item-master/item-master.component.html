@@ -518,6 +518,9 @@
                                                                 {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                                             </option>
                                                         </select>
+                                                        <div *ngIf="submitted && f.costCenter.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.costCenter.errors.required">Cost Center cannot be blank</div>
+                                                          </div>
                                                     </td>
                                                
                                                     <td >
@@ -537,12 +540,16 @@
                                                                 <td>
                                                                     <select  formControlName="poChargeAccount" id="poChargeAccount" class="form-control"
                                                                         [(ngModel)]="poChargeAccount"
+                                                                        [ngClass]="{ 'is-invalid': submitted && f.NaturalAccount.errors }"
                                                                         (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
-                                                                        <option>--Select--</option>
+                                                                        <option></option>
                                                                         <option *ngFor="let sc of  NaturalAccountList" [ngValue]="sc.lookupValue">
                                                                             {{sc.lookupValue}}-{{sc.lookupValueDesc}}
                                                                         </option>
                                                                     </select>
+                                                                    <div *ngIf="submitted && f.NaturalAccount.errors" class="invalid-feedback">
+                                                                        <div *ngIf="f.NaturalAccount.errors.required">Natural Account cannot be blank</div>
+                                                                      </div>
                                                                 </td>
                                                                 <!-- <td>
                                                                     <input type="text" style="width: 150px; background-color: white; border: none;"
@@ -588,6 +595,7 @@
                                                         </td>
                                                         <td><input disabled formControlName="segmentName"
                                                             class="form-control" value={{segmentName}}></td>
+
 
                                                 </tr>
                                                 
@@ -688,19 +696,17 @@
                                                     <td>
                                                         <select  style="width:fit-content" formControlName="mainModel" id="mainModel"
                                                             [(ngModel)]="mainModel" class="form-control"
-                                                            (ngModelChange)="onOptionsSelectedVariant($event)">
-                                                            <option>--Select--</option>
+                                                            (ngModelChange)="onOptionsSelectedVariant($event)"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.mainModel.errors }">
+                                                            <option></option>
                                                             <option *ngFor="let mm of mainModelList">
                                                                 {{mm.code}}
                                                                 <!-- -{{sc.divisionName}} -->
                                                             </option>
                                                         </select>
-                                                        <div *ngIf="submitted && f.mainModel.errors"
-                                                            class="invalid-feedback">
-                                                            <div *ngIf="f.mainModel.errors.required">Enter main model
-                                                            </div>
-                                                            <div *ngIf="f.mainModel.errors?.maxLength">Enter main model
-                                                            </div>
+                                                        <div *ngIf="submitted && f.mainModel.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.mainModel.errors.required">Please enter Main Model</div>
+                                                            <!-- <div *ngIf="f.mainModel.errors?.maxLength">Enter main model</div> -->
                                                         </div>
                                                         <!--<span
                                                             *ngIf="!itemMasterForm.get('mainModel').valid && itemMasterForm.get('mainModel').touched">Please
@@ -712,13 +718,18 @@
                                                     <td><select  style="width:fit-content" formControlName="variantCode" [(ngModel)]="variantCode"
                                                             id="variantCode" class="form-control" style="width: 170px;"
                                                             (ngModelChange)="onOptionsSelectedColor($event)"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.variantCode.errors }"
                                                             (keyup)="onKey($event)" uppercase
                                                             style="text-transform: uppercase;">
-                                                            <option>--Select--</option>
+                                                            <option></option>
                                                             <option *ngFor="let mm of VariantSearch" [ngValue]="mm.variant">
                                                                 {{mm.variant}}-{{mm.varDescription}}
                                                             </option>
-                                                        </select></td>
+                                                        </select>
+                                                        <div *ngIf="submitted && f.variantCode.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.variantCode.errors.required">Please enter Variant Code</div>
+                                                        </div>
+                                                    </td>
                                                     <!-- <td><input type="text" formControlName="variantCode"
                                                     id="variantCode" class="form-control">
 
@@ -737,17 +748,21 @@
                                             </td> -->
                                                     <td style="width: 15;  " class="LabelFontStyle1">
                                                         Color&nbsp;Code&nbsp;:&nbsp;</td>
-                                                    <select  style="width:fit-content" formControlName="colorCode" (keyup)="onKey($event)"
+                                                    <select  formControlName="colorCode" (keyup)="onKey($event)"
                                                         [(ngModel)]="colorCode" id="colorCode" class="form-control"
-                                                        style="width: 170px;" uppercase
+                                                        [ngClass]="{ 'is-invalid': submitted && f.colorCode.errors }"
+                                                      uppercase
                                                         style="text-transform: uppercase;">
-                                                        <option>--Select--</option>
+                                                        <option></option>
                                                         <option *ngFor="let cc of ColourSearch" [ngValue]="cc.ColorCode">
                                                             {{cc.ColorCode}}-{{cc.colorDesc}}
                                                         </option>
                                                     </select>
-                                                    <!-- <td>
-                                                <select formControlName="colorCode" id="colorCode"
+                                                    <div *ngIf="submitted && f.colorCode.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.colorCode.errors.required">Please enter color Code</div>
+                                                    </div>
+                                                 <td>
+                                                <!-- <select formControlName="colorCode" id="colorCode"
                                                     class="form-control">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let cc of colorCodeList">
@@ -760,7 +775,7 @@
                                                     </div>
                                                     <div *ngIf="f.colorCode.errors?.maxLength">Enter color code
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <!--<span
                                                     *ngIf="!itemMasterForm.get('colorCode').valid && itemMasterForm.get('colorCode').touched">Please
                                                     Enter color code</span>-->
@@ -775,10 +790,8 @@
                                                             placeholder="Enter engine no">
                                                         <div *ngIf="submitted && f.engineNo.errors"
                                                             class="invalid-feedback">
-                                                            <div *ngIf="f.engineNo.errors.required">Enter engine no
-                                                            </div>
-                                                            <div *ngIf="f.engineNo.errors?.maxLength">Enter engine no
-                                                            </div>
+                                                            <div *ngIf="f.engineNo.errors.required">Please engine no </div>
+                                                            <!-- <div *ngIf="f.engineNo.errors?.maxLength">Enter engine no </div> -->
                                                         </div>
                                                         <!--  <span
                                                             *ngIf="!itemMasterForm.get('engineNo').valid && itemMasterForm.get('engineNo').touched">Please
@@ -858,13 +871,13 @@
                                                     style="font-size: 10px;color: black;">Vehicle Insurer Details&nbsp;
                                                 </legend>
                                                 <tr>
-                                                    <td style="width: 18%" class="LabelFontStyle1">
+                                                    <td style="width: 18%" class="LabelFontStyle">
                                                         Vehicle&nbsp;Insurer&nbsp;Name&nbsp;:&nbsp;</td>
                                                     <td>
                                                         <select  style="width:fit-content"  formControlName="insurerCompId" id="insurerCompId"
                                                             (ngModelChange)='onInsurerNameSelected($event)'
                                                             class="form-control">
-                                                            <option>--Select--</option>
+                                                            <option></option>
                                                             <option *ngFor="let sc of insNameList"
                                                                 [ngValue]="sc.customerId">
                                                                 {{sc.custName}}
@@ -872,18 +885,14 @@
                                                         </select>
                                                         <div *ngIf="submitted && f.insurerCompId.errors"
                                                             class="invalid-feedback">
-                                                            <div *ngIf="f.insurerCompId.errors.required">Enter insurer
-                                                                name
-                                                            </div>
-                                                            <div *ngIf="f.insurerCompId.errors?.maxLength">Enter insurer
-                                                                name
-                                                            </div>
+                                                            <div *ngIf="f.insurerCompId.errors.required">Enter insurer name </div>
+                                                            <div *ngIf="f.insurerCompId.errors?.maxLength">Enter insurer name </div>
                                                         </div>
                                                         <!--<span
                                                             *ngIf="!itemMasterForm.get('insurerCompId').valid && itemMasterForm.get('insurerCompId').touched">Please
                                                             Enter insurer name</span>-->
                                                     </td>
-                                                    <td style="width: 18%" class="LabelFontStyle1">
+                                                    <td style="width: 18%" class="LabelFontStyle">
                                                         Vehicle&nbsp;Insurer&nbsp;Site&nbsp;:&nbsp;</td>
                                                     <td>
                                                         <select  style="width:fit-content" formControlName="insurerSiteId" id="insurerSiteId"
@@ -896,18 +905,14 @@
                                                         </select>
                                                         <div *ngIf="submitted && f.insurerSiteId.errors"
                                                             class="invalid-feedback">
-                                                            <div *ngIf="f.insurerSiteId.errors.required">Enter insurer
-                                                                site
-                                                            </div>
-                                                            <div *ngIf="f.insurerSiteId.errors?.maxLength">Enter insurer
-                                                                site
-                                                            </div>
+                                                            <div *ngIf="f.insurerSiteId.errors.required">Enter insurer site </div>
+                                                            <div *ngIf="f.insurerSiteId.errors?.maxLength">Enter insurer site </div>
                                                         </div>
                                                         <!--<span
                                                             *ngIf="!itemMasterForm.get('insurerSiteId').valid && itemMasterForm.get('insurerSiteId').touched">Please
                                                             Enter insurer site</span>-->
                                                     </td>
-                                                    <td style="width: 18%" class="LabelFontStyle1">
+                                                    <td style="width: 18%" class="LabelFontStyle">
                                                         Vehicle&nbsp;Insurance&nbsp;expiry&nbsp;date&nbsp;:&nbsp;</td>
                                                     <td><input type="date" class="form-control"
                                                             min="{{minDate | date:'yyyy-MM-dd'}}"></td>

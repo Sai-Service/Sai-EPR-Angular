@@ -310,16 +310,16 @@ export class ItemMasterComponent implements OnInit {
       hsnGstPer:[],
       internalOrder:['', [Validators.required]],
       marginCategory:[],
-      assetItem:['', [Validators.required]],
-      lotSize:['', [Validators.required]],
+      assetItem:[],
+      lotSize:[],
       status:['', [Validators.required]],
-      type:['', [Validators.required]],
-      mainModel:['', [Validators.required]],
-      colorCode:['', [Validators.required]],
-      variantCode:['', [Validators.required]],
-      chassisNo:['', [Validators.required]],
-      engineNo:['', [Validators.required]],
-      vehicleDelvDate:['', [Validators.required]],
+      type:[],
+      mainModel:[],
+      colorCode:[],
+      variantCode:[],
+      chassisNo:[],
+      engineNo:[],
+      vehicleDelvDate:[],
       // manYear:[''],
       loyaltyCardDate:[],
       // octraiBillDate:[''],
@@ -1060,12 +1060,11 @@ else{
     return val;
   }
   newItemMast(){
-    this.submitted = true;
-    
-    if(this.itemMasterForm.invalid){
-      // alert('Error');
-    return;
-    } 
+    // this.submitted = true;
+    // if(this.itemMasterForm.invalid){
+    //   alert('Error');
+    // return;
+    // } 
     const formValue: IItemMaster = this.transData(this.itemMasterForm.value);
     // alert(this.stockable)
     formValue.stockable= this.stockable;
