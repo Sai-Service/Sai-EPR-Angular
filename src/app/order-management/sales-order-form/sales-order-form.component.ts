@@ -503,6 +503,7 @@ export class SalesOrderFormComponent implements OnInit {
     
       this.sub = this.router1.params.subscribe(params => {
         this.orderNumber = params['orderNumber'];
+        // alert(this.orderNumber)
         if (this.orderNumber!=undefined){
         this.OrderFind(this.orderNumber);
         }

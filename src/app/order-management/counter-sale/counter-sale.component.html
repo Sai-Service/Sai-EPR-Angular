@@ -777,6 +777,7 @@
                                             <th scope="col" style="width: 40px;">Type Category</th>
                                             <th scope="col" style="width: 160px;">Item code</th>
                                             <th scope="col" style="width: 70px;">Qty</th>
+                                            <th scope="col" style="width: 70px;">Back Order Qty</th>
                                             <th scope="col" style="width: 160px;">Description</th>
                                             <th scope="col" style="width: 160px;">Locator</th>
                                             <th scope="col" style="width: 160px;">Available QTY</th>
@@ -858,6 +859,12 @@
                                                         <td>
                                                             <input type="number" formControlName="pricingQty"
                                                                 class="form-control" (change)="onKey(i)"
+                                                                style="height: 20px;width: 70px;" min="0"
+                                                                oninput="this.value = Math.abs(this.value)">
+                                                        </td>
+                                                        <td>
+                                                            <input disabled type="number" formControlName="orderedQty"
+                                                                class="form-control" 
                                                                 style="height: 20px;width: 70px;" min="0"
                                                                 oninput="this.value = Math.abs(this.value)">
                                                         </td>
@@ -968,6 +975,12 @@
                                                             <input disabled type="number" formControlName="pricingQty"
                                                                 class="form-control" (change)="onKey(i)"
                                                                 style="height: 20px;width: 70px;">
+                                                        </td>
+                                                        <td>
+                                                            <input disabled type="number" formControlName="orderedQty"
+                                                                class="form-control" 
+                                                                style="height: 20px;width: 70px;" min="0"
+                                                                oninput="this.value = Math.abs(this.value)">
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="orderedItem"
@@ -1364,7 +1377,7 @@
                         </ng-template>
                         <ng-template #elseBlockPaymentButton>
                             <button class="btn btn-primary"  id="paymentButton" #paymentButton
-                                [routerLink]="['/admin/OrderManagement/PaymentReceipt',orderNumber]">Payment</button>
+                                [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                         </ng-template>
                     </td>
                 </tr>
