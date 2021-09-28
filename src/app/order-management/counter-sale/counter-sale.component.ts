@@ -782,7 +782,7 @@ export class CounterSaleComponent implements OnInit {
           }
 
           for (let k = 0; k < data.obj.taxAmounts.length; k++) {
-            alert('check for tax details')
+            // alert('check for tax details')
             let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
             (controlinv.controls[k]).patchValue({
               totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
@@ -854,9 +854,10 @@ export class CounterSaleComponent implements OnInit {
           //   this.PaymentButton = false;
           // }
           if (data.obj.transactionTypeName === 'Accessories Sale - Cash') {
-            // alert(data.obj.transactionTypeName)
             this.paymentButton.nativeElement.hidden = true;
-            // document.getElementById('paymentButton').style.display = 'none';
+          }
+          else if (data.obj.transactionTypeName === 'Accessories Sale - Credit'){
+            this.PaymentButton=false;
           }
         });
 
@@ -1033,7 +1034,7 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    alert('hi')
+    // alert('hi')
     // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
@@ -1082,7 +1083,7 @@ export class CounterSaleComponent implements OnInit {
             this.birthDate = this.selCustomer.birthDate;
             this.weddingDate = this.selCustomer.weddingDate;
             if (selSite.disPer != null){
-              alert(selSite.disPer)
+              // alert(selSite.disPer)
               this.CounterSaleOrderBookingForm.patchValue({discType:'Header Level Discount'})
             this.CounterSaleOrderBookingForm.patchValue({disPer: selSite.disPer })
             this.orderlineDetailsGroup().patchValue({disPer: selSite.disPer})
@@ -1236,7 +1237,7 @@ export class CounterSaleComponent implements OnInit {
           }
           else {
             if (data.code === 400) {
-              alert('RES' + data.message);
+              alert(data.message);
               this.displaycreateCustomer = false;
               this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
               this.CounterSaleOrderBookingForm.get('custName').disable();
@@ -1366,7 +1367,6 @@ export class CounterSaleComponent implements OnInit {
       this.CounterSaleOrderBookingForm.get('segment').disable();
       this.orderlineDetailsArray().get('segment').disable();
       (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
-
     }
     else {
       //let select = this.invItemList1.find(d => d.segment === segment);
