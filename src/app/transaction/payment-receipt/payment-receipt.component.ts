@@ -16,6 +16,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
 interface IPaymentRcpt {
     deptId : number;
+    deptName:string;
     customerId: number;
     orderNumber:number;
     ayType:string;
@@ -25,8 +26,7 @@ interface IPaymentRcpt {
     bankBranch:string;
     checkNo:string;
     checkDate:string;
-  receiptMethodName:string;
-   
+  receiptMethodName:string;   
   }
 
 
@@ -37,7 +37,7 @@ interface IPaymentRcpt {
   })
 export class PaymentReceiptComponent implements OnInit  {
   paymentReceiptForm : FormGroup;
-
+  deptName:string;
     public DivisionIDList : Array<string>=[];
     public OUIdList: Array<string> = [];
     public DepartmentList: Array<string> = [];
@@ -86,13 +86,13 @@ export class PaymentReceiptComponent implements OnInit  {
     // public searchValue=2111242154;
     // public  searchBy ="ORDER NUMBER"
 
-    // searchByRcptNo  : string;
-    // searchByOrderNo  : string;
-    // searchByCustNo  : string;
+    searchByRcptNo  : number;
+    searchByOrderNo  : number;
+    searchByCustNo  : number;
     
-    public searchByRcptNo =2111202105;
-    public searchByOrderNo =2111202148;
-    public searchByCustNo =1212;
+    // public searchByRcptNo =2111202105;
+    // public searchByOrderNo =2111202148;
+    // public searchByCustNo =1212;
 
     // searchByOrderNo:number;
     // searchByCustNo:number;
@@ -351,7 +351,7 @@ export class PaymentReceiptComponent implements OnInit  {
       this.receiptNumber = select.receiptNumber;
       this.displayButton = false;
       this.display = false;
-      
+      this.paymentReceiptForm.disable();
     }
   }
 
@@ -382,17 +382,31 @@ export class PaymentReceiptComponent implements OnInit  {
   newMast() {
     const formValue: IPaymentRcpt =this.transeData(this.paymentReceiptForm.value);
    let selectReceipt=this.ReceiptMethodList.find(d=>d.receiptMethodId===this.receiptMethodId);
-    formValue.receiptMethodName = selectReceipt.receiptMethodName;
-    alert(selectReceipt.receiptMethodName +'----'+ this.receiptMethodId );
+   console.log(selectReceipt); 
+   formValue.receiptMethodName = selectReceipt.methodName;
+   formValue.deptName=(sessionStorage.getItem('deptName'));
+    // alert(selectReceipt.methodName +'----'+ this.receiptMethodId );
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFUILY');
+        alert(res.message);
         // this.paymentReceiptForm.reset();
         this.paymentReceiptForm.disable();
+        this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
+      .subscribe(
+      data => {
+        this.lstcomments = data.obj.oePayList;
+        this.custName=data.obj.custName;
+        this.customerId=data.obj.customerId;
+        // this.lstcomments = data.obj;
+        // this.lstcomments = data;
+        console.log(this.lstcomments);
+       }
+       
+      );
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
-          this.paymentReceiptForm.reset();
+          alert(res.message);
+          // this.paymentReceiptForm.reset();
         }
       }
     });
@@ -408,6 +422,22 @@ export class PaymentReceiptComponent implements OnInit  {
     // this.router.navigate(['admin']);
     this.location.back();
   }
+
+
+  routeOMAndCSPage(){
+    if (this.orderNumber != null){
+    if (Number(sessionStorage.getItem('deptId'))==1 ){
+      // alert(Number(sessionStorage.getItem('deptId'))+'----'+ this.orderNumber)
+     this.router.navigate(['/admin/OrderManagement/SalesOrderForm',this.orderNumber]);
+    }
+     else if (Number(sessionStorage.getItem('deptId'))==6){
+       this.router.navigate(['/admin/OrderManagement/CounterSaleOrder',this.orderNumber]);
+      }
+    }
+    else{
+      this.location.back();
+    }
+   }
 
   reverseReceipt(){
 

@@ -138,6 +138,7 @@ export class CounterSaleComponent implements OnInit {
   frmLocatorId: number;
   activeLineNo: number = 1;
   divisionId: number;
+  orderedQty:number;
   issueCodeType: string;
   uom: string;
   public sub: any;
@@ -471,6 +472,7 @@ export class CounterSaleComponent implements OnInit {
       itemId: [],
       orderedItem: [''],
       pricingQty: ['', [Validators.required]],
+      orderedQty:[''],
       unitSellingPrice: [''],
       taxCategoryName: ['', [Validators.required]],
       baseAmt: [],
