@@ -1289,6 +1289,7 @@ export class CounterSaleComponent implements OnInit {
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
+    alert(arrayControl[index].pricingQty);
     console.log(baseAmt);
     // debugger;
     var disAmt1 = arrayControl[index].disAmt;
