@@ -274,34 +274,54 @@
             <td style="text-align:center" colspan="8">
               <img id="bajajlogo" src="assets\images\Saifinal.jpg" style="background-color: white;">
             </td>
-            <td><a class="dropdown-item" (click)="close()" style="color: blue;"><u>Logout</u></a></td>
-          </tr>
-          <tr>
-            <td class="center">
-              <table class="center" style="width: 100%;">
-                <tr style="background-color: rgb(224, 224, 231); border:1px">
-                  <td style="font-size: 10px;color: blue;">
-                    User&nbsp;Details&nbsp;&nbsp;:
-
+            <td>
+              <table class="center" style="padding-top: 45px;">
+                <tr>
+                  <td>
+                    <table>
+                      <tr>
+                        <td style="font-size: 10px;color: blue;">
+                          OU&nbsp;Name&nbsp;:&nbsp;
+                        </td>
+                        <td style="font-size: 10px;color: black;font-weight: bold;">{{ouName}}</td>
+                      </tr>
+                    </table>
                   </td>
-                  <td style="font-size: 10px;color: black;font-weight: bold;">{{ticketNo}}-{{fullName}}</td>&nbsp;&nbsp;
-                  <td style="font-size: 10px;color: blue;">
-                    Department&nbsp;&nbsp;:
-                  </td>
-                  <td style="font-size: 10px;color: black;font-weight: bold;">{{deptName}}</td>&nbsp;&nbsp;
-                  <td style="font-size: 11px;color: blue;">
-                    Location&nbsp;&nbsp;:
-                  </td>
-                  <td style="font-size: 10px;color: black;font-weight: bold;">{{locName}}</td>&nbsp;&nbsp;
-                  <td style="font-size: 10px;color: blue;">
-                    OU&nbsp;Name&nbsp;:
-                  </td>
-                  <td style="font-size: 10px;color: black;font-weight: bold;">{{ouName}}</td>&nbsp;&nbsp;
+                  
+                </tr>
+                <tr>
                   <td colspan="2" style="font-size: 10px;width: 200px;font-weight: bold;"> {{todaysDataTime}}</td>
                 </tr>
+                <tr>
+                  <td><a class="dropdown-item" (click)="close()" style="color: blue;"><u>Logout</u></a></td>
+                </tr>
               </table>
-            </td>
+              </td>
           </tr>
+         <tr>
+           <table class="center">    
+              <tr>
+                <td class="center">
+                  <table class="center" style="width: 100%;">
+                    <tr style="background-color: rgb(224, 224, 231); border:1px">
+                      <td style="font-size: 10px;color: blue;">
+                        User&nbsp;Details&nbsp;&nbsp;:
+                      </td>
+                      <td style="font-size: 10px;color: black;font-weight: bold;">{{ticketNo}}-{{fullName}}</td>&nbsp;&nbsp;
+                      <td style="font-size: 10px;color: blue;">
+                        Department&nbsp;&nbsp;:
+                      </td>
+                      <td style="font-size: 10px;color: black;font-weight: bold;">{{deptName}}</td>&nbsp;&nbsp;
+                      <td style="font-size: 11px;color: blue;">
+                        Location&nbsp;&nbsp;:
+                      </td>
+                      <td style="font-size: 10px;color: black;font-weight: bold;">{{locName}}</td>&nbsp;&nbsp;
+                    </tr>
+                  </table>
+                </td>
+             </tr>
+           </table>
+         </tr>
         </table>
         <!-- <li class="nav-item dropdown">
 

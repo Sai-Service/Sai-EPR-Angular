@@ -140,9 +140,9 @@
 
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Method:&nbsp;</td>
                             <td>  
-                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}}   class="form-control">
+                                <select  formControlName="receiptMethodName"  value={{receiptMethodName}}   class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  ReceiptMethodList "  [ngValue]="sc.methodName">
+                                    <option *ngFor="let sc of  ReceiptMethodList "  [Value]="sc.methodName">
                                         {{sc.methodName}} 
                                     </option>
                                 </select>

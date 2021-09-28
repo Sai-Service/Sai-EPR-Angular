@@ -26,7 +26,7 @@ interface IPaymentRcpt {
     emplId:number;
     locName : string
     orderNumber:number;
-       receiptMethodName:string;
+    receiptMethodName:string;
     customerId:number;
     custName:string;
       // customerName:string;
@@ -387,10 +387,10 @@ export class PaymentReceiptComponent implements OnInit  {
   }
 
   newMast() {
-    // alert ("Posting data  to PL mater......")
+    alert ("Posting data  to PL mater......")
     // const formValue: IPaymentRcpt =this.paymentReceiptForm.value;
     const formValue: IPaymentRcpt =this.transeData(this.paymentReceiptForm.value);
-    // debugger;
+    debugger;
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
