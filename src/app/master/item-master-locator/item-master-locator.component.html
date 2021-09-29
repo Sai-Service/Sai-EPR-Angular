@@ -47,14 +47,14 @@
                           </td>
                           <td>
                               <select formControlName="subInventoryId" id="subInventoryId" class="form-control"
-                                [ngClass]="{'is-invalid': submitted && f.subinventoryId.errors}">
+                                [ngClass]="{'is-invalid': submitted && f.subInventoryId.errors}">
                                   <option></option>
                                   <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryId"  >
                                      {{sc.subInventoryId}}-{{sc.subInventoryCode}}
                                   </option>
                               </select>
-                              <div *ngIf="submitted && f.subinventoryId.errors" class="invalid-feedback">
-                                  <div *ngIf="f.subinventoryId.errors.required">Subinventory is required</div>
+                              <div *ngIf="submitted && f.subInventoryId.errors" class="invalid-feedback">
+                                  <div *ngIf="f.subInventoryId.errors.required">Subinventory is required</div>
 
                                   <!-- <span
                                       *ngIf="!locatorMasterForm.get('subinventoryId').valid && locatorMasterForm.get('subinventoryId').touched">Please
@@ -159,12 +159,12 @@
 
 
 
-                          <td style="width: 18%" class="LabelFontStyle1">
+                          <!-- <td style="width: 18%" class="LabelFontStyle1">
                               Status&nbsp;
                           </td>
-                          <td>
+                          <td>comment by vinita
                               <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                          </td>
+                          </td> -->
                       </tr>
                   </ng-template>
                   <ng-template #elseBlock>
@@ -173,20 +173,37 @@
                               Location&nbsp;Id&nbsp;:
                           </td>
                           <td>
-                              <input disabled formControlName="locId"  value={{locId}} class="form-control">
-                              <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
-                                  <div *ngIf="f.locId.errors.required">Location is required</div>
+                              <input disabled formControlName="locCode"  value={{locCode}} class="form-control">
+                              <!-- <div *ngIf="submitted && f.locId.errors" class="invalid-feedback">
+                                  <div *ngIf="f.locId.errors.required">Location is required</div> -->
                                   <!-- <span
                                       *ngIf="!locatorMasterForm.get('locId').valid && locatorMasterForm.get('locId').touched">Please
                                       Enter Location Name </span> -->
-                              </div>
+                              <!-- </div> -->
                           </td>
+                          <input hidden formControlName="itemLocatorId">
                           <td style="width: 18%" class="LabelFontStyle1">
                               Subinventory&nbsp;:
                           </td>
                           <td>
-                              <input disabled formControlName="subinventoryId" id="subinventoryId" class="form-control">
+                              <input disabled formControlName="subInventoryCode" id="subInventoryCode" class="form-control">
                           </td>
+                          <td  style="width: 18%" class="LabelFontStyle1">
+                            Item&nbsp;Name&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                                <input disabled formControlName="segment" id="segment" class="form-control">
+                          </td>
+                          <td  style="width: 18%" class="LabelFontStyle1">
+                                Description&nbsp;:&nbsp;
+                              </td>
+                              <td>
+                                    <input disabled formControlName="description" id="description" class="form-control">
+                              </td>
+                      </tr>
+                      <tr>
+                          <td style="width: 18%" class="LabelFontStyle1">
+                              Locator&nbsp;:&nbsp;</td>
                           <td>
                           <input   data-toggle="modal" data-target="#myModal1"
                           formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)"
@@ -211,7 +228,7 @@
                                                 <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
                                                 <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
                                                 <div *ngIf="f.segment11.errors?.pattern">Required Two Digit Code</div> -->
-                                            <span *ngIf="!miscellaneousForm.get('Floor').valid && miscellaneousForm.get('Floor').touched">Required Two Digit Code</span>
+                                            <!-- <span *ngIf="!miscellaneousForm.get('Floor').valid && miscellaneousForm.get('Floor').touched">Required Two Digit Code</span> -->
                                         <!-- </div> -->
                                         </td>
                                     </tr>
@@ -259,12 +276,11 @@
                             </div>
                           </div>
                         </td>
-                        </tr>
-                      <tr>
-                          <td style="width: 18%" class="LabelFontStyle1">
+                        
+                        <!-- <td style="width: 18%" class="LabelFontStyle1">
                               Status&nbsp;:
-                          </td>
-                          <td>
+                          </td> -->
+                          <!-- <td>
                               <select formControlName="status" id="status" class="form-control"
                               [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
                                   <option>--Select--</option>
@@ -277,9 +293,9 @@
                                   <!-- <span
                                       *ngIf="!locatorMasterForm.get('status').valid && locatorMasterForm.get('status').touched">Please
                                       Enter status </span> -->
-                              </div>
-                          </td>
-                          <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                              <!-- </div> -->
+                          <!-- </td> --> 
+                          <!-- <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                           <ng-template #thenBlockInactive>
                           </ng-template>
                           <ng-template #elseBlockInactive>
@@ -290,7 +306,7 @@
                                       <input disabled type="text" formControlName="endDate" class="form-control"
                                       [ngModel]="endDate | date:'yyyy-MM-dd'">
                                   </td>
-                          </ng-template>
+                          </ng-template> -->
                       </tr>
                   </ng-template>
 
@@ -310,15 +326,15 @@
                       <td>
                           <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                       </td>
-                      <td>
+                      <!-- <td>
                           <button type="submit" class="btn btn-primary" id="register"
                               (click)="searchMast()">Search</button>
-                      </td>
+                      </td> -->
                       </ng-template>
                       <ng-template #elseBlock1>
                       <td>
                           <button type="submit" class="btn btn-primary" id="register"
-                              [disabled]="!ItemlocatorMasterForm.valid" (click)="updateMast()">Update</button>
+                              (click)="updateMast()">Update</button>
                       </td>
                       <td>
                           <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
@@ -326,46 +342,73 @@
                       <td>
                           <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
                       </td>
-                      <td>
-                          <button type="submit" class="btn btn-primary" id="register"
-                              (click)="searchMast()">Search</button>
-                      </td>
+                     
                       </ng-template>
                   </tr>
               </table>
+              <br>
+              <table class="center" style=" background-color: #FFE4B5;width: 100%;">
+                <tr>
+                    <td  style="width: 100%;">
+                            <table style="width: 30%;" >
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle"> SubInventory&nbsp;Code&nbsp;:&nbsp;</td>
+                                        <td>
+                                        <select formControlName="subId" id="subId" class="form-control">
+                                          <option></option>
+                                          <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryId"  >
+                                             {{sc.subInventoryId}}-{{sc.subInventoryCode}}
+                                          </option>
+                                      </select>
+                                        </td>
+                                        <td>
+                                              <button type="submit" class="btn btn-primary" id="register"
+                                                    (click)="searchMast(subId)">Search</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                    </td>
+                </tr>
+              </table>
+           
+
+            <!-- <table class="center" style=" width:100%; background-color:beige" >
+       
+                    <tr> -->
 
           </form>
       </div>
   </div>
 </div>
 <br>
+
 <div class="container1">
   <div class="grid_scroll">
   <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
   <tbody>
       <tr class="GridHeader">
           <th scope="col">Location Id</th>
-          <th scope="col">Location Id</th>
+          <!-- <th scope="col">Location Id</th>
           <th scope="col">Subinventory</th>
           <th scope="col">Floor</th>
           <th scope="col">Rack</th>
-          <th scope="col">Rack Number</th>
-          <th scope="col">Row</th>
-          <th scope="col">Row Number</th>
-          <th scope="col">Concatenated Locator</th>
+          <th scope="col">Rack Number</th> -->
+          <th scope="col">Item Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Locator</th>
           <th scope="col">Status</th>
           <th scope="col">Select one</th>
       </tr>
   </tbody>
   <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
       <td>{{com.locatorId}}</td>
-      <td>{{com.locId}}</td>
+      <!-- <td>{{com.locId}}</td>
       <td>{{com.subinventoryId}}</td>
       <td>{{com.segment1}}</td>
       <td>{{com.segment2}}</td>
-      <td>{{com.segment3}}</td>
-      <td>{{com.segment4}}</td>
-      <td>{{com.segment5}}</td>
+      <td>{{com.segment3}}</td> -->
+      <td>{{com.segment}}</td>
+      <td>{{com.description}}</td>
       <td>{{com.segmentName}}</td>
       <td>{{com.status}}</td>
       <td><button (click)="Select(com.locatorId)">Select</button></td>
