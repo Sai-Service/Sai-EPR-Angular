@@ -156,6 +156,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
           } else {
             if (res.code === 400) {
               alert('Error In File : \n' + res.obj);
+              window.location.reload();
             }
           }
         });
@@ -185,6 +186,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
               }
               else {
                 this.itemButton1 = true;
+                window.location.reload();
               }
             }
           }

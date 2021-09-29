@@ -463,7 +463,7 @@ export class CounterSaleComponent implements OnInit {
       onHandQty: [],
       discType: [],
       disPer: ['0'],
-      disAmt: [],
+      disAmt: ['0'],
       uom: [],
       lnflowStatusCode: [''],
       Avalqty: [],

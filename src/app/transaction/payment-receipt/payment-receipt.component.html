@@ -298,6 +298,17 @@
                                             <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!paymentReceiptForm">Save</button>
                                         </td>
                                         
+                                        <div *ngIf="buttonviewReceipt; then thenBlockviewReceipt; else elseBlockviewReceipt"></div>
+                                        <ng-template #thenBlockviewReceipt>
+                                        </ng-template>
+                                        <ng-template #elseBlockviewReceipt>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
+                                                    View&nbsp;Receipt
+                                                </button>
+                                            </td>
+                                        </ng-template>
+
                                         <!-- <td>
                                             <button type="button" class="btn btn-info" (click)="searchMast(searchValue)">Search</button>
                                         </td> -->
