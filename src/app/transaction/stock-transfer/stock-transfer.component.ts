@@ -564,7 +564,7 @@ onlocationissueselect(event){
         if(res.code === 400) {
           alert(res.message);
           // this.stockTranferForm.reset();
-          window.location.reload();
+          // window.location.reload();
         }
        }
       }
