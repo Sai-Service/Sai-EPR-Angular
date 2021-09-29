@@ -28,6 +28,9 @@
             </td>
             <td>
                 <input type="text" class="form-control"  formControlName="invcNo"  >
+                <div *ngIf="submitted && f.invcNo.errors" class="invalid-feedback">
+                    <div *ngIf="f.invcNo.errors.required">Code cannot be blank</div>
+                </div>
             </td>
             <td class="LabelFontStyle">
                 &nbsp;&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
@@ -35,6 +38,9 @@
             <td>
                 <input type="date" class="form-control"  formControlName="invcDt1"  >
             </td>
+            <div *ngIf="submitted && f.invcDt1.errors" class="invalid-feedback">
+                <div *ngIf="f.invcDt1.errors.required">Code cannot be blank</div>
+            </div>
         </tr>
         <tr>
             <td class="LabelFontStyle">
@@ -49,7 +55,9 @@
                     <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
                         {{item.name}}@{{item.suppNo}}</option>
                 </datalist>
-
+                <div *ngIf="submitted && f.supplierNo.errors" class="invalid-feedback">
+                    <div *ngIf="f.supplierNo.errors.required">Code cannot be blank</div>
+                </div>
             </td>
        
             <td class="LabelFontStyle">
@@ -64,9 +72,10 @@
                     {{sc.siteName}}
                 </option>
             </select>
+            <div *ngIf="submitted && f.supplierSite.errors" class="invalid-feedback">
+                <div *ngIf="f.supplierSite.errors.required">Code cannot be blank</div>
+            </div>
             </td>
-            
-          
         </tr>
         <tr>
          <td colspan="6" style="width: 100%;padding-top: 0px;">
