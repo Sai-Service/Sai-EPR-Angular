@@ -801,12 +801,12 @@
                                                 *ngFor="let group of orderlineDetailsArray().controls; let i= index"
                                                 [formGroupName]="i" class="auto-style5">
                                                 <tr>
-                                                    <td>
+                                                    <!-- <td>
                                                         <div
                                                             *ngIf="displayCounterSaleLine[i]; then thenBlockPoLine; else elseBlockPoLine">
                                                         </div>
                                                         <ng-template #thenBlockPoLine>
-                                                            <!-- insert  -->
+                                                           
                                                             <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
                                                                 data-toggle="tab" href="#panel1006" 
                                                                 (click)="taxDetails('insert', i, taxCategoryId)">
@@ -814,19 +814,21 @@
                                                             </a>
                                                         </ng-template>
                                                         <ng-template #elseBlockPoLine>
-                                                            <!-- <a [value]="i+1" class="nav-link waves-light"
-                                                                data-toggle="tab" href="#panel1006" 
-                                                                (click)="taxDetails('Search', i, taxCategoryId)">
-                                                                {{i+1}}
-                                                            </a> -->
                                                             <a id="line{{i}}" data-toggle="tab" href="#panel1006"  [value]="i+1" 
                                                             (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
                                                         </ng-template>
-                                                    </td>
+                                                    </td> -->
                                                     <div
                                                         *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">
                                                     </div>
                                                     <ng-template #thensegmentInvType>
+                                                        <td>
+                                                            <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
+                                                            data-toggle="tab" href="#panel1006" 
+                                                            (click)="taxDetails('insert', i, taxCategoryId)">
+                                                            {{i+1}}
+                                                        </a>
+                                                        </td>
                                                         <td>
                                                             <!-- <input disabled type="text" formControlName="invType" value="invType"
                                             [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
@@ -961,6 +963,10 @@
                                                         </td>
                                                     </ng-template>
                                                     <ng-template #elsesegmentInvType>
+                                                        <td>
+                                                              <a id="line{{i}}" data-toggle="tab" href="#panel1006"  [value]="i+1" 
+                                                            (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
+                                                        </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="invType"
                                                                 value="invType" [ngValue]="invType" class="form-control"

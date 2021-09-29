@@ -1812,7 +1812,7 @@ public poinvCre(segment1) {
 
 
 poAllRecFind(segment1,billToLoc): Observable<any> {
-  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}&billToLoc=${billToLoc}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber?segment1=${segment1}&billToLoc=${billToLoc}`);
 }
 
 
