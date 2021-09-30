@@ -337,7 +337,8 @@ export class ItemMasterLocatorComponent implements OnInit {
   }
 
   searchMast() {
-    this.service.getLocatorMasterSearch()
+    var locId1=this.ItemlocatorMasterForm.get('locId').value;
+    this.service.getItemLocatorMasterSearch(locId1)
       .subscribe(
         data => {
           this.lstcomments = data;

@@ -487,7 +487,7 @@ checkIfAllSelected() {
     this.displaySaveButton =false;
     // alert(segment1);
     console.log(this.poReceiptForm.value);
-    this.service.getsearchByReceiptNo1(segment1,(sessionStorage.getItem('locId')))
+    this.service.getsearchByReceiptNo(segment1,(sessionStorage.getItem('locId')))
       .subscribe(
         data => {
           this.lstcompolines = data;

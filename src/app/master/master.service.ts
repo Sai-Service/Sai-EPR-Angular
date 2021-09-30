@@ -470,6 +470,9 @@ UpdateItemLocatorMaster(LocatorMasterRecord) {
   const url = (this.ServerUrl + `/itemlctrmst`);
   return this.http.put(url, LocatorMasterRecord, options);
 }
+getItemLocatorMasterSearch(locId):Observable<any>{
+  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocation/${locId}`);
+}
 ////////////////////////////////Locator Master/////////////////////////////
 
  getLocatorMasterSearch(): Observable<any> {
@@ -1814,8 +1817,8 @@ public poinvCre(segment1) {
 }
 
 
-poAllRecFind(segment1,locId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}`);
+poAllRecFind(segment1,billToLoc): Observable<any> {
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}&billToLoc=${billToLoc}`);
 }
 
 
@@ -2064,15 +2067,19 @@ OrderCategoryList(): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
+      // alert ("receipt date only");
         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
       }
       if( rcptNumber !=undefined || rcptNumber !=null) {
+        // alert ("receipt number only");
       return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
       }
 
       if(custActNo !=undefined || custActNo !=null){
+        // alert("cust account no");
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
     }
+
 
     getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
@@ -2624,6 +2631,7 @@ getCostDetail(locId,ItemId):Observable<any>
 }
 getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
+  // alert ("Locator Id :" +locatorId);
   return this.http.get(this.ServerUrl+`/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
 }
 // getonhandqty(locatorId):Observable<any>
@@ -2841,7 +2849,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 }
    ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
 
-   getShipmentList(locId,subInv): Observable<any> {
-    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&subInventoryCode=${subInv}`);
+   getShipmentList(locId,deptId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
 }
 }

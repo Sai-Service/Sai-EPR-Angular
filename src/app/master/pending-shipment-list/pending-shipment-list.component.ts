@@ -33,23 +33,31 @@ export class PendingShipmentListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.getShipmentList(sessionStorage.getItem('locId'),sessionStorage.getItem('deptId') ,sessionStorage.getItem('divisionId'))
+    .subscribe(
+      (data: any) => {
+        this.ShipPendingList = data.obj;
+        // alert(data.message)
+        console.log(this.ShipPendingList);
+      }
+    );
   }
 
 
   pendingShipmentList(pendingShipmentListForm: any) {
   }
 
-  pendingList(subInv) {
-    // alert(subInv);
-    this.service.getShipmentList(sessionStorage.getItem('locId'), subInv)
-      .subscribe(
-        (data: any) => {
-          this.ShipPendingList = data.obj;
-          // alert(data.message)
-          console.log(this.ShipPendingList);
-        }
-      );
-  }
+  // pendingList(subInv) {
+  //   // alert(subInv);
+  //   this.service.getShipmentList(sessionStorage.getItem('locId'),sessionStorage.getItem('deptId') ,sessionStorage.getItem('divisionId'))
+  //     .subscribe(
+  //       (data: any) => {
+  //         this.ShipPendingList = data.obj;
+  //         // alert(data.message)
+  //         console.log(this.ShipPendingList);
+  //       }
+  //     );
+  // }
 
 
 

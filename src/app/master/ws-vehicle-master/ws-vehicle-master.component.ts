@@ -32,6 +32,7 @@ interface IWsVehicleMaster {
   custTaxCategoryName: string;
   divisionId:number;
   divisionName:string;
+  dealerCode:string;
 
 
 }
@@ -60,8 +61,10 @@ export class WsVehicleMasterComponent implements OnInit {
   public colorCodeList: Array<string> = [];
   public FuelTypeList: Array<string> = [];
   public statusList: Array<string> = [];
+  public dealerCodeList :Array<string>=[];
 
   pipe = new DatePipe('en-US');
+  public minDate = new Date()  ;
 
   /////////////////////SEARCH/////
   mainModelName: string;
@@ -101,6 +104,7 @@ export class WsVehicleMasterComponent implements OnInit {
   public emplId = 6;
   public varAging: number;
   ddate = Date.now();
+
 
 
   ///////////////////////////
@@ -450,45 +454,15 @@ export class WsVehicleMasterComponent implements OnInit {
     }
   );
 
-    // this.service.PaymentModeList()
-    //   .subscribe(
-    //     data => {
-    //       this.PaymentModeList = data;
-    //       console.log(this.PaymentModeList);
-    //     }
-    //   );
+  this.service.delearCodeList()
+  .subscribe(
+    data => {
+      this.dealerCodeList = data;
+      console.log(this.dealerCodeList);
+    }
+  );
 
-    // this.service.OUIdList()
-    //   .subscribe(
-    //     data => {
-    //       this.OUIdList = data;
-    //       console.log(this.OUIdList);
-    //     }
-    //   );
-
-    // this.service.EwTypeList()
-    //   .subscribe(
-    //     data => {
-    //       this.EwTypeList = data;
-    //       console.log(this.EwTypeList);
-    //     }
-    //   );
-
-    // this.service.EwSourceList()
-    //   .subscribe(
-    //     data => {
-    //       this.EwSourceList = data;
-    //       console.log(this.EwSourceList);
-    //     }
-    //   );
-
-    // this.service.ewInsNameList()
-    //   .subscribe(
-    //     data => {
-    //       this.ewInsNameList = data;
-    //       console.log(this.ewInsNameList);
-    //     }
-    //   );
+  
 
 
     this.service.issueByList(this.locId, this.deptId, this.divisionId)
@@ -856,6 +830,19 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
 
+  // onSelectedDealer(dlrCode) {
+  //   if(dlrCode != undefined){
+  //     let select = this.dealerCodeList.find(d=>d.dealerCode === dlrCode);
+  //     if (select) {
+
+  //     }
+  //   }
+  // }
+
+
+
+
+
   onOptionsSelectedVariant(modelVariant) {
     if(modelVariant != undefined){
     this.service.variantDetailsList(modelVariant)
@@ -884,7 +871,30 @@ export class WsVehicleMasterComponent implements OnInit {
       }
   }
 
+  onChangeRegDate(mRegDate) {
+    // alert ("Sale Date :"+this.deliveryDate);
+    var currDate = new Date();
+    var regDate =new Date(mRegDate);
+    var delDate=new Date(this.deliveryDate);
+
+    if(regDate >delDate || this.deliveryDate===undefined) {
+      alert ("REGISTRATION DATE :" + "Should not be above Sale Date");
+      this.regDate = this.deliveryDate;
+      return;
+    }
+
+  }
+
   onChangeDelDate(mDelDate) {
+    this.regDate=null;
+
+    var currDate = new Date();
+    var delDate =new Date(mDelDate);
+    if(delDate >currDate) {
+      alert ("SALE DATE :" + "Should not be above Today's Date");
+      this.deliveryDate = this.pipe.transform(this.now, 'y-MM-dd');
+      return;
+    } else {
     // ------------Date-----------
     var stDate = new Date(mDelDate);
     var prd = 2;
@@ -892,7 +902,8 @@ export class WsVehicleMasterComponent implements OnInit {
     this.oemWarrentyEndDate = this.pipe.transform(date2, 'y-MM-dd');
     // ------------Date-----------
 
-  }
+  } }
+
   addDays(date1: Date, days1: number): Date {
     date1.setDate(date1.getDate() + days1);
     return date1;
@@ -1076,6 +1087,15 @@ export class WsVehicleMasterComponent implements OnInit {
 
   }
 
+  createCustomer(){
+    this.router.navigate(['/admin/master/customerMaster']);
+  }
 
+  LoadCustDetails(){
+    alert ("Customer details....");
+    // this.GetCustomerDetails(this.lstcomments.customerId);
+    // this.GetCustomerSiteDetails(this.lstcomments.customerId);
+
+  }
 
 }

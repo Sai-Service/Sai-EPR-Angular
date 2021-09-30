@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
+import { Location } from "@angular/common";
 
 interface IcustomerMaster {
   custType: string;
@@ -199,7 +200,7 @@ export class CustomerMasterComponent implements OnInit {
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
       emplId: [''],
@@ -711,7 +712,8 @@ if (person === 'Person'){
     window.location.reload();
   }
   closesMast() {
-    this.router.navigate(['admin']);
+    this.location1.back();
+
   }
   // searchByCustAccount(customerId1) {
   //   this.service.getsearchByAccountNo(customerId1)
