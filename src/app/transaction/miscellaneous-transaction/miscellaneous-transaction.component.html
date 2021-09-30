@@ -227,8 +227,13 @@
                       <th scope="col">Locator</th>
                       <th scope="col" rowspan="2">Available Quantity</th>
                       <th scope="col">Transaction Quantity</th>
+                      <!-- <div *ngIf="dispRow; then thenBlockRow; else elsedispRow"></div> -->
+                      <!-- <ng-template #thenBlockRow> -->
+                      <!-- </ng-template> -->
+                      <!-- <ng-template #elsedispRow> -->
                       <th scope="col">Add</th>
                       <th scope="col">Delete</th>
+                    <!-- </ng-template> -->
               </tr>
             </thead>
             <tbody>
@@ -236,7 +241,7 @@
                 <input type="number" min="0"  hidden formControlName="trxLineId">
               </tr> -->
             <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
-           <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
+           <tr>  <td><input disabled type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId">

@@ -228,17 +228,17 @@ lastkeydown1: number = 0;
 
   onOptiongetdetails(event:any,i)
   {
-    alert(event);
+    // alert(event);
     // alert(event);
     var temp = event.split('--');
-    alert(temp[0]);
+    // alert(temp[0]);
   var segment = temp[0];
     var trxLnArr=this.SubinventoryTransferForm.get('trfLinesList').value;
     let select1=this.ItemIdList.find(d=>d.SEGMENT == segment);
       // var itemId= select1.itemId
       console.log(select1.itemId);
 
-      alert(select1.itemId)
+      // alert(select1.itemId)
       var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
       trxLnArr1.controls[i].patchValue({itemId:select1.itemId});
       var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
@@ -257,7 +257,7 @@ lastkeydown1: number = 0;
           console.log(data);
           var getfrmSubLoc =data;
 
-            alert(i +'i'+'lOCATOR');
+            // alert(i +'i'+'lOCATOR');
             this.locData[i] = data;
             if(getfrmSubLoc.length==1)
             {
@@ -372,16 +372,16 @@ lastkeydown1: number = 0;
 
         AvailQty(event:any,i:number)
         {
-          alert(event+'Loca');
+          // alert(event+'Loca');
           var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
           var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
           var itemid=trxLnArr[i].itemId;
           var locId=trxLnArr[i].locatorId;
           var onhandid=trxLnArr[i].onHandId;
           // trxLnArr1.controls[i].patchValue({locatorId:locId});
-          alert(locId+'locatorID'+onhandid);
+          // alert(locId+'locatorID'+onhandid);
           var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
-          alert(subcode);
+          // alert(subcode);
           // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
           // alert(select2.subInventoryId+'Id')
           if(locId!=undefined){
@@ -395,7 +395,7 @@ lastkeydown1: number = 0;
               let onHand=data.obj;
               let reserve=trxLnArr[i].resveQty;
               //alert(onHand+'OnHand');
-              alert(reserve+'reserve');
+              // alert(reserve+'reserve');
               let avlqty1=0;
               avlqty1= onHand-reserve;
               // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;

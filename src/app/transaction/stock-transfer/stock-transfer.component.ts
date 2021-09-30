@@ -100,6 +100,7 @@ export class StockTransferComponent implements OnInit {
   displayremakdata=true;
   pendingatother:any;
   transferLoc:string;
+  currentOp:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
@@ -227,6 +228,9 @@ export class StockTransferComponent implements OnInit {
   }
   stockTransfer(stockTranferForm: any) { }
   onOptionSelect(event: any, i) {
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
    // alert(event);
     //alert(this.locId);
     console.log(this.subInvCode);
@@ -244,6 +248,9 @@ export class StockTransferComponent implements OnInit {
 
   }
   onOptionItemDetails(event: any, i) {
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
@@ -305,6 +312,9 @@ export class StockTransferComponent implements OnInit {
   }
   AvailQty(event:any,i:number)
 {
+  if(this.currentOp==='SEARCH'){
+    return;
+  }
   // alert(event+'Loca');
   var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
@@ -474,6 +484,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   }
 
   search(ShipmentNo) {
+    this.currentOp='SEARCH';
     // alert('1'+ShipmentNo);
     this.display = true;
 
@@ -501,10 +512,10 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
         var patch = this.stockTranferForm.get('trxLinesList') as FormArray;
         for (let i = 0; i < this.trxLinesList().length; i++) {
           patch.controls[i].patchValue({
-            LinNo: i + 1
+            lineNumber: i + 1
           })
         }
-
+        this.currentOp='INSERT';
       }
       );
 
@@ -549,7 +560,9 @@ selectByShipNo(shipmentNumber:any)
 
 onlocationissueselect(event){
   // alert(event);
-
+  if(this.currentOp==='SEARCH'){
+    return;
+  }
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
   else{

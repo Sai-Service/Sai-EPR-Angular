@@ -246,11 +246,15 @@
                     
                     
                     </td> --> 
-                    <td style="width: 12%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+
+                    <td style="width: 12%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
 
                     <td>
-                        <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" >
+                        <input   type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" 
+                        class="form-control"  (change)="onChangeDelDate(deliveryDate)" 
+                        placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}">
                     </td>
+                   
                     <td style="width: 12%" class="LabelFontStyle">Manuf&nbsp;Year&nbsp;:&nbsp;</td>
 
                     <td>
@@ -267,13 +271,15 @@
                    
                     <tr>
 
+                        <td style="width: 12%" class="LabelFontStyle">Reg.&nbsp;Date&nbsp;:&nbsp;</td>
+
+                        <td>
+                            <input   type="date"  formControlName="regDate"  id="regDate" [(ngModel)]="regDate" class="form-control" 
+                            (change)="onChangeRegDate(regDate)" 
+                             placeholder="" max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </td>
+
                    
-
-                    <td style="width: 12%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
-
-                    <td>
-                        <input   type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control"  (change)="onChangeDelDate(deliveryDate)" >
-                    </td>
                     <td style="width: 12%" class="LabelFontStyle">Dlr&nbsp;Invoice&nbsp;No:&nbsp;</td>
 
                     <td>
@@ -290,6 +296,25 @@
                 <tr>
                     
                     
+                   
+                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Code:&nbsp;</td>
+
+                    <!-- <td>
+                        <input   type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
+                    </td> -->
+
+                    <td>
+                        <select   formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control">
+                            (ngModelChange)='onSelectedDealer($event)'>
+                            <!-- style="width:fit-content"  -->
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of dealerCodeList"
+                                [ngValue]="sc.dealerCode">
+                                {{sc.dealerCode}}-{{sc.dealerDesc}}
+                            </option>
+                        </select>
+                    </td>
+
                     <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Name:&nbsp;</td>
 
                     <td>
@@ -301,12 +326,6 @@
                     <td>
                         <input    type="text"  formControlName="dealerSite"  id="dealerSite" [(ngModel)]="dealerSite" class="form-control" >
                     </td>
-                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Code:&nbsp;</td>
-
-                    <td>
-                        <input   type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
-                    </td>
-
 
                 </tr>
 
@@ -320,7 +339,7 @@
                     </td>
 
                       
-                    <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Type&nbsp;:&nbsp;</td>
+                    <!-- <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Type&nbsp;:&nbsp;</td> -->
 
                       
                         <!-- <select disabled formControlName="itemTypeForCat" id="itemTypeForCat" [(ngModel)]="itemTypeForCat" class="form-control"
@@ -331,9 +350,9 @@
                             </option>
                         </select> -->
 
-                        <td>
-                            <input disabled  type="text"  formControlName="itemTypeForCat"  id="itemTypeForCat" [(ngModel)]="itemTypeForCat" class="form-control" >
-                        </td>
+                       
+                            <input hidden disabled  type="text"  formControlName="itemTypeForCat"  id="itemTypeForCat" [(ngModel)]="itemTypeForCat" class="form-control" >
+                        
 
                    
                     <td style="width: 15%;" class="LabelFontStyle1">Item&nbsp;Category&nbsp;:&nbsp;</td>
@@ -390,9 +409,12 @@
                         <td></td>
                         <td>
                             <button  type="button"  class="btn btn-primary" 
-                            data-toggle="modal" data-target="#CustomerInfo"  style="width: 10rem;color: black;">
+                            data-toggle="modal" data-target="#CustomerInfo"  style="width: 10rem;color: black;" (click)="LoadCustDetails()">
                             &nbsp;Customer Details</button>
                         </td>
+
+                      
+
                 </tr>
               
                
@@ -401,6 +423,14 @@
           <!-- </div> -->
 
           </div>
+
+            <!--           
+          <div class="tab-pane fade" id="panel103" role="tabpanel">
+
+
+
+          </div> -->
+
          
 
 
@@ -603,6 +633,9 @@
     </div>
 </div>
 
+
+
+
 <!-- ------------------------------------Modal form Start - Customer Details--------------------------------- -->
 <!-- CustomerInfo -->
 
@@ -787,12 +820,10 @@
                                     <tr>
                                       <td style="width: 12%" class="LabelFontStyle">Govt.&nbsp;Vehicle:&nbsp;</td>
                                       <td> <input disabled  type="checkbox"  name="govtVehicleYn" formControlName="govtVehicleYn"  [(ngModel)]="govtVehicleYn"  (change)="GovtVehicle($event)"></td>
-                                       
-                                      
                            
-                                       <td style="width: 12%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
-                           
-                                       <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
+                                    <td style="width: 12%" class="LabelFontStyle">VIP&nbsp;:&nbsp;</td>
+                        
+                                    <td><input disabled type="checkbox"  name="vipYn" formControlName="vipYn"  [(ngModel)]="vipYn"  (change)="VipVehicle($event)"> </td>
                                     </tr>
               
                                     <tr>
