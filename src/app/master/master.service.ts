@@ -12,8 +12,8 @@ export class MasterService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  // ServerUrl='http://localhost:8081';
-  ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl='http://localhost:8081';
+  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -939,6 +939,10 @@ searchCustomerByContact(contactNo): Observable<any> {
 
 searchCustomerByAccount(accountNo): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
+}
+
+crediteLimitFn(customerId,customerSiteId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
 }
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
