@@ -25,6 +25,11 @@ interface IItemLocatorMaster {
   subInventoryId:number;
   description:string;
   // copyAddv:string;
+  locationId:number;
+  subId:number;
+  subInventoryCode:string;
+  locCode:string;
+  itemLocatorId:number;
 }
 
 
@@ -58,7 +63,7 @@ export class ItemMasterLocatorComponent implements OnInit {
   displayButton = true;
   public minDate = new Date();
   public statusList: Array<string> = [];
-  public locationIdList: Array<string> = [];
+  public locationIdList: any = [];
   public subinventoryIdList: Array<string> = [];
 
   userList2: any[] = [];
@@ -75,18 +80,23 @@ export class ItemMasterLocatorComponent implements OnInit {
   segment:string;
   subInventoryId:number;
   description:string
+  locationId:number;
+  subId:number;
+  subInventoryCode:string;
+  locCode:string;
+  itemLocatorId:number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.ItemlocatorMasterForm = fb.group({
       locatorId :[],
       locId: ['', [Validators.required]],
       subInventoryId: ['', [Validators.required]],
-      segment1: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
-      segment2: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
-      segment3: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
-      segment4: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
-      segment5: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
-      status: ['', [Validators.required]],
+      // segment1: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      // segment2: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      // segment3: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      // segment4: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      // segment5: ['', [Validators.required], [ Validators.maxLength(5)], Validators.pattern('[A-Z0-9.]*')],
+      status: [''],
       endDate: ['', [Validators.nullValidator]],
       LocatorSegment:[],
       Floor:[],
@@ -97,7 +107,11 @@ export class ItemMasterLocatorComponent implements OnInit {
   segment:[],
   itemId:[],
   description:[],
-
+  locationId:[],
+  subId:[],
+  subInventoryCode:[],
+  locCode:[],
+  itemLocatorId:[],
       // copyAddv:[],
     });
   }
@@ -107,6 +121,7 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    this.locationId=Number(sessionStorage.getItem('locId'));
     this.service.statusList()
       .subscribe(
         data => {
@@ -315,6 +330,9 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   updateMast() {
     const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.value;
+    formValue.subInventoryId=this.ItemlocatorMasterForm.get('subId').value;
+    let select = this.locationIdList.find(d => d.locCode === this.ItemlocatorMasterForm.get('locCode').value);
+    formValue.locId=select.locId;
     this.service.UpdateItemLocatorMaster(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -336,13 +354,17 @@ export class ItemMasterLocatorComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  searchMast() {
+  searchMast(subId) {
+
+    alert(subId);
     var locId1=this.ItemlocatorMasterForm.get('locId').value;
-    this.service.getItemLocatorMasterSearch(locId1)
+    var subId=this.ItemlocatorMasterForm.get('subId').value;
+    this.service.getItemLocatorMasterSearch(this.locationId,subId)
       .subscribe(
         data => {
           this.lstcomments = data;
           console.log(this.lstcomments);
+          
         }
       );
   };
@@ -351,6 +373,7 @@ export class ItemMasterLocatorComponent implements OnInit {
     let select = this.lstcomments.find(d => d.locatorId === locatorId);
     if (select) {
       this.ItemlocatorMasterForm.patchValue(select);
+      this.ItemlocatorMasterForm.patchValue({LocatorSegment:select.segmentName,subInventoryCode:select.subInventoryCode});
       this.displayButton = false;
       this.display = false;
     }

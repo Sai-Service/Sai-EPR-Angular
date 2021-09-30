@@ -75,6 +75,8 @@ interface IcustomerMaster {
   shighAmt:number;
   sdisPer:number;
   termId:number;
+  dealerCode:string;
+  dealerType:string;
 }
 
 @Component({
@@ -197,6 +199,9 @@ export class CustomerMasterComponent implements OnInit {
   sdisPer:number;
   displayadditional=true;
   termId:number;
+  dealerCode:string;
+  dealerType:string;
+  dispDealer=false;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -283,6 +288,8 @@ export class CustomerMasterComponent implements OnInit {
       disPer:[],
       sdisPer:[],
       termId:[],
+      dealerCode:[],
+      dealerType:[],
     })
 
   }
@@ -473,6 +480,11 @@ onOptionSiteStateSeleted(event:any)
         );
       }
 }
+onOptionClassCode(event:any){
+  if (event === 'DEALER') {
+    
+  this.dispDealer=true;
+}}
   onOptionsSelected(event: any) {
     this.Status1 = this.customerMasterForm.get('status').value;
 
@@ -891,7 +903,7 @@ if (person === 'Person'){
         // alert('in Validation');
         const formValue:IcustomerMaster = this.customerMasterForm.value;
         // var type=this.customerMasterForm.get('custType').value;
-        // alert(formValue.birthDate);
+        // alert(formValue.dealerType);
         if(formValue.custType ==='Person')
         {
           if(formValue.birthDate===undefined)
@@ -922,5 +934,19 @@ if (person === 'Person'){
           }
           return validdata;
         }
+        if(formValue.classCodeType==='DEALER')
+        {
+        if(formValue.dealerCode ===null)
+        {
+          alert("Please enter Dealer Code");
+          validdata=false;
+        }
+        if(formValue.dealerType===null)
+        {
+          alert("Please Select Dealer Type");
+          validdata=false;
+        }
+        return validdata;
       }
+  }
 }

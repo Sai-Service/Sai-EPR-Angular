@@ -7,6 +7,7 @@ import { ThemeService } from 'ng2-charts';
 import { MasterService } from '../master.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from "@angular/common";
+import { data } from 'jquery';
 
 interface IpoReceipt{
   ouName:string;
@@ -490,30 +491,35 @@ checkIfAllSelected() {
     this.service.getsearchByReceiptNo(segment1,(sessionStorage.getItem('locId')))
       .subscribe(
         data => {
-          this.lstcompolines = data;
-          let control = this.poReceiptForm.get('poLines') as FormArray;
-          // var length1=this.lstcompolines.rcvLines.length-1;
-          // this.lineDetailsArray.removeAt(length1);
-          // for (var i=0;i<=length1;i++){
-          //   control.push(poLines);
-          // }
-          // var len=this.lineDetailsArray.length;
-          for ( var i=0;i<this.lstcompolines.rcvLines.length;i++){
-            var poLines:FormGroup=this.lineDetailsGroup();
-            control.push(poLines);
+          if (data.code===200){
+            this.lstcompolines = data.obj;
+            let control = this.poReceiptForm.get('poLines') as FormArray;
+            // var length1=this.lstcompolines.rcvLines.length-1;
+            // this.lineDetailsArray.removeAt(length1);
+            // for (var i=0;i<=length1;i++){
+            //   control.push(poLines);
+            // }
+            // var len=this.lineDetailsArray.length;
+            for ( var i=0;i<this.lstcompolines.rcvLines.length;i++){
+              var poLines:FormGroup=this.lineDetailsGroup();
+              control.push(poLines);
+            }
+          this.disabled = false;
+          this.disabledLine=false;
+          this.disabledViewAccounting=false;
+            this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
+            this.poReceiptForm.patchValue(this.lstcompolines);
+            this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+            this.recDate=this.lstcompolines.receiptDate;
+            this.poReceiptForm.patchValue({taxAmt:this.lstcompolines.totalTax})
           }
-        this.disabled = false;
-        this.disabledLine=false;
-        this.disabledViewAccounting=false;
-          this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
-          this.poReceiptForm.patchValue(this.lstcompolines);
-          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
-          this.recDate=this.lstcompolines.receiptDate;
-          this.poReceiptForm.patchValue({taxAmt:this.lstcompolines.totalTax})
-        // }
-      }
-      
-      );  
+          else if(data.code===400){
+            alert(data.message)
+          } 
+        }
+        
+        ); 
+          
   }
 
  

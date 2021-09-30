@@ -62,6 +62,10 @@ interface Imiscellaneous
   trans:string;
   CostDetail:number;
 }
+export class ItemLocator {
+public locatorId : number;
+public segmentName:string;
+}
 @Component({
   selector: 'app-miscellaneous-transaction',
   templateUrl: './miscellaneous-transaction.component.html',
@@ -74,7 +78,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   compNo:string;
   onHandQty:number;
   id:number;
-  public transType:Array<string>=[];
+  public transType:any=[];
   invItemId:number;
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -104,7 +108,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   CostDetail:any;
   subInventoryId:number;
   processItemList:any;
-  getfrmSubLoc:any;
+  getfrmSubLoc:any=[];
   public onhand:any;
   segment11:string;
   lookupValueDesc1:string;
@@ -175,6 +179,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now=new Date();
   compileDate=this.pipe.transform(this.now,'dd-MM-yyyy')
+  currentOp:string;
+  dispRow:boolean=true;
+
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
   {
     this.miscellaneousForm=fb.group({
@@ -341,6 +348,20 @@ console.log(this.route1.queryParams+'hell');
       this.service.TransactionTypemisc().subscribe(
         data=>{
           this.transType=data;
+          if(this.dispheader===true)
+          {
+           alert('In 1st If'+this.transType.length);
+             for(let i=0;i<this.transType.length;i++)  
+             {
+               alert('In For');
+               if(this.transType[i].transactionTypeId===13)
+               {
+                 alert('In If');
+                 this.transType.splice(i,1);
+               }
+             }
+           
+          }
         }
       );
        this.service.ReasonList().subscribe(
@@ -363,6 +384,8 @@ console.log(this.route1.queryParams+'hell');
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
+       
+
         this.addnewcycleLinesList(-1);
         var patch = this.miscellaneousForm.get('trxLinesList') as  FormArray
 
@@ -383,8 +406,7 @@ console.log(this.route1.queryParams+'hell');
     // );
 
     //  alert('sub'+this.sub);
-
-
+       
   }
   miscellaneous(miscellaneousForm:any){}
 
@@ -413,59 +435,62 @@ close(){
 this.router.navigate(['admin']);
 }
 
-  onOptionItemDetails(event:any,i){
+  // onOptionItemDetails(event:any,i){
 
-     var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
-    // var itemid=trxLnArr[i].itemId;
-    // alert(event);
-    let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
-     if(select1!=undefined)
-     {
-    console.log(select1);
-    // alert(select1.itemId+"itemId")
-    var itemId= select1.itemId
-    var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
-    trxLnArr1.controls[i].patchValue({invItemId:select1.itemId});
-    var subcode=this.miscellaneousForm.get('subInventory').value;
-    // alert(subcode+'Subcode');
-   this.service.getItemDetail(select1.itemId).subscribe
-  (data => {this.getItemDetail = data;
-    // alert("this.getItemDetail.description" + this.getItemDetail.description);
-    if(this.getItemDetail.description !=undefined){
-      trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description});
-      trxLnArr1.controls[i].patchValue({uom:this.getItemDetail.uom});
-      trxLnArr1.controls[i].patchValue({entryStatusCode:"Manual"});
-      trxLnArr1.controls[i].patchValue({subInventory:subcode})
-      trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
-    }
-  } );
-  // alert(itemId +'ItemName');
-  this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemId).subscribe
-  (data =>{
-    this.CostDetail=data;
-    trxLnArr1.controls[i].patchValue({itemUnitCost:this.CostDetail.rate});
-  });
-  //   ////////////////
-  //   alert(this.locId +"Loc");
-  //   alert('this.itemId '+this.itemId )
-  //   var subInvCode = this.miscellaneousForm.get('subInventory').value;
-  //   // var itemId = this.miscellaneousForm.get('itemId').value;
-  //   alert(select1.itemId)
-  //   alert(subInvCode);
-  //   this.service.getItemDetail11(Number(sessionStorage.getItem('locId')),itemId,subInvCode).subscribe
-  //   (data =>{ this.getItemDetail1 = data
-  // var sysQty = this.getItemDetail1.onHnQty
-  // var LocName=this.getItemDetail1.locatorName
-  //      trxLnArr1.controls[i].patchValue({systemQty: sysQty });
-  //      trxLnArr1.controls[i].patchValue({LocatorSegment:LocName});
-  //      trxLnArr1.controls[i].patchValue({entryStatusCode:'Process'});
-  //     })
+  //    var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
+  //   // var itemid=trxLnArr[i].itemId;
+  //   // alert(event);
+  //   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+  //    if(select1!=undefined)
+  //    {
+  //   console.log(select1);
+  //   // alert(select1.itemId+"itemId")
+  //   var itemId= select1.itemId
+  //   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
+  //   trxLnArr1.controls[i].patchValue({invItemId:select1.itemId});
+  //   var subcode=this.miscellaneousForm.get('subInventory').value;
+  //   // alert(subcode+'Subcode');
+  //  this.service.getItemDetail(select1.itemId).subscribe
+  // (data => {this.getItemDetail = data;
+  //   // alert("this.getItemDetail.description" + this.getItemDetail.description);
+  //   if(this.getItemDetail.description !=undefined){
+  //     trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description});
+  //     trxLnArr1.controls[i].patchValue({uom:this.getItemDetail.uom});
+  //     trxLnArr1.controls[i].patchValue({entryStatusCode:"Manual"});
+  //     trxLnArr1.controls[i].patchValue({subInventory:subcode})
+  //     trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
+  //   }
+  // } );
+  // // alert(itemId +'ItemName');
+  // this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemId).subscribe
+  // (data =>{
+  //   this.CostDetail=data;
+  //   trxLnArr1.controls[i].patchValue({itemUnitCost:this.CostDetail.rate});
+  // });
+  // //   ////////////////
+  // //   alert(this.locId +"Loc");
+  // //   alert('this.itemId '+this.itemId )
+  // //   var subInvCode = this.miscellaneousForm.get('subInventory').value;
+  // //   // var itemId = this.miscellaneousForm.get('itemId').value;
+  // //   alert(select1.itemId)
+  // //   alert(subInvCode);
+  // //   this.service.getItemDetail11(Number(sessionStorage.getItem('locId')),itemId,subInvCode).subscribe
+  // //   (data =>{ this.getItemDetail1 = data
+  // // var sysQty = this.getItemDetail1.onHnQty
+  // // var LocName=this.getItemDetail1.locatorName
+  // //      trxLnArr1.controls[i].patchValue({systemQty: sysQty });
+  // //      trxLnArr1.controls[i].patchValue({LocatorSegment:LocName});
+  // //      trxLnArr1.controls[i].patchValue({entryStatusCode:'Process'});
+  // //     })
 
-    }
-  }
+  //   }
+  // }
 
   onOptiongetItem(event:any,i)
   {
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
     let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
     var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
     var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
@@ -530,8 +555,9 @@ this.router.navigate(['admin']);
           }
           else
           {
+            // debugger;
             this.getfrmSubLoc=data;
-
+            console.log(this.getfrmSubLoc);
             // trxLnArr1.controls[i].patchValue({LocatorSegment:getfrmSubLoc[0].segmentName});
           // trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
           trxLnArr1.controls[i].patchValue({id:getfrmSubLoc[0].id});
@@ -908,7 +934,7 @@ this.router.navigate(['admin']);
       }
       search(compNo)
       {
-
+        this.currentOp='SEARCH';
         var compno=this.miscellaneousForm.get('compNo').value;
         var appflag=this.miscellaneousForm.get('trans').value;
         this.service.getSearchViewBycompNo(compno).subscribe
@@ -927,8 +953,36 @@ this.router.navigate(['admin']);
                     this.cycleLinesList().push(trxlist);
 
                 }
+                // for(let j=0; j<data.obj.cycleLinesList.length-len; j++){
+                //  control.controls[j].patchValue(data.obj.cycleLinesList);
+                // }
+               
+                for (let i = 0; i < this.cycleLinesList().length; i++) {
+                  // this.onOptiongetItem(data.obj.cycleLinesList[i].segment,i);
+                  // let itemLoct : ItemLocator  = new ItemLocator();
+                  // // let csvRecord: CsvData = new CsvData();
+
+                  // itemLoct.locatorId = data.obj.cycleLinesList[i].locatorId;
+                  // itemLoct.segmentName=data.obj.cycleLinesList[i].LocatorSegment;
+                  // this.getfrmSubLoc.push(itemLoct);
+                  // debugger;
+                  // console.log(this.getfrmSubLoc);
+                  // let sellc=this.getfrmSubLoc.find(d=>d.locatorId===data.obj.cycleLinesList[i].locatorId)
+                  // alert(sellc.segmentName+'Segment');
+                  // control.controls[i].patchValue({LocatorSegment:sellc.segmentName});
+                  control.controls[i].patchValue({
+                    lineNumber: i + 1
+                  })
+                }
+
                       this.miscellaneousForm.patchValue(data.obj);
+                      this.currentOp='INSERT';
+                      // this.miscellaneousForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
                       this.miscellaneousForm.disable();
+                      // this.dispRow=false;
+                      this.displayaddButton=false;
+                      this.displayButton=false;
+                      // this.miscellaneousForm.get('cycleLinesList').disable();
                     }
             })
 
@@ -940,7 +994,7 @@ this.router.navigate(['admin']);
         if (this.miscellaneousForm.valid) {
         // this.displayButton=true;
         // this.displayaddButton=true;
-        const formValue:Imiscellaneous=this.miscellaneousForm.value;
+        const formValue:Imiscellaneous=this.miscellaneousForm.getRawValue();
         this.service.miscSubmit(formValue).subscribe
         ((res:any) => {
           if(res.code===200)

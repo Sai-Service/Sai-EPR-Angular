@@ -470,8 +470,8 @@ UpdateItemLocatorMaster(LocatorMasterRecord) {
   const url = (this.ServerUrl + `/itemlctrmst`);
   return this.http.put(url, LocatorMasterRecord, options);
 }
-getItemLocatorMasterSearch(locId):Observable<any>{
-  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocation/${locId}`);
+getItemLocatorMasterSearch(locId,subId):Observable<any>{
+  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSub?locId=${locId}&subInventoryId=${subId}`);
 }
 ////////////////////////////////Locator Master/////////////////////////////
 
@@ -1818,7 +1818,7 @@ public poinvCre(segment1) {
 
 
 poAllRecFind(segment1,billToLoc): Observable<any> {
-  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}&billToLoc=${billToLoc}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber?segment1=${segment1}&billToLoc=${billToLoc}`);
 }
 
 

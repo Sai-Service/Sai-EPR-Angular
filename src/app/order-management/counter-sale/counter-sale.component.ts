@@ -463,7 +463,7 @@ export class CounterSaleComponent implements OnInit {
       onHandQty: [],
       discType: [],
       disPer: ['0'],
-      disAmt: [],
+      disAmt: ['0'],
       uom: [],
       lnflowStatusCode: [''],
       Avalqty: [],
@@ -1289,11 +1289,12 @@ export class CounterSaleComponent implements OnInit {
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
+    alert(arrayControl[index].pricingQty);
     console.log(baseAmt);
-    // debugger;
+    // debugger; disAmt1 === null &&
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
-    if (disAmt1 === null && disPer > 0) {
+    if ( disPer > 0) {
       disAmt1 = (disPer / 100) * baseAmt;
       (patch.controls[index]).patchValue({
         disAmt: (disPer / 100) * baseAmt,
@@ -1710,7 +1711,8 @@ export class CounterSaleComponent implements OnInit {
 
 
   taxDetails(op, i, taxCategoryId) {
-    // alert(i);
+    alert(i);
+    this.TaxDetailsArray().clear();
     this.TaxDetailsArray().disable();
     let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
     if (op === 'Search') {
@@ -1759,17 +1761,10 @@ export class CounterSaleComponent implements OnInit {
     else {
       alert('Hi');
       this.poLineTax = i;
-      // var itemId = this.invItemList1[i].itemId;
-      // var taxCategoryId = taxCategoryId;
-      // this.taxCategoryId = taxCategoryId;
-      // // var diss = 0;
-      // var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value
-      // var diss = arrayControl[i].diss1;
-      // var baseAmt = arrayControl[this.poLineTax].baseAmtLineWise;
       var invLine = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
       var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
       var taxCategoryId = invLine[i].taxCategoryId;
-      var disAmt1 = arrayControltaxAmounts[0].totTaxAmt;
+      var disAmt1=invLine[i].disAmt;
       var baseAmt1 = invLine[i].baseAmt;
       var itemId = invLine[i].itemId;
       this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt1)
@@ -1782,19 +1777,19 @@ export class CounterSaleComponent implements OnInit {
                 sum = sum + this.taxCalforItem[i].totTaxAmt
               }
             }
-            this.TaxDetailsArray().clear()
-            this.TaxDetailsArray().disable()
             for (let i = 0; i < this.taxCalforItem.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
               this.CounterSaleOrderBookingForm.get('taxAmounts').patchValue(this.taxCalforItem);
-              // (controlinv1.controls[i]).patchValue({
-              //   invLineNo: i + 1,
-              // });
             }
             var arrayupdateTaxLine = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
             this.taxMap.set(i, arrayupdateTaxLine);
           });
+          let linkId = "line" + i;
+          // alert(linkId);
+          document.getElementById(linkId).classList.remove("active");
+          document.getElementById("lineTab").classList.remove("active");
+          document.getElementById("taxTab").classList.add("active"); 
     }
     let linkId = "line" + i;
     // alert(linkId);
@@ -1806,9 +1801,10 @@ export class CounterSaleComponent implements OnInit {
 
 
   patchResultList(i, taxCalforItem) {
-
+    alert('Tax Cal For Item')
+    this.TaxDetailsArray().clear();
     let control = this.TaxDetailsArray().controls[i].get('taxAmounts') as FormArray
-    control.clear();
+    // control.clear();
     taxCalforItem.forEach(x => {
       console.log('in patch' + taxCalforItem);
       console.log(x.taxRateName);
