@@ -507,7 +507,7 @@ export class ReturnToVendorComponent implements OnInit {
             data => {
               this.lstReceiptHeader = data.obj;
               console.log(this.lstReceiptHeader);
-            //  if(data.code===200){
+             if(data.code===200){
               // alert("PO /Receipt Number :"+this.lstReceiptHeader.segment1+"," +mRcptNumber);
               // if(this.lstReceiptHeader !=null) {
                 this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
@@ -533,8 +533,8 @@ export class ReturnToVendorComponent implements OnInit {
                 this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
-              // } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found / doesn't exists Or \nPO ReceiptNo-Location mismatch");
-              //   this.headerFound=false;this.resetMast();}
+              } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
+                this.headerFound=false;this.resetMast();}
           } );  
          }
 
