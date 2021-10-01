@@ -26,7 +26,7 @@
               From subinventory:
             </td>
             <td>
-                <input type="text" class="form-control" style="width: 120px;" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
+                <input disabled type="text" class="form-control" style="width: 120px;" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
                   <!-- <select class="form-control"  formControlName="subInventoryCode" >
                           <option>--Select--</option>
                           <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
@@ -38,7 +38,7 @@
               To subinventory:
             </td>
             <td>
-                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" >
+                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" #myinput >
                           <option>--Select--</option>
 
           <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>
