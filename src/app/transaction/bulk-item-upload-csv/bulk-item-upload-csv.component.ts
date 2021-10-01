@@ -50,12 +50,12 @@ export class BulkItemUploadCSVComponent implements OnInit {
       this.service.bulkpouploadSalesNew(formData).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
-          window.location.reload()
+          // window.location.reload()
         }
         else{
           if (res.code===400){
             alert(res.message);
-            window.location.reload()
+            // window.location.reload()
           }
         }
       })

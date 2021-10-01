@@ -318,8 +318,8 @@ lastkeydown1: number = 0;
 
         okLocator(i)
         {
-
-          // alert(i);
+          var subinventoryId=this.SubinventoryTransferForm.get('subInventoryCode').value;
+          alert(subinventoryId);
           var LocSegment=this.SubinventoryTransferForm.get('trfLinesList').value;
           var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
           LocSegment[i].LocatorSegment=this.SubinventoryTransferForm.get('Floor').value+'.'+
@@ -333,7 +333,7 @@ lastkeydown1: number = 0;
           // alert(this.LocatorSegment1);
           patch.controls[i].patchValue({'LocatorSegment': LocSegment[i].LocatorSegment})
 
-          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId'))).subscribe
+          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),subinventoryId).subscribe
           (data =>{
              this.LocatorList = data
 
