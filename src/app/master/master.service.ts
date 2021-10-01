@@ -2637,6 +2637,8 @@ getCostDetail(locId,ItemId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
 }
+
+
 getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
   // alert ("Locator Id :" +locatorId);
