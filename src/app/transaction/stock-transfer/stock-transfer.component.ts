@@ -349,6 +349,7 @@ export class StockTransferComponent implements OnInit {
 validate(i:number,qty1)
 {
   // alert("Validate");
+  // if(qty1)
   var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
   var trxLnArr1=this.stockTranferForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;

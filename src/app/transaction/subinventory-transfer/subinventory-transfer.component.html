@@ -20,7 +20,7 @@
                 Date:
               </td>
               <td>
-                <input  type="text" class="form-control"formControlName="transDate"[(ngModel)]="transDate" style="width: 120px;">
+                <input disabled type="text" class="form-control"formControlName="transDate"[(ngModel)]="transDate" style="width: 120px;">
               </td>
             <td class="LabelFontStyle">
               From subinventory:
@@ -97,7 +97,7 @@
                           <ng-container *ngFor="let trfLinesLists of trfLinesList().controls; let trfLineIndex=index" [formGroupName]="trfLineIndex">
                           <tr>
                             <td>
-                                <input type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber">
+                                <input disabled type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber">
                             </td>
                             <td>
                                   <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetdetails($event,trfLineIndex)"/>
@@ -107,10 +107,10 @@
                                      </datalist>
                            </td>
                            <td>
-                               <input type="text" class="form-control" style="height: 20px;"formControlName="description">
+                               <input disabled type="text" class="form-control" style="height: 20px;"formControlName="description">
                            </td>
                            <td>
-                               <input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
+                               <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
                            </td>
                            <td>
 
