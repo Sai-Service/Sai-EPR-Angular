@@ -82,7 +82,7 @@
             Eway&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
           </td>
           <td>
-              <input type="date" class="form-control" formControlName="ewayBillDate">
+              <input type="date" class="form-control" formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}">
             </td>
 
         </tr>
@@ -165,12 +165,18 @@
                 <ng-template #thenBlock1>
                 <tr>  <td><input disabled type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                  </td>
-                <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'>
-                  <option></option>
+                <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
+                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 120px;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
+                      <datalist id="dynmicUserIds1">
+                        <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                          </option>
+                         </datalist>
+                  <!-- <option></option>
                   <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
-                  </select>
+                  </select> -->
                   <span *ngIf="getGroupControllinewise(trxLineIndex,'itemId').touched && getGroupControllinewise(trxLineIndex,'itemId').invalid" class="error">Valid Item
                  </span>
+                 <input hidden formControlName="itemId">
                 </td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
@@ -195,7 +201,18 @@
                  </span>
                 </td>
                 <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
-                <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                <td>
+                <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
+                <ng-template #thenLineRemoveRow>
+                    <button type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
+                  </button>
+                </ng-template>
+                <ng-template #elseLinefRemoveRow>
+                    <button disabled type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
+                      </button>
+                </ng-template>
+                </td>
+                
               </tr>
               </ng-template>
               <ng-template #elseBlock1>

@@ -28,6 +28,9 @@
             </td>
             <td>
                 <input type="text" class="form-control"  formControlName="invcNo"  >
+                <div *ngIf="submitted && f.invcNo.errors" class="invalid-feedback">
+                    <div *ngIf="f.invcNo.errors.required">Code cannot be blank</div>
+                </div>
             </td>
             <td class="LabelFontStyle">
                 &nbsp;&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
@@ -35,6 +38,9 @@
             <td>
                 <input type="date" class="form-control"  formControlName="invcDt1"  >
             </td>
+            <div *ngIf="submitted && f.invcDt1.errors" class="invalid-feedback">
+                <div *ngIf="f.invcDt1.errors.required">Code cannot be blank</div>
+            </div>
         </tr>
         <tr>
             <td class="LabelFontStyle">
@@ -49,7 +55,9 @@
                     <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
                         {{item.name}}@{{item.suppNo}}</option>
                 </datalist>
-
+                <div *ngIf="submitted && f.supplierNo.errors" class="invalid-feedback">
+                    <div *ngIf="f.supplierNo.errors.required">Code cannot be blank</div>
+                </div>
             </td>
        
             <td class="LabelFontStyle">
@@ -64,9 +72,10 @@
                     {{sc.siteName}}
                 </option>
             </select>
+            <div *ngIf="submitted && f.supplierSite.errors" class="invalid-feedback">
+                <div *ngIf="f.supplierSite.errors.required">Code cannot be blank</div>
+            </div>
             </td>
-            
-          
         </tr>
         <tr>
          <td colspan="6" style="width: 100%;padding-top: 0px;">
@@ -109,10 +118,20 @@
                             <tr class="GridHeader" style="font-size: 14px;">
                                 <th scope="col" >Item</th>
                                 <th scope="col">Item&nbsp;Description</th> 
+                                <th scope="col">Tax&nbsp;Percentage</th> 
+                                <th scope="col">HSN&nbsp;SAC&nbsp;Code</th> 
+                                <th scope="col">PO&nbsp;Charge&nbsp;Account</th> 
+                                <th scope="col">Error&nbsp;Description&nbsp;</th>
+                                
                             </tr>
                             <tr *ngFor="let com of itemList" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
                                 <td style="border: 1px solid black;padding-left: 5px;">{{com.segment}}</td>  
-                                <td style="border: 1px solid black;padding-left: 5px;">{{com.description}}</td>         
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.description}}</td>
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.isTaxable}}</td>
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.hsnSacCode}}</td>
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.poChargeAccount}}</td>
+                                <td style="border: 1px solid black;padding-left: 5px;">{{com.attribute1}}</td>
+                                       
                             </tr>
                         </table>
                     </div>
@@ -148,7 +167,7 @@
             <td style="border: 1px solid black;padding-left: 5px;">{{com.totTaxAmt}}</td>
             <td style="border: 1px solid black;padding-left: 5px;">{{com.totalAmt}}</td>
             <td style="border: 1px solid black;padding-left: 5px;">{{com.authorizationStatus}}</td>
-            <td style="border: 1px solid black;padding-left: 5px;">{{com.approveDate | date:'dd-MM-yyyy hh:mm:ss'}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;">{{com.poDate}}</td>
         </tr>
     </table>
     <table class="center">

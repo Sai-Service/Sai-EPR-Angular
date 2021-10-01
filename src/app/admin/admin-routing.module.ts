@@ -31,6 +31,10 @@ const routes: Routes = [
         path: 'FixedAsset',
         loadChildren: () => import('../fixed-asset/famaster.module').then(mod => mod.faMasterModule)
       },
+      {
+        path: 'Report',
+        loadChildren: () => import('../report/reports.module').then(mod => mod.ReportsModule)
+      },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
 ];

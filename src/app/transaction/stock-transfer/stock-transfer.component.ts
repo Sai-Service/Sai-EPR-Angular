@@ -31,7 +31,7 @@ interface IStockTransfer {
 
   FrmLocator: string;
   primaryQty: number;
-
+  segment:string;
 
 }
 
@@ -59,7 +59,7 @@ export class StockTransferComponent implements OnInit {
   transQuantity: number;
   primaryQty: number;
   public onhand1:any;
-  public ItemIdList: Array<string> = [];
+  public ItemIdList:any= [];
   transactionTypeId:number=27;
   public subInvCode: any;
   public issueByList: Array<string> = [];
@@ -101,6 +101,10 @@ export class StockTransferComponent implements OnInit {
   pendingatother:any;
   transferLoc:string;
   currentOp:string;
+  displayRemoveRow: Array<boolean> = [];
+  public minewayBillDate = new Date().setDate(new Date().getDate()+7);
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
@@ -168,6 +172,7 @@ export class StockTransferComponent implements OnInit {
         lineNumber: len,
       }
     );
+    this.displayRemoveRow.push(true);
   }
   removenewtrxLinesList(trxLineIndex) {
     this.trxLinesList().removeAt(trxLineIndex);
@@ -216,21 +221,23 @@ export class StockTransferComponent implements OnInit {
         console.log(this.locIdList);
       });
 
-  this.addnewtrxLinesList(-1);
+  // this.addnewtrxLinesList(-1);
 
 
-      var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
-      (patch.controls[0]).patchValue(
-     {
-       lineNumber: 1,
-     }
-   );
+    //   var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
+    //   (patch.controls[0]).patchValue(
+    //  {
+    //    lineNumber: 1,
+    //  }
+  //  );
+   this.displayRemoveRow[0] = false;
   }
   stockTransfer(stockTranferForm: any) { }
   onOptionSelect(event: any, i) {
     if(this.currentOp==='SEARCH'){
       return;
     }
+    
    // alert(event);
     //alert(this.locId);
     console.log(this.subInvCode);
@@ -248,19 +255,33 @@ export class StockTransferComponent implements OnInit {
 
   }
   onOptionItemDetails(event: any, i) {
+    alert(event+'Item');
     if(this.currentOp==='SEARCH'){
       return;
     }
+    // alert(event);
+    // if(event.key==='Tab')
+    // {
+
+    
+        if(event != null)
+        {
+          // alert(event.length);
+          this.displayRemoveRow[i] = true;
+        }
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
    // alert(subcode1.subInventoryId);
-    var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
-    var itemid = trxLnArr[i].itemId;
-   // alert(itemid + "itemId")
-    var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
-    // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
-    this.service.getItemDetail(itemid).subscribe
+   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
+   var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
+  //  trxLnArr1.controls[i].patchValue({itemId:select1.itemId})
+    var itemId =select1.itemId;
+    trxLnArr1.controls[i].patchValue({itemId:itemId})
+  //  alert( itemId);
+        // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
+    this.service.getItemDetail(select1.itemId).subscribe
       (data => {
         this.getItemDetail = data;
        // alert("this.getItemDetail.description" + this.getItemDetail.description);
@@ -270,12 +291,12 @@ export class StockTransferComponent implements OnInit {
         }
       }
       );
-      this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemid).subscribe
+      this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemId).subscribe
           (data =>{
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
           });
-      this.service.getfrmSubLoc(this.locId, itemid, this.subInvCode.subInventoryId).subscribe(
+      this.service.getfrmSubLoc(this.locId, itemId, this.subInvCode.subInventoryId).subscribe(
         data => {
           this.getfrmSubLoc = data;
           console.log(data);
@@ -304,11 +325,12 @@ export class StockTransferComponent implements OnInit {
             }
 
         });
-        this.service.getreserqty( this.locId,itemid).subscribe
+        this.service.getreserqty( this.locId,itemId).subscribe
         (data=>{
           this.resrveqty=data;
           trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
         });
+      // }    
   }
   AvailQty(event:any,i:number)
 {
@@ -349,6 +371,7 @@ export class StockTransferComponent implements OnInit {
 validate(i:number,qty1)
 {
   // alert("Validate");
+  // if(qty1)
   var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
   var trxLnArr1=this.stockTranferForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
@@ -566,6 +589,13 @@ onlocationissueselect(event){
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
   else{
+    // alert('event');
+    this.addnewtrxLinesList(-1);
+    var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
+      (patch.controls[0]).patchValue(
+     {
+       lineNumber: 1,
+     });
     this.service.Shipmentdue(Number(sessionStorage.getItem('locId')),loc,this.subInvCode.subInventoryCode).subscribe
     ((res:any)=>{
       //  var obj=res.obj;
@@ -637,5 +667,27 @@ getGroupControllinewise(index,fieldName) {
   return (<FormArray>this.stockTranferForm.get('trxLinesList')).at(index).get(fieldName);
 
 }
+
+getInvItemId($event)
+{
+  // alert('in getInvItemId')
+   let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+   this.userList2=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+    }
+  }
+}
+searchFromArray1(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
+
 
 }

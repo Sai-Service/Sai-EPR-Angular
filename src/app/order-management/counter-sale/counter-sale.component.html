@@ -878,14 +878,14 @@
                                                         <td>
                                                             <select class="form-control"
                                                                 style="height: 20px; width: 160px;"
-                                                                formControlName="frmLocatorId">
+                                                                formControlName="frmLocatorId" (change)="AvailQty(i)">
                                                                 <!-- <option>--Select--</option>      (ngModelChange)='AvailQty(i)'-->
                                                                 <option *ngFor="let locId of  locData"
                                                                     [ngValue]="locId.locatorId"
                                                                     [Value]="locId.segmentName">
                                                                     {{locId.segmentName}}--{{locId.onHandQty}}</option>
-                                                                <!-- <input hidden formControlName="frmLocatorId"> -->
                                                             </select>
+                                                            <input hidden formControlName="frmLocatorId">
                                                         </td>
                                                         <input hidden type="number" formControlName="onHandQty">
                                                         <input hidden formControlName="id">

@@ -21,7 +21,6 @@ export class CsvData {
   // public max: any;
   // public score: any;
   //}
-
   public PO: any;
   public Part: any;
   public PartName: any;
@@ -55,7 +54,7 @@ export class CsvData {
 export class BulkUploadWithCsvComponent implements OnInit {
 
   public records: any[] = [];
-
+  submitted = false;
   jsondatadisplay: any;
 
   bulkUploadCSVForm: FormGroup;
@@ -99,7 +98,13 @@ export class BulkUploadWithCsvComponent implements OnInit {
       invcDt1: ['', [Validators.required]],
     })
   }
-  bulkUploadCSV(bulkUploadCSVForm) { }
+  bulkUploadCSV(bulkUploadCSVForm) { 
+    this.submitted = true;
+    console.log(bulkUploadCSVForm);
+    if (this.bulkUploadCSVForm.invalid) {
+      return;
+    }
+  }
   ngOnInit(): void {
     this.deptName = (sessionStorage.getItem('deptName'));
     this.bulkUploadCSVForm.patchValue({ location: sessionStorage.getItem('locCode') });
@@ -254,9 +259,13 @@ export class BulkUploadWithCsvComponent implements OnInit {
     }
   }
 
-
+  get f() { return this.bulkUploadCSVForm.controls; }
   //  uploadCSVFile($event: any): void {
   uploadCSVFile(): void {
+    // this.submitted = true;
+    // if(this.bulkUploadCSVForm.invalid){
+    // return;
+    // }
     let text = [];
     //let files = $event.srcElement.files;
 

@@ -940,6 +940,10 @@ searchCustomerByContact(contactNo): Observable<any> {
 searchCustomerByAccount(accountNo): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
 }
+
+crediteLimitFn(customerId,customerSiteId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
+}
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
@@ -2144,6 +2148,10 @@ bulkpouploadSales(formData: FormData) {
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
+
+  bulkpouploadSalesNew(formData: FormData) {
+    return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
+}
 
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
     formData.append('location', location);
