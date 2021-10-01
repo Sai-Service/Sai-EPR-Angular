@@ -8,7 +8,42 @@
                   </tr>
           </table>
           <form [formGroup]="onhandDetailsForm" (ngSubmit)="OnHandDetails(onhandDetailsForm.value)">
-          <table class="centre">
+          
+            <fieldset class="RFS">
+              <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                 SEARCH</legend>
+             <table class="center" style="width: 100%;">
+              <tr>
+                <td >
+                    <table class="center">
+                        <tr>
+                          <td></td> <td></td> <td></td> <td></td>
+                          <td></td> <td></td> <td></td> <td></td>
+                          <td></td> <td></td> <td></td> <td></td>
+                          <td class="LabelFontStyle">&nbsp;Item&nbsp;Code&nbsp;:&nbsp;</td>
+                          <!-- style="background-color: #FFE4B5;" -->
+
+                          <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="width: 250px;"  />
+                            <datalist id="dynmicUserIds1">
+                              <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                                </option>
+                               </datalist>
+                          </td>
+
+                          <td  colspan="8" style="text-align: left; width: 100%;">
+                            <button type="submit" class="btn btn-primary" (click)="searchByItem(segment)" ><i class="fa fa-search"></i></button>
+                        </td>
+
+                         
+                        </tr>
+                    </table>
+                </td>
+              </tr>
+          </table>
+          </fieldset>
+          
+<!--           
+            <table class="centre">
               <tr>
                   <td style="width: 15%" class="LabelFontStyle">
                       Item Name:
@@ -23,29 +58,118 @@
                     <button type="submit" class="btn btn-primary" (click)="searchByItem(segment)" ><i class="fa fa-search"></i></button>
                 </td>
   
-                                <!-- <input  type="number" formControlName="invItemId"> -->
-  
               </tr>
-          </table>
+          </table> -->
+
+          <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">ITEM DETAILS</legend>
+        <table class="center" style="width: 100;" style="width: 100%;">
+            <tr>
+
+              
+            <td style="width: 15%" class="LabelFontStyle">
+              &nbsp;Item Code:&nbsp;
+          </td>  
+
+          <td>
+              <input  type ="text" readonly formControlName="segment" [(ngModel)]='segment'
+                                      value={{segment}} class="form-control" >
+          </td>
+
+            <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;Description:&nbsp;
+            </td>  
+
+            <td>
+                <input  type ="text" readonly formControlName="desc" [(ngModel)]='desc'
+                                        value={{desc}} class="form-control"
+                                        placeholder="" style="width:242%;" >
+
+                                        <!-- {{desc}} -->
+            </td>
+
+            </tr>
+            <tr>
+
+            <td style="width: 15%" class="LabelFontStyle">
+                &nbsp;UOM&nbsp;:&nbsp;
+            </td>  
+
+            <td>
+            <input  type ="text" readonly formControlName="uom" [(ngModel)]='uom'
+                                    value={{uom}} class="form-control"
+                                     >
+            </td>
+
+            <td style="width: 15%" class="LabelFontStyle">HSN/SAC&nbsp;:&nbsp;</td>
+            <td>
+                <input disabled formControlName="hsnSacCode" [(ngModel)]="hsnSacCode" value={{hsnSacCode}}
+                       class="form-control"   style="text-align: right;">
+            </td>
+            <td style="width: 15%" class="LabelFontStyle"> Tax&nbsp;&nbsp;&nbsp;Category:&nbsp;</td>
+            <td>
+                <input disabled formControlName="gstPer" [(ngModel)]="gstPer"
+                    value={{gstPer}} class="form-control"  style="text-align: right;" >
+            </td>
+            
+            </tr>
+
+                    
+                <tr>
+
+
+                
+         
+                  <td style="width: 15%" class="LabelFontStyle"> Purchase&nbsp;Price&nbsp;&nbsp;:&nbsp;</td>
+                  <td>
+                      <input disabled formControlName="purchPrice" [(ngModel)]="purchPrice" value={{purchPrice}} placeholder="00.00"
+                          class="form-control" style="text-align: right;" >
+                  </td>
+
+                <td style="width: 15%" class="LabelFontStyle"> Sale&nbsp;Price&nbsp;&nbsp;:&nbsp;</td>
+                <td>
+                    <input disabled formControlName="salePrice" [(ngModel)]="salePrice" value={{salePrice}} placeholder="00.00"
+                        class="form-control" style="text-align: right;" >
+                </td>
+
+                <td style="width: 15%" class="LabelFontStyle"> MRP&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+                <td>
+                    <input disabled formControlName="mrp" [(ngModel)]="mrp" value={{mrp}} placeholder="00.00"
+                        class="form-control" style="text-align: right;" >
+                </td>
+
+              
+
+            </tr>
+        </table>
+
+       
+
+        </fieldset>
+
+
           <br>
           <div id="ouTable">
             <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
                <thead>
                    <tr class="GridHeader">
   
-                                      <th scope="col">Item Description</th>
-                                      <th scope="col">SubInventory</th>
-                                      <th scope="col">Locator</th>
+                                      <th scope="col">Operating Unit</th>
+                                      <th scope="col">Location</th>
+                                      <th scope="col">Sub Inventory</th>
                                       <th scope="col">Quantity</th>
-  
+                                      <th scope="col">Locator</th>
+                                
                               </tr>
                       </thead>
   
                           <tr *ngFor="let com of Itemdata" class="ItemStyle" style="text-decoration:none;">
-                          <td>{{com.description}}</td>
-                          <td>{{com.subInventoryCode}}</td>
-                          <td>{{com.segmentName}}</td>
-                          <td style="text-align: right;">{{com.onHandQty}}</td>
+                          <td style="text-align: center;">{{this.ouName}}</td>
+                          <td style="text-align: center;">{{this.locName}}</td>
+                          <td style="text-align: center;">{{com.subInventoryCode}}-{{com.description}}</td>
+                          <td style="text-align: center;">{{com.onHandQty}}</td>
+                          <td style="text-align: center;">{{com.segmentName}}</td>
+                          
                         </tr>
   
   
