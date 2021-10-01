@@ -52,7 +52,7 @@ public ItemIdList:any=[];
 public issueByList:Array<string>=[];
 getItemDetail:any;
 getfrmSubLoc:any;
-LocatorList:any;
+public LocatorList:any;
 locData =[ {
   "locatorId": 999,
   "segmentName": "D.U.01.D.01",
@@ -320,6 +320,9 @@ lastkeydown1: number = 0;
         {
 
           // alert(i);
+          var subInvCode=this.SubinventoryTransferForm.get('transferSubInv').value;
+          var selectsubInv=this.tosubInvCode.find(d=>d.subInventoryCode===subInvCode);
+          
           var LocSegment=this.SubinventoryTransferForm.get('trfLinesList').value;
           var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
           LocSegment[i].LocatorSegment=this.SubinventoryTransferForm.get('Floor').value+'.'+
@@ -333,7 +336,7 @@ lastkeydown1: number = 0;
           // alert(this.LocatorSegment1);
           patch.controls[i].patchValue({'LocatorSegment': LocSegment[i].LocatorSegment})
 
-          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId'))).subscribe
+          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),selectsubInv.subInventoryId).subscribe
           (data =>{
              this.LocatorList = data
 
@@ -361,6 +364,15 @@ lastkeydown1: number = 0;
             this.SubinventoryTransferForm.get('Row').reset();
             this.SubinventoryTransferForm.get('RowNo').reset();
             alert('locator search complete')
+            // var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
+            var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+            var locId=trxLnArr[i].locatorId;
+            var trflocId=trxLnArr[i].transferLocatorId;
+            alert(locId+'fromLoccator'+trflocId);
+            if(trflocId===locId)
+            {
+              alert('Can not enter same Locator');
+            }
          }
 
          closesubTrf() {
@@ -465,4 +477,17 @@ lastkeydown1: number = 0;
 
 
         }
+
+        onToLocator(event:any,i)
+{
+  // alert(event);
+  var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
+  var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+  var locId=trxLnArr[i].locatorId;
+  var trflocId=trxLnArr[i].transferLocatorId;
+  if(event===locId)
+  {
+    alert('Can not enter same Locator');
+  }
+}
 }
