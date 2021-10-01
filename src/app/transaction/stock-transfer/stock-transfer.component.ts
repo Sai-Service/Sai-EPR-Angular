@@ -86,6 +86,7 @@ export class StockTransferComponent implements OnInit {
   description: string;
   uom: string;
   display = true;
+  displayOp=true;
   displayButton = true;
   // transDate: Date;
   lstcomment: any;
@@ -489,6 +490,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
 
         this.display = false;
         this.displayButton = false;
+        this.displayOp=false;
       }
       else {
         if (res.code === 400) {
@@ -539,6 +541,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
           })
         }
         this.currentOp='INSERT';
+        this.displayOp=false;
       }
       );
 
@@ -689,5 +692,17 @@ searchFromArray1(arr, regex) {
   return matches;
 };
 
+viewStocknote() {
+  var shipNumber = this.stockTranferForm.get('shipmentNumber').value;
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.service.viewStocknote(shipNumber)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+    })
+}
 
 }

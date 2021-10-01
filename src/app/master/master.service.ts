@@ -1205,7 +1205,16 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
-
+viewStocknote(shipmentNumber){
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/omReceipt/${InvoiceNumber}`;  
+  // local
+  const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
 {
@@ -2629,9 +2638,9 @@ getItemDetail11(locId,itemId,subInvCode):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/OnHandItemDtls?locId=${locId}&subInvCode=${subInvCode}&itemId=${itemId}`)
   }
-LocatorNameList(LocName,LocId):Observable<any>
+LocatorNameList(LocName,LocId,subinventoryId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}`)
+  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}&subinventoryId=${subinventoryId}`)
 }
 getCostDetail(locId,ItemId):Observable<any>
 {

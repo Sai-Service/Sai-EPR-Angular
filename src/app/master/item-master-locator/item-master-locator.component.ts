@@ -202,7 +202,8 @@ export class ItemMasterLocatorComponent implements OnInit {
 
   okLocator()
   {
-
+   var subInventoryId=this.ItemlocatorMasterForm.get('subInventoryId').value;
+    alert(subInventoryId)
     // alert(i);
 
     this.LocatorSegment=this.ItemlocatorMasterForm.get('Floor').value+'.'+
@@ -214,9 +215,10 @@ export class ItemMasterLocatorComponent implements OnInit {
 
     var LocatorSegment1=this.LocatorSegment;
     // alert(this.LocatorSegment1);
+    
     this.ItemlocatorMasterForm.patchValue({'LocatorSegment': this.LocatorSegment})
 
-    this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId'))).subscribe
+    this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),subInventoryId).subscribe
     (data =>{
        this.LocatorList = data
 
@@ -311,16 +313,17 @@ export class ItemMasterLocatorComponent implements OnInit {
     // if(this.ItemlocatorMasterForm.invalid){
     //   return;
     // }
+
     const formValue: IItemLocatorMaster = this.ItemlocatorMasterForm.value;
     // var subId= this.subinventoryIdList.find(d => d.sub === locatorId);
     this.service.ItemLocatorMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        alert(res.message);
         // this.locatorMasterForm.reset();
         window.location.reload();
       } else {
         if (res.code === 400) {
-          alert('Data already present in the data base');
+          alert(res.message);
           // this.locatorMasterForm.reset();
           // window.location.reload();
         }

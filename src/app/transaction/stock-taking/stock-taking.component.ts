@@ -507,7 +507,7 @@ export class StockTakingComponent implements OnInit {
 
     patch.controls[i].patchValue({ 'LocatorSegment': LocSegment[i].LocatorSegment })
 
-    this.service.LocatorNameList(LocatorSegment1, Number(sessionStorage.getItem('locId'))).subscribe
+    this.service.LocatorNameList(LocatorSegment1, Number(sessionStorage.getItem('locId')),this.subInvCode.subinventoryId).subscribe
       (data => {
         this.LocatorList = data
 

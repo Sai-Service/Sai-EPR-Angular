@@ -82,7 +82,7 @@
             Eway&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
           </td>
           <td>
-              <input type="date" class="form-control" formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}">
+              <input type="date" class="form-control" formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}"  onkeydown="return false">
             </td>
 
         </tr>
@@ -200,18 +200,24 @@
                   *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
                  </span>
                 </td>
-                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
-                <td>
+                
+                
                 <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
                 <ng-template #thenLineRemoveRow>
+                    <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
+                  <td>
                     <button type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
                   </button>
+                </td>
                 </ng-template>
                 <ng-template #elseLinefRemoveRow>
+                    <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
+                  <td>
                     <button disabled type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
                       </button>
+                      </td>
                 </ng-template>
-                </td>
+                
                 
               </tr>
               </ng-template>
@@ -408,7 +414,20 @@
                     <button disabled type="submit" class="btn btn-primary" (click)="newStkTransfer()">New</button>
                   </td>
                 </ng-template>
-
+                <td>  
+                    <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
+                      </div>
+                      <ng-template #thenBlockOp>
+                          <button disabled type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
+                              View&nbsp;Note
+                          </button>
+                      </ng-template>
+                      <ng-template #elseBlockOp>
+                  <button type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
+                    View&nbsp;Note
+                </button>
+              </ng-template>
+              </td>
                 <td>
                     <!-- <button type="submit" class="btn btn-primary"    >Payment</button>   -->
                <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>
