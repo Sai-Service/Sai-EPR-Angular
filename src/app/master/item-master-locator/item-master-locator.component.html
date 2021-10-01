@@ -156,15 +156,12 @@
                               </div>
                             </div>
                           </td>
-
-
-
-                          <!-- <td style="width: 18%" class="LabelFontStyle1">
+                          <td style="width: 18%" class="LabelFontStyle1">
                               Status&nbsp;
                           </td>
-                          <td>comment by vinita
+                          <td>
                               <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" >
-                          </td> -->
+                          </td>
                       </tr>
                   </ng-template>
                   <ng-template #elseBlock>
@@ -277,10 +274,10 @@
                           </div>
                         </td>
                         
-                        <!-- <td style="width: 18%" class="LabelFontStyle1">
+                        <td style="width: 18%" class="LabelFontStyle1">
                               Status&nbsp;:
-                          </td> -->
-                          <!-- <td>
+                          </td>
+                          <td>
                               <select formControlName="status" id="status" class="form-control"
                               [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
                                   <option>--Select--</option>
@@ -290,12 +287,12 @@
                               </select>
                               <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
                                   <div *ngIf="f.status.errors.required">status is required</div>
-                                  <!-- <span
+                                   <span
                                       *ngIf="!locatorMasterForm.get('status').valid && locatorMasterForm.get('status').touched">Please
-                                      Enter status </span> -->
-                              <!-- </div> -->
-                          <!-- </td> --> 
-                          <!-- <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                                      Enter status </span> 
+                               </div>
+                          </td> 
+                          <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                           <ng-template #thenBlockInactive>
                           </ng-template>
                           <ng-template #elseBlockInactive>
@@ -306,7 +303,7 @@
                                       <input disabled type="text" formControlName="endDate" class="form-control"
                                       [ngModel]="endDate | date:'yyyy-MM-dd'">
                                   </td>
-                          </ng-template> -->
+                          </ng-template>
                       </tr>
                   </ng-template>
 

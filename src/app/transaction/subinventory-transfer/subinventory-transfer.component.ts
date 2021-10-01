@@ -318,11 +318,16 @@ lastkeydown1: number = 0;
 
         okLocator(i)
         {
+<<<<<<< HEAD
 
           // alert(i);
           var subInvCode=this.SubinventoryTransferForm.get('transferSubInv').value;
           var selectsubInv=this.tosubInvCode.find(d=>d.subInventoryCode===subInvCode);
           
+=======
+          var subinventoryId=this.SubinventoryTransferForm.get('subInventoryCode').value;
+          alert(subinventoryId);
+>>>>>>> 509ee38376af56018c61d969be0feb2c67edec1d
           var LocSegment=this.SubinventoryTransferForm.get('trfLinesList').value;
           var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
           LocSegment[i].LocatorSegment=this.SubinventoryTransferForm.get('Floor').value+'.'+
@@ -336,7 +341,11 @@ lastkeydown1: number = 0;
           // alert(this.LocatorSegment1);
           patch.controls[i].patchValue({'LocatorSegment': LocSegment[i].LocatorSegment})
 
+<<<<<<< HEAD
           this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),selectsubInv.subInventoryId).subscribe
+=======
+          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),subinventoryId).subscribe
+>>>>>>> 509ee38376af56018c61d969be0feb2c67edec1d
           (data =>{
              this.LocatorList = data
 

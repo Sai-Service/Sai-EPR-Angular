@@ -1209,7 +1209,7 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
 {
-  alert('--' + itemid +'--'+ locId);
+  // alert('--' + itemid +'--'+ locId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocitem?locId=${locId}&itemId=${itemid}`)
 }
 //////////Move Order//////////////
@@ -2629,9 +2629,9 @@ getItemDetail11(locId,itemId,subInvCode):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/OnHandItemDtls?locId=${locId}&subInvCode=${subInvCode}&itemId=${itemId}`)
   }
-LocatorNameList(LocName,LocId):Observable<any>
+LocatorNameList(LocName,LocId,subinventoryId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}`)
+  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}&subinventoryId=${subinventoryId}`)
 }
 getCostDetail(locId,ItemId):Observable<any>
 {

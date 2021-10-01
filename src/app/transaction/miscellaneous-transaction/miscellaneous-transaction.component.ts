@@ -708,7 +708,7 @@ this.router.navigate(['admin']);
         // alert(this.LocatorSegment1);
         patch.controls[i].patchValue({'LocatorSegment': LocSegment[i].LocatorSegment})
 
-        this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId'))).subscribe
+        this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe
         (data =>{
            this.LocatorList = data
 
