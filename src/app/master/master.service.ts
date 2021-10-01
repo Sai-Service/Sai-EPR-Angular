@@ -1209,7 +1209,7 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
 {
-  alert('--' + itemid +'--'+ locId);
+  // alert('--' + itemid +'--'+ locId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocitem?locId=${locId}&itemId=${itemid}`)
 }
 //////////Move Order//////////////

@@ -31,6 +31,9 @@ onhandDetailsForm:FormGroup;
   public Itemdata:any[];
   segment:string;
   invItemId:number;
+  ouId:number;
+  ouName:string;
+  locName:string;
   locId:number;
   deptId:number;
   divisionId:number;
@@ -42,12 +45,26 @@ onhandDetailsForm:FormGroup;
   
   userList2: any[] = [];
   lastkeydown1: number = 0;
+
+  desc:string;
+  uom:string;
+  hsnSacCode :string;
+  gstPer:number;
+  salePrice:number;
+  purchPrice:number;
+  mrp:number;
   
+
+
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService)
   {
     this.onhandDetailsForm=fb.group({
       segment:[''],
       invItemId:[''],
+      ouId:[],
+      ouName:[],
+      locName:[],
       locId:[''],
       deptId:[''],
       divisionId:[''],
@@ -55,6 +72,15 @@ onhandDetailsForm:FormGroup;
       onHandQty:[''],
       subInventoryCode:[''],
       description:[''],
+      desc:[],
+      uom:[],
+      hsnSacCode:[],
+      gstPer:[],
+      salePrice:[],
+      purchPrice:[],
+      mrp:[],
+
+
     })
    }
    
@@ -62,6 +88,12 @@ onhandDetailsForm:FormGroup;
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'));
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    this.ouName = (sessionStorage.getItem('ouName'));
+    this.ouId=Number(sessionStorage.getItem('ouId'));
+    this.locId=Number(sessionStorage.getItem('locId'));
+    this.locName=(sessionStorage.getItem('locName'));
+
+
 
     this.service.ItemIdDivisionList(this.divisionId).subscribe(
       data =>{ this.ItemIdList = data;
@@ -94,7 +126,7 @@ onhandDetailsForm:FormGroup;
  
  searchByItem(segment)
  {
-   alert(this.onhandDetailsForm.get('segment').value);
+  //  alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
   // var itemId= select1.itemId
@@ -104,8 +136,15 @@ onhandDetailsForm:FormGroup;
   this.service.searchByItem(select1.itemId,this.locId).subscribe(
     data =>{
       this.Itemdata= data;
+      // alert("this.Itemdata.length :"+this.Itemdata.length);
+      if(this.Itemdata.length >0 ){
+      this.segment=this.Itemdata[0].itemCode;
+      this.desc=this.Itemdata[0].desc;
+      this.uom=this.Itemdata[0].uom;
+
       console.log(data);
       this.onhandDetailsForm.patchValue(data);
+      } else { alert(segment1+" - Stock not  Available...");}
  })
 
 
