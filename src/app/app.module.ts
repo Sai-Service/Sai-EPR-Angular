@@ -35,6 +35,7 @@ import { DashboardComponent } from './master/dashboard/dashboard.component';
 import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form.component';
 import { DeActivateGuard } from './de-activate.guard';
 import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
+import { AllReportsComponent } from './report/all-reports.component';
 // import { ItemLocatorMasterComponent } from './item-locator-master/item-locator-master.component';
 // import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 
@@ -49,6 +50,7 @@ import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-maste
     DashboardComponent,
     PoReceiptFormComponent,
     FaCommanMasterComponent,
+    AllReportsComponent,
     // ItemLocatorMasterComponent,
 
 

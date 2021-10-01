@@ -1,0 +1,50 @@
+<form [formGroup]="bulkUploadCSVForm" (ngSubmit)="bulkUploadCSV(bulkUploadCSVForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Item&nbsp;Upload&nbsp;
+            </td>
+        </tr>
+        </table>
+        <table class="center">
+            <tr>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;Location&nbsp;ID&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="text" class="form-control" disabled formControlName="location" style="width: 100px;" >
+                </td>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input disabled type="text" class="form-control"  formControlName="userName"  >
+                </td>
+            </tr>
+        </table>
+        <table style="width: 50%;" class="center">
+        <tr>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+            </td>
+            <td colspan="3">
+                <input class="form-control" type="file" #fileInput  accept=".csv"  style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+            </td>
+            <td>
+                <button  class="btn btn-primary" (click)="uploadFile()" style="width: 100%;font-size: 11px;">Upload</button>
+            </td>
+        </tr>
+        </table>
+        <table class="center">
+            <tr>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                        Clear
+                    </button>
+                </td>
+                <td>
+                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                </td>
+            </tr>
+        </table>
+</form>

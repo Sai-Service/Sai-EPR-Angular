@@ -132,7 +132,6 @@
         <!-- <ul class="dropdown-menu"> -->
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/PoReceiptForm']">PO Receipt</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/PendingShipmentList']">Pending Shipment List</a>
@@ -216,7 +215,12 @@
                 Warranty</a></li>
           </ul>
         </li>
-
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bulk Upload</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
+          </ul>
+        </li>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">MCP</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMaster']">MCP Item Master</a></li>
@@ -247,8 +251,19 @@
         </li>
       </ul>
     </li>
-
-
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Reports
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Reports</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/Report/AllReports']">All Reports</a></li>
+          </ul>
+        </li>
+      </ul>
+     
     <div class="list-group list-group-flush">
       <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a> -->
       <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a> -->
