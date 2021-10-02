@@ -1206,7 +1206,7 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
 viewStocknote(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/omReceipt/${InvoiceNumber}`;  
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
   // local
   const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {

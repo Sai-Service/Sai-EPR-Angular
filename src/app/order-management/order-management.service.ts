@@ -103,10 +103,10 @@ export class OrderManagementService {
     });
   }
 
-  viewReceipt(InvoiceNumber){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/omReceipt/${InvoiceNumber}`;  
+  viewReceipt(orderNumber){
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/counterSaleReceipt/${orderNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081/omPayment/omReceipt/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081/omPayment/counterSaleReceipt/${orderNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
