@@ -77,6 +77,7 @@ interface IcustomerMaster {
   termId:number;
   dealerCode:string;
   dealerType:string;
+  siteName:string;
 }
 
 @Component({
@@ -202,6 +203,7 @@ export class CustomerMasterComponent implements OnInit {
   dealerCode:string;
   dealerType:string;
   dispDealer=false;
+  siteName:string;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -290,6 +292,7 @@ export class CustomerMasterComponent implements OnInit {
       termId:[],
       dealerCode:[],
       dealerType:[],
+      siteName:[],
     })
 
   }

@@ -98,7 +98,7 @@ export class ReturnToVendorComponent implements OnInit {
       // searchReceiptNo=1000158;
 
       // searchReceiptNo=22111720;
-      searchReceiptNo=52121101112;
+      searchReceiptNo=52121101119;
 
       poStatus:string;
       shipHeaderId:number
@@ -546,12 +546,15 @@ export class ReturnToVendorComponent implements OnInit {
              data => {
                this.lstReceiptLines = data.obj;
                console.log(this.lstReceiptLines);
-              //  alert(this.lstReceiptLines)
+
+               alert(this.lstReceiptLines);
+             
               //  if(this.lstReceiptLines !=null) {
                 let control = this.returntoVendorForm.get('rcvLines') as FormArray;
              
                 // var length1=this.lstReceiptLines.rcvLines.length-1;
                 var length1=this.lstReceiptLines.length-1;
+                // alert(length1);
 
                 this.lineDetailsArray.removeAt(length1);
                   var len=this.lineDetailsArray.length;
@@ -567,12 +570,14 @@ export class ReturnToVendorComponent implements OnInit {
             
                     for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
                     {
+                      this.lineDetailsArray.controls[i].get('qtyReturn').disable();
                       patch.controls[i].patchValue({itemType:'RETURN'})
                       var x=varLineArr[i].invItemId;
                       var y=varLineArr[i].subInventoryId;
-                      this.OnhandQtyCheck(x,y,i)
-                      
+                      var z=varLineArr[i].locatorId;
+                      this.OnhandQtyCheck(x,y,z,i)
                     }
+
                      
                   this.updateShipId()
               } );    
@@ -580,19 +585,26 @@ export class ReturnToVendorComponent implements OnInit {
          
 
 
-          OnhandQtyCheck(mItemId,subinvId,index) {
+          OnhandQtyCheck(mItemId,subinvId,mLocatorId,index) {
             // alert (mItemId +","+subinvId +","+index);
               var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
               var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
-              // var avlQty=0;
-              this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+              // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+              this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
                 .subscribe(
                 data => {
-                  this.ItemLocatorList = data;
-                  console.log(this.ItemLocatorList);
-                  var avlQty=this.ItemLocatorList[0].onHandQty
+                  // this.ItemLocatorList = data;
+                  // console.log(this.ItemLocatorList);
+                  // var avlQty=this.ItemLocatorList[0].onHandQty
                   // alert("Available Qty :" +avlQty)
+                  // patch.controls[index].patchValue({qtyOnHand:avlQty})
+
+                  this.ItemLocatorList = data.obj;
+                  console.log(this.ItemLocatorList);
+                  var avlQty=this.ItemLocatorList;
                   patch.controls[index].patchValue({qtyOnHand:avlQty})
+
+
                   }
               
               ); }
@@ -752,6 +764,7 @@ export class ReturnToVendorComponent implements OnInit {
             patch.controls[index].patchValue({qtyOnHand:avlQty})
 
             if (avlQty <=0 ) {
+              if(avlQty==null) {avlQty=0;}
               alert ("Onhand Quantity not Available - Avaialable Qty : " +avlQty);
                patch.controls[index].patchValue({selectFlag:''})
               this.lineDetailsArray.controls[index].get('qtyReturn').disable();
