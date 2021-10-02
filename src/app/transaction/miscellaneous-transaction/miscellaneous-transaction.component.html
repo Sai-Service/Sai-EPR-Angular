@@ -2,26 +2,7 @@
     <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <div  *ngIf="dispheader; then thenIC; else elsestock"></div>
-        <ng-template #thenIC>
-        <td class="PageHeader">
-          &nbsp;&nbsp;Internal&nbsp;&nbsp; Consumption &nbsp;
-        </td>
-        <table style="width: 100%; background-color: #a4d3e9;">
-          <tr>
-              <td style="width: 15%" class="LabelFontStyle">IC&nbsp;&nbsp;Number&nbsp;:</td>
-              <td>
-                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
-              </td>
-              <td colspan="8" style="text-align: left; width: 100%;">
-                  <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
-                  <!-- Modal -->
-              </td>
-            </tr>
-      </table>
-      </ng-template>
-      <ng-template #elsestock>
-          <td class="PageHeader">
+           <td class="PageHeader">
             &nbsp;&nbsp;Stock&nbsp;&nbsp; Adjustment &nbsp;
           </td>
           <table style="width: 100%; background-color: #a4d3e9;">
@@ -36,7 +17,6 @@
                 </td>
               </tr>
         </table>
-        </ng-template>
       </tr>
     </table>
     <table class="center">
@@ -105,7 +85,7 @@
           Subinventory:
         </td>
         <td>
-            <input type="text" class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
+            <input disabled type="text" class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
           <!-- <select class="form-control" formControlName="subInventory" [(ngModel)]="subInventory">
             <option>--Select--</option>
             <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option> -->
@@ -134,7 +114,7 @@
                <input hidden type="number" formControlName="codeCombinationId">
 
              <td>
-                <input formControlName="segmentName" value={{segmentName}}
+                <input disabled formControlName="segmentName" value={{segmentName}}
                                                                     class="form-control"
                                                                     [(ngModel)]="segmentName"   >
                                                                     <span
@@ -227,8 +207,13 @@
                       <th scope="col">Locator</th>
                       <th scope="col" rowspan="2">Available Quantity</th>
                       <th scope="col">Transaction Quantity</th>
+                      <!-- <div *ngIf="dispRow; then thenBlockRow; else elsedispRow"></div> -->
+                      <!-- <ng-template #thenBlockRow> -->
+                      <!-- </ng-template> -->
+                      <!-- <ng-template #elsedispRow> -->
                       <th scope="col">Add</th>
                       <th scope="col">Delete</th>
+                    <!-- </ng-template> -->
               </tr>
             </thead>
             <tbody>
@@ -236,7 +221,7 @@
                 <input type="number" min="0"  hidden formControlName="trxLineId">
               </tr> -->
             <ng-container *ngFor="let cycleLinesLists of cycleLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
-           <tr>  <td><input type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
+           <tr>  <td><input disabled type="text" class="form-control"  style="height: 20px;width: 50px;" formControlName="lineNumber">
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId">
@@ -257,7 +242,7 @@
               <!-- </td> -->
               <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
-              <td><input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
+              <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
               <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
                 <!-- <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
@@ -275,7 +260,7 @@
                 <td>
               <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event>
                 <option>--Select--</option>
-                <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId"  >{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 <!-- [ngValue]="locId.locatorId" -->
 
                 <input hidden formControlName="locatorId">
@@ -306,14 +291,14 @@
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>
               </td>
-              <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
-                </div>
-                <ng-template #thenBlockopen>
               <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
-              <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+              <div *ngIf="displayRemoveRow[trxLineIndex]; then thenBlockopen; else elseBlockfreeze"> </div>
+                <ng-template #thenBlockopen>
+             
+              <td><button type="butt" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                 </ng-template>
                 <ng-template #elseBlockfreeze>
-                    <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
+                    <!-- <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td> -->
                     <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                 </ng-template>
             </tr>

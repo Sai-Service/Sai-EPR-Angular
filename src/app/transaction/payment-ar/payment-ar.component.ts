@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { escapeIdentifier } from '@angular/compiler/src/output/abstract_emitter';
 
 
 interface IPaymentRcptAr {
@@ -769,6 +770,11 @@ export class PaymentArComponent implements OnInit {
         data => {
           this.lstcomments = data.obj;
           console.log(this.lstcomments);
+          if(data.message==="Record Not Found ") {
+            alert ("No Receipt Found for this date...")
+            this.lstcomments=null;
+          }
+    
          }
         );
       }

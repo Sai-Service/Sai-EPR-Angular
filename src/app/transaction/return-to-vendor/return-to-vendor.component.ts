@@ -87,8 +87,8 @@ export class ReturnToVendorComponent implements OnInit {
       orgId:number;
       ouId :number;
       deptId:number; 
-    // emplId :number;
-      public emplId =6;
+      emplId :number;
+      // public emplId =6;
 
       // searchReceiptNo: number;
       searchBypoNumber:number;
@@ -97,7 +97,8 @@ export class ReturnToVendorComponent implements OnInit {
       // searchBypoNumber=2181211101212100;
       // searchReceiptNo=1000158;
 
-      searchReceiptNo=22111720;
+      // searchReceiptNo=22111720;
+      searchReceiptNo=52121101119;
 
       poStatus:string;
       shipHeaderId:number
@@ -288,7 +289,7 @@ export class ReturnToVendorComponent implements OnInit {
           this.locId=Number(sessionStorage.getItem('locId'));
           this.locName=(sessionStorage.getItem('locName'));
           this.deptId=Number(sessionStorage.getItem('dept'));
-          // this.emplId= Number(sessionStorage.getItem('emplId'));
+          this.emplId= Number(sessionStorage.getItem('emplId'));
           this.orgId=this.ouId;
           console.log(this.loginArray);
           console.log(this.locId);
@@ -496,21 +497,19 @@ export class ReturnToVendorComponent implements OnInit {
           // this.showItemSearch=true;
           this.returntoVendorForm.patchValue(select);
         }
-
      
        SearchByPoRcptNumberHeader(mRcptNumber:any){
           // this.resetMast();
           // this.lineDetailsArray.reset();
-           this.returntoVendorForm.get("searchReceiptNo").disable();
-        
+          this.returntoVendorForm.get("searchReceiptNo").disable();
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
             data => {
-              this.lstReceiptHeader = data;
+              this.lstReceiptHeader = data.obj;
               console.log(this.lstReceiptHeader);
-              // alert(this.lstReceiptHeader.receiptNo);
+             if(data.code===200){
               // alert("PO /Receipt Number :"+this.lstReceiptHeader.segment1+"," +mRcptNumber);
-              if(this.lstReceiptHeader !=null) {
+              // if(this.lstReceiptHeader !=null) {
                 this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
                 this.headerFound=true;
                 this.segment1=this.lstReceiptHeader.segment1;
@@ -534,13 +533,9 @@ export class ReturnToVendorComponent implements OnInit {
                 this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
-              } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found / doesn't exists.");
+              } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
                 this.headerFound=false;this.resetMast();}
-               
           } );  
-
-        
-               
          }
 
 
@@ -551,33 +546,38 @@ export class ReturnToVendorComponent implements OnInit {
              data => {
                this.lstReceiptLines = data.obj;
                console.log(this.lstReceiptLines);
-              //  alert(this.lstReceiptLines)
+
+               alert(this.lstReceiptLines);
+             
               //  if(this.lstReceiptLines !=null) {
                 let control = this.returntoVendorForm.get('rcvLines') as FormArray;
-                var rcvLines:FormGroup=this.lineDetailsGroup();
+             
                 // var length1=this.lstReceiptLines.rcvLines.length-1;
                 var length1=this.lstReceiptLines.length-1;
+                // alert(length1);
 
                 this.lineDetailsArray.removeAt(length1);
                   var len=this.lineDetailsArray.length;
-                  for ( var i=0;i<this.lstReceiptLines.length-len;i++){
+                  // alert ("this.lstReceiptLines.length.length :"+this.lstReceiptLines.length);
+                  for ( let i=0;i<this.lstReceiptLines.length-len;i++){
+                    var rcvLines:FormGroup=this.lineDetailsGroup();
                       control.push(rcvLines);
                     }
-
+                   
                     this.returntoVendorForm.get('rcvLines').patchValue(this.lstReceiptLines);
-
-
                     var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
                     var varLineArr = this.returntoVendorForm.get('rcvLines').value;
             
                     for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
                     {
+                      this.lineDetailsArray.controls[i].get('qtyReturn').disable();
                       patch.controls[i].patchValue({itemType:'RETURN'})
                       var x=varLineArr[i].invItemId;
                       var y=varLineArr[i].subInventoryId;
-                      this.OnhandQtyCheck(x,y,i)
-                      
+                      var z=varLineArr[i].locatorId;
+                      this.OnhandQtyCheck(x,y,z,i)
                     }
+
                      
                   this.updateShipId()
               } );    
@@ -585,19 +585,26 @@ export class ReturnToVendorComponent implements OnInit {
          
 
 
-          OnhandQtyCheck(mItemId,subinvId,index) {
+          OnhandQtyCheck(mItemId,subinvId,mLocatorId,index) {
             // alert (mItemId +","+subinvId +","+index);
               var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
               var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
-              // var avlQty=0;
-              this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+              // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+              this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
                 .subscribe(
                 data => {
-                  this.ItemLocatorList = data;
-                  console.log(this.ItemLocatorList);
-                  var avlQty=this.ItemLocatorList[0].onHandQty
+                  // this.ItemLocatorList = data;
+                  // console.log(this.ItemLocatorList);
+                  // var avlQty=this.ItemLocatorList[0].onHandQty
                   // alert("Available Qty :" +avlQty)
+                  // patch.controls[index].patchValue({qtyOnHand:avlQty})
+
+                  this.ItemLocatorList = data.obj;
+                  console.log(this.ItemLocatorList);
+                  var avlQty=this.ItemLocatorList;
                   patch.controls[index].patchValue({qtyOnHand:avlQty})
+
+
                   }
               
               ); }
@@ -645,7 +652,7 @@ export class ReturnToVendorComponent implements OnInit {
           // delete val.locId;
           delete val.ouId;
           delete val.deptId;
-          delete val.emplId;
+          // delete val.emplId;
           delete val.orgId;
 
           delete val.searchReceiptNo;
@@ -725,7 +732,7 @@ export class ReturnToVendorComponent implements OnInit {
       var mItemId =rtvLineArr[index].invItemId;
       var subinvId =rtvLineArr[index].subInventoryId;
       var mLocatorId=rtvLineArr[index].locatorId;
-      mLocatorId=101;
+      // mLocatorId=101;
       // alert ("Item Id :" +mItemId  + " Index : "+ index + " Repeat Status :" +this.lineItemRepeated);
       
        if(mItemId >0) {
@@ -753,10 +760,11 @@ export class ReturnToVendorComponent implements OnInit {
 
             // var avlQty=this.ItemLocatorList[0].onHandQty
             var avlQty=this.ItemLocatorList;
-            alert ("Onhand Quantity Available in Locator :" +mLocatorId+" - Avaialable Qty : " +avlQty);
+            // alert ("Onhand Quantity Available in Locator :" +mLocatorId+" - Avaialable Qty : " +avlQty);
             patch.controls[index].patchValue({qtyOnHand:avlQty})
 
             if (avlQty <=0 ) {
+              if(avlQty==null) {avlQty=0;}
               alert ("Onhand Quantity not Available - Avaialable Qty : " +avlQty);
                patch.controls[index].patchValue({selectFlag:''})
               this.lineDetailsArray.controls[index].get('qtyReturn').disable();
@@ -878,6 +886,7 @@ export class ReturnToVendorComponent implements OnInit {
       }
       else {
         this.lineDetailsArray.removeAt(index);
+        this.CalculateTotal();
       }
     
     }
@@ -953,9 +962,11 @@ export class ReturnToVendorComponent implements OnInit {
            var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
            // this.itemId = selectedValue.itemId;
           // console.log(this.invItemId, this.taxCat);
-          // alert("PO line id :"+selectedValue.poLineId);
+          // alert("Locator id :"+selectedValue.locatorId);
           var pLineId=selectedValue.poLineId;
           var subInvItemId=selectedValue.subInventoryId;
+          // var lctrId =selectedValue.locatorId;
+          // alert("Locator id :"+lctrId);
           (patch.controls[index]).patchValue(
             {
               qtyReceived: selectedValue.qtyReceived,
@@ -972,6 +983,8 @@ export class ReturnToVendorComponent implements OnInit {
               totAmount: 0,
               sacCode: selectedValue.hsnCode,
               hsnCode: selectedValue.hsnCode,
+              locatorDesc:selectedValue.locatorDesc,
+              locatorId:selectedValue.locatorId,
               invItemId:selectedValue.invItemId,
               subInventoryId:subInvItemId,
               defaultTaxCategory: selectedValue.defaultTaxCategory,
@@ -982,11 +995,11 @@ export class ReturnToVendorComponent implements OnInit {
               billToLocId:this.returntoVendorForm.get('billToLocId').value,
               parentShipHeaderId:  this.lstReceiptHeader.shipHeaderId,
               parentShipLineId:selectedValue.shipLineId,
-              locatorDesc:selectedValue.locatorDesc,
-              locatorId:selectedValue.locatorId,
+             
         
             }
           );
+
 
         } 
       }

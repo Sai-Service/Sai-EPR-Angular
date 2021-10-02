@@ -7,6 +7,7 @@ import { ThemeService } from 'ng2-charts';
 import { MasterService } from '../master.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from "@angular/common";
+import { data } from 'jquery';
 
 interface IpoReceipt{
   ouName:string;
@@ -20,6 +21,7 @@ interface IpoReceipt{
   // totalAmt:number;
   baseAmount:number;
   taxAmt:number;
+  subInventoryId:number;
   recDate:Date;
   Comments:string;
   suppInvDate:Date;
@@ -73,6 +75,7 @@ export class PoReceiptFormComponent implements OnInit {
   ouName:string;
   poNumber:string;
   content:Number;
+  subInventory:number;
   title:string;
   submitted = false;
   private sub: any;
@@ -154,7 +157,7 @@ export class PoReceiptFormComponent implements OnInit {
   lstcompolines: any;
   public poLines:any[];
    public lstlocationwise:any[];
-   public lstcompolines1:any[];
+   public lstcompolines1:any=[];
    public rcvTaxDeatils:[];
    public poTaxDeatils:[];
    public lstSupLineDetails:any[];
@@ -262,7 +265,8 @@ export class PoReceiptFormComponent implements OnInit {
       ctgDescription:[],
       itemDesc:[],
       subInvDesc:[],
-      subInventoryId:[],
+      subInventoryId:[''],
+      // subInventoryId:[],
       locatorDesc:['',[Validators.required]],
       uom:[],
       unitPrice:[],
@@ -445,6 +449,15 @@ checkIfAllSelected() {
           }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            // alert(data.obj.poLines[j].subInventoryId);
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+            // this.lineDetailsGroup().patchValue({subInvetoryId:data.obj.poLines[j].subInventoryId})
+          }
         }
         }
       }
@@ -490,30 +503,33 @@ checkIfAllSelected() {
     this.service.getsearchByReceiptNo(segment1,(sessionStorage.getItem('locId')))
       .subscribe(
         data => {
-          this.lstcompolines = data;
-          let control = this.poReceiptForm.get('poLines') as FormArray;
-          // var length1=this.lstcompolines.rcvLines.length-1;
-          // this.lineDetailsArray.removeAt(length1);
-          // for (var i=0;i<=length1;i++){
-          //   control.push(poLines);
-          // }
-          // var len=this.lineDetailsArray.length;
-          for ( var i=0;i<this.lstcompolines.rcvLines.length;i++){
-            var poLines:FormGroup=this.lineDetailsGroup();
-            control.push(poLines);
+          if (data.code===200){
+            this.lstcompolines = data.obj;
+            let control = this.poReceiptForm.get('poLines') as FormArray;
+            for ( var i=0;i<this.lstcompolines.rcvLines.length;i++){
+              var poLines:FormGroup=this.lineDetailsGroup();
+              control.push(poLines);
+            }
+          this.disabled = false;
+          this.disabledLine=false;
+          this.disabledViewAccounting=false;
+            this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
+            this.poReceiptForm.patchValue(this.lstcompolines);
+            this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
+            this.recDate=this.lstcompolines.receiptDate;
+            this.poReceiptForm.patchValue({taxAmt:this.lstcompolines.totalTax});
+            for (let j=0; j<data.obj.poLines.length;j++){
+              this.lineDetailsArray[i].patchValue({subInventoryId:data.obj.poLines[i].subInventoryId})
+            }
+            // this.poReceiptForm.patchValue({subinventoryId:data.obj.poLines[i].subInventoryId})
           }
-        this.disabled = false;
-        this.disabledLine=false;
-        this.disabledViewAccounting=false;
-          this.poReceiptForm.get('poLines').patchValue(this.lstcompolines.rcvLines);
-          this.poReceiptForm.patchValue(this.lstcompolines);
-          this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
-          this.recDate=this.lstcompolines.receiptDate;
-          this.poReceiptForm.patchValue({taxAmt:this.lstcompolines.totalTax})
-        // }
-      }
-      
-      );  
+          else if(data.code===400){
+            alert(data.message)
+          } 
+        }
+        
+        ); 
+          
   }
 
  
@@ -587,7 +603,13 @@ checkIfAllSelected() {
           }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
-        
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+          }
           // this.locatorDesc.push(this.lstcompolines.rcvLines[0].locatorDesc);
         }
         }
@@ -719,6 +741,13 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
             // debugger;
           }
           this.poReceiptForm.patchValue(this.lstcompolines);
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+          }
           this.locatorDesc=this.lstcompolines.poLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
         }
@@ -755,6 +784,13 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
           }
           // control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+          }
           this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
         }
@@ -839,7 +875,12 @@ var jsonString = JSON.stringify(reqArr);
   }
 
   okLocator(i){
+  // this.lstcompolines.poLines[i].subinvetoryId;
+console.log(this.lstcompolines.poLines[0].subInventoryId);
+
     var poControls=this.poReceiptForm.get('poLines').value;
+    // var subinvetoryId = 
+    // alert(this.lstcompolines.poLines[0].subInventoryId);
     poControls[i].locatorDesc=
     this.poReceiptForm.get('segment11').value+'.'+
     this.poReceiptForm.get('segment2').value+'.'+
@@ -847,7 +888,7 @@ var jsonString = JSON.stringify(reqArr);
     this.poReceiptForm.get('segment4').value+'.'+
     this.poReceiptForm.get('segment5').value;
     var locatorDesc=poControls[i].locatorDesc;
-    this.service.getLocatorPoLines(locatorDesc,this.locId)
+    this.service.getLocatorPoLines(locatorDesc,this.locId,this.lstcompolines.poLines[0].subInventoryId)
     .subscribe((res: any) => {
           if (res.code === 200) {
             alert(res.message);
@@ -987,6 +1028,7 @@ refresh()
         formValue.baseAmount=this.baseAmount;
         formValue.taxAmt=this.taxAmt;
         formValue.totalAmt=this.totalAmt;
+        // formValue.subinvetoryId=this.ls
 this.locId=Number(sessionStorage.getItem('locId'));
 // alert(this.lstcompolines.poLines[i].qtyReceived)
         // }

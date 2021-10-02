@@ -20,13 +20,13 @@
                 Date:
               </td>
               <td>
-                <input  type="text" class="form-control"formControlName="transDate"[(ngModel)]="transDate" style="width: 120px;">
+                <input disabled type="text" class="form-control"formControlName="transDate"[(ngModel)]="transDate" style="width: 120px;">
               </td>
             <td class="LabelFontStyle">
               From subinventory:
             </td>
             <td>
-                <input type="text" class="form-control" style="width: 120px;" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
+                <input disabled type="text" class="form-control" style="width: 120px;" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
                   <!-- <select class="form-control"  formControlName="subInventoryCode" >
                           <option>--Select--</option>
                           <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
@@ -38,7 +38,7 @@
               To subinventory:
             </td>
             <td>
-                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" >
+                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" #myinput >
                           <option>--Select--</option>
 
           <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>
@@ -97,7 +97,7 @@
                           <ng-container *ngFor="let trfLinesLists of trfLinesList().controls; let trfLineIndex=index" [formGroupName]="trfLineIndex">
                           <tr>
                             <td>
-                                <input type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber">
+                                <input disabled type="text" class="form-control"  style="height: 20px;width: 50px;"formControlName="lineNumber">
                             </td>
                             <td>
                                   <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetdetails($event,trfLineIndex)"/>
@@ -107,10 +107,10 @@
                                      </datalist>
                            </td>
                            <td>
-                               <input type="text" class="form-control" style="height: 20px;"formControlName="description">
+                               <input disabled type="text" class="form-control" style="height: 20px;"formControlName="description">
                            </td>
                            <td>
-                               <input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
+                               <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
                            </td>
                            <td>
 
@@ -125,20 +125,32 @@
                                 <input disabled type="number" class="form-control" style="height: 20px;width: 70px;"formControlName="onHandQty">
                            </td>
                            <td>
-                                 <input hidden type="text" class="form-control" style="height: 20px;"formControlName="transferLocatorId">
+                                 <input hidden type="text" class="form-control" style="height: 20px;"formControlName="transferLocatorId" >
                                 <input   data-toggle="modal" data-target="#myModal1"
                                 formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator(trfLineIndex)"
                                 class="form-control" style="height: 20px;width: 100px;">
                            </td>
                            <td>
-                                <input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="primaryQty" >
+                                <input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="primaryQty">
                            </td>
+                           <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
+                          </div>
+                          <ng-template #thenBlockopen>
                            <td>
                                <button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrfLinesList()"></button>
                            </td>
                            <td>
                                <button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;"(click)="removetrfLinesList(trfLineIndex)"></button>
                            </td>
+                          </ng-template>
+                          <ng-template #elseBlockfreeze>
+                              <td>
+                                  <button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrfLinesList()"></button>
+                              </td>
+                              <td>
+                                  <button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;"(click)="removetrfLinesList(trfLineIndex)"></button>
+                              </td>
+                          </ng-template>
                           </tr>
                           </ng-container>
                       </tbody>

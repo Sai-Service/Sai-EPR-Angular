@@ -44,6 +44,7 @@ export class PaymentReceiptComponent implements OnInit  {
     public statusList: Array<string> = [];
     public locIdList: Array<string> = [];
     public PaymentModeList : Array<string> = [];
+    buttonviewReceipt=true;
     // public ReceiptMethodList: Array<string> = [];
     ReceiptMethodList:any=[];
     public ReverseReasonList: Array<string> = [];
@@ -181,6 +182,7 @@ export class PaymentReceiptComponent implements OnInit  {
     // this.locName=(sessionStorage.getItem('locName'));
 
     this.emplId= Number(sessionStorage.getItem('emplId'));
+    this.buttonviewReceipt=true;
 
     console.log(this.loginArray);
     console.log(this.locId);
@@ -253,8 +255,11 @@ export class PaymentReceiptComponent implements OnInit  {
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
         console.log(this.lstcomments);
+        if (data.obj.oePayList.length>0){
+          this.buttonviewReceipt=false;
+        }
        }
-       
+      
       );
       // this.paymentReceiptForm.patchValue( this.lstcomments );
       });
@@ -433,6 +438,9 @@ export class PaymentReceiptComponent implements OnInit  {
      else if (Number(sessionStorage.getItem('deptId'))==6){
        this.router.navigate(['/admin/OrderManagement/CounterSaleOrder',this.orderNumber]);
       }
+      else if (Number(sessionStorage.getItem('deptId'))==5){
+        this.router.navigate(['/admin/OrderManagement/CounterSaleOrder',this.orderNumber]);
+       }
     }
     else{
       this.location.back();
@@ -579,6 +587,18 @@ export class PaymentReceiptComponent implements OnInit  {
   // }
 
 
+  viewReceipt() {
+    var orderNumber = this.paymentReceiptForm.get('orderNumber').value;
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.viewReceipt(orderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
 
 
 }

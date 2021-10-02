@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -52,7 +52,7 @@ public ItemIdList:any=[];
 public issueByList:Array<string>=[];
 getItemDetail:any;
 getfrmSubLoc:any;
-LocatorList:any;
+public LocatorList:any;
 locData =[ {
   "locatorId": 999,
   "segmentName": "D.U.01.D.01",
@@ -92,7 +92,7 @@ primaryQty:number;
 onHandQty:number;
 LocatorSegment:string;
 lineNumber:number;
-
+displayaddButton:boolean=false;
 userList2: any[] = [];
 lastkeydown1: number = 0;
   tosubInvCode: any;
@@ -101,6 +101,12 @@ lastkeydown1: number = 0;
   pipe = new DatePipe('en-US');
   now=new Date();
   transDate=this.pipe.transform(this.now,'dd-MM-yyyy');
+
+  @ViewChild("myinput") myInputField: ElementRef;
+  @ViewChild("suppCode1") suppCode1: ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.SubinventoryTransferForm=fb.group({
@@ -111,11 +117,11 @@ lastkeydown1: number = 0;
       transDate:[],
       issueBy:[],
       remarks:[],
-      Floor:[''],
-      Rack:[''],
-      RackNo:[''],
-      Row:[''],
-      RowNo:[''],
+      Floor:['',[ Validators.maxLength(1)]],
+      Rack:['',[ Validators.maxLength(1)]],
+      RackNo:['',[ Validators.maxLength(2)]],
+      Row:['',[ Validators.maxLength(1)]],
+      RowNo:['',[ Validators.maxLength(2)]],
       locId:[],
       issueTo:[],
       trfLinesList: this.fb.array([]),
@@ -153,6 +159,9 @@ lastkeydown1: number = 0;
          lineNumber: len,
        }
      );
+     
+      // this.displayaddButton=false;
+    
    }
 
    removetrfLinesList(trfLineIndex){
@@ -228,17 +237,17 @@ lastkeydown1: number = 0;
 
   onOptiongetdetails(event:any,i)
   {
-    alert(event);
+    // alert(event);
     // alert(event);
     var temp = event.split('--');
-    alert(temp[0]);
+    // alert(temp[0]);
   var segment = temp[0];
     var trxLnArr=this.SubinventoryTransferForm.get('trfLinesList').value;
     let select1=this.ItemIdList.find(d=>d.SEGMENT == segment);
       // var itemId= select1.itemId
       console.log(select1.itemId);
 
-      alert(select1.itemId)
+      // alert(select1.itemId)
       var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
       trxLnArr1.controls[i].patchValue({itemId:select1.itemId});
       var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
@@ -257,7 +266,7 @@ lastkeydown1: number = 0;
           console.log(data);
           var getfrmSubLoc =data;
 
-            alert(i +'i'+'lOCATOR');
+            // alert(i +'i'+'lOCATOR');
             this.locData[i] = data;
             if(getfrmSubLoc.length==1)
             {
@@ -283,7 +292,10 @@ lastkeydown1: number = 0;
           this.resrveqty=data;
           trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
         });
-
+        if(event!=null)
+        {
+          this.displayaddButton=true;
+        }
   }
   OpenLocator(i)
         {
@@ -320,6 +332,9 @@ lastkeydown1: number = 0;
         {
 
           // alert(i);
+          var subInvCode=this.SubinventoryTransferForm.get('transferSubInv').value;
+          var selectsubInv=this.tosubInvCode.find(d=>d.subInventoryCode===subInvCode);
+          
           var LocSegment=this.SubinventoryTransferForm.get('trfLinesList').value;
           var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
           LocSegment[i].LocatorSegment=this.SubinventoryTransferForm.get('Floor').value+'.'+
@@ -333,7 +348,7 @@ lastkeydown1: number = 0;
           // alert(this.LocatorSegment1);
           patch.controls[i].patchValue({'LocatorSegment': LocSegment[i].LocatorSegment})
 
-          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId'))).subscribe
+          this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),selectsubInv.subInventoryId).subscribe
           (data =>{
              this.LocatorList = data
 
@@ -353,6 +368,15 @@ lastkeydown1: number = 0;
               var arraycontrol =this.SubinventoryTransferForm.get('trfLinesList').value;
               patch.controls[i].patchValue({LocatorSegment : ''});
             }
+            var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+            var locId=trxLnArr[i].locatorId;
+            var trflocId=this.LocatorList.obj.locatorId;
+            // alert(locId+'fromLoccator'+trflocId);
+            if(trflocId===locId)
+            {
+              alert('Can not enter same Locator');
+              patch.controls[i].patchValue({LocatorSegment:''});
+            }
 
             });
             this.SubinventoryTransferForm.get('Floor').reset();
@@ -360,7 +384,9 @@ lastkeydown1: number = 0;
             this.SubinventoryTransferForm.get('RackNo').reset();
             this.SubinventoryTransferForm.get('Row').reset();
             this.SubinventoryTransferForm.get('RowNo').reset();
-            alert('locator search complete')
+            alert('locator search complete');
+            // var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
+        
          }
 
          closesubTrf() {
@@ -372,16 +398,16 @@ lastkeydown1: number = 0;
 
         AvailQty(event:any,i:number)
         {
-          alert(event+'Loca');
+          // alert(event+'Loca');
           var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
           var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
           var itemid=trxLnArr[i].itemId;
           var locId=trxLnArr[i].locatorId;
           var onhandid=trxLnArr[i].onHandId;
           // trxLnArr1.controls[i].patchValue({locatorId:locId});
-          alert(locId+'locatorID'+onhandid);
+          // alert(locId+'locatorID'+onhandid);
           var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
-          alert(subcode);
+          // alert(subcode);
           // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
           // alert(select2.subInventoryId+'Id')
           if(locId!=undefined){
@@ -395,7 +421,7 @@ lastkeydown1: number = 0;
               let onHand=data.obj;
               let reserve=trxLnArr[i].resveQty;
               //alert(onHand+'OnHand');
-              alert(reserve+'reserve');
+              // alert(reserve+'reserve');
               let avlqty1=0;
               avlqty1= onHand-reserve;
               // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
@@ -465,4 +491,18 @@ lastkeydown1: number = 0;
 
 
         }
+
+        onToLocator(event:any,i)
+{
+  // alert(event);
+  var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
+  var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+  var locId=trxLnArr[i].locatorId;
+  var trflocId=trxLnArr[i].transferLocatorId;
+  if(event===locId)
+  {
+    alert('Can not enter same Locator');
+  }
+}
+
 }

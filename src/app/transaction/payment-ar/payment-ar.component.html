@@ -1342,7 +1342,7 @@
             <th style="width:8rem" scope="col">Receipt No</th>
             <th style="width:6rem" scope="col">Receipt Date</th>
             <th style="width:10rem" scope="col">Payment Type</th>
-             <th style="width:10rem" scope="col">Payment Amt</th>
+             <th style="width:10rem" scope="col">Receipt Amt</th>
             <th style="width:10rem" scope="col">Reference Type</th>
             <th style="width:10rem" scope="col">Status</th>
             <th style="width:6rem"  scope="col">Select</th>
@@ -1350,14 +1350,14 @@
    </tbody>
             <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.orgId}}</td>
+                <td style="text-align: center;">{{com.orgId}}</td>
                 <td>{{com.custAccountNo}}/{{com.custSiteId}}/{{com.custName}}-</td>
-                <td>{{com.receiptNumber}}</td>
-                <td>{{com.receiptDate  |date:'dd-MM-y'}}</td>
-                <td>{{com.payType}}</td>  
+                <td style="text-align: center;">{{com.receiptNumber}}</td>
+                <td style="text-align: center;">{{com.receiptDate  |date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.payType}}</td>  
                 <td style="text-align: right;">{{com.paymentAmt}}</td>
                 <td style="text-align: center;">{{com.refType}}</td>
-                <td>{{com.status}}</td>
+                <td style="text-align: center;">{{com.status}}</td>
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
                
             </tr>

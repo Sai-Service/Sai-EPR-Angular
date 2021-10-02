@@ -324,13 +324,13 @@
                                                 placeholder="" >
                         </td>
 
-                        <td style="width: 15%" class="LabelFontStyle">Rtn&nbsp;Amount&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">Return&nbsp;Amt&nbsp;:&nbsp;</td>
                         <td>
                             <input disabled formControlName="baseAmount" [(ngModel)]="baseAmount" value={{baseAmount}}
                                    class="form-control"  placeholder="00.00" style="text-align: right;">
                         </td>
 
-                        <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle"> Return&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
                         <td>
                             <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt"
                                 value={{taxAmt}} class="form-control" placeholder="00.00" style="text-align: right;" >
@@ -342,10 +342,10 @@
                             <tr>
 
            
-                          
+                          <td></td><td></td><td></td><td></td><td></td><td></td>
                         
 
-                            <td style="width: 15%" class="LabelFontStyle"> Rtn&nbsp;Total&nbsp;Amt&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle"> Return&nbsp;Total&nbsp;Amt&nbsp;:&nbsp;</td>
                             <td>
                                 <input disabled formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
                                     class="form-control" style="text-align: right;" >
@@ -416,12 +416,14 @@
                                     <th scope="col" style="width: 3rem;">Received Qty</th>
                                     <th scope="col" style="width: 3rem;">OnHand Qty</th>
                                     <th scope="col" style="width: 3rem;">UOM</th>
+                                    <!-- <th scope="col"> LocatorId</th> -->
+                                    <th scope="col">Sub Inventory</th>
                                     <th scope="col">Stock Locator</th>
                                     <th scope="col">Item Description</th>
                                     <!-- <th scope="col">Inv. Category</th> -->
                                     <!-- <th scope="col">Destination Type</th> -->
                                     <th scope="col">Location</th>
-                                    <th scope="col">Sub Inventory</th>
+                                  
                                     <!-- <th scope="col">UOM</th> -->
                                     <!-- <th scope="col">HSN/SAC code</th> -->
                                     <!-- <th scope="col">Tax Category</th> -->
@@ -463,7 +465,8 @@
                                             <input  type="text" hidden disabled  formControlName="billToLocId"  class="form-control" style="height: 25px;width: 50px;"> 
                                             <input  type="text" hidden disabled formControlName="invItemId"  class="form-control" style="height: 25px;width: 50px;"> 
                                             <input  type="text" hidden disabled formControlName="subInventoryId"  class="form-control" style="height: 25px;width: 50px;"> 
-                                                                                      
+                                            <input hidden disabled type="text" formControlName="locatorId" class="form-control" style="height: 25px;width: 100px;" >
+                                                                                  
                                                                               
                                         
 
@@ -547,11 +550,20 @@
                                                 </select>
                                             </td> -->
 
+                                           <!-- <td> <input disabled type="number" formControlName="locatorId" class="form-control" style="height: 25px;width: 50px;" > </td> -->
+                                          
+                                           <td> <input disabled type="text"
+                                            formControlName="subInvDesc"
+                                            class="form-control" style="height: 25px;width:50px;">
+                                            </td>
                                             <td>
                                                 <input disabled type="text" formControlName="locatorDesc" class="form-control" style="height: 25px;width: 100px;" >
                                             </td> 
-
-                                           
+        
+                                        <td>
+                                            <input type="text" disabled formControlName="locId" class="form-control"
+                                            [(ngModel)]='locId' style="height: 25px;width: 60px;">
+                                        </td>
 
                                         <td> <input disabled type="text"
                                             formControlName="itemDesc"
@@ -560,18 +572,6 @@
                                        
                                         <input hidden disabled type="text" formControlName="ctgDescription" class="form-control" style="height: 25px;width: 100px;">
                                         <input  hidden disabled type="text" formControlName="itemType" [(ngModel)]="itemType"  class="form-control" style="height: 25px;width: 100px;">
-                                      
-                                      
-                                        <td>
-                                            <input type="text" disabled formControlName="locId" class="form-control"
-                                            [(ngModel)]='locId' style="height: 25px;width: 60px;">
-                                        </td>
-                                        <td> <input disabled type="text"
-                                                formControlName="subInvDesc"
-                                                class="form-control" style="height: 25px;width:50px;">
-                                        </td>
-
-
                                         <input hidden disabled type="text" formControlName="sacCode" class="form-control" style="height: 25px;width: 80px;">
                                         <input hidden disabled type="text" formControlName="taxCategoryName"  class="form-control" style="height: 25px;">
                                         
@@ -708,7 +708,7 @@
                                     <ng-template #elseBlock1>
                                    
                                             <td>
-                                                <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!returntoVendorForm">Update</button>
+                                                <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!returntoVendorForm">Print</button>
                                             </td>
                                             <td>
                                                 <!-- <button type="button" class="btn btn-info" (click)="searchMast()">Search</button> -->

@@ -470,8 +470,8 @@ UpdateItemLocatorMaster(LocatorMasterRecord) {
   const url = (this.ServerUrl + `/itemlctrmst`);
   return this.http.put(url, LocatorMasterRecord, options);
 }
-getItemLocatorMasterSearch(locId):Observable<any>{
-  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocation/${locId}`);
+getItemLocatorMasterSearch(locId,subId):Observable<any>{
+  return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSub?locId=${locId}&subInventoryId=${subId}`);
 }
 ////////////////////////////////Locator Master/////////////////////////////
 
@@ -940,6 +940,10 @@ searchCustomerByContact(contactNo): Observable<any> {
 searchCustomerByAccount(accountNo): Observable<any>{
   return this.http.get(this.ServerUrl+`/Customer/getByCustAcctNo?accountNo=${accountNo}`);
 }
+
+crediteLimitFn(customerId,customerSiteId): Observable<any>{
+  return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
+}
 /////////AccountEnquiry////////////////////
 public FinancialPeriod():Observable<any>{
   return this.http.get(this.ServerUrl+'/glPeriod/periodName');
@@ -1201,11 +1205,20 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
-
+viewStocknote(shipmentNumber){
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
+  // local
+  const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 ///////////OnHand////////////
 searchByItem(itemid,locId:number):Observable<any>
 {
-  alert('--' + itemid +'--'+ locId);
+  // alert('--' + itemid +'--'+ locId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocitem?locId=${locId}&itemId=${itemid}`)
 }
 //////////Move Order//////////////
@@ -1224,6 +1237,14 @@ public reservePost(reserverecord)
   };
   const url=this.ServerUrl+`/reserveQty/insResrv`;
   return this.http.post(url,reserverecord,options);
+}
+public reserveDelete(transno,locId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`);
+}
+public reserveDeleteLine(transno,locId,itemId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/removeItem/?transactionNumber=${transno}&locId=${locId}&invItemId=${itemId}`);
 }
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
@@ -1723,8 +1744,9 @@ cityList1(city): Observable<any> {
 }
 // receipt service
 
-getLocatorPoLines(locatorDesc,locId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+getLocatorPoLines(locatorDesc,locId,subinventoryId): Observable<any> {
+  // return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+return this.http.get(this.ServerUrl +`/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}&subinventoryId=${subinventoryId}`)
 }
 
 
@@ -1741,6 +1763,12 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 }
 
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
+  // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+
+ }
+
+ getsearchByReceiptNo1(segment1,mLocId): Observable<any> {
   // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
 
@@ -1812,8 +1840,9 @@ public poinvCre(segment1) {
 
 
 poAllRecFind(segment1,billToLoc): Observable<any> {
-  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber/${segment1}&billToLoc=${billToLoc}`);
+  return this.http.get(this.ServerUrl +`/rcvShipment/findByPONumber?segment1=${segment1}&billToLoc=${billToLoc}`);
 }
+
 
 
 
@@ -2060,15 +2089,19 @@ OrderCategoryList(): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
+      // alert ("receipt date only");
         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
       }
       if( rcptNumber !=undefined || rcptNumber !=null) {
+        // alert ("receipt number only");
       return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
       }
 
       if(custActNo !=undefined || custActNo !=null){
+        // alert("cust account no");
          return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
     }
+
 
     getArReceiptDetailsByRcptNo (rcptNumber): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
@@ -2133,6 +2166,10 @@ bulkpouploadSales(formData: FormData) {
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
+
+  bulkpouploadSalesNew(formData: FormData) {
+    return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
+}
 
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
     formData.append('location', location);
@@ -2610,16 +2647,19 @@ getItemDetail11(locId,itemId,subInvCode):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/itemMst/OnHandItemDtls?locId=${locId}&subInvCode=${subInvCode}&itemId=${itemId}`)
   }
-LocatorNameList(LocName,LocId):Observable<any>
+LocatorNameList(LocName,LocId,subinventoryId):Observable<any>
 {
-  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}`)
+  return this.http.get(this.ServerUrl+`/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}&subinventoryId=${subinventoryId}`)
 }
 getCostDetail(locId,ItemId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
 }
+
+
 getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
+  // alert ("Locator Id :" +locatorId);
   return this.http.get(this.ServerUrl+`/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
 }
 // getonhandqty(locatorId):Observable<any>

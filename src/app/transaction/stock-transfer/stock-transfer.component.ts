@@ -31,7 +31,7 @@ interface IStockTransfer {
 
   FrmLocator: string;
   primaryQty: number;
-
+  segment:string;
 
 }
 
@@ -59,7 +59,7 @@ export class StockTransferComponent implements OnInit {
   transQuantity: number;
   primaryQty: number;
   public onhand1:any;
-  public ItemIdList: Array<string> = [];
+  public ItemIdList:any= [];
   transactionTypeId:number=27;
   public subInvCode: any;
   public issueByList: Array<string> = [];
@@ -86,6 +86,7 @@ export class StockTransferComponent implements OnInit {
   description: string;
   uom: string;
   display = true;
+  displayOp=true;
   displayButton = true;
   // transDate: Date;
   lstcomment: any;
@@ -100,6 +101,11 @@ export class StockTransferComponent implements OnInit {
   displayremakdata=true;
   pendingatother:any;
   transferLoc:string;
+  currentOp:string;
+  displayRemoveRow: Array<boolean> = [];
+  public minewayBillDate = new Date().setDate(new Date().getDate()+7);
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
@@ -151,11 +157,16 @@ export class StockTransferComponent implements OnInit {
   }
 
   addnewtrxLinesList(i:number) {
-    // alert(i+'i');
+    
     if(i>-1)
     {
-
-      // alert('reservecall'+i);
+      var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+      var itemqty=trxLnArr1[i].primaryQty;
+      alert(itemqty);
+      if(itemqty==='')
+     { alert('Please enter quantity');
+     return;
+    }
       this.reservePos(i);
     }
 
@@ -167,8 +178,16 @@ export class StockTransferComponent implements OnInit {
         lineNumber: len,
       }
     );
+    this.displayRemoveRow.push(true);
   }
   removenewtrxLinesList(trxLineIndex) {
+       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+    var itemid=trxLnArr1[trxLineIndex].segment;
+    // alert(itemid+'Delete');
+    if(itemid!=null)
+    {
+    this.deleteReserveLinewise(trxLineIndex);
+    }
     this.trxLinesList().removeAt(trxLineIndex);
   }
 
@@ -215,18 +234,23 @@ export class StockTransferComponent implements OnInit {
         console.log(this.locIdList);
       });
 
-  this.addnewtrxLinesList(-1);
+  // this.addnewtrxLinesList(-1);
 
 
-      var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
-      (patch.controls[0]).patchValue(
-     {
-       lineNumber: 1,
-     }
-   );
+    //   var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
+    //   (patch.controls[0]).patchValue(
+    //  {
+    //    lineNumber: 1,
+    //  }
+  //  );
+   this.displayRemoveRow[0] = false;
   }
   stockTransfer(stockTranferForm: any) { }
   onOptionSelect(event: any, i) {
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
+    
    // alert(event);
     //alert(this.locId);
     console.log(this.subInvCode);
@@ -244,16 +268,33 @@ export class StockTransferComponent implements OnInit {
 
   }
   onOptionItemDetails(event: any, i) {
+    // alert(event+'Item');
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
+    // alert(event);
+    // if(event.key==='Tab')
+    // {
+
+    
+        // if(event != null)
+        // {
+        //   // alert(event.length);
+        //   this.displayRemoveRow[i] = true;
+        // }
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
    // alert(subcode1.subInventoryId);
-    var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
-    var itemid = trxLnArr[i].itemId;
-   // alert(itemid + "itemId")
-    var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
-    // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
-    this.service.getItemDetail(itemid).subscribe
+   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
+   var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
+  //  trxLnArr1.controls[i].patchValue({itemId:select1.itemId})
+    var itemId =select1.itemId;
+    trxLnArr1.controls[i].patchValue({itemId:itemId})
+  //  alert( itemId);
+        // trxLnArr1.controls[i].patchValue({locatorId:this.getfrmSubLoc.locatorId})
+    this.service.getItemDetail(select1.itemId).subscribe
       (data => {
         this.getItemDetail = data;
        // alert("this.getItemDetail.description" + this.getItemDetail.description);
@@ -263,12 +304,12 @@ export class StockTransferComponent implements OnInit {
         }
       }
       );
-      this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemid).subscribe
+      this.service.getCostDetail(Number(sessionStorage.getItem('locId')),itemId).subscribe
           (data =>{
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
           });
-      this.service.getfrmSubLoc(this.locId, itemid, this.subInvCode.subInventoryId).subscribe(
+      this.service.getfrmSubLoc(this.locId, itemId, this.subInvCode.subInventoryId).subscribe(
         data => {
           this.getfrmSubLoc = data;
           console.log(data);
@@ -297,14 +338,18 @@ export class StockTransferComponent implements OnInit {
             }
 
         });
-        this.service.getreserqty( this.locId,itemid).subscribe
+        this.service.getreserqty( this.locId,itemId).subscribe
         (data=>{
           this.resrveqty=data;
           trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
         });
+      // }    
   }
   AvailQty(event:any,i:number)
 {
+  if(this.currentOp==='SEARCH'){
+    return;
+  }
   // alert(event+'Loca');
   var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
@@ -339,10 +384,12 @@ export class StockTransferComponent implements OnInit {
 validate(i:number,qty1)
 {
   // alert("Validate");
+  // if(qty1)
   var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
   var trxLnArr1=this.stockTranferForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].primaryQty;
+  let uomCode=trxLnArr[i].uom;
 //  alert(avalqty+'avalqty');
 //  alert(trxLnArr[i].primaryQty +' qty');
   if(qty>avalqty)
@@ -357,7 +404,15 @@ validate(i:number,qty1)
     trxLnArr1.controls[i].patchValue({primaryQty:''});
     qty1.focus();
   }
-
+  if(uomCode==='NO')
+  {
+    alert(Number.isInteger(qty)+'Status');
+    if(!(Number.isInteger(qty)))
+    {
+    alert('Please enter correct No');
+    trxLnArr1.controls[i].patchValue({primaryQty:''});
+  }}
+  
 }
 reservePos(i)
 {
@@ -397,6 +452,28 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
    }
   }
   );
+}
+deleteReserve()
+{
+  var transferId=this.stockTranferForm.get('transferOrgId').value
+  this.service.reserveDelete(transferId,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
+}
+deleteReserveLinewise(i)
+{
+  var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+  var transferId=this.stockTranferForm.get('transferOrgId').value
+  var itemid=trxLnArr1[i].itemId;
+  this.service.reserveDeleteLine(transferId,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
 }
   newStkTransfer() {
 
@@ -456,6 +533,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
 
         this.display = false;
         this.displayButton = false;
+        this.displayOp=false;
       }
       else {
         if (res.code === 400) {
@@ -474,6 +552,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   }
 
   search(ShipmentNo) {
+    this.currentOp='SEARCH';
     // alert('1'+ShipmentNo);
     this.display = true;
 
@@ -501,10 +580,11 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
         var patch = this.stockTranferForm.get('trxLinesList') as FormArray;
         for (let i = 0; i < this.trxLinesList().length; i++) {
           patch.controls[i].patchValue({
-            LinNo: i + 1
+            lineNumber: i + 1
           })
         }
-
+        this.currentOp='INSERT';
+        this.displayOp=false;
       }
       );
 
@@ -518,9 +598,11 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   // }
   closeMoveOrder() {
     this.router.navigate(['admin']);
+    this.deleteReserve();
   }
   resetMoveOrder() {
     window.location.reload();
+    this.deleteReserve();
   }
 searchAll()
 {
@@ -549,10 +631,19 @@ selectByShipNo(shipmentNumber:any)
 
 onlocationissueselect(event){
   // alert(event);
-
+  if(this.currentOp==='SEARCH'){
+    return;
+  }
   var loc=this.stockTranferForm.get('transferOrgId').value;
   if(loc===undefined){}
   else{
+    // alert('event');
+    this.addnewtrxLinesList(-1);
+    var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
+      (patch.controls[0]).patchValue(
+     {
+       lineNumber: 1,
+     });
     this.service.Shipmentdue(Number(sessionStorage.getItem('locId')),loc,this.subInvCode.subInventoryCode).subscribe
     ((res:any)=>{
       //  var obj=res.obj;
@@ -623,6 +714,40 @@ getGroupControllinewise(index,fieldName) {
   // alert('nam'+fieldName);
   return (<FormArray>this.stockTranferForm.get('trxLinesList')).at(index).get(fieldName);
 
+}
+
+getInvItemId($event)
+{
+  // alert('in getInvItemId')
+   let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+   this.userList2=[];
+   if (userId.length > 2) {
+    if ($event.timeStamp - this.lastkeydown1 > 200) {
+      this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+    }
+  }
+}
+searchFromArray1(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
+
+viewStocknote() {
+  var shipNumber = this.stockTranferForm.get('shipmentNumber').value;
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.service.viewStocknote(shipNumber)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+    })
 }
 
 }
