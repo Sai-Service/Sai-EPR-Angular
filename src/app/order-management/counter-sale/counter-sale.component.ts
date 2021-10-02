@@ -976,6 +976,7 @@ export class CounterSaleComponent implements OnInit {
     if (createOrderType === 'Pick Ticket' || createOrderType === 'Direct Invoice') {
       // Sales Order
       this.displaysalesRepName = true;
+      this.CounterSaleOrderBookingForm.get('othRefNo').disable();
     }
     else {
       if (createOrderType === 'Sales Order') {
@@ -1142,6 +1143,7 @@ export class CounterSaleComponent implements OnInit {
     this.orderManagementService.othRefNoSearchFn(othRefNo)
       .subscribe(
         data => {
+          if (data.code===200){
           this.othRefNoSearchFnData = data.obj;
           this.othRefNo = data.obj.orderNumber1;
           this.salesRepName = data.obj.salesRepName1;
@@ -1151,6 +1153,12 @@ export class CounterSaleComponent implements OnInit {
             alert('Sales Order Customer & Counter Sale Order Customer Not Match')
           }
           else { }
+        }
+        else{
+          if (data.code===400){
+            alert(data.message)
+          }
+        }
         })
 
   }
@@ -1173,7 +1181,7 @@ export class CounterSaleComponent implements OnInit {
           }
           else {
             if (data.code === 400) {
-              alert('res' + data.message);
+              alert( data.message);
               this.displaycreateCustomer = false;
               // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
               // this.CounterSaleOrderBookingForm.get('custName').disable();
@@ -1405,8 +1413,13 @@ export class CounterSaleComponent implements OnInit {
                 });
 
                 this.taxCategoryList = this.taxCategoryList.filter(function (d) { return taxCatNm.includes(d.gstPercentage) });
-
+                // if (data[i].uom==='NO'){
+                //   data[i].pricingQty.includes('.')
+                //   return;
+                // }
               }
+
+             
               if (select.itemId != null) {
                 this.getLocatorDetails(k, select.itemId);
               }
@@ -1430,7 +1443,7 @@ export class CounterSaleComponent implements OnInit {
 
   }
   getLocatorDetails(k, itemId) {
-    alert(k)
+    // alert(k)
     // alert('Enter getLocatorDetails ');
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var invTp = controlinv.controls[k].get('invType').value;
@@ -1630,7 +1643,7 @@ export class CounterSaleComponent implements OnInit {
     }
     // this.displaysegmentInvType.push(true);
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
-    alert(this.CounterSaleOrderBookingForm.get('disPer').value)
+    // alert(this.CounterSaleOrderBookingForm.get('disPer').value)
 
     this.displayRemoveRow.push(true);
     this.displayCounterSaleLine.push(true);

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-all-reports',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./all-reports.component.css']
 })
 export class AllReportsComponent implements OnInit {
-
-  constructor() { }
+  decimal_value:number;
+  constructor() { 
+  }
 
   ngOnInit(): void {
+   this.decimal_value=100.8999777789; 
   }
 
 }
