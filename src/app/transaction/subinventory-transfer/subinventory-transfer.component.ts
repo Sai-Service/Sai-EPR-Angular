@@ -369,6 +369,7 @@ lastkeydown1: number = 0;
             if(trflocId===locId)
             {
               alert('Can not enter same Locator');
+              patch.controls[i].patchValue({LocatorSegment:''});
             }
 
             });
