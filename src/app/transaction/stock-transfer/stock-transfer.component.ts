@@ -93,7 +93,7 @@ export class StockTransferComponent implements OnInit {
   remarks: string;
   segment: string;
   locator: string;
-  transCost: number;
+  transCost:number;
   lineNumber:number;
   pipe = new DatePipe('en-US');
   now=new Date();
@@ -148,7 +148,7 @@ export class StockTransferComponent implements OnInit {
       locatorId: [''],
       segment: [''],
       locator: [''],
-      transCost: [''],
+      transCost: [],
       avlqty:[''],
       onHandQty:[],
       lineNumber:[],
@@ -156,8 +156,7 @@ export class StockTransferComponent implements OnInit {
     })
   }
 
-  addnewtrxLinesList(i:number) {
-    
+  addnewtrxLinesList(i:number) {    
     if(i>-1)
     {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
@@ -168,6 +167,7 @@ export class StockTransferComponent implements OnInit {
      return;
     }
       this.reservePos(i);
+
     }
 
     this.trxLinesList().push(this.newtrxLinesList());
@@ -196,7 +196,8 @@ export class StockTransferComponent implements OnInit {
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
-    this.issueBy=(sessionStorage.getItem('name'))
+    this.issueBy=(sessionStorage.getItem('name'));
+    // this.transCost=0.00;
     // alert(this.deptName+'Depart');
     // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
 
@@ -308,6 +309,7 @@ export class StockTransferComponent implements OnInit {
           (data =>{
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
+            // this.transCost[i]=this.CostDetail.rate;
           });
       this.service.getfrmSubLoc(this.locId, itemId, this.subInvCode.subInventoryId).subscribe(
         data => {
@@ -443,6 +445,8 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
    if(res.code===200)
    {
     alert(res.message);
+    (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
+
    }
    else{
     if(res.code === 400) {

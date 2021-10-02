@@ -2623,6 +2623,10 @@ TransactionTypemisc():Observable<any>
 {
   return this.http.get(this.ServerUrl +`/mtlTrxTypes/stockAdj/9`);
 }
+TransactionTypeIC():Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/mtlTrxTypes/IC/9`);
+}
 ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
@@ -2697,6 +2701,10 @@ getSearchByNo(compNo):Observable<any>
 getSearchViewBycompNo(compNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/stockadj/compileall/${compNo}`)
+}
+getSearchViewByIc(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/IC/${compNo}`)
 }
 getSearchBycompNo(compNo):Observable<any>
 {
