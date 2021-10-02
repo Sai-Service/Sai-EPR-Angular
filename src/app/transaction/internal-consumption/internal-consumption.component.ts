@@ -1,5 +1,5 @@
 import { DatePipe, PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -178,6 +178,13 @@ export class InternalConsumptionComponent implements OnInit {
   compileDate=this.pipe.transform(this.now,'dd-MM-yyyy')
   currentOp:string;
   dispRow:boolean=true;
+  displayRemoveRow: Array<boolean> = [];
+
+  @ViewChild("myinput") myInputField: ElementRef;
+  // @ViewChild("suppCode1") suppCode1: ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
 
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
   {
@@ -257,8 +264,15 @@ export class InternalConsumptionComponent implements OnInit {
     //alert('hi');
     // alert(this.InternalConsumptionForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
-     if(i>-1 && this.InternalConsumptionForm.get('compileType').value===4)
+     if(i>-1)
     {
+      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+      var itemqty=trxLnArr1[i].physicalQty;
+      alert(itemqty);
+      if(itemqty==='')
+     { alert('Please enter quantity');
+     return;
+    }
       //alert('hi');
     this.reservePos(i);
     }
@@ -277,6 +291,13 @@ export class InternalConsumptionComponent implements OnInit {
 
    }
   removenewcycleLinesList(trxLineIndex){
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+    var itemid=trxLnArr1[trxLineIndex].segment;
+    // alert(itemid+'Delete');
+    if(itemid!=null)
+    {
+    this.deleteReserveLinewise(trxLineIndex);
+    }
     this.cycleLinesList().removeAt(trxLineIndex);
     this.displayLocator[trxLineIndex]=true;
   }
@@ -345,24 +366,24 @@ console.log(this.route1.queryParams+'hell');
           console.log(this.locIdList);
         }
       );
-      this.service.TransactionTypemisc().subscribe(
+      this.service.TransactionTypeIC().subscribe(
         data=>{
           this.transType=data;
-          if(this.dispheader===true)
-          {
-            // this.InternalConsumptionForm.reset();
-           alert('In 1st If'+this.transType.length);
-             for(let i=0;i<this.transType.length;i++)  
-             {
-               alert('In For');
-               if(this.transType[i].transactionTypeId===13)
-               {
-                 alert('In If');
-                 this.transType.splice(i,1);
-               }
-             }
+          // if(this.dispheader===true)
+          // {
+          //   // this.InternalConsumptionForm.reset();
+          //  alert('In 1st If'+this.transType.length);
+          //    for(let i=0;i<this.transType.length;i++)  
+          //    {
+          //      alert('In For');
+          //      if(this.transType[i].transactionTypeId===13)
+          //      {
+          //        alert('In If');
+          //        this.transType.splice(i,1);
+          //      }
+          //    }
            
-          }
+          // }
         }
       );
        this.service.ReasonList().subscribe(
@@ -397,7 +418,7 @@ console.log(this.route1.queryParams+'hell');
        }
        
      );
-     
+     this.displayRemoveRow[0] = false;
     //  this.route1.queryParams
     //   .filter(params => params.type1)
     //   .subscribe(params => {
@@ -824,6 +845,7 @@ this.router.navigate(['admin']);
           const formValue:InternalConsumption = this.InternalConsumptionForm.value;
           let variants = <FormArray>this.cycleLinesList();
           var transtypeid = this.InternalConsumptionForm.get('compileType').value;
+          var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
           var locId1=this.InternalConsumptionForm.get('locId').value
 
             let variantFormGroup = <FormGroup>variants.controls[i];
@@ -832,7 +854,7 @@ this.router.navigate(['admin']);
             // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
             variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].physicalQty, []));
             variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
-            variantFormGroup.addControl('transactionNumber',new FormControl(transtypeid.locCode,[]));
+            variantFormGroup.addControl('transactionNumber',new FormControl(seltranstyp.transactionTypeName,[]));
 
 
         // var reserveinfo=formValue[0];
@@ -953,7 +975,7 @@ this.router.navigate(['admin']);
         this.currentOp='SEARCH';
         var compno=this.InternalConsumptionForm.get('compNo').value;
         var appflag=this.InternalConsumptionForm.get('trans').value;
-        this.service.getSearchViewBycompNo(compno).subscribe
+        this.service.getSearchViewByIc(compno).subscribe
             (data=>{
               if(data.code===400)
               {
@@ -1102,4 +1124,29 @@ this.router.navigate(['admin']);
         return (<FormArray>this.InternalConsumptionForm.get('cycleLinesList')).at(index).get(fieldName);
 
       }
+      deleteReserve()
+      {
+        var transtypeid = this.InternalConsumptionForm.get('compileType').value;
+        var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
+        this.service.reserveDelete(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+          //  var obj=res.obj;
+           if(res.code===200)
+           {
+            // alert(res.message);
+           }});
+      }
+      deleteReserveLinewise(i)
+      {
+        var transtypeid = this.InternalConsumptionForm.get('compileType').value;
+        var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
+        var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+        var itemid=trxLnArr1[i].itemId;
+        this.service.reserveDeleteLine(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+          //  var obj=res.obj;
+           if(res.code===200)
+           {
+            // alert(res.message);
+           }});
+      }
+      
 }
