@@ -236,7 +236,7 @@ export class CustomerMasterComponent implements OnInit {
       mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       mobile3: ['',[Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       // emailId: ['', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
-      emailId:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      emailId:['', [Validators.required,Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       emailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       // contactPerson: ['', [Validators.required,Validators.pattern('[a-zA-Z ]*')]],
       contactPerson:['',[Validators.pattern('^[a-z A-Z ]*')]],
@@ -254,22 +254,22 @@ export class CustomerMasterComponent implements OnInit {
       // classCodeType: [''],
       ouId: [''],
       locId:[''],
-      saddress1:['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      saddress2:['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      saddress1:['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      saddress2:['', [Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       saddress3:['',[Validators.maxLength(100)]],
-      scity: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      spinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
-      sstate: ['', Validators.required],
-      smobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      scity: ['', [Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      spinCd: ['', [Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
+      sstate: [''],
+      smobile1: ['', [, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       smobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       smobile3:['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
       semailId: ['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       semailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
-      sstartDate:['', [Validators.required]],
+      sstartDate:[''],
       sendDate: [''],
-      sstatus: ['', [Validators.required]],
+      sstatus: [''],
       //derina - customerSiteId
-      customerSiteId:['', [Validators.required]],
+      customerSiteId:[''],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -279,11 +279,11 @@ export class CustomerMasterComponent implements OnInit {
       loginArray:[],
       staxCatName:[],
       stanNo:[],
-      spanNo:['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
+      spanNo:['', [ Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       sGstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       souId:[],
       souName:[],
-      slocation:['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      slocation:['', [Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       creditAmt:[],
       highAmt:[],
       screditAmt:[],
@@ -606,14 +606,16 @@ if (person === 'Person'){
     var isvaliddata=this.validation();
     if(isvaliddata===false)
     {
+      // alert('In Validation (v)');
       return;
     }
 
     this.submitted = true;
     if(this.customerMasterForm.invalid){
-    alert('In Validation');
+    // alert('In Validation(d) ');
       return;
     }
+    
     // this.submitted = true;
 
 
