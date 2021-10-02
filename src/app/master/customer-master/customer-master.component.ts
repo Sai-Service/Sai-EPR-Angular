@@ -52,7 +52,7 @@ interface IcustomerMaster {
   saddress2: string;
   saddress3: string;
   scity: string;
-  // spinCd: string;
+  spinCd: string;
   sstate: string;
   smobile1: string;
   smobile2: number;
@@ -135,7 +135,7 @@ export class CustomerMasterComponent implements OnInit {
   saddress2: string;
   saddress3: string;
   scity: string;
-  // spinCd: string;
+  spinCd: string;
   sstate: string;
   smobile1: string;
   smobile2: string;
@@ -254,21 +254,22 @@ export class CustomerMasterComponent implements OnInit {
       // classCodeType: [''],
       ouId: [''],
       locId:[''],
-      saddress1: [''],
-      saddress2: [''],
-      saddress3: [''],
-      scity: [''],
-      // spinCd: [''],
-      sstate: [''],
-      smobile1: [''],
-      smobile2: [''],
-      smobile3: [''],
-      semailId: [''],
-      semailId1: [''],
-      sstartDate: [''],
+      saddress1:['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      saddress2:['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      saddress3:['',[Validators.maxLength(100)]],
+      scity: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      spinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
+      sstate: ['', Validators.required],
+      smobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
+      smobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
+      smobile3:['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
+      semailId: ['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      semailId1:['', [Validators.email,Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
+      sstartDate:['', [Validators.required]],
       sendDate: [''],
-      sstatus: [''],
-      customerSiteId:[''],
+      sstatus: ['', [Validators.required]],
+      //derina - customerSiteId
+      customerSiteId:['', [Validators.required]],
       // custAccountNo:['', [Validators.required,Validators.pattern('[0-9]*')]],
       custAccountNo:[''],
       ExeAddress: [],
@@ -278,11 +279,11 @@ export class CustomerMasterComponent implements OnInit {
       loginArray:[],
       staxCatName:[],
       stanNo:[],
-      spanNo:[],
-      sGstNo:[],
+      spanNo:['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
+      sGstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       souId:[],
       souName:[],
-      slocation:[],
+      slocation:['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       creditAmt:[],
       highAmt:[],
       screditAmt:[],
@@ -579,8 +580,10 @@ if (person === 'Person'){
     return val;
   }
   newOnlySiteMast() {
+
     this.submitted = true;
     if(this.customerMasterForm.invalid){
+      // alert ('new site click validation error');
     return;
     }
     const formValue: IcustomerMaster = this.transDataForSite(this.customerMasterForm.value);
