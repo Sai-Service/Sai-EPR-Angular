@@ -329,6 +329,8 @@ input[type=number]{
   text-align: right;
 }
 
+
+
 .invalid-feedback {
   width: 100%;
   font-size: 70%;

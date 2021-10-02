@@ -1736,8 +1736,9 @@ cityList1(city): Observable<any> {
 }
 // receipt service
 
-getLocatorPoLines(locatorDesc,locId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+getLocatorPoLines(locatorDesc,locId,subinventoryId): Observable<any> {
+  // return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+return this.http.get(this.ServerUrl +`/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}&subinventoryId=${subinventoryId}`)
 }
 
 
@@ -2646,6 +2647,8 @@ getCostDetail(locId,ItemId):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
 }
+
+
 getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
   // alert ("Locator Id :" +locatorId);
