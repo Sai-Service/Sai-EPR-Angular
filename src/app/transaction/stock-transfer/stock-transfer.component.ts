@@ -157,11 +157,16 @@ export class StockTransferComponent implements OnInit {
   }
 
   addnewtrxLinesList(i:number) {
-    // alert(i+'i');
+    
     if(i>-1)
     {
-
-      // alert('reservecall'+i);
+      var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+      var itemqty=trxLnArr1[i].primaryQty;
+      alert(itemqty);
+      if(itemqty==='')
+     { alert('Please enter quantity');
+     return;
+    }
       this.reservePos(i);
     }
 
@@ -176,6 +181,13 @@ export class StockTransferComponent implements OnInit {
     this.displayRemoveRow.push(true);
   }
   removenewtrxLinesList(trxLineIndex) {
+       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+    var itemid=trxLnArr1[trxLineIndex].segment;
+    // alert(itemid+'Delete');
+    if(itemid!=null)
+    {
+    this.deleteReserveLinewise(trxLineIndex);
+    }
     this.trxLinesList().removeAt(trxLineIndex);
   }
 
@@ -256,7 +268,7 @@ export class StockTransferComponent implements OnInit {
 
   }
   onOptionItemDetails(event: any, i) {
-    alert(event+'Item');
+    // alert(event+'Item');
     if(this.currentOp==='SEARCH'){
       return;
     }
@@ -265,11 +277,11 @@ export class StockTransferComponent implements OnInit {
     // {
 
     
-        if(event != null)
-        {
-          // alert(event.length);
-          this.displayRemoveRow[i] = true;
-        }
+        // if(event != null)
+        // {
+        //   // alert(event.length);
+        //   this.displayRemoveRow[i] = true;
+        // }
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
@@ -377,6 +389,7 @@ validate(i:number,qty1)
   var trxLnArr1=this.stockTranferForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].primaryQty;
+  let uomCode=trxLnArr[i].uom;
 //  alert(avalqty+'avalqty');
 //  alert(trxLnArr[i].primaryQty +' qty');
   if(qty>avalqty)
@@ -391,7 +404,15 @@ validate(i:number,qty1)
     trxLnArr1.controls[i].patchValue({primaryQty:''});
     qty1.focus();
   }
-
+  if(uomCode==='NO')
+  {
+    alert(Number.isInteger(qty)+'Status');
+    if(!(Number.isInteger(qty)))
+    {
+    alert('Please enter correct No');
+    trxLnArr1.controls[i].patchValue({primaryQty:''});
+  }}
+  
 }
 reservePos(i)
 {
@@ -431,6 +452,28 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
    }
   }
   );
+}
+deleteReserve()
+{
+  var transferId=this.stockTranferForm.get('transferOrgId').value
+  this.service.reserveDelete(transferId,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
+}
+deleteReserveLinewise(i)
+{
+  var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+  var transferId=this.stockTranferForm.get('transferOrgId').value
+  var itemid=trxLnArr1[i].itemId;
+  this.service.reserveDeleteLine(transferId,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
 }
   newStkTransfer() {
 
@@ -555,9 +598,11 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   // }
   closeMoveOrder() {
     this.router.navigate(['admin']);
+    this.deleteReserve();
   }
   resetMoveOrder() {
     window.location.reload();
+    this.deleteReserve();
   }
 searchAll()
 {

@@ -2,26 +2,7 @@
     <form [formGroup]="miscellaneousForm" (ngSubmit)="miscellaneous(miscellaneousForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <div  *ngIf="dispheader; then thenIC; else elsestock"></div>
-        <ng-template #thenIC>
-        <td class="PageHeader">
-          &nbsp;&nbsp;Internal&nbsp;&nbsp; Consumption &nbsp;
-        </td>
-        <table style="width: 100%; background-color: #a4d3e9;">
-          <tr>
-              <td style="width: 15%" class="LabelFontStyle">IC&nbsp;&nbsp;Number&nbsp;:</td>
-              <td>
-                  <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
-              </td>
-              <td colspan="8" style="text-align: left; width: 100%;">
-                  <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
-                  <!-- Modal -->
-              </td>
-            </tr>
-      </table>
-      </ng-template>
-      <ng-template #elsestock>
-          <td class="PageHeader">
+           <td class="PageHeader">
             &nbsp;&nbsp;Stock&nbsp;&nbsp; Adjustment &nbsp;
           </td>
           <table style="width: 100%; background-color: #a4d3e9;">
@@ -36,7 +17,6 @@
                 </td>
               </tr>
         </table>
-        </ng-template>
       </tr>
     </table>
     <table class="center">
@@ -311,14 +291,14 @@
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>
               </td>
-              <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
-                </div>
-                <ng-template #thenBlockopen>
               <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
-              <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+              <div *ngIf="displayRemoveRow[trxLineIndex]; then thenBlockopen; else elseBlockfreeze"> </div>
+                <ng-template #thenBlockopen>
+             
+              <td><button type="butt" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                 </ng-template>
                 <ng-template #elseBlockfreeze>
-                    <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
+                    <!-- <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td> -->
                     <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                 </ng-template>
             </tr>

@@ -36,6 +36,7 @@ import { CashBankTransferComponent } from './cash-bank-transfer/cash-bank-transf
 import { SubinventoryTransferComponent } from './subinventory-transfer/subinventory-transfer.component';
 import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-with-csv.component';
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
+import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 
 
 
@@ -74,6 +75,7 @@ import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upl
     SubinventoryTransferComponent,
     BulkUploadWithCsvComponent,
     BulkItemUploadCSVComponent,
+    InternalConsumptionComponent,
   ],
   
   imports: [

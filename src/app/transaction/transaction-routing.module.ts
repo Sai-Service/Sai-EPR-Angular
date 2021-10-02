@@ -31,6 +31,7 @@ import { SubinventoryTransferComponent } from './subinventory-transfer/subinvent
 import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-with-csv.component';
 import { OPMasterDtoComponent } from '../master/opmaster-dto/opmaster-dto.component';
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
+import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -65,6 +66,7 @@ const routes: Routes = [
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
  {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
 {path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},
+{path:'InternalConsumption',component:InternalConsumptionComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

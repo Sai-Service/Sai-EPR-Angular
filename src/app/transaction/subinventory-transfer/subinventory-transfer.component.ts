@@ -92,7 +92,7 @@ primaryQty:number;
 onHandQty:number;
 LocatorSegment:string;
 lineNumber:number;
-
+displayaddButton:boolean=false;
 userList2: any[] = [];
 lastkeydown1: number = 0;
   tosubInvCode: any;
@@ -159,6 +159,9 @@ lastkeydown1: number = 0;
          lineNumber: len,
        }
      );
+     
+      // this.displayaddButton=false;
+    
    }
 
    removetrfLinesList(trfLineIndex){
@@ -289,7 +292,10 @@ lastkeydown1: number = 0;
           this.resrveqty=data;
           trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
         });
-
+        if(event!=null)
+        {
+          this.displayaddButton=true;
+        }
   }
   OpenLocator(i)
         {
@@ -498,4 +504,5 @@ lastkeydown1: number = 0;
     alert('Can not enter same Locator');
   }
 }
+
 }

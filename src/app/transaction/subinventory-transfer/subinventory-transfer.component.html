@@ -133,12 +133,24 @@
                            <td>
                                 <input type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="primaryQty">
                            </td>
+                           <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
+                          </div>
+                          <ng-template #thenBlockopen>
                            <td>
                                <button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrfLinesList()"></button>
                            </td>
                            <td>
                                <button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;"(click)="removetrfLinesList(trfLineIndex)"></button>
                            </td>
+                          </ng-template>
+                          <ng-template #elseBlockfreeze>
+                              <td>
+                                  <button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrfLinesList()"></button>
+                              </td>
+                              <td>
+                                  <button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;"(click)="removetrfLinesList(trfLineIndex)"></button>
+                              </td>
+                          </ng-template>
                           </tr>
                           </ng-container>
                       </tbody>

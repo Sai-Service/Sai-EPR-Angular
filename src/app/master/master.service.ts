@@ -1238,6 +1238,14 @@ public reservePost(reserverecord)
   const url=this.ServerUrl+`/reserveQty/insResrv`;
   return this.http.post(url,reserverecord,options);
 }
+public reserveDelete(transno,locId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`);
+}
+public reserveDeleteLine(transno,locId,itemId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/removeItem/?transactionNumber=${transno}&locId=${locId}&invItemId=${itemId}`);
+}
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
 }
