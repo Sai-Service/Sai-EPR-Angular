@@ -126,7 +126,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   displayheader:boolean=true;
   displayLocator:Array<boolean>=[];
   displayButton:boolean=true;
-  displayaddButton:boolean=true;
+  displayaddButton:boolean=false;
   addRow:boolean=true;
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -265,6 +265,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
       //alert('hi');
     this.reservePos(i);
     }
+    else{
+      this.displayaddButton=false;
+    }
     this.cycleLinesList().push(this.newcycleLinesList());
 
     var len = this.cycleLinesList().length;
@@ -387,13 +390,16 @@ console.log(this.route1.queryParams+'hell');
        
 
         this.addnewcycleLinesList(-1);
+        
         var patch = this.miscellaneousForm.get('trxLinesList') as  FormArray
 
         (patch.controls[0]).patchValue(
        {
          lineNumber: 1,
        }
+       
      );
+     
     //  this.route1.queryParams
     //   .filter(params => params.type1)
     //   .subscribe(params => {
@@ -491,6 +497,7 @@ this.router.navigate(['admin']);
     if(this.currentOp==='SEARCH'){
       return;
     }
+    
     let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
     var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
     var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
@@ -565,7 +572,10 @@ this.router.navigate(['admin']);
 
           }
         });
-
+        if(event!=null)
+        {
+          this.displayaddButton=true;
+        }
 
   }
   AvailQty(event:any,i)
