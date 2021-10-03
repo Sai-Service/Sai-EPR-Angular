@@ -93,7 +93,7 @@ export class StockTransferComponent implements OnInit {
   remarks: string;
   segment: string;
   locator: string;
-  transCost: number;
+  transCost:number;
   lineNumber:number;
   pipe = new DatePipe('en-US');
   now=new Date();
@@ -148,7 +148,7 @@ export class StockTransferComponent implements OnInit {
       locatorId: [''],
       segment: [''],
       locator: [''],
-      transCost: [''],
+      transCost: [],
       avlqty:[''],
       onHandQty:[],
       lineNumber:[],
@@ -156,13 +156,18 @@ export class StockTransferComponent implements OnInit {
     })
   }
 
-  addnewtrxLinesList(i:number) {
-    // alert(i+'i');
+  addnewtrxLinesList(i:number) {    
     if(i>-1)
     {
-
-      // alert('reservecall'+i);
+      var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+      var itemqty=trxLnArr1[i].primaryQty;
+      alert(itemqty);
+      if(itemqty==='')
+     { alert('Please enter quantity');
+     return;
+    }
       this.reservePos(i);
+
     }
 
     this.trxLinesList().push(this.newtrxLinesList());
@@ -176,6 +181,13 @@ export class StockTransferComponent implements OnInit {
     this.displayRemoveRow.push(true);
   }
   removenewtrxLinesList(trxLineIndex) {
+       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+    var itemid=trxLnArr1[trxLineIndex].segment;
+    // alert(itemid+'Delete');
+    if(itemid!=null)
+    {
+    this.deleteReserveLinewise(trxLineIndex);
+    }
     this.trxLinesList().removeAt(trxLineIndex);
   }
 
@@ -184,7 +196,8 @@ export class StockTransferComponent implements OnInit {
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
-    this.issueBy=(sessionStorage.getItem('name'))
+    this.issueBy=(sessionStorage.getItem('name'));
+    // this.transCost=0.00;
     // alert(this.deptName+'Depart');
     // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
 
@@ -256,7 +269,7 @@ export class StockTransferComponent implements OnInit {
 
   }
   onOptionItemDetails(event: any, i) {
-    alert(event+'Item');
+    // alert(event+'Item');
     if(this.currentOp==='SEARCH'){
       return;
     }
@@ -265,11 +278,11 @@ export class StockTransferComponent implements OnInit {
     // {
 
     
-        if(event != null)
-        {
-          // alert(event.length);
-          this.displayRemoveRow[i] = true;
-        }
+        // if(event != null)
+        // {
+        //   // alert(event.length);
+        //   this.displayRemoveRow[i] = true;
+        // }
     var subcode=this.stockTranferForm.get('subInventoryCode').value;
    // alert(subcode+'Subinventory')
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
@@ -296,6 +309,7 @@ export class StockTransferComponent implements OnInit {
           (data =>{
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
+            // this.transCost[i]=this.CostDetail.rate;
           });
       this.service.getfrmSubLoc(this.locId, itemId, this.subInvCode.subInventoryId).subscribe(
         data => {
@@ -377,6 +391,7 @@ validate(i:number,qty1)
   var trxLnArr1=this.stockTranferForm.get('trxLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].primaryQty;
+  let uomCode=trxLnArr[i].uom;
 //  alert(avalqty+'avalqty');
 //  alert(trxLnArr[i].primaryQty +' qty');
   if(qty>avalqty)
@@ -391,7 +406,15 @@ validate(i:number,qty1)
     trxLnArr1.controls[i].patchValue({primaryQty:''});
     qty1.focus();
   }
-
+  if(uomCode==='NO')
+  {
+    alert(Number.isInteger(qty)+'Status');
+    if(!(Number.isInteger(qty)))
+    {
+    alert('Please enter correct No');
+    trxLnArr1.controls[i].patchValue({primaryQty:''});
+  }}
+  
 }
 reservePos(i)
 {
@@ -422,6 +445,8 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
    if(res.code===200)
    {
     alert(res.message);
+    (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
+
    }
    else{
     if(res.code === 400) {
@@ -431,6 +456,28 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
    }
   }
   );
+}
+deleteReserve()
+{
+  var transferId=this.stockTranferForm.get('transferOrgId').value
+  this.service.reserveDelete(transferId,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
+}
+deleteReserveLinewise(i)
+{
+  var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
+  var transferId=this.stockTranferForm.get('transferOrgId').value
+  var itemid=trxLnArr1[i].itemId;
+  this.service.reserveDeleteLine(transferId,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
 }
   newStkTransfer() {
 
@@ -555,9 +602,11 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   // }
   closeMoveOrder() {
     this.router.navigate(['admin']);
+    this.deleteReserve();
   }
   resetMoveOrder() {
     window.location.reload();
+    this.deleteReserve();
   }
 searchAll()
 {

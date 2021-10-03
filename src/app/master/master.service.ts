@@ -1206,7 +1206,7 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
 viewStocknote(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/omReceipt/${InvoiceNumber}`;  
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
   // local
   const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
@@ -1245,6 +1245,14 @@ public reservePost(reserverecord)
   };
   const url=this.ServerUrl+`/reserveQty/insResrv`;
   return this.http.post(url,reserverecord,options);
+}
+public reserveDelete(transno,locId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`);
+}
+public reserveDeleteLine(transno,locId,itemId)
+{
+    return this.http.delete(this.ServerUrl+`/reserveQty/removeItem/?transactionNumber=${transno}&locId=${locId}&invItemId=${itemId}`);
 }
 WorkShopIssue(locId):Observable<any>{
   return this.http.get(this.ServerUrl+`/jobCard/jobNo?locId=${locId}`);
@@ -1744,8 +1752,9 @@ cityList1(city): Observable<any> {
 }
 // receipt service
 
-getLocatorPoLines(locatorDesc,locId): Observable<any> {
-  return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+getLocatorPoLines(locatorDesc,locId,subinventoryId): Observable<any> {
+  // return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
+return this.http.get(this.ServerUrl +`/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}&subinventoryId=${subinventoryId}`)
 }
 
 
@@ -2622,6 +2631,10 @@ TransactionTypemisc():Observable<any>
 {
   return this.http.get(this.ServerUrl +`/mtlTrxTypes/stockAdj/9`);
 }
+TransactionTypeIC():Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/mtlTrxTypes/IC/9`);
+}
 ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
@@ -2696,6 +2709,10 @@ getSearchByNo(compNo):Observable<any>
 getSearchViewBycompNo(compNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/stockadj/compileall/${compNo}`)
+}
+getSearchViewByIc(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/IC/${compNo}`)
 }
 getSearchBycompNo(compNo):Observable<any>
 {
