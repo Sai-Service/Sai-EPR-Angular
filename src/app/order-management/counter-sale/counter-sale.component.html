@@ -400,8 +400,8 @@
                         Order&nbsp;Date&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input disabled type="text" formControlName="orderedDate" [(ngModel)]='orderedDate'
-                            value={{orderedDate}} class="form-control"
+                        <input disabled type="text"  formControlName="orderedDate" [(ngModel)]='orderedDate'
+                            value={{orderedDate}} class="form-control" [ngModel]="orderedDate | date:'dd-MM-yyyy'"
                             style="width: 160px;text-align: left;font-weight: bold;">
                     </td>
                     <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
@@ -584,9 +584,9 @@
                         Order&nbsp;Date&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input disabled type="date" formControlName="orderedDate" [(ngModel)]='orderedDate'
-                            value={{orderedDate}} class="form-control" [ngModel]="orderedDate | date:'yyyy-MM-dd'"
-                            style="width: 160px;text-align: right;font-weight: bold;">
+                        <input disabled type="text" formControlName="orderedDate" [(ngModel)]='orderedDate'
+                            value="{{orderedDate}}" class="form-control" [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                            style="width: 160px;text-align: left;font-weight: bold;">
                     </td>
                     <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
                     <ng-template #thensalesRepName>
@@ -665,8 +665,8 @@
                         Invoice&nbsp;Number&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input disabled type="text" formControlName="InvoiceNumber" [(ngModel)]='InvoiceNumber'
-                            value={{InvoiceNumber}} class="form-control" style="width: 100%;">
+                        <input disabled type="number" formControlName="trxNumber"
+                            value={{trxNumber}} class="form-control" style="width: 100%;">
                     </td> 
                     <td style="width: 15%" class="LabelFontStyle">
                         Invoice&nbsp;Status&nbsp;:&nbsp;

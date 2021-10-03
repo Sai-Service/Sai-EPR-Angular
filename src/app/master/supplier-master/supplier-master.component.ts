@@ -133,8 +133,8 @@ export class SupplierMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
-      suppNo: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      name: ['',[Validators.required]],
+      suppNo: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
+      name: ['', [ Validators.required, Validators.maxLength(150)], Validators.pattern('[a-zA-Z ]*')],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],
@@ -296,6 +296,12 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   newsupplierMast() {
+
+    this.submitted = true;
+    if(this.supplierMasterForm.invalid){
+    alert('In Validation');
+      return;
+    }
     const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

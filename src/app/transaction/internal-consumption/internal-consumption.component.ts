@@ -1,6 +1,5 @@
-
 import { DatePipe, PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -8,7 +7,7 @@ import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
 import {} from 'rxjs';
 
-interface Imiscellaneous
+interface InternalConsumption
 {
   invItemId:number;
   compNo:string;
@@ -62,17 +61,15 @@ interface Imiscellaneous
   trans:string;
   CostDetail:number;
 }
-export class ItemLocator {
-public locatorId : number;
-public segmentName:string;
-}
+
 @Component({
-  selector: 'app-miscellaneous-transaction',
-  templateUrl: './miscellaneous-transaction.component.html',
-  styleUrls: ['./miscellaneous-transaction.component.css']
+  selector: 'app-internal-consumption',
+  templateUrl: './internal-consumption.component.html',
+  styleUrls: ['./internal-consumption.component.css']
+
 })
-export class MiscellaneousTransactionComponent implements OnInit {
-  miscellaneousForm:FormGroup;
+export class InternalConsumptionComponent implements OnInit {
+  InternalConsumptionForm:FormGroup;
   public ItemIdList:any[];
   public subInvCode:any;
   compNo:string;
@@ -126,9 +123,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   displayheader:boolean=true;
   displayLocator:Array<boolean>=[];
   displayButton:boolean=true;
-  displayRemoveRow: Array<boolean> = [];
   displayaddButton:boolean=false;
-  displayremButton:boolean=false;
   addRow:boolean=true;
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -183,10 +178,17 @@ export class MiscellaneousTransactionComponent implements OnInit {
   compileDate=this.pipe.transform(this.now,'dd-MM-yyyy')
   currentOp:string;
   dispRow:boolean=true;
+  displayRemoveRow: Array<boolean> = [];
+
+  @ViewChild("myinput") myInputField: ElementRef;
+  // @ViewChild("suppCode1") suppCode1: ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
 
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
   {
-    this.miscellaneousForm=fb.group({
+    this.InternalConsumptionForm=fb.group({
       compNo:[''],
       compileName:[''],
       compileId:[''],
@@ -228,7 +230,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     })
   }
   cycleLinesList():FormArray{
-    return this.miscellaneousForm.get("cycleLinesList") as FormArray
+    return this.InternalConsumptionForm.get("cycleLinesList") as FormArray
  }
  newcycleLinesList(): FormGroup{
   return this.fb.group({
@@ -260,29 +262,27 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
   addnewcycleLinesList(i:number){
     //alert('hi');
-    // alert(this.miscellaneousForm.get('compileType').value+'value');
+    // alert(this.InternalConsumptionForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
-     if(i>-1 && this.miscellaneousForm.get('compileType').value===4)
+     if(i>-1)
     {
-      //alert('hi');
-      var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
       var itemqty=trxLnArr1[i].physicalQty;
-      var item1=trxLnArr1[i].segment;
-      alert(item1);
+      alert(itemqty);
       if(itemqty==='')
      { alert('Please enter quantity');
      return;
     }
+      //alert('hi');
     this.reservePos(i);
     }
     else{
       this.displayaddButton=false;
-            
     }
     this.cycleLinesList().push(this.newcycleLinesList());
 
     var len = this.cycleLinesList().length;
-  var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+  var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
   (patch.controls[len - 1]).patchValue(
     {
       lineNumber: len,
@@ -291,7 +291,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
    }
   removenewcycleLinesList(trxLineIndex){
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
     var itemid=trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
     if(itemid!=null)
@@ -366,24 +366,24 @@ console.log(this.route1.queryParams+'hell');
           console.log(this.locIdList);
         }
       );
-      this.service.TransactionTypemisc().subscribe(
+      this.service.TransactionTypeIC().subscribe(
         data=>{
           this.transType=data;
-          if(this.dispheader===true)
-          {
-            // this.miscellaneousForm.reset();
-           alert('In 1st If'+this.transType.length);
-             for(let i=0;i<this.transType.length;i++)  
-             {
-               alert('In For');
-               if(this.transType[i].transactionTypeId===13)
-               {
-                 alert('In If');
-                 this.transType.splice(i,1);
-               }
-             }
+          // if(this.dispheader===true)
+          // {
+          //   // this.InternalConsumptionForm.reset();
+          //  alert('In 1st If'+this.transType.length);
+          //    for(let i=0;i<this.transType.length;i++)  
+          //    {
+          //      alert('In For');
+          //      if(this.transType[i].transactionTypeId===13)
+          //      {
+          //        alert('In If');
+          //        this.transType.splice(i,1);
+          //      }
+          //    }
            
-          }
+          // }
         }
       );
        this.service.ReasonList().subscribe(
@@ -410,7 +410,7 @@ console.log(this.route1.queryParams+'hell');
 
         this.addnewcycleLinesList(-1);
         
-        var patch = this.miscellaneousForm.get('trxLinesList') as  FormArray
+        var patch = this.InternalConsumptionForm.get('trxLinesList') as  FormArray
 
         (patch.controls[0]).patchValue(
        {
@@ -433,7 +433,7 @@ console.log(this.route1.queryParams+'hell');
     //  alert('sub'+this.sub);
        
   }
-  miscellaneous(miscellaneousForm:any){}
+  InternalConsumption(InternalConsumptionForm:any){}
 
   getInvItemId($event)
   {
@@ -458,12 +458,11 @@ console.log(this.route1.queryParams+'hell');
 
 close(){
 this.router.navigate(['admin']);
-this.deleteReserve();
 }
 
   // onOptionItemDetails(event:any,i){
 
-  //    var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
+  //    var trxLnArr=this.InternalConsumptionForm.get('cycleLinesList').value;
   //   // var itemid=trxLnArr[i].itemId;
   //   // alert(event);
   //   let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
@@ -472,9 +471,9 @@ this.deleteReserve();
   //   console.log(select1);
   //   // alert(select1.itemId+"itemId")
   //   var itemId= select1.itemId
-  //   var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
+  //   var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList')as FormArray;
   //   trxLnArr1.controls[i].patchValue({invItemId:select1.itemId});
-  //   var subcode=this.miscellaneousForm.get('subInventory').value;
+  //   var subcode=this.InternalConsumptionForm.get('subInventory').value;
   //   // alert(subcode+'Subcode');
   //  this.service.getItemDetail(select1.itemId).subscribe
   // (data => {this.getItemDetail = data;
@@ -496,8 +495,8 @@ this.deleteReserve();
   // //   ////////////////
   // //   alert(this.locId +"Loc");
   // //   alert('this.itemId '+this.itemId )
-  // //   var subInvCode = this.miscellaneousForm.get('subInventory').value;
-  // //   // var itemId = this.miscellaneousForm.get('itemId').value;
+  // //   var subInvCode = this.InternalConsumptionForm.get('subInventory').value;
+  // //   // var itemId = this.InternalConsumptionForm.get('itemId').value;
   // //   alert(select1.itemId)
   // //   alert(subInvCode);
   // //   this.service.getItemDetail11(Number(sessionStorage.getItem('locId')),itemId,subInvCode).subscribe
@@ -519,12 +518,12 @@ this.deleteReserve();
     }
     
     let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
-    var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
-    var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList')as FormArray;
+    var trxLnArr=this.InternalConsumptionForm.get('cycleLinesList').value;
     trxLnArr1.controls[i].patchValue({invItemId:select1.itemId})
-    var compId= this.miscellaneousForm.get('compileId').value;
-    var compileType1=this.miscellaneousForm.get('compileType').value;
-    var subcode=this.miscellaneousForm.get('subInventory').value;
+    var compId= this.InternalConsumptionForm.get('compileId').value;
+    var compileType1=this.InternalConsumptionForm.get('compileType').value;
+    var subcode=this.InternalConsumptionForm.get('subInventory').value;
     // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     //  alert(select2.subInventoryId+'Subcode');
     // alert(compId);
@@ -602,8 +601,8 @@ this.deleteReserve();
 {
 
   // alert(event.target.value);
-  var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
-  var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+  var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList')as FormArray;
+  var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList').value;
   var itemid=trxLnArr[i].invItemId;
   var locId=trxLnArr[i].LocatorSegment;
   trxLnArr1.controls[i].patchValue({locatorId:locId});
@@ -635,23 +634,22 @@ this.deleteReserve();
 
     });
     console.log(this.onhand);
-    //  var trxLnarronha = this.miscellaneousForm.get('cycleLinesList').value;
+    //  var trxLnarronha = this.InternalConsumptionForm.get('cycleLinesList').value;
 
 }
   resetMiscTrans()
   {
-    this.deleteReserve();
     window.location.reload();
   }
 
   onLocatorSelection(event:any,i)
   {
-    var trxLnArr1=this.miscellaneousForm.get('cycleLinesList')as FormArray;
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList')as FormArray;
+    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList').value;
     var itemid=trxLnArr[i].invItemId;
     var locId=trxLnArr[i].locatorId;
     var onhandid=trxLnArr[i].id;
-    var subcode=this.miscellaneousForm.get('subInventory').value;
+    var subcode=this.InternalConsumptionForm.get('subInventory').value;
     // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     let selloc=this.getfrmSubLoc.find(d=>d.segmentName===event);
     // alert(selloc.locatorId+'Id')
@@ -698,11 +696,11 @@ this.deleteReserve();
 
         if (LocSegment===null)
         {
-          this.miscellaneousForm.get('Floor').reset();
-          this.miscellaneousForm.get('Rack').reset();
-          this.miscellaneousForm.get('RackNo').reset();
-          this.miscellaneousForm.get('Row').reset();
-          this.miscellaneousForm.get('RowNo').reset();
+          this.InternalConsumptionForm.get('Floor').reset();
+          this.InternalConsumptionForm.get('Rack').reset();
+          this.InternalConsumptionForm.get('RackNo').reset();
+          this.InternalConsumptionForm.get('Row').reset();
+          this.InternalConsumptionForm.get('RowNo').reset();
         }
         if(LocSegment!=null)
         {
@@ -726,13 +724,13 @@ this.deleteReserve();
       {
 
         // alert(i);
-        var LocSegment=this.miscellaneousForm.get('cycleLinesList').value;
-        var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-        LocSegment[i].LocatorSegment=this.miscellaneousForm.get('Floor').value+'.'+
-                                     this.miscellaneousForm.get('Rack').value+'.'+
-                                     this.miscellaneousForm.get('RackNo').value+'.'+
-                                     this.miscellaneousForm.get('Row').value+'.'+
-                                     this.miscellaneousForm.get('RowNo').value;
+        var LocSegment=this.InternalConsumptionForm.get('cycleLinesList').value;
+        var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+        LocSegment[i].LocatorSegment=this.InternalConsumptionForm.get('Floor').value+'.'+
+                                     this.InternalConsumptionForm.get('Rack').value+'.'+
+                                     this.InternalConsumptionForm.get('RackNo').value+'.'+
+                                     this.InternalConsumptionForm.get('Row').value+'.'+
+                                     this.InternalConsumptionForm.get('RowNo').value;
 
 
         var LocatorSegment1=LocSegment[i].LocatorSegment;
@@ -756,34 +754,34 @@ this.deleteReserve();
            }
           }
           else if (this.LocatorList.code===400) {
-            var arraycontrol =this.miscellaneousForm.get('cycleLinesList').value;
+            var arraycontrol =this.InternalConsumptionForm.get('cycleLinesList').value;
             patch.controls[i].patchValue({LocatorSegment : ''});
           }
 
           });
-          this.miscellaneousForm.get('Floor').reset();
-          this.miscellaneousForm.get('Rack').reset();
-          this.miscellaneousForm.get('RackNo').reset();
-          this.miscellaneousForm.get('Row').reset();
-          this.miscellaneousForm.get('RowNo').reset();
+          this.InternalConsumptionForm.get('Floor').reset();
+          this.InternalConsumptionForm.get('Rack').reset();
+          this.InternalConsumptionForm.get('RackNo').reset();
+          this.InternalConsumptionForm.get('Row').reset();
+          this.InternalConsumptionForm.get('RowNo').reset();
           alert('locator search complete')
        }
 
       openCodeCombination()
       {
-        let SegmentName1=this.miscellaneousForm.get('SegmentName').value;
+        let SegmentName1=this.InternalConsumptionForm.get('SegmentName').value;
         if(SegmentName1===null)
-        {this.miscellaneousForm.get('segment11').reset();
-        this.miscellaneousForm.get('segment2').reset();
-        this.miscellaneousForm.get('segment3').reset();
-        this.miscellaneousForm.get('segment4').reset();
-        this.miscellaneousForm.get('segment5').reset();
+        {this.InternalConsumptionForm.get('segment11').reset();
+        this.InternalConsumptionForm.get('segment2').reset();
+        this.InternalConsumptionForm.get('segment3').reset();
+        this.InternalConsumptionForm.get('segment4').reset();
+        this.InternalConsumptionForm.get('segment5').reset();
 
-        this.miscellaneousForm.get('lookupValueDesc1').reset();
-        this.miscellaneousForm.get('lookupValueDesc2').reset();
-        this.miscellaneousForm.get('lookupValueDesc3').reset();
-        this.miscellaneousForm.get('lookupValueDesc4').reset();
-        this.miscellaneousForm.get('lookupValueDesc5').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc1').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc2').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc3').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc4').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc5').reset();
       }
       if(SegmentName1!=null)
       {
@@ -800,11 +798,11 @@ this.deleteReserve();
       }
       fnCancatination()
       {
-        this.segmentName=this.miscellaneousForm.get('segment11').value+'.'+
-                         this.miscellaneousForm.get('segment2').value+'.'+
-                         this.miscellaneousForm.get('segment3').value+'.'+
-                         this.miscellaneousForm.get('segment4').value+'.'+
-                         this.miscellaneousForm.get('segment5').value;
+        this.segmentName=this.InternalConsumptionForm.get('segment11').value+'.'+
+                         this.InternalConsumptionForm.get('segment2').value+'.'+
+                         this.InternalConsumptionForm.get('segment3').value+'.'+
+                         this.InternalConsumptionForm.get('segment4').value+'.'+
+                         this.InternalConsumptionForm.get('segment5').value;
 
         // alert(this.segmentName);
 
@@ -814,7 +812,7 @@ this.deleteReserve();
 
             this.segmentNameList = data;
             if (this.segmentNameList.code === 200) {
-              this.miscellaneousForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+              this.InternalConsumptionForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
               if (this.segmentNameList.length == 0) {
                 alert('Invalid Code Combination');
               } else {
@@ -822,33 +820,33 @@ this.deleteReserve();
                 this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
               }
             } else if (this.segmentNameList.code === 400) {
-              this.miscellaneousForm.patchValue({segmentName:''});
+              this.InternalConsumptionForm.patchValue({segmentName:''});
               // alert(this.segmentNameList.message);
 
             }
           }
         );
-        this.miscellaneousForm.get('segment11').reset();
-        this.miscellaneousForm.get('segment2').reset();
-        this.miscellaneousForm.get('segment3').reset();
-        this.miscellaneousForm.get('segment4').reset();
-        this.miscellaneousForm.get('segment5').reset();
+        this.InternalConsumptionForm.get('segment11').reset();
+        this.InternalConsumptionForm.get('segment2').reset();
+        this.InternalConsumptionForm.get('segment3').reset();
+        this.InternalConsumptionForm.get('segment4').reset();
+        this.InternalConsumptionForm.get('segment5').reset();
 
-        this.miscellaneousForm.get('lookupValueDesc1').reset();
-        this.miscellaneousForm.get('lookupValueDesc2').reset();
-        this.miscellaneousForm.get('lookupValueDesc3').reset();
-        this.miscellaneousForm.get('lookupValueDesc4').reset();
-        this.miscellaneousForm.get('lookupValueDesc5').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc1').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc2').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc3').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc4').reset();
+        this.InternalConsumptionForm.get('lookupValueDesc5').reset();
       }
 
       reservePos(i)
       {//alert("Hello");
-      var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
-          const formValue: Imiscellaneous = this.miscellaneousForm.value;
+      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+          const formValue:InternalConsumption = this.InternalConsumptionForm.value;
           let variants = <FormArray>this.cycleLinesList();
-          var transtypeid = this.miscellaneousForm.get('compileType').value;
+          var transtypeid = this.InternalConsumptionForm.get('compileType').value;
           var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
-          var locId1=this.miscellaneousForm.get('locId').value
+          var locId1=this.InternalConsumptionForm.get('locId').value
 
             let variantFormGroup = <FormGroup>variants.controls[i];
             variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, []));
@@ -870,7 +868,7 @@ this.deleteReserve();
          else{
           if(res.code === 400) {
             alert("Code already present in data base");
-            this.miscellaneousForm.reset();
+            this.InternalConsumptionForm.reset();
           }
          }
         }
@@ -879,14 +877,14 @@ this.deleteReserve();
 
       validate(i:number,qty1)
 {//alert("Validate");
-  var trxLnArr=this.miscellaneousForm.get('cycleLinesList').value;
-  var trxLnArr1=this.miscellaneousForm.get('cycleLinesList') as FormArray
+  var trxLnArr=this.InternalConsumptionForm.get('cycleLinesList').value;
+  var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList') as FormArray
   let avalqty=trxLnArr[i].avlqty;
   let qty=trxLnArr[i].physicalQty;
   let uomCode=trxLnArr[i].uom;
  //alert(avalqty+'avalqty');
  //alert(trxLnArr[i].physicalQty +' qty');
-  if(qty>avalqty  && this.miscellaneousForm.get('compileType').value!==13)
+  if(qty>avalqty  && this.InternalConsumptionForm.get('compileType').value!==13)
   {
     alert("You can not enter more than available quantity");
     trxLnArr1.controls[i].patchValue({physicalQty:''});
@@ -912,7 +910,7 @@ this.deleteReserve();
       {
 
         // alert(itemId+'ID')
-        var compileId=this.miscellaneousForm.get('compileId').value;
+        var compileId=this.InternalConsumptionForm.get('compileId').value;
         // alert(compileId+'CompileID');
         // let select1=this.ItemIdList.find(d=>d.itemid===itemId);
         // var itemId= select1.itemId
@@ -931,8 +929,8 @@ this.deleteReserve();
               var xx=data.obj;
               console.log(data.obj);
               console.log(xx);
-              let patch =this.miscellaneousForm.get('cycleLinesList') as FormArray;
-              var control=this.miscellaneousForm.get('cycleLinesList').value;
+              let patch =this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+              var control=this.InternalConsumptionForm.get('cycleLinesList').value;
               var len = this.cycleLinesList().length;
               // alert(control[0].segment );
               if(len === 1 ){
@@ -958,15 +956,15 @@ this.deleteReserve();
             //   control.controls[i].patchValue(data.obj);
             // }
           //  alert(data.obj.compileLineId)
-            // this.miscellaneousForm.get('cycleLinesList').patchValue(data.obj);
+            // this.InternalConsumptionForm.get('cycleLinesList').patchValue(data.obj);
             //  for(let i=0; i< data.obj.length; i++){
             //   //   alert(data.obj.cycleLinesList[i].subInventory+'subInventory');
-              // this.miscellaneousForm.patchValue({'srlNo':i+1})
+              // this.InternalConsumptionForm.patchValue({'srlNo':i+1})
               // control.controls[i].patchValue({srlNo:i+1  })
 
-              // this.miscellaneousForm.patchValue({'segment':data.obj.segment});
-              // this.miscellaneousForm.patchValue({'subInventory':data.obj[i].subInventory});
-              // this.miscellaneousForm.patchValue({'compileLineId':data.obj[i].compileLineId})
+              // this.InternalConsumptionForm.patchValue({'segment':data.obj.segment});
+              // this.InternalConsumptionForm.patchValue({'subInventory':data.obj[i].subInventory});
+              // this.InternalConsumptionForm.patchValue({'compileLineId':data.obj[i].compileLineId})
               // }
           }
           }
@@ -975,9 +973,9 @@ this.deleteReserve();
       search(compNo)
       {
         this.currentOp='SEARCH';
-        var compno=this.miscellaneousForm.get('compNo').value;
-        var appflag=this.miscellaneousForm.get('trans').value;
-        this.service.getSearchViewBycompNo(compno).subscribe
+        var compno=this.InternalConsumptionForm.get('compNo').value;
+        var appflag=this.InternalConsumptionForm.get('trans').value;
+        this.service.getSearchViewByIc(compno).subscribe
             (data=>{
               if(data.code===400)
               {
@@ -986,7 +984,7 @@ this.deleteReserve();
               if(data.code===200)
               {
         //       // this.lstcomment=data.obj;
-                  let control =this.miscellaneousForm.get('cycleLinesList') as FormArray;
+                  let control =this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
                   var len = this.cycleLinesList().length;
                   for(let i=0; i<data.obj.cycleLinesList.length-len; i++){
                     var trxlist:FormGroup=this.newcycleLinesList();
@@ -1015,14 +1013,14 @@ this.deleteReserve();
                   })
                 }
 
-                      this.miscellaneousForm.patchValue(data.obj);
+                      this.InternalConsumptionForm.patchValue(data.obj);
                       this.currentOp='INSERT';
-                      // this.miscellaneousForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
-                      this.miscellaneousForm.disable();
+                      // this.InternalConsumptionForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
+                      this.InternalConsumptionForm.disable();
                       // this.dispRow=false;
                       this.displayaddButton=false;
                       this.displayButton=false;
-                      // this.miscellaneousForm.get('cycleLinesList').disable();
+                      // this.InternalConsumptionForm.get('cycleLinesList').disable();
                     }
             })
 
@@ -1031,10 +1029,10 @@ this.deleteReserve();
       saveMisc()
       {this.displayButton=true;
         this.displayaddButton=true;
-        if (this.miscellaneousForm.valid) {
+        if (this.InternalConsumptionForm.valid) {
         // this.displayButton=true;
         // this.displayaddButton=true;
-        const formValue:Imiscellaneous=this.miscellaneousForm.getRawValue();
+        const formValue:InternalConsumption=this.InternalConsumptionForm.getRawValue();
         this.service.miscSubmit(formValue).subscribe
         ((res:any) => {
           if(res.code===200)
@@ -1045,14 +1043,14 @@ this.deleteReserve();
             this.compileStatus=res.obj.compileStatus;
             // this.lstcomment=data.obj;
             alert("Record Inserted Successfully");
-            // this.miscellaneousForm.patchValue(obj);
-            // let control =this.miscellaneousForm.get('cycleLinesList') as FormArray;
+            // this.InternalConsumptionForm.patchValue(obj);
+            // let control =this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
             // var len = this.cycleLinesList().length;
             // for(let i=0; i<res.obj.cycleLinesList.length-len; i++){
             //   var trxlist:FormGroup=this.newcycleLinesList();
             //   this.cycleLinesList().push(trxlist);
 
-                this.miscellaneousForm.disable();
+                this.InternalConsumptionForm.disable();
                 this.displayButton=false;
                 this.displayaddButton=false;
           }
@@ -1061,7 +1059,7 @@ this.deleteReserve();
             if(res.code===400)
             {
               alert('ERROR OCCOURED IN PROCEESS');
-              this.miscellaneousForm.reset();
+              this.InternalConsumptionForm.reset();
             }
           }
         })
@@ -1077,7 +1075,7 @@ this.deleteReserve();
 
       onSelectReason(event){
         // alert(event);
-        // var reasname=this.miscellaneousForm.get('reason').value;
+        // var reasname=this.InternalConsumptionForm.get('reason').value;
         // this.service.reasonaccCode(this.locId,reasname).subscribe(
           var reasonArr  = event.split('-');
           // alert(reasonArr.length);
@@ -1085,7 +1083,7 @@ this.deleteReserve();
 
           data => {
             this.acccodedesc = data;
-            // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
+            // this.InternalConsumptionForm.patchValue({reason:this.acccodedesc.segmentName});
             this.segmentName=this.acccodedesc.segmentName;
 
           }
@@ -1094,16 +1092,16 @@ this.deleteReserve();
 
       HeaderValidation() {
         var isValid:boolean=false;
-      Object.keys(this.miscellaneousForm.controls).forEach(
+      Object.keys(this.InternalConsumptionForm.controls).forEach(
         (key) => {
-          const control=this.miscellaneousForm.controls[key] as FormControl|FormArray|FormGroup
+          const control=this.InternalConsumptionForm.controls[key] as FormControl|FormArray|FormGroup
 
           if(control instanceof FormControl){
             control.markAsTouched();
           }
           else if (control instanceof FormArray){
 
-      (<FormArray>this.miscellaneousForm.get('cycleLinesList')).controls.forEach((group: FormGroup) => {
+      (<FormArray>this.InternalConsumptionForm.get('cycleLinesList')).controls.forEach((group: FormGroup) => {
         (<any>Object).values(group.controls).forEach((control: FormControl) => {
             control.markAsTouched();
         })
@@ -1118,37 +1116,37 @@ this.deleteReserve();
 
 
       getGroupControl(fieldName) {
-        return(this.miscellaneousForm.get(fieldName));
+        return(this.InternalConsumptionForm.get(fieldName));
       }
 
       getGroupControllinewise(index,fieldName) {
         // alert('nam'+fieldName);
-        return (<FormArray>this.miscellaneousForm.get('cycleLinesList')).at(index).get(fieldName);
+        return (<FormArray>this.InternalConsumptionForm.get('cycleLinesList')).at(index).get(fieldName);
 
       }
       deleteReserve()
-{
-  var transtypeid = this.miscellaneousForm.get('compileType').value;
-  var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
-  this.service.reserveDelete(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
-    //  var obj=res.obj;
-     if(res.code===200)
-     {
-      // alert(res.message);
-     }});
-}
-deleteReserveLinewise(i)
-{
-  var transtypeid = this.miscellaneousForm.get('compileType').value;
-  var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
-  var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
-  var itemid=trxLnArr1[i].itemId;
-  this.service.reserveDeleteLine(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
-    //  var obj=res.obj;
-     if(res.code===200)
-     {
-      // alert(res.message);
-     }});
-}
-
+      {
+        var transtypeid = this.InternalConsumptionForm.get('compileType').value;
+        var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
+        this.service.reserveDelete(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+          //  var obj=res.obj;
+           if(res.code===200)
+           {
+            // alert(res.message);
+           }});
+      }
+      deleteReserveLinewise(i)
+      {
+        var transtypeid = this.InternalConsumptionForm.get('compileType').value;
+        var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
+        var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+        var itemid=trxLnArr1[i].itemId;
+        this.service.reserveDeleteLine(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+          //  var obj=res.obj;
+           if(res.code===200)
+           {
+            // alert(res.message);
+           }});
+      }
+      
 }

@@ -21,7 +21,7 @@ interface IpoReceipt{
   // totalAmt:number;
   baseAmount:number;
   taxAmt:number;
-  subInvetoryId:number;
+  subInventoryId:number;
   recDate:Date;
   Comments:string;
   suppInvDate:Date;
@@ -265,7 +265,7 @@ export class PoReceiptFormComponent implements OnInit {
       ctgDescription:[],
       itemDesc:[],
       subInvDesc:[],
-      subInvetoryId:[''],
+      subInventoryId:[''],
       // subInventoryId:[],
       locatorDesc:['',[Validators.required]],
       uom:[],
@@ -454,7 +454,7 @@ checkIfAllSelected() {
           for (let j=0; j<data.obj.poLines.length;j++){
             // alert(data.obj.poLines[j].subInventoryId);
             (controlinv.controls[j]).patchValue({
-              subInvetoryId: data.obj.poLines[j].subInventoryId,    
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
             });
             // this.lineDetailsGroup().patchValue({subInvetoryId:data.obj.poLines[j].subInventoryId})
           }
@@ -519,7 +519,7 @@ checkIfAllSelected() {
             this.recDate=this.lstcompolines.receiptDate;
             this.poReceiptForm.patchValue({taxAmt:this.lstcompolines.totalTax});
             for (let j=0; j<data.obj.poLines.length;j++){
-              this.lineDetailsArray[i].patchValue({subInvetoryId:data.obj.poLines[i].subInventoryId})
+              this.lineDetailsArray[i].patchValue({subInventoryId:data.obj.poLines[i].subInventoryId})
             }
             // this.poReceiptForm.patchValue({subinventoryId:data.obj.poLines[i].subInventoryId})
           }
@@ -603,7 +603,13 @@ checkIfAllSelected() {
           }
           this.displaySaveButton =true;
           this.poReceiptForm.patchValue(this.lstcompolines);
-        
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+          }
           // this.locatorDesc.push(this.lstcompolines.rcvLines[0].locatorDesc);
         }
         }
@@ -735,6 +741,13 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
             // debugger;
           }
           this.poReceiptForm.patchValue(this.lstcompolines);
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+          }
           this.locatorDesc=this.lstcompolines.poLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
         }
@@ -771,6 +784,13 @@ const rcvtrxId=this.lstcompolines.shipHeaderId;
           }
           // control.push(poLines);
           this.poReceiptForm.patchValue(this.lstcompolines);
+          let controlinv = this.poReceiptForm.get('poLines') as FormArray;
+         
+          for (let j=0; j<data.obj.poLines.length;j++){
+            (controlinv.controls[j]).patchValue({
+              subInventoryId: data.obj.poLines[j].subInventoryId,    
+            });
+          }
           this.locatorDesc=this.lstcompolines.rcvLines[0].locatorDesc;
           this.recDate=this.lstcompolines.receiptDate;
         }
@@ -860,7 +880,7 @@ console.log(this.lstcompolines.poLines[0].subInventoryId);
 
     var poControls=this.poReceiptForm.get('poLines').value;
     // var subinvetoryId = 
-    alert(this.lstcompolines.poLines[0].subInventoryId);
+    // alert(this.lstcompolines.poLines[0].subInventoryId);
     poControls[i].locatorDesc=
     this.poReceiptForm.get('segment11').value+'.'+
     this.poReceiptForm.get('segment2').value+'.'+
