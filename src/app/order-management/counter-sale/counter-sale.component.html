@@ -863,6 +863,10 @@
                                                                 class="form-control" (change)="onKey(i)"
                                                                 style="height: 20px;width: 70px;" min="0"
                                                                 oninput="this.value = Math.abs(this.value)">
+                                                                <input hidden type="text" formControlName="uom"
+                                                                class="form-control" (change)="onKey(i)"
+                                                                style="height: 20px;width: 70px;" min="0"
+                                                                oninput="this.value = Math.abs(this.value)">
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="orderedQty"
