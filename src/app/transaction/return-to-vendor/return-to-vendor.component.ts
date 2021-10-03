@@ -547,9 +547,9 @@ export class ReturnToVendorComponent implements OnInit {
                this.lstReceiptLines = data.obj;
                console.log(this.lstReceiptLines);
 
-               alert(this.lstReceiptLines);
+              //  alert(this.lstReceiptLines);
              
-              //  if(this.lstReceiptLines !=null) {
+               if(this.lstReceiptLines !=null) {
                 let control = this.returntoVendorForm.get('rcvLines') as FormArray;
              
                 // var length1=this.lstReceiptLines.rcvLines.length-1;
@@ -578,7 +578,7 @@ export class ReturnToVendorComponent implements OnInit {
                       this.OnhandQtyCheck(x,y,z,i)
                     }
 
-                     
+                  } else {alert ( "No Line Items Found in this PO Receipt.");}
                   this.updateShipId()
               } );    
             }

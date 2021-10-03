@@ -29,14 +29,18 @@ onhandDetailsForm:FormGroup;
 
   public ItemIdList:any[];
   public Itemdata:any[];
+  lstcomments: any;
   segment:string;
   invItemId:number;
+
   ouId:number;
   ouName:string;
   locName:string;
   locId:number;
   deptId:number;
   divisionId:number;
+  loginArray:string;
+
   segmentName:string;
   onHandQty:number;
   subInventoryCode:string;
@@ -53,6 +57,10 @@ onhandDetailsForm:FormGroup;
   salePrice:number;
   purchPrice:number;
   mrp:number;
+
+  searchItemId :number;
+  searchItemCode:string;
+  searchItemName:string;
   
 
 
@@ -68,6 +76,7 @@ onhandDetailsForm:FormGroup;
       locId:[''],
       deptId:[''],
       divisionId:[''],
+      loginArray:[],
       segmentName:[''],
       onHandQty:[''],
       subInventoryCode:[''],
@@ -80,6 +89,10 @@ onhandDetailsForm:FormGroup;
       purchPrice:[],
       mrp:[],
 
+      searchItemId :[],
+      searchItemCode:[],
+      searchItemName:[],
+
 
     })
    }
@@ -87,6 +100,7 @@ onhandDetailsForm:FormGroup;
   ngOnInit(): void {
     this.locId=Number(sessionStorage.getItem('locId'));
     this.deptId=Number(sessionStorage.getItem('dept'));
+    this.loginArray=sessionStorage.getItem('divisionName');
     this.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.ouName = (sessionStorage.getItem('ouName'));
     this.ouId=Number(sessionStorage.getItem('ouId'));
@@ -126,6 +140,8 @@ onhandDetailsForm:FormGroup;
  
  searchByItem(segment)
  {
+
+  
   //  alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
@@ -149,5 +165,30 @@ onhandDetailsForm:FormGroup;
 
 
 }
+
+    F9Search() {
+      var segment1=this.onhandDetailsForm.get('searchItemCode').value
+      // alert ("item code segment1 :"+segment1);
+      let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+
+      this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+        data =>{
+          this.lstcomments= data;
+          console.log(data);
+        })
+      }
+
+      onOptioninvItemIdSelectedSingle(searchItemCode) {
+        // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
+          let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
+          if( selectedValue != undefined){
+           console.log(selectedValue);
+          // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+          
+          this.searchItemId = selectedValue.itemId;
+          this.searchItemName=selectedValue.DESCRIPTION;
+          this.searchItemCode=selectedValue.SEGMENT;
+        }
+      }
 
 }
