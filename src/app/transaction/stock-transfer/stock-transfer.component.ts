@@ -161,9 +161,10 @@ export class StockTransferComponent implements OnInit {
     {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       var itemqty=trxLnArr1[i].primaryQty;
-      alert(itemqty);
-      if(itemqty==='')
-     { alert('Please enter quantity');
+      var item=trxLnArr1[i].segment;
+      alert(item);
+      if(itemqty===''&& item==='')
+     { alert('Please enter data in blank field');
      return;
     }
       this.reservePos(i);
