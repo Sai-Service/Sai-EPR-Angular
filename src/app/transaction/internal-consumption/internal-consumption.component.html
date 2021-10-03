@@ -38,10 +38,10 @@
             <td style="width: 15%" class="LabelFontStyle">
               Transaction Type:
             </td>
-            <input hidden formControlName="compileId" [(ngModel)]="compileId">
+            <input hidden formControlName="compileId" [(ngModel)]="compileId" >
             <td>
-              <select class="form-control" formControlName="compileType" [(ngModel)]=compileType>
-                <option>--Select--</option>
+              <select class="form-control" formControlName="compileType" [(ngModel)]=compileType #myinput> 
+                <option></option>
                 <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
               </select>
               <span
@@ -291,11 +291,12 @@
                   *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
                  </span>
                   </td>
+                  
                   <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
                     </div>
                     <ng-template #thenBlockopen>
-                  <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
-                  <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+                        <td><button type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}" style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
+                  <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrem{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                     </ng-template>
                     <ng-template #elseBlockfreeze>
                         <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
@@ -337,7 +338,7 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                  <label style="text-align: center;margin-left: 7rem;">Locator + {{ title }}</label>
+                  <label style="text-align: center;margin-left: 7rem;">{{ title }}</label>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div class="modal-body text-center pagination-centered">
@@ -348,7 +349,7 @@
                       </td>
                       <td>
                           <input type="text" formControlName="Floor"  value={{Floor}} [(ngModel)]="Floor" class="form-control"
-                                             placeholder="Floor" style="width: 52px;" >
+                                             placeholder="Floor" style="width: 52px;" maxlength="1">
                           <!-- <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
                               <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
                               <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
@@ -362,7 +363,7 @@
                           Rack&nbsp;:
                       </td>
                       <td>
-      <input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;">
+      <input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;"maxlength="1">
                       </td>
                   </tr>
                   <tr>
@@ -371,7 +372,7 @@
                       </td>
                       <td>
                           <input formControlName="RackNo" [(ngModel)]="RackNo" value={{RackNo}} class="form-control"
-                                             placeholder="Rack No" style="width: 52px;">
+                                             placeholder="Rack No" style="width: 52px;"maxlength="2">
                       </td>
                   </tr>
                   <tr>
@@ -380,7 +381,7 @@
                       </td>
                       <td>
                           <input formControlName="Row" [(ngModel)]="Row" value={{Row}} class="form-control"
-                                           placeholder="Row" style="width: 52px;">
+                                           placeholder="Row" style="width: 52px;" maxlength="1">
                       </td>
                   </tr>
                   <tr>
@@ -389,13 +390,13 @@
                       </td>
                       <td>
                           <input formControlName="RowNo" [(ngModel)]="RowNo" value={{RowNo}} class="form-control"
-                                             placeholder="Row No" style="width: 52px;">
+                                             placeholder="Row No" style="width: 52px;"maxlength="2">
                       </td>
                   </tr>
                 </table>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"  (click)="okLocator(content)">&times;</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="okLocator(content)">Ok</button>
               </div>
             </div>
           </div>

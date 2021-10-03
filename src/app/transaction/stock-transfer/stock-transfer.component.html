@@ -166,7 +166,7 @@
                 <tr>  <td><input disabled type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                  </td>
                 <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
-                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 120px;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
+                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
                       <datalist id="dynmicUserIds1">
                         <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
                           </option>
@@ -181,7 +181,7 @@
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
 
-                <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost" [(ngModel)]="transCost" value="{{ transCost | number:'1.2-2' }}" ></td>
+                <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
                 <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
                 <option>--Select--</option>
                 <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
@@ -201,7 +201,7 @@
                  </span>
                 </td>
                 
-                <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
+                <td><button type="button" class="btn btn-primary fa fa-plus"  id="btnadd{{trxLineIndex}}" style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
                 <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
                 <ng-template #thenLineRemoveRow>
                    
@@ -228,7 +228,7 @@
                </td>
                <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
                <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
-               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost" [(ngModel)]="transCost" value="{{ transCost | number:'1.2-2' }}"></td>
+               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost" value="{{ transCost | number:'1.2-2' }}"></td>
                <td><input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
                    <input hidden type="number" formControlName="locatorId">
                </td>
@@ -428,10 +428,10 @@
                 </button>
               </ng-template>
               </td>
-                <td>
-                    <!-- <button type="submit" class="btn btn-primary"    >Payment</button>   -->
+                <!-- <td>
+                    <button type="submit" class="btn btn-primary"    >Payment</button>  
                <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>
-                </td>
+                </td> -->
                 <td>
                     <button  type="submit" class="btn btn-primary" (click)="searchAll()">Search</button>
                   </td>

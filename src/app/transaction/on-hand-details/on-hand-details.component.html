@@ -23,7 +23,9 @@
                           <td class="LabelFontStyle">&nbsp;Item&nbsp;Code&nbsp;:&nbsp;</td>
                           <!-- style="background-color: #FFE4B5;" -->
 
-                          <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="width: 250px;"  />
+                          <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" 
+                            formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                            class="form-control"  style="width: 250px;" />
                             <datalist id="dynmicUserIds1">
                               <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
                                 </option>
@@ -33,6 +35,12 @@
                           <td  colspan="8" style="text-align: left; width: 100%;">
                             <button type="submit" class="btn btn-primary" (click)="searchByItem(segment)" ><i class="fa fa-search"></i></button>
                         </td>
+                        <td></td> <td></td> <td></td> <td></td>
+                        <td>
+                          <button type="button"  class="btn btn-primary" 
+                          data-toggle="modal" data-target="#exampleModal2" style="width: 8rem;color: black;">
+                          &nbsp;Search(F9)</button>
+                      </td>
 
                          
                         </tr>
@@ -72,8 +80,8 @@
           </td>  
 
           <td>
-              <input  type ="text" readonly formControlName="segment" [(ngModel)]='segment'
-                                      value={{segment}} class="form-control" >
+              <input  type ="text"  disabled formControlName="segment" [(ngModel)]='segment'
+                      value={{segment}} class="form-control" style="background-color:lavender ; border-color: black;">
           </td>
 
             <td style="width: 15%" class="LabelFontStyle">
@@ -81,9 +89,9 @@
             </td>  
 
             <td>
-                <input  type ="text" readonly formControlName="desc" [(ngModel)]='desc'
+                <input  type ="text"  disabled formControlName="desc" [(ngModel)]='desc'
                                         value={{desc}} class="form-control"
-                                        placeholder="" style="width:242%;" >
+                                         style="width:242%;background-color:lavender ;border-color: black;" >
 
                                         <!-- {{desc}} -->
             </td>
@@ -96,9 +104,8 @@
             </td>  
 
             <td>
-            <input  type ="text" readonly formControlName="uom" [(ngModel)]='uom'
-                                    value={{uom}} class="form-control"
-                                     >
+            <input  type ="text"  disabled formControlName="uom" [(ngModel)]='uom'
+                     value={{uom}} class="form-control" style="background-color:lavender ;border-color: black;" >
             </td>
 
             <td style="width: 15%" class="LabelFontStyle">HSN/SAC&nbsp;:&nbsp;</td>
@@ -185,6 +192,132 @@
                   </td>
               </tr>
           </table>
+
+          <!-- -------------------------------Item Search Modal--------------------- -->
+
+        
+
+        <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                
+                <div class="modal-header">
+
+                  <h5 class="modal-title" id="exampleModal2Label" style="text-align: center;" >ITEM&nbsp;SEARCH&nbsp;FORM</h5>
+                  <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <div class="modal-body">
+                    <table class="center" style="width: 100%;">
+
+                      <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Dvision&nbsp;:&nbsp;</td>
+                        <td style="font-weight: bold;">
+                            <!-- <input  disabled  type="text" formControlName="loginArray" id="loginArray" 
+                             [(ngModel)]="loginArray"   class="form-control" style="width: 250px;   background-color:lavender ; border-color: black;" > -->
+                              {{loginArray}}
+                            </td>
+                        <td style="width: 15%" class="LabelFontStyle">Operating&nbsp; Unit:&nbsp;</td>
+                        <td style="font-weight: bold;">
+                            <!-- <input  disabled  type="text" formControlName="ouName" id="ouName" 
+                             [(ngModel)]="ouName"   class="form-control" style=" width: 250px; background-color:lavender ; border-color: black;" > -->
+                              {{ouName}}
+                            </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td>
+                        <td style="font-weight: bold;">
+                            <!-- <input  disabled  type="text" formControlName="locName" id="locName" 
+                             [(ngModel)]="locName"   class="form-control" style=" width: 250px; background-color:lavender ; border-color: black;" > -->
+                              {{locName}}
+                            </td>
+
+
+                      </tr>
+                    <tr>
+                        
+                        <td style="width: 15%" class="LabelFontStyle">
+                            Item &nbsp;Number&nbsp;:&nbsp;
+                        </td>
+
+                        <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode"  
+                           id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                           class="form-control"  (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
+                           style="width: 250px; background-color: yellow;"  />
+                          <datalist id="dynmicUserIds1" >
+                            <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
+                              {{item.SEGMENT}}
+                              </option>
+                          </datalist>
+                        </td>
+
+                        <td> 
+                          <button style="width: 8em;" type="button" class="btn btn-primary" (click)="F9Search()" >Search</button>
+                       </td>
+                      </tr>
+                        <!-- <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td> -->
+                       <!-- <td></td> -->
+                       <tr>
+                        <td></td>
+                        <td style="width: 250px;">
+                            <!-- <input style="width: 250px;" disabled  type="text" formControlName="searchItemName" id="searchItemName" 
+                             [(ngModel)]="searchItemName"   class="form-control" style=" width: 250px; background-color:lavender ; border-color: black;" > -->
+                              {{searchItemName}}
+                          </td>
+                       
+                       
+                    </tr>
+                    </table>
+                    <!-- -------------------------- -->
+
+                    <div class="container1">
+                    <div class="grid_scroll_3">
+                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                        <tbody>
+                                <tr class="GridHeader">
+                                <th style="width:5rem" scope="col">Item&nbsp;Number</th>
+                                <th style="width:15rem" scope="col"> Item&nbsp;Descreption</th>
+                                <th style="width:3rem" scope="col"> UOM&nbsp;</th>
+                                <th style="width:10rem" scope="col">Category&nbsp;</th>
+                                <th style="width:10rem" scope="col">Locator&nbsp;</th>
+                                <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
+                                <th style="width:6rem" scope="col">Quantity&nbsp;</th>
+                                <th style="width:6rem" scope="col">MRP&nbsp;</th>
+                                <th style="width:6rem" scope="col">NDP&nbsp;</th>
+                                <th style="width:6rem" scope="col">Principle&nbsp;Item</th>
+                              
+                            </tr>
+                        </tbody>
+                        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                                <td style="width:10rem;text-align: center;">{{com.SEGMENT}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.DESCRIPTION}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.UOM}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.CATEGDESC}}</td>      
+                                <td style="width:10rem;text-align: center;">{{com.STOCKLOCTR}}</td> 
+                                <td style="width:10rem;text-align: center;">{{com.HSNSACCODE}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.ONHANDQTY}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.MRP}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.NDP}}</td>
+                                <td style="width:10rem;text-align: center;">{{com.PRINCPLEITEM}}</td>
+                                <!-- <td style="width:10rem;text-align: center;">{{com.lastUpdatedDate | date:'dd-MM-y hh:mm:ss'}}</td> -->
+                               </tr>
+                    </table>
+                    </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                    <!-- -------------------------- -->
+                </div>
+
+              </div>
+            </div>
+        </div>
+
+
+          <!-- --------------------------------------------------------- -->
         </form>
   </div>
   

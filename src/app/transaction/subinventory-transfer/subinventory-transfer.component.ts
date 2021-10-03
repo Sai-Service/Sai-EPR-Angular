@@ -151,6 +151,8 @@ lastkeydown1: number = 0;
 
    addnewtrfLinesList()
    {
+    
+    
      this.trfLinesList().push(this.newtrfLinesList());
      var len = this.trfLinesList().length;
      var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
@@ -503,6 +505,40 @@ lastkeydown1: number = 0;
   {
     alert('Can not enter same Locator');
   }
+}
+
+validate(i:number,qty1)
+{
+  // alert("Validate");
+  // if(qty1)
+  var trxLnArr=this.SubinventoryTransferForm.get('trfLinesList').value;
+  var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList') as FormArray
+  let avalqty=trxLnArr[i].onHandQty;
+  let qty=trxLnArr[i].primaryQty;
+  let uomCode=trxLnArr[i].uom;
+//  alert(avalqty+'avalqty');
+//  alert(trxLnArr[i].primaryQty +' qty');
+  if(qty>avalqty)
+  {
+    alert("You can not enter more than available quantity");
+    trxLnArr1.controls[i].patchValue({primaryQty:''});
+    qty1.focus();
+  }
+  if(qty<=0)
+  {
+    alert("Please enter quantity more than zero");
+    trxLnArr1.controls[i].patchValue({primaryQty:''});
+    qty1.focus();
+  }
+  if(uomCode==='NO')
+  {
+    alert(Number.isInteger(qty)+'Status');
+    if(!(Number.isInteger(qty)))
+    {
+    alert('Please enter correct No');
+    trxLnArr1.controls[i].patchValue({primaryQty:''});
+  }}
+  
 }
 
 }

@@ -128,6 +128,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   displayButton:boolean=true;
   displayRemoveRow: Array<boolean> = [];
   displayaddButton:boolean=false;
+  displayremButton:boolean=false;
   addRow:boolean=true;
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -264,10 +265,19 @@ export class MiscellaneousTransactionComponent implements OnInit {
      if(i>-1 && this.miscellaneousForm.get('compileType').value===4)
     {
       //alert('hi');
+      var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+      var itemqty=trxLnArr1[i].physicalQty;
+      var item1=trxLnArr1[i].segment;
+      alert(item1);
+      if(itemqty==='')
+     { alert('Please enter quantity');
+     return;
+    }
     this.reservePos(i);
     }
     else{
       this.displayaddButton=false;
+            
     }
     this.cycleLinesList().push(this.newcycleLinesList());
 
@@ -281,6 +291,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
 
    }
   removenewcycleLinesList(trxLineIndex){
+    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+    var itemid=trxLnArr1[trxLineIndex].segment;
+    // alert(itemid+'Delete');
+    if(itemid!=null)
+    {
+    this.deleteReserveLinewise(trxLineIndex);
+    }
     this.cycleLinesList().removeAt(trxLineIndex);
     this.displayLocator[trxLineIndex]=true;
   }
@@ -441,6 +458,7 @@ console.log(this.route1.queryParams+'hell');
 
 close(){
 this.router.navigate(['admin']);
+this.deleteReserve();
 }
 
   // onOptionItemDetails(event:any,i){
@@ -622,6 +640,7 @@ this.router.navigate(['admin']);
 }
   resetMiscTrans()
   {
+    this.deleteReserve();
     window.location.reload();
   }
 
@@ -828,6 +847,7 @@ this.router.navigate(['admin']);
           const formValue: Imiscellaneous = this.miscellaneousForm.value;
           let variants = <FormArray>this.cycleLinesList();
           var transtypeid = this.miscellaneousForm.get('compileType').value;
+          var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
           var locId1=this.miscellaneousForm.get('locId').value
 
             let variantFormGroup = <FormGroup>variants.controls[i];
@@ -836,7 +856,7 @@ this.router.navigate(['admin']);
             // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
             variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].physicalQty, []));
             variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id,[]));
-            variantFormGroup.addControl('transactionNumber',new FormControl(transtypeid.locCode,[]));
+            variantFormGroup.addControl('transactionNumber',new FormControl(seltranstyp.transactionTypeName,[]));
 
 
         // var reserveinfo=formValue[0];
@@ -1106,4 +1126,29 @@ this.router.navigate(['admin']);
         return (<FormArray>this.miscellaneousForm.get('cycleLinesList')).at(index).get(fieldName);
 
       }
+      deleteReserve()
+{
+  var transtypeid = this.miscellaneousForm.get('compileType').value;
+  var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
+  this.service.reserveDelete(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId'))).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
+}
+deleteReserveLinewise(i)
+{
+  var transtypeid = this.miscellaneousForm.get('compileType').value;
+  var seltranstyp=this.transType.find(d=>d.transactionTypeId===transtypeid);
+  var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+  var itemid=trxLnArr1[i].itemId;
+  this.service.reserveDeleteLine(seltranstyp.transactionTypeName,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
+}
+
 }

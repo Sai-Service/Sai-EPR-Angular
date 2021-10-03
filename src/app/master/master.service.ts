@@ -1221,6 +1221,14 @@ searchByItem(itemid,locId:number):Observable<any>
   // alert('--' + itemid +'--'+ locId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocitem?locId=${locId}&itemId=${itemid}`)
 }
+
+searchByItemf9(itemid,locId,ouId,divId):Observable<any>
+{
+  // alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
+  return this.http.get(this.ServerUrl+`/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`)
+  // http://localhost:8081/itemMst/ItemDtlsF9?locId=121&itemId=544&ouId=110&divisionId=2
+}
+
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {
@@ -2623,6 +2631,10 @@ TransactionTypemisc():Observable<any>
 {
   return this.http.get(this.ServerUrl +`/mtlTrxTypes/stockAdj/9`);
 }
+TransactionTypeIC():Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/mtlTrxTypes/IC/9`);
+}
 ReasonList():Observable<any>
 {
   return this.http.get(this.ServerUrl+'/mtlTransReasons');
@@ -2697,6 +2709,10 @@ getSearchByNo(compNo):Observable<any>
 getSearchViewBycompNo(compNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/stockadj/compileall/${compNo}`)
+}
+getSearchViewByIc(compNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/stockadj/IC/${compNo}`)
 }
 getSearchBycompNo(compNo):Observable<any>
 {
