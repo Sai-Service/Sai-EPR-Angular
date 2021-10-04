@@ -534,7 +534,11 @@ export class ReturnToVendorComponent implements OnInit {
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
               } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
-                this.headerFound=false;this.resetMast();}
+                this.headerFound=false;
+                this.resetMast();
+                // this.returntoVendorForm.get("showAllItem").disable();
+                // this.returntoVendorForm.get("rcvLines").disable();
+              }
           } );  
          }
 
