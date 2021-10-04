@@ -186,8 +186,7 @@
                 <option>--Select--</option>
                 <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
-                <span
-                *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
+                <span *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
                </span>
                 <input hidden formControlName="onHandQty">
                 <input hidden type="number" formControlName="onHandId">

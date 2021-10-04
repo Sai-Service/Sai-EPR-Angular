@@ -32,6 +32,7 @@ import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-w
 import { OPMasterDtoComponent } from '../master/opmaster-dto/opmaster-dto.component';
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
+import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -67,6 +68,7 @@ const routes: Routes = [
  {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
 {path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},
 {path:'InternalConsumption',component:InternalConsumptionComponent},
+{path:'pendingPoList',component:PoUploadListComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

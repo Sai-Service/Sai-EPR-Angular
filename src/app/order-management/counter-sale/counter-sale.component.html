@@ -401,7 +401,7 @@
                     </td>
                     <td>
                         <input disabled type="text"  formControlName="orderedDate" [(ngModel)]='orderedDate'
-                            value={{orderedDate}} class="form-control" [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                            value={{orderedDate}} class="form-control" 
                             style="width: 160px;text-align: left;font-weight: bold;">
                     </td>
                     <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
@@ -585,7 +585,7 @@
                     </td>
                     <td>
                         <input disabled type="text" formControlName="orderedDate" [(ngModel)]='orderedDate'
-                            value="{{orderedDate}}" class="form-control" [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                            value="{{orderedDate}}" class="form-control"
                             style="width: 160px;text-align: left;font-weight: bold;">
                     </td>
                     <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
@@ -863,6 +863,10 @@
                                                                 class="form-control" (change)="onKey(i)"
                                                                 style="height: 20px;width: 70px;" min="0"
                                                                 oninput="this.value = Math.abs(this.value)">
+                                                                <input hidden type="text" formControlName="uom"
+                                                                class="form-control" (change)="onKey(i)"
+                                                                style="height: 20px;width: 70px;" min="0"
+                                                                oninput="this.value = Math.abs(this.value)">
                                                         </td>
                                                         <td>
                                                             <input disabled type="number" formControlName="orderedQty"
@@ -878,11 +882,13 @@
                                                         <td>
                                                             <select class="form-control"
                                                                 style="height: 20px; width: 160px;"
-                                                                formControlName="frmLocatorId" (change)="AvailQty(i)">
+                                                                formControlName="frmLocatorId" (ngModelChange)="AvailQty(i)">
                                                                 <!-- <option>--Select--</option>      (ngModelChange)='AvailQty(i)'-->
-                                                                <option *ngFor="let locId of  locData"
+                                                                <!-- <option *ngFor="let locId of  locData"
                                                                     [ngValue]="locId.locatorId"
                                                                     [Value]="locId.segmentName">
+                                                                    {{locId.segmentName}}--{{locId.onHandQty}}</option> -->
+                                                                     <option *ngFor="let locId of  locData" [ngValue]="locId.locatorId">
                                                                     {{locId.segmentName}}--{{locId.onHandQty}}</option>
                                                             </select>
                                                             <input hidden formControlName="frmLocatorId">
@@ -1061,9 +1067,9 @@
                                                                 class="form-control"
                                                                 style="width: 120px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option value="BOOKED">BOOKED</option>
+                                                                <option value="BOOKED" hidden>BOOKED</option>
                                                                 <option value="CANCELLED">CANCELLED</option>
-                                                                <option value="INVOICED">INVOICED</option>
+                                                                <option value="INVOICED" hidden>INVOICED</option>
                                                             </select>
                                                         </td>
                                                     </ng-template>
@@ -1336,8 +1342,7 @@
                     </td>
                    
                     <td>
-                        <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate">
-                        </div>
+                        <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate"></div>
                         <ng-template #thenpickTicketUpdate>
                         </ng-template>
                         <ng-template #elsepickTicketUpdate>
@@ -1351,7 +1356,17 @@
                                         <button type="button" class="btn btn-primary" (click)=" pickTicketInvoiceFunction()">
                                             Invoice
                                         </button>
-                
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" (click)="generateGatePass()" style="width: 8rem;">
+                                           Generate&nbsp;Gate&nbsp;Pass
+                                        </button>
+                                    </td>
+                                    
+                                    <td>
+                                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
+                                           View&nbsp;Gate&nbsp;Pass
+                                        </button>
                                     </td>
                                 </tr>
                             </table>
@@ -1406,6 +1421,16 @@
                     <td>
                         <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
                             View&nbsp;Receipt
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="generateGatePass()" style="width: 8rem;">
+                           Generate&nbsp;Gate&nbsp;Pass
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
+                           View&nbsp;Gate&nbsp;Pass
                         </button>
                     </td>
                     <td>

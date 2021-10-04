@@ -394,6 +394,7 @@ export class PaymentReceiptComponent implements OnInit  {
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.displayButton = false;
         // this.paymentReceiptForm.reset();
         this.paymentReceiptForm.disable();
         this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
