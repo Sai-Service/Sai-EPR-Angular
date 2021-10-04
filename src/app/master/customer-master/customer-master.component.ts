@@ -162,7 +162,7 @@ export class CustomerMasterComponent implements OnInit {
   displayButton = true;
   birthDate :Date;
   weddingDate: Date;
-  startDate: Date;
+  startDate: Date=new Date();
   endDate: Date
   public minDate = new Date()  ;
   public minDateBirth = new Date().setFullYear(new Date().getFullYear() -18);
@@ -244,7 +244,7 @@ export class CustomerMasterComponent implements OnInit {
       // contactNo: ['', [Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       birthDate: [''],
       weddingDate: [''],
-      startDate: ['', [Validators.required]],
+      startDate: [''],
       endDate: [''],
       gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
@@ -404,13 +404,18 @@ export class CustomerMasterComponent implements OnInit {
 
   ExeAddressEvent(e) {
     if (e.target.checked) {
-      this.saddress1 = this.address1
+      this.saddress1 = this.customerMasterForm.get('address1').value;
       this.saddress2 = this.address2
       this.saddress3 = this.address3
       // this.saddress4 = this.address4
-      this.scity = this.city
-      // this.spinCd = this.pinCd
+      this.scity = this.customerMasterForm.get('city').value;
+      this.spinCd = this.customerMasterForm.get('pinCd').value;
       this.sstate = this.state
+      this.customerMasterForm.patchValue({slocation:this.customerMasterForm.get('location').value});
+      this.customerMasterForm.patchValue({smobile1:this.customerMasterForm.get('mobile1').value});
+      this.customerMasterForm.patchValue({semailId:this.customerMasterForm.get('emailId').value});
+      this.customerMasterForm.patchValue({spanNo:this.customerMasterForm.get('panNo').value});
+      this.customerMasterForm.patchValue({sGstNo:this.customerMasterForm.get('gstNo').value});
     }
     else {
       this.saddress1 = null;
@@ -527,10 +532,57 @@ onOptionClassCode(event:any){
   }
 
   gstVerification(event: any) {
-    const gstNo1 = this.gstNo.substr(3,10);
-    // this.panNo = gstNo1;
-    this.customerMasterForm.patchValue({panNo:gstNo1});
+    var gstno=this.customerMasterForm.get('gstNo').value
+const gstNo1 = gstno.substr(2,10);
+this.panNo = gstNo1;;
     alert('Gst verificaition');
+
+    var res = gstno.substr(0, 2);
+    console.log(res);
+    const state = this.customerMasterForm.get('state').value;
+    console.log(state);
+    console.log(this.state === 'MAHARASHTRA' && res === 27 );
+    switch (state) {
+      case 'MAHARASHTRA':
+           if (res != 27 ){
+            alert('Kindly entered correct GST No Start with 27');
+            this.customerMasterForm.get('gstnNo').reset();
+           }
+      break;
+      case 'GOA':
+           if (res != 30 ){
+            alert('Kindly entered correct GST No Start with 30');
+            this.customerMasterForm.get('gstnNo').reset();
+           }
+      break;
+      case 'ANDHRA PRADESH':
+           if (res != 28 ){
+            alert('Kindly entered correct GST No Start with 28');
+            this.customerMasterForm.get('gstnNo').reset();
+           }
+      break;
+      case 'KARNATAKA':
+           if (res != 29 ){
+            alert('Kindly entered correct GST No Start with 29');
+            this.customerMasterForm.get('gstnNo').reset();
+           }
+      break;
+      case 'KERALA':
+           if (res != 32 ){
+            alert('Kindly entered correct GST No Start with 32');
+            this.customerMasterForm.get('gstnNo').reset();
+           }
+      break;  
+      case 'TELANGANA':
+           if (res != 36 ){
+            alert('Kindly entered correct GST No Start with 36');
+            this.customerMasterForm.get('gstnNo').reset();
+           }
+      break;
+        }   
+        
+  
+
   }
 
   onKey(event: any) {
@@ -606,19 +658,12 @@ if (person === 'Person'){
     var isvaliddata=this.validation();
     if(isvaliddata===false)
     {
-      // alert('In Validation (v)');
+      alert('In Validation (v)');
       return;
     }
 
     this.submitted = true;
-    if(this.customerMasterForm.invalid){
-    // alert('In Validation(d) ');
-      return;
-    }
-    
-    // this.submitted = true;
-
-
+     
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
     return;
@@ -663,11 +708,11 @@ if (person === 'Person'){
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
-        window.location.reload();
+        // window.location.reload();
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
-          this.customerMasterForm.reset();
+          // this.customerMasterForm.reset();
         }
       }
     });
@@ -695,7 +740,18 @@ if (person === 'Person'){
 
   updateMast() {
 
+    var isvaliddata=this.validation();
+    if(isvaliddata===false)
+    {
+      // alert('In Validation (v)');
+      return;
+    }
 
+    this.submitted = true;
+    if(this.customerMasterForm.invalid){
+    // alert('In Validation(d) ');
+      return;
+    }
     const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.getRawValue());
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -797,7 +853,8 @@ if (person === 'Person'){
             taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
             highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
             creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
-            disPer:this.lstcomments.customerSiteMasterList[0].disPer
+            disPer:this.lstcomments.customerSiteMasterList[0].disPer,
+            location:this.lstcomments.customerSiteMasterList[0].location,
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments.title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments.termId);
@@ -834,20 +891,21 @@ if (person === 'Person'){
           this.saddress2 = select.address2
           this.saddress3 = select.address3
           this.scity = select.city
-          this.pinCd = select.pinCd
+          this.spinCd = select.pinCd
           this.sstate = select.state
           this.contactNo = select.contactNo
           this.contactPerson = select.contactPerson
-          this.emailId = select.emailId
+          this.semailId = select.emailId
           this.gstNo = select.gstNo
           this.smobile1 = select.mobile1
           this.smobile2 = select.mobile2
           this.ouId = select.ouId
-          this.panNo = select.panNo
+          this.spanNo = select.panNo
           this.tanNo = select.tanNo
           this.souId=select.ouId
           this.customerSiteId=select.customerSiteId;
           this.slocation=select.location
+          this.customerMasterForm.patchValue({siteName:select.siteName});
           // this.sstatus=select.status
           // ticketNo not in  json
           let selstatus = this.statusList.find(d => d.codeDesc === select.status);
