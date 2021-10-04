@@ -29,6 +29,10 @@ onhandDetailsForm:FormGroup;
 
   public ItemIdList:any[];
   public Itemdata:any[];
+
+  public OUIdList: Array<string> = [];
+  public locIdList: Array<string> = [];
+
   lstcomments: any;
   segment:string;
   invItemId:number;
@@ -61,6 +65,8 @@ onhandDetailsForm:FormGroup;
   searchItemId :number;
   searchItemCode:string;
   searchItemName:string;
+
+  showOrg = false;
   
 
 
@@ -98,22 +104,37 @@ onhandDetailsForm:FormGroup;
    }
    
   ngOnInit(): void {
-    this.locId=Number(sessionStorage.getItem('locId'));
-    this.deptId=Number(sessionStorage.getItem('dept'));
-    this.loginArray=sessionStorage.getItem('divisionName');
-    this.divisionId=Number(sessionStorage.getItem('divisionId'));
-    this.ouName = (sessionStorage.getItem('ouName'));
-    this.ouId=Number(sessionStorage.getItem('ouId'));
-    this.locId=Number(sessionStorage.getItem('locId'));
-    this.locName=(sessionStorage.getItem('locName'));
-
-
+    this.loadDefaultValues();
+    // this.locId=Number(sessionStorage.getItem('locId'));
+    // this.deptId=Number(sessionStorage.getItem('dept'));
+    // this.loginArray=sessionStorage.getItem('divisionName');
+    // this.divisionId=Number(sessionStorage.getItem('divisionId'));
+    // this.ouName = (sessionStorage.getItem('ouName'));
+    // this.ouId=Number(sessionStorage.getItem('ouId'));
+    // this.locId=Number(sessionStorage.getItem('locId'));
+    // this.locName=(sessionStorage.getItem('locName'));
 
     this.service.ItemIdDivisionList(this.divisionId).subscribe(
       data =>{ this.ItemIdList = data;
         console.log(this.ItemIdList);
 
    });
+
+   this.service.OUIdList()
+   .subscribe(
+     data => {
+       this.OUIdList = data;
+       console.log(this.OUIdList);
+     }
+   );
+
+ this.service.locationIdList()
+ .subscribe(
+   data => {
+     this.locIdList = data;
+     console.log(this.locIdList);
+   }
+ );
   }
   OnHandDetails(onhandDetailsForm:any){}
 
@@ -140,31 +161,42 @@ onhandDetailsForm:FormGroup;
  
  searchByItem(segment)
  {
-
-  
   //  alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
+   if(segment1 ==undefined || segment1==null) {
+    alert ("Please select Item Code ....") ;return;
+   }
    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
-  // var itemId= select1.itemId
-  //  alert(itemId);
-  //  var itemId=this.averagecostForm.get('invItemId').value;
-  //  alert(itemId);
-  this.service.searchByItem(select1.itemId,this.locId).subscribe(
+   if (select1==undefined) {
+    alert ("Please select valid Item Code ....") ;return;
+   }
+  
+  //  alert("select1.itemId  :"+select1.itemId );
+   
+ 
+  this.service.searchByItemByLoc(this.locId,select1.itemId,this.ouId,this.divisionId).subscribe(
     data =>{
-      this.Itemdata= data;
+      this.Itemdata= data.obj;
+      console.log(this.Itemdata);
       // alert("this.Itemdata.length :"+this.Itemdata.length);
-      if(this.Itemdata.length >0 ){
-      this.segment=this.Itemdata[0].itemCode;
-      this.desc=this.Itemdata[0].desc;
-      this.uom=this.Itemdata[0].uom;
 
-      console.log(data);
-      this.onhandDetailsForm.patchValue(data);
-      } else { alert(segment1+" - Stock not  Available...");}
+      // if(this.Itemdata.length >0 ){
+        if(this.Itemdata !=null){
+          this.segment=this.Itemdata[0].segment;
+          this.desc=this.Itemdata[0].description;
+          this.uom=this.Itemdata[0].uom;
+          this.mrp=this.Itemdata[0].mrp;
+          this.hsnSacCode=this.Itemdata[0].hsnsacCode;
+          this.purchPrice=this.Itemdata[0].ndp;
+          this.gstPer=this.Itemdata[0].taxcategoryName;
+          this.onhandDetailsForm.patchValue(data.obj);
+      } else { alert(segment1+" - Stock not Available/Wrong Item Code...");}
  })
 
 
 }
+
+   
 
     F9Search() {
       var segment1=this.onhandDetailsForm.get('searchItemCode').value
@@ -190,5 +222,49 @@ onhandDetailsForm:FormGroup;
           this.searchItemCode=selectedValue.SEGMENT;
         }
       }
+
+      onOuIdSelected1(ouId) {
+
+        // if(ouId===sessionStorage.getItem('ouId')) {this.locId=Number(sessionStorage.getItem('locId'));return;}
+    
+        if(ouId=='ALL') {this.locIdList=null;}
+        if (ouId > 0) {
+          this.showOrg = true;
+    
+          this.service.getLocationSearch1(ouId)
+            .subscribe(
+              data => {
+                this.locIdList = data;
+                console.log(this.locIdList);
+              
+               if(this.locIdList.length <=0) {this.showOrg=false;this.locIdList=null;} 
+               else {  this.locId=data[0].locId ;
+                if(ouId===Number(sessionStorage.getItem('ouId'))) {
+                  // alert('ouId id =' +ouId +","+sessionStorage.getItem('ouId') );
+                  this.locId=Number(sessionStorage.getItem('locId'));
+                }
+              }
+    
+              }
+            );}else {this.showOrg = false;}
+          
+      }
+
+      loadDefaultValues() {
+        this.locId=Number(sessionStorage.getItem('locId'));
+        this.deptId=Number(sessionStorage.getItem('dept'));
+        this.loginArray=sessionStorage.getItem('divisionName');
+        this.divisionId=Number(sessionStorage.getItem('divisionId'));
+        this.ouName = (sessionStorage.getItem('ouName'));
+        this.ouId=Number(sessionStorage.getItem('ouId'));
+        this.locId=Number(sessionStorage.getItem('locId'));
+        this.locName=(sessionStorage.getItem('locName'));
+      
+       }
+
+       resetMast() {
+        window.location.reload();
+      }
+    
 
 }

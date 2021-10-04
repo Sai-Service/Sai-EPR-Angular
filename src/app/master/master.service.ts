@@ -1216,11 +1216,18 @@ viewStocknote(shipmentNumber){
   });
 }
 ///////////OnHand////////////
-searchByItem(itemid,locId:number):Observable<any>
+searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>
 {
-  // alert('--' + itemid +'--'+ locId);
-  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocitem?locId=${locId}&itemId=${itemid}`)
-}
+   alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
+   if(ouId ==='ALL') {
+    return this.http.get(this.ServerUrl+`/onhandqty/onhandItemListAll?itemId=${itemid}&divisionId=${divId}`)
+   } else  if (ouId >0 && locId==='ALL') {
+    return this.http.get(this.ServerUrl+`/onhandqty/onhandItemListOUwise?itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`)
+   }
+   else {
+    return this.http.get(this.ServerUrl+`/onhandqty/onhandItemListOUwise?itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&locationId=${locId}`)
+    }
+  }
 
 searchByItemf9(itemid,locId,ouId,divId):Observable<any>
 {
@@ -1773,7 +1780,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
-
+  // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 
  getsearchByReceiptNo1(segment1,mLocId): Observable<any> {

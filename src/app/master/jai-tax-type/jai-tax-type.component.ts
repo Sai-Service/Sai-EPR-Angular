@@ -1086,6 +1086,7 @@ export class JaiTaxTypeComponent implements OnInit {
     }
 
   }
+  
   onOptionsSelectedStatus(event: any) {
     this.Status1 = this.jaiTaxtypeMasterForm.get('status').value;
     // alert(this.Status1);
