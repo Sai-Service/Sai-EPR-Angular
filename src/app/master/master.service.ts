@@ -2171,6 +2171,10 @@ bulkpouploadSales(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
   }
 
+  pendingPOList(emplId) {
+    return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
+  }
+
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }

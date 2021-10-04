@@ -882,11 +882,13 @@
                                                         <td>
                                                             <select class="form-control"
                                                                 style="height: 20px; width: 160px;"
-                                                                formControlName="frmLocatorId" (change)="AvailQty(i)">
+                                                                formControlName="frmLocatorId" (ngModelChange)="AvailQty(i)">
                                                                 <!-- <option>--Select--</option>      (ngModelChange)='AvailQty(i)'-->
-                                                                <option *ngFor="let locId of  locData"
+                                                                <!-- <option *ngFor="let locId of  locData"
                                                                     [ngValue]="locId.locatorId"
                                                                     [Value]="locId.segmentName">
+                                                                    {{locId.segmentName}}--{{locId.onHandQty}}</option> -->
+                                                                     <option *ngFor="let locId of  locData" [ngValue]="locId.locatorId">
                                                                     {{locId.segmentName}}--{{locId.onHandQty}}</option>
                                                             </select>
                                                             <input hidden formControlName="frmLocatorId">
@@ -1065,9 +1067,9 @@
                                                                 class="form-control"
                                                                 style="width: 120px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option value="BOOKED">BOOKED</option>
+                                                                <option value="BOOKED" hidden>BOOKED</option>
                                                                 <option value="CANCELLED">CANCELLED</option>
-                                                                <option value="INVOICED">INVOICED</option>
+                                                                <option value="INVOICED" hidden>INVOICED</option>
                                                             </select>
                                                         </td>
                                                     </ng-template>
@@ -1355,7 +1357,16 @@
                                         <button type="button" class="btn btn-primary" (click)=" pickTicketInvoiceFunction()">
                                             Invoice
                                         </button>
-                
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" (click)="generateGatePass()" style="width: 8rem;">
+                                           Generate&nbsp;Gate&nbsp;Pass
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
+                                           View&nbsp;Gate&nbsp;Pass
+                                        </button>
                                     </td>
                                 </tr>
                             </table>
@@ -1410,6 +1421,16 @@
                     <td>
                         <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
                             View&nbsp;Receipt
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="generateGatePass()" style="width: 8rem;">
+                           Generate&nbsp;Gate&nbsp;Pass
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
+                           View&nbsp;Gate&nbsp;Pass
                         </button>
                     </td>
                     <td>
