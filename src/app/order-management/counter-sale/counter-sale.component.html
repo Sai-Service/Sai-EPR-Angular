@@ -401,7 +401,7 @@
                     </td>
                     <td>
                         <input disabled type="text"  formControlName="orderedDate" [(ngModel)]='orderedDate'
-                            value={{orderedDate}} class="form-control" [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                            value={{orderedDate}} class="form-control" 
                             style="width: 160px;text-align: left;font-weight: bold;">
                     </td>
                     <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
@@ -585,7 +585,7 @@
                     </td>
                     <td>
                         <input disabled type="text" formControlName="orderedDate" [(ngModel)]='orderedDate'
-                            value="{{orderedDate}}" class="form-control" [ngModel]="orderedDate | date:'dd-MM-yyyy'"
+                            value="{{orderedDate}}" class="form-control"
                             style="width: 160px;text-align: left;font-weight: bold;">
                     </td>
                     <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
@@ -1342,8 +1342,7 @@
                     </td>
                    
                     <td>
-                        <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate">
-                        </div>
+                        <div *ngIf="displaypickTicketUpdate; then thenpickTicketUpdate; else elsepickTicketUpdate"></div>
                         <ng-template #thenpickTicketUpdate>
                         </ng-template>
                         <ng-template #elsepickTicketUpdate>
@@ -1363,6 +1362,7 @@
                                            Generate&nbsp;Gate&nbsp;Pass
                                         </button>
                                     </td>
+                                    
                                     <td>
                                         <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
                                            View&nbsp;Gate&nbsp;Pass
