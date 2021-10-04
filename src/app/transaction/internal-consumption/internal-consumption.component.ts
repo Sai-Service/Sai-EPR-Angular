@@ -596,13 +596,16 @@ this.router.navigate(['admin']);
           this.displayLocator[i]  = true;
 
           }
+          if(event!=null)
+          {
+            // this.displayaddButton=true;
+            // alert('Remove');
+            (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = false;
+            (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
+          }
+          
         });
-        if(event!=null)
-        {
-         // this.displayaddButton=true;
-         (document.getElementById('btnDelLn'+i) as HTMLInputElement).disabled = false;
-        }
-      //  (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
+      
   }
   AvailQty(event:any,i)
 {
@@ -906,7 +909,7 @@ this.router.navigate(['admin']);
   }
   if(uomCode==='NO')
   {
-    alert(Number.isInteger(qty)+'Status');
+    // alert(Number.isInteger(qty)+'Status');
     if(!(Number.isInteger(qty)))
     {
     alert('Please enter correct No');

@@ -1215,6 +1215,16 @@ viewStocknote(shipmentNumber){
     headers: this.headers,
   });
 }
+viewStockgatePass(shipmentNumber){
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
+  // local
+  const REQUEST_URI = `http://localhost:8081/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
 ///////////OnHand////////////
 searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>
 {

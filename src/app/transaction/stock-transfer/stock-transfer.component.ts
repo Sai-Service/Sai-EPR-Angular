@@ -34,12 +34,19 @@ interface IStockTransfer {
   segment:string;
 
 }
+export  class StockTransferRow {
+  segment:string;
+  Locator:string;
+  quantity:number;
+  
+}
 
 @Component({
   selector: 'app-stock-transfer',
   templateUrl: './stock-transfer.component.html',
   styleUrls: ['./stock-transfer.component.css']
 })
+
 export class StockTransferComponent implements OnInit {
   stockTranferForm: FormGroup;
   ShipmentNo: string;
@@ -106,6 +113,7 @@ export class StockTransferComponent implements OnInit {
   public minewayBillDate = new Date().setDate(new Date().getDate()+7);
   userList2: any[] = [];
   lastkeydown1: number = 0;
+  public itemMap = new Map<string, StockTransferRow >();
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
@@ -157,6 +165,7 @@ export class StockTransferComponent implements OnInit {
   }
 
   addnewtrxLinesList(i:number) {    
+    alert(i+'I Value');
     if(i>-1)
     {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
@@ -167,8 +176,14 @@ export class StockTransferComponent implements OnInit {
      { alert('Please enter data in blank field');
      return;
     }
+    if(!this.itemMap.has(item))
+    {
       this.reservePos(i);
-
+    }
+    else{
+      this.deleteReserveLinewise(i);
+      this.reservePos(i);
+    }
     }
 
     this.trxLinesList().push(this.newtrxLinesList());
@@ -179,7 +194,7 @@ export class StockTransferComponent implements OnInit {
         lineNumber: len,
       }
     );
-    this.displayRemoveRow.push(true);
+    this.displayRemoveRow[i-1]=true;
   }
   removenewtrxLinesList(trxLineIndex) {
        var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
@@ -188,6 +203,7 @@ export class StockTransferComponent implements OnInit {
     if(itemid!=null)
     {
     this.deleteReserveLinewise(trxLineIndex);
+    this.itemMap.delete(itemid);
     }
     this.trxLinesList().removeAt(trxLineIndex);
   }
@@ -245,7 +261,7 @@ export class StockTransferComponent implements OnInit {
     //    lineNumber: 1,
     //  }
   //  );
-   this.displayRemoveRow[0] = false;
+   this.displayRemoveRow[-1] = false;
   }
   stockTransfer(stockTranferForm: any) { }
   onOptionSelect(event: any, i) {
@@ -440,7 +456,13 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
    if(res.code===200)
    {
     alert(res.message);
-    (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
+    // (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
+    var stkRow:StockTransferRow=new StockTransferRow();
+    stkRow.segment=(trxLnArr1[i].segment);
+    stkRow.Locator=(trxLnArr1[i].frmLocator);
+    stkRow.quantity=(trxLnArr1[i].quantity);
+    this.itemMap.set(trxLnArr1[i].segment,stkRow);
+    
 
    }
    else{
@@ -749,4 +771,16 @@ viewStocknote() {
     })
 }
 
+viewStockgatePass() {
+  var shipNumber = this.stockTranferForm.get('shipmentNumber').value;
+  const fileName = 'download.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.service.viewStockgatePass(shipNumber)
+    .subscribe(data => {
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+    })
+}
 }
