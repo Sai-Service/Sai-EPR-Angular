@@ -304,13 +304,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
   }
 
 
-  // exportToExcel() {
-  //   const ws: xlsx.WorkSheet =   
-  //   xlsx.utils.table_to_sheet(this.epltable.nativeElement);
-  //   const wb: xlsx.WorkBook = xlsx.utils.book_new();
-  //   xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
-  //   xlsx.writeFile(wb, 'epltable.xlsx');
-  //  }
+ 
   
 
   get f() { return this.bulkUploadCSVForm.controls; }

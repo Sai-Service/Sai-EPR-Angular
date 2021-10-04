@@ -317,17 +317,11 @@ export class StockTransferComponent implements OnInit {
           this.getfrmSubLoc = data;
           console.log(data);
           var getfrmSubLoc =data;
-          //   // alert(getfrmSubLoc.segmentName+'SegmentName')
-
-
-            // alert(i +'i');
             this.locData[i] = data;
             if(getfrmSubLoc.length==1)
             {
-            // this.displayLocator[i]=false;
             trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
             trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
-            // trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
             trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
             trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
             }

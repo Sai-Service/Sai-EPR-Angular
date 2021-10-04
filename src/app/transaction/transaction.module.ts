@@ -37,6 +37,7 @@ import { SubinventoryTransferComponent } from './subinventory-transfer/subinvent
 import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-with-csv.component';
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
+import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
 
 
 
@@ -76,6 +77,7 @@ import { InternalConsumptionComponent } from './internal-consumption/internal-co
     BulkUploadWithCsvComponent,
     BulkItemUploadCSVComponent,
     InternalConsumptionComponent,
+    PoUploadListComponent,
   ],
   
   imports: [

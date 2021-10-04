@@ -1011,6 +1011,15 @@ refresh()
 
 
       poSave(){
+        const loctorDesc=this.poReceiptForm.get('poLines').value;
+        for (let i=0; i < loctorDesc[i].length;i++){
+        var locatorDesc=this.lineDetailsArray[i].get('locatorDesc').value;
+        if (locatorDesc=== undefined){
+          alert('Please Entered Locator Description !');
+          return
+        }
+      }
+       
         this.displaySaveButton =false;
         const totlCalControls=this.poReceiptForm.get('poLines').value;
         this.baseAmount=0;
