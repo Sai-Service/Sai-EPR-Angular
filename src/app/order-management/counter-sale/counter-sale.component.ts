@@ -801,6 +801,7 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+            this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
             this.displayorderHedaerDetails = false;
             this.displaycounterSaleOrderSave = false;
             this.displaypickTicketInvoice = false;
@@ -1271,6 +1272,7 @@ export class CounterSaleComponent implements OnInit {
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
     var Avalqty = trxLnArr[index].Avalqty;
+    let uomCode=trxLnArr[index].uom;
     if (qty1 > Avalqty) {
       alert("You can not enter more than available quantity!..");
       trxLnArr1.controls[index].patchValue({ pricingQty: '' });
@@ -1284,8 +1286,16 @@ export class CounterSaleComponent implements OnInit {
       (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
       return false;
     }
-    return true;
-    // this.reservePos(i);
+    // return true;
+    if(uomCode==='NO')
+    {
+      // alert(Number.isInteger(qty1)+'Status');
+      if(!(Number.isInteger(qty1)))
+      {
+      alert('Please enter correct No');
+      trxLnArr1.controls[index].patchValue({pricingQty:''});
+      return;
+    }}
   }
 
   onKey(index) {

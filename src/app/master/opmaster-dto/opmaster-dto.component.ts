@@ -343,6 +343,12 @@ export class OPMasterDtoComponent implements OnInit {
     message: string;
     allUsers: Observable<OPMasterDtoComponent[]>;
 
+// buttons display 
+displayFirstButtonDisplay=true;
+displaySecondButtonDisplay=true;
+displayThirdButtonDisplay=true;
+
+
   constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
 
@@ -418,6 +424,9 @@ export class OPMasterDtoComponent implements OnInit {
   get f() { return this.poMasterDtoForm.controls; }
 
   ngOnInit(): void {
+    this.displayFirstButtonDisplay=false;
+    this.displaySecondButtonDisplay=true;
+    this.displayThirdButtonDisplay=true;
     this.currentOp = 'insert';
     this.hideArray[0] = true;
     // this.loadAllUser();
@@ -713,7 +722,7 @@ export class OPMasterDtoComponent implements OnInit {
       diss1: [],
 
       itemType: [],
-      unitPrice: [],
+      unitPrice: ['',[Validators.required]],
       orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
       baseAmtLineWise: [],
       poChargeAcc: [],
@@ -816,8 +825,6 @@ export class OPMasterDtoComponent implements OnInit {
     this.displayPoLine.push(true);
     this.hideArray[index] = true;
     // val1+index.focus();
-
-
   }
   RemoveRow(index) {
     if (index === 0) {
@@ -843,10 +850,10 @@ export class OPMasterDtoComponent implements OnInit {
           console.log(data);
           if (data.code === 400) {
             alert(data.message)
-            this.displayNewButtonApprove = false;
-            this.displayNewButtonUpdate = false;
-            this.displayNewButtonSave = false;
-            this.displayNewButtonReset = false;
+            // this.displayNewButtonApprove = false;
+            // this.displayNewButtonUpdate = false;
+            // this.displayNewButtonSave = false;
+            // this.displayNewButtonReset = false;
             alert(data.message);
             window.location.reload();
           } if (data.code === 200) {
@@ -855,11 +862,12 @@ export class OPMasterDtoComponent implements OnInit {
             this.lstcomments1 = data.obj;
             const status = this.lstcomments1.authorizationStatus;
             if (status === 'Inprogress') {
-              this.displayNewButtonApprove = true;
-              this.displayNewButtonUpdate = true;
-              this.displayNewButtonSave = false;
-              this.displayNewButtonpoCancel = false;
-              this.displayNewButtonReset = false;
+              // this.displayNewButtonApprove = true;
+              // this.displayNewButtonUpdate = true;
+              // this.displayNewButtonSave = false;
+              // this.displayNewButtonpoCancel = false;
+              // this.displayNewButtonReset = false;
+              this.displayFirstButtonDisplay=true;
               this.displayOnStatus = true;
               this.displayButton = false;
               this.displayNewButton = false;
@@ -925,11 +933,14 @@ export class OPMasterDtoComponent implements OnInit {
               // this.lineDetailsArray.removeAt(this.lstcomments1.poLines.length - 1);
             }
             if (status === "APPROVED") {
-              this.displayNewButtonApprove = false;
-              this.displayNewButtonUpdate = false;
-              this.displayNewButtonSave = false;
-              this.displayNewButtonReset = false;
-              this.displayNewButtonpoCancel = false;
+              // this.displayNewButtonApprove = false;
+              // this.displayNewButtonUpdate = false;
+              // this.displayNewButtonSave = false;
+              // this.displayNewButtonReset = false;
+              // this.displayNewButtonpoCancel = false;
+              this.displaySecondButtonDisplay=true;
+              this.displayFirstButtonDisplay=true;
+              this.displayThirdButtonDisplay=false;
               this.displayOnStatus = false;
               this.displayButton = false;
               this.dispbut = false;
@@ -1159,10 +1170,10 @@ export class OPMasterDtoComponent implements OnInit {
     return val;
   }
   newPOMast() {
-    this.displayNewButtonApprove = true;
-    this.displayNewButtonUpdate = true;
-    this.displayNewButtonSave = false;
-    this.displayNewButtonReset = false;
+    // this.displayNewButtonApprove = true;
+    // this.displayNewButtonUpdate = true;
+    // this.displayNewButtonSave = false;
+    // this.displayNewButtonReset = false;
     this.authorizationStatus = 'Inprogress';
     const formValue: IpostPO = this.transData(this.poMasterDtoForm.getRawValue());
     formValue.authorizationStatus = 'Inprogress';
@@ -1194,15 +1205,9 @@ export class OPMasterDtoComponent implements OnInit {
         alert(res.message);
         this.segment1 = sessionStorage.getItem('poNo');
         this.Search(this.segment1);
-        // this.displayNewButtonApprove =true;
-        // this.displayNewButtonUpdate= true;
-        // this.displayNewButtonSave=false;
-        // this.displayNewButtonReset=false;
-
-        // this.displayButton = false;
-        // this.displayNewButton = false;
-        // this.displaySuppcode = false;
-        // this.dispDivision = false;
+        this.displaySecondButtonDisplay=false;
+        this.displayFirstButtonDisplay=true;
+        this.displayThirdButtonDisplay=true;
       }
 
       if (res.code === 400) {
@@ -1567,13 +1572,14 @@ export class OPMasterDtoComponent implements OnInit {
 
     this.service.UpdatePoDetails(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('PO UPDATED SUCCESSFULLY');
+        alert(res.message);
         // this.authorizationStatus = 'APPROVED';
         this.displayNewButton = false;
-        this.displayNewButtonApprove = true;
-        this.displayNewButtonUpdate = false;
-        this.displayNewButtonSave = false;
-        this.displayNewButtonReset = false;
+        this.displayFirstButtonDisplay=true;
+        // this.displayNewButtonApprove = true;
+        // this.displayNewButtonUpdate = false;
+        // this.displayNewButtonSave = false;
+        // this.displayNewButtonReset = false;
         // window.location.reload();
       } else {
         if (res.code === 400) {
@@ -1584,10 +1590,10 @@ export class OPMasterDtoComponent implements OnInit {
     });
   }
   Approve() {
-    this.displayNewButtonApprove = false;
-    this.displayNewButtonUpdate = false;
-    this.displayNewButtonSave = false;
-    this.displayNewButtonReset = false;
+    // this.displayNewButtonApprove = false;
+    // this.displayNewButtonUpdate = false;
+    // this.displayNewButtonSave = false;
+    // this.displayNewButtonReset = false;
     const formValue: IpostPO = this.transUData(this.poMasterDtoForm.value);
     formValue.ouId = this.ouId;
     formValue.dept = Number(this.dept);
@@ -1595,20 +1601,24 @@ export class OPMasterDtoComponent implements OnInit {
     this.service.ApprovePo(formValue, formValue.segment1).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.displayNewButtonApprove = false;
-        this.displayNewButtonUpdate = false;
-        this.displayNewButtonSave = false;
-        this.displayNewButtonReset = false;
+        // this.displayNewButtonApprove = false;
+        // this.displayNewButtonUpdate = false;
+        // this.displayNewButtonSave = false;
+        // this.displayNewButtonReset = false;
         this.authorizationStatus = 'APPROVED';
         this.approveDate = new Date();
         this.displayNewButton = false;
         // window.location.reload();
+        this.displaySecondButtonDisplay=true;
+        this.displayFirstButtonDisplay=true;
+        this.displayThirdButtonDisplay=false;
         this.segment1 = sessionStorage.getItem('poNo');
         this.Search(this.segment1);
       } else {
         if (res.code === 400) {
           alert(res.message);
-          this.poMasterDtoForm.reset();
+          window.location.reload();
+          // this.poMasterDtoForm.reset();
         }
       }
     });
@@ -1807,8 +1817,8 @@ export class OPMasterDtoComponent implements OnInit {
     this.lineDetailsArray.controls[lineNum].get('itemType').setValue(itemType);
     this.lineDetailsArray.controls[lineNum].get('polineNum').setValue(lineNum+1);
     this.invItemList = new Array();
-    if (this.poMasterDtoForm.get('supplierCode').value === '') {
-      alert('Please Select Supplier Code First !');
+    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value ===null ||  this.poMasterDtoForm.get('billToLoc').value === undefined) {
+      alert('Please Select Header Deatils !');
       this.lineDetailsArray.controls[lineNum].get('itemType').setValue('--Select--');
       (<any>this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
       return;
@@ -1837,11 +1847,11 @@ export class OPMasterDtoComponent implements OnInit {
                 this.poMasterDtoForm.get('billToLoc').disable();
               }
             );
-
-
-
         // this.displaysupplierSiteId=false;
-
+              if (sessionStorage.getItem('deptName')==='Sales' && itemType === 'GOODS'){
+                this.lineDetailsArray.controls[lineNum].patchValue({orderedQty:1})
+                this.lineDetailsArray.controls[lineNum].get('orderedQty').disable();
+              }
 
       }
       if (itemType === 'EXPENCE') {
@@ -1922,11 +1932,11 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
   clearFormArray() {
-    this.poMasterDtoForm.reset();
+    // this.poMasterDtoForm.reset();
     // this.lineDetailsArray.controls[i].get('taxAmounts')
     // this.poMasterDtoForm.lineDetailsGroup.TaxDetailsArray.clear();
     // this.lineDetailsArray.clear();
-    // window.location.reload();
+    window.location.reload();
   }
   closeMast() {
     this.router.navigate(['admin']);
