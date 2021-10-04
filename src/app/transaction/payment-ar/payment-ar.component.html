@@ -485,7 +485,8 @@
                                     <ng-template #thenshowDet1Yes>
                                      
                                         <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
-                                        <td><input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" (change)="glPrdValidate(glDate)" style="background-color: yellow;"></td>
+                                        <td><input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
+                                            max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" style="background-color: yellow;"></td>
                                         
                                         <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
                                         <td>  <input style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" style="background-color: yellow;">    </td>
@@ -546,7 +547,8 @@
 
 
                                     <td style="width: 15%" class="LabelFontStyle">Ref&nbsp;Date&nbsp;</td>
-                                    <td><input   type="date"  formControlName="referenceDate"  id="referenceDate" [(ngModel)]="referenceDate" class="form-control" ></td>
+                                    <td><input   type="date"  formControlName="referenceDate"  id="referenceDate" 
+                                        max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="referenceDate" class="form-control" ></td>
                                    
                                     </ng-template>
 
@@ -1303,7 +1305,7 @@
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Receipt&nbsp;Date:&nbsp;</td>
                     
                                 <td>
-                                    <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control" >
+                                    <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" >
                                 </td>
 
                                 <td style="background-color: #FFE4B5;">
