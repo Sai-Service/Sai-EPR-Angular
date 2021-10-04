@@ -593,7 +593,8 @@ this.router.navigate(['admin']);
         });
         if(event!=null)
         {
-          this.displayaddButton=true;
+         // this.displayaddButton=true;
+         (document.getElementById('btnDelLn'+i) as HTMLInputElement).disabled = false;
         }
 
   }
