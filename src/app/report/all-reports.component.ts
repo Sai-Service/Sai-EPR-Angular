@@ -47,8 +47,7 @@ export class AllReportsComponent implements OnInit {
   }
   SPdebtorsReport(){
     var invcDt2 = this.reportForm.get('invcDt1').value;
-    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MM-yyyy');
-    alert(invcDt1)
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(invcDt1,sessionStorage.getItem('locId'))

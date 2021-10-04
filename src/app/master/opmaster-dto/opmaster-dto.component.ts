@@ -860,7 +860,7 @@ displayThirdButtonDisplay=true;
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
             this.lstcomments1 = data.obj;
-            const status = this.lstcomments1.authorizationStatus;
+            const status = this.lstcomments1.authorizationStatus; 
             if (status === 'Inprogress') {
               // this.displayNewButtonApprove = true;
               // this.displayNewButtonUpdate = true;
@@ -868,6 +868,8 @@ displayThirdButtonDisplay=true;
               // this.displayNewButtonpoCancel = false;
               // this.displayNewButtonReset = false;
               this.displayFirstButtonDisplay=true;
+              this.displaySecondButtonDisplay=false;
+              this.displaytaxDisscountButton=true;
               this.displayOnStatus = true;
               this.displayButton = false;
               this.displayNewButton = false;
