@@ -268,9 +268,10 @@ export class InternalConsumptionComponent implements OnInit {
     {
       var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
       var itemqty=trxLnArr1[i].physicalQty;
-      alert(itemqty);
-      if(itemqty==='')
-     { alert('Please enter quantity');
+      var itemseg=trxLnArr1[i].segment;
+      // alert(itemqty);
+      if(itemqty==='' && itemseg==='')
+     { alert('Please enter data in blank field');
      return;
     }
       //alert('hi');
@@ -397,18 +398,23 @@ console.log(this.route1.queryParams+'hell');
         }
       )
 
-      this.service.ItemIdDivisionList(this.divisionId).subscribe(
-            data =>{ this.ItemIdList = data;
-              console.log(this.ItemIdList);
+      // this.service.ItemIdDivisionList(this.divisionId).subscribe(
+      //       data =>{ this.ItemIdList = data;
+      //         console.log(this.ItemIdList);
 
-         });
+      //    });
+        //  this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+        //   data => {
+        //     this.ItemIdList = data;
+        //     // console.log(this.invItemId);
+        //   });
          this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
        
 
-        this.addnewcycleLinesList(-1);
+        // this.addnewcycleLinesList(-1);
         
         var patch = this.InternalConsumptionForm.get('trxLinesList') as  FormArray
 
@@ -594,8 +600,9 @@ this.router.navigate(['admin']);
         if(event!=null)
         {
           this.displayaddButton=true;
+          
         }
-
+        (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
   }
   AvailQty(event:any,i)
 {
@@ -864,6 +871,7 @@ this.router.navigate(['admin']);
          if(res.code===200)
          {
           alert("Record inserted Successfully");
+          (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
          }
          else{
           if(res.code === 400) {
@@ -1088,6 +1096,13 @@ this.router.navigate(['admin']);
 
           }
         );
+        this.addnewcycleLinesList(-1);
+        this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+          data => {
+            this.ItemIdList = data;
+            // console.log(this.invItemId);
+          });
+
       }
 
       HeaderValidation() {

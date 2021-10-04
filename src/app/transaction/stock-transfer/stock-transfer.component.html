@@ -166,7 +166,7 @@
                 <tr>  <td><input disabled type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                  </td>
                 <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
-                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 120px;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
+                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
                       <datalist id="dynmicUserIds1">
                         <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
                           </option>
@@ -186,8 +186,7 @@
                 <option>--Select--</option>
                 <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 </select>
-                <span
-                *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
+                <span *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
                </span>
                 <input hidden formControlName="onHandQty">
                 <input hidden type="number" formControlName="onHandId">
@@ -428,10 +427,10 @@
                 </button>
               </ng-template>
               </td>
-                <td>
-                    <!-- <button type="submit" class="btn btn-primary"    >Payment</button>   -->
+                <!-- <td>
+                    <button type="submit" class="btn btn-primary"    >Payment</button>  
                <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>
-                </td>
+                </td> -->
                 <td>
                     <button  type="submit" class="btn btn-primary" (click)="searchAll()">Search</button>
                   </td>

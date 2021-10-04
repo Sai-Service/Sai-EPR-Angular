@@ -994,7 +994,7 @@
                                                                 </select>
                                                             </td>
                                                             <td> <input type="number" min="0"
-                                                                    formControlName="orderedQty" style="width: 4rem;"
+                                                                    formControlName="orderedQty" oninput="this.value = Math.abs(this.value)" style="width: 4rem;"
                                                                     class="form-control">
                                                             </td>
                                                             <!-- <td> <input type="number" min="0"  formControlName="orderedQty"
@@ -1012,7 +1012,7 @@
 
                                                             <input hidden formControlName="diss1" value={{diss1}}>
 
-                                                            <td> <input type="number" min="0"
+                                                            <td> <input type="number" min="0" oninput="this.value = Math.abs(this.value)"
                                                                     formControlName="unitPrice" style="width: 6rem;"
                                                                     class="form-control" (change)="onKey(i)"></td>
 
@@ -1674,89 +1674,71 @@
 </ng-template>
 
 </div>
-<!-- <table>
-                      
-</table> -->
-<table class="center">
-    <tr>
+<div *ngIf="displayFirstButtonDisplay; then thenFirstButtonDisplay; else elseFirstButtonDisplay"></div>
+<ng-template #thenFirstButtonDisplay>  
+</ng-template>
+<ng-template #elseFirstButtonDisplay>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 4rem;">Save</button>
+            </td>
+        </tr>
+    </table>
+</ng-template>
+<div *ngIf="displaySecondButtonDisplay; then thenSecondButtonDisplay; else elseSecondButtonDisplay"></div>
+<ng-template #thenSecondButtonDisplay>
+</ng-template>
+<ng-template #elseSecondButtonDisplay>
+ <table class="center">
+     <tr>
         <td>
             <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
         </td>
         <td>
-            <div *ngIf="displayNewButtonReset ; then thenBlockReset; else elseBlockReset"></div>
-            <ng-template #thenBlockReset>
-                <button type="button" class="btn btn-primary" (click)="clearFormArray()"
-                    style="width: 8rem;">Reset</button>
-            </ng-template>
-            <ng-template #elseBlockReset>
-                <button type="button" disabled class="btn btn-primary" (click)="clearFormArray()"
-                    style="width: 8rem;">Reset</button>
-            </ng-template>
+            <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
         </td>
         <td>
-            <div *ngIf="displayNewButtonSave ; then thenBlockSave; else elseBlockSave"></div>
-            <ng-template #thenBlockSave>
-                <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
-            </ng-template>
-            <ng-template #elseBlockSave>
-                <button disabled type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 8rem;">Save</button>
-            </ng-template>
+            <button type="button"  class="btn btn-primary" (click)="UpdatePOMast()" style="width: 8rem;">Update</button>
         </td>
         <td>
-            <div *ngIf="displayNewButtonUpdate ; then thenBlockUpdate; else elseBlockUpdate"></div>
-            <ng-template #thenBlockUpdate>
-                <button type="button" class="btn btn-primary" (click)="UpdatePOMast()"
-                    style="width: 8rem;">Update</button>
-            </ng-template>
-            <ng-template #elseBlockUpdate>
-                <button type="button" disabled class="btn btn-primary" (click)="UpdatePOMast()"
-                    style="width: 8rem;">Update</button>
-            </ng-template>
+            <button type="button" class="btn btn-primary" (click)="Approve()" style="width: 8rem;">Approve</button>
         </td>
         <td>
-            <div *ngIf="displayNewButtonApprove ; then thenBlockApprove; else elseBlockApprove"></div>
-            <ng-template #thenBlockApprove>
-                <button type="button" class="btn btn-primary" (click)="Approve()" style="width: 8rem;">Approve</button>
-            </ng-template>
-            <ng-template #elseBlockApprove>
-                <button type="button" class="btn btn-primary" disabled (click)="Approve()"
-                    style="width: 8rem;">Approve</button>
-            </ng-template>
+            <input hidden type="text" disabled formControlName="segment1" class="form-control" [(ngModel)]='segment1' placeholder="">
+            <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button>
         </td>
-        <td>
-            <div *ngIf="displaygoReceiptForm ; then thenBlockgoReceiptForm; else elseBlockgoReceiptForm"></div>
-            <ng-template #thenBlockgoReceiptForm>
-            </ng-template>
-            <ng-template #elseBlockgoReceiptForm>
-                <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;">New
-                    Receipt Creation</button>
-            </ng-template>
-        </td>
-        <td>
-            <div *ngIf="displayNewButtonpoCancel ; then thenBlockpoCancel; else elseBlockpoCancel"></div>
-            <ng-template #thenBlockpoCancel>
-                <!-- <button type="button" class="btn btn-primary" (click)="poCancel()" style="width: 8rem;">PO Cancelled</button> -->
-            </ng-template>
-            <ng-template #elseBlockpoCancel>
-                <input hidden type="text" disabled formControlName="segment1" class="form-control"
-                    [(ngModel)]='segment1' placeholder="">
-                <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO
-                    Cancelled</button>
-            </ng-template>
-        </td>
-
-
-        <!-- <div *ngIf="displaytaxDisscountButton; then thenBlocktaxDisscount; else elseBlocktaxDisscount">
-        </div>
-        <ng-template #thenBlocktaxDisscount>
-        </ng-template>
-        <ng-template #elseBlocktaxDisscount>
-            <td> <button type="button" class="btn btn-primary" (click)="Apply()" style="width: 8rem;">Apply</button>
+     </tr>
+ </table>
+</ng-template>
+<div *ngIf="displayThirdButtonDisplay; then thenThirdButtonDisplay; else elseThirdButtonDisplay"></div>
+<ng-template #thenThirdButtonDisplay>
+</ng-template>
+<ng-template #elseThirdButtonDisplay>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
             </td>
-        </ng-template> -->
-        <!-- <button type="button" class="btn btn-primary"   (click)="actionMethod($event)">Give Kitchen access</button> -->
-    </tr>
-</table>
+            <td>
+                <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
+            </td>
+            <td>
+                <input hidden type="text" disabled formControlName="segment1" class="form-control" [(ngModel)]='segment1' placeholder="">
+                <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button>
+            </td>
+            <td>
+                <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;">New Receipt Creation</button>
+            </td>
+        </tr>
+    </table>
+</ng-template>
 <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
 </div>
 <ng-template #thenBlockModal>

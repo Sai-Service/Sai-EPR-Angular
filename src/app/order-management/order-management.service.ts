@@ -69,6 +69,7 @@ export class OrderManagementService {
     return this.http.put(url, UpdateCounterSaleInvRecord, options);
   }
 
+
     
   downloadCSPreINV(orderNumber) :Observable<any> {
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//orderHeader/cntrTaxPreInvPrint/${orderNumber}`; 
@@ -102,6 +103,18 @@ export class OrderManagementService {
       headers: this.headers,
     });
   }
+
+  viewGatePass(orderNumber){
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/orderHeader/SS_SPAC_Gatepass/${orderNumber}`;  
+    // local
+    const REQUEST_URI = `http://localhost:8081/orderHeader/SS_SPAC_Gatepass/${orderNumber}`;    
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   viewReceipt(orderNumber){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/omPayment/counterSaleReceipt/${orderNumber}`;  
@@ -155,7 +168,7 @@ export class OrderManagementService {
   downloadGatePass(InvoiceNumber){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081//salesGatePass/print/${InvoiceNumber}`;    
+    const REQUEST_URI = `http://localhost:8081/salesGatePass/print/${InvoiceNumber}`;    
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -229,6 +242,19 @@ export class OrderManagementService {
     return this.http.post(url, AccLineRecord1, options);
   }
   
+  // genrateGatePass(orderNumber,emplId){
+  //   return this.http.get(this.ServerUrl + `/orderHeader/postSPACGatepass?orderNumber=${orderNumber}&emplId=${emplId}`);
+  // }
+
+  genrateGatePass(orderNumber,emplId) {
+    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+      .set('emplId', emplId)
+    const REQUEST_URI = this.ServerUrl + `/orderHeader/postSPACGatepass?orderNumber=${orderNumber}&emplId=${emplId}`;
+    return this.http.post(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+
+    });
+  }
 
   // **************** counter Sale order Save post *****************************/////
 

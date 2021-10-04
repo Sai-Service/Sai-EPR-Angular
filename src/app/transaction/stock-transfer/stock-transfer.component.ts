@@ -161,9 +161,10 @@ export class StockTransferComponent implements OnInit {
     {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       var itemqty=trxLnArr1[i].primaryQty;
-      alert(itemqty);
-      if(itemqty==='')
-     { alert('Please enter quantity');
+      var item=trxLnArr1[i].segment;
+      alert(item);
+      if(itemqty===''&& item==='')
+     { alert('Please enter data in blank field');
      return;
     }
       this.reservePos(i);
@@ -316,17 +317,11 @@ export class StockTransferComponent implements OnInit {
           this.getfrmSubLoc = data;
           console.log(data);
           var getfrmSubLoc =data;
-          //   // alert(getfrmSubLoc.segmentName+'SegmentName')
-
-
-            // alert(i +'i');
             this.locData[i] = data;
             if(getfrmSubLoc.length==1)
             {
-            // this.displayLocator[i]=false;
             trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
             trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
-            // trxLnArr1.controls[i].patchValue({frmLocator:getfrmSubLoc[0].segmentName});
             trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
             trxLnArr1.controls[i].patchValue({onHandId:getfrmSubLoc[0].id});
             }
