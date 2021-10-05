@@ -646,6 +646,8 @@
                         <tr>
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
+                                 <!-- <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button> -->
+                                   
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="rtvSave()" [disabled]="!returntoVendorForm">Save</button>
                                 </td>

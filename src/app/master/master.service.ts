@@ -1228,7 +1228,7 @@ viewStockgatePass(shipmentNumber){
 ///////////OnHand////////////
 searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>
 {
-   alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
+  //  alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
    if(ouId ==='ALL') {
     return this.http.get(this.ServerUrl+`/onhandqty/onhandItemListAll?itemId=${itemid}&divisionId=${divId}`)
    } else  if (ouId >0 && locId==='ALL') {

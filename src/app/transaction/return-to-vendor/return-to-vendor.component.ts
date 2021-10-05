@@ -98,7 +98,8 @@ export class ReturnToVendorComponent implements OnInit {
       // searchReceiptNo=1000158;
 
       // searchReceiptNo=22111720;
-      searchReceiptNo=52121101130;
+      // searchReceiptNo=52121101133;
+      searchReceiptNo:number;
 
       poStatus:string;
       shipHeaderId:number
@@ -162,6 +163,9 @@ export class ReturnToVendorComponent implements OnInit {
       lineItemRepeated=false;
       checkBoxAllItem=true;
       enableCheckBox=true;
+      validateStatus = false;
+      saveButton = false;
+
 
    constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.returntoVendorForm = fb.group({ 
@@ -929,6 +933,7 @@ export class ReturnToVendorComponent implements OnInit {
           data => {
             this.PoRcptLineItemList = data.obj;
             console.log(this.PoRcptLineItemList);
+            // this.validateStatus=true;
           }
         );
 
@@ -1035,6 +1040,19 @@ export class ReturnToVendorComponent implements OnInit {
     rtnSearchByDocNo(mRtnNumber){
       alert ("WIP.... Return Number....." +mRtnNumber);
 
+    }
+
+    validateSave() 
+    {
+        var applLineArr = this.returntoVendorForm.get('rcvLine').value;
+        var len1 = applLineArr.length;
+        this.validateStatus = false;
+        this.saveButton = false;
+        for (let i = len1 - 1; i >= 0; i--) {
+          if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
+            this.lineDetailsArray.removeAt(i);
+          } else { this.saveButton = true; }
+        }
     }
     
 

@@ -128,14 +128,25 @@ onhandDetailsForm:FormGroup;
      }
    );
 
- this.service.locationIdList()
+//  this.service.locationIdList()
+//  .subscribe(
+//    data => {
+//      this.locIdList = data;
+//      console.log(this.locIdList);
+//    }
+//  );
+
+ this.service.getLocationSearch1(this.ouId)
  .subscribe(
    data => {
      this.locIdList = data;
      console.log(this.locIdList);
-   }
- );
+
+    }
+     );
+     
   }
+
   OnHandDetails(onhandDetailsForm:any){}
 
   getInvItemId($event)
@@ -190,7 +201,7 @@ onhandDetailsForm:FormGroup;
           this.purchPrice=this.Itemdata[0].ndp;
           this.gstPer=this.Itemdata[0].taxcategoryName;
           this.onhandDetailsForm.patchValue(data.obj);
-          
+
       } else { alert(segment1+" - Stock not Available/Wrong Item Code...");}
  })
 
@@ -226,13 +237,18 @@ onhandDetailsForm:FormGroup;
 
       onOuIdSelected1(ouId) {
 
+        // alert("OUID :"+ouId);
+
         // if(ouId===sessionStorage.getItem('ouId')) {this.locId=Number(sessionStorage.getItem('locId'));return;}
     
         if(ouId=='ALL') {this.locIdList=null;}
+
         if (ouId > 0) {
           this.showOrg = true;
+          var mOuId =ouId;
+            // alert("OUID :"+mOuId);
     
-          this.service.getLocationSearch1(ouId)
+          this.service.getLocationSearch1(mOuId)
             .subscribe(
               data => {
                 this.locIdList = data;
@@ -240,6 +256,7 @@ onhandDetailsForm:FormGroup;
               
                if(this.locIdList.length <=0) {this.showOrg=false;this.locIdList=null;} 
                else {  this.locId=data[0].locId ;
+
                 if(ouId===Number(sessionStorage.getItem('ouId'))) {
                   // alert('ouId id =' +ouId +","+sessionStorage.getItem('ouId') );
                   this.locId=Number(sessionStorage.getItem('locId'));

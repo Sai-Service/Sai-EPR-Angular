@@ -9,6 +9,9 @@ import {formatDate } from '@angular/common';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent  {
+
+  public ItemIdList:any[];
+  lstcomments: any;
   ticketNo:string;
   today= new Date();
   todaysDataTime = '';
@@ -18,8 +21,9 @@ export class AdminComponent  {
   deptName:string;
   locName:string;
   ouName:string;
- 
-  constructor(private router: Router) { 
+  loginArray:string;
+  // constructor(private fb: FormBuilder, private router: Router, private service: MasterService)
+  constructor(private router: Router ) { 
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
   }
 
@@ -35,9 +39,14 @@ export class AdminComponent  {
     this.deptName=(sessionStorage.getItem('deptName'));
     this.locName=(sessionStorage.getItem('locName'));
     this.ouName=(sessionStorage.getItem('ouName'));
+    this.loginArray=sessionStorage.getItem('divisionName');
     // $('[data-submenu]').submenupicker();
 
+    // this.service.ItemIdDivisionList(this.divisionId).subscribe(
+    //       data =>{ this.ItemIdList = data;
+    //         console.log(this.ItemIdList);
 
+    //   });
 
     $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
       if (!$(this).next().hasClass('show')) {
@@ -74,4 +83,31 @@ export class AdminComponent  {
   dashboard(){
     this.router.navigate(['/admin']);
   }
+  F9Search() {
+
+    alert ("WIP...."); }
+
+    // var segment1=this.onhandDetailsForm.get('searchItemCode').value
+    // let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+    // this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+    //   data =>{
+    //     this.lstcomments= data;
+    //     console.log(data);
+    //   })
+    // }
+
+    onOptioninvItemIdSelectedSingle(searchItemCode) {
+      // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
+        let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
+        if( selectedValue != undefined){
+         console.log(selectedValue);
+        // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+        
+        // this.searchItemId = selectedValue.itemId;
+        // this.searchItemName=selectedValue.DESCRIPTION;
+        // this.searchItemCode=selectedValue.SEGMENT;
+      }
+    }
+
+
 }
