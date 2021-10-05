@@ -508,8 +508,7 @@
                     </td>
                     <td>
                         <input disabled type="number" formControlName="totTax" [(ngModel)]="totTax" value={{totTax}}
-                            class="form-control" placeholder="0.00" style="width: 160px;text-align: right;"
-                            minFractionDigits="2" maxFractionDigits>
+                            class="form-control" placeholder="0.00" style="width: 160px;text-align: right;">
                     </td>
                 </tr>
                 <tr>
@@ -888,7 +887,7 @@
                                                                     [ngValue]="locId.locatorId"
                                                                     [Value]="locId.segmentName">
                                                                     {{locId.segmentName}}--{{locId.onHandQty}}</option> -->
-                                                                     <option *ngFor="let locId of  locData" [ngValue]="locId.locatorId">
+                                                                     <option *ngFor="let locId of  locData[i]" [ngValue]="locId.locatorId">
                                                                     {{locId.segmentName}}--{{locId.onHandQty}}</option>
                                                             </select>
                                                             <input hidden formControlName="frmLocatorId">
