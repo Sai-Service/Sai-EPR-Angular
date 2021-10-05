@@ -201,21 +201,21 @@
                 </td>
                 
                 <td><button type="button" class="btn btn-primary fa fa-plus"  id="btnadd{{trxLineIndex}}" style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
-                <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
+                <!-- <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
                 <ng-template #thenLineRemoveRow>
-                   
+                    -->
                   <td>
-                    <button type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
+                    <button type="button"  class="btn btn-primary fa fa-trash" style="width: 2rem;" id="btnrm{{trxLineIndex}}" (click)="removenewtrxLinesList(trxLineIndex)">
                   </button>
                 </td>
-                </ng-template>
+                <!-- </ng-template>
                 <ng-template #elseLinefRemoveRow>
-                    <!-- <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td> -->
+                    <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
                   <td>
                     <button disabled type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
                       </button>
                       </td>
-                </ng-template>
+                </ng-template> -->
                 
                 
               </tr>

@@ -395,8 +395,16 @@ console.log(this.route1.queryParams+'hell');
        this.service.ReasonList().subscribe(
          data=>{
            this.reasonlist=data;
-           
-//           let currReason = this.reasonlist.filter((reasonName) => (customer.custAccountNo === custAccountNo));
+           let selreasonlist:any=[];
+           for(let i=0;i<this.reasonlist.length;i++)
+           {
+            if(this.reasonlist[i].reasonName.includes('SA'))
+            {
+              selreasonlist.push(this.reasonlist[i]);
+            }
+           }
+           this.reasonlist=selreasonlist;
+          //  let currReason = this.reasonlist.filter((reasonName:string) => (reasonName.includes('IC')));
 // this.selCustomer = currCustomer[0];
 
          }
