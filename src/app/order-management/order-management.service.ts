@@ -10,8 +10,8 @@ export class OrderManagementService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';  
-  ServerUrl = 'http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  // ServerUrl = 'http://localhost:8081';
+  ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
 
   constructor(private http: HttpClient) {

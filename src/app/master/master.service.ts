@@ -1216,7 +1216,7 @@ viewStocknote(shipmentNumber){
   });
 }
 viewStockgatePass(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
   // local
   const REQUEST_URI = `http://localhost:8081/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
