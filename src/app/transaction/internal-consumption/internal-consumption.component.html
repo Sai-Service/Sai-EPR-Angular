@@ -70,7 +70,7 @@
           </td>
           <input hidden formControlName="compileId" [(ngModel)]="compileId">
           <td>
-            <select class="form-control" formControlName="compileType">
+            <select class="form-control" formControlName="compileType" #myinput>
               <option>--Select--</option>
               <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
             </select>
@@ -299,8 +299,8 @@
                   <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrem{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                     </ng-template>
                     <ng-template #elseBlockfreeze>
-                        <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
-                        <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+                        <td><button disabled type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
+                        <td><button disabled type="button" class="btn btn-primary fa fa-trash"id="btnrem{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                     </ng-template>
                 </tr>
                 </ng-container>
