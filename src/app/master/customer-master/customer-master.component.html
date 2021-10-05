@@ -531,9 +531,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }" (change)="onOptionWeddingDate($event)"
                                         placeholder="Enter weddingDate" max="{{minDate | date:'yyyy-MM-dd'}}" min="{{minDateWedding | date:'yyyy-MM-dd'}}">
                                 </td>
-                                <input hidden type="text" formControlName="startDate" class="form-control"
-                                [ngModel]="startDate | date:'dd-MM-yyyy'"> 
-                            <!-- <input type="date" formControlName="startDate" class="form-control"
+                                <input hidden type="text" formControlName="startDate" class="form-control"[(ngModel)]="startDate">                            <!-- <input type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date"
                             min="{{minDate | date:'yyyy-MM-dd'}}">
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Creation&nbsp;Date&nbsp;:&nbsp;</td>

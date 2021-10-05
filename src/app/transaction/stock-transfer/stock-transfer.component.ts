@@ -165,13 +165,13 @@ export class StockTransferComponent implements OnInit {
   }
 
   addnewtrxLinesList(i:number) {    
-    alert(i+'I Value');
+    // alert(i+'I Value');
     if(i>-1)
     {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       var itemqty=trxLnArr1[i].primaryQty;
       var item=trxLnArr1[i].segment;
-      alert(item);
+      // alert(item);
       if(itemqty===''&& item==='')
      { alert('Please enter data in blank field');
      return;
@@ -421,7 +421,7 @@ validate(i:number,qty1)
   }
   if(uomCode==='NO')
   {
-    alert(Number.isInteger(qty)+'Status');
+    // alert(Number.isInteger(qty)+'Status');
     if(!(Number.isInteger(qty)))
     {
     alert('Please enter correct No');
@@ -662,7 +662,7 @@ onlocationissueselect(event){
   else{
     // alert('event');
     this.addnewtrxLinesList(-1);
-    (document.getElementById('btnrm'+0) as HTMLInputElement).disabled = true;
+    // (document.getElementById('btnrm'+0) as HTMLInputElement).disabled = true;
     var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
      {
