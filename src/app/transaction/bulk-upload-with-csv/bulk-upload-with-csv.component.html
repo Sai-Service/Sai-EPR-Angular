@@ -172,11 +172,11 @@
           <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
             <a   [routerLink]="['/admin/master/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
         </td>
-            <td style="border: 1px solid black;padding-left: 5px;">{{com.baseAmount}}</td>
-            <td style="border: 1px solid black;padding-left: 5px;">{{com.totTaxAmt}}</td>
-            <td style="border: 1px solid black;padding-left: 5px;">{{com.totalAmt}}</td>
-            <td style="border: 1px solid black;padding-left: 5px;">{{com.authorizationStatus}}</td>
-            <td style="border: 1px solid black;padding-left: 5px;">{{com.poDate}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;text-align: right;">{{com.baseAmount}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;text-align: right;">{{com.totTaxAmt}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;text-align: right;">{{com.totalAmt}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;text-align: right;">{{com.authorizationStatus}}</td>
+            <td style="border: 1px solid black;padding-left: 5px;text-align: right;">{{com.poDate | date:'yyyy-MM-dd'}}</td>
         </tr>
     </table>
     <table class="center">
