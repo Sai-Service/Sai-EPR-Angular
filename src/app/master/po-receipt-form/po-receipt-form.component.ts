@@ -1012,13 +1012,13 @@ refresh()
 
       poSave(){
         const loctorDesc=this.poReceiptForm.get('poLines').value;
-        for (let i=0; i < loctorDesc[i].length;i++){
-        var locatorDesc=this.lineDetailsArray[i].get('locatorDesc').value;
-        if (locatorDesc=== undefined){
-          alert('Please Entered Locator Description !');
-          return
-        }
-      }
+      //   for (let i=0; i < loctorDesc[i].length;i++){
+      //   var locatorDesc=this.lineDetailsArray[i].get('locatorDesc').value;
+      //   // if (locatorDesc=== undefined){
+      //   //   alert('Please Entered Locator Description !');
+      //   //   return
+      //   // }
+      // }
        
         this.displaySaveButton =false;
         const totlCalControls=this.poReceiptForm.get('poLines').value;
@@ -1047,11 +1047,14 @@ this.locId=Number(sessionStorage.getItem('locId'));
     this.service.poSaveSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.receiptNo=res.obj;
+        this.ReceiptFind(res.obj)
+        // var recDate1= new Date()
+      //  this.poReceiptForm.patchValue({recDate:recDate1})
         this.disabled = false;
         this.disabledLine=false;
         this.disabledViewAccounting=false;
         alert(res.message);
-
+        // this.poFind(this.segment1)
         // this.poReceiptForm.reset();
       } else {
         if (res.code === 400) {

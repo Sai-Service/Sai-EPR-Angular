@@ -1216,7 +1216,7 @@ viewStocknote(shipmentNumber){
   });
 }
 viewStockgatePass(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
   // local
   const REQUEST_URI = `http://localhost:8081/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
@@ -1788,8 +1788,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 }
 
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
-  // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
-  return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 

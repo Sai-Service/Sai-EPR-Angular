@@ -316,7 +316,7 @@ export class CustomerMasterComponent implements OnInit {
    this.locId=(sessionStorage.getItem('locId'));
    this.emplId=Number(sessionStorage.getItem('emplId'));
    console.log(this.ouId);
-   this.weddingDate = new Date();
+  //  this.weddingDate = new Date();
    this.startDate = new Date();
        this.service.custTypeList()
       .subscribe(
@@ -538,7 +538,7 @@ onOptionClassCode(event:any){
     var gstno=this.customerMasterForm.get('gstNo').value
 const gstNo1 = gstno.substr(2,10);
 this.panNo = gstNo1;;
-    alert('Gst verificaition');
+    // alert('Gst verificaition');
 
     var res = gstno.substr(0, 2);
     console.log(res);
@@ -983,6 +983,7 @@ if (person === 'Person'){
           if(formValue.birthDate===undefined)
           {
           alert('Please enter Birth Date');
+          validdata=false;
           }
           if(formValue.title===undefined)
           {
