@@ -184,6 +184,7 @@ export class StockTransferComponent implements OnInit {
       this.deleteReserveLinewise(i);
       this.reservePos(i);
     }
+
     }
 
     this.trxLinesList().push(this.newtrxLinesList());
@@ -194,7 +195,7 @@ export class StockTransferComponent implements OnInit {
         lineNumber: len,
       }
     );
-    this.displayRemoveRow[i-1]=true;
+    this.displayRemoveRow[i]=true;
   }
   removenewtrxLinesList(trxLineIndex) {
        var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
@@ -261,7 +262,8 @@ export class StockTransferComponent implements OnInit {
     //    lineNumber: 1,
     //  }
   //  );
-   this.displayRemoveRow[-1] = false;
+  //  this.displayRemoveRow[-1] = false;
+  // (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
   }
   stockTransfer(stockTranferForm: any) { }
   onOptionSelect(event: any, i) {
@@ -660,6 +662,7 @@ onlocationissueselect(event){
   else{
     // alert('event');
     this.addnewtrxLinesList(-1);
+    (document.getElementById('btnrm'+0) as HTMLInputElement).disabled = true;
     var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
      {
