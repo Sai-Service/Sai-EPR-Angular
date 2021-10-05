@@ -384,8 +384,19 @@
                                     <label class="form-check-label" style="color: black;font-size: small;font-weight: bold">
                                         Show&nbsp;All&nbsp;Item&nbsp;Lines&nbsp;:&nbsp;
                                     </label>
-                                       <input type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
-                                         [(ngModel)]="showAllLines" (change)="showAll($event)">
+
+                                    <div *ngIf="checkBoxAllItem ,then thenshowChkBoxYes; else thenshowChkBoxNo")></div>
+                                    <ng-template #thenshowChkBoxYes>
+
+                                       <input  type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
+                                         [(ngModel)]="showAllLines" (change)="showAll($event)"  >
+                                    </ng-template>
+                                    <ng-template #thenshowChkBoxNo>
+                                        <input disabled type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
+                                          [(ngModel)]="showAllLines" (change)="showAll($event)" checked>
+                                     </ng-template>
+
+
                                    </div>
                                     </td>
                                 
@@ -506,7 +517,8 @@
                                             <ng-template #BlockShowAll2>
                                                 <td>  
                                                     <select  formControlName="itemName" id="itemName"  class="form-control"  
-                                                             (ngModelChange)="onItemSelected($event,i)" style="width: 250px;height: 25px;background-color: yellow">
+                                                           (ngModelChange)="onItemSelected($event,i)" style="width: 250px;height: 25px;background-color: yellow">
+                                                             
                                                         <option >--Select--</option>
                                                         <option *ngFor="let sc of  PoRcptLineItemList" [ngValue]="sc.itemName"  >
                                                         {{sc.itemName}}
