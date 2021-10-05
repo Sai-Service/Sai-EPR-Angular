@@ -190,6 +190,7 @@ onhandDetailsForm:FormGroup;
           this.purchPrice=this.Itemdata[0].ndp;
           this.gstPer=this.Itemdata[0].taxcategoryName;
           this.onhandDetailsForm.patchValue(data.obj);
+          
       } else { alert(segment1+" - Stock not Available/Wrong Item Code...");}
  })
 

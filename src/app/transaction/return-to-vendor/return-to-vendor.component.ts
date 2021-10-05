@@ -98,7 +98,7 @@ export class ReturnToVendorComponent implements OnInit {
       // searchReceiptNo=1000158;
 
       // searchReceiptNo=22111720;
-      searchReceiptNo=52121101119;
+      searchReceiptNo=52121101130;
 
       poStatus:string;
       shipHeaderId:number
@@ -139,7 +139,7 @@ export class ReturnToVendorComponent implements OnInit {
       displayButton = true;
       rtnLineValidation=true;
       rtnChkboxValidation=true;
-
+      public minDate = new Date();
       frmDate= this.pipe.transform(Date.now(), 'y-MM-dd');
       toDate= this.pipe.transform(Date.now(), 'y-MM-dd');
 
@@ -949,7 +949,7 @@ export class ReturnToVendorComponent implements OnInit {
 
       onItemSelected(mItem, index) {
 
-        // alert ("in ItemSelect....");
+        // alert ("in ItemSelect...." +mItem + " index -"+index); 
         // patch.controls[index].patchValue({selectFlag:''})
 
         //  this.showQtyRtncol=false;
