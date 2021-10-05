@@ -1,6 +1,6 @@
 
 import { DatePipe, PathLocationStrategy } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -184,6 +184,12 @@ export class MiscellaneousTransactionComponent implements OnInit {
   currentOp:string;
   dispRow:boolean=true;
 
+  @ViewChild("myinput") myInputField: ElementRef;
+  // @ViewChild("suppCode1") suppCode1: ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
+
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
   {
     this.miscellaneousForm=fb.group({
@@ -268,7 +274,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
       var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
       var itemqty=trxLnArr1[i].physicalQty;
       var item1=trxLnArr1[i].segment;
-      alert(item1);
+      // alert(item1);
       if(itemqty==='')
      { alert('Please enter quantity');
      return;
@@ -372,13 +378,13 @@ console.log(this.route1.queryParams+'hell');
           if(this.dispheader===true)
           {
             // this.miscellaneousForm.reset();
-           alert('In 1st If'+this.transType.length);
+          //  alert('In 1st If'+this.transType.length);
              for(let i=0;i<this.transType.length;i++)  
              {
-               alert('In For');
+              //  alert('In For');
                if(this.transType[i].transactionTypeId===13)
                {
-                 alert('In If');
+                //  alert('In If');
                  this.transType.splice(i,1);
                }
              }
@@ -389,6 +395,18 @@ console.log(this.route1.queryParams+'hell');
        this.service.ReasonList().subscribe(
          data=>{
            this.reasonlist=data;
+           let selreasonlist:any=[];
+           for(let i=0;i<this.reasonlist.length;i++)
+           {
+            if(this.reasonlist[i].reasonName.includes('SA'))
+            {
+              selreasonlist.push(this.reasonlist[i]);
+            }
+           }
+           this.reasonlist=selreasonlist;
+          //  let currReason = this.reasonlist.filter((reasonName:string) => (reasonName.includes('IC')));
+// this.selCustomer = currCustomer[0];
+
          }
        )
        this.service.TypeList().subscribe(
@@ -900,7 +918,7 @@ this.deleteReserve();
   }
   if(uomCode==='NO')
   {
-    alert(Number.isInteger(qty)+'Status');
+    // alert(Number.isInteger(qty)+'Status');
     if(!(Number.isInteger(qty)))
     {
     alert('Please enter correct No');
