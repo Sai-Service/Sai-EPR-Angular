@@ -1593,7 +1593,7 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
                   // }
                 }
               }
-              alert(select.itemId)
+              // alert(select.itemId)
               if (select.itemId != null) {
                 // this.getLocatorDetails(k, select.itemId);
                 let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -2240,36 +2240,30 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
   reservePos(i) {
     // alert("Hello");
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    // var trxLnArr2 = this.moveOrderForm.get('trxLinesList') as FormArray;
-    // const formValue: ImoveOrder = this.CounterSaleOrderBookingForm.value;
     let variants = <FormArray>this.orderlineDetailsArray();
     var transtypeid = this.CounterSaleOrderBookingForm.get('transactionTypeId').value;
     console.log(transtypeid);
-
-    var locId1 = this.CounterSaleOrderBookingForm.get('locId').value
+    var locId1 = sessionStorage.getItem('locId');
     let variantFormGroup = <FormGroup>variants.controls[i];
     variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, Validators.required));
     variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
-    // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
     variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].pricingQty, Validators.required));
-    // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
     variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, []));
-    // var reserveinfo=formValue[0];
-
-    this.service.reservePost(variants.value[i]).subscribe((res: any) => {
-      //  var obj=res.obj;
+     this.service.reservePost(variants.value[i]).subscribe((res: any) => {
       if (res.code === 200) {
         // alert("Record inserted Successfully");
       }
       else {
         if (res.code === 400) {
-          // alert("Code already present in data base");
-          this.CounterSaleOrderBookingForm.reset();
+          window.location.reload();
         }
       }
     }
     );
   }
+
+
+
 
   onOptionsSelectedTransactionType(transactionTypeName) {
     if (transactionTypeName != undefined) {
