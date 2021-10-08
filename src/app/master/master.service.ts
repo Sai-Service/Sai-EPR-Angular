@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component';
 import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.component'
+import{ AppConstants} from '../app-constants'
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,12 @@ import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.co
 export class MasterService {
   httpclient: any;
   headers: any;
-
-  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl : string;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.ServerUrl = AppConstants.ServerUrl;
    }
 
    ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////
@@ -1210,7 +1209,7 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
 viewStocknote(shipmentNumber){
   // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
   // local
-  const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/StkTransferNote/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1220,7 +1219,7 @@ viewStocknote(shipmentNumber){
 viewStockgatePass(shipmentNumber){
   // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
   // local
-  const REQUEST_URI = `http://localhost:8081/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1875,7 +1874,7 @@ poAllRecFind(segment1,billToLoc): Observable<any> {
 downloadgrrPrint(receiptNo) :Observable<any> {
   // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
   // local
-  const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
+  const REQUEST_URI = this.ServerUrl +`//rcvShipment/POReceipt/${receiptNo}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
