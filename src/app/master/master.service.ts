@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { from, Observable } from 'rxjs';
 import{OPMasterDtoComponent} from './opmaster-dto/opmaster-dto.component';
 import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.component'
+import{ AppConstants} from '../app-constants'
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,12 @@ import {} from 'src/app/transaction/bulk-upload-with-csv/bulk-upload-with-csv.co
 export class MasterService {
   httpclient: any;
   headers: any;
-
-  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl : string;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.ServerUrl = AppConstants.ServerUrl;
    }
 
    ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////

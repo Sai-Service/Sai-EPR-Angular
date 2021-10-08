@@ -1,6 +1,8 @@
 .form-control{
-    height: 25px;
+    border-color: gray;
 }
+
+
 td{
     padding: 0px;
 }

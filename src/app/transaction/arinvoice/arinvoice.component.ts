@@ -739,7 +739,7 @@ export class ARInvoiceComponent implements OnInit {
   }
   Save(){
     
-    let jsonData=this.arInvoiceForm.value;
+    let jsonData=this.arInvoiceForm.getRawValue();
     jsonData.ouId = this.ouId;
     var arrayControl = this.arInvoiceForm.get('invLines').value;
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
