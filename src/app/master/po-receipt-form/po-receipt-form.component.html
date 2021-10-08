@@ -475,7 +475,7 @@
                                         </td>
                                         <td>
                                             <input disabled type="number" formControlName="baseAmount"
-                                                [(ngModel)]="baseAmount" value={{baseAmount}}
+                                                [(ngModel)]="baseAmount" value="{{baseAmount}}"
                                                 class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
                                                 placeholder="00.00" style="width: 75px;">
@@ -866,8 +866,8 @@
                                     formControlName="unitPrice"
                                     class="form-control" style="height: 20px;width: 80px;text-align: right;">
                             </td>
-                            <td> <input disabled type="number"
-                                formControlName="baseAmount"
+                            <td> <input disabled type="number" 
+                                formControlName="baseAmount" value="{{baseAmount}}"
                                 class="form-control" style="height: 20px;width: 80px;text-align: right;">
                         </td>
                         <td>  <input disabled type="number"
@@ -981,7 +981,7 @@
                                 class="form-control" style="height: 20px;width: 80px;text-align: right;">
                         </td>
                         <td> <input disabled type="number"
-                            formControlName="baseAmount"
+                            formControlName="baseAmount" value="{{baseAmount}}"
                             class="form-control" style="height: 20px;width: 80px;text-align: right;">
                     </td>
                     <td>  <input disabled type="number"
@@ -1126,13 +1126,14 @@
                         Discription&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input disabled formControlName="description" class="form-control" [ngModel]="description" >
-                    </td> 
+                        <input disabled formControlName="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                    </td>
+                    
                     <td style="width: 18%" class="LabelFontStyle">
                         Ledger&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input disabled formControlName="ledgerId" class="form-control" [ngModel]="ledgerId" >
+                        <input disabled formControlName="description" class="form-control" [ngModel]="description" >
                     </td>
                 </tr>
                 <tr>

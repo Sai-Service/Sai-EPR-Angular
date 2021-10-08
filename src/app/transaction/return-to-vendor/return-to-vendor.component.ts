@@ -98,7 +98,8 @@ export class ReturnToVendorComponent implements OnInit {
       // searchReceiptNo=1000158;
 
       // searchReceiptNo=22111720;
-      searchReceiptNo=52121101130;
+      // searchReceiptNo=52121101133;
+      searchReceiptNo:number;
 
       poStatus:string;
       shipHeaderId:number
@@ -160,7 +161,11 @@ export class ReturnToVendorComponent implements OnInit {
       showQtyRtncol=true;
       lineValidation=false;
       lineItemRepeated=false;
+      checkBoxAllItem=true;
       enableCheckBox=true;
+      validateStatus = false;
+      saveButton = false;
+
 
    constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
           this.returntoVendorForm = fb.group({ 
@@ -545,6 +550,7 @@ export class ReturnToVendorComponent implements OnInit {
 
          SearchByPoRcptNumberLine(){
           // alert("PO / Receipt Number :"+this.segment1 +","+this.receiptNo);
+          this.enableCheckBox=true;
            this.service.getsearchByReceiptNoLine(this.segment1,this.receiptNo)
            .subscribe(
              data => {
@@ -896,19 +902,28 @@ export class ReturnToVendorComponent implements OnInit {
     }
 
      showAll(e) {
+      //  alert ("in...Show All");
           if(this.headerFound) {
               if ( e.target.checked === true){
+                this.SearchByPoRcptNumberLine();
+                this.checkBoxAllItem=false;
                 this.showAllItem=true;
-               
-                this.SearchByPoRcptNumberLine()   }
+                // e.target.checked=true;
+              
+                // this.returntoVendorForm.get("showAllLines").value();
+              
+                 }
               else { 
                 // this.lineDetailsArray.reset();   
                 this.showAllItem=false;
-                this.showLineLov(this.segment1,this.receiptNo);
+                // this.showLineLov(this.segment1,this.receiptNo);
+                
+                // alert ("in...Show All else "+ this.showAllItem);
               } 
-          }else {alert("Receipt Header Details Not Found...Please check");
-           e.target.checked=false;}
+          }else {alert("Receipt Header Details Not Found...Please check"); e.target.checked=false;}
       }
+
+
 
       showLineLov(mPonumber,mRcptNumber) {
         // alert("in showlov...");
@@ -918,6 +933,7 @@ export class ReturnToVendorComponent implements OnInit {
           data => {
             this.PoRcptLineItemList = data.obj;
             console.log(this.PoRcptLineItemList);
+            // this.validateStatus=true;
           }
         );
 
@@ -1024,6 +1040,19 @@ export class ReturnToVendorComponent implements OnInit {
     rtnSearchByDocNo(mRtnNumber){
       alert ("WIP.... Return Number....." +mRtnNumber);
 
+    }
+
+    validateSave() 
+    {
+        var applLineArr = this.returntoVendorForm.get('rcvLine').value;
+        var len1 = applLineArr.length;
+        this.validateStatus = false;
+        this.saveButton = false;
+        for (let i = len1 - 1; i >= 0; i--) {
+          if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
+            this.lineDetailsArray.removeAt(i);
+          } else { this.saveButton = true; }
+        }
     }
     
 
