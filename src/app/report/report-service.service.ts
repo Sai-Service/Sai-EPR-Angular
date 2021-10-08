@@ -22,7 +22,7 @@ export class ReportServiceService {
    SPDebtorReport(invcDt1,locId){
     // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/SparesReports/SprDebtors?toDate=${invcDt1}&locId=${locId}`;  
     // local
-    const REQUEST_URI = `http://localhost:8081/SparesReports/SprDebtors?toDate=${invcDt1}&locId=${locId}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDebtors?toDate=${invcDt1}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
