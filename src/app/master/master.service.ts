@@ -38,12 +38,14 @@ export class MasterService {
   teamRoleListFN(deptName): Observable<any> {
     return this.http.get(this.ServerUrl +`/cmnLookup/TeamRole/${deptName}`);
   }
+
   OUIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/opUnit');
   }
 
-
-
+  OUIdListDiv(mDivId): Observable<any> {
+     return this.http.get(this.ServerUrl +`/opUnit/divisionWise/${mDivId}`);
+  }
 
   StateList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/States');

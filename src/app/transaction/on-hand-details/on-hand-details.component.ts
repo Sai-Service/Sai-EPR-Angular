@@ -44,7 +44,6 @@ onhandDetailsForm:FormGroup;
   deptId:number;
   divisionId:number;
   loginArray:string;
-
   segmentName:string;
   onHandQty:number;
   subInventoryCode:string;
@@ -120,13 +119,23 @@ onhandDetailsForm:FormGroup;
 
    });
 
-   this.service.OUIdList()
+  //  this.service.OUIdList()
+  //  .subscribe(
+  //    data => {
+  //      this.OUIdList = data;
+  //      console.log(this.OUIdList);
+  //    }
+  //  );
+
+   this.service.OUIdListDiv(this.divisionId)
    .subscribe(
      data => {
        this.OUIdList = data;
        console.log(this.OUIdList);
      }
    );
+
+   
 
 //  this.service.locationIdList()
 //  .subscribe(
@@ -172,6 +181,7 @@ onhandDetailsForm:FormGroup;
  
  searchByItem(segment)
  {
+   
   //  alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
    if(segment1 ==undefined || segment1==null) {
@@ -269,12 +279,12 @@ onhandDetailsForm:FormGroup;
       }
 
       loadDefaultValues() {
+        this.ouName = (sessionStorage.getItem('ouName'));
+        this.ouId=Number(sessionStorage.getItem('ouId'));
         this.locId=Number(sessionStorage.getItem('locId'));
         this.deptId=Number(sessionStorage.getItem('dept'));
         this.loginArray=sessionStorage.getItem('divisionName');
         this.divisionId=Number(sessionStorage.getItem('divisionId'));
-        this.ouName = (sessionStorage.getItem('ouName'));
-        this.ouId=Number(sessionStorage.getItem('ouId'));
         this.locId=Number(sessionStorage.getItem('locId'));
         this.locName=(sessionStorage.getItem('locName'));
       
