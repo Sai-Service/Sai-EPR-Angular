@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
+import { DatePipe } from '@angular/common'
 
 interface IcustomerMaster {
   custType: string;
@@ -204,10 +205,12 @@ export class CustomerMasterComponent implements OnInit {
   dealerType:string;
   dispDealer=false;
   siteName:string;
+  
+  pipe = new DatePipe('en-US');
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private service: MasterService ) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
       emplId: [''],
@@ -812,12 +815,14 @@ if (person === 'Person'){
            console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments[0]);
           // this.city = this.lstcomments.city
+ 
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
             highAmt:this.lstcomments[0].customerSiteMasterList[0].highAmt,
             creditAmt:this.lstcomments[0].customerSiteMasterList[0].creditAmt,
             disPer:this.lstcomments[0].customerSiteMasterList[0].disPer
+  
           });
           var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
           var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
@@ -847,6 +852,9 @@ if (person === 'Person'){
            console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments);
           // this.city = this.lstcomments.city
+           
+          let birDate =this.pipe.transform(this.lstcomments[0].customerSiteMasterList[0].birthDate, 'yyyy-MM-dd');
+         alert("----"+birDate)
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments.customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,

@@ -164,7 +164,8 @@ export class ItemCategortComponent implements OnInit {
         alert(res.message);
         // this.itemCategoryMasterForm.reset();
      
-           (document.getElementById('saveBtn') as HTMLInputElement).disabled = true;this.searchItemCatMast()
+           (document.getElementById('saveBtn') as HTMLInputElement).disabled = true;
+           this.searchItemCatMast()
       } else {
         if (res.code === 400) {
           alert(res.message); 
@@ -258,6 +259,7 @@ export class ItemCategortComponent implements OnInit {
   }
   message: string = "Please Fix the Errors !";
   msgType:string ="Close";
+  
   getMessage(msgType: string) {
     this.msgType = msgType;
     if (msgType.includes("Save")) {
