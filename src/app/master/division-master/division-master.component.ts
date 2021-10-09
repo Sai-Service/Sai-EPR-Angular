@@ -169,4 +169,49 @@ export class DivisionMasterComponent implements OnInit {
       this.display = false;
     }
   }
+
+   message: string = "Please Fix the Errors !";
+  msgType:string ="Close";
+  getMessage(msgType: string) {
+    this.msgType = msgType;
+    if (msgType.includes("Save")) {
+      this.submitted = true;
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.divisionMasterForm.invalid) {
+        
+        //this.submitted = false;
+        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.message = "Do you want to SAVE the changes(Yes/No)?"
+      
+    }
+
+    if (msgType.includes("Reset")) {
+      this.message = "Do you want to Reset the changes(Yes/No)?"
+    }
+    
+    if (msgType.includes("Close")) {
+      this.message = "Do you want to Close the Form(Yes/No)?"
+    }
+    return;
+  }
+
+ executeAction() {
+    if(this.msgType.includes("Save")) {   
+      this.newMast();
+    }
+
+    if (this.msgType.includes("Reset")) {
+      // this.resetItemCatMast();
+      this.divisionMasterForm.reset();
+    }
+    
+    if (this.msgType.includes("Close")) {
+      // this.closeItemCatMast();
+      this.router.navigate(['admin']);
+    }
+    return;
+  }
+
 }
