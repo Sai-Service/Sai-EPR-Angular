@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import{ AppConstants} from '../app-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +9,12 @@ import { Observable } from 'rxjs';
 export class ServiceService {
   httpclient: any;
   headers: any;
-
-  // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  ServerUrl: string;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.ServerUrl = AppConstants.ServerUrl;
    }
 ///////////////////Job Card //////////////
 getJonCardNoSearch(jonCardNo): Observable<any> {
