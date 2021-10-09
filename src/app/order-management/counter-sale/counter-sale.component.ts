@@ -24,6 +24,13 @@ const MIME_TYPES = {
   xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
 };
 
+interface IGatePass{
+  boxQty:number;
+  driverName:string;
+  vehNo:string;
+  orderNumber:number;
+  emplId:number;
+}
 
 interface ISalesBookingForm {
   emplId: number;
@@ -312,6 +319,9 @@ export class CounterSaleComponent implements OnInit {
   displayCounterSaleLine: Array<boolean> = [];
 
   selCustomer: any;
+  boxQty:number;
+  driverName:string;
+  vehNo:string;
 
   // @ViewChild("paymentButton") myInputField: ElementRef;
 
@@ -371,7 +381,7 @@ export class CounterSaleComponent implements OnInit {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
       disPer: [''],
-      refCustNo: ['', [Validators.required]],
+      refCustNo: [''],
       transactionTypeId: [''],
       InvoiceNumber: [''],
       name: ['', [Validators.required]],
@@ -379,6 +389,9 @@ export class CounterSaleComponent implements OnInit {
       id: [''],
       trxNumber: [''],
       headerId: [''],
+      boxQty:[''],
+      driverName:[''],
+      vehNo:[''],
       orderStatus: [''],
       ouId: [''],
       issuedBy: [''],
@@ -582,6 +595,7 @@ export class CounterSaleComponent implements OnInit {
         }
       );
 
+      
     this.service.taxCategoryListForSALES()
       .subscribe(
         data1 => {
@@ -840,6 +854,9 @@ export class CounterSaleComponent implements OnInit {
               this.displayViewGatePass=true;
               this.CounterSaleOrderBookingForm.disable();
               this.TaxDetailsArray().disable();
+              this.CounterSaleOrderBookingForm.get('boxQty').enable();
+              this.CounterSaleOrderBookingForm.get('driverName').enable();
+              this.CounterSaleOrderBookingForm.get('vehNo').enable();
               // alert(this.allDatastore.flowStatusCode);
               // if (this.allDatastore.flowStatusCode === 'BOOKED' && this.allDatastore.paymentType === 'IMMEDIATE') {
               //   // alert('Hi..')
@@ -942,8 +959,12 @@ export class CounterSaleComponent implements OnInit {
   }
 
   generateGatePass(){
-   var orderNumber= this.CounterSaleOrderBookingForm.get('orderNumber').value;
-    this.orderManagementService.genrateGatePass(Number(orderNumber),(sessionStorage.getItem('emplId'))).subscribe((res: any) => {
+    const formValue: IGatePass = this.CounterSaleOrderBookingForm.value;
+    formValue.orderNumber=this.orderNumber;
+    formValue.emplId=Number(sessionStorage.getItem('emplId'));
+    alert(formValue.orderNumber);
+    // let formValue1=formValue.getRawValue();
+    this.orderManagementService.genrateGatePass(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.OrderFind(this.orderNumber);
@@ -1146,6 +1167,7 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
 
 
   onOptionsSelectedcustSiteName(siteName) {
+    alert(siteName)
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
 
@@ -1190,6 +1212,7 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
             }
           })
     }
+   
   }
   // onOptionsSelectedcustSiteName(siteName) {
   //   // alert(siteName);

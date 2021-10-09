@@ -103,12 +103,12 @@
                             
                                 
 
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Division&nbsp;:&nbsp;
-                            </td>  
+                            </td>   -->
 
                             <td>
-                            <input disabled formControlName="loginArray" [(ngModel)]='loginArray'
+                            <input  hidden disabled formControlName="loginArray" [(ngModel)]='loginArray'
                                                     value={{loginArray}} class="form-control"
                                                     placeholder="" >
                             </td>
@@ -116,28 +116,23 @@
                             
 
 
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Operating&nbsp;Unit:&nbsp;
-                            </td>  
+                            </td>   -->
 
                             <td>
-                            <input disabled formControlName="ouName" [(ngModel)]='ouName'
+                            <input hidden disabled formControlName="ouName" [(ngModel)]='ouName'
                                                     value={{ouName}} class="form-control"
                                                     placeholder="" >
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Location&nbsp;:&nbsp;
-                            </td>  
+                            </td>   -->
 
-                            <!-- <td>
-                            <input disabled formControlName="locId" [(ngModel)]='locId'
-                                                    value={{locId}} class="form-control"
-                                                    placeholder="" >
-                            </td> -->
-
+                           
                             <td>
-                            <select  disabled formControlName="locId" id="locId" class="form-control" >
+                            <select hidden disabled formControlName="locId" id="locId" class="form-control" >
                                <option disabled>--Select--</option>
                                 <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                     <!-- {{sc.locCode}}- -->
@@ -146,19 +141,14 @@
                             </select>
                            </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">
+                            <!-- <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Dept&nbsp;:&nbsp;
-                            </td>  
-                            <!-- 
-                            <td>
-                            <input disabled formControlName="deptId" [(ngModel)]='deptId'
-                                                    value={{deptId}} class="form-control"
-                                                    placeholder="" >
-                            </td> -->
+                            </td>   -->
+                           
 
 
                             <td>  
-                                <select disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
+                                <select  hidden disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
                                     <!-- {{sc.cmnTypeId}}- -->
@@ -169,20 +159,53 @@
 
                         </tr>
 
-
                         <tr>
 
-                            <!-- <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Supplier&nbsp;No:&nbsp;
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Receipt&nbsp;No:&nbsp;
                             </td>  
     
                             <td>
-                            <input  type ="text" disabled formControlName="suppNo" [(ngModel)]='suppNo'
-                                                    value={{suppNo}} class="form-control"
+                            <input type="text"  disabled formControlName="receiptNo" [(ngModel)]='receiptNo'
+                                                    value={{receiptNo}} class="form-control"
                                                     placeholder="" >
-                            </td> -->
+                            </td>
+    
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Receipt&nbsp;Date:&nbsp;
+                            </td>  
+    
+                            <td>
+                            <input  type ="date" disabled formControlName="receiptDate" [(ngModel)]='receiptDate'
+                                                    value={{receiptDate}} class="form-control"
+                                                    placeholder="" >
+                            </td>
 
-                           
+
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;PO&nbsp;No:&nbsp;
+                            </td>  
+    
+                            <td>
+                            <input disabled formControlName="segment1" [(ngModel)]='segment1'
+                                                    value={{segment1}} class="form-control"
+                                                    placeholder="" >
+                            </td>
+    
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;PO&nbsp;Date:&nbsp;
+                            </td>  
+    
+                            <td>
+                            <input type ="date" disabled formControlName="poDate" [(ngModel)]='poDate'
+                                                    value={{poDate}} class="form-control"
+                                                    placeholder="" >
+                            </td>
+                        </tr>
+                       
+                        <tr>
+
+                                                  
 
                             <td style="width: 15%" class="LabelFontStyle">
                                 &nbsp;Sup&nbsp;Inv&nbsp;No:&nbsp;
@@ -204,21 +227,9 @@
                                                     placeholder="" >
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">
-                                &nbsp;Supplier&nbsp;Name:&nbsp;
-                            </td>  
-    
-                            <td>
-                            <input  type ="text" disabled formControlName="supplierName" [(ngModel)]='supplierName'
-                                                    value={{supplierName}} class="form-control"
-                                                    style="width:268%" >
-                            </td>
+                           
 
-                        </tr>
-
-                        
-                            <tr>
-
+                       
                                 <td style="width: 15%" class="LabelFontStyle">
                                     &nbsp;AP&nbsp;Inv&nbsp;No:&nbsp;
                                 </td>  
@@ -239,63 +250,60 @@
                                                         placeholder="" >
                                 </td>
 
-                                <td style="width: 15%" class="LabelFontStyle">
-                                    &nbsp;PO&nbsp;No:&nbsp;
-                                </td>  
-        
-                                <td>
-                                <input disabled formControlName="segment1" [(ngModel)]='segment1'
-                                                        value={{segment1}} class="form-control"
-                                                        placeholder="" >
-                                </td>
-        
-                                <td style="width: 15%" class="LabelFontStyle">
-                                    &nbsp;PO&nbsp;Date:&nbsp;
-                                </td>  
-        
-                                <td>
-                                <input type ="date" disabled formControlName="poDate" [(ngModel)]='poDate'
-                                                        value={{poDate}} class="form-control"
-                                                        placeholder="" >
-                                </td>
-    
                                 </tr>
+
+                                <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Receipt&nbsp;Amt:&nbsp;
+                                    </td>  
+                                    <td>
+                                        <input   type ="number" disabled formControlName="PoRctTotalAmt" [(ngModel)]='PoRctTotalAmt'
+                                                                value={{PoRctTotalAmt}} class="form-control"
+                                                                style="text-align: right;" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Supplier&nbsp;Name:&nbsp;
+                                    </td>  
+            
+                                    <td>
+                                    <input  type ="text" disabled formControlName="supplierName" [(ngModel)]='supplierName'
+                                                            value={{supplierName}} class="form-control"
+                                                            style="width:275%" >
+                                    </td>
+            
+            
+                                    
+            
+                                    <td></td>  <td></td>  <td></td>
+
+                                    <!-- <button  type="button"  class="btn btn-primary" 
+                                    data-toggle="modal" data-target="#PoReceiptLineItems" style="width: 8rem;color: black;">
+                                    &nbsp;Receipt&nbsp;Line&nbsp;Details&nbsp;</button>
+                                    -->
+            
+                                     <div *ngIf ="dispReceiptLines;then enableButtonYes;else enableButtonNo"></div>
+                                    <ng-template #enableButtonYes>
+                                   <td>
+                                       <button  type="button"  class="btn btn-primary" 
+                                       data-toggle="modal" data-target="#PoReceiptLineItems" style="width: 8rem;color: black;">
+                                       &nbsp;Receipt&nbsp;Line&nbsp;Details&nbsp;</button>
+                                   </td>
+                                   </ng-template>
+                                   <ng-template #enableButtonNo>
+                                   <td>
+                                       <button disabled type="button"  class="btn btn-primary" 
+                                       data-toggle="modal" data-target="#PoReceiptLineItems" style="width: 8rem;color: black;">
+                                       &nbsp;Receipt&nbsp;Line&nbsp;Details&nbsp;</button>
+                                   </td>
+                                   </ng-template> 
+             
+                                 
+                                    </tr>
                        
 
-                        <tr>
-
-                        <td style="width: 15%" class="LabelFontStyle">
-                            &nbsp;Receipt&nbsp;No:&nbsp;
-                        </td>  
-
-                        <td>
-                        <input type="text"  disabled formControlName="receiptNo" [(ngModel)]='receiptNo'
-                                                value={{receiptNo}} class="form-control"
-                                                placeholder="" >
-                        </td>
-
-                        <td style="width: 15%" class="LabelFontStyle">
-                            &nbsp;Receipt&nbsp;Date:&nbsp;
-                        </td>  
-
-                        <td>
-                        <input  type ="date" disabled formControlName="receiptDate" [(ngModel)]='receiptDate'
-                                                value={{receiptDate}} class="form-control"
-                                                placeholder="" >
-                        </td>
-
-
-                        <td style="width: 15%" class="LabelFontStyle">
-                            &nbsp;Receipt&nbsp;Amt:&nbsp;
-                        </td>  
-                        <td>
-                            <input   type ="number" disabled formControlName="PoRctTotalAmt" [(ngModel)]='PoRctTotalAmt'
-                                                    value={{PoRctTotalAmt}} class="form-control"
-                                                    style="text-align: right;" >
-                        </td>
-
-                     
-                        </tr>
+                      
                     </table>
                     </fieldset>
 
@@ -382,7 +390,7 @@
                                     <td>
                                    <div class="form-check">
                                     <label class="form-check-label" style="color: black;font-size: small;font-weight: bold">
-                                        Show&nbsp;All&nbsp;Item&nbsp;Lines&nbsp;:&nbsp;
+                                        Show&nbsp;All&nbsp;Items&nbsp;&nbsp;:&nbsp;
                                     </label>
 
                                     <div *ngIf="checkBoxAllItem ,then thenshowChkBoxYes; else thenshowChkBoxNo")></div>
@@ -392,13 +400,25 @@
                                          [(ngModel)]="showAllLines" (change)="showAll($event)"  >
                                     </ng-template>
                                     <ng-template #thenshowChkBoxNo>
-                                        <input disabled type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
-                                          [(ngModel)]="showAllLines" (change)="showAll($event)" checked>
-                                     </ng-template>
 
+                                        <div *ngIf="indReturn ,then BlockChk101; else BlockChk102")></div>
+                                         <ng-template #BlockChk101>
+                                        <input disabled type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
+                                          [(ngModel)]="showAllLines" (change)="showAll($event)"  >
+                                        </ng-template>
+                                        <ng-template #BlockChk102>
+                                            <input disabled type="checkbox" id="showAllLines"  [formControl]="showAllLines" value="showAllLines"
+                                              [(ngModel)]="showAllLines" (change)="showAll($event)" checked >
+                                        </ng-template>
+
+                                    </ng-template>
 
                                    </div>
                                     </td>
+
+                                  
+
+
                                 
                                </tr>
                             </table>
@@ -515,27 +535,52 @@
                                                 </td>
                                             </ng-template>
                                             <ng-template #BlockShowAll2>
-                                                <td>  
+
+                                                <!-- <td>  
                                                     <select  formControlName="itemName" id="itemName"  class="form-control"  
                                                            (ngModelChange)="onItemSelected($event,i)" style="width: 250px;height: 25px;background-color: yellow">
-                                                             
                                                         <option >--Select--</option>
                                                         <option *ngFor="let sc of  PoRcptLineItemList" [ngValue]="sc.itemName"  >
                                                         {{sc.itemName}}
                                                         </option>
                                                     </select>
-                                                </td>
+                                                </td> -->
+
+                                                <!-- <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" 
+                                                    formControlName="itemName"   id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                                                    class="form-control"  style="width: 200px;height:25px ;background-color: yellow;" />
+                                                    <datalist id="dynmicUserIds1">
+                                                      <option *ngFor="let item of PoRcptLineItemList" [ngValue]="item.itemName">{{item.itemName}}
+                                                        </option>
+                                                       </datalist>
+                                                  </td> -->
+
+                                                  <div *ngIf ="validateStatus;then showItemYes;else showItemNo"></div>
+
+                                                  <ng-template #showItemYes>
+                                                  <td><input   type="text" formControlName="itemName"  id="itemName"  (change)="findPoReceiptItem(i)" 
+                                                              style="height: 25px;width: 200px;background-color: yellow;"  class="form-control" > </td>
+                               
+                                                  </ng-template>
+                                                  <ng-template #showItemNo>
+                                                    <td><input  disabled  type="text" formControlName="itemName"  id="itemName"  
+                                                                style="height: 25px;width: 200px;background-color: yellow;"  class="form-control" > </td>
+                                 
+                                                    </ng-template>
+
 
                                             </ng-template>
 
-                                            <div *ngIf ="showQtyRtncol;then showqtyRtnYes;else showqtyRtnNo"></div>
+                                            <!-- <div *ngIf ="showQtyRtncol;then showqtyRtnYes;else showqtyRtnNo"></div>
                                             <ng-template #showqtyRtnYes>
                                                <td><input  type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 50px;background-color: yellow;" (change)="validateQty(i)" > </td> 
                                            </ng-template>
                                            <ng-template #showqtyRtnNo>
-                                             <td><input disabled type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 50px;background-color: yellow;" (change)="validateQty(i)" > </td> 
-                                           </ng-template>
-                                           
+                                             <td><input disabled type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 50px;background-color: yellow;" > </td> 
+                                           </ng-template> -->
+
+                                           <td><input disabled  type="number" formControlName="qtyReturn" class="form-control" style="height: 25px;width: 50px;background-color: yellow;" (change)="validateQty(i)" > </td> 
+                                         
                                     
                                             <td> 
                                              <input disabled type="number"
@@ -647,12 +692,29 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="rtvSave()" [disabled]="!returntoVendorForm">Save</button>
-                                </td>
+                                <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
+                                <ng-template #vStatusYes>
+                                    <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
+                                </ng-template>
+                                <ng-template #vStatusNo>
+                                   <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
+                               </ng-template>
+                            </td>
                                 
                                 <td>
-                                    <!-- <button type="button" class="btn btn-info" (click)="searchMast()">Search</button> -->
-                                </td>
+                                <div *ngIf="saveButton ,then SaveYes; else SaveNo")></div>
+                                <ng-template #SaveYes>
+                                    <button style="width: 8em;" type="button" class="btn btn-info" (click)="rtvSave()">Save</button>
+                                </ng-template>
+                                <ng-template #SaveNo>
+                                    <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="rtvSave()">Save</button>
+                                </ng-template>
+
+                            </td>
+                                
+                                <!-- <td>
+                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                </td> -->
 
                                     <!-- ====================Reset Dialog ======================== -->
 
@@ -853,6 +915,78 @@
                         </tr>
                     </table>
                     </fieldset>
+
+                    <!-- ============================== show item list modal======================= -->
+
+                    <div class="modal fade" id="PoReceiptLineItems" tabindex="-1" role="dialog" aria-labelledby="PoReceiptLineItemsLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <div class="modal-content">
+                            
+                            <div class="modal-header">
+            
+                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;ITEM&nbsp;DETAILS - PO|Receipt&nbsp;No:&nbsp;{{this.segment1}} | {{this.receiptNo}}</h5>
+                              <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            
+                            <div class="modal-body">
+
+                                <div class="container1">
+                                    <div class="grid_scroll_3">
+                                    <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:#959595;border-collapse:collapse;width: 100%;"> -->
+                                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+                                  
+                                      <tbody>
+                                                <tr class="GridHeader">
+                                                <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
+                                                <th style="width:5rem" scope="col">Item&nbsp;Number</th>
+                                                <th style="width:20rem" scope="col">&nbsp;Descreption</th>
+                                                <th style="width:3rem" scope="col">&nbsp;Unit</th>
+                                                <th style="width:6rem" scope="col">Quantity&nbsp;</th>
+                                                <th style="width:6rem" scope="col">SubInventory&nbsp;</th>
+                                                <th style="width:6rem" scope="col">Locator&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Tax%&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Unit Rate&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Amount&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Tax Amt&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Net Amt&nbsp;</th>
+                                                                                             
+                                            </tr>
+                                        </tbody>
+                                        <!-- <tr *ngFor="let com of PoRcptLineItemList" class="ItemStyle" style="text-decoration:none;"> -->
+
+                                            <tr *ngFor="let com of lstReceiptItemLines let i= index" class="ItemStyle" style="text-decoration:none;">
+                                                <td style="text-align: center;">{{i+1}}</td>
+                                                <td style="width:10rem;text-align: left;">{{com.itemName}}</td>
+                                                <td style="width:25rem;text-align: left;">{{com.itemDesc}}</td>
+                                                <td style="width:3rem;text-align: center;">{{com.uom}}</td>
+                                                <td style="width:6rem;text-align: center;">{{com.qtyReceived}}</td>
+                                                <td style="width:4rem;text-align: center;">{{com.subInvDesc}}</td>
+                                                <td style="width:10rem;text-align: center;">{{com.locatorDesc}}</td> 
+                                                <td style="width:10rem;text-align: center;">{{com.hsnCode}}</td>
+                                                <td style="width:4rem;text-align: center;">{{com.taxPercentage|number:'0.00'}}</td>
+                                                <td style="width:8rem;text-align: right;">{{com.unitPrice|number:'0.00'}}</td>
+                                                <td style="width:8rem;text-align: right;">{{com.baseAmount|number:'0.00'}}</td>
+                                                <td style="width:8rem;text-align: right;">{{com.taxAmount|number:'0.00'}}</td>
+                                                <td style="width:8rem;text-align: right;">{{com.totAmount|number:'0.00'}}</td>
+                                                
+                                               
+                                               </tr>
+                                    </table>
+                                    </div>
+                                    </div>
+
+                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                        
 
 
 

@@ -1,3 +1,4 @@
+ 
 <div class="d-flex" id="wrapper">
   <div class="bg-light border-right" id="sidebar-wrapper">
     <li class="nav-item dropdown">
@@ -270,7 +271,18 @@
       <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Events</a> -->
       <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a> -->
       <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+    
     </div>
+
+
+    <!-- ------------------------------ F9 SEARCH -->
+    <li class="nav-item dropdown">
+      <a class="list-group-item list-group-item-action bg-light"  data-toggle="modal" data-target="#partSearch">
+         &nbsp;&nbsp;Search&nbsp;&nbsp;</a>
+    </li>
+    <!-- ------------------------------ F9 SEARCH -->
+  
+
   </div>
   <div id="page-content-wrapper" style="background-color: white;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
@@ -309,6 +321,7 @@
                 <tr>
                   <td><a class="dropdown-item" (click)="close()" style="color: blue;"><u>Logout</u></a></td>
                 </tr>
+
               </table>
               </td>
           </tr>
@@ -353,9 +366,132 @@
            </div>
           </li> -->
 
+          <!-- -------------------------------Item Search Modal--------------------- -->
+        
+
+          <!-- --------------------------------------------------- -->
+
       </div>
     </nav>
     <router-outlet></router-outlet>
   </div>
 </div>
+
+
+
+<form [formGroup]="adminForm1" (ngSubmit)="admin(adminForm1.value)"> 
+  <div class="modal fade" id="partSearch" #partSearch  tabindex="-1" role="dialog" aria-labelledby="partSearchLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="partSearchLabel" style="text-align: center;color:blue" >ITEM&nbsp;SEARCH&nbsp;FORM&nbsp;-&nbsp;{{loginArray}}&nbsp;|&nbsp;{{ouName}}&nbsp;|&nbsp;{{locName}} </h5>
+          <button type="button" class="close " data-dismiss="modal" aria-label="Close"> 
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+            <table class="center" style="width: 100%;">
+
+              <!-- <tr> -->
+                <!-- <td style="width: 15%" class="LabelFontStyle">Dvision&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">
+                        {{loginArray}}
+                    </td> -->
+                <!-- <td style="width: 15%" class="LabelFontStyle">Operating&nbsp; Unit:&nbsp;</td>
+                <td style="font-weight: bold;">
+                        {{ouName}}
+                    </td> -->
+
+                <!-- <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">
+                         {{locName}}
+                    </td> -->
+
+
+              <!-- </tr> -->
+            <tr>
+                
+                <td style="width: 15%" class="LabelFontStyle">
+                    Item &nbsp;Number&nbsp;:&nbsp;
+                </td>
+
+                <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
+                   id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                   class="form-control"  (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
+                   style="width: 250px; background-color: yellow;"  />
+                  <datalist id="dynmicUserIds1" >
+                    <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
+                      {{item.SEGMENT}}
+                      </option>
+                  </datalist>
+                </td>
+
+                <td>
+                  <input type ="text"  formControlName="searchItemName" value={{searchItemName}} 
+                         class="form-control" >
+              </td>
+
+                                   
+
+                <td> 
+                  <button style="width: 8em;" type="button" class="btn btn-primary" (click)="F9Search(searchItemName)" >Search</button>
+               </td>
+              </tr>
+               <!-- <tr>
+                <td></td>
+                    <td style="width: 250px;">
+                        {{searchItemName}}
+                    </td>
+               </tr> -->
+
+            </table>
+           
+            <div class="container1">
+            <div class="grid_scroll_3">
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+          
+              <tbody>
+                        <tr class="GridHeader">
+                        <th style="width:5rem" scope="col">Item&nbsp;Number</th>
+                        <th style="width:20rem" scope="col"> Item&nbsp;Descreption</th>
+                        <th style="width:3rem" scope="col"> UOM&nbsp;</th>
+                        <th style="width:10rem" scope="col">Category&nbsp;</th>
+                        <th style="width:10rem" scope="col">Locator&nbsp;</th>
+                        <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
+                        <th style="width:6rem" scope="col">Quantity&nbsp;</th>
+                        <th style="width:6rem" scope="col">MRP&nbsp;</th>
+                        <th style="width:6rem" scope="col">NDP&nbsp;</th>
+                        <th style="width:6rem" scope="col">Principle&nbsp;Item</th>
+                      
+                    </tr>
+                </tbody>
+                <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                        <td style="width:10rem;text-align: center;">{{com.SEGMENT}}</td>
+                        <td style="width:20rem;text-align: center;">{{com.DESCRIPTION}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.UOM}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.CATEGDESC}}</td>      
+                        <td style="width:10rem;text-align: center;">{{com.STOCKLOCTR}}</td> 
+                        <td style="width:10rem;text-align: center;">{{com.HSNSACCODE}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.ONHANDQTY}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.MRP}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.NDP}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.PRINCPLEITEM}}</td>
+                       </tr>
+            </table>
+            </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+         
+        </div>
+
+      </div>
+    </div>
+</div> 
+</form>
 

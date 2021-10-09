@@ -1,24 +1,22 @@
-.loginForm {
+/* .loginForm {
     border: 5px solid purple; 
     padding: 40px;
     background-color: blue;
-    /* background-image: url(C:/erpRelica/erpReplica/src/assets/images/bg1.png); */
     width: 100%;
     height: 100%;
-    /* background-image: url(src/assets/222.jpg); */
     background-repeat: no-repeat;
     vertical-align: top; 
-      }
+      } */
 
-      .back-image{
-        /* background-image: url(src/assets/images/background1.jpg); */
+      /* .back-image{
+        
         background-image: url(/assets/images/background1.jpg);
   
         background-repeat: no-repeat;
          padding: 10px;
         width: 100%;
         height: 550px;
-      }
+      } */
 
       .autostyle10{
         margin-left: 72%;

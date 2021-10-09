@@ -9,6 +9,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from "@angular/common";
 import { data } from 'jquery';
 
+
 interface IpoReceipt{
   ouName:string;
   poNumber:string;
@@ -23,6 +24,7 @@ interface IpoReceipt{
   taxAmt:number;
   subInventoryId:number;
   recDate:Date;
+  // recDate: new Date()
   Comments:string;
   suppInvDate:Date;
   suppInvNo:string;
@@ -66,7 +68,7 @@ billToLocId:number;
 }
 
 @Component({
-  selector: 'app-po-receipt-form',
+  selector: 'app-po-receipt-form,number-pipe', 
   templateUrl: './po-receipt-form.component.html',
   styleUrls: ['./po-receipt-form.component.css']
 })
@@ -101,7 +103,7 @@ export class PoReceiptFormComponent implements OnInit {
   // recDate=new Date();
   pipe = new DatePipe('en-US');
   now = Date.now();
-  recDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
+  recDate = this.pipe.transform(this.now,'dd-MM-yyyy');
   Comments:string;
   suppInvDate:Date;
   suppInvNo:string;
@@ -194,7 +196,7 @@ export class PoReceiptFormComponent implements OnInit {
   displaysubInvDesc:Array<boolean>=[];
   TRUER=false; recFagDiss=true; 
 
-
+ 
   // recDate=this.pipe.transform(this.recDate,'dd-MM-yyyy');
 
   constructor(private fb: FormBuilder,private location: Location, private router: Router, private service: MasterService,private router1: ActivatedRoute) {
@@ -619,40 +621,29 @@ checkIfAllSelected() {
     }
 
 taxDeatils(poHeaderId,poLineId){
-if(this.lstcompolines.receiptNo===null){
-  const trxId=this.lstcompolines.poLines[0].poHeaderId;
-const trxLineId=this.lstcompolines.poLines[0].poLineId;
-  this.service.receiptnotdonetaxDeatils(trxId,trxLineId)
-  .subscribe((res: any) => {
-    if (res.code === 200) {
-      this.poTaxDeatils = res.obj;   
-      console.log(this.poTaxDeatils);
+  alert(this.lstcompolines.receiptNo);
+if(this.lstcompolines.receiptNo != null){
+  for (let i=0;i<this.lstcompolines.length;i++ ){
+    const rcvtrxLineId=this.lstcompolines.rcvLines[i].shipLineId;
+  const rcvtrxId=this.lstcompolines.shipHeaderId;
+  alert(rcvtrxId +'-----'+ rcvtrxLineId)
+    this.service.receiptdonetaxDeatils(rcvtrxId,rcvtrxLineId)
+    .subscribe((res: any) => {
+      if (res.code === 200) {
+      this.rcvTaxDeatils = res.obj.rcvLines;
+      console.log(this.rcvTaxDeatils);
+      }
+      else  { if (res.code === 400) {
+        alert('Error : ' + res.message);
+      }
+      }
+      // this.poReceiptForm.patchValue(this.lstcompolines);
     }
-    else  { if (res.code === 400) {
-      alert('Error : ' + res.message);
-    }
-    }
-    // this.poReceiptForm.patchValue(this.lstcompolines);
+  );
   }
-);
 }
 else{
-  const rcvtrxLineId=this.lstcompolines.rcvLines[0].shipLineId;
-const rcvtrxId=this.lstcompolines.shipHeaderId;
-  this.service.receiptdonetaxDeatils(rcvtrxId,rcvtrxLineId)
-  .subscribe((res: any) => {
-    if (res.code === 200) {
-    this.rcvTaxDeatils = res.obj;
-    console.log(this.rcvTaxDeatils);
-    
-    }
-    else  { if (res.code === 400) {
-      alert('Error : ' + res.message);
-    }
-    }
-    // this.poReceiptForm.patchValue(this.lstcompolines);
-  }
-);
+
 }
 }
  
@@ -935,9 +926,12 @@ console.log(this.lstcompolines.poLines[0].subInventoryId);
   var baseAmt = unitPrri * quantity
 var taxAmt =baseAmt*taxPer/100;
    (patch.controls[i]).patchValue({ 
-    baseAmount: baseAmt,  
-    taxAmount : taxAmt,
-    totAmount: baseAmt +taxAmt,
+    // baseAmount: baseAmt,  
+    // taxAmount : taxAmt,
+    // totAmount: baseAmt +taxAmt,
+    baseAmount:  Math.round(((baseAmt) + Number.EPSILON) * 100) / 100,
+    taxAmount:  Math.round(((taxAmt) + Number.EPSILON) * 100) / 100,
+    totAmount:  Math.round(((baseAmt +taxAmt) + Number.EPSILON) * 100) / 100,
    });
   //  alert("Validate");
    var trxLnArr=this.poReceiptForm.get('poLines').value;
