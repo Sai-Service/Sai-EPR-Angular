@@ -1780,7 +1780,8 @@ export class PaymentArComponent implements OnInit {
     var payType = this.paymentArForm.get('payType').value;
     var receiptMethodId = this.paymentArForm.get('receiptMethodId').value;
     var receiptMethodName = this.paymentArForm.get('receiptMethodName').value;
-    var empId = this.paymentArForm.get('emplId').value;
+    // var empId = this.paymentArForm.get('emplId').value;
+    var empId =Number(sessionStorage.getItem('emplId'));
     // var empId= 26;
     // alert ("Empid =" +empId);
     // var glDate= this.paymentArForm.get('glDateLine').value;
