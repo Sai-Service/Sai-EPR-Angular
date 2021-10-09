@@ -621,40 +621,29 @@ checkIfAllSelected() {
     }
 
 taxDeatils(poHeaderId,poLineId){
-if(this.lstcompolines.receiptNo===null){
-  const trxId=this.lstcompolines.poLines[0].poHeaderId;
-const trxLineId=this.lstcompolines.poLines[0].poLineId;
-  this.service.receiptnotdonetaxDeatils(trxId,trxLineId)
-  .subscribe((res: any) => {
-    if (res.code === 200) {
-      this.poTaxDeatils = res.obj;   
-      console.log(this.poTaxDeatils);
+  alert(this.lstcompolines.receiptNo);
+if(this.lstcompolines.receiptNo != null){
+  for (let i=0;i<this.lstcompolines.length;i++ ){
+    const rcvtrxLineId=this.lstcompolines.rcvLines[i].shipLineId;
+  const rcvtrxId=this.lstcompolines.shipHeaderId;
+  alert(rcvtrxId +'-----'+ rcvtrxLineId)
+    this.service.receiptdonetaxDeatils(rcvtrxId,rcvtrxLineId)
+    .subscribe((res: any) => {
+      if (res.code === 200) {
+      this.rcvTaxDeatils = res.obj.rcvLines;
+      console.log(this.rcvTaxDeatils);
+      }
+      else  { if (res.code === 400) {
+        alert('Error : ' + res.message);
+      }
+      }
+      // this.poReceiptForm.patchValue(this.lstcompolines);
     }
-    else  { if (res.code === 400) {
-      alert('Error : ' + res.message);
-    }
-    }
-    // this.poReceiptForm.patchValue(this.lstcompolines);
+  );
   }
-);
 }
 else{
-  const rcvtrxLineId=this.lstcompolines.rcvLines[0].shipLineId;
-const rcvtrxId=this.lstcompolines.shipHeaderId;
-  this.service.receiptdonetaxDeatils(rcvtrxId,rcvtrxLineId)
-  .subscribe((res: any) => {
-    if (res.code === 200) {
-    this.rcvTaxDeatils = res.obj;
-    console.log(this.rcvTaxDeatils);
-    
-    }
-    else  { if (res.code === 400) {
-      alert('Error : ' + res.message);
-    }
-    }
-    // this.poReceiptForm.patchValue(this.lstcompolines);
-  }
-);
+
 }
 }
  
