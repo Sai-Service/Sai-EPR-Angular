@@ -45,7 +45,7 @@
             To&nbsp;Organization&nbsp;:&nbsp;
           </td>
           <td>
-             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId" (ngModelChange)="onlocationissueselect($event)">
+             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId" (ngModelChange)="onlocationissueselect($event)" #myinput>
                   <option>--Select--</option>
                   <option *ngFor="let sc of  locIdList" [ngValue]="sc.toLocationId" >
                       {{sc.toLocationId}}-{{sc.toLocation}}
@@ -418,7 +418,7 @@
                       </div>
                       <ng-template #thenBlockOp>
                           <button disabled type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
-                              View&nbsp;Note
+                              View&nbsp;Print
                           </button>
                       </ng-template>
                       <ng-template #elseBlockOp>
