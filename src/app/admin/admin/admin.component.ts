@@ -128,7 +128,7 @@ declare var $: any;
   f9Key() {
     // alert( "Key F9 pressed");
     // this.router.navigate(['/admin/transaction/OnHandDetails']);
-    // this.partSearch.open();
+     // this.partSearch.open();
     $("#partSearch").modal('show');
   }
 
@@ -163,11 +163,20 @@ declare var $: any;
     return matches;
   };
 
-  F9Search(mName) {
+  F9Search() {
 
     // const formValue: IAdmin = this.adminForm1.value;
 
-    alert ("WIP...." + mName); 
+    // alert ("WIP...." + this.adminForm1.get('searchItemName').value); 
+
+    var segment1=this.adminForm1.get('searchItemCode').value
+    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+
+    this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+      data =>{
+        this.lstcomments= data;
+        console.log(data);
+      })
   
   }
 
@@ -181,16 +190,18 @@ declare var $: any;
     // }
 
     onOptioninvItemIdSelectedSingle(searchItemCode) {
-      alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
-        let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
-        if( selectedValue != undefined){
-         console.log(selectedValue);
+      // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
+       
+      // let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
+      //   if( selectedValue != undefined){
+      //    console.log(selectedValue);
+
         // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
         
         // this.searchItemId = selectedValue.itemId;
         // this.searchItemName=selectedValue.DESCRIPTION;
         // this.searchItemCode=selectedValue.SEGMENT;
-      }
+      // }
     }
 
 
