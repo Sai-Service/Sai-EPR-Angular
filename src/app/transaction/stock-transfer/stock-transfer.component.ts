@@ -1,10 +1,10 @@
 // import { Component, OnInit } from '@angular/core';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
 import { data } from 'jquery';
-import { MasterService } from 'src/app/master/master.service';
+import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 
 
@@ -115,6 +115,13 @@ export class StockTransferComponent implements OnInit {
   lastkeydown1: number = 0;
   public itemMap = new Map<string, StockTransferRow >();
 
+
+  @ViewChild("myinput") myInputField: ElementRef;
+  // @ViewChild("segment") segment: ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.stockTranferForm = fb.group({
       ShipmentNo: [''],
@@ -171,8 +178,8 @@ export class StockTransferComponent implements OnInit {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       var itemqty=trxLnArr1[i].primaryQty;
       var item=trxLnArr1[i].segment;
-      // alert(item);
-      if(itemqty===''&& item==='')
+      alert(itemqty);
+      if(itemqty===''|| item==='')
      { alert('Please enter data in blank field');
      return;
     }
@@ -181,23 +188,43 @@ export class StockTransferComponent implements OnInit {
       this.reservePos(i);
     }
     else{
+      // debugger;
       this.deleteReserveLinewise(i);
       this.reservePos(i);
     }
-
     }
+    var len1 = this.trxLinesList().length;
+    alert(len1+'Length'+i);
+    if(len1==i+1){
+     
+    this.trxLinesList().push(this.newtrxLinesList()); 
+    
 
-    this.trxLinesList().push(this.newtrxLinesList());
-    var len = this.trxLinesList().length;
+    // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
     var patch = this.stockTranferForm.get('trxLinesList') as FormArray;
+    var len = this.trxLinesList().length;
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
+        
       }
+      
     );
-    this.displayRemoveRow[i]=true;
+     var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+    }
+    }
+    // this.displayRemoveRow[i]=true;
+    alert(i);
+   
   }
-  removenewtrxLinesList(trxLineIndex) {
+  removenewtrxLinesList(trxLineIndex:number) {
+    var len1=this.trxLinesList().length;
+    if(len1===1){
+      alert('You can not delete the line');
+      return;}
        var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     var itemid=trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
@@ -207,6 +234,20 @@ export class StockTransferComponent implements OnInit {
     this.itemMap.delete(itemid);
     }
     this.trxLinesList().removeAt(trxLineIndex);
+    var patch = this.stockTranferForm.get('trxLinesList') as FormArray;
+    var len = this.trxLinesList().length;
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+      }
+    );
+
+    var btnrm =document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement).disabled = true;
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+    }
+    // }
   }
 
   ngOnInit(): void {
@@ -441,16 +482,27 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     let toorg=this.stockTranferForm.get('transferOrgId').value;
     // alert(toorg+'toOrg');
     let todesc=this.locIdList.find(d=>d.toLocationId===toorg);
-    var locId1=this.stockTranferForm.get('locId').value
+    var locId1=this.stockTranferForm.get('locId').value;
+    var prqty=trxLnArr1[i].primaryQty
+    // alert(prqty+'QTY');
+    // if(variants.controls[i].get('reservedQty')!=undefined)
+    // {
+    //   alert('In if');
+    //   variants.controls[i].get('reservedQty').reset();
 
+    // }
+     
       let variantFormGroup = <FormGroup>variants.controls[i];
+      variantFormGroup.removeControl('reservedQty');
+      variantFormGroup.removeControl('invItemId');
+      variantFormGroup.removeControl('transactionNumber');
       variantFormGroup.addControl('transactionTypeId', new FormControl(1, []));
       variantFormGroup.addControl('locId', new FormControl(locId1, []));
       variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].primaryQty, []));
       // variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].onHandId, Validators.required));
        variantFormGroup.addControl('invItemId', new FormControl(trxLnArr1[i].itemId, []));
        variantFormGroup.addControl('transactionNumber',new FormControl(todesc.toLocationId,[]));
-
+       console.log(variants);
   // var reserveinfo=formValue[0];
   // alert('reservecall2'+i);
   this.service.reservePost(variants.value[i]).subscribe((res:any)=>{
@@ -465,7 +517,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     stkRow.quantity=(trxLnArr1[i].quantity);
     this.itemMap.set(trxLnArr1[i].segment,stkRow);
     
-
+// variants.controls[i].get('reservedQty').reset();
    }
    else{
     if(res.code === 400) {
@@ -662,7 +714,7 @@ onlocationissueselect(event){
   else{
     // alert('event');
     this.addnewtrxLinesList(-1);
-    // (document.getElementById('btnrm'+0) as HTMLInputElement).disabled = true;
+    
     var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
      {
@@ -693,11 +745,13 @@ onlocationissueselect(event){
   this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
     data => {
       this.ItemIdList = data;
+      (document.getElementById('btnrm0') as HTMLInputElement).disabled = true;
       // console.log(this.invItemId);
     });
 
 
 }
+
 }
 
 HeaderValidation() {
