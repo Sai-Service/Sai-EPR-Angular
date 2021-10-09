@@ -12,8 +12,8 @@ export class MasterService {
   headers: any;
 
   // ServerUrl='http://saireplica.horizon.org:8080/ErpReplica';
-  ServerUrl='http://localhost:8081';
-  // ServerUrl='http://saihorizon.com:8080/ErpReplica'
+  //ServerUrl='http://localhost:8081';
+   ServerUrl='http://saihorizon.com:8080/ErpReplica'
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -1206,9 +1206,9 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
 viewStocknote(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
+   const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
   // local
-  const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
+  //const REQUEST_URI = `http://localhost:8081/rcvShipment/StkTransferNote/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1216,9 +1216,9 @@ viewStocknote(shipmentNumber){
   });
 }
 viewStockgatePass(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
+   const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
   // local
-  const REQUEST_URI = `http://localhost:8081/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
+  //const REQUEST_URI = `http://localhost:8081/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1871,9 +1871,9 @@ poAllRecFind(segment1,billToLoc): Observable<any> {
 
 
 downloadgrrPrint(receiptNo) :Observable<any> {
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
+   const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
   // local
-  const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
+  //const REQUEST_URI = `http://localhost:8081//rcvShipment/POReceipt/${receiptNo}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
