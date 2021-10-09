@@ -491,7 +491,7 @@
                                                 [(ngModel)]="supplierName" value={{supplierName}}  class="form-control">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Receipt&nbsp;Number&nbsp;:&nbsp;
+                                            GRR&nbsp;Number&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <input type="text" disabled formControlName="receiptNo" [(ngModel)]="receiptNo"
@@ -499,7 +499,7 @@
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Receipt&nbsp;Date&nbsp;:&nbsp;
+                                            GRR&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <!-- <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
@@ -514,12 +514,14 @@
                                               <!-- value={{recDate}} [(ngModel)]="recDate" -->
                                         </td> 
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Tax&nbsp;Amount&nbsp;:&nbsp;
+                                            Total&nbsp;SGST&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled type="number" formControlName="taxAmt" [(ngModel)]="taxAmt"
-                                                value={{taxAmt}}  class="form-control" placeholder="00.00"  oninput="this.value = Math.abs(this.value)"
-                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                            <input disabled type="number" formControlName="baseAmount"
+                                                [(ngModel)]="baseAmount" value="{{baseAmount}}"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                                                placeholder="00.00" style="width: 75px;">
                                         </td>
 
                                     </tr>
@@ -551,12 +553,16 @@
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Total&nbsp;Amount&nbsp;:&nbsp;
+                                            Total&nbsp;CGST&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
-                                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                            <input disabled type="number" formControlName="baseAmount"
+                                                [(ngModel)]="baseAmount" value="{{baseAmount}}"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                                                placeholder="00.00" style="width: 75px;">
                                         </td>
+                                        
                                     </tr>
                                     <tr> 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -567,6 +573,26 @@
                                                 value={{ewayBillNo}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
+                                     
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                value={{suppInvNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td></td><td></td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Total&nbsp;IGSt&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="number" formControlName="taxAmt" [(ngModel)]="taxAmt"
+                                                value={{taxAmt}}  class="form-control" placeholder="00.00"  oninput="this.value = Math.abs(this.value)"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             E-Way&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
                                         </td>
@@ -576,14 +602,8 @@
                                                 class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle">
-                                            Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
-                                        </td>
-                                        <td>
-                                            <input type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
-                                                value={{suppInvNo}} class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
-                                        </td>
+                                        
+                                        
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                         </td>
@@ -592,15 +612,32 @@
                                                 value={{suppInvDate}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
+                                       <td></td><td></td>
+                                       <td style="width: 15%" class="LabelFontStyle">
+                                        Tax&nbsp;Amount&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input disabled type="number" formControlName="taxAmt" [(ngModel)]="taxAmt"
+                                            value={{taxAmt}}  class="form-control" placeholder="00.00"  oninput="this.value = Math.abs(this.value)"
+                                            [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                    </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Comments&nbsp;:&nbsp;
                                         </td>
-                                        <td>
+                                        <td colspan="2">
                                             <input type="text" formControlName="Comments" [(ngModel)]='Comments'
-                                                value={{Comments}} class="form-control"
+                                                value={{Comments}} class="form-control" style="width: 100%;"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td></td><td></td><td></td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Total&nbsp;Amount&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -636,7 +673,7 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Total&nbsp;Amount&nbsp;:&nbsp;
+                                                Total&nbsp;SGST&nbsp;:&nbsp;
                                             </td>
                                             <td>
                                                 <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
@@ -652,6 +689,25 @@
                                                     value={{ewayBillNo}} class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
+                                           
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                    value={{suppInvNo}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td></td><td></td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Total&nbsp;IGST&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 E-Way&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
                                             </td>
@@ -662,14 +718,6 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
-                                            </td>
-                                            <td>
-                                                <input disabled type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
-                                                    value={{suppInvNo}} class="form-control"
-                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
-                                            </td>
-                                            <td style="width: 15%" class="LabelFontStyle">
                                                 Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                             </td>
                                             <td>
@@ -677,15 +725,31 @@
                                                     value={{suppInvDate}} class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
+                                            <td></td><td></td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Tax&nbsp;Amount&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Comments&nbsp;:&nbsp;
                                             </td>
-                                            <td>
+                                            <td colspan="2">
                                                 <input disabled type="text" formControlName="Comments" [(ngModel)]='Comments'
-                                                    value={{Comments}} class="form-control"
+                                                    value={{Comments}} class="form-control" style="width: 100%;"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td></td><td></td><td></td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Total&nbsp;Amount&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
                                             </td>
                                         </tr>
                                         </ng-template>

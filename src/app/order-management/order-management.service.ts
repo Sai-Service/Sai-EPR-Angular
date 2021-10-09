@@ -246,14 +246,24 @@ export class OrderManagementService {
   //   return this.http.get(this.ServerUrl + `/orderHeader/postSPACGatepass?orderNumber=${orderNumber}&emplId=${emplId}`);
   // }
 
-  genrateGatePass(orderNumber,emplId) {
-    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
-      .set('emplId', emplId)
-    const REQUEST_URI = this.ServerUrl + `/orderHeader/postSPACGatepass?orderNumber=${orderNumber}&emplId=${emplId}`;
-    return this.http.post(REQUEST_URI, {
-      params: REQUEST_PARAMS,
+  // genrateGatePass(orderNumber,emplId) {
+  //   const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+  //     .set('emplId', emplId)
+  //   const REQUEST_URI = this.ServerUrl + `/orderHeader/postSPACGatepass?orderNumber=${orderNumber}&emplId=${emplId}`;
+  //   return this.http.post(REQUEST_URI, {
+  //     params: REQUEST_PARAMS,
 
-    });
+  //   });
+  // }
+
+
+
+  genrateGatePass(genrateGatePass) {
+    const options = {
+      headers: this.headers
+    };
+    const url = (this.ServerUrl + `/orderHeader/postSPACGatepass`);
+    return this.http.post(url, genrateGatePass, options);
   }
 
   // **************** counter Sale order Save post *****************************/////
