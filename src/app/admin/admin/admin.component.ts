@@ -1,5 +1,5 @@
-import { Component, OnInit,HostListener  } from '@angular/core';
-import * as $ from 'jquery';
+import { Component, OnInit,HostListener ,ViewChild } from '@angular/core';
+// import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import {formatDate } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
@@ -17,15 +17,19 @@ interface IAdmin {
   searchItemCode: string;
   searchItemName: string;
 }
+
+declare var $: any;
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent  {
-  // export class AdminComponent implements OnInit {
+// export class AdminComponent  {
+  export class AdminComponent implements OnInit {
     adminForm1:FormGroup;
 
+    // @ViewChild('partSearch') partSearch: any;
 
   public ItemIdList:any[];
   lstcomments: any;
@@ -122,9 +126,10 @@ export class AdminComponent  {
 
    
   f9Key() {
-    // alert( "Key F9 pressed");
-    this.router.navigate(['/admin/transaction/OnHandDetails']);
-   
+    alert( "Key F9 pressed");
+    // this.router.navigate(['/admin/transaction/OnHandDetails']);
+     // this.partSearch.open();
+    $("#partSearch").modal('show');
   }
 
 
@@ -158,11 +163,11 @@ export class AdminComponent  {
     return matches;
   };
 
-  F9Search(mName) {
+  F9Search() {
 
-    const formValue: IAdmin = this.adminForm1.value;
+    // const formValue: IAdmin = this.adminForm1.value;
 
-    alert ("WIP...." + mName); 
+    alert ("WIP...." + this.adminForm1.get('searchItemName').value); 
   
   }
 
