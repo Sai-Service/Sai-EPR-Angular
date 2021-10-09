@@ -126,9 +126,9 @@ declare var $: any;
 
    
   f9Key() {
-    // alert( "Key F9 pressed");
+    alert( "Key F9 pressed");
     // this.router.navigate(['/admin/transaction/OnHandDetails']);
-    // this.partSearch.open();
+     // this.partSearch.open();
     $("#partSearch").modal('show');
   }
 
@@ -163,11 +163,11 @@ declare var $: any;
     return matches;
   };
 
-  F9Search(mName) {
+  F9Search() {
 
     // const formValue: IAdmin = this.adminForm1.value;
 
-    alert ("WIP...." + mName); 
+    alert ("WIP...." + this.adminForm1.get('searchItemName').value); 
   
   }
 
