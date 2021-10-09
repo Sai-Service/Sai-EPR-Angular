@@ -62,6 +62,13 @@ interface Imiscellaneous
   trans:string;
   CostDetail:number;
 }
+export  class miscTrans {
+  segment:string;
+  Locator:string;
+  quantity:number;
+  
+}
+
 export class ItemLocator {
 public locatorId : number;
 public segmentName:string;
@@ -127,7 +134,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
   displayLocator:Array<boolean>=[];
   displayButton:boolean=true;
   displayRemoveRow: Array<boolean> = [];
-  displayaddButton:boolean=false;
+  displayaddButton:boolean=true;
   displayremButton:boolean=false;
   addRow:boolean=true;
   public InterBrancList:Array<string>=[];
@@ -184,10 +191,19 @@ export class MiscellaneousTransactionComponent implements OnInit {
   currentOp:string;
   dispRow:boolean=true;
 
-  @ViewChild("myinput") myInputField: ElementRef;
+  public itemMap = new Map<string, miscTrans >();
+
+  @ViewChild("myinput") myinput: ElementRef;
+  @ViewChild("input1") input1:ElementRef;
+  @ViewChild("input2") input2:ElementRef;
+  @ViewChild("input3") input3:ElementRef;
+  @ViewChild("input4") input4:ElementRef;
+  @ViewChild("input5") input5:ElementRef;
+  @ViewChild("input6") input6:ElementRef;
+  @ViewChild("Item") Item:ElementRef;
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
-    this.myInputField.nativeElement.focus();
+    this.myinput.nativeElement.focus();
   }
 
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
@@ -265,46 +281,88 @@ export class MiscellaneousTransactionComponent implements OnInit {
   })}
 
   addnewcycleLinesList(i:number){
+    if(i>-1){
+    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+      var itemqty=trxLnArr1[i].physicalQty;
+      var item1=trxLnArr1[i].segment;
+      // alert(item1);
+      if(item1==='')
+     { alert('Please enter Blank Data');
+     return;
+    }
+  }
     //alert('hi');
     // alert(this.miscellaneousForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
      if(i>-1 && this.miscellaneousForm.get('compileType').value===4)
+    // if(i>-1)
     {
       //alert('hi');
-      var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
-      var itemqty=trxLnArr1[i].physicalQty;
-      var item1=trxLnArr1[i].segment;
-      // alert(item1);
-      if(itemqty==='')
-     { alert('Please enter quantity');
-     return;
-    }
-    this.reservePos(i);
+      
+    if(!this.itemMap.has(item1))
+    {
+      this.reservePos(i);
     }
     else{
-      this.displayaddButton=false;
-            
+      // debugger;
+      this.deleteReserveLinewise(i);
+      this.reservePos(i);
     }
-    this.cycleLinesList().push(this.newcycleLinesList());
-
-    var len = this.cycleLinesList().length;
-  var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-  (patch.controls[len - 1]).patchValue(
-    {
-      lineNumber: len,
-    }
-  );
-
    }
+   var len1 = this.cycleLinesList().length;
+    alert(len1+'Length'+i);
+    if(len1==i+1){
+     
+    this.cycleLinesList().push(this.newcycleLinesList());
+    
+    // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
+    var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    var len = this.cycleLinesList().length;
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+        
+      }
+      
+    );
+     var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    // this.Item[i+1].nativeElement.focus();
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+    }
+    }
+    // this.displayRemoveRow[i]=true;
+    // alert(i);
+      }
   removenewcycleLinesList(trxLineIndex){
+    var len1=this.cycleLinesList().length;
+    if(len1===1){
+      alert('You can not delete the line');
+      return;}
     var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
     var itemid=trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
     if(itemid!=null)
     {
     this.deleteReserveLinewise(trxLineIndex);
+    this.itemMap.delete(itemid);
     }
     this.cycleLinesList().removeAt(trxLineIndex);
+    var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    var len = this.cycleLinesList().length;
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+      }
+    );
+
+    var btnrm =document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement).disabled = true;
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+    }
+   
     this.displayLocator[trxLineIndex]=true;
   }
   ngOnInit(): void {
@@ -452,6 +510,41 @@ console.log(this.route1.queryParams+'hell');
        
   }
   miscellaneous(miscellaneousForm:any){}
+
+  keytab(event, maxLength,nxtEle)
+  {
+    console.log(event);
+    // let sib=event.srcElement.nextElementSibling;
+    // alert(sib);
+    // alert(event.target.value+'Event'+event.target.value.length);
+    if(event.target.value.length===maxLength )
+    {
+      // alert('Focus'+nxtEle);
+      if(nxtEle==='input2')
+      {
+        // alert('Input2');
+      this.input2.nativeElement.focus();
+      }
+      if(nxtEle==='input3')
+      {
+      this.input3.nativeElement.focus();
+      }
+      if(nxtEle==='input4')
+      {
+      this.input4.nativeElement.focus();
+      }
+      if(nxtEle==='input5')
+      {
+      this.input5.nativeElement.focus();
+      }
+      if(nxtEle==='input6')
+      {
+      this.input6.nativeElement.focus();
+      }
+    }
+    
+
+  }
 
   getInvItemId($event)
   {
@@ -610,10 +703,11 @@ this.deleteReserve();
 
           }
         });
-        if(event!=null)
-        {
-          this.displayaddButton=true;
-        }
+        // if(event!=null)
+        // {
+        //   // this.displayaddButton=true;
+        //   (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = true;
+        // }
 
   }
   AvailQty(event:any,i)
@@ -869,6 +963,8 @@ this.deleteReserve();
           var locId1=this.miscellaneousForm.get('locId').value
 
             let variantFormGroup = <FormGroup>variants.controls[i];
+            variantFormGroup.removeControl('reservedQty');
+            variantFormGroup.removeControl('transactionNumber');
             variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, []));
             variantFormGroup.addControl('locId', new FormControl(locId1, []));
             // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
@@ -884,6 +980,12 @@ this.deleteReserve();
          if(res.code===200)
          {
           alert("Record inserted Successfully");
+          var miscRow:miscTrans=new miscTrans();
+          miscRow.segment=(trxLnArr1[i].segment);
+          miscRow.Locator=(trxLnArr1[i].LocatorSegment);
+          miscRow.quantity=(trxLnArr1[i].physicalQty);
+          this.itemMap.set(trxLnArr1[i].segment,miscRow);
+         
          }
          else{
           if(res.code === 400) {
@@ -1073,6 +1175,7 @@ this.deleteReserve();
                 this.miscellaneousForm.disable();
                 this.displayButton=false;
                 this.displayaddButton=false;
+                // (document.getElementById("btnrm") as HTMLInputElement).disabled = false;
           }
           else
           {
