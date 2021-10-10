@@ -104,6 +104,13 @@ lastkeydown1: number = 0;
 
   @ViewChild("myinput") myInputField: ElementRef;
   @ViewChild("suppCode1") suppCode1: ElementRef;
+  @ViewChild("input1") input1:ElementRef;
+  @ViewChild("input2") input2:ElementRef;
+  @ViewChild("input3") input3:ElementRef;
+  @ViewChild("input4") input4:ElementRef;
+  @ViewChild("input5") input5:ElementRef;
+  @ViewChild("input6") input6:ElementRef;
+  @ViewChild("Item") Item:ElementRef;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -149,10 +156,18 @@ lastkeydown1: number = 0;
      })
    }
 
-   addnewtrfLinesList()
+   addnewtrfLinesList(i)
    {
-    
-    
+     if(i>0){
+    var trxLnArr1 = this.SubinventoryTransferForm.get('trfLinesList').value;
+    var itemqty=trxLnArr1[i].primaryQty;
+    var item1=trxLnArr1[i].segment;
+    // alert(item1);
+    if(item1===''||itemqty==='')
+   { alert('Please enter Blank Data');
+   return;
+  }
+}    
      this.trfLinesList().push(this.newtrfLinesList());
      var len = this.trfLinesList().length;
      var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
@@ -167,7 +182,25 @@ lastkeydown1: number = 0;
    }
 
    removetrfLinesList(trfLineIndex){
+    var len1=this.trfLinesList().length;
+    if(len1===1){
+      alert('You can not delete the line');
+      return;}
     this.trfLinesList().removeAt(trfLineIndex);
+    var patch = this.SubinventoryTransferForm.get('cycleLinesList') as FormArray;
+    var len = this.trfLinesList().length;
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+      }
+    );
+
+    var btnrm =document.getElementById("btnrm"+(trfLineIndex-1)) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnrm"+(trfLineIndex-1)) as HTMLInputElement).disabled = true;
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+    }
+  
    }
   ngOnInit(): void {
 
@@ -203,7 +236,7 @@ lastkeydown1: number = 0;
       //     console.log(this.ItemIdList);
       //     // console.log(this.invItemId);
       //   });
-        this.addnewtrfLinesList();
+        this.addnewtrfLinesList(0);
         var patch = this.SubinventoryTransferForm.get('trfLinesList') as  FormArray
         (patch.controls[0]).patchValue(
        {
@@ -215,6 +248,42 @@ lastkeydown1: number = 0;
 
   subinventoryTransfer(SubinventoryTransferForm:any)
   {}
+
+  keytab(event, maxLength,nxtEle)
+  {
+    console.log(event);
+    // let sib=event.srcElement.nextElementSibling;
+    // alert(sib);
+    // alert(event.target.value+'Event'+event.target.value.length);
+    if(event.target.value.length===maxLength )
+    {
+      // alert('Focus'+nxtEle);
+      if(nxtEle==='input2')
+      {
+        // alert('Input2');
+      this.input2.nativeElement.focus();
+      }
+      if(nxtEle==='input3')
+      {
+      this.input3.nativeElement.focus();
+      }
+      if(nxtEle==='input4')
+      {
+      this.input4.nativeElement.focus();
+      }
+      if(nxtEle==='input5')
+      {
+      this.input5.nativeElement.focus();
+      }
+      if(nxtEle==='input6')
+      {
+      this.input6.nativeElement.focus();
+      }
+    }
+    
+
+  }
+
 
   getInvItemId($event)
   {

@@ -158,70 +158,69 @@
                         </tr>
                     </ng-template>
                 </table>
-                <table class="center">
+                <table class="center"> 
                     <tr>
                         <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                         <ng-template #thenBlock1>
+                            <td class="center">
+                                <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+                                   <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
+                         
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                                data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                                    <!-- (click)="resetItemCatMast()" -->
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="closeBtn"
+                                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                            </td>
+
                         <td>
-                            <button type="submit" class="btn btn-primary" id="register"
-                                (click)="newMast()">Save</button>
-                                <!-- [disabled]="!divisionMasterForm.valid"  -->
+
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                             Reset
+                        </button> -->
+                        <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+                                </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div> 
+                            </div>
+                            </div>
+                        </div> -->
                         </td>
-                        <td>
-                            <!-- <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> -->
-                       <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Reset
-   </button>
-   <!-- Modal -->
-   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-     <div class="modal-dialog modal-dialog-centered" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
-             <span aria-hidden="true">&times;</span>
-           </button>
-         </div>
-         <div class="modal-body">
-           <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-             Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
-         </label>
-         </div>
-         <div class="modal-footer">
-             <table class="center">
-                 <tr>
-                     <td>
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     </td>
-                     <td>
-                         <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
-                     </td>
-                 </tr>
-             </table>
-           </div> 
-       </div>
-     </div>
-   </div>
-                        </td>
-                        <td>
-                            <!-- <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button> -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                        <!-- <td>
+                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
                                 Close
-                              </button>
-                              
-                              <!-- Modal -->
-                              <!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"> -->
-                                <div class="modal fade" id="exampleModalLong">
-                                <!-- <div class="modal-dialog" role="document"> -->
-                                    <div class="modal-dialog">
+                         </button>
+                          <div class="modal fade" id="exampleModalLong">
+                                  <div class="modal-dialog">
                                   <div class="modal-content">
-                                    <!-- <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div> -->
-                                    <div class="modal-body">
+                                 <div class="modal-body">
                                         <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
@@ -243,7 +242,7 @@
                                   </div>
                                 </div>
                               </div>
-                        </td>
+                        </td> -->
                         <td>
                             <button type="submit" class="btn btn-primary" id="register"
                                 (click)="searchMast()">Search</button>
@@ -335,3 +334,29 @@
     </table>
 </div>
 </div>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
