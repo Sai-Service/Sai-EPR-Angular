@@ -923,6 +923,8 @@ this.router.navigate(['admin']);
           var locId1=this.InternalConsumptionForm.get('locId').value
 
             let variantFormGroup = <FormGroup>variants.controls[i];
+            variantFormGroup.removeControl('reservedQty');
+            variantFormGroup.removeControl('transactionNumber');
             variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, []));
             variantFormGroup.addControl('locId', new FormControl(locId1, []));
             // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
@@ -938,7 +940,12 @@ this.router.navigate(['admin']);
          if(res.code===200)
          {
           alert("Record inserted Successfully");
-          (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
+          var IcRow:IcTrans=new IcTrans();
+          IcRow.segment=(trxLnArr1[i].segment);
+          IcRow.Locator=(trxLnArr1[i].LocatorSegment);
+          IcRow.quantity=(trxLnArr1[i].physicalQty);
+          this.itemMap.set(trxLnArr1[i].segment,IcRow);
+          // (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
          }
          else{
           if(res.code === 400) {
@@ -1171,6 +1178,41 @@ this.router.navigate(['admin']);
           });
 
       }
+      keytab(event, maxLength,nxtEle)
+  {
+    console.log(event);
+    // let sib=event.srcElement.nextElementSibling;
+    // alert(sib);
+    // alert(event.target.value+'Event'+event.target.value.length);
+    if(event.target.value.length===maxLength )
+    {
+      // alert('Focus'+nxtEle);
+      if(nxtEle==='input2')
+      {
+        // alert('Input2');
+      this.input2.nativeElement.focus();
+      }
+      if(nxtEle==='input3')
+      {
+      this.input3.nativeElement.focus();
+      }
+      if(nxtEle==='input4')
+      {
+      this.input4.nativeElement.focus();
+      }
+      if(nxtEle==='input5')
+      {
+      this.input5.nativeElement.focus();
+      }
+      if(nxtEle==='input6')
+      {
+      this.input6.nativeElement.focus();
+      }
+    }
+    
+
+  }
+
 
       HeaderValidation() {
         var isValid:boolean=false;
