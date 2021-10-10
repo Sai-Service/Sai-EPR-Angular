@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import{ AppConstants} from '../app-constants'
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,12 @@ import { retry, catchError } from 'rxjs/operators';
 export class LoginService {
 
   headers: HttpHeaders;
+  ServerUrl : string;
   constructor(private httpclient: HttpClient) {
 
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.ServerUrl = AppConstants.ServerUrl;
 
   }
   public login(username: string, password: string) {
