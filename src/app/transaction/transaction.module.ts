@@ -38,6 +38,7 @@ import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-w
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
+import { RelatedItemPartComponent } from './related-item-part/related-item-part.component';
 
 
 
@@ -78,6 +79,7 @@ import { PoUploadListComponent } from './po-upload-list/po-upload-list.component
     BulkItemUploadCSVComponent,
     InternalConsumptionComponent,
     PoUploadListComponent,
+    RelatedItemPartComponent,
   ],
   
   imports: [
