@@ -310,7 +310,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
    }
    var len1 = this.cycleLinesList().length;
-    alert(len1+'Length'+i);
+    // alert(len1+'Length'+i);
     if(len1==i+1){
      
     this.cycleLinesList().push(this.newcycleLinesList());
@@ -328,6 +328,9 @@ export class MiscellaneousTransactionComponent implements OnInit {
      var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
      if(document.contains(btnrm)){
     (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    this.miscellaneousForm.get('compileType').disable();
+    this.miscellaneousForm.get('reason').disable();
+    this.miscellaneousForm.get('approvedBy').disable();
     // this.Item[i+1].nativeElement.focus();
     // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
@@ -473,11 +476,11 @@ console.log(this.route1.queryParams+'hell');
         }
       )
 
-      this.service.ItemIdDivisionList(this.divisionId).subscribe(
-            data =>{ this.ItemIdList = data;
-              console.log(this.ItemIdList);
+      // this.service.ItemIdDivisionList(this.divisionId).subscribe(
+      //       data =>{ this.ItemIdList = data;
+      //         console.log(this.ItemIdList);
 
-         });
+      //    });
          this.service.issueByList(this.locId,this.deptId,this.divisionId).subscribe
       (data => {this.issueByList = data;
           console.log(this.issueByList);
@@ -510,6 +513,26 @@ console.log(this.route1.queryParams+'hell');
        
   }
   miscellaneous(miscellaneousForm:any){}
+
+  onOptionTypeSelect(event)
+  {
+    alert(event);
+    if(event===13){
+    this.service.ItemIdDivisionList(this.divisionId).subscribe(
+      data =>{ this.ItemIdList = data;
+        console.log(this.ItemIdList);
+
+   });
+  }
+  if(event===4){
+    this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
+      data => {
+        this.ItemIdList = data;
+        
+        // console.log(this.invItemId);
+      });
+  }
+  }
 
   keytab(event, maxLength,nxtEle)
   {
@@ -708,6 +731,7 @@ this.deleteReserve();
         //   // this.displayaddButton=true;
         //   (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = true;
         // }
+       
 
   }
   AvailQty(event:any,i)
@@ -979,7 +1003,7 @@ this.deleteReserve();
         //  var obj=res.obj;
          if(res.code===200)
          {
-          alert("Record inserted Successfully");
+          // alert("Record inserted Successfully");
           var miscRow:miscTrans=new miscTrans();
           miscRow.segment=(trxLnArr1[i].segment);
           miscRow.Locator=(trxLnArr1[i].LocatorSegment);

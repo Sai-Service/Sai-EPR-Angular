@@ -300,7 +300,7 @@ export class InternalConsumptionComponent implements OnInit {
     }
    }
    var len1 = this.cycleLinesList().length;
-    alert(len1+'Length'+i);
+    // alert(len1+'Length'+i);
     if(len1==i+1){
      
     this.cycleLinesList().push(this.newcycleLinesList());
@@ -318,10 +318,13 @@ export class InternalConsumptionComponent implements OnInit {
      var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
      if(document.contains(btnrm)){
     (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    this.InternalConsumptionForm.get('compileType').disable();
+    this.InternalConsumptionForm.get('reason').disable();
     // this.Item[i+1].nativeElement.focus();
     // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
     }
+    
     // this.displayRemoveRow[i]=true;
     // alert(i);
       }
@@ -939,7 +942,7 @@ this.router.navigate(['admin']);
         //  var obj=res.obj;
          if(res.code===200)
          {
-          alert("Record inserted Successfully");
+          // alert("Record inserted Successfully");
           var IcRow:IcTrans=new IcTrans();
           IcRow.segment=(trxLnArr1[i].segment);
           IcRow.Locator=(trxLnArr1[i].LocatorSegment);

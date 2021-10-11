@@ -929,6 +929,9 @@ public CustMasterSubmit(CustMasterRecord) {
 getsearchByAccountNo(customerId1): Observable<any> {
   return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1/${customerId1}`);
 }
+Limitdata(ouId,custId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/Customer/getCrAmtHighAmt?ouId=${ouId}&customerId=${custId}`)
+}
 
 getsearchByAccountNo1(accountId , divisionId): Observable<any> {
   return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
