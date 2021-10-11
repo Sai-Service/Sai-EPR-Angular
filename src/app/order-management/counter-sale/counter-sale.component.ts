@@ -217,6 +217,7 @@ export class CounterSaleComponent implements OnInit {
   displaydisPer = true;
   displaypickTicketInvoice = true;
   displaycreateOrderType = true;
+  showApplyDiscount =true;
   selectedLine = 0;
   categoryList: any[];
   custSiteList: any[];
@@ -549,18 +550,15 @@ export class CounterSaleComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // $("#menu-toggle").click(function(e) {
-    //  // e.preventDefault();
-    //   $("#wrapper").toggleClass("toggled");
-    // });
-
     $("#wrapper").toggleClass("toggled");
 
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.displayDMSCDMS = true;
+      this.showApplyDiscount=false;
     }
     else if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.displayDMSCDMS = false;
+      this.showApplyDiscount=true;
     }
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
     this.CounterSaleOrderBookingForm.patchValue({ disAmt: 0 })

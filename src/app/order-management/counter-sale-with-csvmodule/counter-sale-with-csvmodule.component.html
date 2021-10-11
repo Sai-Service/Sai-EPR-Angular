@@ -1,0 +1,36 @@
+<form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;With&nbsp;CSV&nbsp;
+            </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;Order&nbsp;No&nbsp;&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                    value={{orderNumber}}>
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="OrderFind(orderNumber)"><i class="fa fa-search"
+                        aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+    <section class="mx-2 pb-3">
+        <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
+            <li class="nav-item waves-effect waves-light">
+              <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md" role="tab" aria-controls="home-md" aria-selected="true">Header&nbsp;Details</a>
+            </li>
+            <li class="nav-item waves-effect waves-light">
+              <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md" aria-selected="false">Lines&nbsp;Details</a>
+            </li>
+          </ul>
+          <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
+            <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
+            </div>
+            <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
+            </div>
+          </div>
+    </section>
+</form>

@@ -130,14 +130,14 @@ export class ItemMasterLocatorComponent implements OnInit {
         }
       );
 
-    this.service.locationIdList()
+    this.service.locationIdList1(sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.locationIdList = data;
           console.log(this.locationIdList);
         }
       );
-    this.service.subinventoryIdList()
+    this.service.subinventoryIdList1(sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           this.subinventoryIdList = data;

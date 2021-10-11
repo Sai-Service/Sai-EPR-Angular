@@ -1335,9 +1335,14 @@
                                     </tbody>
 
                                 </table>
+                                <div *ngIf="showApplyDiscount; then thenApplyDiscount; else elseApplyDiscount"></div>
+                                <ng-template #thenApplyDiscount>
+                                </ng-template>
+                                <ng-template #elseApplyDiscount>
                                 <button type="button" class="btn btn-primary" (click)="addDiscount(selectedLine)"
                                     style="width: 8rem; border: solid 1px Gray">Apply
                                     Discount</button>
+                                </ng-template>
                             </div>
                         </div>
 
