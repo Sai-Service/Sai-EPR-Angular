@@ -977,7 +977,9 @@ refresh()
       //   this.segmentName = aaa;
       // }
 
-
+      // onKey(event: any){
+      //   alert('only tab')
+      // }
 
 
 //       validate(i:number,qty1)

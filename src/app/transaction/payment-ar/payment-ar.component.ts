@@ -175,7 +175,8 @@ export class PaymentArComponent implements OnInit {
   searchByRcptNo: number;
   searchByCustNo: number;
 
-  searchByDate: Date;
+  // searchByDate: Date;
+  searchByDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   ordNumber: number;
   cancelReason: string;
 
@@ -1173,6 +1174,8 @@ export class PaymentArComponent implements OnInit {
 
 
   validateLineApplAmt(index) {
+
+    
     var x = 0;
     var totUnAppAmt = 0;
     var totAppAmt = 0;
@@ -1183,11 +1186,19 @@ export class PaymentArComponent implements OnInit {
     var invLineArr = this.paymentArForm.get('invLine').value;
     var patch = this.paymentArForm.get('invLine') as FormArray;
 
+    this.invLineArray().controls[index].get('applyrcptFlag').enable();
+    this.applySaveButton=false;
+    this.validateStatus=true;
+
     var lineApplAmt = Number(invLineArr[index].applAmtNew);
     var applyReceiptFlag = invLineArr[index].applyrcptFlag;
     var ytotUnAppAmt = Number(this.totUnAppliedtAmount);
     var ytotAppAmt = Number(this.totAppliedtAmount);
 
+    // patch.controls[index].patchValue({ applyrcptFlag: true })
+   
+
+   
     if (applyReceiptFlag === true) {
 
       var LineinvAmt = Number(invLineArr[index].invoiceAmount);
@@ -1228,8 +1239,10 @@ export class PaymentArComponent implements OnInit {
       ///////////////////////////////////////////////////////
     }
     else {
-      alert("Line-" + index + " : Apply Flag not selected...Select Apply Flag First.");
-      patch.controls[index].patchValue({ applAmtNew: '' })
+      alert("Line-" + index + " : Apply Flag not selected/disabled...Select Apply Flag First.");
+      patch.controls[index].patchValue({ applAmtNew: '' });
+      patch.controls[index].patchValue({ balDueAmt: invLineArr[index].balance1 });
+      
     }
 
   }
@@ -1650,8 +1663,18 @@ export class PaymentArComponent implements OnInit {
         if (this.invLineArray().controls[i].get('applyrcptFlag').value != true) {
           this.invLineArray().removeAt(i);
         } else { this.applySaveButton = true; }
+
+        
       }
     }
+     for (let i = 0; i < applLineArr.length ; i++) {
+      this.invLineArray().controls[i].get('applyrcptFlag').disable();
+      this.CheckLineValidations(i);
+    
+     }
+
+     if(this.applLineValidation==true) {this.applySaveButton=true;} else {this.applySaveButton=false;}
+
   }
 
 
@@ -1663,14 +1686,14 @@ export class PaymentArComponent implements OnInit {
 
     this.applLineValidation = false;
     var len1 = applLineArr.length;
-    // alert ("this.invLineArray().length b4 removing unchecked lines  :" +len1);
+    // alert ("this.invLineArray().length  :" +len1);
 
 
     for (let i = 0; i < len1; i++) {
 
-      if (applLineArr[i].applyrcptFlag === true) {
+      // if (applLineArr[i].applyrcptFlag === true) {
         this.CheckLineValidations(i);
-      }
+      // } 
     }
 
     if (this.applLineValidation === false) {
@@ -1757,7 +1780,8 @@ export class PaymentArComponent implements OnInit {
     var payType = this.paymentArForm.get('payType').value;
     var receiptMethodId = this.paymentArForm.get('receiptMethodId').value;
     var receiptMethodName = this.paymentArForm.get('receiptMethodName').value;
-    var empId = this.paymentArForm.get('emplId').value;
+    // var empId = this.paymentArForm.get('emplId').value;
+    var empId =Number(sessionStorage.getItem('emplId'));
     // var empId= 26;
     // alert ("Empid =" +empId);
     // var glDate= this.paymentArForm.get('glDateLine').value;
@@ -2089,7 +2113,7 @@ export class PaymentArComponent implements OnInit {
     var chkFlag = applLineArr[i].applyrcptFlag;
     var j = i + 1;
 
-
+  //  alert (lineValue1+","+tglDate +","+chkFlag);
     if (lineValue1 === undefined || lineValue1 === null || lineValue1 <= 0) {
       alert("Line-" + j + " APPL AMT :  Should  be grater than Zero");
       this.applLineValidation = false;
@@ -2100,18 +2124,19 @@ export class PaymentArComponent implements OnInit {
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
     if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
-      this.checkValidation = false;
+      // this.checkValidation = false;
       alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
       this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
-      return;
-    }
-
-
-    if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
-      alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
       this.applLineValidation = false;
       return;
     }
+
+
+    // if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
+    //   alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
+    //   this.applLineValidation = false;
+    //   return;
+    // }
 
     this.applLineValidation = true;
   }

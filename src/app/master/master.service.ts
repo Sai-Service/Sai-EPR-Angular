@@ -104,6 +104,11 @@ export class MasterService {
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
+
+  locationIdList1(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/locationMst/locListOuwise/${ouId}`);
+  }
+
   TolocationIdList(locId): Observable<any> {
     return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
   }
@@ -112,6 +117,10 @@ export class MasterService {
   }
   subinventoryIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/subInvMst');
+  }
+
+  subinventoryIdList1(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/subInvMst/subInv/${divisionId}`);
   }
   titleList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/TitleList');
