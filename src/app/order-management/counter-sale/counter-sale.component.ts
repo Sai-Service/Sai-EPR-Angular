@@ -123,20 +123,14 @@ var require: any;
   templateUrl: './counter-sale.component.html',
   styleUrls: ['./counter-sale.component.css'],
 
-  template: `
-  <pdf-viewer [src]="pdfSrc"
+  template: `<pdf-viewer [src]="pdfSrc"
               [render-text]="true"
-              style="display: block;"
-  ></pdf-viewer>
-  `
+              style="display: block;"></pdf-viewer>`
 })
 
 
 export class CounterSaleComponent implements OnInit {
-
   CounterSaleOrderBookingForm: FormGroup;
-
-  // lnflowStatusCode:string;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
   transactionTypeId: number;
@@ -1116,8 +1110,6 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
         this.orderedItem = data.description;
         this.itemMap.set(itemType, data);
         this.itemMap2.set(lnNo, this.itemMap.get(itemType));
-        // this.lnflowStatusCode='BOOKED'
-        // console.log(this.lnflowStatusCode);
       }
     );
 
@@ -1136,8 +1128,6 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
   };
 
   accountNoSearch(custAccountNo) {
-    // alert('hi')
-    // this.orderManagementService.accountNoSearchFn2(custAccountNo, (sessionStorage.getItem('divisionId')))
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {

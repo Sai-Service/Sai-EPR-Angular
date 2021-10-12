@@ -268,6 +268,9 @@ export class PoReceiptFormComponent implements OnInit {
       itemDesc:[],
       subInvDesc:[],
       subInventoryId:[''],
+      cgstAmt:[''],
+      sgstAmt:[''],
+      igstAmt:[''],
       // subInventoryId:[],
       locatorDesc:['',[Validators.required]],
       uom:[],
@@ -1055,6 +1058,7 @@ this.locId=Number(sessionStorage.getItem('locId'));
       } else {
         if (res.code === 400) {
           alert(res.message);
+          window.location.reload();
           // this.poReceiptForm.reset();
         }
       }
