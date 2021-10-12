@@ -117,6 +117,7 @@ export class StockTransferComponent implements OnInit {
 
 
   @ViewChild("myinput") myInputField: ElementRef;
+  emplId: number;
   // @ViewChild("segment") segment: ElementRef;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
@@ -257,6 +258,7 @@ export class StockTransferComponent implements OnInit {
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
     this.issueBy=(sessionStorage.getItem('name'));
+    this.emplId=Number(sessionStorage.getItem('emplId'));
     // this.transCost=0.00;
     // alert(this.deptName+'Depart');
     // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
@@ -830,15 +832,30 @@ viewStocknote() {
 }
 
 viewStockgatePass() {
+  const formValue:IStockTransfer = this.stockTranferForm.value;
   var shipNumber = this.stockTranferForm.get('shipmentNumber').value;
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.service.viewStockgatePass(shipNumber)
-    .subscribe(data => {
-      var blob = new Blob([data], { type: 'application/pdf' });
-      var url = URL.createObjectURL(blob);
-      var printWindow = window.open(url, '', 'width=800,height=500');
-      printWindow.open
-    })
-}
+  this.service.StockgatePassSubmit(formValue).subscribe(
+    (res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.service.viewStockgatePass(shipNumber,this.emplId)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+        })
+    }
+     else {
+        if (res.code === 400) {
+          alert( res.message);     
+          // this.CounterSaleOrderBookingForm.reset();
+          // window.location.reload();
+        }
+
+    }}
+  )
+  }
 }
