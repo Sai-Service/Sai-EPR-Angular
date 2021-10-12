@@ -60,7 +60,7 @@
                                                 Journal&nbsp;Date&nbsp;:
                                         </td>
                                         <td >
-                                            <input type="Date" class="form-control" formControlName="postedDate" id="postDate" >
+                                            <input type="Date" class="form-control" formControlName="postedDate" id="postDate" value={{postedDate}}>
                                             <span  *ngIf="!JournalVoucherForm.get('postedDate').valid && JournalVoucherForm.get('postedDate').touched">Please
                                                     Select Period Date </span>
                                         </td>

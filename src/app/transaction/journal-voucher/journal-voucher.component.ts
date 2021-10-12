@@ -53,7 +53,7 @@ export class JournalVoucherComponent implements OnInit {
   segment11:string;
   lookupValueDesc1:string;
   segment2:number;
-  postedDate:Date;
+  postedDate = new Date();
   lookupValueDesc2:string;
   segment3:number;
   lookupValueDesc3:string;
@@ -176,7 +176,7 @@ export class JournalVoucherComponent implements OnInit {
     this.emplId=Number((sessionStorage.getItem('emplId')));
     // alert('employee'+this.emplId);
 
-    this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.now,'dd-MM-yyyy','en'));
+    this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.postedDate,'yyyy-MM-dd','en'));
     this.addnewglLines();
     var patch=this.JournalVoucherForm.get('glLines') as FormArray
      (patch.controls[0]).patchValue(

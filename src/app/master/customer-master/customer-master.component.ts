@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
 import { DatePipe } from '@angular/common'
+import { formatDate } from '@angular/common'
 
 interface IcustomerMaster {
   custType: string;
@@ -1003,24 +1004,23 @@ if (person === 'Person'){
         }
       }
       onBirthgDateChange(event){
-
-
         var birthdt  :Date= new Date(event.target.value);
-        this.minDateWedding = birthdt.setFullYear(birthdt.getFullYear()+18);
-        var birthdt1  :Date= new Date(this.minDateWedding);
-
+        
+        
+       // this.customerMasterForm.controls.weddingDate.setValue(formatDate(this.minDateWedding,'yyyy-MM-dd','en'));
 
       }
       onOptionWeddingDate(event)
       {
 
-         var weddate=event.target.value;
+        var weddate=event.target.value;
 
         var birthdat:Date=this.customerMasterForm.get('birthDate').value
 
         if(weddate>this.startDate ||weddate<=birthdat||weddate<=birthdat.setFullYear(birthdat.getFullYear()+18))
         {
           alert("Please select Correct Wedding Date");
+          this.weddingDate = undefined;
 
         }
       }
