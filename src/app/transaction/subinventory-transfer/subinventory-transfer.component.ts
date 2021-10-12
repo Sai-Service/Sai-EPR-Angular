@@ -251,6 +251,7 @@ lastkeydown1: number = 0;
 
   keytab(event, maxLength,nxtEle)
   {
+    // this.input1.nativeElement.focus();
     console.log(event);
     // let sib=event.srcElement.nextElementSibling;
     // alert(sib);
@@ -274,6 +275,7 @@ lastkeydown1: number = 0;
       if(nxtEle==='input5')
       {
       this.input5.nativeElement.focus();
+      (document.getElementById('btnok') as HTMLInputElement).disabled = false;
       }
       if(nxtEle==='input6')
       {
@@ -370,7 +372,7 @@ lastkeydown1: number = 0;
   }
   OpenLocator(i)
         {
-
+          
           var LocSegment=this.trfLinesList().controls[i].get('LocatorSegment').value;
 
           if (LocSegment===null)
@@ -380,6 +382,7 @@ lastkeydown1: number = 0;
             this.SubinventoryTransferForm.get('RackNo').reset();
             this.SubinventoryTransferForm.get('Row').reset();
             this.SubinventoryTransferForm.get('RowNo').reset();
+            // this.input1.nativeElement.focus();
           }
           if(LocSegment!=null)
           {
@@ -390,13 +393,17 @@ lastkeydown1: number = 0;
             this.RackNo = temp[2];
             this.Row = temp[3];
             this.RowNo = temp[4];
+            // this.input1.nativeElement.focus();
           }
               // this.showModal = true;
               this.content = i;
               let a = i + 1
               this.title = "Locator :" + a;
-
-
+              
+              // debugger;
+              (document.getElementById('btnok') as HTMLInputElement).disabled = true;
+              
+              this.input1.nativeElement.focus();
         }
 
         okLocator(i)

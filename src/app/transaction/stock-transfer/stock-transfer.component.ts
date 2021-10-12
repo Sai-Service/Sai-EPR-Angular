@@ -178,7 +178,7 @@ export class StockTransferComponent implements OnInit {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       var itemqty=trxLnArr1[i].primaryQty;
       var item=trxLnArr1[i].segment;
-      alert(itemqty);
+      // alert(itemqty);
       if(itemqty===''|| item==='')
      { alert('Please enter data in blank field');
      return;
@@ -194,7 +194,7 @@ export class StockTransferComponent implements OnInit {
     }
     }
     var len1 = this.trxLinesList().length;
-    alert(len1+'Length'+i);
+    // alert(len1+'Length'+i);
     if(len1==i+1){
      
     this.trxLinesList().push(this.newtrxLinesList()); 
@@ -213,11 +213,12 @@ export class StockTransferComponent implements OnInit {
      var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
      if(document.contains(btnrm)){
     (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    this.stockTranferForm.get('transferOrgId').disable();
     // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
     }
     // this.displayRemoveRow[i]=true;
-    alert(i);
+    // alert(i);
    
   }
   removenewtrxLinesList(trxLineIndex:number) {
@@ -509,7 +510,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   //  var obj=res.obj;
    if(res.code===200)
    {
-    alert(res.message);
+    // alert(res.message);
     // (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
     var stkRow:StockTransferRow=new StockTransferRow();
     stkRow.segment=(trxLnArr1[i].segment);

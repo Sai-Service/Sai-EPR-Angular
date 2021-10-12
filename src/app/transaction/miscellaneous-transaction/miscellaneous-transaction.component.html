@@ -70,7 +70,7 @@
       </td>
       <input hidden formControlName="compileId" [(ngModel)]="compileId">
       <td>
-        <select class="form-control" formControlName="compileType" #myinput>
+        <select class="form-control" formControlName="compileType" (ngModelChange)="onOptionTypeSelect($event)" #myinput>
           <option>--Select--</option>
           <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
         </select>

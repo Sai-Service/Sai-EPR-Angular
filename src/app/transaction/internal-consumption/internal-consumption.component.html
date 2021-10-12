@@ -71,7 +71,7 @@
     <input hidden formControlName="compileId" [(ngModel)]="compileId">
     <td>
       <select class="form-control" formControlName="compileType" #myinput>
-        <option>--Select--</option>
+        <!-- <option>--Select--</option> -->
         <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
       </select>
       <span
@@ -259,7 +259,7 @@
             <ng-template #thenBlock>
               <td>
             <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event>
-              <option>--Select--</option>
+              <!-- <option>--Select--</option> -->
               <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
               <!-- [ngValue]="locId.locatorId" -->
 

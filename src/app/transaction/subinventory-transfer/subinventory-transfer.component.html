@@ -163,14 +163,16 @@
       </div>
       <table class="center">
               <tr>
-                 <td>
-                  <button type="submit" class="btn btn-primary" (click)="closesubTrf()">Close</button>
+              
+              
+                <td>
+                    <button  type="submit" class="btn btn-primary" (click)="newSubtrf()">Save</button>
                 </td>
                 <td>
                   <button type="submit" class="btn btn-primary" (click)="resetsubTrf()" >Reset</button>
                 </td>
                 <td>
-                    <button  type="submit" class="btn btn-primary" (click)="newSubtrf()">Save</button>
+                  <button type="submit" class="btn btn-primary" (click)="closesubTrf()">Close</button>
                 </td>
                </tr>
             </table>
@@ -181,7 +183,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                       <label style="text-align: center;margin-left: 7rem;"> {{ title }}</label>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
                   </div>
                   <div class="modal-body text-center pagination-centered">
                     <table class="center" style="width: 100%;">
@@ -238,7 +240,7 @@
                     </table>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="okLocator(content)" #input6>Ok</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnok"  (click)="okLocator(content)" #input6>Ok</button>
                   </div>
                 </div>
               </div>
