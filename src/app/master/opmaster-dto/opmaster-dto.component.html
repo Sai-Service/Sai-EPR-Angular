@@ -82,7 +82,7 @@
                                         </ng-template>
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Creation&nbsp;Date:</td>
-                                    <td><input disabled formControlName="poDate" class="form-control"
+                                    <td><input disabled  formControlName="poDate" class="form-control"
                                             [(ngModel)]="poDate" placeholder="Enter Creation Date"
                                             min="{{minDate | date:'yyyy-MM-dd'}}" style="width: 120px;">
 
@@ -239,7 +239,7 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Approval&nbsp;Date:
                                     </td>
-                                    <td> <input disabled formControlName="approveDate" class="form-control">
+                                    <td> <input disabled type="date" formControlName="approveDate" class="form-control">
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Amount:</td>
@@ -271,8 +271,14 @@
                                         </span>
 
                                     </td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Date:</td>
+                                    <td>
+                                        <input type="date" formControlName="suppInvDate" class="form-control"
+                                        style="width: 100%;"
+                                        [ngClass]="{ 'is-invalid': submitted && f.suppInvDate.errors }">
+                                    </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Description:</td>
-                                    <td colspan="3">
+                                    <td colspan="2">
                                         <input type="text" formControlName="description" class="form-control"
                                             placeholder="Enter the description" style="width: 100%;">
                                     </td>
@@ -351,7 +357,7 @@
 
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Creation&nbsp;Date:</td>
-                                    <td><input disabled formControlName="poDate" class="form-control"></td>
+                                    <td><input disabled type="date" formControlName="poDate" class="form-control"></td>
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Name:</td>
@@ -464,7 +470,7 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Approve&nbsp;Date:
                                     </td>
-                                    <td> <input disabled formControlName="approveDate" class="form-control">
+                                    <td> <input disabled type="date" formControlName="approveDate"  class="form-control">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Amount:</td>
                                     <td>
@@ -480,8 +486,14 @@
                                         <input disabled type="text" formControlName="suppInvNo" class="form-control"
                                             style="width: 100%;">
                                     </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Supplier&nbsp;Date&nbsp;:&nbsp;</td>
+                                    <td colspan="">
+                                        <input disabled type="date" formControlName="suppInvDate" class="form-control"
+                                            style="width: 100%;">
+                                    </td>
                                     <td style="width: 15%" class="LabelFontStyle">Description:</td>
-                                    <td colspan="3">
+                                    <td colspan="2">
                                         <input disabled type="text" formControlName="description" class="form-control"
                                             placeholder="Enter the description" style="width: 100%;">
                                     </td>
