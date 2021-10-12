@@ -355,7 +355,7 @@ export class ARInvoiceComponent implements OnInit {
           data1 = this.taxCategoryList;
         }
       );
-    this.service.locationIdList()
+    this.service.locationIdList1(this.ouId)
       .subscribe(
         data => {
           this.locIdList = data;
