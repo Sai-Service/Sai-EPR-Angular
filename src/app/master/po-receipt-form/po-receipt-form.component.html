@@ -502,15 +502,13 @@
                                             Receipt&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <!-- <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
+                                            <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
                                               <ng-template #thenrecDate>
-                                                <input disabled formControlName="recDate" 
-                                                value={{recDate}} class="form-control"  >
+                                                <input disabled formControlName="recDate" value="{{recDate}}"   class="form-control" value={{recDate}} class="form-control">
                                               </ng-template>
-                                              <ng-template #elserecDate> -->
-                                                <input type="date" disabled formControlName="recDate"  value={{recDate}} [(ngModel)]="recDate"
-                                                class="form-control">
-                                              <!-- </ng-template>   -->
+                                              <ng-template #elserecDate>
+                                                <input type="date" disabled formControlName="recDate"  value="{{recDate}}"   class="form-control">
+                                              </ng-template>  
                                               <!-- value={{recDate}} [(ngModel)]="recDate" -->
                                         </td> 
                                         <td style="width: 15%" class="LabelFontStyle">
@@ -589,7 +587,7 @@
                                         </td>
                                         <td>
                                             <input type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
-                                                value={{suppInvDate}} class="form-control"
+                                                value={{suppInvDate}} class="form-control" max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                     </tr>
@@ -674,7 +672,7 @@
                                             </td>
                                             <td>
                                                 <input disabled type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
-                                                    value={{suppInvDate}} class="form-control"
+                                                    value={{suppInvDate}} class="form-control" style="width: 170px;"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                         </tr>
@@ -693,7 +691,7 @@
                                         <td>
                                             <input hidden type="text" disabled formControlName="locId" class="form-control"
                                             [(ngModel)]='locId' >
-                                            <input hidden type="text" disabled formControlName="poHeaderId" class="form-control"
+                                            <input hidden type="number" disabled formControlName="poHeaderId" class="form-control"
                                             [(ngModel)]='poHeaderId'> 
                                             <input hidden  type="number" disabled formControlName="suppNo" class="form-control"> 
                                             <input hidden type="number" disabled formControlName="supplierSiteId" class="form-control"> 
@@ -755,7 +753,7 @@
                             <th scope="col">Sub-Inventory</th>
                             <th scope="col">Price</th>
                             <th scope="col">Base Amount</th>
-                            <th scope="col">Tax Percentage</th>
+                            <th scope="col">Tax %</th>
                             <th scope="col">SGST Amt</th>
                             <th scope="col">CGST Amt</th>
                             <th scope="col">IGST Amt</th>
@@ -777,7 +775,6 @@
                                 <ng-template #thenBlockLine>
                                 <tr>
                                     <input hidden type="text" disabled formControlName="poHeaderId" class="form-control"> 
-                                    <input hidden type="text" disabled formControlName="poLineId" class="form-control"> 
                                     <input hidden type="text" disabled formControlName="polineNum" class="form-control"> 
                                     <input hidden type="text" disabled formControlName="locatorId" class="form-control"> 
                                     
@@ -918,8 +915,9 @@
                                             class="form-control" style="height: 20px;width: 70px;">
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal31"  (click)="taxDeatils(shipHeaderId,shipLineId)" style="height: fit-content;width: fit-content;">
-                                          <img id="bajajlogo" src="assets\images\tax.png" >
+                                        <input hidden type="number" disabled formControlName="poLineId" class="form-control"> 
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal31"  (click)="taxDeatils(i,poHeaderId,poLineId)" style="height: fit-content;width: fit-content;">
+                                          <img id="bajajlogo" src="assets\images\tax.png">
                                         </button>
                                         <div class="modal fade" id="exampleModal31" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                           <div class="modal-dialog" role="document">
@@ -960,9 +958,10 @@
                                 </ng-template>
                                 <ng-template #elseBlockLine>
                                     <tr>
-                                        <input hidden type="text" disabled formControlName="poLineId" class="form-control"> 
+                                        <input hidden type="number" disabled formControlName="poLineId" class="form-control"> 
                                         <input hidden type="text" disabled formControlName="polineNum" class="form-control"> 
-                                        <input hidden type="text" disabled formControlName="locatorId" class="form-control">                                                                
+                                        <input hidden type="text" disabled formControlName="locatorId" class="form-control">    
+                                        <!-- <input type="number" formControlName="shipHeaderId">                                                             -->
                                         <!-- <td>
                                             <input type="checkbox">
                                         </td> -->
@@ -1044,7 +1043,10 @@
                                             [(ngModel)]='locId' style="height: 20px;width: 60px;">
                                         </td> -->
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal30"  (click)="taxDeatils(shipHeaderId,shipLineId)" style="width: fit-content;">
+                                            <input hidden disabled type="number" disabled
+                                                formControlName="shipLineId"
+                                                class="form-control" style="height: 20px;width: 70px;">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal30"  (click)="taxDeatils1(i)" style="width: fit-content;">
                                                 <img id="bajajlogo" src="assets\images\tax.png" >
                                             </button>
                       <div class="modal fade" id="exampleModal30" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1299,7 +1301,7 @@
                 <div class="modal-dialog modal-sm">
                   <div class="modal-content">
                     <div class="modal-header">
-                        <label style="text-align: center;margin-left: 7rem;">Locator+{{title}}</label>
+                        <label style="text-align: center;margin-left: 7rem;">{{title}}</label>
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
