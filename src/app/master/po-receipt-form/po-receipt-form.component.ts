@@ -8,6 +8,7 @@ import { MasterService } from '../master.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from "@angular/common";
 import { data } from 'jquery';
+import { formatDate } from '@angular/common'
 
 
 interface IpoReceipt {

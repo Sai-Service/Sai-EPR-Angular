@@ -678,10 +678,11 @@
                                 <ng-template #thenBlockaadharInfo>
                                     <td style="width: 10%" class="LabelFontStyle">&nbsp;Aadhar&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input formControlName="aadharNo" [(ngModel)]='aadharNo' value={{aadharNo}}
+                                        <input type="number" formControlName="aadharNo" [(ngModel)]='aadharNo' value={{aadharNo}}
                                              class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
-                                            placeholder="Enter Aadhar No">
+                                            placeholder="Enter Aadhar No" maxlength="12">
+
                                     </td>
                                 </ng-template>
                                 <ng-template #elseBlocktanInfo>
