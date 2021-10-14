@@ -71,7 +71,7 @@
     <input hidden formControlName="compileId" [(ngModel)]="compileId">
     <td>
       <select class="form-control" formControlName="compileType" #myinput>
-        <option>--Select--</option>
+        <!-- <option>--Select--</option> -->
         <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
       </select>
       <span
@@ -259,7 +259,7 @@
             <ng-template #thenBlock>
               <td>
             <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event>
-              <option>--Select--</option>
+              <!-- <option>--Select--</option> -->
               <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
               <!-- [ngValue]="locId.locatorId" -->
 
@@ -296,7 +296,7 @@
               </div>
               <ng-template #thenBlockopen>
                   <td><button type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}" style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
-            <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrem{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
+            <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrm{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
               </ng-template>
               <ng-template #elseBlockfreeze>
                   <td><button disabled type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
@@ -349,7 +349,7 @@
                 </td>
                 <td>
                     <input type="text" formControlName="Floor"  value={{Floor}} [(ngModel)]="Floor" class="form-control"
-                                       placeholder="Floor" style="width: 52px;" maxlength="1">
+                                       placeholder="Floor" style="width: 52px;" maxlength="1"(keyup)="keytab($event, 1,'input2')"  #input1>
                     <!-- <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
                         <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
                         <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
@@ -363,7 +363,7 @@
                     Rack&nbsp;:
                 </td>
                 <td>
-<input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;"maxlength="1">
+<input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;" maxlength="1" (keyup)="keytab($event, 1,'input3')"  #input2>
                 </td>
             </tr>
             <tr>
@@ -372,7 +372,7 @@
                 </td>
                 <td>
                     <input formControlName="RackNo" [(ngModel)]="RackNo" value={{RackNo}} class="form-control"
-                                       placeholder="Rack No" style="width: 52px;"maxlength="2">
+                                       placeholder="Rack No" style="width: 52px;"maxlength="2" (keyup)="keytab($event, 2,'input4')"  #input3>
                 </td>
             </tr>
             <tr>
@@ -381,7 +381,7 @@
                 </td>
                 <td>
                     <input formControlName="Row" [(ngModel)]="Row" value={{Row}} class="form-control"
-                                     placeholder="Row" style="width: 52px;" maxlength="1">
+                                     placeholder="Row" style="width: 52px;" maxlength="1" (keyup)="keytab($event, 1,'input5')"  #input4>
                 </td>
             </tr>
             <tr>
@@ -390,13 +390,13 @@
                 </td>
                 <td>
                     <input formControlName="RowNo" [(ngModel)]="RowNo" value={{RowNo}} class="form-control"
-                                       placeholder="Row No" style="width: 52px;"maxlength="2">
+                                       placeholder="Row No" style="width: 52px;"maxlength="2" (keyup)="keytab($event, 2,'input6')"  #input5>
                 </td>
             </tr>
           </table>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="okLocator(content)">Ok</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="okLocator(content)" #input6>Ok</button>
         </div>
       </div>
     </div>

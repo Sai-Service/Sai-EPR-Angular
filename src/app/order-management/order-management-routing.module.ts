@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { from } from 'rxjs';
 import { AllotmentComponent } from './allotment/allotment.component';
+import { CounterSaleWithCSVModuleComponent } from './counter-sale-with-csvmodule/counter-sale-with-csvmodule.component';
 import { CounterSaleComponent } from './counter-sale/counter-sale.component';
 import { DeAllotmentComponent } from './de-allotment/de-allotment.component';
 import { OmSalesOrderFormComponent } from './om-sales-order-form/om-sales-order-form.component';
@@ -25,7 +26,11 @@ const routes: Routes = [
   {path:'ReversalOrder',component:ReversalOrderComponent},
   {path:'GatePass',component:SalesGatePassComponent},
   {path:'OMSalesOrder',component:OmSalesOrderFormComponent},
+<<<<<<< HEAD
   {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
+=======
+  {path:'CounterSaleWithCSV',component:CounterSaleWithCSVModuleComponent},
+>>>>>>> 1be03fde6946218bf1e40f66fc133d680b820ad9
   // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

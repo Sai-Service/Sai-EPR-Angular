@@ -1,20 +1,14 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, HostListener, ViewChild, ElementRef ,NgModule} from '@angular/core';
+import { FormGroup, FormControl, FormBuilder,NgForm,Validators, FormArray,FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
-import { Router } from '@angular/router';
-import { Validators, FormArray } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { ActivatedRoute, ParamMap ,Router} from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { TransactionService } from 'src/app/transaction/transaction.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { data } from 'jquery';
 import { SalesOrderobj } from 'src/app/order-management/sales-order-form/sales-orderobj'
-import { DatePipe } from '@angular/common';
-import { Location } from "@angular/common";
+import { DatePipe,Location } from '@angular/common';
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver';
 
@@ -44,7 +38,6 @@ interface ISalesBookingForm {
   transactionTypeName: string;
   createOrderType: string;
   custPoNumber: number;
-  // orderedDate: Date;
   frmLocatorId: number;
   priceListId: number;
   priceListName: string;
@@ -117,19 +110,16 @@ interface CustomerCreationInterface {
 
 var require: any;
 
-
 @Component({
-  selector: 'app-counter-sale',
-  templateUrl: './counter-sale.component.html',
-  styleUrls: ['./counter-sale.component.css'],
-
+  selector: 'app-counter-sale-with-csvmodule',
+  templateUrl: './counter-sale-with-csvmodule.component.html',
+  styleUrls: ['./counter-sale-with-csvmodule.component.css'],
   template: `<pdf-viewer [src]="pdfSrc"
               [render-text]="true"
               style="display: block;"></pdf-viewer>`
 })
-
-
-export class CounterSaleComponent implements OnInit {
+export class CounterSaleWithCSVModuleComponent implements OnInit {
+ 
   CounterSaleOrderBookingForm: FormGroup;
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
@@ -1814,11 +1804,11 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
     // return;
     // } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    // let jsonData = this.CounterSaleOrderBookingForm.value;
     let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
     jsonData.orderedDate=this.pipe.transform(this.now, 'yyyy-MM-dd');
     jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
-    // alert(jsonData.refCustNo);
+    jsonData.emplId=sessionStorage.getItem('emplId');
+    jsonData.locId=sessionStorage.getItem('locId');
     jsonData.ouId = Number(sessionStorage.getItem('ouId'));
     let salesObj = Object.assign(new SalesOrderobj(), jsonData);
     salesObj.setoeOrderLinesAllList(orderLines);
@@ -2281,7 +2271,6 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
       this.displayCSOrderAndLineDt = false;
       let select = this.orderTypeList.find(d => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
-      // alert(select.transactionTypeId)
       this.CounterSaleOrderBookingForm.patchValue({ transactionTypeId: select.transactionTypeId })
       if (transactionTypeName === 'Accessories Sale - Cash' || transactionTypeName === 'Spares Sale - Cash') {
         this.PaymentButton = true

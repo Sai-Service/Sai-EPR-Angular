@@ -366,7 +366,6 @@ export class BulkUploadWithCsvComponent implements OnInit {
 
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     let csvArr = [];
-
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split(',');
       if (curruntRecord.length == headerLength) {
@@ -397,7 +396,6 @@ export class BulkUploadWithCsvComponent implements OnInit {
         csvArr.push(csvRecord);
       }
       return csvArr;
-
     }
 
     

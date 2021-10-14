@@ -52,6 +52,7 @@ interface IpostPO {
   description: string;
   baseAmount: number;
   suppInvNo: string;
+  suppInvDate:Date;
   TransactionNature: string;
   purchaseLocation: string;
   evaluatorName: string;
@@ -171,6 +172,7 @@ export class OPMasterDtoComponent implements OnInit {
   totTaxAmt: number;
   baseAmount: number;
   suppInvNo: string;
+  suppInvDate:Date;
   TransactionNature: string;
   purchaseLocation: string;
   evaluatorName: string;
@@ -369,6 +371,7 @@ displayThirdButtonDisplay=true;
       totalAmt: [],
       supplierAddress: [],
       suppInvNo: ['', [Validators.minLength(3)]],
+      suppInvDate:[''],
       // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
       iRNNo: [],
@@ -489,6 +492,7 @@ displayThirdButtonDisplay=true;
     //       console.log(this.invItemList);
     //     }
     //   );
+
     this.service.taxCategoryList()
       .subscribe(
         data1 => {
@@ -860,6 +864,13 @@ displayThirdButtonDisplay=true;
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
             this.lstcomments1 = data.obj;
+            var approveDate1 = data.obj.approveDate;
+            var approveDate2 = this.pipe.transform(approveDate1, 'dd-MM-yyyy');
+            this.poMasterDtoForm.patchValue({approveDate: approveDate2});
+            var poDate1 = data.obj.poDate;
+            var poDate2 = this.pipe.transform(poDate1, 'dd-MM-yyyy');
+            this.poMasterDtoForm.patchValue({poDate: poDate2});
+            // alert(approveDate2);
             const status = this.lstcomments1.authorizationStatus; 
             if (status === 'Inprogress') {
               // this.displayNewButtonApprove = true;
@@ -1077,6 +1088,7 @@ displayThirdButtonDisplay=true;
     delete val.empId;
     delete val.baseAmount;
     delete val.suppInvNo;
+    delete val.suppInvDate;
     delete val.TransactionNature;
     delete val.purchaseLocation;
     delete val.evaluatorName;
@@ -1305,7 +1317,6 @@ displayThirdButtonDisplay=true;
 
         console.log(this.invItemId, this.taxCat);
         if (this.itemType === "GOODS") {
-
           this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc).subscribe((res: any) => {
             if (res.code === 200) {
               this.ItemDetailsList = res.obj;
@@ -1428,12 +1439,20 @@ displayThirdButtonDisplay=true;
             this.siteIdList = data;
             console.log(this.siteIdList);
             this.taxCat = this.siteIdList.taxCategoryName
-
+            var taxCategoryName=data.taxCategoryName;
             if (this.taxCat == null) {
               alert("Tax not attached to site")
               this.displayNewButton = false;
               const sitWithOutTax = 'y';
             }
+            // if (taxCategoryName.includes('Purchase-S&CGST')){
+            //   // alert(taxCategoryName);
+            //   this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-S&CGST'));
+            // }
+            // else if (taxCategoryName.includes('Purchase-I&CGST')){
+            //   alert(taxCategoryName);
+            //   this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-I&CGST'));
+            // }
           }
         );
     }

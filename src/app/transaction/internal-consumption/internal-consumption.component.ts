@@ -62,6 +62,13 @@ interface InternalConsumption
   CostDetail:number;
 }
 
+export  class IcTrans {
+  segment:string;
+  Locator:string;
+  quantity:number;
+  
+}
+
 @Component({
   selector: 'app-internal-consumption',
   templateUrl: './internal-consumption.component.html',
@@ -123,7 +130,7 @@ export class InternalConsumptionComponent implements OnInit {
   displayheader:boolean=true;
   displayLocator:Array<boolean>=[];
   displayButton:boolean=true;
-  displayaddButton:boolean=false;
+  displayaddButton:boolean=true;
   addRow:boolean=true;
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
@@ -180,10 +187,20 @@ export class InternalConsumptionComponent implements OnInit {
   dispRow:boolean=true;
   displayRemoveRow: Array<boolean> = [];
 
-  @ViewChild("myinput") myInputField: ElementRef;
+  public itemMap = new Map<string, IcTrans >();
+
+  @ViewChild("myinput") myinput: ElementRef;
+  @ViewChild("input1") input1:ElementRef;
+  @ViewChild("input2") input2:ElementRef;
+  @ViewChild("input3") input3:ElementRef;
+  @ViewChild("input4") input4:ElementRef;
+  @ViewChild("input5") input5:ElementRef;
+  @ViewChild("input6") input6:ElementRef;
+  @ViewChild("Item") Item:ElementRef;
+  
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
-    this.myInputField.nativeElement.focus();
+    this.myinput.nativeElement.focus();
   }
 
   constructor(private fb: FormBuilder, private router: Router,private route1:ActivatedRoute, private service: MasterService)
@@ -261,47 +278,88 @@ export class InternalConsumptionComponent implements OnInit {
   })}
 
   addnewcycleLinesList(i:number){
-    //alert('hi');
-    // alert(this.InternalConsumptionForm.get('compileType').value+'value');
-    // this.cycleLinesList().push(this.newcycleLinesList());
-     if(i>-1)
-    {
-      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+    if(i>-1){
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
       var itemqty=trxLnArr1[i].physicalQty;
-      var itemseg=trxLnArr1[i].segment;
-      // alert(itemqty);
-      if(itemqty==='' && itemseg==='')
-     { alert('Please enter data in blank field');
+      var item1=trxLnArr1[i].segment;
+      // alert(item1);
+      if(item1==='')
+     { alert('Please enter Blank Data');
      return;
     }
-      //alert('hi');
-    this.reservePos(i);
+  
+  
+    if(!this.itemMap.has(item1))
+    {
+      this.reservePos(i);
     }
     else{
-      this.displayaddButton=false;
+      // debugger;
+      this.deleteReserveLinewise(i);
+      this.reservePos(i);
     }
-    this.cycleLinesList().push(this.newcycleLinesList());
-
-    var len = this.cycleLinesList().length;
-  var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-  (patch.controls[len - 1]).patchValue(
-    {
-      lineNumber: len,
-    }
-  );
-
    }
-  removenewcycleLinesList(trxLineIndex){
-    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
-    var itemid=trxLnArr1[trxLineIndex].segment;
-    // alert(itemid+'Delete');
-    if(itemid!=null)
-    {
-    this.deleteReserveLinewise(trxLineIndex);
+   var len1 = this.cycleLinesList().length;
+    // alert(len1+'Length'+i);
+    if(len1==i+1){
+     
+    this.cycleLinesList().push(this.newcycleLinesList());
+    
+    // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
+    var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+    var len = this.cycleLinesList().length;
+    (patch.controls[len - 1]).patchValue(
+      {
+        lineNumber: len,
+        
+      }
+      
+    );
+     var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    this.InternalConsumptionForm.get('compileType').disable();
+    this.InternalConsumptionForm.get('reason').disable();
+    // this.Item[i+1].nativeElement.focus();
+    // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
-    this.cycleLinesList().removeAt(trxLineIndex);
-    this.displayLocator[trxLineIndex]=true;
-  }
+    }
+    
+    // this.displayRemoveRow[i]=true;
+    // alert(i);
+      }
+      removenewcycleLinesList(trxLineIndex){
+        var len1=this.cycleLinesList().length;
+        if(len1===1){
+          alert('You can not delete the line');
+          return;}
+        var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+        var itemid=trxLnArr1[trxLineIndex].segment;
+        // alert(itemid+'Delete');
+        if(itemid!=null)
+        {
+        this.deleteReserveLinewise(trxLineIndex);
+        this.itemMap.delete(itemid);
+        }
+        this.cycleLinesList().removeAt(trxLineIndex);
+        var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+        var len = this.cycleLinesList().length;
+        (patch.controls[len - 1]).patchValue(
+          {
+            lineNumber: len,
+          }
+        );
+    
+        var btnrm =document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement;
+         if(document.contains(btnrm)){
+        (document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement).disabled = true;
+        // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+        }
+       
+        this.displayLocator[trxLineIndex]=true;
+      }
+ 
+ 
   ngOnInit(): void {
 
     // alert(this.route1.queryParams+'hell')
@@ -423,7 +481,7 @@ console.log(this.route1.queryParams+'hell');
         });
        
 
-        // this.addnewcycleLinesList(-1);
+        this.addnewcycleLinesList(-1);
         
         var patch = this.InternalConsumptionForm.get('trxLinesList') as  FormArray
 
@@ -605,13 +663,13 @@ this.router.navigate(['admin']);
           this.displayLocator[i]  = true;
 
           }
-          if(event!=null)
-          {
-            // this.displayaddButton=true;
-            // alert('Remove');
-            (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = false;
-            (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
-          }
+          // if(event!=null)
+          // {
+          //   // this.displayaddButton=true;
+          //   // alert('Remove');
+          //   (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = false;
+          //   (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
+          // }
           
         });
       
@@ -868,6 +926,8 @@ this.router.navigate(['admin']);
           var locId1=this.InternalConsumptionForm.get('locId').value
 
             let variantFormGroup = <FormGroup>variants.controls[i];
+            variantFormGroup.removeControl('reservedQty');
+            variantFormGroup.removeControl('transactionNumber');
             variantFormGroup.addControl('transactionTypeId', new FormControl(transtypeid, []));
             variantFormGroup.addControl('locId', new FormControl(locId1, []));
             // variantFormGroup.addControl('itemId', new FormControl(trxLnArr1[i].invItemId, Validators.required));
@@ -882,8 +942,13 @@ this.router.navigate(['admin']);
         //  var obj=res.obj;
          if(res.code===200)
          {
-          alert("Record inserted Successfully");
-          (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
+          // alert("Record inserted Successfully");
+          var IcRow:IcTrans=new IcTrans();
+          IcRow.segment=(trxLnArr1[i].segment);
+          IcRow.Locator=(trxLnArr1[i].LocatorSegment);
+          IcRow.quantity=(trxLnArr1[i].physicalQty);
+          this.itemMap.set(trxLnArr1[i].segment,IcRow);
+          // (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
          }
          else{
           if(res.code === 400) {
@@ -1108,7 +1173,7 @@ this.router.navigate(['admin']);
 
           }
         );
-        this.addnewcycleLinesList(-1);
+        // this.addnewcycleLinesList(-1);
         this.service.ItemIdListDept(this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId).subscribe(
           data => {
             this.ItemIdList = data;
@@ -1116,6 +1181,41 @@ this.router.navigate(['admin']);
           });
 
       }
+      keytab(event, maxLength,nxtEle)
+  {
+    console.log(event);
+    // let sib=event.srcElement.nextElementSibling;
+    // alert(sib);
+    // alert(event.target.value+'Event'+event.target.value.length);
+    if(event.target.value.length===maxLength )
+    {
+      // alert('Focus'+nxtEle);
+      if(nxtEle==='input2')
+      {
+        // alert('Input2');
+      this.input2.nativeElement.focus();
+      }
+      if(nxtEle==='input3')
+      {
+      this.input3.nativeElement.focus();
+      }
+      if(nxtEle==='input4')
+      {
+      this.input4.nativeElement.focus();
+      }
+      if(nxtEle==='input5')
+      {
+      this.input5.nativeElement.focus();
+      }
+      if(nxtEle==='input6')
+      {
+      this.input6.nativeElement.focus();
+      }
+    }
+    
+
+  }
+
 
       HeaderValidation() {
         var isValid:boolean=false;

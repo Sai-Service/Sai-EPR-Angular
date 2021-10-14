@@ -49,7 +49,7 @@
                                                 Period&nbsp;:
                                         </td>
                                         <td >
-                                            <select class="form-control"  formControlName="periodName" >
+                                            <select class="form-control"  formControlName="periodName" (ngModelChange)="onOptionGlPeriod($event)">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                                             </select>
@@ -60,7 +60,7 @@
                                                 Journal&nbsp;Date&nbsp;:
                                         </td>
                                         <td >
-                                            <input type="Date" class="form-control" formControlName="postedDate" >
+                                            <input type="Date" class="form-control" formControlName="postedDate" id="postDate" value={{postedDate}}>
                                             <span  *ngIf="!JournalVoucherForm.get('postedDate').valid && JournalVoucherForm.get('postedDate').touched">Please
                                                     Select Period Date </span>
                                         </td>

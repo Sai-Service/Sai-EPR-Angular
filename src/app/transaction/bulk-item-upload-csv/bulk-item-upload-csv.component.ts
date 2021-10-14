@@ -58,6 +58,7 @@ export class BulkItemUploadCSVComponent implements OnInit {
 
 
   uploadFile(event:any) {
+    // alert(event)
     event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])

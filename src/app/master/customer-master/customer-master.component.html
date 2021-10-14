@@ -26,8 +26,75 @@
                                                     placeholder="Enter contact number">
                                             </td>
                                             <td>
-                                                <button type="submit" (click)="searchByContact(customerId1)"><i
-                                                        class="fa fa-search"></i></button>
+                                                <!-- <button type="submit" (click)="searchByContact(customerId1)"><i
+                                                        class="fa fa-search"></i></button> -->
+                                                        <button type="button" class="btn btn-primary" (click)="searchByContact(customerId1)"
+                                                        data-toggle="modal" data-target="#contactNoSearchModel" style="width: 2rem;color: white;">
+                                                        <i class="fa fa-search"></i> </button>
+                                                    <div class="modal fade" id="contactNoSearchModel" tabindex="-1" role="dialog"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <table class="GridFont" id="excel-table" cellspacing="0"
+                                                                                cellpadding="4">
+                                                                                <tbody>
+                                                                                    <tr class="GridHeader">
+                                                                                        <th scope="col">Customer No</th>
+                                                                                        <th scope="col">Customer Name</th>
+                                                                                        <th scope="col">Address1</th>
+                                                                                        <th scope="col">Address2</th>
+                                                                                        <th scope="col">Address3</th>
+                                                                                        <th scope="col">Location</th>
+                                                                                        <th scope="col">City</th>
+                                                                                        <th scope="col">Pin Code</th>
+                                                                                        <th scope="col">State</th>
+                                                                                        <th scope="col">Mobile1</th>
+                                                                                        <th scope="col">Mobile2</th>
+                                                                                        <th scope="col">Email ID1</th>
+                                                                                        <th scope="col">Email ID2</th>
+                                                                                        <th scope="col">Select</th>
+                                                                                    </tr>
+                                                                                    <tr *ngFor="let com of accountNoSearchdata" class="ItemStyle"
+                                                                                        style="text-decoration:none;">
+                                                                                        <td style="width: 195px;">{{com.custAccountNo}}</td>
+                                                                                        <td style="width: 195px;">{{com.custName}}</td>
+                                                                                        <td style="width: 195px;">{{com.address1}}</td>
+                                                                                        <td style="width: 195px;">{{com.address2}}</td>
+                                                                                        <td style="width: 195px;">{{com.address3}}</td>
+                                                                                        <td style="width: 195px;">{{com.address4}}</td>
+                                                                                        <td style="width: 195px;">{{com.city}}</td>
+                                                                                        <td style="width: 195px;">{{com.pinCd}}</td>
+                                                                                        <td style="width: 195px;">{{com.state}}</td>
+                                                                                        <td style="width: 195px;">{{com.mobile1}}</td>
+                                                                                        <td style="width: 195px;">{{com.mobile2}}</td>
+                                                                                        <td style="width: 195px;">{{com.emailId}}</td>
+                                                                                        <td style="width: 195px;">{{com.emailId1}}</td>
+                                                                                        <td><button class="btn-primary"
+                                                                                                (click)="searchByAccount1(com.custAccountNo)"
+                                                                                                data-dismiss="modal">Select</button></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                            
                                             </td>
                                         <!-- </tr>
                                         <tr> -->
@@ -607,6 +674,18 @@
                                         *ngIf="!customerMasterForm.get('panNo').valid && customerMasterForm.get('panNo').touched">Please
                                         Enter pan no must</span> -->
                                 </td>
+                                <div *ngIf="displaytanaadhar; then thenBlockaadharInfo; else elseBlocktanInfo"></div>
+                                <ng-template #thenBlockaadharInfo>
+                                    <td style="width: 10%" class="LabelFontStyle">&nbsp;Aadhar&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input type="number" formControlName="aadharNo" [(ngModel)]='aadharNo' value={{aadharNo}}
+                                             class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
+                                            placeholder="Enter Aadhar No" maxlength="12">
+
+                                    </td>
+                                </ng-template>
+                                <ng-template #elseBlocktanInfo>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Tan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <input formControlName="tanNo" [(ngModel)]='tanNo' value={{tanNo}}
@@ -614,6 +693,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
                                         placeholder="Enter tan No">
                                 </td>
+                                </ng-template>
                             </tr>
                             <!-- <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;"> -->
                               <tr>
@@ -664,6 +744,12 @@
                               </td>
                           </tr>
                             <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Applicable&nbsp;:&nbsp;</td>
+                                    <!-- <td> -->
+                                            <td style="border: none;color: black;">
+                                                    <input type="checkbox" formControlName="tcs" [(ngModel)]="tcs"  (change)="tcssel($event)">
+                                                </td>
+                                    <!-- </td> -->
                             </tr>
                             <tr>
                                 <!-- <td style="width: 15%" class="LabelFontStyle1">
@@ -857,7 +943,7 @@
                                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                         <td>
                                            <select   formControlName="souId" id="souId" [(ngModel)]="souId"  class="form-control"
-                                           [ngClass]="{ 'is-invalid': submitted && f.customerSiteId.errors }">
+                                           [ngClass]="{ 'is-invalid': submitted && f.customerSiteId.errors }" (ngModelChange)="onOptionSelOuLimit($event)">
                                                     <option disabled></option>
                                                     <option *ngFor="let sc of  ouIdList" [ngValue]="sc.ouId">
                                                     {{sc.ouId}}-{{sc.ouName}}

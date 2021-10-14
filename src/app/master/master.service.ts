@@ -104,6 +104,11 @@ export class MasterService {
   locationIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
   }
+
+  locationIdList1(ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/locationMst/locListOuwise/${ouId}`);
+  }
+
   TolocationIdList(locId): Observable<any> {
     return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
   }
@@ -112,6 +117,10 @@ export class MasterService {
   }
   subinventoryIdList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/subInvMst');
+  }
+
+  subinventoryIdList1(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/subInvMst/subInv/${divisionId}`);
   }
   titleList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/TitleList');
@@ -929,6 +938,9 @@ public CustMasterSubmit(CustMasterRecord) {
 getsearchByAccountNo(customerId1): Observable<any> {
   return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1/${customerId1}`);
 }
+Limitdata(ouId,custId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/Customer/getCrAmtHighAmt?ouId=${ouId}&customerId=${custId}`)
+}
 
 getsearchByAccountNo1(accountId , divisionId): Observable<any> {
   return this.http.get(this.ServerUrl +  `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
@@ -1216,15 +1228,22 @@ viewStocknote(shipmentNumber){
     headers: this.headers,
   });
 }
-viewStockgatePass(shipmentNumber){
+viewStockgatePass(shipmentNumber,empId){
  //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
   // local
-  const REQUEST_URI = this.ServerUrl +`/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;    
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/postSTKGatepass?shipmentNumber=${shipmentNumber}&emplId=${empId}`;    
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
     headers: this.headers,
   });
+}
+StockgatePassSubmit(stkGatePass) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/rcvShipment/SS_Stk_Gatepass/`);
+  return this.http.post(url, stkGatePass, options);
 }
 ///////////OnHand////////////
 searchByItemByLoc(locId,itemid,ouId,divId):Observable<any>

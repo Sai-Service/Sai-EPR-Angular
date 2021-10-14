@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
 import { DatePipe } from '@angular/common'
+import { formatDate } from '@angular/common'
 
 interface IcustomerMaster {
   custType: string;
@@ -79,6 +80,8 @@ interface IcustomerMaster {
   dealerCode:string;
   dealerType:string;
   siteName:string;
+  tcs:string;
+  aadharNo:number;
 }
 
 @Component({
@@ -187,6 +190,7 @@ export class CustomerMasterComponent implements OnInit {
   // ouId:number;
 
   loginArray:string;
+  divId:number;
   lstcomments2: any[];
 
   public payTermDescList: any;
@@ -207,6 +211,11 @@ export class CustomerMasterComponent implements OnInit {
   siteName:string;
   
   pipe = new DatePipe('en-US');
+  accountNoSearchdata: any;
+  displaytanaadhar: boolean;
+  tcs:string;
+  aadharNo:number;
+  limitData: any;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
 
@@ -280,6 +289,7 @@ export class CustomerMasterComponent implements OnInit {
       divisionName: [],
       ouName:[],
       loginArray:[],
+      divId:[],
       staxCatName:[],
       stanNo:[],
       spanNo:['', [ Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
@@ -297,6 +307,8 @@ export class CustomerMasterComponent implements OnInit {
       dealerCode:[],
       dealerType:[],
       siteName:[],
+      tcs:[],
+      aadharNo:[],
     })
 
   }
@@ -309,6 +321,7 @@ export class CustomerMasterComponent implements OnInit {
     this.lstcomments.customerSiteMasterList=[];
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
+    this.divId=Number(sessionStorage.getItem('divisionId'));
    this.loginName=sessionStorage.getItem('name');
    console.log(this.loginArray);
    this.ouName = (sessionStorage.getItem('ouName'));
@@ -362,13 +375,21 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.titleList);
         }
       );
-    this.service.OUIdList()
+    // this.service.OUIdList()
+    //   .subscribe(
+    //     data => {
+    //       this.ouIdList = data;
+    //       console.log(this.ouIdList);
+    //     }
+    //   );
+      this.service.OUIdListDiv(this.divId)
       .subscribe(
         data => {
           this.ouIdList = data;
           console.log(this.ouIdList);
         }
       );
+      
     this.service.cityList()
       .subscribe(
         data => {
@@ -524,6 +545,7 @@ onOptionClassCode(event:any){
     if (event === 'Person') {
       this.displayPerson = true;
       this.displayOrgnization = false;
+      this.displaytanaadhar=true;
     //  this.customerMasterForm.get('custName').disable();
     } if (event === 'Organization') {
       //this.displayOrgnization = true;
@@ -531,6 +553,7 @@ onOptionClassCode(event:any){
      // this.customerMasterForm.get('custName').enable();
      this.customerMasterForm.get('birthDate').disable();
      this.customerMasterForm.get('weddingDate').disable();
+     this.displaytanaadhar=false;
     }
   }
 
@@ -629,7 +652,7 @@ if (person === 'Person'){
     delete val.weddingDate;
     delete val.status;
     delete val.classCodeType;
-    delete val.spinCd;
+    // delete val.spinCd;comment by vinita
     delete val.sstartDate;
     delete val.sendDate;
     return val;
@@ -811,34 +834,36 @@ if (person === 'Person'){
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
         data => {
-          this.lstcomments = data.obj;
+          this.accountNoSearchdata = data.obj;
            console.log(this.lstcomments);
-          this.customerMasterForm.patchValue(this.lstcomments[0]);
+           this.customerMasterForm.patchValue({ custAccountNo: data.obj.custAccountNo })
+          // this.customerMasterForm.patchValue(this.lstcomments[0]);
+          // this.customerMasterForm.patchValue(this.lstcomments[0].);
           // this.city = this.lstcomments.city
  
-          this.customerMasterForm.patchValue({
-            panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
-            gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
-            highAmt:this.lstcomments[0].customerSiteMasterList[0].highAmt,
-            creditAmt:this.lstcomments[0].customerSiteMasterList[0].creditAmt,
-            disPer:this.lstcomments[0].customerSiteMasterList[0].disPer
+    //       this.customerMasterForm.patchValue({
+    //         panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
+    //         gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
+    //         highAmt:this.lstcomments[0].customerSiteMasterList[0].highAmt,
+    //         creditAmt:this.lstcomments[0].customerSiteMasterList[0].creditAmt,
+    //         disPer:this.lstcomments[0].customerSiteMasterList[0].disPer
   
-          });
-          var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
-          var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
-          this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValueId});
-          this.displayadditional=false;
-          this.customerMasterForm.get('address1').disable();
-    this.customerMasterForm.get('address2').disable();
-    this.customerMasterForm.get('address3').disable();
-    this.customerMasterForm.get('address4').disable();
-    this.customerMasterForm.get('location').disable();
-    this.customerMasterForm.get('city').disable();
-    this.customerMasterForm.get('pinCd').disable();
-    this.customerMasterForm.get('state').disable();
-    this.customerMasterForm.get('creditAmt').disable();
-    this.customerMasterForm.get('highAmt').disable();
-    this.customerMasterForm.get('disPer').disable();
+    //       });
+    //       var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
+    //       var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
+    //       this.customerMasterForm.patchValue({title:this.lstcomments[0].title,paymentType:payTerm.lookupValueId});
+    //       this.displayadditional=false;
+    //       this.customerMasterForm.get('address1').disable();
+    // this.customerMasterForm.get('address2').disable();
+    // this.customerMasterForm.get('address3').disable();
+    // this.customerMasterForm.get('address4').disable();
+    // this.customerMasterForm.get('location').disable();
+    // this.customerMasterForm.get('city').disable();
+    // this.customerMasterForm.get('pinCd').disable();
+    // this.customerMasterForm.get('state').disable();
+    // this.customerMasterForm.get('creditAmt').disable();
+    // this.customerMasterForm.get('highAmt').disable();
+    // this.customerMasterForm.get('disPer').disable();comment by vinnita
         }
       );
   }
@@ -853,8 +878,8 @@ if (person === 'Person'){
           this.customerMasterForm.patchValue(this.lstcomments);
           // this.city = this.lstcomments.city
            
-          let birDate =this.pipe.transform(this.lstcomments[0].customerSiteMasterList[0].birthDate, 'yyyy-MM-dd');
-         alert("----"+birDate)
+          // let birDate =this.pipe.transform(this.lstcomments[0].birthDate, 'yyyy-MM-dd');
+        //  alert("----"+birDate)
           this.customerMasterForm.patchValue({
             panNo:this.lstcomments.customerSiteMasterList[0].panNo,
             gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
@@ -914,6 +939,9 @@ if (person === 'Person'){
           this.customerSiteId=select.customerSiteId;
           this.slocation=select.location
           this.customerMasterForm.patchValue({siteName:select.siteName});
+          this.customerMasterForm.patchValue({screditAmt:select.creditAmt});
+          this.customerMasterForm.patchValue({shighAmt:select.highAmt});
+          this.customerMasterForm.patchValue({sdisPer:select.disPer});
           // this.sstatus=select.status
           // ticketNo not in  json
           let selstatus = this.statusList.find(d => d.codeDesc === select.status);
@@ -941,6 +969,33 @@ if (person === 'Person'){
         );
         }
       }
+      tcssel(e) {
+        if (e.target.checked=== true) {
+          this.tcs = 'Y'
+       } 
+       if (e.target.checked=== false) {
+         this.tcs='N'
+       }
+      }
+      onOptionSelOuLimit(event){
+        var custId=this.customerMasterForm.get('customerId').value;
+        if(custId!=null){
+        this.service.Limitdata(event,custId).subscribe((res: any) => {
+          if (res.code === 200) {
+            // alert(res.message);
+            this.limitData = res.obj
+            this.customerMasterForm.patchValue({'screditAmt':this.limitData.creditAmt,'shighAmt':this.limitData.highAmt,'sdisPer':this.limitData.disPer});
+            } 
+            else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+           
+            // this.country = 'INDIA';
+          }
+        );}
+      }
       onOptionsiteSelectedCity (event){
 
         if(event != undefined){
@@ -949,24 +1004,23 @@ if (person === 'Person'){
         }
       }
       onBirthgDateChange(event){
-
-
         var birthdt  :Date= new Date(event.target.value);
-        this.minDateWedding = birthdt.setFullYear(birthdt.getFullYear()+18);
-        var birthdt1  :Date= new Date(this.minDateWedding);
-
+        
+        
+       // this.customerMasterForm.controls.weddingDate.setValue(formatDate(this.minDateWedding,'yyyy-MM-dd','en'));
 
       }
       onOptionWeddingDate(event)
       {
 
-         var weddate=event.target.value;
+        var weddate=event.target.value;
 
         var birthdat:Date=this.customerMasterForm.get('birthDate').value
 
         if(weddate>this.startDate ||weddate<=birthdat||weddate<=birthdat.setFullYear(birthdat.getFullYear()+18))
         {
           alert("Please select Correct Wedding Date");
+          this.weddingDate = undefined;
 
         }
       }

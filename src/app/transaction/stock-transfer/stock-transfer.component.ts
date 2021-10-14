@@ -117,6 +117,7 @@ export class StockTransferComponent implements OnInit {
 
 
   @ViewChild("myinput") myInputField: ElementRef;
+  emplId: number;
   // @ViewChild("segment") segment: ElementRef;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
@@ -178,7 +179,7 @@ export class StockTransferComponent implements OnInit {
       var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
       var itemqty=trxLnArr1[i].primaryQty;
       var item=trxLnArr1[i].segment;
-      alert(itemqty);
+      // alert(itemqty);
       if(itemqty===''|| item==='')
      { alert('Please enter data in blank field');
      return;
@@ -194,7 +195,7 @@ export class StockTransferComponent implements OnInit {
     }
     }
     var len1 = this.trxLinesList().length;
-    alert(len1+'Length'+i);
+    // alert(len1+'Length'+i);
     if(len1==i+1){
      
     this.trxLinesList().push(this.newtrxLinesList()); 
@@ -213,11 +214,12 @@ export class StockTransferComponent implements OnInit {
      var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
      if(document.contains(btnrm)){
     (document.getElementById("btnrm"+i) as HTMLInputElement).disabled = false;
+    this.stockTranferForm.get('transferOrgId').disable();
     // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
     }
     // this.displayRemoveRow[i]=true;
-    alert(i);
+    // alert(i);
    
   }
   removenewtrxLinesList(trxLineIndex:number) {
@@ -256,6 +258,7 @@ export class StockTransferComponent implements OnInit {
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
     this.issueBy=(sessionStorage.getItem('name'));
+    this.emplId=Number(sessionStorage.getItem('emplId'));
     // this.transCost=0.00;
     // alert(this.deptName+'Depart');
     // alert(this.locId+'locID'+Number(sessionStorage.getItem('locId')));
@@ -509,7 +512,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
   //  var obj=res.obj;
    if(res.code===200)
    {
-    alert(res.message);
+    // alert(res.message);
     // (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = true;
     var stkRow:StockTransferRow=new StockTransferRow();
     stkRow.segment=(trxLnArr1[i].segment);
@@ -829,15 +832,30 @@ viewStocknote() {
 }
 
 viewStockgatePass() {
+  const formValue:IStockTransfer = this.stockTranferForm.value;
   var shipNumber = this.stockTranferForm.get('shipmentNumber').value;
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.service.viewStockgatePass(shipNumber)
-    .subscribe(data => {
-      var blob = new Blob([data], { type: 'application/pdf' });
-      var url = URL.createObjectURL(blob);
-      var printWindow = window.open(url, '', 'width=800,height=500');
-      printWindow.open
-    })
-}
+  this.service.StockgatePassSubmit(formValue).subscribe(
+    (res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.service.viewStockgatePass(shipNumber,this.emplId)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+        })
+    }
+     else {
+        if (res.code === 400) {
+          alert( res.message);     
+          // this.CounterSaleOrderBookingForm.reset();
+          // window.location.reload();
+        }
+
+    }}
+  )
+  }
 }

@@ -1,10 +1,13 @@
-import { PathLocationStrategy } from '@angular/common';
+import { PathLocationStrategy, DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
 import { data } from 'jquery';
 import { MasterService } from 'src/app/master/master.service';
+import { min } from 'moment';
+import { formatDate } from '@angular/common'
+
 
 interface IJournalVoucher{
   segmentName:string;
@@ -31,6 +34,7 @@ interface IJournalVoucher{
   description:string;
   jeLineNum:number;
   docSeqVal1:number;
+  
 } 
 @Component({
   selector: 'app-journal-voucher',
@@ -49,7 +53,7 @@ export class JournalVoucherComponent implements OnInit {
   segment11:string;
   lookupValueDesc1:string;
   segment2:number;
-  postedDate:Date;
+  postedDate = new Date();
   lookupValueDesc2:string;
   segment3:number;
   lookupValueDesc3:string;
@@ -96,6 +100,11 @@ export class JournalVoucherComponent implements OnInit {
 
   periodName:string;
   public PeriodName:any;
+
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+
+
  
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.JournalVoucherForm=fb.group({
@@ -167,6 +176,7 @@ export class JournalVoucherComponent implements OnInit {
     this.emplId=Number((sessionStorage.getItem('emplId')));
     // alert('employee'+this.emplId);
 
+    this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.postedDate,'yyyy-MM-dd','en'));
     this.addnewglLines();
     var patch=this.JournalVoucherForm.get('glLines') as FormArray
      (patch.controls[0]).patchValue(
@@ -550,5 +560,16 @@ else
   alert("JV Status is not POST So,you can not reverse the JV");
 }
     }
-      }
+
+    onOptionGlPeriod(event){
+     
+       var selPer=this.PeriodName.find(d=>d.periodName===event);
+      (document.getElementById('postDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
+      (document.getElementById('postDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
+    }
+   
+  
+  
+  
+  }
   

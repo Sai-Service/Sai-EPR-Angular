@@ -158,25 +158,24 @@
         
         </tr>
     </table>
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" 
-    id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <table class="center" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;">
         <tr class="GridHeader" style="font-size: 14px;">
-            <th scope="col" style="border: 1px solid black;">PO Number</th>
+            <th scope="col" style="border: 1px solid black;width: 250px;">PO Number</th>
             <th scope="col" style="border: 1px solid black;">Base Amount</th>
             <th scope="col" style="border: 1px solid black;">Total Tax Amount</th>
             <th scope="col" style="border: 1px solid black;">Total Amount</th>
-            <th scope="col" style="border: 1px solid black;">PO Status</th>
-            <!-- <th scope="col" style="border: 1px solid black;">PO Date</th> -->
+            <th scope="col" style="border: 1px solid black;width: 200px;">PO Status</th>
+            <th scope="col" style="border: 1px solid black;width: 200px;">PO Date</th>
         </tr>
         <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
-          <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
+          <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;text-align: center;">
             <a   [routerLink]="['/admin/master/OPMasterDto',com.segment1]" href="{{segment1}}">{{com.segment1}}</a>
         </td>
-            <td style="border: 1px solid black;padding-left: 15px;text-align: right;">{{com.baseAmount}}</td>
-            <td style="border: 1px solid black;padding-left: 15px;text-align: right;">{{com.totTaxAmt}}</td>
-            <td style="border: 1px solid black;padding-left: 15px;text-align: right;">{{com.totalAmt}}</td>
-            <td style="border: 1px solid black;padding-left: 15px;text-align: right;">{{com.authorizationStatus}}</td>
-            <!-- <td style="border: 1px solid black;padding-left: 5px;text-align: right;">{{com.poDate | date:'yyyy-MM-dd'}}</td> -->
+            <td style="border: 1px solid black;padding-right: 15px;text-align: right;">{{com.baseAmount}}</td>
+            <td style="border: 1px solid black;padding-right: 15px;text-align: right;">{{com.totTaxAmt}}</td>
+            <td style="border: 1px solid black;padding-right: 15px;text-align: right;">{{com.totalAmt}}</td>
+            <td style="border: 1px solid black;padding-right: 15px;text-align: center;">{{com.authorizationStatus}}</td>
+            <td style="border: 1px solid black;padding-right: 5px;text-align: center;width: 30px;">{{com.poDate}}</td>
         </tr>
     </table>
     <table class="center">
