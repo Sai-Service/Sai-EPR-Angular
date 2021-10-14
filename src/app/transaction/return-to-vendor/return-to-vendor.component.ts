@@ -135,10 +135,14 @@ export class ReturnToVendorComponent implements OnInit {
       rtnDocDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       rtnFromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       rtnToDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+      // remarks:string;
+      remarks="52121101142";
                
       returnTo='Supplier'
 
       displayButton = true;
+      validateStatus = false;
+      saveButton = false;
       rtnLineValidation=true;
       rtnChkboxValidation=true;
       public minDate = new Date();
@@ -157,15 +161,15 @@ export class ReturnToVendorComponent implements OnInit {
       showLocator=false;
       validQtyEntered=false;
       showAllLines=false;
-      showAllItem=false;
+     
       headerFound=false;
       showQtyRtncol=false;
       lineValidation=false;
       lineItemRepeated=false;
       checkBoxAllItem=true;
       enableCheckBox=true;
-      validateStatus = false;
-      saveButton = false;
+      showAllItem=false;
+      
       lineStatus = false;
       dispReceiptLines=false;
       indReturn=false;
@@ -228,6 +232,7 @@ export class ReturnToVendorComponent implements OnInit {
             rtnDocDate:[],
             rtnFromDate:[],
             rtnToDate:[],
+            remarks:[],
           
             rcvLines: this.fb.array([this.lineDetailsGroup()]), 
             // poLines: this.fb.array([this.lineDetailsGroup()]),
