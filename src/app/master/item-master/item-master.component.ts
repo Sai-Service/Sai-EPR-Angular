@@ -204,6 +204,7 @@ export class ItemMasterComponent implements OnInit {
   public purchasableList: Array<string>=[];
   public costCenterList:Array<string>=[];
   public hsnSacCodeList: Array<string>[];
+  public taxCategoryDataList:Array<string>=[];
 
   public internalOrderList:Array<string>[];
   public marginCategoryList:Array<string>[];
@@ -992,6 +993,7 @@ else{
       .subscribe(
         data => {
           this.lstcomments = data;
+          this.taxCategoryDataList=data.taxCategoryNameList;
       this.itemMasterForm.patchValue(this.lstcomments);
 
       let selloc = sessionStorage.getItem('locCode');

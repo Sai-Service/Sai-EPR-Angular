@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -77,6 +77,7 @@ export class PoReceiptFormComponent implements OnInit {
   poReceiptForm: FormGroup;
   ouName: string;
   poNumber: string;
+  public minDate = new Date();
   recdate1:Date;
   content: Number;
   itemType: string;
@@ -108,7 +109,7 @@ export class PoReceiptFormComponent implements OnInit {
   now = Date.now();
   recDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   // recDate:Date;
-  public minDate = new Date();
+  // public minDate = new Date();
   Comments: string;
   suppInvDate: Date;
   suppInvNo: string;
@@ -201,7 +202,16 @@ export class PoReceiptFormComponent implements OnInit {
   displaysubInvDesc: Array<boolean> = [];
   TRUER = false; recFagDiss = true;
 
-
+  @ViewChild("myinput") myInputField: ElementRef;
+  @ViewChild("input1") input1:ElementRef;
+  @ViewChild("input2") input2:ElementRef;
+  @ViewChild("input3") input3:ElementRef;
+  @ViewChild("input4") input4:ElementRef;
+  @ViewChild("input5") input5:ElementRef;
+  @ViewChild("input6") input6:ElementRef;
+  ngAfterViewInit() {
+    this.myInputField.nativeElement.focus();
+  }
   // recDate=this.pipe.transform(this.recDate,'dd-MM-yyyy');
 
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute) {
@@ -894,7 +904,7 @@ export class PoReceiptFormComponent implements OnInit {
   }
 
   okLocator(i) {
-    // this.lstcompolines.poLines[i].subinvetoryId;
+    
     console.log(this.lstcompolines.poLines[0].subInventoryId);
 
     var poControls = this.poReceiptForm.get('poLines').value;
@@ -906,7 +916,7 @@ export class PoReceiptFormComponent implements OnInit {
       this.poReceiptForm.get('segment3').value + '.' +
       this.poReceiptForm.get('segment4').value + '.' +
       this.poReceiptForm.get('segment5').value;
-    var locatorDesc = poControls[i].locatorDesc;
+    var locatorDesc = (poControls[i].locatorDesc).toUpperCase();
     this.service.getLocatorPoLines(locatorDesc, this.locId, this.lstcompolines.poLines[0].subInventoryId)
       .subscribe((res: any) => {
         if (res.code === 200) {
@@ -1035,9 +1045,10 @@ export class PoReceiptFormComponent implements OnInit {
   poSave() {
     var loctorDesc1 = this.poReceiptForm.get('poLines').value;
     for (let i = 0; i < loctorDesc1.length; i++) {
-      // alert(loctorDesc1.length+'----'+loctorDesc1[i].locatorDesc);
-      if (loctorDesc1[i].loctorDesc1 === null && loctorDesc1[i].itemType === 'GOODS' || loctorDesc1[i].loctorDesc1 === undefined) {
+      // alert(loctorDesc1[i].itemType+'----'+loctorDesc1[i].locatorDesc); 
+      if ( loctorDesc1[i].itemType === 'GOODS' && loctorDesc1[i].locatorDesc === null ) {
         alert('Please Entered Locator !');
+        //  alert(loctorDesc1[i].itemType+'----'+loctorDesc1[i].locatorDesc); 
         return
       }
     }
@@ -1158,6 +1169,43 @@ export class PoReceiptFormComponent implements OnInit {
       });
   }
 
+
+  keytab(event, maxLength,nxtEle)
+  {
+  
+    if(event.target.value.length===maxLength )
+    {
+      // alert('Focus'+nxtEle);
+      if(nxtEle==='input2')
+      {
+     event.target.value = event.target.value.toUpperCase();
+      this.input2.nativeElement.focus();
+      }
+      if(nxtEle==='input3')
+      {
+        event.target.value = event.target.value.toUpperCase();
+      this.input3.nativeElement.focus();
+      }
+      if(nxtEle==='input4')
+      {
+        event.target.value = event.target.value.toUpperCase();
+      this.input4.nativeElement.focus();
+      }
+      if(nxtEle==='input5')
+      {
+        event.target.value = event.target.value.toUpperCase();
+      this.input5.nativeElement.focus();
+      (document.getElementById('btnok') as HTMLInputElement).disabled = false;
+      }
+      if(nxtEle==='input6')
+      {
+        event.target.value = event.target.value.toUpperCase();
+      this.input6.nativeElement.focus();
+      }
+    }
+    
+
+  }
 }
 
 

@@ -1445,14 +1445,14 @@ displayThirdButtonDisplay=true;
               this.displayNewButton = false;
               const sitWithOutTax = 'y';
             }
-            if (taxCategoryName.includes('Purchase-S&CGST')){
-              alert(taxCategoryName);
-              this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-S&CGST'));
-            }
-            else if (taxCategoryName.includes('Purchase-I&CGST')){
-              alert(taxCategoryName);
-              this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-I&CGST'));
-            }
+            // if (taxCategoryName.includes('Purchase-S&CGST')){
+            //   // alert(taxCategoryName);
+            //   this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-S&CGST'));
+            // }
+            // else if (taxCategoryName.includes('Purchase-I&CGST')){
+            //   alert(taxCategoryName);
+            //   this.taxCategoryList = this.taxCategoryList.filter(taxCategoryName.includes('Purchase-I&CGST'));
+            // }
           }
         );
     }

@@ -544,9 +544,8 @@
                                            Document&nbsp;Date:&nbsp;
                                         </td>
                                         <td>
-                                            <input type="date" formControlName="docDate"
-                                                [(ngModel)]='docDate' value={{docDate}} class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            <input type="date" formControlName="docDate"  max="{{minDate | date:'yyyy-MM-dd'}}"
+                                                [(ngModel)]='docDate' value={{docDate}} class="form-control">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Total&nbsp;Amount&nbsp;:&nbsp;
@@ -572,13 +571,13 @@
                                             <input type="date" formControlName="ewayBillDate"
                                                 [(ngModel)]='ewayBillDate' value={{ewayBillDate}}
                                                 class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                                max="{{minDate | date:'yyyy-MM-dd'}}" >
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                            <input type="text" disabled formControlName="suppInvNo" [(ngModel)]='suppInvNo'
                                                 value={{suppInvNo}} class="form-control"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -586,7 +585,7 @@
                                             Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                            <input type="date" disabled formControlName="suppInvDate" [(ngModel)]='suppInvDate'
                                                 value={{suppInvDate}} class="form-control" max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;"
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
@@ -663,7 +662,7 @@
                                                 Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                             </td>
                                             <td>
-                                                <input disabled type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                <input disabled  type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
                                                     value={{suppInvNo}} class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
@@ -1312,14 +1311,8 @@
                             </td>
                             <td>
                                 <input type="text" formControlName="segment11"  value={{segment11}} [(ngModel)]='segment11' class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.segment11.errors }"
-                                placeholder="Floor" style="width: 52px;" >
-                                <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
-                                    <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
-                                    <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
-                                    <div *ngIf="f.segment11.errors?.pattern">Required Two Digit Code</div>
-                                <span *ngIf="!poReceiptForm.get('segment11').valid && poReceiptForm.get('segment11').touched">Required Two Digit Code</span>
-                            </div>
+                                  maxlength="1"   (keyup)="keytab($event, 1,'input2')"  #input1
+                                placeholder="Floor" style="width: 52px;">
                             </td>
                         </tr>
                         <tr>
@@ -1328,7 +1321,7 @@
                             </td>
                             <td>
   <input formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
-    [ngClass]="{ 'is-invalid': submitted && f.segment2.errors }"
+  maxLength="1" (keyup)="keytab($event, 1,'input3')"  #input2
                 placeholder="Rack" style="width: 52px;">
                             </td>
                         </tr>
@@ -1338,7 +1331,7 @@
                             </td>
                             <td>
                                 <input  formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.segment3.errors }"
+                                maxlength="2" (keyup)="keytab($event, 2,'input4')"  #input3
                                 placeholder="Rack No" style="width: 52px;">
                             </td>
                         </tr>
@@ -1348,7 +1341,7 @@
                             </td>
                             <td>
                                 <input formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.segment4.errors }"
+                                maxlength="1" (keyup)="keytab($event, 1,'input5')"  #input4
                                 placeholder="Row" style="width: 52px;">
                             </td>
                         </tr>
@@ -1358,7 +1351,7 @@
                             </td>
                             <td>
                                 <input  formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
-                                [ngClass]="{ 'is-invalid': submitted && f.segment5.errors }"
+                                maxlength="2" (keyup)="keytab($event, 2,'input6')"  #input5
                                 placeholder="Row No" style="width: 52px;">
                             </td>
                         </tr>

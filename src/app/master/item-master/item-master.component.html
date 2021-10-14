@@ -630,7 +630,19 @@
                                                         </td>
                                                     </tr>
                                                 </ng-template>
-
+                                                <tr>
+                                                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                                        <tbody>
+                                                            <tr class="GridHeader">
+                                                                <th scope="col">Sales Tax category</th>
+                                                                <th scope="col">Purachase Tax category</th>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tr *ngFor="let com of taxCategoryDataList" class="ItemStyle" style="text-decoration:none;">
+                                                            <td>{{com.taxCategoryNameList}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </tr>
                                                 <!-- <div
                                                     *ngIf="displayisTaxable; then thenBlockisTaxable; else elseBlockisTaxable">
                                                 </div>
