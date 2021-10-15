@@ -15,38 +15,15 @@
                     <table class="center">
                         <tr>
 
-                        <td>
-                            <input  hidden  style="width:30px ;"   type="text" formControlName="orgId"
-                            class="form-control" [(ngModel)]="orgId" >
-                        </td>
-
-                        <td>
-                            <input hidden  style="width:30px ;"   type="text" formControlName="divisionId"
-                            class="form-control" [(ngModel)]="divisionId" >
-                        </td>
-                     
-                        <td>
-                            <input hidden style="width:30px ;"  type="text" formControlName="locationId"  [(ngModel)]="locationId" class="form-control"  placeholder="Location Name">
-                        </td>
-
-                        <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id:&nbsp;</td> -->
-
-                        <td >
-                            <input disabled style="width:50px ;"  type="text"  formControlName="emplId"
-                            class="form-control" [(ngModel)]="emplId" placeholder="">
-
-                        </td>
-
-                        <td>
-                            <input  hidden style="width:30px ;" type="text"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" >
-                        </td>
-                        <!-- <td>
-                            <input  disabled style="width:30px ;" type="text"  formControlName="status"  id="status" [(ngModel)]="status" class="form-control" >
-                        </td> -->
-
-
-
-                                            
+                        <td> <input  hidden  style="width:30px ;"   type="number" formControlName="orgId"  class="form-control" [(ngModel)]="orgId" > </td>
+                        <td> <input hidden  style="width:30px ;"   type="number" formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" > </td>
+                        <td> <input hidden style="width:30px ;"  type="number" formControlName="locationId"  [(ngModel)]="locationId" class="form-control"  placeholder="Location Name"> </td>
+                        <td> <input hidden style="width:30px ;"  type="number" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name"> </td>
+                        <td> <input hidden disabled style="width:50px ;"  type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId" placeholder=""></td>
+                        <td> <input hidden style="width:30px ;" type="number"  formControlName="customerId"  id="customerId" [(ngModel)]="customerId" class="form-control" ></td>
+                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="ouId"  id="ouId" [(ngModel)]="ouId" class="form-control" ></td>
+                        <td> <input hidden disabled style="width:30px ;" type="number"  formControlName="deptId"  id="deptId" [(ngModel)]="deptId" class="form-control" ></td>
+                                 
                       </tr>
                     </table>
 
@@ -56,21 +33,21 @@
 
                     <fieldset class="RFS">
                         <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Order Details</legend> -->
-                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Location | Customer </legend>
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Customer Details </legend>
                     <table class="center">
                           
-                       <tr>
+                       <!-- <tr>
 
                         <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
-                        <td   style="border: none;color: black;">
+                        <td  hidden  style="border: none;color: black;">
                             <input type="text" disabled formControlName="loginArray"
                                 class="form-control" [(ngModel)]="loginArray" style="background-color: lightgreen;">
-                        </td>
+                        </td> -->
 
 
-                        <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td>
+                        <!-- <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td> -->
 
-                        <div *ngIf="displayButton ,then thenshowOu1; else thenshowOu2")></div>
+                        <!-- <div *ngIf="displayButton ,then thenshowOu1; else thenshowOu2")></div>
                         <ng-template #thenshowOu1>
 
                         <td>  
@@ -103,7 +80,6 @@
 
                         <td>
                         <select disabled formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="background-color: lightgreen;"   >
-                            <!-- (ngModelChange)='onLocationSelected1($event,i)' -->
                             <option disabled>--Select--</option>
                             <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                             {{sc.locId}}-{{sc.locCode}}-{{sc.locName}}
@@ -120,7 +96,7 @@
                                     {{sc.cmnTypeId}}-{{sc.code}}
                                 </option>
                             </select>
-                        </td>
+                        </td> -->
 
 
 
@@ -132,13 +108,13 @@
                      <td>
                          <input  type="checkbox"  name="insuranceFlag" formControlName="insuranceFlag"  [(ngModel)]="insuranceFlag"  (change)="insuranceFlag1($event)">
                      </td> -->
-                       </tr>
+                       <!-- </tr> -->
 
                        <tr>
 
                         <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;No:&nbsp;</td>
                         <td>
-                         <input type="text"
+                         <input type="text" autofocus 
                             formControlName="attribute1"
                             [(ngModel)]="attribute1"
                             (change)="serchByRegNo(attribute1)"
@@ -427,15 +403,15 @@
                                 </table>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
-                            <td>
-                                <input  disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control"  placeholder="">
+                            <td colspan="2">
+                                <input  style="width: 100%;" disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control" >
                             </td>
-                            <td></td>
-                            
+                            <!-- <td></td> -->
+                      
                             <td>
                                 <button type="button"  class="btn btn-primary" 
-                                data-toggle="modal" data-target="#customerDetails"   style="width: 9rem;color: black;">
-                                &nbsp;View&nbsp;Customer&nbsp;Details</button>
+                                data-toggle="modal" data-target="#customerDetails"   style="width: 5rem;color: black;">
+                                &nbsp;Customer...&nbsp;</button>
                             </td>
 
                              
@@ -699,8 +675,8 @@
 
                                      <td style="width: 15%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
         
-                                        <td>
-                                            <input style="width: 450%;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here">
+                                        <td colspan="7">
+                                            <input style="width: 100%;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here">
                                         </td>
                                     </tr>
 
@@ -963,7 +939,7 @@
                                         </td>
 
                                         <td>
-                                            <input  readonly type="text" class="form-control" formControlName="custName"  [(ngModel)]="custName">
+                                            <input readonly type="text" class="form-control" formControlName="custName"  [(ngModel)]="custName">
                                         </td> 
 
                                         <td style="width: 15%" class="LabelFontStyle">

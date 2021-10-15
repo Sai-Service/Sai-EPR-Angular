@@ -525,4 +525,22 @@ reversalReasonList(): Observable<any> {
   return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/ReversalReason`);
 }
 
+
+/////////////////////////////// COUNTER SALE RETURN/////////////////
+
+counterSaleReturnSearchHeader(orderNumber): Observable<any> {
+  return this.http.get(this.ServerUrl +`/orderHeader/salesReturn/${orderNumber}`);
+}
+counterSaleReturnSearchLines(orderNumber): Observable<any> {
+  return this.http.get(this.ServerUrl +`/orderHeader/salesRtnLines/${orderNumber}`);
+}
+
+public rtnCntrOrderSaveSubmit(rtnRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/arInv/salesReversal';
+  return this.http.post(url, rtnRecord, options);
+}
+
 }

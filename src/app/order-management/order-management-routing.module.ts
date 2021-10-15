@@ -11,6 +11,7 @@ import { ReversalOrderComponent } from './reversal-order/reversal-order.componen
 import { SalesGatePassComponent } from './sales-gate-pass/sales-gate-pass.component';
 import { SalesOrderBookingComponent } from './sales-order-booking/sales-order-booking.component';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
+import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -25,7 +26,11 @@ const routes: Routes = [
   {path:'ReversalOrder',component:ReversalOrderComponent},
   {path:'GatePass',component:SalesGatePassComponent},
   {path:'OMSalesOrder',component:OmSalesOrderFormComponent},
+<<<<<<< HEAD
+  {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
+=======
   {path:'CounterSaleWithCSV',component:CounterSaleWithCSVModuleComponent},
+>>>>>>> 1be03fde6946218bf1e40f66fc133d680b820ad9
   // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
