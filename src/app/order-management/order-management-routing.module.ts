@@ -26,11 +26,8 @@ const routes: Routes = [
   {path:'ReversalOrder',component:ReversalOrderComponent},
   {path:'GatePass',component:SalesGatePassComponent},
   {path:'OMSalesOrder',component:OmSalesOrderFormComponent},
-<<<<<<< HEAD
-  {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
-=======
   {path:'CounterSaleWithCSV',component:CounterSaleWithCSVModuleComponent},
->>>>>>> 1be03fde6946218bf1e40f66fc133d680b820ad9
+  {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
   // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
