@@ -370,8 +370,8 @@ displayThirdButtonDisplay=true;
       authorizationStatus: [],
       totalAmt: [],
       supplierAddress: [],
-      suppInvNo: ['', [Validators.minLength(3)]],
-      suppInvDate:[''],
+      suppInvNo: ['', [Validators.required,Validators.minLength(3)]],
+      suppInvDate:['',[Validators.required]],
       // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
       iRNNo: [],
@@ -1217,7 +1217,7 @@ displayThirdButtonDisplay=true;
 
       if (res.code === 200) {
         alert(res.message);
-        this.segment1 = sessionStorage.getItem('poNo');
+        this.segment1 = sessionStorage.getFItem('poNo');
         this.Search(this.segment1);
         this.displaySecondButtonDisplay=false;
         this.displayFirstButtonDisplay=true;
@@ -1838,7 +1838,8 @@ displayThirdButtonDisplay=true;
     this.lineDetailsArray.controls[lineNum].get('itemType').setValue(itemType);
     this.lineDetailsArray.controls[lineNum].get('polineNum').setValue(lineNum+1);
     this.invItemList = new Array();
-    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value ===null ||  this.poMasterDtoForm.get('billToLoc').value === undefined) {
+    alert(this.poMasterDtoForm.get('suppInvNo').value ===null)
+    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value ===null|| this.poMasterDtoForm.get('suppInvNo').value ===null || this.poMasterDtoForm.get('suppInvDate').value ===null||this.poMasterDtoForm.get('billToLoc').value === undefined) {
       alert('Please Select Header Deatils !');
       this.lineDetailsArray.controls[lineNum].get('itemType').setValue('--Select--');
       (<any>this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();

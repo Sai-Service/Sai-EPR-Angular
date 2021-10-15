@@ -396,8 +396,8 @@
                         Reference&nbsp;No&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input type="text" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}}
-                            (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;">
+                        <input type="number" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}}
+                            (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;" #othRefNo1>
                     </td>
                 </tr>
                 <tr>
@@ -1087,7 +1087,7 @@
                                                         <td>
                                                             <select formControlName="flowStatusCode" id="flowStatusCode"
                                                                 class="form-control"
-                                                                style="width: 120px;height: 25px;font-size: 10px;">
+                                                                style="width: 120px;height: 25px;font-size: 10px;" #flowStatusCode1>
                                                                 <option>--Select--</option>
                                                                 <option value="BOOKED" hidden>BOOKED</option>
                                                                 <option value="CANCELLED">CANCELLED</option>

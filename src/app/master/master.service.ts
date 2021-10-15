@@ -2219,6 +2219,10 @@ bulkpouploadSales(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
 }
 
+bulkPickTickCSV(formData: FormData) {
+  return this.http.post(this.ServerUrl + `/fileImport/uploadCS`, formData)
+}
+
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
     formData.append('location', location);
     formData.append('invcNo', invcNo);
