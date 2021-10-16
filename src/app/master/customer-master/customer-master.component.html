@@ -579,7 +579,7 @@
                                 <td>
                                     <input type="date" formControlName="birthDate" [(ngModel)]='birthDate'
                                         value={{birthDate}} (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
+                                        [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }" 
                                         placeholder="Enter birthDate"
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
                                         max="{{minDateBirth | date:'yyyy-MM-dd'}}" (change)="onBirthgDateChange($event)" >
