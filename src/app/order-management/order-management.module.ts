@@ -15,6 +15,7 @@ import { OmSalesOrderFormComponent } from './om-sales-order-form/om-sales-order-
 import { CounterSaleWithCSVModuleComponent } from './counter-sale-with-csvmodule/counter-sale-with-csvmodule.component';
 import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
+// import {CounterSaleReturnComponent} from './counter-sale-return/counter-sale-return.component'
 
 @NgModule({
   declarations: [SalesOrderBookingComponent, PaymentReceiptComponent, AllotmentComponent, DeAllotmentComponent, CounterSaleComponent, SalesOrderFormComponent, ReversalOrderComponent, SalesGatePassComponent, OmSalesOrderFormComponent, CounterSaleWithCSVModuleComponent,CounterSaleReturnComponent],

@@ -37,6 +37,7 @@ import { DeActivateGuard } from './de-activate.guard';
 import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
 import { AllReportsComponent } from './report/all-reports.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
+// import { CounterSaleReturnComponent} from './order-management/counter-sale-return/counter-sale-return.component'
 // import { ItemLocatorMasterComponent } from './item-locator-master/item-locator-master.component';
 // import { ReturnToVendorComponent } from './return-to-vendor/return-to-vendor.component';
 

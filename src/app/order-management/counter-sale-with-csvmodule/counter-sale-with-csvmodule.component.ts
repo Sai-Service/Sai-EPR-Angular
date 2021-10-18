@@ -316,6 +316,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   // custType: string;
   // customerId:number;
 
+  @ViewChild('fileInput') fileInput;
+  message: string;
 
   @ViewChild("paymentButton") paymentButton: ElementRef;
 
@@ -2312,5 +2314,35 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
 
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
+  }
+
+
+
+  uploadFile(event:any) {
+    // alert(event)
+    event.target.disabled = true;
+    let formData = new FormData();
+    // const formData =this.CounterSaleOrderBookingForm.getRawValue();
+    formData.append('file', this.fileInput.nativeElement.files[0])
+    // if ((sessionStorage.getItem('deptName'))=== 'Sales') {
+      this.service.bulkPickTickCSV(formData).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+        //   this.itemUploadedList=res.obj;  
+         this.CounterSaleOrderBookingForm.get('files').reset();
+        }
+        else{
+          if (res.code===400){
+
+            alert(res.message);
+            // this.itemList = res.obj;
+            this.CounterSaleOrderBookingForm.get('files').reset();
+          }
+        }
+      })
+
+      setTimeout(() => {
+        event.target.disabled = false;
+       }, 60000);
   }
 }
