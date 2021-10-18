@@ -844,7 +844,7 @@
                                
 
                                 <div class="container1">
-                                    <div class="grid_scroll_3">
+                                   <div class="grid_scroll_3">
                                     <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:#959595;border-collapse:collapse;width: 100%;"> -->
                                     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
                                   
@@ -858,6 +858,7 @@
                                                 <th style="width:6rem" scope="col">SubInventory&nbsp;</th>
                                                 <th style="width:6rem" scope="col">Locator&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Destination&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Tax%&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Unit Rate&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Amount&nbsp;</th>
@@ -877,23 +878,19 @@
                                                 <td style="width:4rem;text-align: center;">{{com.subInvDesc}}</td>
                                                 <td style="width:10rem;text-align: center;">{{com.locatorDesc}}</td> 
                                                 <td style="width:10rem;text-align: center;">{{com.hsnCode}}</td>
+                                                <td style="width:10rem;text-align: center;">{{com.itemType}}</td>
                                                 <td style="width:4rem;text-align: center;">{{com.taxPercentage|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.unitPrice|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.baseAmount|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.taxAmount|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.totAmount|number:'0.00'}}</td>
-                                                
-                                               
-                                               </tr>
+                                            </tr>
                                     </table>
-                                    </div>
-                                    </div>
-
+                                  </div>
+                                </div>
                                  <div class="modal-footer">
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                                 </div>
-
-                            
                           </div>
                         </div>
                     </div>

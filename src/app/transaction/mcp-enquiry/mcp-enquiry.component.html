@@ -15,61 +15,61 @@
                      <table class="center">
                         <tr>
 
-                        <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td>
+                        <!-- <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td> -->
 
-                        <td   style="border: none;color: black;">
+                        <td  hidden style="border: none;color: black;">
                             <input type="text" disabled formControlName="loginArray"
                                 class="form-control" [(ngModel)]="loginArray" placeholder="">
                         </td>
                     
                         <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="ouId"
+                            <input hidden style="width:30px ;"  disabled type="text" formControlName="ouId"
                             class="form-control" [(ngModel)]="ouId" >
                         </td>
                     
                         <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                            <input hidden style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
                         </td>
 
                         <td >
-                            <input  style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            <input hidden style="width:30px ;"  type="text" disabled formControlName="deptId"
                             class="form-control" [(ngModel)]="deptId" placeholder="">
 
                         </td>
 
                         <td >
-                            <input  style="width: 20px;"  type="text" disabled formControlName="emplId"
+                            <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"
                             class="form-control" [(ngModel)]="emplId" placeholder="">
                         </td>
 
                         <td>
-                            <input disabled style="width:30px ;" type="text"  formControlName="customerId"  id="custId" [(ngModel)]="customerId" class="form-control" >
+                            <input hidden disabled style="width:30px ;" type="text"  formControlName="customerId"  id="custId" [(ngModel)]="customerId" class="form-control" >
                         </td>
                         <td>
-                            <input disabled style="width:30px ;" type="text"  formControlName="vehicleAgeDays"  id="vehicleAgeDays" [(ngModel)]="vehicleAgeDays" class="form-control" >
-                        </td>
-
-                        <td>
-                            <input  disabled  style="width:50px ;"  type="text" formControlName="lastRunKms"  id="lastRunKms" [(ngModel)]="lastRunKms" class="form-control">
+                            <input hidden disabled style="width:30px ;" type="text"  formControlName="vehicleAgeDays"  id="vehicleAgeDays" [(ngModel)]="vehicleAgeDays" class="form-control" >
                         </td>
 
                         <td>
-                            <input  disabled  style="width:50px ;"  type="text" formControlName="customerSiteId"  id="customerSiteId" [(ngModel)]="customerSiteId" class="form-control">
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="lastRunKms"  id="lastRunKms" [(ngModel)]="lastRunKms" class="form-control">
                         </td>
 
                         <td>
-                            <input  disabled type="text"  formControlName="packageType"  id="packageType" [(ngModel)]="packageType" class="form-control" >
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="customerSiteId"  id="customerSiteId" [(ngModel)]="customerSiteId" class="form-control">
+                        </td>
+
+                        <td>
+                            <input hidden disabled type="text"  formControlName="packageType"  id="packageType" [(ngModel)]="packageType" class="form-control" >
                         </td>
 
                         
                         <td>
-                            <input  disabled  style="width:50px ;"  type="text" formControlName="itemId"  id="itemId" [(ngModel)]="itemId" class="form-control">
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="itemId"  id="itemId" [(ngModel)]="itemId" class="form-control">
                         </td>
                         <td>
-                            <input  disabled  style="width:50px ;"  type="text" formControlName="sourceDesc"  id="sourceDesc" [(ngModel)]="sourceDesc" class="form-control">
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="sourceDesc"  id="sourceDesc" [(ngModel)]="sourceDesc" class="form-control">
                         </td>
                         <td>
-                            <input  disabled  style="width:50px ;"  type="text" formControlName="colorCode"  id="colorCode" [(ngModel)]="colorCode" class="form-control">
+                            <input hidden disabled  style="width:50px ;"  type="text" formControlName="colorCode"  id="colorCode" [(ngModel)]="colorCode" class="form-control">
                         </td>
                         
                         
@@ -324,10 +324,10 @@
                      
                             <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
 
-                            <td>
-                                <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                            <td colspan="2">
+                                <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" style="width: 100%;">
                             </td>
-                            <td></td>
+                            <!-- <td></td> -->
 
                              <!-- -----------------------------CUSTOMER MODAL FORM STARTS HERE--------------------- -->
 
@@ -582,11 +582,12 @@
 
                                      <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Name:&nbsp;</td>
                                 
-                                    <td>
-                                        <input disabled style="width: 458%;" type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
+                                    <td colspan="5">
+                                        <input disabled style="width: 100%;" type="text"  formControlName="packageDesc"  id="packageDesc" [(ngModel)]="packageDesc" class="form-control" >
                                     </td>
 
-                                    <td></td> <td></td><td></td> <td></td> <td></td> 
+                                    <td></td> 
+                                    <!-- <td></td> <td></td> <td></td>  -->
                                     <!--  
                                     <td>
                                         <button style="width: 16em;" type="button" class="btn btn-info" (click)="showPkgDetails()">Show Package Details</button>

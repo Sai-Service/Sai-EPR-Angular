@@ -3,7 +3,7 @@
           <table style="width: 100%;background-color: white;">
                   <tr>
                     <td class="PageHeader">
-                      &nbsp;&nbsp; Item OnHand Details  &nbsp;
+                      &nbsp;&nbsp;ITEM&nbsp;ONHAND&nbsp;DETAILS&nbsp;
                     </td>
                   </tr>
           </table>
@@ -83,7 +83,7 @@
 
                           <td  colspan="8" style="text-align: left; width: 100%;">
                             <button type="submit" class="btn btn-primary" (click)="searchByItem(segment)" ><i class="fa fa-search"></i></button>
-                        </td>
+                          </td>
                          <!-- <td  colspan="8" style="text-align: left; width: 100%;">
                           <button  type="submit" class="btn btn-primary" (click)="loadDefaultValues()">Reset</button>
                          </td> -->
@@ -107,8 +107,10 @@
 
           <td>
               <input  type ="text"  disabled formControlName="segment" [(ngModel)]='segment'
-                      value={{segment}} class="form-control" style="width: 250px; background-color:lavender ; border-color: black;">
+                      value={{segment}} class="form-control" style="width:250px; background-color:lavender ; border-color: black;">
           </td>
+
+          <!-- <td></td> -->
          
          
             <td style="width: 15%" class="LabelFontStyle">HSN/SAC&nbsp;:&nbsp;</td>
@@ -135,7 +137,7 @@
             <td>
                 <input  type ="text"  disabled formControlName="desc" [(ngModel)]='desc'
                                         value={{desc}} class="form-control"
-                                         style="width:140%;background-color:lavender ;border-color: black;" >
+                                         style="width:250px;background-color:lavender ;border-color: black;" >
 
             </td>
 
@@ -161,10 +163,10 @@
 
                 <tr>
 
-                  <td style="width: 15%" class="LabelFontStyle"> Tax&nbsp;&nbsp;&nbsp;Category:&nbsp;</td>
-                  <td>
+                  <td style="width: 15%" class="LabelFontStyle"> Tax&nbsp;Category:&nbsp;</td>
+                  <td >
                       <input disabled formControlName="gstPer" [(ngModel)]="gstPer"
-                          value={{gstPer}} class="form-control"  style="width:250px ;" >
+                          value={{gstPer}} class="form-control"  style="width:250px;" >
                   </td>
 
                 <td></td><td></td>
@@ -226,7 +228,7 @@
 
                  
                   <td>
-                    <button  type="button"  class="btn btn-primary" 
+                    <button  disabled type="button"  class="btn btn-primary" 
                     data-toggle="modal" data-target="#exampleModal3" style="width: 6rem;color: black;">
                     &nbsp;Search(F9)</button>
                 </td>
@@ -293,7 +295,7 @@
                         </td>
 
                         <td> 
-                          <button style="width: 8em;" type="button" class="btn btn-primary" (click)="F9Search()" >Search</button>
+                          <button style="width: 8em;" type="button" class="btn btn-primary" (click)="F9Search()" >Search1</button>
                        </td>
                       </tr>
                         <!-- <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td> -->

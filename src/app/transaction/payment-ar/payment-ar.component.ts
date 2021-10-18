@@ -812,7 +812,16 @@ export class PaymentArComponent implements OnInit {
 
           // && data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].balanceAmount
 
-          if (data.obj.oePayList[0].reversalReasonCode === null) {
+           if (data.obj.oePayList[0].paymentAmt === data.obj.oePayList[0].totAppliedtAmount) {
+
+            this.showModalForm = false;
+            this.enableApplyButton = false;
+            this.enableCancelButton = false;
+            this.paymentArForm.disable();
+            return;
+
+           }
+          else if (data.obj.oePayList[0].reversalReasonCode === null) {
 
             this.showModalForm = true;
             this.enableApplyButton = true;
@@ -849,6 +858,7 @@ export class PaymentArComponent implements OnInit {
             this.enableCancelButton = false;
             this.paymentArForm.disable();
           }
+
 
 
 

@@ -49,7 +49,9 @@
                             <input hidden disabled  style="width:50px ;"  type="text"  formControlName="divisionId"  class="form-control" [(ngModel)]="divisionId">
                             <input hidden disabled style="width:30px ;"   type="text" formControlName="ouId" class="form-control" [(ngModel)]="ouId" >
                             <input hidden disabled style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
-                            <input hidden disabled style="width:100px;"   type="text" formControlName="emplId"  [(ngModel)]="emplId" class="form-control"  >
+                            <td>
+                            <input  disabled style="width:100px;"   type="text" formControlName="emplId"  [(ngModel)]="emplId" class="form-control"  >
+                            </td>
                             <input hidden disabled style="width:30px ;"   type="text" disabled formControlName="deptId"  class="form-control" [(ngModel)]="deptId" >
                             <input hidden disabled style="width:30px ;"   type="text" disabled formControlName="customerId"  class="form-control" [(ngModel)]="customerId" >
 
@@ -222,6 +224,8 @@
                                    </tr>
                                 </table>
 
+                                
+
                                 <table class="auto-style4" class="GridFont" cellspacing="0"
                                 cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
                                 style="border-color:#959595;width:100%;border-collapse:collapse;">
@@ -230,6 +234,8 @@
     
                                 <thead>
                                     <tr class="GridHeader">
+                                        <!-- <th scope="col">LineId</th> -->
+                                        <!-- <th scope="col">PLineId</th> -->
                                         
                                         <th scope="col">Select</th>
                                         <th scope="col" >Item Number</th>
@@ -268,7 +274,10 @@
                                                 <input  type="text" hidden disabled formControlName="taxCategoryId"  class="form-control" style="height: 25px;width: 50px;"> 
                                                 <input  type="text" hidden disabled formControlName="invType"  class="form-control" style="height: 25px;width: 50px;"> 
                                                 <input  type="text" hidden disabled formControlName="frmLocatorId"  class="form-control" style="height: 25px;width: 50px;"> 
-                                            
+                                               
+                                                <input  type="text" hidden disabled formControlName="lineId"  class="form-control" style="height: 25px;width: 50px;"> 
+                                                <input  type="text" hidden disabled formControlName="parentLineId"  class="form-control" style="height: 25px;width: 50px;"> 
+                                              
                                                 
                                                 
                                             <td> <input style="text-align: center;width: 3rem;" type="checkbox"  name="selectFlag" formControlName="selectFlag" ([ngModel])="selectFlag"  (change)="LineSelectFlag($event,i)">  </td>
@@ -685,8 +694,8 @@
                     <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:#959595;border-collapse:collapse;width: 100%;"> -->
                     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
                   
-                      <tbody>
-                                <tr class="GridHeader">
+                        <tbody>
+                            <tr class="GridHeader">
                                 <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
                                 <th style="width:5rem" scope="col">Item&nbsp;Number</th>
                                 <th style="width:20rem" scope="col">&nbsp;Description</th>
@@ -695,6 +704,7 @@
                                 <th style="width:6rem" scope="col">SubInventory&nbsp;</th>
                                 <th style="width:6rem" scope="col">Locator&nbsp;</th>
                                 <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
+                                <!-- <th style="width:8rem" scope="col">Destination&nbsp;</th> -->
                                 <th style="width:8rem" scope="col">Tax%&nbsp;</th>
                                 <th style="width:8rem" scope="col">Unit Rate&nbsp;</th>
                                 <th style="width:8rem" scope="col">Amount&nbsp;</th>
@@ -715,6 +725,7 @@
                                 <td style="width:4rem;text-align: center;">{{com.subInvDesc}}</td>
                                 <td style="width:8rem;text-align: center;">{{com.frmLocatorName}}</td> 
                                 <td style="width:8rem;text-align: center;">{{com.hsnSacCode}}</td>
+                                <!-- <td style="width:8rem;text-align: center;">{{com.itemType}}</td> -->
                                 <td style="width:10rem;text-align: center;">{{com.taxPer}}</td>
                                 <td style="width:8rem;text-align: right;">{{com.unitSellingPrice|number:'0.00'}}</td>
                                 <td style="width:8rem;text-align: right;">{{com.baseAmt|number:'0.00'}}</td>
@@ -722,9 +733,7 @@
                                 <td style="width:8rem;text-align: right;">{{com.disAmt|number:'0.00'}}</td>
                                 <td style="width:8rem;text-align: right;">{{com.taxAmt|number:'0.00'}}</td>
                                 <td style="width:8rem;text-align: right;">{{com.totAmt|number:'0.00'}}</td> 
-                                 
-                               
-                               </tr>
+                            </tr>
                     </table>
                     </div>
                     </div>

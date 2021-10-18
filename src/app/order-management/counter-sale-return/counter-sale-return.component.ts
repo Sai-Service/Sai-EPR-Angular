@@ -91,7 +91,7 @@ export class CounterSaleReturnComponent implements OnInit {
   flowStatusCode :string;
   tlName :string;
   // remarks :string;
-  remarks='2021101121169';
+  remarks='2021101121181';
 
   othRefNo :string;
   issuedBy:string;
@@ -138,7 +138,7 @@ export class CounterSaleReturnComponent implements OnInit {
       orgId:[''],
 
       orderNumber:[],
-      orderDate :[],
+      orderedDate :[],
       orderTypeId:[],
       trxNumber:[],
 
@@ -211,6 +211,7 @@ export class CounterSaleReturnComponent implements OnInit {
     return this.fb.group({
     headerId:[],
     lineId:[],
+    parentLineId:[],
     lineNumber:[],
 
     itemId:[],
@@ -336,7 +337,7 @@ export class CounterSaleReturnComponent implements OnInit {
             this.orderedDate=this.lstOrderHeader.orderedDate;
             this.headerFound=true;
             this.orderNumber=this.lstOrderHeader.orderNumber;
-            this.orderedDate=this.lstOrderHeader.orderedDate;
+            // this.orderedDate=this.lstOrderHeader.orderedDate;
             this.transactionTypeName=this.lstOrderHeader.transactionTypeName;
             this.trxNumber=this.lstOrderHeader.trxNumber;
             this.orderStatus=this.lstOrderHeader.orderStatus;
@@ -357,7 +358,7 @@ export class CounterSaleReturnComponent implements OnInit {
             this.compId=this.lstOrderHeader.compId;
             this.divisionId=this.lstOrderHeader.divisionId;
             this.deptId=this.lstOrderHeader.deptId;
-            this.emplId=this.lstOrderHeader.emplId;
+            // this.emplId=this.lstOrderHeader.emplId;
             this.headerId=this.lstOrderHeader.headerId;
             this.ouId=this.lstOrderHeader.ouId;
             this.orderTypeId=this.lstOrderHeader.orderTypeId;
@@ -449,10 +450,13 @@ export class CounterSaleReturnComponent implements OnInit {
                     for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
                     {
                       this.lineDetailsArray.controls[i].get('cancelledQty').disable();
+                      var pLineId =varLineArr[i].lineId;
                       patch.controls[i].patchValue({baseAmt:0})
                       patch.controls[i].patchValue({taxAmt:0})
                       patch.controls[i].patchValue({totAmt:0})
                       patch.controls[i].patchValue({disAmt:0})
+                      patch.controls[i].patchValue({parentLineId:pLineId})
+                     
                    
                     
                       this.lineDetailsArray.controls[i].get('selectFlag').enable();
@@ -515,7 +519,6 @@ export class CounterSaleReturnComponent implements OnInit {
        disPer: selectedValue.disPer,
        hsnSacCode: selectedValue.hsnSacCode,
        frmLocatorName:selectedValue.frmLocatorName,
-
        taxCategoryId: selectedValue.taxCategoryId,
        taxPer: selectedValue.taxPer,
        frmLocatorId:selectedValue.frmLocatorId,
@@ -523,6 +526,7 @@ export class CounterSaleReturnComponent implements OnInit {
        invType: selectedValue.invType,
        priceListId:selectedValue.priceListId,
        lineId:selectedValue.lineId,
+       parentLineId:selectedValue.lineId,
        lineNumber:selectedValue.lineNumber,
        itemId:selectedValue.itemId,
       
@@ -688,7 +692,7 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
 
       validateSave() 
       {
-
+        this.emplId= Number(sessionStorage.getItem('emplId'));
         var rtvLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
         var len1 = rtvLineArr.length;
 
@@ -769,6 +773,7 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
             // this.shipHeaderId=null;
             this.saveButton=false;
             // this.totAmt=this.rtnTotAmt;
+           
             this.orderManagementService.rtnCntrOrderSaveSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 this.rtnDocNo=res.obj;

@@ -193,6 +193,8 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OMSalesOrder']">OM Sales</a></li> -->
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>     
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>     
+          
           </ul>
         </li>
 
@@ -424,29 +426,27 @@
                    style="width: 250px; background-color: yellow;"  />
                   <datalist id="dynmicUserIds1" >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
-                      {{item.SEGMENT}}
-                      </option>
+                      {{item.SEGMENT}} 
                   </datalist>
                 </td>
 
-                <!-- <td>
-                  <input type ="text"  formControlName="searchItemName" value={{searchItemName}}  [(ngModel)]="searchItemName"
-                         class="form-control" >
-              </td> -->
+                
+                <td  colspan="8" style="text-align: left; width: 100%;">
+                  <button type="submit" class="btn btn-primary" (click)="F9Search()" style="width: 4em;" ><i class="fa fa-search"></i></button>
+                </td>
 
-                                   
+                
 
+                                              
+               <!-- 
                 <td> 
                   <button style="width: 8em;" type="button" class="btn btn-primary" (click)="F9Search()" >Search</button>
-               </td>
-              </tr>
+               </td> -->
 
-               <!-- <tr>
-                <td></td>
-                    <td style="width: 250px;">
-                        {{searchItemName}}
-                    </td>
-               </tr> -->
+            
+              </tr>
+              <td></td>
+              <td colspan="4"> {{this.searchItemName}} </td>
 
             </table>
            
@@ -456,26 +456,30 @@
           
               <tbody>
                         <tr class="GridHeader">
-                        <th style="width:5rem" scope="col">Item&nbsp;Number</th>
-                        <th style="width:20rem" scope="col"> Item&nbsp;Descreption</th>
-                        <th style="width:3rem" scope="col"> UOM&nbsp;</th>
+                        <!-- <th style="width:5rem" scope="col">Item&nbsp;Number</th>
+                        <th style="width:20rem" scope="col"> Item&nbsp;Descreption</th> -->
+
+                        <th style="width:3rem"  scope="col">SubInventory&nbsp;</th>
                         <th style="width:10rem" scope="col">Category&nbsp;</th>
                         <th style="width:10rem" scope="col">Locator&nbsp;</th>
-                        <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
-                        <th style="width:6rem" scope="col">Quantity&nbsp;</th>
-                        <th style="width:6rem" scope="col">MRP&nbsp;</th>
-                        <th style="width:6rem" scope="col">NDP&nbsp;</th>
-                        <th style="width:6rem" scope="col">Principle&nbsp;Item</th>
+                        <th style="width:8rem"  scope="col">Hsn/Sac&nbsp;</th>
+                        <th style="width:3rem"  scope="col">UOM&nbsp;</th>
+                        <th style="width:6rem"  scope="col">Quantity&nbsp;</th>
+                        <th style="width:6rem"  scope="col">MRP&nbsp;</th>
+                        <th style="width:6rem"  scope="col">NDP&nbsp;</th>
+                        <th style="width:6rem"  scope="col">Principle&nbsp;Item</th>
                       
                     </tr>
                 </tbody>
                 <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
-                        <td style="width:10rem;text-align: center;">{{com.SEGMENT}}</td>
-                        <td style="width:20rem;text-align: center;">{{com.DESCRIPTION}}</td>
-                        <td style="width:10rem;text-align: center;">{{com.UOM}}</td>
+                        <!-- <td style="width:10rem;text-align: center;">{{com.SEGMENT}}</td> -->
+                        <!-- <td style="width:20rem;text-align: center;">{{com.DESCRIPTION}}</td> -->
+                        
+                        <td style="width:10rem;text-align: center;">{{com.SUBINVENTORYCODE}}</td>
                         <td style="width:10rem;text-align: center;">{{com.CATEGDESC}}</td>      
                         <td style="width:10rem;text-align: center;">{{com.STOCKLOCTR}}</td> 
                         <td style="width:10rem;text-align: center;">{{com.HSNSACCODE}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.UOM}}</td>
                         <td style="width:10rem;text-align: center;">{{com.ONHANDQTY}}</td>
                         <td style="width:10rem;text-align: center;">{{com.MRP}}</td>
                         <td style="width:10rem;text-align: center;">{{com.NDP}}</td>
