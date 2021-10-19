@@ -1,0 +1,413 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td colspan="4" class="PageHeader" style="width: 100%;" >
+                &nbsp;&nbsp;GL&nbsp;Account
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+             <form [formGroup]="GlCodeCombinaionForm" (ngSubmit)="GlCodeCombinaion(GlCodeCombinaionForm.value)" >
+                <table class="center">
+                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1">                 
+                    </div>
+                    <ng-template #thenBlock1>
+                    <tr>
+                        <td style="width: 20%;" class="LabelFontStyle1" >
+                            Account&nbsp;:
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="text" formControlName="segmentName" class="form-control" id="segmentName"
+                                        [(ngModel)]='segmentName' value={{segmentName}} data-target="#myModal" placeholder="Please enter code combination">
+                                        <span *ngIf="!GlCodeCombinaionForm.get('segmentName').valid && GlCodeCombinaionForm.get('segmentName').touched ">Please enter code combination</span>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width:1rem ; text-align: right;">
+                                            <!-- class="Modalbutton1" -->
+                                            ...
+                                          </button>
+                                          <div class="modal fade" id="myModal">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+                                                        color: black;margin-left: 40%;">
+                                                       Code&nbsp;Combination&nbsp;
+                                                       </label>
+                                                       <button type="button" class="close" data-dismiss="modal">&times;</button>                                        
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <table style="width: 100%;" class="center">
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Branch&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Branch")' style="width: 140px;">
+                                                                    <option> select</option>
+                                                                    <option *ngFor="let branch of branchList">
+                                                                        {{branch.lookupValue}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" formControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Location&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Location")' style="width: 140px;">
+                                                                    <option> select</option>
+                                                                    <option *ngFor= "let Location of locationList">
+                                                                        {{Location.lookupValue}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" formControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Cost&nbsp;Centre&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" (ngModelChange)='onOptionsSelectedBranch($event,"CostCentre")' style="width: 140px;">
+                                                                    <option > select</option>
+                                                                    <option *ngFor="let costcentre of costCentre">
+                                                                        {{costcentre.lookupValue}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" formControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Naural&nbsp;Account&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code" style="width: 140px;">
+                                                                    <option> select</option>
+                                                                    <option *ngFor="let naturalaccount of naturalAccount">
+                                                                        {{naturalaccount.lookupValue}}                                                        
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" formControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 30%;" class="LabelFontStyle1">
+                                                                Inter&nbsp;Branch&nbsp;:
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Interbranch")' style="width: 140px;">
+                                                                    <option> select</option>
+                                                                    <option *ngFor="let interbranch of interBranch">
+                                                                        {{interbranch.lookupValue}}
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input disabled type="text"  class="form-control" formControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 160px;">
+                                                            </td>
+                                                        </tr>
+                                                       </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" 
+                                                        data-dismiss="modal" (click)="GlCodeCombination(segment1,segment2,segment3,segment4,segment5)">OK</button>
+                                                        <!-- <button type="button" class="btn btn-primary">Cancel</button> -->
+                                                      </div>
+                                                </div>
+                                            </div>
+                                          </div>    
+                                    </td>
+                                </tr>
+                            </table>
+                          
+                        <!-- </td> -->
+                        <!-- <td> -->
+                          
+                         </td>
+                         
+                        <td  class="LabelFontStyle">
+                         Type:
+                        </td>
+                        <td>
+                            <input disabled type="text" class="form-control" formControlName="accountType" [(ngModel)]='accountType'  value={{accountType}}>
+                        </td>
+                        <td>
+                            <!-- <input disabled type="checkbox" id="detailPostingAllowedFlag" formControlName="detailPostingAllowedFlag" value="detailPostingAllowedFlag" [(ngModel)]='detailPostingAllowedFlag' (change)="postingAllowedEvent($event)"> -->
+                            <div *ngIf="recFagDiss; then thenBlockrec; else elseBlockrec"></div>
+                                    <ng-template #thenBlockrec>
+                                    <input  type="checkbox"  id="detailPostingAllowedFlag" [formControl]="detailPostingAllowedFlag"   value="detailPostingAllowedFlag" [(ngModel)]="detailPostingAllowedFlag" (change)="postingAllowedEvent($event)">
+                                    </ng-template>
+                                    <ng-template #elseBlockrec>  
+                                        <input  type="checkbox" checked   id="detailPostingAllowedFlag" [formControl]="detailPostingAllowedFlag"   value="detailPostingAllowedFlag" [(ngModel)]="detailPostingAllowedFlag" (change)="postingAllowedEvent($event)">
+                                    </ng-template>
+
+                            <label for="Posting" class="LabelFontStyle">&nbsp;Allow &nbsp;Posting</label> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  class="LabelFontStyle" >
+                            &nbsp;&nbsp;&nbsp;&nbsp;Start Date:
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input  class="form-control" type="date" formControlName="startDate" [(ngModel)]='startDate' value={{startDate}} placeholder="Please enter correct date" min="{{minDate | date:'yyyy-MM-dd'}}"> 
+                                        <span *ngIf="!GlCodeCombinaionForm.get('startDate').valid && GlCodeCombinaionForm.get('startDate').touched">Please enter start date</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td  class="LabelFontStyle" >
+                            Status:
+                        </td>
+                        <td>
+                            <select class="form-control" formControlName="status" [(ngModel)]='status' value={{status}}>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                </select>
+                        </td>
+                        <td style="width: 30%;">
+                            <input disabled type="checkbox" id="Posting" formControlName="detailBudgetingAllowedFlag" ([ngModel])='detailBudgetingAllowedFlag' (change)="budgetAllowedEvent($event)">
+                            <label for="Posting" class="LabelFontStyle">&nbsp;Allow Budgeting</label> 
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template #elseBlock1>
+                    <tr>
+                        <td style="width: 20%;" class="LabelFontStyle" >
+                            Account:
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input disabled type="text" formControlName="segmentName" class="form-control" id="segmentName"
+                                        [(ngModel)]='segmentName' value={{segmentName}} data-target="#myModal" placeholder="Please enter code combination"
+                                        >
+                                        <span>Please enter code combination</span>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width:1rem ; text-align: right;">
+                                            <!-- class="Modalbutton1" -->
+                                            ...
+                                          </button>
+                                          <div class="modal fade" id="myModal">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+                                                        color: black;">
+                                                       Code Combination
+                                                       </label>
+                                                       <button type="button" class="close" data-dismiss="modal">&times;</button>                                        
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Branch
+                                                                </td>
+                                                                <td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code">
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" formControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;">
+                                                                </td>
+                                                                </tr>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Location
+                                                                </td>
+                                                                <td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code" >
+                                                                    </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" formControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;">
+                                                                </td>
+                                                       
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Cost Centre
+                                                                </td>
+                                                                <td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" >
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" formControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Naural Account
+                                                                </td>
+                                                                <td>
+                                                                   
+                                                                <input disabled type="text" class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code">
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" formControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="width: 30%;" class="LabelFontStyle">
+                                                                    Inter Branch
+                                                                </td>
+                                                                <td>
+                                                                <input disabled type="text" class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" >
+                                                                   </td>
+                                                                <td>
+                                                                    <input disabled type="text"  class="form-control" formControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;">
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" 
+                                                        data-dismiss="modal" (click)="GlCodeCombination(segment1,segment2,segment3,segment4,segment5)">OK</button>
+                                                        <!-- <button type="button" class="btn btn-primary">Cancel</button> -->
+                                                      </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                    </td>
+                                </tr>
+                            </table>
+                          
+                        <!-- </td> -->
+                        <!-- <td> -->
+                          
+                         </td>
+                         
+                        <td  class="LabelFontStyle">
+                         Type:
+                        </td>
+                        <td>
+                            <input disabled type="text" class="form-control" formControlName="accountType" [(ngModel)]='accountType'  value={{accountType}}>
+                        </td>
+                        <td>
+                            <input disabled type="checkbox" id="detailPostingAllowedFlag" formControlName="detailPostingAllowedFlag" value="detailPostingAllowedFlag" [(ngModel)]='detailPostingAllowedFlag' (change)="postingAllowedEvent($event)">
+                            <label for="Posting" class="LabelFontStyle">&nbsp;Allow &nbsp;Posting</label> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  class="LabelFontStyle" >
+                            &nbsp;&nbsp;&nbsp;&nbsp;Start Date:
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input  class="form-control"disabled type="date" formControlName="startDate" [(ngModel)]='startDate' value={{startDate}} placeholder="Please enter correct date" min="{{minDate | date:'yyyy-MM-dd'}}"> 
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td  class="LabelFontStyle" >
+                            Status:
+                        </td>
+                        <td>
+                            <select class="form-control" formControlName="status" [(ngModel)]='status' value={{status}}>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                </select>
+                        </td>
+                        <td style="width: 30%;">
+                            <input disabled type="checkbox" id="Posting" formControlName="detailBudgetingAllowedFlag" ([ngModel])='detailBudgetingAllowedFlag' (change)="budgetAllowedEvent($event)">
+                            <label for="Posting" class="LabelFontStyle">&nbsp;Allow Budgeting</label> 
+                        </td>
+                    </tr>
+                </ng-template>
+                </table>
+                <table class="center">
+                    <tr>
+                        <div *ngIf="displayButton; then thenBlock; else elseBlock"> </div>                
+                    <ng-template #thenBlock>
+                          <td>
+                            <button type="submit" class="btn btn-primary" (click)="newMast()">Save</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="reset" (click)="resetglcodecombination()">Reset</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="Close" (click)="closeglcodecombination()" >Close</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="searchMast()">Search</button>
+                        </td>
+                    
+                </ng-template>
+            </tr>
+                <tr>
+                <ng-template #elseBlock>
+                    
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="update" (click)="updateMaster()">Update</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="reset" (click)="resetglcodecombination()">Reset</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="Close" (click)="closeglcodecombination()" >Close</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="searchMast()">Search</button>
+                        </td>
+                    </ng-template>
+                    </tr>
+               
+              
+                </table>
+              </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="Container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tbody>
+            <tr class="GridHeader">
+                <th scope="col"> GlCodeCombination</th>
+                <th scope="col">Type</th>
+                <th scope="col">Allow Posting</th>
+                <th scope="col">Allow Budget</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select</th>
+            </tr>
+        </tbody>
+            <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+                 <td>{{com.segmentName}}</td>
+                 <td>{{com.accountType}}</td>
+                 <td>{{com.detailPostingAllowedFlag}}</td>
+                 <td>{{com.detailBudgetingAllowedFlag}}</td>
+                 <td>{{com.startDate}}</td>
+                 <td>{{com.status}}</td>
+                 <td><button class="btn btn-secondary" (click)="(Selectgl(com.codeCombinationId))">Select</button></td>
+            </tr>
+    </table>
+</div>
+</div>
+

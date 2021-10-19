@@ -271,6 +271,9 @@ getTaxCat(ouId): Observable<any> {
 BranchList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Branch');
 }
+BranchListDiv(compId,divId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/fndAcctLookup/lookupTypeInfo?compId=${compId}&divisionId=${divId}&lookupType=SS_Branch`)
+}
 CostCenterList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/CostCentre');
 }
@@ -1183,6 +1186,11 @@ public completeInvoice(invoiceno)
   return this.http.put(url,option);
 }
 ////////////Subinventory Transfer////////
+getsearchBySubInvTrfNo(subtrfNo,locId):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
+}
+
 public subInvTransferSubmit(subInvTransferRecord)
 {
   const option={
@@ -1206,6 +1214,24 @@ public stockTransferSubmit(stockTransferRecord)
   return this.http.post(url,stockTransferRecord,option);
 }
 
+UpdateStkEway(EwayRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl +'/mmtTrx');
+  return this.http.put(url, EwayRecord, options);
+}
+
+// UpdateStkEway(EwayRecord) {
+//   const REQUEST_PARAMS = new HttpParams().set('shipmentNumber', EwayRecord.shipmentNumber)
+//                                          .set('transferOrgId', EwayRecord.transferOrgId)
+//                                          .set('ewayBill', EwayRecord.ewayBill)
+//                                          .set('ewayBillDate', EwayRecord.ewayBillDate)
+//   const REQUEST_URI = this.ServerUrl +'/mmtTrx/EwayUpdate';
+//   return this.http.put(REQUEST_URI,null, {
+//     params: REQUEST_PARAMS,
+//   });
+// }
 getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)
@@ -1219,9 +1245,9 @@ Shipmentdue(frmLoc,toLoc,subInvCode):Observable<any>
   return this.http.get(this.ServerUrl+`/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
 }
 viewStocknote(shipmentNumber){
-  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;  
+  // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
   // local
-  const REQUEST_URI = this.ServerUrl +`/rcvShipment/StkTransferNote/${shipmentNumber}`;    
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/StkTransferNote/${shipmentNumber}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1229,9 +1255,9 @@ viewStocknote(shipmentNumber){
   });
 }
 viewStockgatePass(shipmentNumber,empId){
- //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;  
+ //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;
   // local
-  const REQUEST_URI = this.ServerUrl +`/rcvShipment/postSTKGatepass?shipmentNumber=${shipmentNumber}&emplId=${empId}`;    
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/postSTKGatepass?shipmentNumber=${shipmentNumber}&emplId=${empId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1349,6 +1375,10 @@ ItemIdDivisionList(divisionId):Observable<any>{
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
   // alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+}
+getItemLoc(locId,subInventoryId,invItemId):Observable<any>{
+  // alert ("ms >> subInventoryId :" +subInventoryId);
+  return this.http.get(this.ServerUrl+`/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subInventoryId}&itemId=${invItemId}`)
 }
 getSearchByTrans(reqNo):Observable<any>{
 
@@ -1808,6 +1838,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 }
 
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
+  alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
    return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
@@ -2217,10 +2248,6 @@ bulkpouploadSales(formData: FormData) {
 
   bulkpouploadSalesNew(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
-}
-
-bulkPickTickCSV(formData: FormData) {
-  return this.http.post(this.ServerUrl + `/fileImport/uploadCS`, formData)
 }
 
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {

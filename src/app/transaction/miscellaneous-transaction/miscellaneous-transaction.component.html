@@ -12,8 +12,9 @@
                     <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
                 </td>
                 <td colspan="8" style="text-align: left; width: 100%;">
-                    <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button>
-                    <!-- Modal -->
+                    <!-- <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button> -->
+                    <button type="submit" class="btn btn-primary" (click)="search(compNo)"><i class="fa fa-search"></i></button>
+
                 </td>
               </tr>
         </table>
@@ -65,7 +66,7 @@
                 *ngIf="getGroupControl('compileDate').touched && getGroupControl('compileDate').invalid">Valid Transaction Type
                </span>
             </td>
-      <td style="width: 15%" class="LabelFontStyle">
+      <td style="width: 15%" class="LabelFontStyle1">
         Transaction Type:
       </td>
       <input hidden formControlName="compileId" [(ngModel)]="compileId">
@@ -94,11 +95,11 @@
             *ngIf="getGroupControl('subInventory').touched && getGroupControl('subInventory').invalid">Valid Transaction Type
            </span>
         </td>
-        <td style="width: 15%" class="LabelFontStyle">
+        <td style="width: 15%" class="LabelFontStyle1">
             Reason:
           </td>
           <td>
-            <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
+            <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)" >
               <option>--Select--</option>
               <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
               </select>
@@ -156,7 +157,7 @@
           Made By:
          </td>
          <td>
-           <input type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
+           <input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
            <!-- <select type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
             <option>--Select--</option>
             <option *ngFor="let ib of issueByList">{{ib.name}}</option>
@@ -225,11 +226,16 @@
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId">
-                         <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
+                         <td>
+                           <input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/>
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                     </option>
                    </datalist>
+                   <!-- <input list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)" type="text" formControlName="segment" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                  <datalist id="dynmicUserIds1">
+                    <option  *ngFor="let item of ItemIdList">{{item.SEGMENT}}</option>
+                  </datalist> -->
                    <span
                    *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
                   </span>
@@ -240,7 +246,7 @@
               <!-- <td> -->
                 <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
               <!-- </td> -->
-              <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+              <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description" #desc></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
               <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
@@ -291,8 +297,8 @@
               *ngIf="getGroupControllinewise(trxLineIndex,'physicalQty').touched && getGroupControllinewise(trxLineIndex,'physicalQty').invalid" class="error">Valid Item
              </span>
               </td>
-              
-              <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> </div> 
+
+              <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> </div>
                 <ng-template #thenBlockopen>
                     <td><button type="button" class="btn btn-primary fa fa-plus" id="btnadd{{trxLineIndex}}"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
               <td><button type="button" class="btn btn-primary fa fa-trash" id="btnrm{{trxLineIndex}}" style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
@@ -301,7 +307,7 @@
                     <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewcycleLinesList(trxLineIndex)"></button></td>
                     <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewcycleLinesList(trxLineIndex)"></button></td>
                 </ng-template>
-                
+
             </tr>
             </ng-container>
             </tbody>
@@ -349,7 +355,7 @@
                   </td>
                   <td>
                       <input type="text" formControlName="Floor"  value={{Floor}} [(ngModel)]="Floor" class="form-control"
-                                         placeholder="Floor" style="width: 52px;" maxlength="1" (keyup)="keytab($event, 1,'input2')" #input1 >
+                                         placeholder="Floor" style="width: 52px;" maxlength="1" (keyup)="keytab($event, 1,'input2')"  autofocus >
                       <!-- <div *ngIf="submitted && f. segment11.errors" class="invalid-feedback">
                           <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
                           <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
@@ -402,5 +408,15 @@
       </div>
     </div>
 
+    <!-- <input list="dynmicUserIds1" (keyup)="filterRecord( $event)" type="text" formControlName="segment" />
+                  <datalist id="dynmicUserIds1">
+                    <option (keyup.enter)="onOptiongetItem($event,0)" *ngFor="let item of ItemIdList">{{item.SEGMENT}}</option>
+                  </datalist> -->
+                  <!-- <input type="text" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"
+                    style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" #Item/> -->
+                <!-- <datalist id="dynmicUserIds1"> -->
+                  <!-- <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}} -->
+                    <!-- </option> -->
+                   <!-- </datalist> -->
     </form>
     </div>

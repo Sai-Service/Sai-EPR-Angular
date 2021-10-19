@@ -36,7 +36,7 @@
                 &nbsp;&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
             </td>
             <td>
-                <input type="date" class="form-control"  formControlName="invcDt1"  max="{{minDate | date:'yyyy-MM-dd'}}"  onkeydown="return false" >
+                <input type="date" class="form-control"  formControlName="invcDt1"  max="{{minDate | date:'yyyy-MM-dd'}}" >
             </td>
             <div *ngIf="submitted && f.invcDt1.errors" class="invalid-feedback">
                 <div *ngIf="f.invcDt1.errors.required">Code cannot be blank</div>

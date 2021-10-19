@@ -67,7 +67,7 @@ const routes: Routes = [
  {path:'CashBankTransfer',component:CashBankTransferComponent},
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
  {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
-{path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},
+ {path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},
 {path:'InternalConsumption',component:InternalConsumptionComponent},
 {path:'pendingPoList',component:PoUploadListComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},

@@ -200,7 +200,7 @@
                   *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
                  </span>
                 </td>
-                
+
                 <td><button type="button" class="btn btn-primary fa fa-plus"  id="btnadd{{trxLineIndex}}" style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
                 <!-- <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
                 <ng-template #thenLineRemoveRow>
@@ -217,8 +217,8 @@
                       </button>
                       </td>
                 </ng-template> -->
-                
-                
+
+
               </tr>
               </ng-template>
               <ng-template #elseBlock1>
@@ -286,13 +286,13 @@
                   Eway Bill Number:
                 </td>
                 <td>
-                  <input disabled type="text" class="form-control" formControlName="ewayBill">
+                  <input  type="text" class="form-control" formControlName="ewayBill">
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                   Eway Bill Date:
                 </td>
                 <td>
-                    <input disabled type="date" class="form-control" formControlName="ewayBillDate">
+                    <input  type="date" class="form-control" formControlName="ewayBillDate">
                   </td>
 
               </tr>
@@ -411,10 +411,10 @@
                 </ng-template>
                 <ng-template #elseBlock>
                   <td>
-                    <button disabled type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button>
+                    <button  type="submit" class="btn btn-primary" (click)="EwayUpdate()">Save</button>
                   </td>
                 </ng-template>
-                <td>  
+                <td>
                     <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
                       </div>
                       <ng-template #thenBlockOp>
@@ -432,7 +432,7 @@
               </ng-template>
               </td>
                 <!-- <td>
-                    <button type="submit" class="btn btn-primary"    >Payment</button>  
+                    <button type="submit" class="btn btn-primary"    >Payment</button>
                <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>
                 </td> -->
                 <td>
@@ -462,11 +462,11 @@
     <!-- Nav tabs -->
     <ul class="nav tabs-white nav-fill" role="tablist">
       <li class="nav-item ml-0">
-         <a class="nav-link waves-light active" data-toggle="tab" href="#panel1001" role="tab">Receiving at other Location</a>
+         <a class="nav-link waves-light active" data-toggle="tab" href="#panel1001" role="tab">Pending to Receive at this Location</a>
 
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light" data-toggle="tab" href="#panel1002" role="tab">Receiving at this Location</a>
+        <a class="nav-link waves-light" data-toggle="tab" href="#panel1002" role="tab">Pending to Receive at Other Location</a>
       </li>
     </ul>
 
