@@ -2236,7 +2236,6 @@ bulkpouploadSales(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
 }
 
-<<<<<<< HEAD
 bulkPickTickCSVold(formData: FormData) {
   return this.http.post(this.ServerUrl + `/fileImport/uploadCS`, formData)
 }
@@ -2249,8 +2248,6 @@ bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string)
   return this.http.post(REQUEST_URI, formData);
 }
 
-=======
->>>>>>> 90a5c6ce51fb5f83cd7bc73b3baffbb805a3811e
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
     formData.append('location', location);
     formData.append('invcNo', invcNo);

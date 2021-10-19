@@ -308,6 +308,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   driverName:string;
   vehNo:string;
 
+  @ViewChild('fileInput') fileInput;
   // @ViewChild("paymentButton") myInputField: ElementRef;
 
 
