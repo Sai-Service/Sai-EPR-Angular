@@ -86,7 +86,10 @@
                             <input hidden disabled   formControlName="shipHeaderId" [(ngModel)] ="shipHeaderId" class="form-control">
                             <input hidden disabled   formControlName="poHeaderId" [(ngModel)] ="poHeaderId" class="form-control">
                             <input hidden disabled    formControlName="suppNo"   [(ngModel)]='suppNo'  class="form-control">
+                            <input hidden disabled    formControlName="originalReceiptNo"   [(ngModel)]='originalReceiptNo'  class="form-control">
                           
+
+                            
                             <td >
                                 <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"
                                 class="form-control" [(ngModel)]="emplId" placeholder="">
@@ -744,8 +747,15 @@
                           <div class="modal-content">
                             
                             <div class="modal-header">
-            
-                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;DETAILS - PO|Receipt&nbsp;No:&nbsp;{{this.segment1}} | {{this.receiptNo}}</h5>
+                            
+                            <div *ngIf="returnReceipt ,then ShowRtnRcpt1; else showOriginalRcpt1")></div>
+                            <ng-template #ShowRtnRcpt1>
+                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;RETURN&nbsp;DETAILS - Return&nbsp;No:&nbsp;{{this.receiptNo}} | Receipt&nbsp;No:&nbsp;{{this.originalReceiptNo}} </h5>
+                            </ng-template> 
+                            <ng-template #showOriginalRcpt1>
+                                <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;DETAILS - Receipt&nbsp;No:&nbsp; {{this.receiptNo}}</h5>
+                            </ng-template> 
+                              
                               <button type="button" class="close " data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -757,7 +767,17 @@
                                 <table class="center" style="width: 100%;">
                                     <tr>
                                         <fieldset class="RFS">
-                                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Header Details</legend>
+
+                                        <div *ngIf="returnReceipt ,then ShowRtnRcpt2; else showOriginalRcpt2")></div>
+                                        <ng-template #ShowRtnRcpt2>
+                                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Return Header Details</legend>
+                                        </ng-template>
+                                        <ng-template #showOriginalRcpt2>
+                                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Header Details</legend>
+                                        </ng-template>
+                                       
+                                        <!-- originalReceiptNo -->
+                                        
                                         <table class="center" style="width: 100;" style="width: 100%;">
                                                <tr>
                                                     <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;No:&nbsp; </td> 
