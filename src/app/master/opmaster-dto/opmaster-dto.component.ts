@@ -122,9 +122,11 @@ interface IpostPO {
 export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
+  isDisabled = true;
   docType:string;
   private sub: any;
   selectedLine = 0;
+  gstPercentage:number;
   clicked = false;
   public currentOp: string;
   showModal: boolean;
@@ -149,7 +151,7 @@ export class OPMasterDtoComponent implements OnInit {
   // poDate = this.pipe.transform(this.now, 'short');
   poDate = this.pipe.transform(this.now, 'd-M-y h:mm:ss');
 
-
+  public itemMap = new Map<string, any>();
 
   deptName: any;
 
@@ -228,7 +230,7 @@ export class OPMasterDtoComponent implements OnInit {
   public searchResult: Array<any> = [];
   public seriesList: Array<any> = [];
   public delearCodeList: Array<string> = [];
-  public taxCategoryList: any;
+  public taxCategoryList: any=[];
    public allTaxCategoryList: any[];
   public dispbut = true;
   lineNumber: number;
@@ -267,7 +269,7 @@ export class OPMasterDtoComponent implements OnInit {
   displayinvDesc = true;
   displayBillShipList = true;
   displayBillShipList1 = true;
-  // displayPoLine =true;
+  // displaysegmentList=true;
   displayTaxDetailData = true;
   DissRecoverableFlag = false;
   DissinclusiveFlag = false;
@@ -428,6 +430,7 @@ displayThirdButtonDisplay=true;
   get f() { return this.poMasterDtoForm.controls; }
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
     this.displayFirstButtonDisplay=false;
     this.displaySecondButtonDisplay=true;
     this.displayThirdButtonDisplay=true;
@@ -468,6 +471,16 @@ displayThirdButtonDisplay=true;
           console.log(this.OUIdList);
         }
       );
+
+      // this.service.taxCategoryList()
+      // .subscribe(
+      //   data1 => {
+      //     this.taxCategoryList = data1;
+      //     console.log(this.taxCategoryList);
+      //     data1 = this.taxCategoryList;
+      //   }
+      // );
+
     this.service.DepartmentList()
       .subscribe(
         data => {
@@ -494,14 +507,15 @@ displayThirdButtonDisplay=true;
     //     }
     //   );
 
-    this.service.taxCategoryList()
-      .subscribe(
-        data1 => {
-          this.taxCategoryList = data1;
-          console.log(this.taxCategoryList);
-          data1 = this.taxCategoryList;
-        }
-      );
+    // this.service.taxCategoryList()
+    //   .subscribe(
+    //     data1 => {
+    //       this.taxCategoryList = data1;
+    //       console.log(this.taxCategoryList);
+    //       data1 = this.taxCategoryList;
+    //     }
+    //   );
+
 
     this.service.supplierCodeList()
       .subscribe(
@@ -723,9 +737,9 @@ displayThirdButtonDisplay=true;
       invCategory: [],
       uom: [],
       hsnSacCode: [],
+      gstPercentage:[],
       taxCategoryName: [],
       diss1: [],
-
       itemType: [],
       unitPrice: ['',[Validators.required]],
       orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
@@ -1241,6 +1255,7 @@ displayThirdButtonDisplay=true;
     // alert('**supp***' + supp);
     if (supp != null) {
       var value = supp.substr(supp.indexOf('@') + 1, supp.length);
+      // alert(value)
       let selectedValue = this.supplierCodeList.find(v => v.suppNo == value);
 
       console.log(selectedValue, value);
@@ -1259,29 +1274,30 @@ displayThirdButtonDisplay=true;
         );
     }
   }
-  onOptionTaxCatSelected(i, taxCategoryName) {
-    // alert('******' + taxCategoryName);
+  onOptionTaxCatSelected(i) {
+    var taxCategoryName=this.poMasterDtoForm.get('taxCategoryName').value;
+    alert('******'+ i+'----'+ taxCategoryName);
     if (taxCategoryName != null) {
-      let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
-
-      this.taxCategoryId = selectedValue.taxCategoryId
-
-      var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-      (patch.controls[i]).patchValue(
-        {
-          taxCategoryId: Number(this.taxCategoryId),
-        });
+      // let selectedValue = this.taxCategoryList.find(v => v.taxCategoryName == taxCategoryName);
+      // this.taxCategoryId = selectedValue.taxCategoryId
+      var taxCategoryId=this.poMasterDtoForm.get('taxCategoryId').value;
+      // var patch = this.poMasterDtoForm.get('poLines') as FormArray;
+      // (patch.controls[i]).patchValue(
+      //   {
+      //     taxCategoryId: Number(this.taxCategoryId),
+      //   });
 
       /////////TAX DETAIL CALCULATION//////
       var arrayControl = this.poMasterDtoForm.get('poLines').value
       var patch = this.poMasterDtoForm.get('poLines') as FormArray;
-      var itemId = this.ItemDetailsList.itemId;
+      // var itemId = this.ItemDetailsList.itemId;
+      var itemId=this.poMasterDtoForm.get('itemId').value;
       var diss = 0;
       var sum = 0;
       var baseAmount = arrayControl[i].baseAmtLineWise
 
       if (baseAmount != null) {
-        this.service.taxCalforItem(itemId, this.taxCategoryId, diss, baseAmount)
+        this.service.taxCalforItem(itemId, taxCategoryId, diss, baseAmount)
           .subscribe(
             (data: any[]) => {
               this.taxCalforItem = data;
@@ -1305,7 +1321,7 @@ displayThirdButtonDisplay=true;
     }
   }
   onOptioninvItemIdSelected(itemId, index) {
-    // alert('**item**' + itemId);
+    // alert(itemId);
     if (itemId != null) {
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if (selectedValue != undefined) {
@@ -1315,16 +1331,42 @@ displayThirdButtonDisplay=true;
         var patch = this.poMasterDtoForm.get('poLines') as FormArray;
         this.itemType = arrayControl[index].itemType
         this.invItemId = selectedValue.itemId;
-
         console.log(this.invItemId, this.taxCat);
         if (this.itemType === "GOODS") {
           this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc).subscribe((res: any) => {
             if (res.code === 200) {
-              this.ItemDetailsList = res.obj;
+              if (res.obj.itemId===null){
+                alert('Item Or PO Charge Account Not Found in Master !')
+                var patch = this.poMasterDtoForm.get('poLines') as FormArray;  
+                (patch.controls[index]).patchValue({
+                  segment:' ',
+                }) 
+                return;
+              }
+              else{
+                this.ItemDetailsList = res.obj;
 
+              // alert(this.ItemDetailsList.gstPercentage);
               var patch = this.poMasterDtoForm.get('poLines') as FormArray;
 
-              this.taxCategoryId = this.ItemDetailsList.taxCategoryId
+              this.taxCategoryId = this.ItemDetailsList.taxCategoryId;
+              var gstPercentage=this.ItemDetailsList.gstPercentage;
+              // alert(gstPercentage)
+              var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
+              console.log(this.suppIdList);   
+            let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
+              console.log(selectedValue);
+              if (selectedValue.taxCategoryName != null && gstPercentage != null){
+                this.service.taxCategoryListNew(selectedValue.taxCategoryName,gstPercentage)
+                .subscribe(
+                  data1 => {
+                    // this.taxCategoryMap.set(index,data1);
+                    this.taxCategoryList[index] = data1;
+                    console.log(this.taxCategoryList);
+                  }
+                );
+              }
+                // this.taxCategoryList[0]=this.ItemDetailsList.taxCategoryName;
               if (this.ItemDetailsList.segmentName === null) {
                 (patch.controls[index]).patchValue(
                   {
@@ -1338,9 +1380,8 @@ displayThirdButtonDisplay=true;
                     poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
                     taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                     invItemId: this.invItemId,
-
+                    gstPercentage:this.ItemDetailsList.gstPercentage
                   }
-
                 );
               }
               else {
@@ -1360,11 +1401,12 @@ displayThirdButtonDisplay=true;
                       poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
                       taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                       invItemId: this.invItemId,
+                      gstPercentage:this.ItemDetailsList.gstPercentage,
                     }
                   );
                 }
                 else {
-
+                  alert('not null');
                   (patch.controls[index]).patchValue(
                     {
                       diss1: 0,
@@ -1377,9 +1419,11 @@ displayThirdButtonDisplay=true;
                       poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
                       taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                       invItemId: this.invItemId,
+                      gstPercentage:this.ItemDetailsList.gstPercentage,
                     }
                   );
                 }
+              }
               }
             }
             else {
@@ -1413,6 +1457,7 @@ displayThirdButtonDisplay=true;
                     poChargeAcc: Number(this.ItemDetailsList.codeCombinationId),
                     taxCategoryId: Number(this.ItemDetailsList.taxCategoryId),
                     invItemId: this.invItemId,
+                    gstPercentage:this.ItemDetailsList.gstPercentage,
                   }
                 );
 
@@ -1422,6 +1467,8 @@ displayThirdButtonDisplay=true;
         }
       }
     }
+   
+    // alert(supplierSiteId +'----'+ selectedValue.taxCategoryName)
   }
   onContextValueSelected(contextValue: any) {
     if (contextValue === 'TrueValue') {
@@ -1831,15 +1878,19 @@ displayThirdButtonDisplay=true;
 
   // checked
   onOptioninvitemTypeSelected(e: any, lineNum) {
-    // alert(lineNum)
     var itemType = e.target.value;
+    // debugger;
+    if (this.itemMap.has(itemType)){
+      this.invItemList = this.itemMap.get(itemType);
+    }
     this.lineDetailsArray.controls[lineNum].get('segment').setValue('');
     this.lineDetailsArray.controls[lineNum].get('segment').disable();
     this.lineDetailsArray.controls[lineNum].reset();
     this.lineDetailsArray.controls[lineNum].get('itemType').setValue(itemType);
     this.lineDetailsArray.controls[lineNum].get('polineNum').setValue(lineNum+1);
-    this.invItemList = new Array();
-    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value ===null|| this.poMasterDtoForm.get('suppInvNo').value ===null || this.poMasterDtoForm.get('suppInvDate').value ===null||this.poMasterDtoForm.get('billToLoc').value === undefined || this.poMasterDtoForm.get('suppInvNo').value===null || this.poMasterDtoForm.get('suppInvDate').value===null) {
+    // this.invItemList = new Array();
+    // alert(this.poMasterDtoForm.get('suppInvNo').value +'----'+ this.poMasterDtoForm.get('suppInvDate').value) 
+    if (this.poMasterDtoForm.get('supplierCode').value === '' || this.poMasterDtoForm.get('shipToLoc').value ===null|| this.poMasterDtoForm.get('suppInvNo').value ===null || this.poMasterDtoForm.get('suppInvDate').value ===null||this.poMasterDtoForm.get('billToLoc').value === undefined || this.poMasterDtoForm.get('suppInvNo').value===undefined || this.poMasterDtoForm.get('suppInvDate').value=== undefined) {
       alert('Please Select Header Deatils !');
       this.lineDetailsArray.controls[lineNum].get('itemType').setValue('--Select--');
       (<any>this.poMasterDtoForm.get('supplierCode')).nativeElement.focus();
@@ -1847,28 +1898,37 @@ displayThirdButtonDisplay=true;
     }
     else {
       if (itemType === 'GOODS') {
-
+        // alert(lineNum);
         var deptName1 = this.poMasterDtoForm.get('dept').value;
+        this.lineDetailsArray.controls[lineNum].get('segment').disable();
         this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
-
-        // if (this.invItemList.length <= 0) {
+      //  this.displaysegmentList[lineNum]=false;
+        if (this.invItemList.length <= 0) {
           this.service.invItemList2(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')))
             .subscribe(
               data => {
+                this.lineDetailsArray.controls[lineNum].get('segment').disable();
                 this.invItemList = data;
+                this.itemMap.set(itemType,data);
                 console.log(this.invItemList);
-                this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
-                this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
                 this.lineDetailsArray.controls[lineNum].get('segment').enable();
-                var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
-                this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
-
-                this.poMasterDtoForm.get('supplierCode').disable();
-                this.poMasterDtoForm.get('supplierSiteId').disable();
-                this.poMasterDtoForm.get('shipToLoc').disable();
-                this.poMasterDtoForm.get('billToLoc').disable();
+                // this.displaysegmentList[lineNum]=true;
               }
-            );
+            );    
+        }
+            this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
+            this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
+            this.lineDetailsArray.controls[lineNum].get('segment').enable();
+            var ids = new Set(this.selectedInvItem.map(({ itemId }) => itemId));
+            this.invItemList = this.invItemList.filter(({ itemId }) => !ids.has(itemId));
+            // this.displaysegmentList[lineNum]=true;
+            this.poMasterDtoForm.get('supplierCode').disable();
+            this.poMasterDtoForm.get('supplierSiteId').disable();
+            this.poMasterDtoForm.get('shipToLoc').disable();
+            this.poMasterDtoForm.get('billToLoc').disable();
+            this.poMasterDtoForm.get('suppInvNo').disable();
+            this.poMasterDtoForm.get('suppInvDate').disable();
+        // }
         // this.displaysupplierSiteId=false;
               if (sessionStorage.getItem('deptName')==='Sales' && itemType === 'GOODS'){
                 this.lineDetailsArray.controls[lineNum].patchValue({orderedQty:1})
@@ -1876,6 +1936,7 @@ displayThirdButtonDisplay=true;
               }
 
       }
+      if (this.invItemList.length <= 0) {
       if (itemType === 'EXPENCE') {
         var deptName = 'NA';
         this.service.invItemList(itemType, deptName, (sessionStorage.getItem('divisionId')))
@@ -1894,6 +1955,7 @@ displayThirdButtonDisplay=true;
             }
           );
       }
+    }
 
     }
   }

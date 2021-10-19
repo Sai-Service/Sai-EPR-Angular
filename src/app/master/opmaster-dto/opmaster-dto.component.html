@@ -107,7 +107,7 @@
                                         </datalist>
 
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Site:</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Site:</td>
                                     <td>
                                         <div
                                             *ngIf="displaysupplierSiteId; then thensupplierSiteId; else elsesupplierSiteId">
@@ -251,13 +251,13 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle1">
-                                        Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                        Supp&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
-                                        <input type="text" formControlName="suppInvNo" class="form-control"
+                                        <input type="text" formControlName="suppInvNo" class="form-control" [(ngModel)]="suppInvNo"
                                             style="width: 100%;"
                                             [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
                                             placeholder="Please enter supplier invoice number">
-                                        <div *ngIf="submitted && f.suppInvNo.errors" class="invalid-feedback">
+                                        <!-- <div *ngIf="submitted && f.suppInvNo.errors" class="invalid-feedback">
                                             <div *ngIf="f.suppInvNo.errors?.maxLength">Maximum 8
                                                 characters characters valid</div>
                                             <div *ngIf="f.suppInvNo.errors?.minLength">Minimum 6
@@ -268,12 +268,12 @@
                                             Supplier invoice no valid for minimum 3 digit and
                                             maximum 30
                                             digit
-                                        </span>
+                                        </span> -->
 
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Date:</td>
+                                    <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Inv&nbsp;Date:</td>
                                     <td>
-                                        <input type="date" formControlName="suppInvDate" class="form-control"
+                                        <input type="date" formControlName="suppInvDate" class="form-control" [(ngModel)]="suppInvDate"
                                         style="width: 100%;" max="{{minDate | date:'yyyy-MM-dd'}}" onkeydown="return false" 
                                         [ngClass]="{ 'is-invalid': submitted && f.suppInvDate.errors }">
                                     </td>
@@ -392,7 +392,7 @@
                                             </datalist>
                                         </ng-template>
                                     </td>
-                                    <td style="width: 15%" class="LabelFontStyle">Supplier&nbsp;Site:</td>
+                                    <td style="width: 15%" class="LabelFontStyle">Supp&nbsp;Site:</td>
                                     <td>
                                         <input disabled type="text" formControlName="supplierAddress"
                                             class="form-control">
@@ -481,13 +481,13 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
+                                        Supp&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
                                         <input disabled type="text" formControlName="suppInvNo" class="form-control"
                                             style="width: 100%;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
-                                        Supplier&nbsp;Date&nbsp;:&nbsp;</td>
+                                        Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;</td>
                                     <td colspan="">
                                         <input disabled type="date" formControlName="suppInvDate" class="form-control"
                                             style="width: 100%;">
@@ -873,7 +873,7 @@
                                                     [formGroupName]="i" class="auto-style5">
                                                     <tr>
                                                         <input type="number" min="0" hidden formControlName="poLineId">
-                                                        <input type="text" hidden formControlName="taxCategoryId">
+                                                        <input hidden type="number"  formControlName="taxCategoryId">
                                                         <input type="text" hidden formControlName="diss1"
                                                             value={{diss1}}>
                                                         <input type="number" min="0" hidden   formControlName="polineNum">
@@ -936,37 +936,20 @@
                                                                 </select>
                                                             </td>
                                                             <td>
-                                                                <!-- <select formControlName="invItemId" id="invItemId"
-                                                            (ngModelChange)='onOptioninvItemIdSelected(i)'
-                                                            class="form-control">
-                                                            <option>--Select--</option>
-                                                            <option *ngFor="let sc of  invItemList" [value]="sc.itemId">
-                                                                {{sc.segment}}
-                                                            </option>
-                                                        </select> -->
-                                                                <!-- (keyup)="getInvItemId($event,i)" id="invItemIdFirstWay" -->
-                                                                <!-- <div *ngIf="displaygetInvItemId; then thengetInvItemId; else elsegetInvItemId"></div>
-                                                        <ng-template #thengetInvItemId> -->
+                                                                <!-- <div  *ngIf="displaysegmentList[i]; then thensegmentList; else elsesegmentList"> </div>
+                                                                <ng-template #thensegmentList> -->
                                                                 <input type="text" formControlName="segment"
                                                                     list="dynmicUserIds1" class="form-control"
                                                                     (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                                 <datalist id="dynmicUserIds1">
-                                                                    <option *ngFor="let item of invItemList"
+                                                                    <option *ngFor="let item of invItemList" 
                                                                         [ngValue]="item.itemId">{{item.segment}}
                                                                     </option>
                                                                 </datalist>
                                                                 <!-- </ng-template>
-                                                        <ng-template #elsegetInvItemId>
-                                                            <input disabled type="text" formControlName="segment"
-                                                            (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                            list="dynmicUserIds1" class="form-control"
-                                                            (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
-                                                        <datalist id="dynmicUserIds1">
-                                                            <option *ngFor="let item of invItemList"
-                                                                [ngValue]="item.itemId">{{item.segment}}
-                                                            </option>
-                                                        </datalist>
-                                                        </ng-template> -->
+                                                                <ng-template #elsesegmentList>
+                                                                    <input disabled type="text" formControlName="segment" class="form-control">
+                                                                </ng-template> -->
                                                             </td>
                                                             <input hidden type="text" formControlName="invItemId">
                                                             <td> <input disabled type="text"
@@ -997,10 +980,10 @@
 
                                                                 <select formControlName="taxCategoryName"
                                                                     id="taxCategoryName"
-                                                                    (ngModelChange)='onOptionTaxCatSelected(i, $event)'
+                                                                    (change)='onOptionTaxCatSelected(i)'
                                                                     class="form-control">
                                                                     <option>--Select--</option>
-                                                                    <option *ngFor="let sc of  taxCategoryList" [value]="sc.taxCategoryName">
+                                                                    <option *ngFor="let sc of  taxCategoryList[i]" [value]="sc.taxCategoryName">
                                                                         {{sc.taxCategoryName}}
                                                                     </option>
                                                                 </select>
@@ -1044,7 +1027,10 @@
                                                                 <ng-template #thenBlockHSN> -->
                                                                     <input disabled type="text"
                                                                         formControlName="hsnSacCode"
-                                                                        style="width: 4rem;" class="form-control">
+                                                                        style="width: 5rem;" class="form-control">
+                                                                        <input hidden type="number"
+                                                                        formControlName="gstPercentage"
+                                                                        style="width: 5rem;" class="form-control">
                                                                 <!-- </ng-template>
                                                                 <ng-template #elseBlockHSN>
                                                                     <input type="text" formControlName="hsnSacCode"
@@ -1163,12 +1149,14 @@
                                                                 <ng-template #thenBlockHSN>
                                                                     <input disabled type="text"
                                                                         formControlName="hsnSacCode"
-                                                                        style="width: 4rem;" class="form-control">
+                                                                        style="width: 5rem;" class="form-control">
+                                                                        <input hidden type="number" formControlName="gstPercentage">
                                                                 </ng-template>
                                                                 <ng-template #elseBlockHSN>
                                                                     <input type="text" formControlName="hsnSacCode"
-                                                                        id="hsnSacCode" style="width: 4rem;"
+                                                                        id="hsnSacCode" style="width: 5rem;"
                                                                         class="form-control">
+                                                                        <input hidden type="number" formControlName="gstPercentage">
                                                                 </ng-template>
                                                             </td>
 

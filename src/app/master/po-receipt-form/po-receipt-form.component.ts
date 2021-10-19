@@ -16,6 +16,8 @@ interface IpoReceipt {
   poNumber: string;
   supplier: string;
   item: string;
+  poInvNum: string;
+  poInvDate: Date;
   segment1: string;
   ouId: number;
   totalAmt: number;
@@ -79,6 +81,8 @@ export class PoReceiptFormComponent implements OnInit {
   poNumber: string;
   public minDate = new Date();
   recdate1:Date;
+  poInvNum: string;
+  poInvDate: Date;
   content: Number;
   itemType: string;
   subInventory: number;
@@ -220,6 +224,8 @@ export class PoReceiptFormComponent implements OnInit {
       poNumber: ['', Validators.required],
       supplier: [''],
       item: [''],
+      poInvNum: [''],
+      poInvDate:[''],
       segment1: [''],
       shipmentNumber: [],
       ouId: [''],
@@ -361,6 +367,7 @@ export class PoReceiptFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
   var  recdate1=this.pipe.transform(this.now, 'dd-MM-yyyy');
     this.poReceiptForm.patchValue({recDate:recdate1});
     // alert(this.pipe.transform(this.now, 'dd-MM-yyyy'));
@@ -1054,21 +1061,21 @@ export class PoReceiptFormComponent implements OnInit {
     }
     this.displaySaveButton = false;
     const totlCalControls = this.poReceiptForm.get('poLines').value;
-    this.baseAmount = 0;
-    this.taxAmt = 0;
-    this.totalAmt = 0;
-    for (var i = 0; i < totlCalControls.length; i++) {
-      this.baseAmount = this.baseAmount + totlCalControls[i].baseAmount;
-      this.taxAmt = this.taxAmt + totlCalControls[i].taxAmount;
+    // this.baseAmount = 0;
+    // this.taxAmt = 0;
+    // this.totalAmt = 0;
+    // for (var i = 0; i < totlCalControls.length; i++) {
+    //   this.baseAmount = this.baseAmount + totlCalControls[i].baseAmount;
+    //   this.taxAmt = this.taxAmt + totlCalControls[i].taxAmount;
 
-    }
-    this.totalAmt = this.baseAmount + this.taxAmt;
+    // }
+    // this.totalAmt = this.baseAmount + this.taxAmt;
     // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
     const formValue: IpoReceipt = this.poReceiptForm.value;
     // formValue.qtyReceived=totlCalControls[i].qtyReceived;
-    formValue.baseAmount = this.baseAmount;
-    formValue.taxAmt = this.taxAmt;
-    formValue.totalAmt = this.totalAmt;
+    formValue.baseAmount = this.poReceiptForm.get('baseAmount').value;
+    formValue.taxAmt = this.poReceiptForm.get('taxAmt').value;
+    formValue.totalAmt = this.poReceiptForm.get('totalAmt').value;
     // formValue.subinvetoryId=this.ls
     this.locId = Number(sessionStorage.getItem('locId'));
     // alert(this.lstcompolines.poLines[i].qtyReceived)

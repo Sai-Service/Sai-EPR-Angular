@@ -839,9 +839,7 @@
                                                             (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
                                                         </ng-template>
                                                     </td> -->
-                                                    <div
-                                                        *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">
-                                                    </div>
+                                                    <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
                                                     <ng-template #thensegmentInvType>
                                                         <td>
                                                             <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"

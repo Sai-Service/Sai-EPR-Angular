@@ -1064,6 +1064,10 @@ ItemDetailsList(invItemId, taxCat, billTo):Observable<any> {
   });
 }
 
+taxCategoryListNew(taxCategoryName,hsnTaxPer):Observable<any>{
+  return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=PURCHASE&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
+}
+
 expenceItemDetailsList(invItemId):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/ItemDetailsExp/${invItemId}`);
 }
@@ -2219,8 +2223,16 @@ bulkpouploadSales(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
 }
 
-bulkPickTickCSV(formData: FormData) {
+bulkPickTickCSVold(formData: FormData) {
   return this.http.post(this.ServerUrl + `/fileImport/uploadCS`, formData)
+}
+
+
+bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string) {
+  formData.append('priceListName', priceListName);
+  formData.append('taxCategoryName', taxCategoryName);
+  const REQUEST_URI = this.ServerUrl +`/fileImport/uploadCS`;
+  return this.http.post(REQUEST_URI, formData);
 }
 
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {

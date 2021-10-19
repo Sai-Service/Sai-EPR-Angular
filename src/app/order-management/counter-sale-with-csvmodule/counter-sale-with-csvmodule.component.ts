@@ -2322,21 +2322,48 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
     // alert(event)
     event.target.disabled = true;
     let formData = new FormData();
-    // const formData =this.CounterSaleOrderBookingForm.getRawValue();
     formData.append('file', this.fileInput.nativeElement.files[0])
-    // if ((sessionStorage.getItem('deptName'))=== 'Sales') {
-      this.service.bulkPickTickCSV(formData).subscribe((res: any) => {
+    var priceListName =this.CounterSaleOrderBookingForm.get('priceListName').value;
+    var siteName1=this.CounterSaleOrderBookingForm.get('name').value;
+    let selSite = this.custSiteList.find(d => d.siteName === siteName1);
+    const taxCategoryName = selSite.taxCategoryName;
+      this.service.bulkPickTickCSV(formData,priceListName,taxCategoryName).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
-        //   this.itemUploadedList=res.obj;  
-         this.CounterSaleOrderBookingForm.get('files').reset();
+          this.orderlineDetailsArray().clear();
+         let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+         let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
+         for (let i = 0; i <= res.obj.length-1; i++) {
+          var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
+          control.push(oeOrderLinesAllList1);
         }
+        this.CounterSaleOrderBookingForm.patchValue(res.obj);
+        for (let k = 0; k < res.obj.length; k++) {
+          let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          (controlinv.controls[k]).patchValue({
+            invType:res.obj[k].invType,
+            segment:res.obj[k].segment,
+            orderedItem:res.obj[k].orderedItem,
+            pricingQty:res.obj[k].orderedQty,
+            taxCategoryName:res.obj[k].taxCategoryName,
+            taxCategoryId:res.obj[k].taxCategoryId,
+            unitSellingPrice:res.obj[k].unitSellingPrice,
+            baseAmt:res.obj[k].baseAmt,
+            hsnSacCode:res.obj[k].hsnSacCode,
+            frmLocatorId:res.obj[k].itemLocator,
+            flowStatusCode:'BOOKED',
+            itemId:res.obj[k].itemId,
+          })
+        // this.onKey(k);
+        // alert(this.onKey(k));
+        }
+      }
         else{
           if (res.code===400){
 
             alert(res.message);
             // this.itemList = res.obj;
-            this.CounterSaleOrderBookingForm.get('files').reset();
+            // this.CounterSaleOrderBookingForm.get('files').reset();
           }
         }
       })

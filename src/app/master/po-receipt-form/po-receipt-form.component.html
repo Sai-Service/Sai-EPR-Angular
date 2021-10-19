@@ -574,7 +574,7 @@
                                                 max="{{minDate | date:'yyyy-MM-dd'}}" >
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            Supp&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <input type="text" disabled formControlName="suppInvNo" [(ngModel)]='suppInvNo'
@@ -582,7 +582,7 @@
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <input type="date" disabled formControlName="suppInvDate" [(ngModel)]='suppInvDate'
@@ -591,6 +591,20 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            PO&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" formControlName="poInvNum" [(ngModel)]='poInvNum'
+                                                value={{poInvNum}} class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            PO&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="date" formControlName="poInvDate" [(ngModel)]='poInvDate'
+                                                value={{poInvDate}} class="form-control">
+                                        </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Comments&nbsp;:&nbsp;
                                         </td>
@@ -659,7 +673,7 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                                Supp&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                             </td>
                                             <td>
                                                 <input disabled  type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
@@ -667,7 +681,7 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                                Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                             </td>
                                             <td>
                                                 <input disabled type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
@@ -676,6 +690,20 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                PO&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="poInvNum" [(ngModel)]='poInvNum'
+                                                    value={{poInvNum}} class="form-control">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                PO&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="poInvDate" [(ngModel)]='poInvDate'
+                                                    value={{poInvDate}} class="form-control">
+                                            </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Comments&nbsp;:&nbsp;
                                             </td>
