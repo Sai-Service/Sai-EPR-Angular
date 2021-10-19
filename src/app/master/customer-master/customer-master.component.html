@@ -431,7 +431,7 @@
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                 <td>
                                     <input type="number" formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
-                                        class="form-control"
+                                        class="form-control" max="9999"
                                         [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }"
                                         placeholder="Enter pin code" (change)="pinCodeVerification(pincod)" #pincod>
                                     <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
@@ -681,7 +681,7 @@
                                         <input type="number" formControlName="aadharNo" [(ngModel)]='aadharNo' value={{aadharNo}}
                                              class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
-                                            placeholder="Enter Aadhar No" maxlength="12">
+                                            placeholder="Enter Aadhar No" maxlength="12" oninput="this.value = Math.abs(this.value)">
 
                                     </td>
                                 </ng-template>
@@ -717,7 +717,7 @@
                                   <input type="number" formControlName="highAmt" value={{highAmt}} type="number"
                                       class="form-control" min='0'
                                       [ngClass]="{ 'is-invalid': submitted && f.smobile2.errors }"
-                                      placeholder="Enter Higher Amount">
+                                      placeholder="Enter Higher Amount" oninput="this.value = Math.abs(this.value)">
                                   <div *ngIf="submitted && f.highAmt.errors" class="invalid-feedback">
                                       <div *ngIf="f.highAmt.errors.required">Enter  Higher Amount </div>
                                       <div *ngIf="f.highAmt.errors.maxLength">Enter  Higher Amount
@@ -732,7 +732,7 @@
                                   <input type="number" formControlName="disPer" value={{disPer}} [(ngModel)]='disPer' type="number"
                                       class="form-control" min='0.0' max='99'
                                       [ngClass]="{ 'is-invalid': submitted && f.disPer.errors }"
-                                      placeholder="Enter discount Percentage">
+                                      placeholder="Enter discount Percentage" oninput="this.value = Math.abs(this.value)">
                                   <div *ngIf="submitted && f.disPer.errors" class="invalid-feedback">
                                       <div *ngIf="f.disPer.errors.required">Enter discount Percentage </div>
                                       <div *ngIf="f.disPer.errors.maxLength">Enter discount Percentage

@@ -1214,6 +1214,24 @@ public stockTransferSubmit(stockTransferRecord)
   return this.http.post(url,stockTransferRecord,option);
 }
 
+UpdateStkEway(EwayRecord) {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl +'/mmtTrx');
+  return this.http.put(url, EwayRecord, options);
+}
+
+// UpdateStkEway(EwayRecord) {
+//   const REQUEST_PARAMS = new HttpParams().set('shipmentNumber', EwayRecord.shipmentNumber)
+//                                          .set('transferOrgId', EwayRecord.transferOrgId)
+//                                          .set('ewayBill', EwayRecord.ewayBill)
+//                                          .set('ewayBillDate', EwayRecord.ewayBillDate)
+//   const REQUEST_URI = this.ServerUrl +'/mmtTrx/EwayUpdate';
+//   return this.http.put(REQUEST_URI,null, {
+//     params: REQUEST_PARAMS,
+//   });
+// }
 getsearchByShipmentNo(shipNo):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/mmtTrx/stktrf/${shipNo}`)

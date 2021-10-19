@@ -8,7 +8,6 @@ import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 
 
-
 interface IStockTransfer {
   ShipmentNo: String;
   status: string;
@@ -35,6 +34,12 @@ interface IStockTransfer {
 
   emplId:number;
 
+}
+interface IEway{
+  ewayBill: string;
+  ewayBillDate: Date;
+  ShipmentNo: String;
+  transferOrgId: number;
 }
 export  class StockTransferRow {
   segment:string;
@@ -443,6 +448,24 @@ export class StockTransferComponent implements OnInit {
   trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
     })
 
+}
+transdata(val){
+  delete val.trxLinesList.itemId;
+  return val;
+}
+EwayUpdate(){
+  const formValue:IStockTransfer = this.transdata(this.stockTranferForm.value);
+    this.service.UpdateStkEway(formValue).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert('RECORD UPDATED SUCCESSFULLY');
+      // window.location.reload();
+    } else {
+      if (res.code === 400) {
+        alert('ERROR OCCOURED IN PROCEESS');
+        // this.customerMasterForm.reset();
+      }
+    }
+  });
 }
 validate(i:number,qty1)
 {
