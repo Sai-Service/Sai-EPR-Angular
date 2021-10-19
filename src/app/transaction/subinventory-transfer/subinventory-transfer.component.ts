@@ -553,9 +553,12 @@ this.SubNo="12PU";
               let avlqty1=0;
               avlqty1= onHand-reserve;
               if(subcode===tosub){
-                if(locId!=tolocator)
+                alert('In If')
+                if(locId===tolocator)
                 {
+                  alert('In 2IF');
                   alert('Please select correct locator');
+                  trxLnArr1.controls[i].patchValue({LocatorSegment: ''});
                 }
               }
               // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
