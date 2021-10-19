@@ -49,9 +49,9 @@
                             <input hidden disabled  style="width:50px ;"  type="text"  formControlName="divisionId"  class="form-control" [(ngModel)]="divisionId">
                             <input hidden disabled style="width:30px ;"   type="text" formControlName="ouId" class="form-control" [(ngModel)]="ouId" >
                             <input hidden disabled style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
-                            <td>
-                            <input  disabled style="width:100px;"   type="text" formControlName="emplId"  [(ngModel)]="emplId" class="form-control"  >
-                            </td>
+                            <!-- <td> -->
+                            <input hidden disabled style="width:100px;"   type="text" formControlName="emplId"  [(ngModel)]="emplId" class="form-control"  >
+                            <!-- </td> -->
                             <input hidden disabled style="width:30px ;"   type="text" disabled formControlName="deptId"  class="form-control" [(ngModel)]="deptId" >
                             <input hidden disabled style="width:30px ;"   type="text" disabled formControlName="customerId"  class="form-control" [(ngModel)]="customerId" >
 
@@ -186,11 +186,11 @@
                            </table>
                         </fieldset>
 
-                        <div class="grid_scroll">
-                            <fieldset class="RFS" style="background-color: white;">
-                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Line Details</legend>
-                                
-                                <table style="width: 50%;">
+                       
+                        <div class="grid_scroll">   
+                            <!-- <fieldset class="RFS" style="background-color: white;"> -->
+                                <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Line Details</legend> -->
+                                  <table style="width: 50%;">
                                     
                                         <tr>
                                             <td>
@@ -317,9 +317,11 @@
                                 </tbody>
     
                              
-                            </table>
-                            </fieldset>
+                        </table>
+                         <!-- </fieldset> -->
                         </div>
+                     
+
                         <br>
                         <!-- ===================================Buttons======================================== -->
                         <table class="center">

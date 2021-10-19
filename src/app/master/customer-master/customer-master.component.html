@@ -579,8 +579,8 @@
                                 <td>
                                     <input type="date" formControlName="birthDate" [(ngModel)]='birthDate'
                                         value={{birthDate}} (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }" 
-                                        placeholder="Enter birthDate" onkeydown="return false" 
+                                        [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
+                                        placeholder="Enter birthDate"
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
                                         max="{{minDateBirth | date:'yyyy-MM-dd'}}" (change)="onBirthgDateChange($event)" >
                                     <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
@@ -593,7 +593,7 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Wedding&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate' onkeydown="return false" 
+                                    <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate'
                                         value={{weddingDate}} (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }" (change)="onOptionWeddingDate($event)"
                                         placeholder="Enter weddingDate" max="{{minDate | date:'yyyy-MM-dd'}}" min="{{minDateWedding | date:'yyyy-MM-dd'}}">
@@ -679,7 +679,7 @@
                                     <td style="width: 10%" class="LabelFontStyle">&nbsp;Aadhar&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
                                         <input type="number" formControlName="aadharNo" [(ngModel)]='aadharNo' value={{aadharNo}}
-                                             class="form-control"  oninput="this.value = Math.abs(this.value)"
+                                             class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
                                             placeholder="Enter Aadhar No" maxlength="12">
 
@@ -700,7 +700,7 @@
                               <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Limit&nbsp;:&nbsp;</td>
                               <td>
                                   <input type="number" formControlName="creditAmt" value={{creditAmt}} type="number"
-                                      class="form-control" min='0'  oninput="this.value = Math.abs(this.value)"
+                                      class="form-control" min='0'
                                       [ngClass]="{ 'is-invalid': submitted && f.creditAmt.errors }"
                                       placeholder="Enter  Credit Amount">
                                   <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
@@ -715,7 +715,7 @@
                               <td style="width: 15%" class="LabelFontStyle">Higher&nbsp;Amount&nbsp;:&nbsp;</td>
                               <td>
                                   <input type="number" formControlName="highAmt" value={{highAmt}} type="number"
-                                      class="form-control" min='0'  oninput="this.value = Math.abs(this.value)"
+                                      class="form-control" min='0'
                                       [ngClass]="{ 'is-invalid': submitted && f.smobile2.errors }"
                                       placeholder="Enter Higher Amount">
                                   <div *ngIf="submitted && f.highAmt.errors" class="invalid-feedback">
@@ -730,7 +730,7 @@
                               <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Discount&nbsp;:&nbsp;</td>
                               <td>
                                   <input type="number" formControlName="disPer" value={{disPer}} [(ngModel)]='disPer' type="number"
-                                      class="form-control" min='0.0' max='99'  oninput="this.value = Math.abs(this.value)"
+                                      class="form-control" min='0.0' max='99'
                                       [ngClass]="{ 'is-invalid': submitted && f.disPer.errors }"
                                       placeholder="Enter discount Percentage">
                                   <div *ngIf="submitted && f.disPer.errors" class="invalid-feedback">

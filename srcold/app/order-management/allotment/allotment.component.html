@@ -1,0 +1,238 @@
+<form [formGroup]="allotmentForm" (ngSubmit)="allotment(allotmentForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Allotment&nbsp;
+            </td>
+            <!-- <td style="background-color: #FFE4B5;">
+                <input  class="form-control" formControlName="ouName" [(ngModel)]='ouName'>
+            </td>         -->
+            <!-- <td style="background-color: #FFE4B5;">
+                <button type="button" class="btn-primary" (click)="allotmentSearch()"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </td> -->
+        </tr>
+        </table>
+        <div style="background-color: #FFE4B5;width: 100%;">
+            <table class="center">
+                <tr>
+                    <td  style="font-weight: bold;width: 100%;text-align: center;">
+                        &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp; {{ouName}}
+                    </td>
+                </tr>
+            </table>
+        <table style="background-color: #FFE4B5;" align="center">
+            <tr>
+                <td>
+                    &nbsp;Order&nbsp;Number&nbsp;:&nbsp;  
+                </td>
+                <td>
+                    <input   class="form-control" >
+                </td>
+                <td>
+                    <button type="button" class="btn-primary" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                </td>
+            </tr>
+           
+        </table>
+    </div>
+        <div class="center" style="width: 100%;padding-top: 10px;">
+            <div class="form-bg">
+                <div class="grid_scroll">
+                    <a style="cursor: pointer" (click)="exportexcel()">
+                        cloud_download
+                      </a>
+                    <table  class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
+                        <thead>
+                            <tr class="GridHeader">
+                                <th scope="col" style="border: 1px solid black;">Allocate</th>
+                                <th scope="col" style="border: 1px solid black;">Order Number</th>
+                                <th scope="col" style="border: 1px solid black;">Ordered Date</th>
+                                <th scope="col" style="border: 1px solid black;">Order Type</th>
+                                <th scope="col" style="border: 1px solid black;">Cust Name</th>
+                                <th scope="col" style="border: 1px solid black;">Model</th>
+                                <th scope="col" style="border: 1px solid black;">Variant</th>
+                                <th scope="col" style="border: 1px solid black;">Color</th>
+                                <th scope="col" style="border: 1px solid black;">Paid Amount</th>
+                                <th scope="col" style="border: 1px solid black;">Aging</th>
+                                <th scope="col" style="border: 1px solid black;">Available Qty</th>
+                                <th scope="col" style="border: 1px solid black;">Taxi Flag</th>
+                                <th scope="col" style="border: 1px solid black;">Exchange Flag</th>
+                                <th scope="col" style="border: 1px solid black;">Select</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let com of allotmentsearchlist let i= index"
+                            class="ItemStyle" style="text-decoration:none;">
+                                <!-- [formControl]="selectOrderNumber"    [(ngModel)]='selectOrderNumber' -->
+                                <td style="border: 1px solid black;">
+                                    <input  type="checkbox" formControlName="selectOrderNumber"
+                                   (change)="selectOrderNumberEvent($event,com.orderNumber)">
+                                </td>
+                                
+                                <td style="border: 1px solid black;">{{com.orderNumber}}</td>
+                               <td style="border: 1px solid black;">{{com.orderedDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                               <td style="border: 1px solid black;">{{com.transactionTypeName}}</td>
+                               <td style="border: 1px solid black;">{{com.custName}}</td>
+                               <td style="border: 1px solid black;">{{com.model}}</td>
+                               <td style="border: 1px solid black;">{{com.variant}}</td>
+                               <td style="border: 1px solid black;">{{com.color}}</td>
+                               <td style="text-align: right;border: 1px solid black;padding-right: 10px;">{{com.paidAmount}}</td>
+                               <td style="border: 1px solid black;">{{com.aging}}</td>
+                               <td style="border: 1px solid black;">{{com.qtyAvail}}</td>
+                               <td style="border: 1px solid black;">{{com.taxiYN}}</td>
+                               <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
+                               <div *ngIf="displayChassisForm[i]; then thenChassisForm; else elseChassisForm"> </div>
+                               <ng-template #thenChassisForm>
+                               <td style="border: 1px solid black;">
+                                <button class="btn btn-secondary" (click)="Select(com.model,com.color,com.variant,locId)" data-toggle="modal" data-target="#exampleModal">Select</button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header modal-xl">
+                                            <label style="width: 100%;text-align: center;font-size: 14px;font-weight: bold;">
+                                                &nbsp;Vehicle&nbsp;Items&nbsp;List&nbsp;
+                                            </label>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
+                                                <thead>
+                                                    <tr class="GridHeader">
+                                                        <th scope="col" style="border: 1px solid black;">Select</th>
+                                                        <th scope="col" style="border: 1px solid black;">Item To Allocate</th>
+                                                        <th scope="col" style="border: 1px solid black;">Description</th>
+                                                        <th scope="col" style="border: 1px solid black;">Date Of Purchase</th>
+                                                        <th scope="col" style="border: 1px solid black;">Dealer Code</th>
+                                                        <th scope="col" style="border: 1px solid black;">Rips</th>
+                                                        <th scope="col" style="border: 1px solid black;">Interiors</th>
+                                                        <th scope="col" style="border: 1px solid black;">Two Tone</th>
+                                                        <th scope="col" style="border: 1px solid black;">Hold</th>
+                                                        <th scope="col" style="border: 1px solid black;">Hold Reason</th>
+                                                        <th scope="col" style="border: 1px solid black;">Fuel Type</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let com of allotmentVehiclesearchlist" class="ItemStyle" style="text-decoration:none;">
+                                                        <td style="border: 1px solid black;">
+                                                            <input  type="checkbox" formControlName="selectChasisNumber" 
+                                                            (change)="selectChasisNumberEvent($event,com.segment)">
+                                                        </td>
+                                                        <td style="border: 1px solid black;">{{com.segment}}</td>
+                                                        <td style="border: 1px solid black;">{{com.description}}</td>
+                                                        <td style="border: 1px solid black;">{{com.dateOfPurchase  | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                                                        <td style="border: 1px solid black;">{{com.dealerCode}}</td>
+                                                        <td style="border: 1px solid black;">{{com.rips}}</td>
+                                                        <td style="border: 1px solid black;">{{com.interiors}}</td>
+                                                        <td style="border: 1px solid black;">{{com.twoTone}}</td>
+                                                        <td style="border: 1px solid black;">{{com.hold}}</td>
+                                                        <td style="border: 1px solid black;">{{com.holdReason}}</td>
+                                                        <td style="border: 1px solid black;">{{com.fuelType}}</td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="allotedVehicleSelect()">Allocate</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>  
+                            </td> 
+                               </ng-template>
+                               <ng-template #elseChassisForm>
+                            <td style="border: 1px solid black;">  
+                            </td>
+                               </ng-template>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="center">
+                        <tr>
+                            <!-- <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="allotment1()">Allotment</button>
+                            </td> -->
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" style="width: 8rem;">
+   Allocated List
+  </button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%;"> 
+                <thead>
+                    <tr class="GridHeader"> 
+                        <th scope="col" style="border: 1px solid black;">Order Number</th>
+                        <th scope="col" style="border: 1px solid black;">Item Allocated</th>
+                        <th scope="col" style="border: 1px solid black;">Color Code</th>
+                        <th scope="col" style="border: 1px solid black;">Description</th>
+                        <th scope="col" style="border: 1px solid black;">Alloted Date</th>
+                        <th scope="col" style="border: 1px solid black;">RIPS</th>
+                        <th scope="col" style="border: 1px solid black;">Two Tone</th>
+                        <th scope="col" style="border: 1px solid black;">Interiors</th>
+                        <th scope="col" style="border: 1px solid black;">Accessories Fitted</th>
+                        <th scope="col" style="border: 1px solid black;">Hold</th>
+                        <th scope="col" style="border: 1px solid black;">Hold Reason</th>
+                        <th scope="col" style="border: 1px solid black;">Exchange</th>
+                        <th scope="col" style="border: 1px solid black;">Date of Purchase</th>
+                        <th scope="col" style="border: 1px solid black;">Aging</th>
+                        <th scope="col" style="border: 1px solid black;">Order Aging</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        <tr *ngFor="let com of Deallotmentsearchlist" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                            <td style="border: 1px solid black;">{{com.orderNumber}}</td>
+                            <td style="border: 1px solid black;">{{com.orderedItem}}</td>
+                            <td style="border: 1px solid black;">{{com.colorCode}}</td>
+                            <td style="border: 1px solid black;">{{com.description}}</td>
+                            <td style="border: 1px solid black;width: 8rem;">{{com.lineCreationDt | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                            <td style="border: 1px solid black;">{{com.rips}}</td>
+                            <td style="border: 1px solid black;">{{com.twoTone}}</td>
+                            <td style="border: 1px solid black;">{{com.interiors}}</td>
+                            <td style="border: 1px solid black;"></td>
+                            <td style="border: 1px solid black;">{{com.hold}}</td>
+                            <td style="border: 1px solid black;">{{com.holdReason}}</td>
+                            <td style="border: 1px solid black;">{{com.exchangeYN}}</td>
+                            <td style="border: 1px solid black;width: 8rem;">{{com.creationDate | date:'yyyy-MM-dd  hh:mm:ss'}}</td>
+                            <td style="border: 1px solid black;">{{com.aging}}</td>
+                            <td style="border: 1px solid black;">{{com.orderAging}}</td>
+                        </tr>
+                    </tbody>
+               
+            </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+               
+</form>
+
+
+
