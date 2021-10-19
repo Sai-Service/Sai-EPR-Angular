@@ -45,6 +45,7 @@ interface IsubinventoryTransfer
   templateUrl: './subinventory-transfer.component.html',
   styleUrls: ['./subinventory-transfer.component.css']
 })
+
 export class SubinventoryTransferComponent implements OnInit {
 SubinventoryTransferForm:FormGroup;
 
