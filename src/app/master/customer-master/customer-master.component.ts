@@ -209,7 +209,7 @@ export class CustomerMasterComponent implements OnInit {
   dealerType:string;
   dispDealer=false;
   siteName:string;
-  
+
   pipe = new DatePipe('en-US');
   accountNoSearchdata: any;
   displaytanaadhar: boolean;
@@ -242,7 +242,7 @@ export class CustomerMasterComponent implements OnInit {
       location:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       city:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       taxCategoryName: ['', Validators.required],
-      pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('[0-9]*')]],
+      pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength,Validators.pattern("^[0-9]{6}$")]],
       state: ['', Validators.required],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
@@ -389,7 +389,7 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.ouIdList);
         }
       );
-      
+
     this.service.cityList()
       .subscribe(
         data => {
@@ -515,7 +515,7 @@ onOptionSiteStateSeleted(event:any)
 }
 onOptionClassCode(event:any){
   if (event === 'DEALER') {
-    
+
   this.dispDealer=true;
 }}
   onOptionsSelected(event: any) {
@@ -598,16 +598,16 @@ this.panNo = gstNo1;;
             alert('Kindly entered correct GST No Start with 32');
             this.customerMasterForm.get('gstnNo').reset();
            }
-      break;  
+      break;
       case 'TELANGANA':
            if (res != 36 ){
             alert('Kindly entered correct GST No Start with 36');
             this.customerMasterForm.get('gstnNo').reset();
            }
       break;
-        }   
-        
-  
+        }
+
+
 
   }
 
@@ -689,7 +689,7 @@ if (person === 'Person'){
     }
 
     this.submitted = true;
-     
+
     if(this.customerMasterForm.invalid){
       alert("Please fix the errors!!");
     return;
@@ -840,14 +840,14 @@ if (person === 'Person'){
           // this.customerMasterForm.patchValue(this.lstcomments[0]);
           // this.customerMasterForm.patchValue(this.lstcomments[0].);
           // this.city = this.lstcomments.city
- 
+
     //       this.customerMasterForm.patchValue({
     //         panNo:this.lstcomments[0].customerSiteMasterList[0].panNo,
     //         gstNo:this.lstcomments[0].customerSiteMasterList[0].gstNo,
     //         highAmt:this.lstcomments[0].customerSiteMasterList[0].highAmt,
     //         creditAmt:this.lstcomments[0].customerSiteMasterList[0].creditAmt,
     //         disPer:this.lstcomments[0].customerSiteMasterList[0].disPer
-  
+
     //       });
     //       var title1=this.titleList.find(d=>d.code===this.lstcomments[0].title);
     //       var payTerm=this.payTermDescList.find(d=>d.lookupValueId===this.lstcomments[0].termId);
@@ -877,7 +877,7 @@ if (person === 'Person'){
            console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments);
           // this.city = this.lstcomments.city
-           
+
           // let birDate =this.pipe.transform(this.lstcomments[0].birthDate, 'yyyy-MM-dd');
         //  alert("----"+birDate)
           this.customerMasterForm.patchValue({
@@ -972,7 +972,7 @@ if (person === 'Person'){
       tcssel(e) {
         if (e.target.checked=== true) {
           this.tcs = 'Y'
-       } 
+       }
        if (e.target.checked=== false) {
          this.tcs='N'
        }
@@ -985,13 +985,13 @@ if (person === 'Person'){
             // alert(res.message);
             this.limitData = res.obj
             this.customerMasterForm.patchValue({'screditAmt':this.limitData.creditAmt,'shighAmt':this.limitData.highAmt,'sdisPer':this.limitData.disPer});
-            } 
+            }
             else {
             if (res.code === 400) {
               alert(res.message);
             }
           }
-           
+
             // this.country = 'INDIA';
           }
         );}
@@ -1005,8 +1005,8 @@ if (person === 'Person'){
       }
       onBirthgDateChange(event){
         var birthdt  :Date= new Date(event.target.value);
-        
-        
+
+
        // this.customerMasterForm.controls.weddingDate.setValue(formatDate(this.minDateWedding,'yyyy-MM-dd','en'));
 
       }
@@ -1087,19 +1087,19 @@ if (person === 'Person'){
       this.submitted = true;
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
-        
+
         //this.submitted = false;
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;
       }
       this.message = "Do you want to SAVE the changes(Yes/No)?"
-      
+
     }
 
     if (msgType.includes("Reset")) {
       this.message = "Do you want to Reset the changes(Yes/No)?"
     }
-    
+
     if (msgType.includes("Close")) {
       this.message = "Do you want to Close the Form(Yes/No)?"
     }
@@ -1108,7 +1108,7 @@ if (person === 'Person'){
 
  executeAction() {
     if(this.msgType.includes("Save")) {
-     
+
       this.newMast();
     }
 
@@ -1116,7 +1116,7 @@ if (person === 'Person'){
       // this.resetItemCatMast();
       this.customerMasterForm.reset();
     }
-    
+
     if (this.msgType.includes("Close")) {
       // this.closeItemCatMast();
       this.router.navigate(['admin']);
@@ -1124,5 +1124,11 @@ if (person === 'Person'){
     return;
   }
 
+pinCodeVerification(pincod){
+  if(pincod.leng>6)
+  {
+    alert("Please enter Pincode in proper format");
+  }
+}
 }
 
