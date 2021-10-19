@@ -1,5 +1,5 @@
 import { PathLocationStrategy, DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { controllers } from 'chart.js';
@@ -104,7 +104,12 @@ export class JournalVoucherComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
 
-
+  @ViewChild("perName") perName: ElementRef;
+  displayaddButton: boolean;
+  divId: number;
+  ngAfterViewInit() {
+    this.perName.nativeElement.focus();
+  }
  
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.JournalVoucherForm=fb.group({
@@ -156,7 +161,28 @@ export class JournalVoucherComponent implements OnInit {
      })
    }
 
-   addnewglLines(){
+   addnewglLines(i:number){
+    //  alert(i+'Index');
+    //  var cramt=this.JournalVoucherForm.get('segmentName').value;
+    if(i>-1){
+      // alert('inside IF');
+      var trxLnArr1 = this.JournalVoucherForm.get('glLines').value;
+      console.log(trxLnArr1);
+      // console.log(trxArr1[i].segmentName);     
+      // 
+      // alert(trxLnArr1[i].segmentName);
+        var segName=trxLnArr1[i].segmentName;
+        var drAmt=trxLnArr1[i].enteredDr;
+        var crAmt=trxLnArr1[i].enteredDr;
+        // alert(drAmt+'Amt'+crAmt);
+        if(segName===null||(drAmt===null || crAmt===null))
+       { alert('Please enter Blank Data');
+       return;
+    }
+      }
+      var len1 = this.glLines().length;
+      // alert(len1+'Length'+i);
+      if(len1==i+1){
      this.glLines().push(this.newglLines());
      var len=this.glLines().length;
      var patch=this.JournalVoucherForm.get('glLines') as FormArray
@@ -165,8 +191,30 @@ export class JournalVoucherComponent implements OnInit {
         jeLineNum: len,
       }
     );
-  
+    var btnrm =document.getElementById("btnrm"+(i-1)) as HTMLInputElement;
+    if(document.contains(btnrm)){
+   (document.getElementById("btnrm"+(i-1)) as HTMLInputElement).disabled = false;
+   // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+   }}
      }
+     removeglLines(glLineIndex){
+      var len1=this.glLines().length;
+      if(len1===1){
+        alert('You can not delete the line');
+        return;}
+      this.glLines().removeAt(glLineIndex);
+      var len=this.glLines().length;
+      var patch=this.JournalVoucherForm.get('glLines') as FormArray
+      (patch.controls[len - 1]).patchValue(
+       {
+         jeLineNum: len,
+       }
+     );
+     var btnrm =document.getElementById("btnRm"+glLineIndex) as HTMLInputElement;
+     if(document.contains(btnrm)){
+    (document.getElementById("btnRm"+glLineIndex) as HTMLInputElement).disabled = true;
+    }
+  }
 
   ngOnInit(): void {
 
@@ -174,10 +222,12 @@ export class JournalVoucherComponent implements OnInit {
     this.ouId=Number((sessionStorage.getItem('ouId')));
     // alert('OrgID'+this.ouId);
     this.emplId=Number((sessionStorage.getItem('emplId')));
+    this.divId=Number(sessionStorage.getItem('divisionId'));
+    (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
     // alert('employee'+this.emplId);
 
     this.JournalVoucherForm.controls.postedDate.setValue(formatDate(this.postedDate,'yyyy-MM-dd','en'));
-    this.addnewglLines();
+    this.addnewglLines(-1);
     var patch=this.JournalVoucherForm.get('glLines') as FormArray
      (patch.controls[0]).patchValue(
       {
@@ -198,6 +248,13 @@ export class JournalVoucherComponent implements OnInit {
         console.log(this.BranchList);
       }
     );
+    // this.service.BranchListDiv(1,this.divId)
+    // .subscribe(
+    //   data => {
+    //     this.BranchList = data;
+    //     console.log(this.BranchList);
+    //   }
+    // );
     this.service.JournalType().subscribe(
       data=>{this.JournalType=data;
       }
@@ -229,7 +286,8 @@ export class JournalVoucherComponent implements OnInit {
    console.log(this.locIdList);
  }
 );
-
+this.JournalVoucherForm.get('reversalPeriod').disable();
+this.JournalVoucherForm.get('reversalDate').disable();
   }
 JournalVoucher(JournalVoucherForm:any){}
 
@@ -380,10 +438,7 @@ var segment = temp1[0];}
       return matches;
     };
 
-    removeglLines(glLineIndex){
-      this.glLines().removeAt(glLineIndex);
-      
-    }
+   
     creditTotalCal()
     {
 
@@ -421,6 +476,7 @@ var segment = temp1[0];}
       if(totcr===totdr)
       {
         const formValue:IJournalVoucher=this.JournalVoucherForm.value;
+        console.log(formValue);
         this.service.glPost(formValue).subscribe((res:any)=>{
           if(res.code===200)
           {
@@ -429,6 +485,18 @@ var segment = temp1[0];}
             this.docSeqValue=res.obj.DocSeqValue;
             this.status=res.obj.Status;
             this.JournalVoucherForm.disable();
+            (document.getElementById("btnPost") as HTMLInputElement).disabled = true;
+            (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            // this.displayaddButton=false;
+           var len= this.JournalVoucherForm.get('glLines')as FormArray;
+            // var len=this.glLines.length;
+            alert(len.length);
+            for(var i=0;i<len.length;i++){
+              alert('For Loop'+i);
+              // var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
+            (document.getElementById("btnAdd"+i) as HTMLInputElement).disabled = true;
+            (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
+            }
           }
           else
          {
@@ -511,6 +579,7 @@ copyGl()
    
            });
            this.JournalVoucherForm.patchValue(data.obj);
+           this.JournalVoucherForm.patchValue({periodName:data.obj.periodName});
            this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
            this.JournalVoucherForm.patchValue({runningTotalDr:data.obj.runningTotalDr});
                     
@@ -520,6 +589,37 @@ copyGl()
            
           //  this.JournalVoucherForm.get('trxLinesList').patchValue(data.obj.glLines);
           // }
+          if(data.obj.status==='INCOMPLETE')
+          {
+            (document.getElementById("btnRev") as HTMLInputElement).disabled = true;
+
+          }
+          if(data.obj.status==='POST')
+          {
+            this.JournalVoucherForm.disable();
+            // this.JournalVoucherForm.get('glLines').disable();
+            // this.JournalVoucherForm.get('glLines').get('segmentName').disable();
+            
+          
+            (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
+            (document.getElementById("btnPost") as HTMLInputElement).disabled = true;
+             this.JournalVoucherForm.get('reversalPeriod').enable();
+              this.JournalVoucherForm.get('reversalDate').enable();
+              (document.getElementById("btnRev") as HTMLInputElement).disabled = false;
+        
+                var len= this.JournalVoucherForm.get('glLines')as FormArray;
+            // // var len=this.glLines.length;
+            // // alert(len.length);
+            for(var i=0;i<len.length;i++){
+              alert('For Loop'+i);
+            //   // var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
+            (document.getElementById("btnAdd"+i) as HTMLInputElement).disabled = true;
+            (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
+            }
+            }
+            
+
+          
          }
        }
        );
@@ -564,12 +664,18 @@ else
     onOptionGlPeriod(event){
      
        var selPer=this.PeriodName.find(d=>d.periodName===event);
+       if(selPer!=undefined){
       (document.getElementById('postDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
       (document.getElementById('postDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
     }
-   
+  }
+    resetJv()
+    {
+      window.location.reload();
+    }
   
-  
-  
+    close(){
+      this.router.navigate(['admin']);
+      }
   }
   

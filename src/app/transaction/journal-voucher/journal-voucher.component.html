@@ -49,12 +49,12 @@
                                                 Period&nbsp;:
                                         </td>
                                         <td >
-                                            <select class="form-control"  formControlName="periodName" (ngModelChange)="onOptionGlPeriod($event)">
+                                            <select class="form-control"  formControlName="periodName" (ngModelChange)="onOptionGlPeriod($event)" #perName>
                                                 <option>--Select--</option>
                                                 <option *ngFor="let fy of PeriodName" [ngValue]="fy.periodName">{{fy.periodName}}</option>
                                             </select>
-                                            <span  *ngIf="!JournalVoucherForm.get('periodName').valid && JournalVoucherForm.get('periodName').touched">Please
-                                                    Select Period Name </span>
+                                            <!-- <span  *ngIf="!JournalVoucherForm.get('periodName').valid && JournalVoucherForm.get('periodName').touched">Please
+                                                    Select Period Name </span> -->
                                         </td>
                                         <td style="width: 15%"class="LabelFontStyle1">
                                                 Journal&nbsp;Date&nbsp;:
@@ -74,8 +74,8 @@
                                                         <option>--Select--</option>
                                                         <option *ngFor="let jt of JournalType">{{jt.lookupValue}}</option>
                                                     </select>
-                                                    <span  *ngIf="!JournalVoucherForm.get('jeCategory').valid && JournalVoucherForm.get('jeCategory').touched">Please
-                                                            Select Journal Type </span>
+                                                    <!-- <span  *ngIf="!JournalVoucherForm.get('jeCategory').valid && JournalVoucherForm.get('jeCategory').touched">Please
+                                                            Select Journal Type </span> -->
                                                 </td>
                                                 <td style="width: 15%"class="LabelFontStyle">
                                                         Document&nbsp;Number&nbsp;:
@@ -220,8 +220,16 @@
                             <td>
                                     <input type="text" class="form-control"  style="height: 20px;width: 250px;"formControlName="description" >
                             </td>
-                            <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;"(click)="addnewglLines()"></button></td>
-          <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removeglLines(glLineIndex)"></button></td>
+                            <!-- <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> -->
+                            <!-- </div> -->
+                            <!-- <ng-template #thenBlockopen>
+                            <td><button type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" id="btnAdd" (click)="addnewglLines(glLineIndex)"></button></td>
+                            <td><button type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" id="btnRm" (click)="removeglLines(glLineIndex)"></button></td>
+                            </ng-template>
+                            <ng-template #elseBlockfreeze> -->
+                                    <td><button  type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" id="btnAdd{{glLineIndex}}" (click)="addnewglLines(glLineIndex)"></button></td>
+                                    <td><button  type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" id="btnRm{{glLineIndex}}" (click)="removeglLines(glLineIndex)"></button></td>
+                            <!-- </ng-template> -->
                       </tr>
                         </ng-container>
                   </tbody>
@@ -259,22 +267,22 @@
     <table class="center">
             <tr>
                <td>
-                <button type="submit" class="btn btn-primary">Close</button>
+                <button type="submit" class="btn btn-primary" (click)="close()">Close</button>
               </td>
               <td>
-                <button type="submit" class="btn btn-primary" (click)="saveGl()" >Save</button>
+                <button type="submit" class="btn btn-primary" (click)="saveGl()" id="btnSave" >Save</button>
               </td>
               <td>
-                  <button  type="submit" class="btn btn-primary" (click)="postGl()" >Post</button>
+                  <button  type="submit" class="btn btn-primary" (click)="postGl()" id="btnPost">Post</button>
               </td>
               <td>
-                    <button  type="submit" class="btn btn-primary"(click)="copyGl()" >Copy</button>
+                    <button  type="submit" class="btn btn-primary"(click)="copyGl()" id="btnCopy">Copy</button>
               </td>
               <td>
-                    <button  type="submit" class="btn btn-primary" (click)="reverseGl()" >Reverse</button>
+                    <button  type="submit" class="btn btn-primary" (click)="reverseGl()" id="btnRev">Reverse</button>
               </td>
               <td>
-                    <button  type="submit" class="btn btn-primary" >Reset</button>
+                    <button  type="submit" class="btn btn-primary" (click)="resetJv()">Reset</button>
               </td>
              </tr>
           </table>
