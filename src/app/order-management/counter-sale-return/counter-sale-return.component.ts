@@ -506,7 +506,7 @@ export class CounterSaleReturnComponent implements OnInit {
    (patch.controls[index]).patchValue(
      {
        cancelledQty: selectedValue.cancelledQty,
-       itemDesc: selectedValue.segment,
+       itemDesc: selectedValue.itemDesc,
        orderedItem:selectedValue.segment,
        uom: selectedValue.uom,
        taxCategoryName: selectedValue.taxCategoryName,
