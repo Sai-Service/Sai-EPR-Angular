@@ -33,6 +33,7 @@ import { OPMasterDtoComponent } from '../master/opmaster-dto/opmaster-dto.compon
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
+// import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 const routes: Routes = [
   {path:'PoInvoice', component: PoInvoiceComponent},
@@ -66,9 +67,10 @@ const routes: Routes = [
  {path:'CashBankTransfer',component:CashBankTransferComponent},
  {path:'SubInventoryTransfer',component:SubinventoryTransferComponent},
  {path:'BulkUploadWithCsv',component:BulkUploadWithCsvComponent},
-{path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},
+ {path:'BulkItemUploadCSV',component:BulkItemUploadCSVComponent},
 {path:'InternalConsumption',component:InternalConsumptionComponent},
 {path:'pendingPoList',component:PoUploadListComponent},
+// {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

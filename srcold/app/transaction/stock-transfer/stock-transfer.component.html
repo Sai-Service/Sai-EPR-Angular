@@ -1,0 +1,577 @@
+<div class="center">
+  <form [formGroup]="stockTranferForm" (ngSubmit)="stockTransfer(stockTranferForm.value)">
+  <table style="width: 100%;background-color: white;">
+      <tr>
+          <!-- class="PageHeader" -->
+          <td class="PageHeader">
+              &nbsp;&nbsp;Stock&nbsp;Transfer&nbsp;
+          </td>
+
+
+      <table style="width: 100%; background-color: #a4d3e9;">
+        <tr>
+            <td style="width: 15%" class="LabelFontStyle">Stock&nbsp;Transfer&nbsp;Number&nbsp;:</td>
+            <td>
+                <input type="text"  class="form-control" formControlName="ShipmentNo" id="ShipmentNo" [(ngModel)]="ShipmentNo">
+            </td>
+            <td colspan="8" style="text-align: left; width: 100%;">
+                <button type="submit" class="btn btn-primary" (click)='search(ShipmentNo)'><i class="fa fa-search"></i></button>
+            </td>
+        </tr>
+    </table>
+    </tr>
+  </table>
+  <!-- <div formArrayName="trxLinesList"> -->
+  <div class="center" style="width: 100%;">
+    <!-- <form [formGroup]="moveOrderForm" (ngSubmit)="MoveOrder(moveOrderForm.value)"> -->
+      <div *ngIf="displayButton; then thenBlock1; else elseBlock1"> </div>
+      <ng-template #thenBlock1>
+     <table class="center">
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            Stock&nbsp;Transfer&nbsp;Number&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
+            <input hidden formControlName="transactionTypeId">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+              Date&nbsp;:&nbsp;
+            </td>
+            <td>
+              <input  disabled type="text" class="form-control" formControlName="transDate"[(ngModel)]="transDate">
+            </td>
+          <td style="width: 15%" class="LabelFontStyle1">
+            To&nbsp;Organization&nbsp;:&nbsp;
+          </td>
+          <td>
+             <select id="transferOrgId" class="form-control" formControlName="transferOrgId" [(ngModel)]="transferOrgId" (ngModelChange)="onlocationissueselect($event)" #myinput>
+                  <option>--Select--</option>
+                  <option *ngFor="let sc of  locIdList" [ngValue]="sc.toLocationId" >
+                      {{sc.toLocationId}}-{{sc.toLocation}}
+                  </option>
+              </select>
+              <span  *ngIf="!stockTranferForm.get('transferOrgId').valid && stockTranferForm.get('transferOrgId').touched">Please
+                  select Organization Name </span>
+                  <span
+                  *ngIf="getGroupControl('transferOrgId').touched && getGroupControl('transferOrgId').invalid" class="error">Valid Item
+                 </span>
+          </td>
+                    <td>
+            <input type="hidden" formControlName="locId" [(ngModel)]="locId">
+            <input type="hidden" formControlName="emplId">
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle1">SubInventory</td>
+            <!-- <td><select class="form-control"  formControlName="subInventoryCode" >
+                <option>--Select--</option>
+                <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
+                </select> -->
+                <td>
+                    <input disabled type="text" class="form-control"  formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
+                <span  *ngIf="!stockTranferForm.get('subInventoryCode').valid && stockTranferForm.get('subInventoryCode').touched">Please
+                    select Organization Name </span>
+              </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Eway&nbsp;Bill&nbsp;Number&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="ewayBill" maxlength="16">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Eway&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
+          </td>
+          <td>
+              <input type="date" class="form-control" formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}"  onkeydown="return false">
+            </td>
+
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            Request&nbsp;By&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
+              <!-- <option>--Select--</option>
+              <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+              </select> -->
+          </td>
+          <td style="width: 15%" class="LabelFontStyle1">
+            Request&nbsp;To&nbsp;:&nbsp;
+          </td>
+          <td>
+            <select type="text" class="form-control" formControlName="issueTo">
+              <option>--Select--</option>
+              <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
+              </select>
+              <span  *ngIf="!stockTranferForm.get('issueTo').valid && stockTranferForm.get('issueTo').touched" class="cross-validation-error-message alert">Please
+                  select Issue Name </span>
+                  <span
+                  *ngIf="getGroupControl('issueTo').touched && getGroupControl('issueTo').invalid" class="error">Valid Item
+                 </span>
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            Status&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
+          </td>
+        </tr>
+        <input hidden formControlName='deptName'[(ngModel)]='deptName'>
+<tr>
+
+      <td style="width: 15%" class="LabelFontStyle">
+        Remark&nbsp;:&nbsp;
+      </td>
+
+      <td>
+          <input type="text" class="form-control" formControlName="remarks">
+        </td>
+</tr>
+      </table>
+    </ng-template>
+      <br>
+      <div formArrayName="trxLinesList">
+      <div class="grid_scroll">
+
+        <table class="center" style="width: 100%;">
+          <tr>
+            <td>
+              <div class="grid_scroll">
+          <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
+          cellpadding="4" class="auto-style4" class="GridFont">
+            <thead>
+                <tr class="GridHeader">
+                        <th scope="col">Srl&nbsp;No.&nbsp;</th>
+                        <th scope="col">Item&nbsp;Code&nbsp;</th>
+                        <th scope="col">Item&nbsp;Description&nbsp;</th>
+                        <th scope="col">UOM</th>
+                        <!-- <th scope="col">Subinventory</th> -->
+                        <th scope="col">Price</th>
+                        <th scope="col">Locator</th>
+                        <th scope="col" rowspan="2">Available Qty</th>
+                        <th scope="col">Quantity</th>
+                        <!-- <th scope="col">Reason</th> -->
+                        <th scope="col">Add</th>
+                        <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- <input type="number" min="0"  hidden formControlName="trxLineId"> -->
+                </tr>
+              <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
+                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"> </div>
+                <ng-template #thenBlock1>
+                <tr>  <td><input disabled type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
+                 </td>
+                <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
+                    <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)' />
+                      <datalist id="dynmicUserIds1">
+                        <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                          </option>
+                         </datalist>
+                  <!-- <option></option>
+                  <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
+                  </select> -->
+                  <span *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
+                 </span>
+                 <input hidden formControlName="itemId">
+                </td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
+                <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
+
+                <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
+                <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
+                <option>--Select--</option>
+                <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+                </select>
+                <span *ngIf="getGroupControllinewise(trxLineIndex,'frmLocator').touched && getGroupControllinewise(trxLineIndex,'frmLocator').invalid" class="error">Valid Item
+               </span>
+                <input hidden formControlName="onHandQty">
+                <input hidden type="number" formControlName="onHandId">
+                <input hidden type="number" formControlName="locatorId">
+                <input hidden  type="text" formControlName="resveQty">
+                </td>
+                <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
+                <td><input type="number" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" value="{{ primaryQty | number:'1.2-2' }}" #qty>
+                  <span
+                  *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
+                 </span>
+                </td>
+                
+                <td><button type="button" class="btn btn-primary fa fa-plus"  id="btnadd{{trxLineIndex}}" style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
+                <!-- <div *ngIf="displayRemoveRow[trxLineIndex]; then thenLineRemoveRow; else elseLinefRemoveRow"> </div>
+                <ng-template #thenLineRemoveRow>
+                    -->
+                  <td>
+                    <button type="button"  class="btn btn-primary fa fa-trash" style="width: 2rem;" id="btnrm{{trxLineIndex}}" (click)="removenewtrxLinesList(trxLineIndex)">
+                  </button>
+                </td>
+                <!-- </ng-template>
+                <ng-template #elseLinefRemoveRow>
+                    <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
+                  <td>
+                    <button disabled type="button"  class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)">
+                      </button>
+                      </td>
+                </ng-template> -->
+                
+                
+              </tr>
+              </ng-template>
+              <ng-template #elseBlock1>
+                <tr>  <td><input  disabled formControlName="lineNumber" type="text" class="form-control"  style="height: 20px;width: 50px;" >
+                </td>
+               <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
+               </td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
+               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost" value="{{ transCost | number:'1.2-2' }}"></td>
+               <td><input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
+                   <input hidden type="number" formControlName="locatorId">
+               </td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="avlqty"></td>
+               <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="primaryQty" ></td>
+               <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
+               <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+             </tr>
+              </ng-template>
+
+
+              </ng-container>
+              </tbody>
+          </table>
+        </div>
+        </td>
+        </tr>
+        </table>
+        </div>
+      </div>
+      <!-- </ng-template> -->
+      <ng-template #elseBlock1>
+          <table class="center">
+              <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Stock Tansfer Number:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
+                  <input hidden formControlName="transactionTypeId">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Date:
+                  </td>
+                  <td>
+                    <input disabled type="text" class="form-control" formControlName="transDate" >
+                  </td>
+                <td style="width: 15%" class="LabelFontStyle1">
+                  To Organization:
+                </td>
+                <td>
+                   <input disabled type="text"  class="form-control" formControlName="transferLoc" [(ngModel)]="transferLoc">
+
+                </td>
+                          <td>
+                  <input type="hidden" formControlName="locId" [(ngModel)]="locId">
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 15%" class="LabelFontStyle">SubInventory</td>
+                  <td><input disabled type="text" class="form-control"  formControlName="subInventoryCode" >
+
+                    </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Eway Bill Number:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="ewayBill">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Eway Bill Date:
+                </td>
+                <td>
+                    <input disabled type="date" class="form-control" formControlName="ewayBillDate">
+                  </td>
+
+              </tr>
+              <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Request By:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="issueBy" [(ngModel)]="issueBy">
+                    <!-- <option>--Select--</option>
+                    <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                    </select> -->
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Request To:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="issueTo">
+                    <!-- <option>--Select--</option>
+                    <option *ngFor="let ib of issueByList">{{ib.name}}</option>
+                    </select> -->
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                  Status:
+                </td>
+                <td>
+                  <input disabled type="text" class="form-control" formControlName="status" [(ngModel)]="status">
+                </td>
+              </tr>
+              <input hidden formControlName='deptName'[(ngModel)]='deptName'>
+      <tr>
+
+            <td style="width: 15%" class="LabelFontStyle">
+              Remark:
+            </td>
+
+            <td>
+                <input disabled type="text" class="form-control" formControlName="remarks">
+              </td>
+      </tr>
+            </table>
+        <br>
+        <!-- <div formArrayName="trxLinesList">
+        <div class="grid_scroll">
+          <table class="center">
+            <tr>
+              <td>
+                <div class="grid_scroll">
+            <table  style="width:100%; border-collapse:collapse;" cellspacing="0"
+            cellpadding="4" class="auto-style4" class="GridFont">
+              <thead>
+                  <tr class="GridHeader">
+                          <th scope="col">Srl No.</th>
+                          <th scope="col">Item Code</th>
+                          <th scope="col">Item Description</th>
+                          <th scope="col">UOM</th>
+                          <th scope="col">Subinventory</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Locator</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Reason</th>
+                          <th scope="col">Add</th>
+                          <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <input type="number" min="0"  hidden formControlName="trxLineId">
+                  </tr>
+                <ng-container *ngFor="let trxLinesLists of trxLinesList().controls; let trxLineIndex=index" [formGroupName]="trxLineIndex">
+               <tr>  <td><input hidden disabled type="text" class="form-control"  style="height: 20px;width: 50px;" >
+                   </td>
+                  <td><input disabled type="text"  class="form-control" style="height: 20px;" formControlName="segment">
+                  </td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px; width: 110px;" formControlName="subInventoryCode" >
+                  </td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="transCost"></td>
+                  <td><input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
+                      <input hidden type="number" formControlName="locatorId">
+                  </td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;" ></td>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList()"></button></td>
+                  <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
+                </tr>
+                </ng-container>
+                </tbody>
+            </table>
+          </div>
+          </td>
+          </tr>
+          </table>
+          </div>
+        </div> -->
+      </ng-template>
+  </div>
+
+        <table class="center">
+          <tr>
+             <td>
+              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" >Close</button>
+            </td>
+            <td>
+              <button type="submit" class="btn btn-primary" (click)="resetMoveOrder()" >Reset</button>
+            </td>
+            <td>
+              <div *ngIf="display; then thenBlock; else elseBlock">
+              </div>
+              <ng-template #thenBlock>
+                <td>
+                  <button type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button>
+                </td>
+
+                </ng-template>
+                <ng-template #elseBlock>
+                  <td>
+                    <button disabled type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button>
+                  </td>
+                </ng-template>
+                <td>  
+                    <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
+                      </div>
+                      <ng-template #thenBlockOp>
+                          <button disabled type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
+                              View&nbsp;Print
+                          </button>
+                      </ng-template>
+                      <ng-template #elseBlockOp>
+                  <button type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
+                    View&nbsp;Note
+                </button>
+                <!-- <button type="button" class="btn btn-primary" (click)="viewStockgatePass()" style="width: 6rem;">
+                  View &nbsp;Gatepass;
+                </button> -->
+              </ng-template>
+              </td>
+                <!-- <td>
+                    <button type="submit" class="btn btn-primary"    >Payment</button>  
+               <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>
+                </td> -->
+                <td>
+                    <button  type="submit" class="btn btn-primary" (click)="searchAll()">Search</button>
+                  </td>
+          </tr>
+        </table>
+    <!-- </form> -->
+    <br>
+
+
+<!-- card code  -->
+<!-- Card -->
+<div class="card chart-card">
+
+  <!-- Card content -->
+  <div class="card-body pb-0">
+
+    <!-- Title -->
+    <h4 class="card-title font-weight-bold" style="background-color: #FFE4B5;width: 100%;">Pending Data</h4>
+
+  </div>
+
+  <!-- Classic tabs -->
+  <div class="classic-tabs">
+
+    <!-- Nav tabs -->
+    <ul class="nav tabs-white nav-fill" role="tablist">
+      <li class="nav-item ml-0">
+         <a class="nav-link waves-light active" data-toggle="tab" href="#panel1001" role="tab">Receiving at other Location</a>
+
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" data-toggle="tab" href="#panel1002" role="tab">Receiving at this Location</a>
+      </li>
+    </ul>
+
+    <div class="tab-content rounded-bottom">
+      <!--Panel 1-->
+      <div class="tab-pane fade in show active" id="panel1001" role="tabpanel">
+          <div class="Container1">
+              <div class="grid_scroll">
+              <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <tbody>
+                      <tr class="GridHeader">
+                        <th scope="col">StockAdjustment Number</th>
+                        <th scope="col">From Location</th>
+                        <th scope="col">To Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">remark</th>
+                        <th scope="col">View</th>
+                      </tr>
+                      </tbody>
+                      <tr *ngFor="let com of pendingrec" style="background-color:#E3EAEB;">
+                        <td>{{com.shipmentNumber}}</td>
+                        <td>{{com.fromLoc}}</td>
+                        <td>{{com.toLoc}}</td>
+                        <td>{{com.creationDate}}</td>
+                        <td>{{com.remark}}</td>
+                        <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button>
+                      </tr>
+              </table>
+              </div>
+            </div>
+
+      </div>
+      <!--/.Panel 1-->
+      <!--Panel 2-->
+      <div class="tab-pane fade" id="panel1002" role="tabpanel">
+          <div class="Container1">
+              <div class="grid_scroll">
+              <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <tbody>
+                      <tr class="GridHeader">
+                        <th scope="col">StockAdjustment Number</th>
+                        <th scope="col">From Location</th>
+                        <th scope="col">To Location</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">remark</th>
+                        <th scope="col">View</th>
+                      </tr>
+                      </tbody>
+                      <tr *ngFor="let com of pendingatother" style="background-color:#E3EAEB;">
+                        <td>{{com.shipmentNumber}}</td>
+                        <td>{{com.fromLoc}}</td>
+                        <td>{{com.toLoc}}</td>
+                        <td>{{com.creationDate}}</td>
+                        <td>{{com.remark}}</td>
+                        <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button>
+                      </tr>
+              </table>
+              </div>
+            </div>
+      </div>
+      <!--/.Panel 2-->
+      <!--Panel 3-->
+      <div class="tab-pane fade" id="panel1003" role="tabpanel">
+        <img class="img-fluid z-depth-1 rounded mb-3" alt="sample image" src="https://mdbootstrap.com/img/Photos/Others/intro1.jpg">
+        <p align="justify" class="font-small text-muted mx-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima at ipsum sit amet.</p>
+      </div>
+      <!--/.Panel 3-->
+    </div>
+
+  </div>
+  <!-- Classic tabs -->
+
+</div>
+<!-- Card -->
+
+<!-- ---------------Close Dialog Box----------------- -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+                <tr>
+                    <td>
+                    <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMoveOrder()">Yes</button>
+                    </td>
+                    <td>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+</form>
+
+  </div>
+
+

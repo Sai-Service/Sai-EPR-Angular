@@ -2948,4 +2948,6 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
    getShipmentList(locId,deptId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
 }
+
+
 }
