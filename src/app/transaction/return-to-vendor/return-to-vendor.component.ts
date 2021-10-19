@@ -72,6 +72,8 @@ export class ReturnToVendorComponent implements OnInit {
   lstcomments: any;
   lstcompolines: any;
   getPoReceiptDetails:  Array<any> = [];
+  lstReceiptRtnHeader: any;
+  lstReceiptRtnItemLines:any;
   
   // public ItemLocatorList: Array<string> = [];
 
@@ -1029,8 +1031,20 @@ export class ReturnToVendorComponent implements OnInit {
 
     rtnSearchByDocNo(mRtnNumber){
       alert ("WIP.... Return Number....." +mRtnNumber);
+      this.service.getsearchByReceiptNo(mRtnNumber,this.locId)
+      .subscribe(
+        data => {
+          this.lstReceiptRtnHeader = data.obj;
+          // this.lstReceiptRtnItemLines=data.obj.rcvLines;
+          console.log(this.lstReceiptRtnHeader);
+        //  if(data.code===200){
+        //  }
+        });
+      }
 
-    }
+
+
+    
 
     validateSave() 
     {
