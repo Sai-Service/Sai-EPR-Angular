@@ -316,8 +316,6 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   // custType: string;
   // customerId:number;
 
-  @ViewChild('fileInput') fileInput;
-  message: string;
 
   @ViewChild("paymentButton") paymentButton: ElementRef;
 

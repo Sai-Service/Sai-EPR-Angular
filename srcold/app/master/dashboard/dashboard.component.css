@@ -1,0 +1,27 @@
+/* .card{
+    border-color: black;
+ }
+ 
+ 
+ .card-header{
+     color: black;
+     font-family: Verdana, Geneva, Tahoma, sans-serif;
+     font-size: small;
+     text-align: center;
+     background-color: cornsilk;
+ }
+ 
+ .chart-wrapper{
+     width: 50%;
+ } */
+
+
+ .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+
+ 

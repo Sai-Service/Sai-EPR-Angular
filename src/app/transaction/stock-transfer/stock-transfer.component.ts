@@ -33,12 +33,14 @@ interface IStockTransfer {
   primaryQty: number;
   segment:string;
 
+  emplId:number;
+
 }
 export  class StockTransferRow {
   segment:string;
   Locator:string;
   quantity:number;
-  
+
 }
 
 @Component({
@@ -141,6 +143,7 @@ export class StockTransferComponent implements OnInit {
       transferLoc:[],
       status: ['', [Validators.required]],
       transReference:[''],
+      emplId:[],
       trxLinesList: this.fb.array([]),
 
     }
@@ -172,7 +175,7 @@ export class StockTransferComponent implements OnInit {
     })
   }
 
-  addnewtrxLinesList(i:number) {    
+  addnewtrxLinesList(i:number) {
     // alert(i+'I Value');
     if(i>-1)
     {
@@ -197,9 +200,9 @@ export class StockTransferComponent implements OnInit {
     var len1 = this.trxLinesList().length;
     // alert(len1+'Length'+i);
     if(len1==i+1){
-     
-    this.trxLinesList().push(this.newtrxLinesList()); 
-    
+
+    this.trxLinesList().push(this.newtrxLinesList());
+
 
     // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
     var patch = this.stockTranferForm.get('trxLinesList') as FormArray;
@@ -207,9 +210,9 @@ export class StockTransferComponent implements OnInit {
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
-        
+
       }
-      
+
     );
      var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
      if(document.contains(btnrm)){
@@ -220,7 +223,7 @@ export class StockTransferComponent implements OnInit {
     }
     // this.displayRemoveRow[i]=true;
     // alert(i);
-   
+
   }
   removenewtrxLinesList(trxLineIndex:number) {
     var len1=this.trxLinesList().length;
@@ -314,7 +317,7 @@ export class StockTransferComponent implements OnInit {
     if(this.currentOp==='SEARCH'){
       return;
     }
-    
+
    // alert(event);
     //alert(this.locId);
     console.log(this.subInvCode);
@@ -340,7 +343,7 @@ export class StockTransferComponent implements OnInit {
     // if(event.key==='Tab')
     // {
 
-    
+
         // if(event != null)
         // {
         //   // alert(event.length);
@@ -351,6 +354,7 @@ export class StockTransferComponent implements OnInit {
     // let subcode1=this.subInvCode.find(d=>d.subInventoryCode===subcode);
    // alert(subcode1.subInventoryId);
    let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+   if(select1!=undefined){
    var trxLnArr = this.stockTranferForm.get('trxLinesList').value;
    var trxLnArr1 = this.stockTranferForm.get('trxLinesList') as FormArray;
   //  trxLnArr1.controls[i].patchValue({itemId:select1.itemId})
@@ -402,7 +406,7 @@ export class StockTransferComponent implements OnInit {
           this.resrveqty=data;
           trxLnArr1.controls[i].patchValue({resveQty:this.resrveqty});
         });
-      // }    
+      }
   }
   AvailQty(event:any,i:number)
 {
@@ -471,7 +475,7 @@ validate(i:number,qty1)
     alert('Please enter correct No');
     trxLnArr1.controls[i].patchValue({primaryQty:''});
   }}
-  
+
 }
 reservePos(i)
 {
@@ -494,7 +498,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     //   variants.controls[i].get('reservedQty').reset();
 
     // }
-     
+
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.removeControl('reservedQty');
       variantFormGroup.removeControl('invItemId');
@@ -519,7 +523,7 @@ var trxLnArr1 = this.stockTranferForm.get('trxLinesList').value;
     stkRow.Locator=(trxLnArr1[i].frmLocator);
     stkRow.quantity=(trxLnArr1[i].quantity);
     this.itemMap.set(trxLnArr1[i].segment,stkRow);
-    
+
 // variants.controls[i].get('reservedQty').reset();
    }
    else{
@@ -612,6 +616,8 @@ deleteReserveLinewise(i)
         this.display = false;
         this.displayButton = false;
         this.displayOp=false;
+        this.stockTranferForm.get('ewayBill').disable();
+      this.stockTranferForm.get('ewayBillDate').disable();
       }
       else {
         if (res.code === 400) {
@@ -630,26 +636,23 @@ deleteReserveLinewise(i)
   }
 
   search(ShipmentNo) {
+    if(ShipmentNo!=undefined){
     this.currentOp='SEARCH';
     // alert('1'+ShipmentNo);
     this.display = true;
-
+    this.stockTranferForm.get('ewayBill').disable();
+      this.stockTranferForm.get('ewayBillDate').disable();
     // var shipNo = (this.stockTranferForm.get('ShipmentNo').value);
     // alert('2'+shipNo)
     this.service.getsearchByShipmentNo(ShipmentNo).subscribe
       (data => {
         this.lstcomment = data;
         let control = this.stockTranferForm.get('trxLinesList') as FormArray;
-        // data.forEach(f => {
-        //   var trxlist:FormGroup=this.newtrxLinesList();
-        //   this.trxLinesList().push(trxlist);
-        // });
         var len = this.trxLinesList().length;
         for (let i = 0; i < data.length - len; i++) {
           var trxlist: FormGroup = this.newtrxLinesList();
           this.trxLinesList().push(trxlist);
         }
-        // alert(this.transferLoc);
         this.stockTranferForm.patchValue(this.lstcomment[0]);
         this.transferLoc=this.lstcomment[0].transferLoc;
         this.displayButton = false;
@@ -661,11 +664,18 @@ deleteReserveLinewise(i)
             lineNumber: i + 1
           })
         }
+        var eway=this.stockTranferForm.get('ewayBill').value;
+        alert(eway);
+        if(eway===''){
+          alert('In If');
+          this.stockTranferForm.get('ewayBill').enable();
+          this.stockTranferForm.get('ewayBillDate').enable();
+        }
         this.currentOp='INSERT';
         this.displayOp=false;
       }
       );
-
+    }
   }
   // onSelectLocaorId(event: any, i) {
   //   alert('locatorSelect' + event);
@@ -717,7 +727,7 @@ onlocationissueselect(event){
   else{
     // alert('event');
     this.addnewtrxLinesList(-1);
-    
+
     var patch = this.stockTranferForm.get('trxLinesList') as  FormArray
       (patch.controls[0]).patchValue(
      {
@@ -850,7 +860,7 @@ viewStockgatePass() {
     }
      else {
         if (res.code === 400) {
-          alert( res.message);     
+          alert( res.message);
           // this.CounterSaleOrderBookingForm.reset();
           // window.location.reload();
         }

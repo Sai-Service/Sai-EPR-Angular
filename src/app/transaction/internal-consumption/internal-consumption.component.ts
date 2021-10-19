@@ -66,7 +66,7 @@ export  class IcTrans {
   segment:string;
   Locator:string;
   quantity:number;
-  
+
 }
 
 @Component({
@@ -197,7 +197,7 @@ export class InternalConsumptionComponent implements OnInit {
   @ViewChild("input5") input5:ElementRef;
   @ViewChild("input6") input6:ElementRef;
   @ViewChild("Item") Item:ElementRef;
-  
+
   // @ViewChild("suppCode1") suppCode1: ElementRef;
   ngAfterViewInit() {
     this.myinput.nativeElement.focus();
@@ -287,8 +287,8 @@ export class InternalConsumptionComponent implements OnInit {
      { alert('Please enter Blank Data');
      return;
     }
-  
-  
+
+
     if(!this.itemMap.has(item1))
     {
       this.reservePos(i);
@@ -302,18 +302,18 @@ export class InternalConsumptionComponent implements OnInit {
    var len1 = this.cycleLinesList().length;
     // alert(len1+'Length'+i);
     if(len1==i+1){
-     
+
     this.cycleLinesList().push(this.newcycleLinesList());
-    
+
     // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
     var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
     (patch.controls[len - 1]).patchValue(
       {
         lineNumber: len,
-        
+
       }
-      
+
     );
      var btnrm =document.getElementById("btnrm"+i) as HTMLInputElement;
      if(document.contains(btnrm)){
@@ -324,7 +324,7 @@ export class InternalConsumptionComponent implements OnInit {
     // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
     }
     }
-    
+
     // this.displayRemoveRow[i]=true;
     // alert(i);
       }
@@ -349,17 +349,17 @@ export class InternalConsumptionComponent implements OnInit {
             lineNumber: len,
           }
         );
-    
+
         var btnrm =document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement;
          if(document.contains(btnrm)){
         (document.getElementById("btnrm"+(trxLineIndex-1)) as HTMLInputElement).disabled = true;
         // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
         }
-       
+
         this.displayLocator[trxLineIndex]=true;
       }
- 
- 
+
+
   ngOnInit(): void {
 
     // alert(this.route1.queryParams+'hell')
@@ -432,7 +432,7 @@ console.log(this.route1.queryParams+'hell');
           // {
           //   // this.InternalConsumptionForm.reset();
           //  alert('In 1st If'+this.transType.length);
-          //    for(let i=0;i<this.transType.length;i++)  
+          //    for(let i=0;i<this.transType.length;i++)
           //    {
           //      alert('In For');
           //      if(this.transType[i].transactionTypeId===13)
@@ -441,7 +441,7 @@ console.log(this.route1.queryParams+'hell');
           //        this.transType.splice(i,1);
           //      }
           //    }
-           
+
           // }
         }
       );
@@ -479,17 +479,17 @@ console.log(this.route1.queryParams+'hell');
       (data => {this.issueByList = data;
           console.log(this.issueByList);
         });
-       
+
 
         this.addnewcycleLinesList(-1);
-        
+
         var patch = this.InternalConsumptionForm.get('trxLinesList') as  FormArray
 
         (patch.controls[0]).patchValue(
        {
          lineNumber: 1,
        }
-       
+
      );
      this.displayRemoveRow[0] = false;
     //  this.route1.queryParams
@@ -504,7 +504,7 @@ console.log(this.route1.queryParams+'hell');
     // );
 
     //  alert('sub'+this.sub);
-       
+
   }
   InternalConsumption(InternalConsumptionForm:any){}
 
@@ -589,8 +589,9 @@ this.router.navigate(['admin']);
     if(this.currentOp==='SEARCH'){
       return;
     }
-    
+
     let select1=this.ItemIdList.find(d=>d.SEGMENT===event);
+    if(select1!=undefined){
     var trxLnArr1=this.InternalConsumptionForm.get('cycleLinesList')as FormArray;
     var trxLnArr=this.InternalConsumptionForm.get('cycleLinesList').value;
     trxLnArr1.controls[i].patchValue({invItemId:select1.itemId})
@@ -670,9 +671,9 @@ this.router.navigate(['admin']);
           //   (document.getElementById('btnadd'+i) as HTMLInputElement).disabled = false;
           //   (document.getElementById('btnrem'+i) as HTMLInputElement).disabled = true;
           // }
-          
-        });
-      
+
+        });}
+
   }
   AvailQty(event:any,i)
 {
@@ -1057,6 +1058,7 @@ this.router.navigate(['admin']);
       }
       search(compNo)
       {
+        if(compNo!=undefined){
         this.currentOp='SEARCH';
         var compno=this.InternalConsumptionForm.get('compNo').value;
         var appflag=this.InternalConsumptionForm.get('trans').value;
@@ -1079,7 +1081,7 @@ this.router.navigate(['admin']);
                 // for(let j=0; j<data.obj.cycleLinesList.length-len; j++){
                 //  control.controls[j].patchValue(data.obj.cycleLinesList);
                 // }
-               
+
                 for (let i = 0; i < this.cycleLinesList().length; i++) {
                   // this.onOptiongetItem(data.obj.cycleLinesList[i].segment,i);
                   // let itemLoct : ItemLocator  = new ItemLocator();
@@ -1108,7 +1110,7 @@ this.router.navigate(['admin']);
                       // this.InternalConsumptionForm.get('cycleLinesList').disable();
                     }
             })
-
+          }
       }
 
       saveMisc()
@@ -1212,7 +1214,7 @@ this.router.navigate(['admin']);
       this.input6.nativeElement.focus();
       }
     }
-    
+
 
   }
 
@@ -1275,5 +1277,5 @@ this.router.navigate(['admin']);
             // alert(res.message);
            }});
       }
-      
+
 }
