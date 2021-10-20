@@ -100,6 +100,7 @@ lastkeydown1: number = 0;
   tosubInvCode: any;
   resrveqty: any;
   SubNo:string;
+  currentOp:string;
 
   pipe = new DatePipe('en-US');
   now=new Date();
@@ -252,7 +253,7 @@ lastkeydown1: number = 0;
          lineNumber: 1,
        }
      );
-this.SubNo="12PU";
+// this.SubNo="12PU";
   }
 
   subinventoryTransfer(SubinventoryTransferForm:any)
@@ -318,8 +319,9 @@ this.SubNo="12PU";
   };
 
   search(SubNo) {
-    alert(SubNo+'1st');
+    // alert(SubNo+'1st');
     if(SubNo!=undefined){
+      this.currentOp='SEARCH';
     this.service.getsearchBySubInvTrfNo(SubNo,this.locId).subscribe
       (data => {
         this.lstcomment = data;
@@ -328,16 +330,25 @@ this.SubNo="12PU";
         for (let i = 0; i < data.length - len; i++) {
           var trxlist: FormGroup = this.newtrfLinesList();
           this.trfLinesList().push(trxlist);
+
         }
         this.SubinventoryTransferForm.patchValue(this.lstcomment[0]);
         this.SubinventoryTransferForm.get('trfLinesList').patchValue(this.lstcomment);
         var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
         for (let i = 0; i < this.trfLinesList().length; i++) {
-          patch.controls[i].patchValue({
-            lineNumber: i + 1
+          // patch.get('locatorId').setValue(this.lstcomment[i].locatorId);
+
+          this.locData[i]={locatorId:this.lstcomment[i].locatorId,
+                          segmentName:this.lstcomment[i].locator,
+                          onHandQty:this.lstcomment[i].primaryQty,
+                          id:this.lstcomment[i].locatorId}
+            patch.controls[i].patchValue({
+            lineNumber: i + 1,
+            locatorId:this.lstcomment[i].locatorId,
+            LocatorSegment:this.lstcomment[i].transferLocator
           })
         }
-
+        this.currentOp='INSERT';
       }
       );
     }
@@ -345,6 +356,9 @@ this.SubNo="12PU";
 
   onOptiongetdetails(event:any,i)
   {
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
     // alert(event);
     // alert(event);
     var temp = event.split('--');
@@ -524,6 +538,9 @@ this.SubNo="12PU";
 
         AvailQty(event:any,i:number)
         {
+          if(this.currentOp==='SEARCH'){
+            return;
+          }
           // alert(event+'Loca');
           var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
           var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
