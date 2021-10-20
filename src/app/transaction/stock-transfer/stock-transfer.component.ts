@@ -454,7 +454,9 @@ transdata(val){
   return val;
 }
 EwayUpdate(){
-  const formValue:IStockTransfer = this.transdata(this.stockTranferForm.value);
+ // const formValue:IStockTransfer = this.transdata(this.stockTranferForm.value);
+ const formValue:IEway = this.stockTranferForm.value;
+ debugger;
     this.service.UpdateStkEway(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD UPDATED SUCCESSFULLY');
