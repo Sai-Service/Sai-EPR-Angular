@@ -45,6 +45,7 @@ interface IsubinventoryTransfer
   templateUrl: './subinventory-transfer.component.html',
   styleUrls: ['./subinventory-transfer.component.css']
 })
+
 export class SubinventoryTransferComponent implements OnInit {
 SubinventoryTransferForm:FormGroup;
 
@@ -99,7 +100,8 @@ lastkeydown1: number = 0;
   tosubInvCode: any;
   resrveqty: any;
   SubNo:string;
-
+  currentOp:string;
+  dispsearLocator=true;
   pipe = new DatePipe('en-US');
   now=new Date();
   transDate=this.pipe.transform(this.now,'dd-MM-yyyy');
@@ -117,6 +119,7 @@ lastkeydown1: number = 0;
   itemLocator: any;
   gettoSubLoc: any=[];
   displayLocator: boolean;
+  locator:string;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -161,6 +164,7 @@ lastkeydown1: number = 0;
       lineNumber:[],
       onHandId:[],
       resveQty:[''],
+      locator:[],
      })
    }
 
@@ -251,7 +255,7 @@ lastkeydown1: number = 0;
          lineNumber: 1,
        }
      );
-this.SubNo="12PU";
+// this.SubNo="12PU";
   }
 
   subinventoryTransfer(SubinventoryTransferForm:any)
@@ -317,8 +321,10 @@ this.SubNo="12PU";
   };
 
   search(SubNo) {
-    alert(SubNo+'1st');
+    // alert(SubNo+'1st');
     if(SubNo!=undefined){
+      this.currentOp='SEARCH';
+      this.dispsearLocator=true;
     this.service.getsearchBySubInvTrfNo(SubNo,this.locId).subscribe
       (data => {
         this.lstcomment = data;
@@ -327,16 +333,27 @@ this.SubNo="12PU";
         for (let i = 0; i < data.length - len; i++) {
           var trxlist: FormGroup = this.newtrfLinesList();
           this.trfLinesList().push(trxlist);
+
         }
+        this.dispsearLocator=false;
         this.SubinventoryTransferForm.patchValue(this.lstcomment[0]);
         this.SubinventoryTransferForm.get('trfLinesList').patchValue(this.lstcomment);
         var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
         for (let i = 0; i < this.trfLinesList().length; i++) {
-          patch.controls[i].patchValue({
-            lineNumber: i + 1
+          // patch.get('locatorId').setValue(this.lstcomment[i].locatorId);
+
+          // this.locData[i]={locatorId:this.lstcomment[i].locatorId,
+          //                 segmentName:this.lstcomment[i].locator,
+          //                 onHandQty:this.lstcomment[i].primaryQty,
+          //                 id:this.lstcomment[i].locatorId}
+            patch.controls[i].patchValue({
+            lineNumber: i + 1,
+            // locatorId:this.lstcomment[i].locatorId,
+            LocatorSegment:this.lstcomment[i].transferLocator
           })
         }
-
+        this.SubinventoryTransferForm.disable();
+        this.currentOp='INSERT';
       }
       );
     }
@@ -344,6 +361,9 @@ this.SubNo="12PU";
 
   onOptiongetdetails(event:any,i)
   {
+    if(this.currentOp==='SEARCH'){
+      return;
+    }
     // alert(event);
     // alert(event);
     var temp = event.split('--');
@@ -523,6 +543,9 @@ this.SubNo="12PU";
 
         AvailQty(event:any,i:number)
         {
+          if(this.currentOp==='SEARCH'){
+            return;
+          }
           // alert(event+'Loca');
           var trxLnArr1=this.SubinventoryTransferForm.get('trfLinesList')as FormArray;
           var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
@@ -553,9 +576,12 @@ this.SubNo="12PU";
               let avlqty1=0;
               avlqty1= onHand-reserve;
               if(subcode===tosub){
-                if(locId!=tolocator)
+                alert('In If')
+                if(locId===tolocator)
                 {
+                  alert('In 2IF');
                   alert('Please select correct locator');
+                  trxLnArr1.controls[i].patchValue({LocatorSegment: ''});
                 }
               }
               // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;

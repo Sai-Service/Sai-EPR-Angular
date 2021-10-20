@@ -86,7 +86,10 @@
                             <input hidden disabled   formControlName="shipHeaderId" [(ngModel)] ="shipHeaderId" class="form-control">
                             <input hidden disabled   formControlName="poHeaderId" [(ngModel)] ="poHeaderId" class="form-control">
                             <input hidden disabled    formControlName="suppNo"   [(ngModel)]='suppNo'  class="form-control">
+                            <input hidden disabled    formControlName="originalReceiptNo"   [(ngModel)]='originalReceiptNo'  class="form-control">
                           
+
+                            
                             <td >
                                 <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"
                                 class="form-control" [(ngModel)]="emplId" placeholder="">
@@ -137,10 +140,22 @@
                         <tr>
 
                         <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;No:&nbsp; </td> 
-                        <td> <input autofocus type="text"   formControlName="receiptNo" [(ngModel)]='receiptNo'
-                            value={{receiptNo}} class="form-control"  (change)="SearchByPoRcptNumberHeader(receiptNo)"
-                            placeholder="Enter Receipt No" style="background-color: yellow;" >
+                        <td>
+                        <table>
+                        <tr>
+                            <td> <input autofocus type="number"   formControlName="receiptNo" [(ngModel)]='receiptNo'
+                                value={{receiptNo}} class="form-control"  (change)="SearchByPoRcptNumberHeader(receiptNo)"
+                                placeholder="Enter Receipt No" style="background-color: yellow; text-align: left;" (keyup)="onKey($event)" >
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        </table>
                         </td>
+
 
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Return&nbsp;No:&nbsp;
@@ -285,9 +300,9 @@
                                     <th scope="col" style="width: 3rem;">OnHand Qty</th>
                                     <th scope="col" style="width: 3rem;">UOM</th>
                                     <!-- <th scope="col"> LocatorId</th> -->
-                                    <th scope="col">Sub Inventory</th>
+                                    <th scope="col">Sub Inv</th>
                                     <th scope="col">Stock Locator</th>
-                                    <th scope="col">Location</th>
+                                    <!-- <th scope="col">Location</th> -->
                                     <th scope="col">Item Description</th>
                                     <!-- <th scope="col">Inv. Category</th> -->
                                     <!-- <th scope="col">Destination Type</th> -->
@@ -337,7 +352,8 @@
                                             <input  type="text" hidden disabled formControlName="invItemId"  class="form-control" style="height: 25px;width: 50px;"> 
                                             <input  type="text" hidden disabled formControlName="subInventoryId"  class="form-control" style="height: 25px;width: 50px;"> 
                                             <input hidden disabled type="text" formControlName="locatorId" class="form-control" style="height: 25px;width: 100px;" >
-                                    
+                                            <input type="text"  hidden disabled formControlName="locId" class="form-control" [(ngModel)]='locId' style="height: 25px;width: 60px;">
+                                          
                                         <td>
                                             <div *ngIf="enableCheckBox; then thenBlock; else elseBlock"></div>
                                             <ng-template #thenBlock>
@@ -385,12 +401,12 @@
 
                                                   <ng-template #showItemYes>
                                                   <td><input   type="text" formControlName="itemName"  id="itemName"  (change)="findPoReceiptItem(i)" 
-                                                              style="height: 25px;width: 200px;background-color: yellow;"  class="form-control" placeholder="Enter Item Number" > </td>
+                                                              style="height: 25px;width: 220px;background-color: yellow;"  class="form-control" placeholder="Enter Item Number" > </td>
                                
                                                   </ng-template>
                                                   <ng-template #showItemNo>
                                                     <td><input  disabled  type="text" formControlName="itemName"  id="itemName"  
-                                                                style="height: 25px;width: 200px;background-color: yellow;"  class="form-control" placeholder="Enter Item Number" > </td>
+                                                                style="height: 25px;width: 220px;background-color: yellow;"  class="form-control" placeholder="Enter Item Number" > </td>
                                  
                                                     </ng-template>
 
@@ -419,7 +435,7 @@
                                            </td> 
 
                                            <td>
-                                            <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 45px;" >
+                                            <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 50px;" >
                                            </td> 
 
 
@@ -441,13 +457,11 @@
                                             class="form-control" style="height: 25px;width:50px;">
                                             </td>
                                             <td>
-                                                <input disabled type="text" formControlName="locatorDesc" class="form-control" style="height: 25px;width: 100px;" >
-                                            </td> 
+                                            <input   disabled type="text" formControlName="locatorDesc" class="form-control" style="height: 25px;width: 100px;" >
+                                            </td>
+                                           
         
-                                        <td>
-                                            <input type="text" disabled formControlName="locId" class="form-control"
-                                            [(ngModel)]='locId' style="height: 25px;width: 60px;">
-                                        </td>
+                                       
 
                                         <td> <input disabled type="text"
                                             formControlName="itemDesc"
@@ -462,26 +476,26 @@
 
                                         <td>  <input disabled type="text"
                                             formControlName="taxPercentage" 
-                                            class="form-control" style="height: 25px;width: 60px;text-align: right;">
+                                            class="form-control" style="height: 25px;width: 50px;text-align: right;">
                                        </td>
                                         <td> <input disabled type="text"
                                                 formControlName="unitPrice"
-                                                class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                                class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                         </td>
                                         <td> <input disabled type="text"
                                                 formControlName="baseAmount"
-                                                class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                                class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                         </td>
 
                                        
                                     <td> <input disabled type="text"
                                             formControlName="taxAmount"
-                                            class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                            class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                     </td>
                                    
                                     <td> <input disabled type="text"
                                             formControlName="totAmount"
-                                            class="form-control" style="height: 25px;width: 80px;text-align: right;">
+                                            class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                     </td>
 
                                     <td> <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
@@ -744,8 +758,15 @@
                           <div class="modal-content">
                             
                             <div class="modal-header">
-            
-                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;DETAILS - PO|Receipt&nbsp;No:&nbsp;{{this.segment1}} | {{this.receiptNo}}</h5>
+                            
+                            <div *ngIf="returnReceipt ,then ShowRtnRcpt1; else showOriginalRcpt1")></div>
+                            <ng-template #ShowRtnRcpt1>
+                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;RETURN&nbsp;DETAILS - Return&nbsp;No:&nbsp;{{this.receiptNo}} | Receipt&nbsp;No:&nbsp;{{this.originalReceiptNo}} </h5>
+                            </ng-template> 
+                            <ng-template #showOriginalRcpt1>
+                                <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;DETAILS - Receipt&nbsp;No:&nbsp; {{this.receiptNo}}</h5>
+                            </ng-template> 
+                              
                               <button type="button" class="close " data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -757,7 +778,17 @@
                                 <table class="center" style="width: 100%;">
                                     <tr>
                                         <fieldset class="RFS">
-                                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Header Details</legend>
+
+                                        <div *ngIf="returnReceipt ,then ShowRtnRcpt2; else showOriginalRcpt2")></div>
+                                        <ng-template #ShowRtnRcpt2>
+                                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Return Header Details</legend>
+                                        </ng-template>
+                                        <ng-template #showOriginalRcpt2>
+                                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Header Details</legend>
+                                        </ng-template>
+                                       
+                                        <!-- originalReceiptNo -->
+                                        
                                         <table class="center" style="width: 100;" style="width: 100%;">
                                                <tr>
                                                     <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;No:&nbsp; </td> 

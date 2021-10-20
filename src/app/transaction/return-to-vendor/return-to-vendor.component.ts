@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { trigger } from '@angular/animations';
+import { McpEnquiryComponent } from '../mcp-enquiry/mcp-enquiry.component';
 
 
 interface IRtnToVendor {
@@ -113,6 +114,7 @@ export class ReturnToVendorComponent implements OnInit {
       supplierName:string;
       shipmentNo:number;
       receiptNo:number;
+      originalReceiptNo:number;
       totalAmt:number;
       PoRctTotalAmt:number;
       billToLocId:number;
@@ -171,6 +173,7 @@ export class ReturnToVendorComponent implements OnInit {
       checkBoxAllItem=true;
       enableCheckBox=true;
       showAllItem=false;
+      returnReceipt=false;
       
       lineStatus = false;
       dispReceiptLines=false;
@@ -208,6 +211,7 @@ export class ReturnToVendorComponent implements OnInit {
             supplierName:[],
             shipmentNo:[],
             receiptNo:[],
+            originalReceiptNo:[],
             totalAmt:[],
             billToLocId:[],
             shipmentDate:[],
@@ -345,6 +349,8 @@ export class ReturnToVendorComponent implements OnInit {
       //  );
     
       //  }
+
+      onKey(event: any) {}
 
    
         SearchByPONumber(mPoNumber){
@@ -522,7 +528,14 @@ export class ReturnToVendorComponent implements OnInit {
        SearchByPoRcptNumberHeader(mRcptNumber:any){
           // this.resetMast();
           // this.lineDetailsArray.reset();
+          if(mRcptNumber==undefined || mRcptNumber==null)
+          {
+            alert ("Please Enter Receipt No.");
+            return;
+          }
+
           this.returntoVendorForm.get("searchReceiptNo").disable();
+          
           // this.lineDetailsArray.controls[0].get('itemName').disable();
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
@@ -530,12 +543,26 @@ export class ReturnToVendorComponent implements OnInit {
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
               console.log(this.lstReceiptHeader);
+
              if(data.code===200){
-              this.dispReceiptLines=true;
+              
+                this.dispReceiptLines=true;
               // alert("PO /Receipt Number :"+this.lstReceiptHeader.segment1+"," +mRcptNumber);
               // if(this.lstReceiptHeader !=null) {
-                this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
-                this.headerFound=true;
+                if(this.lstReceiptHeader.originalReceiptNo===null) 
+                {
+                  this.headerFound=true;
+                  this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
+                  this.returnReceipt=false;
+                }
+                 else 
+                { this.rtnDocNo=this.lstReceiptHeader.receiptNo;
+                  this.headerFound=false;
+                  this.returnReceipt=true;
+                  this.returntoVendorForm.disable();
+
+                }
+                this.originalReceiptNo=this.lstReceiptHeader.originalReceiptNo;
                 this.segment1=this.lstReceiptHeader.segment1;
                 this.poDate=this.lstReceiptHeader.poDate;
                 this.receiptNo=this.lstReceiptHeader.receiptNo;
@@ -557,12 +584,15 @@ export class ReturnToVendorComponent implements OnInit {
                 this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
-              } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
+              } 
+              
+              else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
                 this.headerFound=false;
                 this.resetMast();
                 // this.returntoVendorForm.get("showAllItem").disable();
                 // this.returntoVendorForm.get("rcvLines").disable();
-              }
+              
+            }
           } );  
          }
 
@@ -716,8 +746,6 @@ export class ReturnToVendorComponent implements OnInit {
           var avlQty=rtnLineArr[index].qtyOnHand;
           var itmName =rtnLineArr[index].itemName;
           var chkFlag   = rtnLineArr[index].selectFlag;
-
-
 
           if(itmName ===null ||itmName ===undefined ) {
             alert("Line-"+(index+1)+ " ITEM NUMBER :  Should not be null");

@@ -8,7 +8,6 @@ import { MasterService } from '../../master/master.service';
 import { DatePipe } from '@angular/common';
 
 
-
 interface IStockTransfer {
   ShipmentNo: String;
   status: string;
@@ -35,6 +34,12 @@ interface IStockTransfer {
 
   emplId:number;
 
+}
+interface IEway{
+  ewayBill: string;
+  ewayBillDate: Date;
+  ShipmentNo: String;
+  transferOrgId: number;
 }
 export  class StockTransferRow {
   segment:string;
@@ -96,6 +101,7 @@ export class StockTransferComponent implements OnInit {
   uom: string;
   display = true;
   displayOp=true;
+  displayUp=true;
   displayButton = true;
   // transDate: Date;
   lstcomment: any;
@@ -444,6 +450,27 @@ export class StockTransferComponent implements OnInit {
     })
 
 }
+transdata(val){
+  delete val.trxLinesList.itemId;
+  return val;
+}
+EwayUpdate(){
+ // const formValue:IStockTransfer = this.transdata(this.stockTranferForm.value);
+ const formValue:IEway = this.stockTranferForm.value;
+ debugger;
+    this.service.UpdateStkEway(formValue).subscribe((res: any) => {
+    if (res.code === 200) {
+      alert('RECORD UPDATED SUCCESSFULLY');
+      this.displayUp=true;
+      // window.location.reload();
+    } else {
+      if (res.code === 400) {
+        alert('ERROR OCCOURED IN PROCEESS');
+        // this.customerMasterForm.reset();
+      }
+    }
+  });
+}
 validate(i:number,qty1)
 {
   // alert("Validate");
@@ -616,6 +643,8 @@ deleteReserveLinewise(i)
         this.display = false;
         this.displayButton = false;
         this.displayOp=false;
+        this.displayUp=false;
+
         this.stockTranferForm.get('ewayBill').disable();
       this.stockTranferForm.get('ewayBillDate').disable();
       }
@@ -654,6 +683,10 @@ deleteReserveLinewise(i)
           this.trxLinesList().push(trxlist);
         }
         this.stockTranferForm.patchValue(this.lstcomment[0]);
+        var ewaydate=this.lstcomment[0].ewayBillDate;
+        // alert(ewaydate.substr(0,ewaydate.indexOf('T'))+'Time');
+        // this.stockTranferForm.patchValue({'ewayBillDate':ewaydate.substr(0,ewaydate.indexOf('T'))});
+        this.stockTranferForm.patchValue({'ewayBillDate':ewaydate});
         this.transferLoc=this.lstcomment[0].transferLoc;
         this.displayButton = false;
         this.display = false;
@@ -670,9 +703,12 @@ deleteReserveLinewise(i)
           alert('In If');
           this.stockTranferForm.get('ewayBill').enable();
           this.stockTranferForm.get('ewayBillDate').enable();
+          this.displayUp=false;
         }
         this.currentOp='INSERT';
         this.displayOp=false;
+        // (document.getElementById('btnUpdate') as HTMLInputElement).disabled = false;
+        this.displayUp=true;
       }
       );
     }
