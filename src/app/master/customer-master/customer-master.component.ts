@@ -242,11 +242,7 @@ export class CustomerMasterComponent implements OnInit {
       location:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       city:  ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       taxCategoryName: ['', Validators.required],
-<<<<<<< HEAD
-      pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength(6),Validators.pattern('^[1-9][0-9]{5}$')]],
-=======
       pinCd: ['', [Validators.required,Validators.minLength(6),Validators.maxLength,Validators.pattern("^[0-9]{6}$")]],
->>>>>>> 70e77fa41d1e499f85325a79deb60d70dd740b04
       state: ['', Validators.required],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(10),Validators.maxLength(10)]],
       mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
