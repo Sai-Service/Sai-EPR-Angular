@@ -35,6 +35,9 @@ export class AllReportsComponent implements OnInit {
     this.reportForm = this.fb.group({ 
       invcDt1:[],
       location:[],
+      spreceiptfromDate:[],
+      deptId:[],
+      spreceipttoDate:[]
     })
   }
 
@@ -44,6 +47,7 @@ export class AllReportsComponent implements OnInit {
   ngOnInit(): void {
    this.decimal_value=100.8999777789; 
    this.reportForm.patchValue({ location: sessionStorage.getItem('locId') });
+   this.reportForm.patchValue({ deptId: sessionStorage.getItem('deptId') });
   }
   SPdebtorsReport(){
     var invcDt2 = this.reportForm.get('invcDt1').value;
@@ -51,6 +55,23 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(invcDt1,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spReceiptRegister(){
+    var spreceiptfromDate2 = this.reportForm.get('spreceiptfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spreceipttoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spReceiptRegisterReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);

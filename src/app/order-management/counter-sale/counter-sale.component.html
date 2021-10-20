@@ -396,8 +396,8 @@
                         Reference&nbsp;No&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input type="text" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}}
-                            (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;">
+                        <input type="number" formControlName="othRefNo" [(ngModel)]='othRefNo' value={{othRefNo}}
+                            (keydown.tab)="othRefNoSearch(othRefNo)" class="form-control" style="width: 160px;" #othRefNo1>
                     </td>
                 </tr>
                 <tr>
@@ -839,7 +839,7 @@
                                                             (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
                                                         </ng-template>
                                                     </td> -->
-                                                    <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
+                                                    <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"></div>
                                                     <ng-template #thensegmentInvType>
                                                         <td>
                                                             <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
@@ -960,7 +960,7 @@
                                                                 class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList"
+                                                                <option *ngFor="let sc of  taxCategoryList[i]"
                                                                     [value]="sc.taxCategoryName">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
@@ -1066,8 +1066,6 @@
                                                                 [(ngModel)]='orgId' class="form-control"
                                                                 style="height: 20px;width: 160px;">
                                                         </td>
-
-
                                                         <td>
                                                             <input disabled type="number" formControlName="taxAmt"
                                                                 class="form-control" style="height: 20px;width: 70px;">
@@ -1083,10 +1081,10 @@
                                                                 class="form-control" style="height: 20px;width: 70px;">
                                                         </td>
                                                         <td>
-                                                            <select formControlName="flowStatusCode" id="flowStatusCode"
-                                                                class="form-control"
-                                                                style="width: 120px;height: 25px;font-size: 10px;">
-                                                                <option>--Select--</option>
+                                                            <select formControlName="flowStatusCode" id="flowStatusCode1"
+                                                                class="form-control" 
+                                                                style="width: 120px;height: 25px;font-size: 10px;" #flowStatusCode1>
+                                                                <option [disabled]="isDisabled">--Select--</option>
                                                                 <option value="BOOKED" hidden>BOOKED</option>
                                                                 <option value="CANCELLED">CANCELLED</option>
                                                                 <option value="INVOICED" hidden>INVOICED</option>
@@ -1388,22 +1386,13 @@
                                             Generate&nbsp;Gate&nbsp;Pass
                                           </button>
                                     </td>
-
-                                    <td>
-                                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()"
-                                            style="width: 8rem;">
-                                            View&nbsp;Gate&nbsp;Pass
-                                        </button>
-                                    </td>
                                 </tr>
                             </table>
 
                         </ng-template>
                     </td>
                     <td>
-                        <div
-                            *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
-                        </div>
+                        <div   *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave"></div>
                         <ng-template #thencounterSaleOrderSave>
                             <button type="submit" class="btn btn-primary" id="register"
                                 (click)="counterSaleOrderSave()">Create Order</button>
@@ -1432,6 +1421,7 @@
             </table>
         </ng-template>
         <ng-template #elsecounterSaleAllButtons>
+            <div [style.display]="isVisible ? 'block' : 'none'">
             <table class="center">
                 <tr>
                     <td>
@@ -1490,16 +1480,11 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="generateGatePass()">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="generateGatePass()">Save</button>
         </div>
       </div>
     </div>
   </div>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
-                            View&nbsp;Gate&nbsp;Pass
-                        </button>
                     </td>
                     <td>
                         <div *ngIf="PaymentButton; then thenBlockPaymentButton; else elseBlockPaymentButton"></div>
@@ -1509,6 +1494,37 @@
                             <button class="btn btn-primary" id="paymentButton" #paymentButton
                                 [routerLink]="['/admin/transaction/PaymentReceipt',orderNumber]">Payment</button>
                         </ng-template>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </ng-template>
+        <div   *ngIf="displayAfterGatePass; then thencounterAfterGatePass; else elsecounterAfterGatePass"></div>
+        <ng-template #thencounterAfterGatePass>
+        </ng-template>
+        <ng-template #elsecounterAfterGatePass>
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">Clear</button>
+                    </td>
+                    <td>
+                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="downloadCSINV()" style="width: 6rem;">
+                            View&nbsp;Invoice
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
+                            View&nbsp;Receipt
+                        </button>
+                    </td>
+                     <td>
+                        <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
+                            View&nbsp;Gate&nbsp;Pass
+                        </button>
                     </td>
                 </tr>
             </table>

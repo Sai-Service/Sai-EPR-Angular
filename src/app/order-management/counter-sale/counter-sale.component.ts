@@ -171,7 +171,8 @@ export class CounterSaleComponent implements OnInit {
   public subInvCode: any;
   onhand1: any;
   Avalqty: number;
-
+  // isVisible:boolean;
+  isVisible: boolean = false;
   displayPerson: boolean;
   public minDate = new Date();
   public cityList: Array<string>[];
@@ -201,6 +202,7 @@ export class CounterSaleComponent implements OnInit {
   displayCSOrderAndLineDt = true;
   displaypickTicketUpdate = true;
   displayViewGatePass =true;
+  displayAfterGatePass=true;
 
   displayCustomerSite = true;
   displaysegmentInvType: Array<boolean> = [];
@@ -809,10 +811,7 @@ export class CounterSaleComponent implements OnInit {
             }
             this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
             this.CounterSaleOrderBookingForm.get('orderedDate').disable();
-            this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
-  
-  
-  
+            this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId'))); 
             if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
@@ -873,6 +872,11 @@ export class CounterSaleComponent implements OnInit {
               else {
                 this.displaysalesRepName = true;
               }
+            }
+           if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN==='Y'){
+              alert('gate pass dobe')
+              this.displayAfterGatePass=false;
+              this.isVisible = false;
             }
             // if (this.allDatastore.flowStatusCode === 'BOOKED' && this.allDatastore.paymentType === 'IMMEDIATE') {
             //   this.PaymentButton = false;
@@ -1140,9 +1144,9 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             
-            if (this.custSiteList.length === 1) {
-              this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
-            }
+            // if (this.custSiteList.length === 1) {
+            //   this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+            // }
           }
           else {
             if (data.code === 400) {
@@ -1504,6 +1508,8 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
       const taxCategoryName = selSite.taxCategoryName;
       console.log(selSite);
+    
+
       if (taxCategoryName === 'Sales-IGST'){
       this.orderManagementService.addonDescList(segment)
         .subscribe(
@@ -1511,10 +1517,7 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
             this.addonDescList = data;
             for (let i = 0; i < data.length; i++) {
               var taxCatNm: string = data[i].taxCategoryName;
-              // alert(taxCatNm);
-              // if ()
               if (taxCatNm.includes('Sale-I-GST')) {
-                //  alert('sale' + '-'+k);
                 (controlinv.controls[k]).patchValue({
                   itemId: data[i].itemId,
                   orderedItem: data[i].description,
@@ -1533,7 +1536,6 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
               }
             }
             if (select.itemId != null) {
-              // this.getLocatorDetails(k, select.itemId);
               let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
               var invTp = controlinv.controls[k].get('invType').value;
               this.service.getfrmSubLoc(this.locId, select.itemId , this.subInventoryId).subscribe(
@@ -1549,8 +1551,6 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
                   } else {
                     var getfrmSubLoc = data;
                     this.locData[k] = data;
-                    // debugger;
-                    // let select = this.locData.find(d => d.frmLocatorId === getfrmSubLoc[0].locatorId);
                     controlinv.controls[k].get('frmLocatorId').enable();
                     if (getfrmSubLoc.length == 1) {
                       controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });

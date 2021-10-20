@@ -1406,7 +1406,7 @@ displayThirdButtonDisplay=true;
                   );
                 }
                 else {
-                  alert('not null');
+                  // alert('not null');
                   (patch.controls[index]).patchValue(
                     {
                       diss1: 0,

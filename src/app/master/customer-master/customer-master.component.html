@@ -430,8 +430,8 @@
                             <tr>
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="number" formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
-                                        (keyup)="onKey($event)" class="form-control"
+                                    <input  formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
+                                        (keyup)="onKey($event)" class="form-control" minlength="6" maxlength="6" pattern="zipPattern" 
                                         [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }"
                                         placeholder="Enter pin code">
                                     <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
