@@ -101,7 +101,7 @@ lastkeydown1: number = 0;
   resrveqty: any;
   SubNo:string;
   currentOp:string;
-
+  dispsearLocator=true;
   pipe = new DatePipe('en-US');
   now=new Date();
   transDate=this.pipe.transform(this.now,'dd-MM-yyyy');
@@ -119,6 +119,7 @@ lastkeydown1: number = 0;
   itemLocator: any;
   gettoSubLoc: any=[];
   displayLocator: boolean;
+  locator:string;
   ngAfterViewInit() {
     this.myInputField.nativeElement.focus();
   }
@@ -163,6 +164,7 @@ lastkeydown1: number = 0;
       lineNumber:[],
       onHandId:[],
       resveQty:[''],
+      locator:[],
      })
    }
 
@@ -322,6 +324,7 @@ lastkeydown1: number = 0;
     // alert(SubNo+'1st');
     if(SubNo!=undefined){
       this.currentOp='SEARCH';
+      this.dispsearLocator=true;
     this.service.getsearchBySubInvTrfNo(SubNo,this.locId).subscribe
       (data => {
         this.lstcomment = data;
@@ -332,22 +335,24 @@ lastkeydown1: number = 0;
           this.trfLinesList().push(trxlist);
 
         }
+        this.dispsearLocator=false;
         this.SubinventoryTransferForm.patchValue(this.lstcomment[0]);
         this.SubinventoryTransferForm.get('trfLinesList').patchValue(this.lstcomment);
         var patch = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
         for (let i = 0; i < this.trfLinesList().length; i++) {
           // patch.get('locatorId').setValue(this.lstcomment[i].locatorId);
 
-          this.locData[i]={locatorId:this.lstcomment[i].locatorId,
-                          segmentName:this.lstcomment[i].locator,
-                          onHandQty:this.lstcomment[i].primaryQty,
-                          id:this.lstcomment[i].locatorId}
+          // this.locData[i]={locatorId:this.lstcomment[i].locatorId,
+          //                 segmentName:this.lstcomment[i].locator,
+          //                 onHandQty:this.lstcomment[i].primaryQty,
+          //                 id:this.lstcomment[i].locatorId}
             patch.controls[i].patchValue({
             lineNumber: i + 1,
-            locatorId:this.lstcomment[i].locatorId,
+            // locatorId:this.lstcomment[i].locatorId,
             LocatorSegment:this.lstcomment[i].transferLocator
           })
         }
+        this.SubinventoryTransferForm.disable();
         this.currentOp='INSERT';
       }
       );
