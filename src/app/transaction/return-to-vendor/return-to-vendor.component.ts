@@ -72,6 +72,8 @@ export class ReturnToVendorComponent implements OnInit {
   lstcomments: any;
   lstcompolines: any;
   getPoReceiptDetails:  Array<any> = [];
+  lstReceiptRtnHeader: any;
+  lstReceiptRtnItemLines:any;
   
   // public ItemLocatorList: Array<string> = [];
 
@@ -111,6 +113,7 @@ export class ReturnToVendorComponent implements OnInit {
       supplierName:string;
       shipmentNo:number;
       receiptNo:number;
+      originalReceiptNo:number;
       totalAmt:number;
       PoRctTotalAmt:number;
       billToLocId:number;
@@ -169,6 +172,7 @@ export class ReturnToVendorComponent implements OnInit {
       checkBoxAllItem=true;
       enableCheckBox=true;
       showAllItem=false;
+      returnReceipt=false;
       
       lineStatus = false;
       dispReceiptLines=false;
@@ -206,6 +210,7 @@ export class ReturnToVendorComponent implements OnInit {
             supplierName:[],
             shipmentNo:[],
             receiptNo:[],
+            originalReceiptNo:[],
             totalAmt:[],
             billToLocId:[],
             shipmentDate:[],
@@ -528,12 +533,26 @@ export class ReturnToVendorComponent implements OnInit {
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
               console.log(this.lstReceiptHeader);
+
              if(data.code===200){
-              this.dispReceiptLines=true;
+              
+                this.dispReceiptLines=true;
               // alert("PO /Receipt Number :"+this.lstReceiptHeader.segment1+"," +mRcptNumber);
               // if(this.lstReceiptHeader !=null) {
-                this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
-                this.headerFound=true;
+                if(this.lstReceiptHeader.originalReceiptNo===null) 
+                {
+                  this.headerFound=true;
+                  this.showLineLov(this.lstReceiptHeader.segment1,mRcptNumber);
+                  this.returnReceipt=false;
+                }
+                 else 
+                { this.rtnDocNo=this.lstReceiptHeader.receiptNo;
+                  this.headerFound=false;
+                  this.returnReceipt=true;
+                  this.returntoVendorForm.disable();
+
+                }
+                this.originalReceiptNo=this.lstReceiptHeader.originalReceiptNo;
                 this.segment1=this.lstReceiptHeader.segment1;
                 this.poDate=this.lstReceiptHeader.poDate;
                 this.receiptNo=this.lstReceiptHeader.receiptNo;
@@ -555,12 +574,15 @@ export class ReturnToVendorComponent implements OnInit {
                 this.shipHeaderId=this.lstReceiptHeader.shipHeaderId;
                 // this.returntoVendorForm.patchValue(this.lstReceiptHeader);
                 // this.shipHeaderId=null;
-              } else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
+              } 
+              
+              else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
                 this.headerFound=false;
                 this.resetMast();
                 // this.returntoVendorForm.get("showAllItem").disable();
                 // this.returntoVendorForm.get("rcvLines").disable();
-              }
+              
+            }
           } );  
          }
 
@@ -714,8 +736,6 @@ export class ReturnToVendorComponent implements OnInit {
           var avlQty=rtnLineArr[index].qtyOnHand;
           var itmName =rtnLineArr[index].itemName;
           var chkFlag   = rtnLineArr[index].selectFlag;
-
-
 
           if(itmName ===null ||itmName ===undefined ) {
             alert("Line-"+(index+1)+ " ITEM NUMBER :  Should not be null");
@@ -1029,8 +1049,20 @@ export class ReturnToVendorComponent implements OnInit {
 
     rtnSearchByDocNo(mRtnNumber){
       alert ("WIP.... Return Number....." +mRtnNumber);
+      this.service.getsearchByReceiptNo(mRtnNumber,this.locId)
+      .subscribe(
+        data => {
+          this.lstReceiptRtnHeader = data.obj;
+          // this.lstReceiptRtnItemLines=data.obj.rcvLines;
+          console.log(this.lstReceiptRtnHeader);
+        //  if(data.code===200){
+        //  }
+        });
+      }
 
-    }
+
+
+    
 
     validateSave() 
     {

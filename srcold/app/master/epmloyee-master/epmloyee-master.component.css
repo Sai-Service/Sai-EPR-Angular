@@ -1,0 +1,41 @@
+
+  td{
+    padding: 6px;
+  }
+  
+  
+.modal {
+  width: 20rem;
+  margin-left: 50%;
+}
+
+
+  
+.modal-header{
+  text-align: center;
+}
+
+
+
+.grid_scroll{
+  overflow: auto;
+   height: 200px; 
+  width: 100%;
+  }
+
+  input:disabled {
+    background: #a9b4a9;
+  }
+
+  input.ng-invalid{
+    
+    background-color: rgb(240, 243, 63);
+  }
+
+  select.ng-invalid{
+    background-color: rgb(245, 235, 102);
+  }
+   input:ng-valid[required], .ng-valid.required  {
+    
+    background-color: rgb(66, 32, 189);
+  }

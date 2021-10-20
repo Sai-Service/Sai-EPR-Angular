@@ -94,7 +94,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                            
+
                                             </td>
                                         <!-- </tr>
                                         <tr> -->
@@ -431,9 +431,9 @@
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                 <td>
                                     <input type="number" formControlName="pinCd" [(ngModel)]='pinCd' value={{pinCd}}
-                                        (keyup)="onKey($event)" class="form-control"
+                                        class="form-control" max="9999"
                                         [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }"
-                                        placeholder="Enter pin code">
+                                        placeholder="Enter pin code" (change)="pinCodeVerification(pincod)" #pincod>
                                     <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
                                         <div *ngIf="f.pinCd.errors.required">Pin code cannot be blank</div>
                                         <div *ngIf="f.pinCd.errors.maxLength">Please enter valid 6 digit Pin code number</div>
@@ -477,7 +477,7 @@
                                         placeholder="Enter mobile1"> -->
                                     <input  formControlName="mobile1" value={{mobile1}} class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }" placeholder="Enter Mobile 1">
-                                    <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback" maxlength="10">
                                         <div *ngIf="f.mobile1.errors.required">Mobile 1 cannot be blank</div>
                                         <div *ngIf="f.mobile1.errors.maxLength">Please enter 10 digit mobile no</div>
                                         <div *ngIf="f.mobile1.errors.minLength">Please enter 10 digit mobile no</div>
@@ -579,10 +579,10 @@
                                 <td>
                                     <input type="date" formControlName="birthDate" [(ngModel)]='birthDate'
                                         value={{birthDate}} (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }" 
-                                        placeholder="Enter birthDate" onkeydown="return false" 
                                         [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
-                                        max="{{minDateBirth | date:'yyyy-MM-dd'}}" (change)="onBirthgDateChange($event)" >
+                                        placeholder="Enter birthDate"
+                                        [ngClass]="{ 'is-invalid': submitted && f.birthDate.errors }"
+                                        max="{{minDateBirth | date:'yyyy-MM-dd'}}" (change)="onBirthgDateChange($event)" onkeydown="return false" >
                                     <div *ngIf="submitted && f.birthDate.errors" class="invalid-feedback">
                                         <div *ngIf="f.birthDate.errors.required">Birthdate cannot be blank</div>
                                         <!-- <div *ngIf="f.birthDate.errors.maxLength">birth date must</div> -->
@@ -593,10 +593,10 @@
                                 </td>
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Wedding&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate' onkeydown="return false" 
+                                    <input type="date" formControlName="weddingDate" [(ngModel)]='weddingDate'
                                         value={{weddingDate}} (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.weddingDate.errors }" (change)="onOptionWeddingDate($event)"
-                                        placeholder="Enter weddingDate" max="{{minDate | date:'yyyy-MM-dd'}}" min="{{minDateWedding | date:'yyyy-MM-dd'}}">
+                                        placeholder="Enter weddingDate" max="{{minDate | date:'yyyy-MM-dd'}}" min="{{minDateWedding | date:'yyyy-MM-dd'}}" onkeydown="return false">
                                 </td>
                                 <input hidden type="text" formControlName="startDate" class="form-control"[(ngModel)]="startDate">                            <!-- <input type="date" formControlName="startDate" class="form-control"
                             placeholder="Enter start Date"
@@ -626,7 +626,7 @@
                                     *ngIf="!customerMasterForm.get('status').valid && customerMasterForm.get('status').touched">Please
                                     Enter Status </span> -->
                                 </td>
-                              
+
                             </tr>
                             <tr>
                                 <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
@@ -679,9 +679,9 @@
                                     <td style="width: 10%" class="LabelFontStyle">&nbsp;Aadhar&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
                                         <input type="number" formControlName="aadharNo" [(ngModel)]='aadharNo' value={{aadharNo}}
-                                             class="form-control"  oninput="this.value = Math.abs(this.value)"
+                                             class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.tanNo.errors }"
-                                            placeholder="Enter Aadhar No" maxlength="12">
+                                            placeholder="Enter Aadhar No" maxlength="12" oninput="this.value = Math.abs(this.value)">
 
                                     </td>
                                 </ng-template>
@@ -700,7 +700,7 @@
                               <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Limit&nbsp;:&nbsp;</td>
                               <td>
                                   <input type="number" formControlName="creditAmt" value={{creditAmt}} type="number"
-                                      class="form-control" min='0'  oninput="this.value = Math.abs(this.value)"
+                                      class="form-control" min='0'
                                       [ngClass]="{ 'is-invalid': submitted && f.creditAmt.errors }"
                                       placeholder="Enter  Credit Amount">
                                   <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
@@ -715,9 +715,9 @@
                               <td style="width: 15%" class="LabelFontStyle">Higher&nbsp;Amount&nbsp;:&nbsp;</td>
                               <td>
                                   <input type="number" formControlName="highAmt" value={{highAmt}} type="number"
-                                      class="form-control" min='0'  oninput="this.value = Math.abs(this.value)"
+                                      class="form-control" min='0'
                                       [ngClass]="{ 'is-invalid': submitted && f.smobile2.errors }"
-                                      placeholder="Enter Higher Amount">
+                                      placeholder="Enter Higher Amount" oninput="this.value = Math.abs(this.value)">
                                   <div *ngIf="submitted && f.highAmt.errors" class="invalid-feedback">
                                       <div *ngIf="f.highAmt.errors.required">Enter  Higher Amount </div>
                                       <div *ngIf="f.highAmt.errors.maxLength">Enter  Higher Amount
@@ -730,9 +730,9 @@
                               <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Discount&nbsp;:&nbsp;</td>
                               <td>
                                   <input type="number" formControlName="disPer" value={{disPer}} [(ngModel)]='disPer' type="number"
-                                      class="form-control" min='0.0' max='99'  oninput="this.value = Math.abs(this.value)"
+                                      class="form-control" min='0.0' max='99'
                                       [ngClass]="{ 'is-invalid': submitted && f.disPer.errors }"
-                                      placeholder="Enter discount Percentage">
+                                      placeholder="Enter discount Percentage" oninput="this.value = Math.abs(this.value)">
                                   <div *ngIf="submitted && f.disPer.errors" class="invalid-feedback">
                                       <div *ngIf="f.disPer.errors.required">Enter discount Percentage </div>
                                       <div *ngIf="f.disPer.errors.maxLength">Enter discount Percentage
@@ -785,13 +785,13 @@
                                           (click)="updateMast()">Update</button>
                                   </td> -->
                                 <td class="center">
-                                    <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                    <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                                     data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                                        <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
-                             
+
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                                         <!-- (click)="resetItemCatMast()" -->
                                 </td>
@@ -800,8 +800,8 @@
                                     data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
                                 </td>
                                 <td>
-    
-    
+
+
                               </ng-template>
                               <ng-template #elseBlock>
                                   <!-- <td>
@@ -813,13 +813,13 @@
                                           (click)="updateMast()">Update</button>
                                   </td> -->
                                   <td class="center">
-                                    <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                    <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                                     data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                                        <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
-                             
+
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                                         <!-- (click)="resetItemCatMast()" -->
                                 </td>
@@ -828,8 +828,8 @@
                                     data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
                                 </td>
                                 <td>
-    
-    
+
+
                               </ng-template>
 
                               <!-- <td>
@@ -938,7 +938,7 @@
                                 </table>
                                 <table class="center" style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                     <tr>
-                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId" 
+                                      <input hidden formControlName="customerSiteId"[(ngModel)]="customerSiteId"
                                       [ngClass]="{ 'is-invalid': submitted && f.customerSiteId.errors }" >
                                         <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                                         <td>
@@ -957,9 +957,9 @@
                                         <td>
                                             <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
                                                 class="form-control"
-                                                placeholder="Enter GSTN" 
+                                                placeholder="Enter GSTN"
                                                 [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }">
-                                                
+
                                                 <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
                                                     <div *ngIf="f.sGstNo.errors.pattern">Invalid GSTIN number format</div>
                                                     <div *ngIf="f.sGstNo.errors.required">GST number cannot be blank</div>
@@ -1063,7 +1063,7 @@
                                                 <div *ngIf="f.scity.errors.required">City cannot be blank </div>
                                                 <div *ngIf="f.scity.errors.minLength">Minimum 3 characters required</div>
                                                 <div *ngIf="f.scity.errors.maxLength">Maximum 50 characters allowed</div>
-        
+
                                             </div>
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('scity').valid && customerMasterForm.get('scity').touched">Please
@@ -1192,7 +1192,7 @@
 
                                                 <input hidden type="date" formControlName="sstartDate" class="form-control"
                                                 placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
-                                           
+
                                         </td>
                                         <!-- <td style="width: 15%" class="LabelFontStyle">
                                             Start&nbsp;Date&nbsp;:&nbsp;</td>
@@ -1201,7 +1201,7 @@
                                             <!-- <span
                                                 *ngIf="!customerMasterForm.get('sstartDate').valid && customerMasterForm.get('sstartDate').touched">Please
                                                 Enter start Date </span> -->
-                                        <!-- </td> --> 
+                                        <!-- </td> -->
                                         <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
                                             <div *ngIf="displaystatus; then thenBlockStatus; else elseBlockStatus"></div>
                                             <ng-template #thenBlockStatus>
@@ -1227,7 +1227,7 @@
                                     </ng-template>
                                     </tr>
                                     <tr>
-                                            
+
                                         <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                                         <ng-template #thenBlockInactive>
                                         </ng-template>
@@ -1257,7 +1257,7 @@
                                       <td>
                                           <input formControlName="shighAmt" value={{shighAmt}} type="number"
                                               class="form-control" min='0'
-                                              [ngClass]="{ 'is-invalid': submitted && f.shighAmt.errors }" 
+                                              [ngClass]="{ 'is-invalid': submitted && f.shighAmt.errors }"
                                               placeholder="Enter Higher Amount">
                                           <div *ngIf="submitted && f.shighAmt.errors" class="invalid-feedback">
                                               <div *ngIf="f.shighAmt.errors.required">Enter  Higher Amount </div>

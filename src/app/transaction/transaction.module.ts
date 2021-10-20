@@ -22,8 +22,6 @@ import { McpPackageMasterComponent } from './mcp-package-master/mcp-package-mast
 import { McpEnquiryComponent } from './mcp-enquiry/mcp-enquiry.component';
 import { McpEnrollmentComponent } from './mcp-enrollment/mcp-enrollment.component';
 import { McpCancellationComponent } from './mcp-cancellation/mcp-cancellation.component';
-
-
   import { from } from 'rxjs';
 import { StockTakingComponent } from './stock-taking/stock-taking.component';
 import { JournalVoucherComponent } from './journal-voucher/journal-voucher.component';
@@ -38,6 +36,7 @@ import { BulkUploadWithCsvComponent } from './bulk-upload-with-csv/bulk-upload-w
 import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upload-csv.component';
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
+import { RelatedItemPartComponent } from './related-item-part/related-item-part.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 
@@ -56,7 +55,6 @@ import { PoUploadListComponent } from './po-upload-list/po-upload-list.component
     PaymentReceiptComponent, 
     PaymentArComponent, 
     AvgCostUpdateComponent, 
-    // ReceiptArApplicationComponent, 
     SaiExtendedWarrantyComponent, 
     SaiEwSchemeMasterComponent, 
     McpItemMasterComponent, 
@@ -79,7 +77,8 @@ import { PoUploadListComponent } from './po-upload-list/po-upload-list.component
     BulkItemUploadCSVComponent,
     InternalConsumptionComponent,
     PoUploadListComponent,
-    // CounterSaleReturnComponent,
+    RelatedItemPartComponent,
+    // CounterSaleReturnComponent
   ],
   
   imports: [

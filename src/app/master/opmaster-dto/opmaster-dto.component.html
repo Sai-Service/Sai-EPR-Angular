@@ -250,7 +250,7 @@
 
                                 </tr>
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle1">
+                                    <td style="width: 15%" class="LabelFontStyle">
                                         Supplier&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
                                         <input type="text" formControlName="suppInvNo" class="form-control"
@@ -274,7 +274,7 @@
                                     <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Date:</td>
                                     <td>
                                         <input type="date" formControlName="suppInvDate" class="form-control"
-                                        style="width: 100%;" max="{{minDate | date:'yyyy-MM-dd'}}" onkeydown="return false" 
+                                        style="width: 100%;"
                                         [ngClass]="{ 'is-invalid': submitted && f.suppInvDate.errors }">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Description:</td>

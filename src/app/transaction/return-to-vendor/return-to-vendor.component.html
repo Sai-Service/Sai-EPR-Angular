@@ -86,7 +86,10 @@
                             <input hidden disabled   formControlName="shipHeaderId" [(ngModel)] ="shipHeaderId" class="form-control">
                             <input hidden disabled   formControlName="poHeaderId" [(ngModel)] ="poHeaderId" class="form-control">
                             <input hidden disabled    formControlName="suppNo"   [(ngModel)]='suppNo'  class="form-control">
+                            <input hidden disabled    formControlName="originalReceiptNo"   [(ngModel)]='originalReceiptNo'  class="form-control">
                           
+
+                            
                             <td >
                                 <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"
                                 class="form-control" [(ngModel)]="emplId" placeholder="">
@@ -220,9 +223,9 @@
                     </fieldset>
 
                     <div class="grid_scroll">
-                        <fieldset class="RFS" style="background-color: white;">
-                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Line Item Details</legend>
-                            
+                        <!-- <fieldset class="RFS" style="background-color: white;"> -->
+                            <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Line Item Details</legend> -->
+                     
                             <table style="width: 50%;">
                                 <tr>
                                     <td>
@@ -499,10 +502,11 @@
                             </tbody>
 
                          
-                        </table>      
-                        </fieldset>
-                    </div>
-
+                        </table>     
+                  
+                        <!-- </fieldset> -->
+                 
+                    </div> 
 
 
                     <br>
@@ -689,7 +693,7 @@
                     
 
                                       
-                    <fieldset class="RFS">
+                    <!-- <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
                            SEARCH</legend>
                     <table class="center" style="width: 100%;background-color: #FFE4B5;">
@@ -734,7 +738,7 @@
                           </td>
                         </tr>
                     </table>
-                    </fieldset>
+                    </fieldset> -->
 
                     <!-- ============================== show item list modal======================= -->
 
@@ -743,8 +747,15 @@
                           <div class="modal-content">
                             
                             <div class="modal-header">
-            
-                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;DETAILS - PO|Receipt&nbsp;No:&nbsp;{{this.segment1}} | {{this.receiptNo}}</h5>
+                            
+                            <div *ngIf="returnReceipt ,then ShowRtnRcpt1; else showOriginalRcpt1")></div>
+                            <ng-template #ShowRtnRcpt1>
+                              <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;RETURN&nbsp;DETAILS - Return&nbsp;No:&nbsp;{{this.receiptNo}} | Receipt&nbsp;No:&nbsp;{{this.originalReceiptNo}} </h5>
+                            </ng-template> 
+                            <ng-template #showOriginalRcpt1>
+                                <h5 class="modal-title" id="PoReceiptLineItemsLabel" style="text-align: center;" >PO&nbsp;RECEIPT&nbsp;DETAILS - Receipt&nbsp;No:&nbsp; {{this.receiptNo}}</h5>
+                            </ng-template> 
+                              
                               <button type="button" class="close " data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -756,7 +767,17 @@
                                 <table class="center" style="width: 100%;">
                                     <tr>
                                         <fieldset class="RFS">
-                                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Header Details</legend>
+
+                                        <div *ngIf="returnReceipt ,then ShowRtnRcpt2; else showOriginalRcpt2")></div>
+                                        <ng-template #ShowRtnRcpt2>
+                                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Return Header Details</legend>
+                                        </ng-template>
+                                        <ng-template #showOriginalRcpt2>
+                                            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">PO Receipt Header Details</legend>
+                                        </ng-template>
+                                       
+                                        <!-- originalReceiptNo -->
+                                        
                                         <table class="center" style="width: 100;" style="width: 100%;">
                                                <tr>
                                                     <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;No:&nbsp; </td> 
@@ -844,7 +865,7 @@
                                
 
                                 <div class="container1">
-                                    <div class="grid_scroll_3">
+                                   <div class="grid_scroll_3">
                                     <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:#959595;border-collapse:collapse;width: 100%;"> -->
                                     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
                                   
@@ -858,6 +879,7 @@
                                                 <th style="width:6rem" scope="col">SubInventory&nbsp;</th>
                                                 <th style="width:6rem" scope="col">Locator&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Hsn/Sac&nbsp;</th>
+                                                <th style="width:8rem" scope="col">Destination&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Tax%&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Unit Rate&nbsp;</th>
                                                 <th style="width:8rem" scope="col">Amount&nbsp;</th>
@@ -877,23 +899,19 @@
                                                 <td style="width:4rem;text-align: center;">{{com.subInvDesc}}</td>
                                                 <td style="width:10rem;text-align: center;">{{com.locatorDesc}}</td> 
                                                 <td style="width:10rem;text-align: center;">{{com.hsnCode}}</td>
+                                                <td style="width:10rem;text-align: center;">{{com.itemType}}</td>
                                                 <td style="width:4rem;text-align: center;">{{com.taxPercentage|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.unitPrice|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.baseAmount|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.taxAmount|number:'0.00'}}</td>
                                                 <td style="width:8rem;text-align: right;">{{com.totAmount|number:'0.00'}}</td>
-                                                
-                                               
-                                               </tr>
+                                            </tr>
                                     </table>
-                                    </div>
-                                    </div>
-
+                                  </div>
+                                </div>
                                  <div class="modal-footer">
                                     <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
                                 </div>
-
-                            
                           </div>
                         </div>
                     </div>
@@ -911,7 +929,7 @@
 </form>
 <br>
 
-<div class="container1">
+<!-- <div class="container1">
     <div class="grid_scroll">
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
         <tbody>
@@ -930,7 +948,7 @@
                 <th style="width:6rem" scope="col">Select</th>
             </tr>
         </tbody>
-        <tr *ngFor="let com of lstcomments let i= index" class="ItemStyle" style="text-decoration:none;" >
+        <tr *ngFor="let com of lstReceiptRtnHeader let i= index" class="ItemStyle" style="text-decoration:none;" >
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{com.receiptNo}}</td>
                 <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>
@@ -946,4 +964,4 @@
         </tr> 
     </table>
 </div>
-</div>
+</div> -->
