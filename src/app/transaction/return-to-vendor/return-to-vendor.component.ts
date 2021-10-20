@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { trigger } from '@angular/animations';
+import { McpEnquiryComponent } from '../mcp-enquiry/mcp-enquiry.component';
 
 
 interface IRtnToVendor {
@@ -349,6 +350,8 @@ export class ReturnToVendorComponent implements OnInit {
     
       //  }
 
+      onKey(event: any) {}
+
    
         SearchByPONumber(mPoNumber){
           alert("WIP-PO: "+mPoNumber);
@@ -525,7 +528,14 @@ export class ReturnToVendorComponent implements OnInit {
        SearchByPoRcptNumberHeader(mRcptNumber:any){
           // this.resetMast();
           // this.lineDetailsArray.reset();
+          if(mRcptNumber==undefined || mRcptNumber==null)
+          {
+            alert ("Please Enter Receipt No.");
+            return;
+          }
+
           this.returntoVendorForm.get("searchReceiptNo").disable();
+          
           // this.lineDetailsArray.controls[0].get('itemName').disable();
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(

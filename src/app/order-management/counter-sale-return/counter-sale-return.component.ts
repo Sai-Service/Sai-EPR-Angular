@@ -199,7 +199,9 @@ export class CounterSaleReturnComponent implements OnInit {
 
       rtnFromDate:[],
       rtnToDate:[],
-      searchCntrSaleOrderNo:[],
+      searchCntrSaleOrderNo:['',Validators.pattern('[0-9]*')],
+
+      // mobile2: ['', [Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*')]],
 
       oeOrderLinesAllList: this.fb.array([this.lineDetailsGroup()]), 
 
@@ -286,6 +288,9 @@ export class CounterSaleReturnComponent implements OnInit {
 
   }
 
+  onKey(event: any) {}
+  
+
   addRow(index) {
     if(this.showAllItem==false) 
     {
@@ -322,6 +327,11 @@ export class CounterSaleReturnComponent implements OnInit {
   SearchByCntrSaleOrderNoHeader(mOrderNumber) {
      // this.resetMast();
       // this.lineDetailsArray.reset();
+      if(mOrderNumber==undefined || mOrderNumber==null)
+          {
+            alert ("Please Enter Order No.");
+            return;
+          }
       this.counterSaleReturnOrderForm.get("searchCntrSaleOrderNo").disable();
       // this.lineDetailsArray.controls[0].get('itemName').disable();
       this.orderManagementService.counterSaleReturnSearchHeader(mOrderNumber)
