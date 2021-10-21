@@ -2190,8 +2190,13 @@ OrderCategoryList(): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
 
-
   }
+
+  getCreditMemoSearchByInvoiceNo(custAccountNo,billToSiteId,crMemoNo): Observable<any> {
+     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/cm?creditNo=${crMemoNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
+    // http://localhost:8081/arCashReceipts/apply/cm?creditNo=12121101817&custAccountNo=1212&billToSiteId=101
+  }
+
 
   PaymentModeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');

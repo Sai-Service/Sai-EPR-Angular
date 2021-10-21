@@ -89,3 +89,50 @@ fieldset {
         background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
         /* #40758b; */
       }
+
+      .modal-dialog {
+        max-width: 1300px;
+        margin: 0 auto;
+        /* vertical-align: top; */
+        /* display: inline-block;  */
+        text-align: left; 
+      }
+
+      .btn-info{
+        width: 5em;
+        background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 3rem;
+        border-color: #2c3e50;
+        height: 22px;
+        font-size: 11px;
+        vertical-align: middle;
+        text-align: center;
+        line-height: 10px; /* Tamaño de linea */
+        width: 5rem;
+      }
+
+      .auto-style4
+{
+    color:#333333;
+    font-family:Verdana;
+    font-size:small;
+    height:16px;
+    width: 100%;
+    text-align: left; 
+    margin-right:0px; 
+    margin-left: 0px;
+    border-color: #35357c;
+    border-style: ridge;
+
+}
+
+.grid_scroll_3{
+    overflow: auto;
+    /* width: 800px; */
+    width: 100%;
+    height: 330px;
+    width: 100%;
+  }
