@@ -51,8 +51,8 @@
                       {{sc.toLocationId}}-{{sc.toLocation}}
                   </option>
               </select>
-              <span  *ngIf="!stockTranferForm.get('transferOrgId').valid && stockTranferForm.get('transferOrgId').touched">Please
-                  select Organization Name </span>
+              <!-- <span  *ngIf="!stockTranferForm.get('transferOrgId').valid && stockTranferForm.get('transferOrgId').touched">Please
+                  select Organization Name </span> -->
                   <span
                   *ngIf="getGroupControl('transferOrgId').touched && getGroupControl('transferOrgId').invalid" class="error">Valid Item
                  </span>
@@ -83,7 +83,7 @@
             Eway&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
           </td>
           <td>
-              <input type="date" class="form-control" formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}"  onkeydown="return false">
+              <input type="date" class="form-control"  formControlName="ewayBillDate"  min="now" max="{{minewayBillDate | date:'yyyy-MM-dd'}}"  onkeydown="return false">
             </td>
 
         </tr>
@@ -401,36 +401,53 @@
               <button type="submit" class="btn btn-primary" (click)="resetMoveOrder()" >Reset</button>
             </td>
             <td>
-              <div *ngIf="display; then thenBlock; else elseBlock">
-              </div>
-              <ng-template #thenBlock>
-                <td>
-                  <button type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button>
-                </td>
+              <table class="center">
+                <tr>
+                  <div *ngIf="display; then thenBlock; else elseBlock">
+                  </div>
+                  <ng-template #thenBlock>
+                    <td>
+                      <button type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button>
+                    </td>
 
-                </ng-template>
-                <ng-template #elseBlock>
-                  <td>
-                    <button  type="submit" class="btn btn-primary" (click)="EwayUpdate()">Save</button>
-                  </td>
-                </ng-template>
-                <td>
-                    <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
-                      </div>
-                      <ng-template #thenBlockOp>
-                          <button disabled type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
-                              View&nbsp;Print
-                          </button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                      <td>
+                        <button disabled type="submit"  class="btn btn-primary" (click)="newStkTransfer()">Save</button>
+                      </td>
+                    </ng-template>
+                    <div *ngIf="displayUp; then thenBlockUp; else elseBlockUp">
+                    </div>
+                    <ng-template #thenBlockUp>
+                      <td>
+                        <button disabled type="submit"  class="btn btn-primary" (click)="EwayUpdate()">Update</button>
+                      </td>
                       </ng-template>
-                      <ng-template #elseBlockOp>
-                  <button type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
-                    View&nbsp;Note
-                </button>
-                <!-- <button type="button" class="btn btn-primary" (click)="viewStockgatePass()" style="width: 6rem;">
-                  View &nbsp;Gatepass;
-                </button> -->
-              </ng-template>
-              </td>
+                      <ng-template #elseBlockUp>
+                        <td>
+                          <button  type="submit" id="btnUpdate" class="btn btn-primary" (click)="EwayUpdate()">Update</button>
+                        </td>
+                        </ng-template>
+                        <td>
+                        <div *ngIf="displayOp; then thenBlockOp; else elseBlockOp">
+                          </div>
+                          <ng-template #thenBlockOp>
+                              <button disabled type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
+                                  View&nbsp;Print
+                              </button>
+                          </ng-template>
+                          <ng-template #elseBlockOp>
+                      <button type="button" class="btn btn-primary" (click)="viewStocknote()" style="width: 6rem;">
+                        View&nbsp;Note
+                    </button>
+                    <!-- <button type="button" class="btn btn-primary" (click)="viewStockgatePass()" style="width: 6rem;">
+                      View &nbsp;Gatepass;
+                    </button> -->
+                  </ng-template>
+                </td>
+                </tr>
+              </table>
+               </td>
                 <!-- <td>
                     <button type="submit" class="btn btn-primary"    >Payment</button>
                <button class="btn btn-primary" [routerLink]="['/PoReceiptForm']">Receipt</button>

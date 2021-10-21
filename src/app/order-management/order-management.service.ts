@@ -199,7 +199,10 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
 
-
+ 
+  getTaxCategoriesForSales(taxCategoryName,hsnTaxPer):Observable<any>{
+    return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=SALES&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
+  }
 
   ItemDescList(segment,ouId):Observable<any>{
     return this.http.get(this.ServerUrl+`/JaiTaxCatg/IgstTaxCtg?itemId=${segment}&ouId=${ouId}`)

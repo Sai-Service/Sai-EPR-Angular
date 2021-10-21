@@ -134,6 +134,10 @@
                            <td>
                                <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
                            </td>
+                           <div *ngIf="dispsearLocator; then thenBlockop; else elseBlockse">
+                          </div>
+                          <ng-template #thenBlockop>
+
                            <td>
                                <select class=" form-control" style="height: 20px; width: 110px;" formControlName="locatorId" (ngModelChange)="AvailQty($event,trfLineIndex)">
                                       <option>--Select--</option>
@@ -145,6 +149,12 @@
                                       *ngIf="getGroupControllinewise(trfLineIndex,'locatorId').touched && getGroupControllinewise(trfLineIndex,'locatorId').invalid" class="error">Valid Item
                                      </span>
                            </td>
+                           </ng-template>
+                           <ng-template #elseBlockse>
+                            <td>
+                            <input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
+                            </td>
+                           </ng-template>
                            <td>
                                 <input disabled type="number" class="form-control" style="height: 20px;width: 70px;"formControlName="onHandQty">
                            </td>

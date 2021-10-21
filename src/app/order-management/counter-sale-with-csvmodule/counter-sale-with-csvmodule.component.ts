@@ -168,6 +168,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   public issueCodeTypeList: any[];
   public status = "Active";
   public titleList: Array<string>[];
+  subInventoryCode:any=[];
   displayOrgnization: boolean;
   PersonType: any;
   classCodeType: string;
@@ -308,6 +309,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   driverName:string;
   vehNo:string;
 
+  @ViewChild('fileInput') fileInput;
   // @ViewChild("paymentButton") myInputField: ElementRef;
 
 
@@ -692,6 +694,14 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         this.OrderFind(this.orderNumber);
       }
     });
+
+    this.service.subInvCode2(this.deptId,this.divisionId).subscribe(
+      data => {
+        this.subInvCode = data;
+        console.log(this.subInventoryId);
+        this.subInventoryCode=this.subInvCode.subInventoryCode;
+        alert('subInventoryCode');
+      });
 
     this.displaysegmentInvType[0] = true;
 
@@ -2312,5 +2322,61 @@ onOptionsSelectedCategory(itemType: string, lnNo: number) {
 
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
+  }
+
+
+
+  uploadFile(event:any) {
+    alert(event)
+    event.target.disabled = true;
+    let formData = new FormData();
+    formData.append('file', this.fileInput.nativeElement.files[0])
+    var priceListName =this.CounterSaleOrderBookingForm.get('priceListName').value;
+    var siteName1=this.CounterSaleOrderBookingForm.get('name').value;
+    let selSite = this.custSiteList.find(d => d.siteName === siteName1);
+    const taxCategoryName = selSite.taxCategoryName;
+    const subInvID=this.subInvCode.subInventoryId;
+    alert(subInvID);
+      this.service.bulkPickTickCSV(formData,priceListName,taxCategoryName,subInvID,sessionStorage.getItem('locId')).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.orderlineDetailsArray().clear();
+         let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+         let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
+         for (let i = 0; i <= res.obj.length-1; i++) {
+          var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
+          control.push(oeOrderLinesAllList1);
+        }
+        this.CounterSaleOrderBookingForm.patchValue(res.obj);
+        for (let k = 0; k < res.obj.length; k++) {
+          let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+          (controlinv.controls[k]).patchValue({
+            invType:res.obj[k].invType,
+            segment:res.obj[k].segment,
+            orderedItem:res.obj[k].orderedItem,
+            pricingQty:res.obj[k].orderedQty,
+            taxCategoryName:res.obj[k].taxCategoryName,
+            taxCategoryId:res.obj[k].taxCategoryId,
+            unitSellingPrice:res.obj[k].unitSellingPrice,
+            baseAmt:res.obj[k].baseAmt,
+            hsnSacCode:res.obj[k].hsnSacCode,
+            frmLocatorId:res.obj[k].locatorId,
+            flowStatusCode:'BOOKED',
+            itemId:res.obj[k].itemId,
+          })
+          console.log(this.frmLocatorId);
+          
+        }
+      }
+        else{
+          if (res.code===400){
+            alert(res.message);
+          }
+        }
+      })
+
+      setTimeout(() => {
+        event.target.disabled = false;
+       }, 60000);
   }
 }

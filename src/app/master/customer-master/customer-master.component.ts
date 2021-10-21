@@ -624,6 +624,8 @@ if (person === 'Person'){
 }
 
   }
+
+  
   mergeCustName(fName, mName, lName) {
     const aaa = fName + ' ' + mName + ' ' + lName;
     this.custName = aaa;

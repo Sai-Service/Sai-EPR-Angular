@@ -125,7 +125,7 @@
                                                 <td>
                                         
                                                     <input type="date" formControlName="frmDate1"
-                                                    [(ngModel)]='frmDate1' value={{frmDate1}}    data-toggle="modal" 
+                                                    [(ngModel)]='frmDate1' value={{frmDate1}}    data-toggle="modal"  onkeydown="return false" 
                                                     class="form-control" style="width: 130px;"  [ngModel]="frmDate1 | date:'yyyy-MM-dd'" >
                                                     <!-- (keydown.tab)="ReceiptDateWiseFind()"   data-target="#exampleModalScrollable" -->
                                             </td> 
@@ -283,7 +283,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <input type="date" formControlName="frmDate" [(ngModel)]='frmDate' value={{frmDate}} class="form-control">
+                                                    <input type="date" formControlName="frmDate" [(ngModel)]='frmDate' value={{frmDate}} class="form-control" onkeydown="return false" >
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary"
@@ -349,7 +349,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <input type="date" formControlName="poDate" [(ngModel)]='poDate' value={{poDate}} class="form-control">
+                                                    <input type="date" formControlName="poDate" [(ngModel)]='poDate' value={{poDate}}  onkeydown="return false"  class="form-control">
                                                 </td>
                                                 <td>
                                                     <!-- Button trigger modal -->
@@ -507,7 +507,7 @@
                                                 <input disabled formControlName="recDate" value="{{recDate}}"   class="form-control" value={{recDate}} class="form-control">
                                               </ng-template>
                                               <ng-template #elserecDate>
-                                                <input type="date" disabled formControlName="recDate"  value="{{recDate}}"   class="form-control">
+                                                <input type="date" disabled formControlName="recDate"  value="{{recDate}}" onkeydown="return false"   class="form-control">
                                               </ng-template>  
                                               <!-- value={{recDate}} [(ngModel)]="recDate" -->
                                         </td> 
@@ -545,7 +545,7 @@
                                         </td>
                                         <td>
                                             <input type="date" formControlName="docDate"  max="{{minDate | date:'yyyy-MM-dd'}}"
-                                                [(ngModel)]='docDate' value={{docDate}} class="form-control">
+                                            onkeydown="return false"      [(ngModel)]='docDate' value={{docDate}} class="form-control">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Total&nbsp;Amount&nbsp;:&nbsp;
@@ -568,13 +568,13 @@
                                             E-Way&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
-                                            <input type="date" formControlName="ewayBillDate"
+                                            <input type="date" formControlName="ewayBillDate" onkeydown="return false" 
                                                 [(ngModel)]='ewayBillDate' value={{ewayBillDate}}
                                                 class="form-control"
                                                 max="{{minDate | date:'yyyy-MM-dd'}}" >
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            Supp&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <input type="text" disabled formControlName="suppInvNo" [(ngModel)]='suppInvNo'
@@ -582,7 +582,7 @@
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <input type="date" disabled formControlName="suppInvDate" [(ngModel)]='suppInvDate'
@@ -591,6 +591,20 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            PO&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" formControlName="poInvNum" [(ngModel)]='poInvNum'
+                                                value={{poInvNum}} class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            PO&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="date" formControlName="poInvDate" [(ngModel)]='poInvDate'
+                                                value={{poInvDate}} class="form-control">
+                                        </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Comments&nbsp;:&nbsp;
                                         </td>
@@ -659,7 +673,7 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Supplier&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                                Supp&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
                                             </td>
                                             <td>
                                                 <input disabled  type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
@@ -667,7 +681,7 @@
                                                     [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Supplier&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                                Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
                                             </td>
                                             <td>
                                                 <input disabled type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
@@ -676,6 +690,20 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                PO&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="poInvNum" [(ngModel)]='poInvNum'
+                                                    value={{poInvNum}} class="form-control">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                PO&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="poInvDate" [(ngModel)]='poInvDate'
+                                                    value={{poInvDate}} class="form-control">
+                                            </td>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Comments&nbsp;:&nbsp;
                                             </td>
@@ -1248,11 +1276,12 @@
                                         <td>
                                             <button type="submit" (click)="grrReceiptPrint()" class="btn btn-primary" style="width: 10rem;">View GRR Receipt Print</button>   
                                         </td>
-                                        <td>
+                                        <td >
+                                            <div [style.display]="isVisible ? 'block' : 'none'">
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal10" style="width: 8rem;">
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PO&nbsp;Inv&nbsp;Creation
                                             </button>
-                                            
+                                        </div>
                                             <!-- Modal -->
                                             <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel10" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -1283,7 +1312,7 @@
                                             </div>
                                             </div>
                                                                                     <!-- </ng-template>  -->
-                                                                                </td>
+                                         </td>
                                     </ng-template>
                                    
                                 </tr>

@@ -92,11 +92,22 @@
                                 <td style="width: 15%" class="LabelFontStyle">
                                     &nbsp;Order&nbsp;No:&nbsp;
                                 </td>  
-        
                                 <td>
-                                    <input autofocus type ="text"  formControlName="searchCntrSaleOrderNo" [(ngModel)]='searchCntrSaleOrderNo' style="background-color: yellow;"
-                                                            value={{searchCntrSaleOrderNo}} class="form-control" (change)="SearchByCntrSaleOrderNoHeader(searchCntrSaleOrderNo)"
-                                                            placeholder="Enter Order No" >
+                                <table>
+                                <tr>
+                                    <td>
+                                        <input autofocus type ="number"  formControlName="searchCntrSaleOrderNo" [(ngModel)]='searchCntrSaleOrderNo' style="background-color: yellow; text-align: left;"
+                                        value={{searchCntrSaleOrderNo}} class="form-control" (change)="SearchByCntrSaleOrderNoHeader(searchCntrSaleOrderNo)"
+                                        placeholder="Enter Order No"  (keyup)="onKey($event)"   >
+                                        <!-- [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }" -->
+                                    </td>
+                                                  
+                                    <td>
+                                        <button type="button" class="btn-primary" (click)="SearchByCntrSaleOrderNoHeader(searchCntrSaleOrderNo)"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                </table>
                                 </td>
                               
                                 
@@ -149,13 +160,13 @@
                                    class="form-control"  placeholder="00.00" style="text-align: right;">
                         </td>
 
-                        <td style="width: 15%" class="LabelFontStyle"> Discount&nbsp;&nbsp;Amt&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle"> Disc&nbsp;&nbsp;Amt&nbsp;:&nbsp;</td>
                         <td>
                             <input disabled formControlName="rtnDisAmt" [(ngModel)]="rtnDisAmt"
                                 value={{rtnDisAmt}} class="form-control" placeholder="00.00" style="text-align: right;" >
                         </td>
 
-                        <td style="width: 15%" class="LabelFontStyle"> Return&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
                         <td>
                             <input disabled formControlName="rtnTaxAmt" [(ngModel)]="rtnTaxAmt"
                                 value={{rtnTaxAmt}} class="form-control" placeholder="00.00" style="text-align: right;" >
@@ -163,7 +174,7 @@
     
                       
                        
-                            <td style="width: 15%" class="LabelFontStyle"> Return&nbsp;Total&nbsp;Amt&nbsp;:&nbsp;</td>
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Total&nbsp;Amt&nbsp;:&nbsp;</td>
                             <td>
                                 <input disabled formControlName="rtnTotAmt" [(ngModel)]="rtnTotAmt" value={{rtnTotAmt}} placeholder="00.00"
                                     class="form-control" style="text-align: right;" >
@@ -245,7 +256,7 @@
                                         <th scope="col" >UOM</th>
                                         <!-- <th scope="col">Sub Inventory</th> -->
                                         <th scope="col">Locator</th>
-                                        <th scope="col">HSN</th>
+                                        <!-- <th scope="col">HSN</th> -->
                                         <th scope="col">Item Description</th>
                                         <th scope="col">Tax %</th>
                                         <th scope="col">Unit Price</th>
@@ -284,27 +295,27 @@
                                          
                                             <div *ngIf ="showAllItem;then BlockShowAll1;else BlockShowAll2"></div>
                                             <ng-template #BlockShowAll1>
-                                                 <td><input disabled  type="text" formControlName="orderedItem"  id="orderedItem"   class="form-control" style="height: 25px;width: 230px;" > </td>
+                                                 <td><input disabled  type="text" formControlName="orderedItem"  id="orderedItem"   class="form-control" style="height: 25px;width: 200px;" > </td>
                                             </ng-template>
                                             <ng-template #BlockShowAll2>
                                                 <td><input  type="text" formControlName="orderedItem"  id="orderedItem"   (change)="findOrderItem(i)"
-                                                    style="height: 25px;width: 230px;background-color: yellow;"  class="form-control" > </td>
+                                                    style="height: 25px;width: 200px;background-color: yellow;"  class="form-control" > </td>
                                             </ng-template>
 
                                                <td><input disabled  type="number" formControlName="cancelledQty" class="form-control" style="height: 25px;width: 60px;background-color: yellow;" (change)="validateQty(i)" > </td> 
                                                <td> <input disabled type="number" formControlName="pricingQty"   class="form-control" style="height: 25px;width: 60px;" ></td>
                                                <!-- <td> <input disabled type="number" formControlName="onHandQty" class="form-control" style="height: 25px;width: 60px;" ></td>  -->
-                                               <td> <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 60px;" >  </td> 
-                                               <td> <input disabled type="text" formControlName="frmLocatorName" class="form-control" style="height: 25px;width: 100px;" > </td> 
-                                               <td><input  disabled type="text" formControlName="hsnSacCode" class="form-control" style="height: 25px;width: 80px;"></td>
-                                               <td> <input disabled type="text"  formControlName="itemDesc" class="form-control" style="height: 25px; width:250px"> </td>
+                                               <td> <input disabled type="text" formControlName="uom" class="form-control" style="height: 25px;width: 40px;" >  </td> 
+                                               <td> <input disabled type="text" formControlName="frmLocatorName" class="form-control" style="height: 25px;width: 80px;" > </td> 
+                                               <input hidden  disabled type="text" formControlName="hsnSacCode" class="form-control" style="height: 25px;width: 80px;">
+                                               <td> <input disabled type="text"  formControlName="itemDesc" class="form-control" style="height: 25px; width:240px"> </td>
                                                
     
-                                                <td> <input disabled type="number"   formControlName="taxPer"  class="form-control" style="height: 25px;width: 50px;"></td>
-                                                <td> <input disabled type="number"  formControlName="unitSellingPrice" class="form-control" style="height: 25px;width: 100px;text-align: right;"></td>
+                                                <td> <input disabled type="number"   formControlName="taxPer"  class="form-control" style="height: 25px;width: 40px;"></td>
+                                                <td> <input disabled type="number"  formControlName="unitSellingPrice" class="form-control" style="height: 25px;width: 80px;text-align: right;"></td>
                                                 <td> <input disabled type="number"  formControlName="baseAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"> </td>
-                                                <td> <input disabled type="number"  formControlName="disPer"  class="form-control" style="height: 25px;width: 50px;text-align: right;"> </td>
-                                                <td> <input disabled type="number"  formControlName="disAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"></td>
+                                                <td> <input disabled type="number"  formControlName="disPer"  class="form-control" style="height: 25px;width: 40px;text-align: right;"> </td>
+                                                <td> <input disabled type="number"  formControlName="disAmt"  class="form-control" style="height: 25px;width: 80px;text-align: right;"></td>
                                                 <td> <input disabled type="number"  formControlName="taxAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"> </td>
                                                 <td> <input disabled type="number"  formControlName="totAmt"  class="form-control" style="height: 25px;width: 100px;text-align: right;"></td>
                                                 <td> <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
