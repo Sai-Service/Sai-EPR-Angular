@@ -196,6 +196,8 @@
             <td>
                 <input type="text" disabled class="form-control">
             </td>
+
+           
         </tr>
         <tr>
             
@@ -916,7 +918,34 @@
 <!-- </div> -->
                 <table class="center">
                     <tr>
-                        <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
+
+                        <!-- <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td> -->
+                        <div *ngIf="displaySaveButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            <td> <button type="button" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
+                           
+                            <td>
+                                <button disabled type="button"  class="btn btn-primary" 
+                                data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()" style="width: 8rem;">
+                                &nbsp;Apply</button>
+                            </td>
+
+                        </ng-template>
+                        
+                        <ng-template #elseBlock1>
+                            <td> <button disabled type="button" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
+                            <!-- <td> <button   type="butt on" class="btn btn-primary" (click)="creditMemoApply()" style="width: 8rem;">Apply</button></td> -->
+                        
+                            <td>
+                                <button  type="button"  class="btn btn-primary" 
+                                data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()" style="width: 8rem;">
+                                &nbsp;Apply</button>
+                            </td>
+
+
+                        </ng-template>
+                        
+                        
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>
                         <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
                         <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->
@@ -1071,7 +1100,163 @@
                         </div>
                     </div>
                 </ng-template>
+
+                <!-- ------------------------apply modal start-------------------- -->
+
+                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                         <div class="modal-header">
+                          <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
+                         <h5 class="modal-title" id="exampleModal2Label">&nbsp;Credit Memo&nbsp;Application - Credit Invoice Number :&nbsp; {{this.trxNumber1}}</h5>
+                       
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                         </div>
+                        
+                            <div class="modal-body">
+                            <table class="center" style="width: 100%;">
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;No&nbsp;&nbsp;:&nbsp;  </td>
+                                   <td> <input disabled  type="number" formControlName="custAccountNo"   [(ngModel)] ="custAccountNo"  class="form-control"> </td>
+                                  
+                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name&nbsp;&nbsp;:&nbsp;  </td>
+                                    <td colspan="2"> <input disabled  type="text" formControlName="custName" [(ngModel)] ="custName"   class="form-control" style="width: 100%;"> </td>
+                                  
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">cust&nbsp;SiteId&nbsp;&nbsp;:&nbsp;  </td> -->
+                                    <input hidden disabled  type="number" formControlName="customerSiteId"       [(ngModel)] ="customerSiteId"  class="form-control">
+                                   
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">customerId&nbsp;&nbsp;&nbsp;:&nbsp;  </td> -->
+                                    <input hidden disabled  type="number" formControlName="customerId"       [(ngModel)] ="customerId"  class="form-control">
+                               
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Applied&nbsp;Total&nbsp;&nbsp;:&nbsp;  </td>
+                                    <td><input disabled  type="number" formControlName="totAppliedtAmount"   [(ngModel)] ="totAppliedtAmount"  class="form-control"></td>
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">UnApplied&nbsp;Total&nbsp;&nbsp;:&nbsp;  </td>
+                                     <td><input disabled  type="number" formControlName="totUnAppliedtAmount" [(ngModel)] ="totUnAppliedtAmount"   class="form-control"></td>
+                                  
+                                    <td style="width: 15%" class="LabelFontStyle">Balance&nbsp;Total&nbsp;&nbsp;:&nbsp;  </td>
+                                    <td><input disabled  type="number" formControlName="balanceAmount"       [(ngModel)] ="balanceAmount"  class="form-control"></td>
+                               
+                                </tr>
+
+                                <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Note&nbsp;Amt&nbsp;:&nbsp;  </td>
+                                    <td> <input disabled  type="number" class="form-control" formControlName="creditNoteAmount"  [(ngModel)]="creditNoteAmount"  > </td>
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">Applied &nbsp;Amt&nbsp;:&nbsp; </td>
+                                    <td> <input disabled  type="number" class="form-control" formControlName="tApplAmt"  [(ngModel)]="tApplAmt"></td>
+                                    
+                                     <td style="width: 15%" class="LabelFontStyle">   Un Applied &nbsp;Amt&nbsp;:&nbsp; </td>
+                                     <td> <input disabled type="number" class="form-control" formControlName="tUapplAmt"  [(ngModel)]="tUapplAmt"></td>
+                                    
+                                 </tr>
+
+
+                            </table>
+
+                            <div class="container1">
+                                <div class="grid_scroll_3">
+                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                <tbody>
+                                    <tr class="GridHeader">
+                                      
+                                        <th style="width:6rem" scope="col">Srl#</th>
+                                        <th style="width:3rem;text-align: center;" scope="col"><input  type="checkbox" formControlName="selectAllflag1" [(ngModel)]="selectAllflag1" ></th>
+                                        <!-- (change)="applyReceiptFlagAll($event)" -->
+                                        <!-- <th style="width:3rem;text-align: center;" scope="col"><button style="width: 8em;" type="button" class="btn btn-info" (click)="applyReceiptFlagAll101()">Select All</button></th> -->
+                                        <!-- <button style="width: 8em;" type="button" class="btn btn-info" (click)="AppliedDetails(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Apply&nbsp;Details</button> -->
+                                    
+                                        <th style="width:6rem" scope="col">Application Type</th>
+                                        <th style="width:6rem" scope="col">Invoice No</th>
+                                        <th style="width:6rem" scope="col">Invoice Date</th>
+                                        <th style="width:10rem" scope="col">Invoice Amt</th>
+                                        <th style="width:10rem" scope="col">Applied Amt</th>
+                                        <th style="width:11rem" scope="col">Apply Date</th>
+                                        <th style="width:11rem" scope="col">GL Date</th>
+                                        <th style="width:10rem" scope="col">Apply Amt</th>
+                                        <th style="width:10rem" scope="col">Balance  Due</th>
+                                        <!-- <th style="width:10rem" scope="col">Balance</th> -->
+                                        <!-- <th style="width:10rem" scope="col">billToCustId</th> -->
+                                        <!-- <th style="width:10rem" scope="col">billToSiteId</th>  -->
+                                   </tr>
+                                </tbody>
+
+                                <ng-container  class="center" formArrayName="invLine">
+                                    <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+                                            <!-- <tr *ngFor="let com of lstinvoices let i=index" class="ItemStyle" style="text-decoration:none;"> -->
+                                               <tr>
+                                                <td style="text-align: right;">{{k+1}}</td>
+                                                <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
+                                                <td><input style="width: 100px;height: 25px;text-align: center;"      disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
+                                                <td><input style="width: 140px;height: 25px;" type="text"             disabled formControlName="trxNumber" class="form-control"></td>
+                                                <td><input style="width: 130px;height: 25px;text-align: center;"       disabled type="text" formControlName="trxDate" class="form-control"></td>   
+                                                <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
+                                                <td><input style="width: 95px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                                
+                                                <td><input style="width: 95px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
+                                                <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
+                                                <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
+                                               
+                                                <td><input disabled style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew"  class="form-control" placeholder="" (change)="validateLineApplAmt(k)" > </td>
+                                                
+                                                <td><input style="width: 98px;height: 25px;text-align: right;"     disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
+                                                <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" >
+                                                <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" >
+                                                <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled   type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" >
+                                                <!-- <td>  <button  class="btn btn-secondary" (click)="ApplyRcpt(com.trxNumber,receiptNumber)">Apply</button></td>   -->
+                                            </tr>
+                                            </ng-container>
+                                            </ng-container>
+
+                                </table>
+                                </div>
+                            </div>
+
+                                
+                            </div>
+
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-info"  >Save</button> -->
+                                <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
+                                   <ng-template #vStatusYes>
+                                       <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave()">Validate</button>
+                                   </ng-template>
+                                   <ng-template #vStatusNo>
+                                      <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave()">Validate</button>
+                                  </ng-template>
+                                  
+                                  <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo")></div>
+                                  <ng-template #appSaveYes>
+                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                  </ng-template>
+                                  <ng-template #appSaveNo>
+                                      <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                  </ng-template>
+                                
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                                <!-- <button type="button" class="btn btn-info" (click)="resetModalMast()">Reset</button> -->
+                          
+                              </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                  
+                        
+                        
+
+
+                <!-- ------------------------apply modal end-------------------- -->
         </form>
+        <!-- </form> -->
     </div>
 </div>
 </div>

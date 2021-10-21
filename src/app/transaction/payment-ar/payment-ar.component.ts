@@ -75,6 +75,8 @@ export class PaymentArComponent implements OnInit {
   CustomerDetailsList: any;
   CustomerSiteDetails: any;
   GLPeriodCheck: any;
+  glPrdStartDate: string;
+  glPrdEndDate: string;
 
   userList1: any[] = [];
   lastkeydown1: number = 0;
@@ -83,8 +85,7 @@ export class PaymentArComponent implements OnInit {
   lstinvoices: any[];
   lstCustomer: any[];
 
-  glPrdStartDate: string;
-  glPrdEndDate: string;
+  
 
   ouId: number;
   deptId: number;
@@ -145,11 +146,12 @@ export class PaymentArComponent implements OnInit {
   public minDate = new Date();
   checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  glDate = this.pipe.transform(this.now, 'y-MM-dd');
+  
   // trxDate= this.pipe.transform(this.now, 'dd-MM-y');
   // trxDate=this.pipe.transform(this.now, 'y-MM-dd');
   // trxDate :Date;
   // applDate:string;
+  glDate = this.pipe.transform(this.now, 'y-MM-dd');
   glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
   applDate = this.pipe.transform(this.now, 'y-MM-dd');
   // reversalDate= this.pipe.transform(this.now, 'dd-MM-y');
@@ -1656,6 +1658,7 @@ export class PaymentArComponent implements OnInit {
     this.totAppliedtAmount = this.tApplAmt;
     this.balanceAmount = this.tUapplAmt;
   }
+  
 
   validateSave(mType) {
 
@@ -1677,6 +1680,8 @@ export class PaymentArComponent implements OnInit {
         
       }
     }
+
+    
      for (let i = 0; i < applLineArr.length ; i++) {
       this.invLineArray().controls[i].get('applyrcptFlag').disable();
       this.CheckLineValidations(i);
@@ -1711,7 +1716,9 @@ export class PaymentArComponent implements OnInit {
       return;
     }
     this.CalculateRcptBalances();
-    this.applySaveButton = false;;
+    this.applySaveButton = false;
+    this.enableApplyButton=false;
+    this.enableCancelButton=false;
 
     const formValue: IPaymentRcptAr = this.transeData1(this.paymentArForm.value);
 
@@ -1779,7 +1786,14 @@ export class PaymentArComponent implements OnInit {
       alert("Validation Failed... \nPosting not done....")
       return;
     }
+
+    for (let i = 0; i < applLineArr.length ; i++) {
+      this.invLineArray().controls[i].get('applyrcptFlag').disable();
+     }
+     this.CalculateRcptBalances();
     this.applySaveButton = false;
+    this.enableApplyButton=false;
+    this.enableCancelButton=false;
     const formValue: IPaymentRcptAr = this.transeData2(this.paymentArForm.value);
 
     // var invLine= this.paymentArForm.get('invLine').value;
