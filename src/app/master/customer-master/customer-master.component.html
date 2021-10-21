@@ -845,10 +845,10 @@
                                   <button type="submit" class="btn btn-primary" id="register"
                                       (click)="resetMast()">Reset</button>
                               </td> -->
-                              <td>
+                              <!-- <td>
                                   <button type="submit" class="btn btn-primary" id="register"
                                       (click)="closesMast()">Close</button>
-                              </td>
+                              </td> -->
                           </tr>
 
                       </table>
@@ -1071,7 +1071,7 @@
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                         <td>
-                                            <input formControlName="spinCd" value={{spinCd}} [(ngModel)]='spinCd'
+                                            <input  formControlName="spinCd" value={{spinCd}} [(ngModel)]='spinCd'
                                                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.spinCd.errors }"
                                                 placeholder="Enter Pin code">
                                             <div *ngIf="submitted && f.spinCd.errors" class="invalid-feedback">

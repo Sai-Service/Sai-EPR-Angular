@@ -149,11 +149,11 @@ export class BulkUploadWithCsvComponent implements OnInit {
       this.service.bulkpouploadSales(formData).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
-          this.bulkUploadCSVForm.get('invcDt1').reset();
-          this.bulkUploadCSVForm.get('invcNo').reset();
-          this.bulkUploadCSVForm.get('supplierNo').reset();
-          this.bulkUploadCSVForm.get('supplierSite').reset();
-          this.bulkUploadCSVForm.get('file').reset();
+          // this.bulkUploadCSVForm.get('invcDt1').reset();
+          // this.bulkUploadCSVForm.get('invcNo').reset();
+          // this.bulkUploadCSVForm.get('supplierNo').reset();
+          // this.bulkUploadCSVForm.get('supplierSite').reset();
+          // this.bulkUploadCSVForm.get('file').reset();
           this.poDetails = res.obj;
           for (let i = 0; i < res.obj; i++) {
             this.bulkUploadCSVForm.patchValue({ segment1: res[i].obj.segment1 })
@@ -163,11 +163,11 @@ export class BulkUploadWithCsvComponent implements OnInit {
         } else {
           if (res.code === 400) {
             alert('Error In File : \n' + res.obj);
-            this.bulkUploadCSVForm.get('invcDt1').reset();
-            this.bulkUploadCSVForm.get('invcNo').reset();
-            this.bulkUploadCSVForm.get('supplierNo').reset();
-            this.bulkUploadCSVForm.get('supplierSite').reset();
-            this.bulkUploadCSVForm.get('file').reset();
+            // this.bulkUploadCSVForm.get('invcDt1').reset();
+            // this.bulkUploadCSVForm.get('invcNo').reset();
+            // this.bulkUploadCSVForm.get('supplierNo').reset();
+            // this.bulkUploadCSVForm.get('supplierSite').reset();
+            // this.bulkUploadCSVForm.get('file').reset();
           }
         }
       });
@@ -178,20 +178,20 @@ export class BulkUploadWithCsvComponent implements OnInit {
         this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
           if (res.code === 200) {
             alert(res.obj);
-            this.bulkUploadCSVForm.get('invcDt1').reset();
-            this.bulkUploadCSVForm.get('invcNo').reset();
-            this.bulkUploadCSVForm.get('supplierNo').reset();
-            this.bulkUploadCSVForm.get('supplierSite').reset();
-            this.bulkUploadCSVForm.get('file').reset();
+            // this.bulkUploadCSVForm.get('invcDt1').reset();
+            // this.bulkUploadCSVForm.get('invcNo').reset();
+            // this.bulkUploadCSVForm.get('supplierNo').reset();
+            // this.bulkUploadCSVForm.get('supplierSite').reset();
+            // this.bulkUploadCSVForm.get('file').reset();
           } else {
             if (res.code === 400) {
               alert('Error In File : \n' + res.obj);
-              window.location.reload();
-              this.bulkUploadCSVForm.get('invcDt1').reset();
-              this.bulkUploadCSVForm.get('invcNo').reset();
-              this.bulkUploadCSVForm.get('supplierNo').reset();
-              this.bulkUploadCSVForm.get('supplierSite').reset();
-              this.bulkUploadCSVForm.get('file').reset();
+              // window.location.reload();
+              // this.bulkUploadCSVForm.get('invcDt1').reset();
+              // this.bulkUploadCSVForm.get('invcNo').reset();
+              // this.bulkUploadCSVForm.get('supplierNo').reset();
+              // this.bulkUploadCSVForm.get('supplierSite').reset();
+              // this.bulkUploadCSVForm.get('file').reset();
             }
           }
         });
@@ -211,11 +211,11 @@ export class BulkUploadWithCsvComponent implements OnInit {
             alert(res.message);
             this.poDetails[0] = res.obj;
             console.log(this.poDetails);
-            this.bulkUploadCSVForm.get('invcDt1').reset();
-            this.bulkUploadCSVForm.get('invcNo').reset();
-            this.bulkUploadCSVForm.get('supplierNo').reset();
-            this.bulkUploadCSVForm.get('supplierSite').reset();
-            this.bulkUploadCSVForm.get('file').reset();
+            // this.bulkUploadCSVForm.get('invcDt1').reset();
+            // this.bulkUploadCSVForm.get('invcNo').reset();
+            // this.bulkUploadCSVForm.get('supplierNo').reset();
+            // this.bulkUploadCSVForm.get('supplierSite').reset();
+            // this.bulkUploadCSVForm.get('file').reset();
           } else {
             if (res.code === 400) {
               alert(res.message);
@@ -223,20 +223,20 @@ export class BulkUploadWithCsvComponent implements OnInit {
               if (res.message.includes('101')) {
                 this.itemList = res.obj;
                 this.itemButton1 = false;
-                this.bulkUploadCSVForm.get('invcDt1').reset();
-                this.bulkUploadCSVForm.get('invcNo').reset();
-                this.bulkUploadCSVForm.get('supplierNo').reset();
-                this.bulkUploadCSVForm.get('supplierSite').reset();
-                this.bulkUploadCSVForm.get('file').reset();
+                // this.bulkUploadCSVForm.get('invcDt1').reset();
+                // this.bulkUploadCSVForm.get('invcNo').reset();
+                // this.bulkUploadCSVForm.get('supplierNo').reset();
+                // this.bulkUploadCSVForm.get('supplierSite').reset();
+                // this.bulkUploadCSVForm.get('file').reset();
               }
               else {
                 this.itemButton1 = true;
-                window.location.reload();
-                this.bulkUploadCSVForm.get('invcDt1').reset();
-                this.bulkUploadCSVForm.get('invcNo').reset();
-                this.bulkUploadCSVForm.get('supplierNo').reset();
-                this.bulkUploadCSVForm.get('supplierSite').reset();
-                this.bulkUploadCSVForm.get('file').reset();
+                // window.location.reload();
+                // this.bulkUploadCSVForm.get('invcDt1').reset();
+                // this.bulkUploadCSVForm.get('invcNo').reset();
+                // this.bulkUploadCSVForm.get('supplierNo').reset();
+                // this.bulkUploadCSVForm.get('supplierSite').reset();
+                // this.bulkUploadCSVForm.get('file').reset();
               }
             }
           }
@@ -245,6 +245,12 @@ export class BulkUploadWithCsvComponent implements OnInit {
      
     }
   }
+
+
+  closederror(){
+    window.location.reload()
+  }
+
 
   routeOMAndCSPage(segment1) {
     this.router.navigate(['/OPMasterDto', segment1]);

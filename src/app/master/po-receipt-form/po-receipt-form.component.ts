@@ -16,6 +16,8 @@ interface IpoReceipt {
   poNumber: string;
   supplier: string;
   item: string;
+  poInvNum: string;
+  poInvDate: Date;
   segment1: string;
   ouId: number;
   totalAmt: number;
@@ -77,8 +79,11 @@ export class PoReceiptFormComponent implements OnInit {
   poReceiptForm: FormGroup;
   ouName: string;
   poNumber: string;
+  isVisible:boolean=true;
   public minDate = new Date();
   recdate1:Date;
+  poInvNum: string;
+  poInvDate: Date;
   content: Number;
   itemType: string;
   subInventory: number;
@@ -220,6 +225,8 @@ export class PoReceiptFormComponent implements OnInit {
       poNumber: ['', Validators.required],
       supplier: [''],
       item: [''],
+      poInvNum: [''],
+      poInvDate:[''],
       segment1: [''],
       shipmentNumber: [],
       ouId: [''],
@@ -361,6 +368,7 @@ export class PoReceiptFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+    $("#wrapper").toggleClass("toggled");
   var  recdate1=this.pipe.transform(this.now, 'dd-MM-yyyy');
     this.poReceiptForm.patchValue({recDate:recdate1});
     // alert(this.pipe.transform(this.now, 'dd-MM-yyyy'));
@@ -530,13 +538,14 @@ export class PoReceiptFormComponent implements OnInit {
           if (data.code === 200) {
             this.lstcompolines = data.obj;
             var recDate1 = (data.obj.recDate,'dd-MM-yyyy');
-            // var recDate2 = this.pipe.transform(recDate1,'dd-MM-yyyy');
             this.poReceiptForm.patchValue(({recDate: (data.obj.recDate,'dd-MM-yyyy')}));
-            // alert(recDate1);
             let control = this.poReceiptForm.get('poLines') as FormArray;
             for (var i = 0; i < this.lstcompolines.rcvLines.length; i++) {
               var poLines: FormGroup = this.lineDetailsGroup();
               control.push(poLines);
+            }
+            if (data.obj.poInvNum != null){
+              this.isVisible=false;
             }
             this.disabled = false;
             this.disabledLine = false;
@@ -549,7 +558,6 @@ export class PoReceiptFormComponent implements OnInit {
             for (let j = 0; j < data.obj.poLines.length; j++) {
               this.lineDetailsArray[i].patchValue({ subInventoryId: data.obj.poLines[i].subInventoryId })
             }
-            // this.poReceiptForm.patchValue({subinventoryId:data.obj.poLines[i].subInventoryId})
           }
           else if (data.code === 400) {
             alert(data.message)
@@ -1054,21 +1062,21 @@ export class PoReceiptFormComponent implements OnInit {
     }
     this.displaySaveButton = false;
     const totlCalControls = this.poReceiptForm.get('poLines').value;
-    this.baseAmount = 0;
-    this.taxAmt = 0;
-    this.totalAmt = 0;
-    for (var i = 0; i < totlCalControls.length; i++) {
-      this.baseAmount = this.baseAmount + totlCalControls[i].baseAmount;
-      this.taxAmt = this.taxAmt + totlCalControls[i].taxAmount;
+    // this.baseAmount = 0;
+    // this.taxAmt = 0;
+    // this.totalAmt = 0;
+    // for (var i = 0; i < totlCalControls.length; i++) {
+    //   this.baseAmount = this.baseAmount + totlCalControls[i].baseAmount;
+    //   this.taxAmt = this.taxAmt + totlCalControls[i].taxAmount;
 
-    }
-    this.totalAmt = this.baseAmount + this.taxAmt;
+    // }
+    // this.totalAmt = this.baseAmount + this.taxAmt;
     // const formValue: IpoReceipt = this.transData(this.poReceiptForm.value);
     const formValue: IpoReceipt = this.poReceiptForm.value;
     // formValue.qtyReceived=totlCalControls[i].qtyReceived;
-    formValue.baseAmount = this.baseAmount;
-    formValue.taxAmt = this.taxAmt;
-    formValue.totalAmt = this.totalAmt;
+    formValue.baseAmount = this.poReceiptForm.get('baseAmount').value;
+    formValue.taxAmt = this.poReceiptForm.get('taxAmt').value;
+    formValue.totalAmt = this.poReceiptForm.get('totalAmt').value;
     // formValue.subinvetoryId=this.ls
     this.locId = Number(sessionStorage.getItem('locId'));
     // alert(this.lstcompolines.poLines[i].qtyReceived)
@@ -1129,6 +1137,7 @@ export class PoReceiptFormComponent implements OnInit {
     this.service.poinvCre(segment1).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.ReceiptFind(this.receiptNo);     
       }
       else {
         if (res.code === 400) {

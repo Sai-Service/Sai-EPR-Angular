@@ -20,8 +20,6 @@ export class ReportServiceService {
 
 
    SPDebtorReport(invcDt1,locId){
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/SparesReports/SprDebtors?toDate=${invcDt1}&locId=${locId}`;  
-    // local
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDebtors?toDate=${invcDt1}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
@@ -29,4 +27,14 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  spReceiptRegisterReport(fromDate,toDate,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprReceiptRegister?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&deptId=${deptId}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 }
+
