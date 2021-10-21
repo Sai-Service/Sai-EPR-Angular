@@ -907,6 +907,19 @@
             <div class="tab-pane fade" id="lineDetails-md" role="tabpanel" aria-labelledby="lineDetails-tab-md">
                 <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Import&nbsp;File</legend>
+                    <table>
+                        <tr>
+                            <td class="LabelFontStyle">
+                                &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+                            </td>
+                            <td colspan="3">
+                                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                            </td>
+                            <td>
+                                <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                            </td>
+                        </tr>
+                    </table>
                 </fieldset>
                 <fieldset class="RFS">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Line & Tax  Details</legend>
@@ -942,8 +955,7 @@
                                 href="#panel1002">Lines</a>
                         </li>
                         <li class="nav-item">
-                            <a id="taxTab" class="nav-link waves-light" data-toggle="tab" href="#panel1006">Tax
-                                Details</a>
+                            <a id="taxTab" class="nav-link waves-light" data-toggle="tab" href="#panel1006">Tax  Details</a>
                         </li>
                         <li class="nav-item"></li>
                         <li class="nav-item"></li>
@@ -993,9 +1005,7 @@
                                                 *ngFor="let group of orderlineDetailsArray().controls; let i= index"
                                                 [formGroupName]="i" class="auto-style5">
                                                 <tr>
-                                                    <div
-                                                        *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">
-                                                    </div>
+                                                    <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"> </div>
                                                     <ng-template #thensegmentInvType>
                                                         <td>
                                                             <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
