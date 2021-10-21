@@ -135,7 +135,6 @@
                                <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
                            </td>
                            <td>
-
                                <select class=" form-control" style="height: 20px; width: 110px;" formControlName="locatorId" (ngModelChange)="AvailQty($event,trfLineIndex)">
                                       <option>--Select--</option>
                                       <option *ngFor="let locId of  locData[trfLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
