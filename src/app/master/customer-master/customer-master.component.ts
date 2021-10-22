@@ -213,6 +213,7 @@ export class CustomerMasterComponent implements OnInit {
   pipe = new DatePipe('en-US');
   accountNoSearchdata: any;
   displaytanaadhar: boolean;
+  displayenable=true;
   tcs:string;
   aadharNo:number;
   limitData: any;
@@ -625,7 +626,7 @@ if (person === 'Person'){
 
   }
 
-  
+
   mergeCustName(fName, mName, lName) {
     const aaa = fName + ' ' + mName + ' ' + lName;
     this.custName = aaa;
@@ -830,6 +831,15 @@ if (person === 'Person'){
   //       }
   //     );
   // }
+
+  omit_special_char(event)
+  {
+     var k;
+     k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+     return(k >= 48 && k <= 57);
+  }
+
+
   searchByContact(contactNo) {
 
     this.displayNewButton =false;
@@ -878,6 +888,7 @@ if (person === 'Person'){
           this.lstcomments = data.obj;
            console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments);
+          this.displayenable=false;
           // this.city = this.lstcomments.city
 
           // let birDate =this.pipe.transform(this.lstcomments[0].birthDate, 'yyyy-MM-dd');
@@ -1113,7 +1124,9 @@ if (person === 'Person'){
 
       this.newMast();
     }
-
+    if(this.msgType.includes("Update")){
+      this.updateMast();
+    }
     if (this.msgType.includes("Reset")) {
       // this.resetItemCatMast();
       this.customerMasterForm.reset();

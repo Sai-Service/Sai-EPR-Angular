@@ -274,18 +274,22 @@ lastkeydown1: number = 0;
       if(nxtEle==='input2')
       {
         // alert('Input2');
+        event.target.value = event.target.value.toUpperCase();
       this.input2.nativeElement.focus();
       }
       if(nxtEle==='input3')
       {
+        event.target.value = event.target.value.toUpperCase();
       this.input3.nativeElement.focus();
       }
       if(nxtEle==='input4')
       {
+        event.target.value = event.target.value.toUpperCase();
       this.input4.nativeElement.focus();
       }
       if(nxtEle==='input5')
       {
+        event.target.value = event.target.value.toUpperCase();
       this.input5.nativeElement.focus();
       (document.getElementById('btnok') as HTMLInputElement).disabled = false;
       }
