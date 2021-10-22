@@ -778,6 +778,9 @@ getsupplierMastSearch(): Observable<any> {
 getsearchBySuppCode(suppNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/supp/bycode/${suppNo}`);
 }
+supplierType(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppType`);
+}
 
 public SupliMasterSubmit(SupliMasterRecord) {
   const options = {
@@ -2275,6 +2278,10 @@ bulkpouploadSales(formData: FormData) {
 
   pendingPOList(emplId) {
     return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
+  }
+  
+  getPOByUser(emplId, startDt, endDt){
+    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
   }
 
   bulkpouploadSpares(formData: FormData) {

@@ -50,6 +50,7 @@ interface IsupplierMaster {
   endDate: Date;
   sstatus: string;
   emplId:number;
+  aadharNo:string;
   //displayMsmeNo:
   // aadharNo:string;
 }
@@ -61,7 +62,7 @@ interface IsupplierMaster {
   styleUrls: ['./supplier-master.component.css']
 })
 export class SupplierMasterComponent implements OnInit {
-  
+
   supplierMasterForm: FormGroup;
   suppId: number;
   suppNo: number;
@@ -129,11 +130,16 @@ export class SupplierMasterComponent implements OnInit {
   // public cityList: Array<string>[];
   public cityList1: any;
   public YesNoList: Array<string> = [];
+  displayadditional:boolean;
+  aadharNo:string;
+  divId:number;
+  compId:number;
+  supplierTyp: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
-      suppNo: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
+      suppNo: ['', [Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
       name: ['', [ Validators.required, Validators.maxLength(150)], Validators.pattern('[a-zA-Z ]*')],
       // address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
       address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -164,6 +170,9 @@ export class SupplierMasterComponent implements OnInit {
       msmeNo: [],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
       status: ['', [Validators.nullValidator]],
+      divId:[],
+      compId:[],
+
       // Duplicate Fields Comments start
       // contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
       // // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
@@ -171,7 +180,7 @@ export class SupplierMasterComponent implements OnInit {
       // mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength,Validators.maxLength(10)]],
       // mobile2: ['',[Validators.pattern('[0-9]*'), Validators.minLength,Validators.minLength(10),Validators.maxLength(10)]],
       // emailId: ['',[Validators.email]],
-      
+
       // taxCategoryName: [],
       //  creditDays: ['',[Validators.required,Validators.pattern('[0-9]*')]],
       // creditLimit: ['',[Validators.required,Validators.pattern('[0-9]*')]],
@@ -212,6 +221,8 @@ export class SupplierMasterComponent implements OnInit {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
     this.emplId =Number(sessionStorage.getItem('emplId'));
+    this.divId =Number(sessionStorage.getItem('divisionId'));
+    this.compId =41;
     this.service.cityList()
       .subscribe(
         data => {
@@ -219,6 +230,11 @@ export class SupplierMasterComponent implements OnInit {
           console.log(this.cityList);
         }
       );
+      this.service.supplierType().subscribe(
+        data=>{
+          this.supplierTyp=data;
+        }
+      )
       this.service.statusList()
       .subscribe(
         data => {
@@ -234,7 +250,7 @@ export class SupplierMasterComponent implements OnInit {
           console.log(this.YesNoList);
         }
       );
-    
+
     this.service.StateList()
       .subscribe(
         data => {
@@ -298,11 +314,11 @@ export class SupplierMasterComponent implements OnInit {
 
   newsupplierMast() {
 
-    this.submitted = true;
-    if(this.supplierMasterForm.invalid){
-    alert('In Validation');
-      return;
-    }
+    // this.submitted = true;
+    // if(this.supplierMasterForm.invalid){
+    // alert('In Validation');
+    //   return;
+    // }
     const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -311,7 +327,7 @@ export class SupplierMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('Supplier Master Details Validation Error. Please Enter Validate Data !!!');
-          this.supplierMasterForm.reset();
+          // this.supplierMasterForm.reset();
         }
       }
     });
@@ -494,7 +510,7 @@ alert(suppSiteId);
           // this.allFunction(locId);
         }
       );
-    } 
+    }
   }
   onOptionsSelected(event: any) {
     this.Status1 = this.supplierMasterForm.get('sstatus').value;
@@ -507,11 +523,11 @@ alert(suppSiteId);
       this.supplierMasterForm.get('endDate').reset();
       this.displayInactive = true;
     }
-  }   
+  }
   onOptionsSelectedSupp(event: any) {
-    
+
     this.Status1 = this.supplierMasterForm.get('status').value;
-    
+
     if (this.Status1 === 'Inactive') {
 
       this.displayInactive = false;
@@ -521,7 +537,7 @@ alert(suppSiteId);
       this.supplierMasterForm.get('endDate').reset();
       this.displayInactive = true;
     }
-  } 
+  }
 
   onOptionsSelectedCity (city: any){
     // alert(city);
@@ -565,12 +581,12 @@ alert(suppSiteId);
         // alert(gstno);
         if(gstno.length==15 && gstno!='GSTUNREGISTERED')
         {
-          
+
           const gstNo1 = gstno.substr(2,10);
           this.panNo = gstNo1;
           tanNo.focus();
         }
-        else 
+        else
         {
           // this.gstNo='GSTUNREGISTERED';
           if(gstno.length==0 ) {
@@ -581,17 +597,17 @@ alert(suppSiteId);
         return;
 
       }
-      
+
       onMSMESelected(msmeYN : any){
         // alert(msmeYN);
-          if (msmeYN === 'Y') {   
+          if (msmeYN === 'Y') {
             this.displayMsmeNo = true;
           }
           else {
             this.displayMsmeNo = false;
           }
         }
-     
+
 
          message: string = "Please Fix the Errors !";
           msgType:string ="Close";
@@ -601,42 +617,42 @@ alert(suppSiteId);
               this.submitted = true;
               (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
               if (this.supplierMasterForm.invalid) {
-                
+
                 //this.submitted = false;
                 (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
                 return;
               }
               this.message = "Do you want to SAVE the changes(Yes/No)?"
-              
+
             }
-        
+
             if (msgType.includes("Reset")) {
               this.message = "Do you want to Reset the changes(Yes/No)?"
             }
-            
+
             if (msgType.includes("Close")) {
               this.message = "Do you want to Close the Form(Yes/No)?"
             }
             return;
           }
-        
+
          executeAction() {
             if(this.msgType.includes("Save")) {
-             
+
               this.newsupplierMast();
             }
-        
+
             if (this.msgType.includes("Reset")) {
               this.resetsupplierMast();
         //       this.itemMasterForm.reset();
             }
-            
+
             if (this.msgType.includes("Close")) {
               // this.closeItemCatMast();
               this.router.navigate(['admin']);
             }
             return;
           }
-        
+
         }
-        
+

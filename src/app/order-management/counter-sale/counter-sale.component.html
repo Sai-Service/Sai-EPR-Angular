@@ -959,13 +959,13 @@
                                                                 id="taxCategoryName" (change)="onKey(i)"
                                                                 class="form-control"
                                                                 style="width: 160px;height: 25px;font-size: 10px;">
-                                                                <option>--Select--</option>
+                                                                <!-- <option>--Select--</option> -->
                                                                 <option *ngFor="let sc of  taxCategoryList[i]"
-                                                                    [value]="sc.taxCategoryName">
+                                                                    [ngValue]="sc">
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                            <input  type="number" formControlName="taxCategoryId"
+                                                            <input hidden type="number" formControlName="taxCategoryId"
                                                                 class="form-control" style="height: 20px;width: 70px;">
                                                         </td>
 
