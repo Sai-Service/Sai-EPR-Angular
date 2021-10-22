@@ -134,6 +134,7 @@ export class SupplierMasterComponent implements OnInit {
   aadharNo:string;
   divId:number;
   compId:number;
+  supplierTyp: any;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -229,6 +230,11 @@ export class SupplierMasterComponent implements OnInit {
           console.log(this.cityList);
         }
       );
+      this.service.supplierType().subscribe(
+        data=>{
+          this.supplierTyp=data;
+        }
+      )
       this.service.statusList()
       .subscribe(
         data => {
@@ -308,11 +314,11 @@ export class SupplierMasterComponent implements OnInit {
 
   newsupplierMast() {
 
-    this.submitted = true;
-    if(this.supplierMasterForm.invalid){
-    alert('In Validation');
-      return;
-    }
+    // this.submitted = true;
+    // if(this.supplierMasterForm.invalid){
+    // alert('In Validation');
+    //   return;
+    // }
     const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

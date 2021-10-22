@@ -778,6 +778,9 @@ getsupplierMastSearch(): Observable<any> {
 getsearchBySuppCode(suppNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/supp/bycode/${suppNo}`);
 }
+supplierType(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppType`);
+}
 
 public SupliMasterSubmit(SupliMasterRecord) {
   const options = {
