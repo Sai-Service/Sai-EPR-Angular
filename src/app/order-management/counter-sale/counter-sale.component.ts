@@ -286,8 +286,8 @@ export class CounterSaleComponent implements OnInit {
   ouName: string;
   gstNo: string;
   taxCategoryName: string;
-  public taxCategoryList: any=[];
-  public allTaxCategoryList: any=[];
+  public taxCategoryList: any = [];
+  public allTaxCategoryList: any = [];
   lstgetOrderLineDetails: any[];
   lstgetOrderTaxDetails: any[];
   custSiteAddressList: any;
@@ -826,6 +826,7 @@ export class CounterSaleComponent implements OnInit {
                 if (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
                   this.displayLineflowStatusCode[i] = false;
                   // this.PaymentButton = false;
+                  this.displayRemoveRow[i] = false;
                 }
                 else if
                   (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'CANCELLED' && this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'Invoiced') {
@@ -873,9 +874,12 @@ export class CounterSaleComponent implements OnInit {
               }
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
-              alert('gate pass dobe')
+
               this.displayAfterGatePass = false;
               this.isVisible = false;
+            } else {
+              this.displayAfterGatePass = true;
+              this.isVisible = true;
             }
             // if (this.allDatastore.flowStatusCode === 'BOOKED' && this.allDatastore.paymentType === 'IMMEDIATE') {
             //   this.PaymentButton = false;
@@ -1158,8 +1162,8 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedcustSiteName(siteName) {
-    alert(siteName)
-    let selSite = this.custSiteList.find(d => d.siteName === siteName);
+   // alert(siteName)
+       let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
@@ -1392,7 +1396,7 @@ export class CounterSaleComponent implements OnInit {
   }
 
   onKey(index) {
-    // alert('onKey' + index)
+   
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var pricingQty = arrayControl[index].pricingQty;
     var isvalidqty = this.validate(index, pricingQty);
@@ -1404,10 +1408,11 @@ export class CounterSaleComponent implements OnInit {
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
-
-    let select = this.taxCategoryList.find(d => d.taxCategoryName === taxcatName);
+    console.log(taxcatName);
+    let select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
     var taxCategoryId = select.taxCategoryId;
     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+    patch.controls[index].patchValue({ taxCategoryName: select });
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
     // alert(arrayControl[index].pricingQty);
@@ -1500,7 +1505,7 @@ export class CounterSaleComponent implements OnInit {
       var itemType = (controlinv.controls[k]).get('invType').value;
       // alert(itemType)
       let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
-      this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
+      //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
       this.itemId = select.itemId;
       var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
@@ -1518,17 +1523,31 @@ export class CounterSaleComponent implements OnInit {
                     itemId: data[i].itemId,
                     orderedItem: data[i].description,
                     hsnSacCode: data[i].hsnSacCode,
-                    taxCategoryId: data[i].taxCategoryId,
-                    taxCategoryName: data[i].taxCategoryName,
+                    // taxCategoryId: data[i].taxCategoryId,
+                    // taxCategoryName: data[i].taxCategoryName,
                     uom: data[i].uom,
                     unitSellingPrice: data[i].priceValue,
                   });
 
-                  this.taxCategoryList = this.taxCategoryList.filter(function (d) { return itemtaxCatNm.includes(d.gstPercentage) });
+                  // this.taxCategoryList = this.taxCategoryList.filter(function (d) { return itemtaxCatNm.includes(d.gstPercentage) });
                   // if (data[i].uom==='NO'){
                   //   data[i].pricingQty.includes('.')
                   //   return;
                   // }
+                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[k] = data1;
+                        this.allTaxCategoryList[k] = data1;
+                        
+                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
+                        (controlinv.controls[k]).patchValue({
+                          taxCategoryId :itemCateNameList.taxCategoryId,
+                            taxCategoryName: itemCateNameList,      
+                         })
+                      }
+                    );
+
                 }
               }
               if (select.itemId != null) {
@@ -1589,25 +1608,25 @@ export class CounterSaleComponent implements OnInit {
                     uom: data[i].uom,
                     unitSellingPrice: data[i].priceValue,
                   });
-                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName,data[i].taxPercentage)
-                  .subscribe(
-                    data1 => {
-                      this.taxCategoryList[k]= data1;
-                      this.allTaxCategoryList[k] = data1;
-                      let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
-                    controlinv.controls[k].get('taxCategoryName').setValue(itemCateNameList.taxCategoryName);
-                      // var taxCategoryName=itemCateNameList.taxCategoryName;
-                  // alert(itemCateNameList.taxCategoryName + k);
-                  //  (controlinv.controls[k]).patchValue({
-                  //    taxCategoryId: itemCateNameList.taxCategoryId,
-                  //    taxCategoryName: itemCateNameList,      
-                  //  })
-                    }
-                  );
-                  
+                
+                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[k] = data1;
+                        this.allTaxCategoryList[k] = data1;
+                        
+                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
+                        (controlinv.controls[k]).patchValue({
+                          taxCategoryId :itemCateNameList.taxCategoryId,
+                            taxCategoryName: itemCateNameList,      
+                         })
+                      }
+                    );
+
                 }
               }
               if (select.itemId != null) {
+              
                 // this.getLocatorDetails(k, select.itemId);
                 let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                 var invTp = controlinv.controls[k].get('invType').value;
@@ -1748,7 +1767,7 @@ export class CounterSaleComponent implements OnInit {
 
     var amount = arrayControl[i].unitSellingPrice;
 
-    let select = this.taxCategoryList.find(d => d.taxCategoryName === taxCategoryName);
+    let select = this.taxCategoryList[i].find(d => d.taxCategoryName === taxCategoryName);
 
     this.taxCategoryId = select.taxCategoryId;
     console.log(this.taxCategoryId);
