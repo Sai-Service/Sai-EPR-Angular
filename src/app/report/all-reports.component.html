@@ -36,6 +36,40 @@
                     <button class="btn-primary" (click)="SPdebtorsReport()">View Report</button>
                 </td>
             </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Receipt Register</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spreceiptfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spreceipttoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="number" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
+                            <td>
+                                <input disabled type="number" class="form-control"  formControlName="deptId" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spReceiptRegister()">View Report</button>
+                </td>
+            </tr>
         </table>
         <table class="center">
             <tr>

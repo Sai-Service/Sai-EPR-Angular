@@ -36,7 +36,7 @@
                 &nbsp;&nbsp;Invoice&nbsp;Date&nbsp;:&nbsp;
             </td>
             <td>
-                <input type="date" class="form-control"  formControlName="invcDt1"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                <input type="date" class="form-control"  formControlName="invcDt1" onkeydown="return false"  max="{{minDate | date:'yyyy-MM-dd'}}" >
             </td>
             <div *ngIf="submitted && f.invcDt1.errors" class="invalid-feedback">
                 <div *ngIf="f.invcDt1.errors.required">Code cannot be blank</div>
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="refresh()">Close</button>
                     </div>
                   </div>
                 </div>

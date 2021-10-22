@@ -6,6 +6,7 @@ import { MasterService } from 'src/app/master/master.service';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
+import { DatePipe } from '@angular/common';
 // import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obj';
 // import { ManualARInvoiceObj } from '../manual-arinvoice-obj';
 
@@ -49,6 +50,7 @@ interface IArInvoice {
 
 export class ARInvoiceComponent implements OnInit {
   arInvoiceForm: FormGroup;
+  pipe = new DatePipe('en-US');
   branch: any;
   divisionId:number;
   itemId: number;
@@ -93,6 +95,14 @@ export class ARInvoiceComponent implements OnInit {
   glDate = new Date();
   taxAmount: number;
 
+  public applyTo = 'INVOICE'
+  now = Date.now();
+  public minDate = new Date();
+  glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
+  // glDate = this.pipe.transform(this.now, 'y-MM-dd');
+ 
+  applDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   public distributioArr: any;
   public paymentTermList: any[];
   public locIdList: Array<string> = [];
@@ -106,6 +116,9 @@ export class ARInvoiceComponent implements OnInit {
   public InterBrancList: Array<string> = [];
   accountNoSearch: any;
   invItemList: any[];
+
+  lstinvoices: any[];
+
   billToCustNo: number;
   public taxCalforItem: any;
   userList1: any[] = [];
@@ -124,8 +137,31 @@ export class ARInvoiceComponent implements OnInit {
   shipcontactNo:number;
   paymentTerm:string;
   emplId:number;
-
   activeTab = 'home-md';
+
+  displaySaveButton=true;
+  applySaveButton = false;
+  validateStatus = false;
+  selectAllflag1 = false;
+  checkValidation = false;
+  applLineValidation = false;
+ 
+ 
+
+  tApplAmt:number;
+  tUapplAmt:number;
+  totUnAppliedtAmount:number;
+  totAppliedtAmount:number;
+  balanceAmount:number;
+  creditNoteAmount: number;
+  customerId:number;
+  customerSiteId:number;
+  custAccountNo:number;
+  custName:string;
+
+  GLPeriodCheck: any;
+  glPrdStartDate: string;
+  glPrdEndDate: string;
 
   search(activeTab){
     this.activeTab = activeTab;
@@ -137,6 +173,7 @@ export class ARInvoiceComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
+      
       source: [],
       class: [],
       locId: [],
@@ -181,10 +218,55 @@ export class ARInvoiceComponent implements OnInit {
       billcontactNo:[],
       shipcontactNo:[],
       emplId:[],
+
+      applyTo:[],
+      tApplAmt:[],
+      tUapplAmt:[],
+      creditNoteAmount:[],
+      totUnAppliedtAmount:[],
+      totAppliedtAmount:[],
+      balanceAmount:[],
+      customerId:[],
+      customerSiteId:[],
+      custAccountNo:[],
+      custName:[],
+      glPrdStartDate: [],
+      glPrdEndDate: [],
+
       invLines: this.fb.array([this.lineDetailsGroup()]),
       invDisLines: this.fb.array([this.distLineDetails()]),
-      taxLines: this.fb.array([this.TaxDetailsGroup()])
+      taxLines: this.fb.array([this.TaxDetailsGroup()]),
+      invLine: this.fb.array([this.invLineDetails()])
     });
+  }
+
+  invLineDetails() {
+    return this.fb.group({
+      // selectAllflag: [],
+      applyTo: [],
+      applyrcptFlag: [],
+      trxNumber: [],
+      trxDate: [],
+      invoiceAmount: [],
+      applAmt: [],
+      balDueAmt: [],
+      balance1: [],
+      applAmtNew: [],
+      paymentAmt: [],
+      applDate: [],
+      glDate: [],
+      glDateLine: [],
+      billToCustId: [],
+      billToSiteId: [],
+      invCurrancyCode: [],
+      refReasonCode: [],
+      // emplId:[],
+
+    })
+  }
+
+  invLineArray(): FormArray {
+    return <FormArray>this.arInvoiceForm.get('invLine')
   }
   addRow(k) {
     // alert('k '+ k);
@@ -427,10 +509,24 @@ export class ARInvoiceComponent implements OnInit {
           lineNum: 1,
         }
       );
+
+      this.service.GLperiod()
+      .subscribe(
+        data => {
+          this.GLPeriodCheck = data.obj;
+          console.log(this.GLPeriodCheck);
+        }
+      );
+
+    this.glPrdStartDate = this.GLPeriodCheck.startDate;
+    this.glPrdEndDate = this.GLPeriodCheck.endDate
+
   }
 
   arInvoice(arInvoiceForm) { }
+
   searchByInvoiceNo(trxNumber1) {
+    this.displaySaveButton=false;
     //  this.arInvoiceForm.reset();
     // this.router.navigate(['ARInvoice']);
     //  this.TaxDetailsArray().reset();
@@ -1364,6 +1460,395 @@ export class ARInvoiceComponent implements OnInit {
         );
     }
   }
+
+
+  // SearchInvoices(a,b,c){
+   
+  // var custAcno= this.arInvoiceForm.get('shipToCustNo').value
+  // var billToSite= this.arInvoiceForm.get('billToSiteId').value
+  // var invoiceNum= this.arInvoiceForm.get('trxNumber').value
+
+  // alert("wip....search invoices :"+custAcno +","+billToSite +","+invoiceNum);
+
+  // }
+
+  SearchInvoices() {
+    // this.paymentArForm.get('applyTo').disable();
+
+    var custAcno= this.arInvoiceForm.get('shipToCustNo').value
+    var billToSite= this.arInvoiceForm.get('billToSiteId').value
+    var creditMemoNum= this.arInvoiceForm.get('trxNumber').value
+    // var totCrAmt= this.arInvoiceForm.get('invoiceAmount').value
+    // this.creditNoteAmount=Math.abs(totCrAmt);
+    
+    this.applySaveButton=false;
+    this.invLineArray().clear();
+
+      this.service.getCreditMemoSearchByInvoiceNo(custAcno, billToSite, creditMemoNum)
+        .subscribe(
+          data => {
+            this.lstinvoices = data.obj.invLine;
+            console.log(this.lstinvoices);
+            var len = this.invLineArray().length;
+            // alert("this.lstinvoices.length :"+this.lstinvoices.length +","+len);
+            var y = 0;
+
+
+          //  if (this.lstinvoices.length > 0) {
+          //    alert ("in if....");
+          //     this.validateStatus = true;
+          //     this.arInvoiceForm.get('selectAllflag1').disable();
+          //   } else {   alert ("in else....");
+          //     this.arInvoiceForm.get('selectAllflag1').disable();
+          //     this.validateStatus = false; return;
+          //   }
+
+            // alert ("testing....");
+            var invCount=this.lstinvoices.length;
+
+            if (invCount > 0) {
+              this.validateStatus = true;
+              // this.arInvoiceForm.get('selectAllflag1').disable();
+
+              this.totAppliedtAmount= Math.abs(data.obj.totAppliedtAmount);
+              this.totUnAppliedtAmount=Math.abs(data.obj.totUnAppliedtAmount);
+              this.balanceAmount=Math.abs(data.obj.balanceAmount);
+              this.creditNoteAmount=Math.abs(data.obj.creditNoteAmount);
+
+              this.customerId=data.obj.customerId;
+              this.customerSiteId=data.obj.customerSiteId;
+              this.custAccountNo=data.obj.custAccountNo;
+              this.custName=data.obj.custName;
+
+              this.tUapplAmt=this.totUnAppliedtAmount;
+              this.tApplAmt= this.totAppliedtAmount;
+           
+            for (let i = 0; i < this.lstinvoices.length - len; i++) {
+              var invLnGrp: FormGroup = this.invLineDetails();
+              this.invLineArray().push(invLnGrp);
+            }
+
+            this.arInvoiceForm.get('invLine').patchValue(this.lstinvoices);
+
+            /////////////////////////////////////////////////////////
+            var patch = this.arInvoiceForm.get('invLine') as FormArray;
+            var invLineArr = this.arInvoiceForm.get('invLine').value;
+
+            for (let i = 0; i < this.lstinvoices.length - len; i++) {
+              y = invLineArr[i].balDueAmt.toFixed(2);
+              patch.controls[i].patchValue({ balDueAmt: y })
+              patch.controls[i].patchValue({ balance1: y })
+              var x = invLineArr[i].applAmt.toFixed(2);
+              patch.controls[i].patchValue({ applAmt: x })
+              patch.controls[i].patchValue({ applyTo: 'INVOICE' })
+             
+              var z1 = this.pipe.transform(this.now, 'y-MM-dd');
+               patch.controls[i].patchValue({applDate:z1})
+
+              var invAmt = invLineArr[i].invoiceAmount.toFixed(2);
+              patch.controls[i].patchValue({ invoiceAmount: invAmt })
+            }
+          } else {
+                alert("No Pending Bills Found against this customer.");
+                this.arInvoiceForm.get('selectAllflag1').disable();
+                this.validateStatus = false;
+            }
+                     
+          }  );
+    } 
+
+     
+    
+    validateLineApplAmt(index) {
+
+    
+    var x = 0;
+    var totUnAppAmt = 0;
+    var totAppAmt = 0;
+    var LineinvAmt = 0;
+    var LineApplAmount = 0;
+    var invBalAmt = 0;
+    var applyReceiptFlag;
+    var invLineArr = this.arInvoiceForm.get('invLine').value;
+    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+
+    this.invLineArray().controls[index].get('applyrcptFlag').enable();
+    this.applySaveButton=false;
+    this.validateStatus=true;
+
+    var lineApplAmt = Number(invLineArr[index].applAmtNew);
+    var applyReceiptFlag = invLineArr[index].applyrcptFlag;
+    var ytotUnAppAmt = Number(this.totUnAppliedtAmount);
+    var ytotAppAmt = Number(this.totAppliedtAmount);
+
+    // patch.controls[index].patchValue({ applyrcptFlag: true })
+   
+
+   
+    if (applyReceiptFlag === true) {
+
+      var LineinvAmt = Number(invLineArr[index].invoiceAmount);
+      var LineDueAmt = Number(invLineArr[index].balance1);
+
+      if (lineApplAmt > LineDueAmt || lineApplAmt <= 0 || lineApplAmt > ytotUnAppAmt) {
+        alert("Line: " + (index + 1) + "\nInvoice Amt :" + LineDueAmt + "\nApplied Amt :" + lineApplAmt + "\nLine appiled Amt should be > 0 and <= Line balance Amt and  <=Unapplied Amt");
+        patch.controls[index].patchValue({ applAmtNew: '' })
+        patch.controls[index].patchValue({ applyrcptFlag: '' })
+      }
+      else {
+        LineinvAmt = invLineArr[index].invoiceAmount;
+        LineApplAmount = invLineArr[index].applAmtNew;
+        invBalAmt = invLineArr[index].balance1;
+        var newBal = 0;
+        newBal = invBalAmt - LineApplAmount;
+        newBal = Number(newBal.toFixed(2));
+
+        patch.controls[index].patchValue({ balDueAmt: newBal })
+        x = 0;
+
+      }
+
+      /////////////////////////////////////////////////////////
+      this.CalculateBalance();
+     
+      ///////////////////////////////////////////////////////
+    }
+    else {
+      alert("Line-" + index + " : Apply Flag not selected/disabled...Select Apply Flag First.");
+      patch.controls[index].patchValue({ applAmtNew: '' });
+      patch.controls[index].patchValue({ balDueAmt: invLineArr[index].balance1 });
+      
+    }
+
+  }
+
+
+  CalculateBalance() {
+
+    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+    var invLineArr = this.arInvoiceForm.get('invLine').value;
+
+    // alert ("CalculateBalance...");
+    var appCount = 0;
+    var len = this.invLineArray().length;
+    var len1 = this.lstinvoices.length;
+    var ttl = 0;
+    this.tApplAmt = this.totAppliedtAmount;
+    this.tUapplAmt = this.totUnAppliedtAmount;
+
+    // alert ("tApplAmt :"+this.tApplAmt + "tUapplAmt : "+this.tUapplAmt + " invLineArray.length : "+this.invLineArray().length)
+
+    for (let i = 0; i < this.invLineArray().length; i++) {
+
+      if (invLineArr[i].applAmtNew > 0) {
+        ttl = ttl + Number(invLineArr[i].applAmtNew);
+      }
+
+      if (invLineArr[i].applyrcptFlag === true) { appCount = appCount + 1; }
+
+    }
+
+    // alert ("ttl ="+ttl);
+
+    if (len1 == appCount) { this.arInvoiceForm.patchValue({ selectAllflag1: true }) }
+
+    // alert("Total Applied Amt :"  +ttl);
+    this.tApplAmt = Number(this.tApplAmt) + ttl;
+    this.tUapplAmt = Number(this.tUapplAmt) - ttl;
+    // this.balanceAmount=   this.tUapplAmt;
+
+  }
+
+  applyReceiptFlag(e, index) {
+    //  alert("invoked fn from applyReceiptFlagAll");
+    // alert("e  ,index= "+ e +","+index);
+    var xyz;
+    var tApplAmt;
+    var tUappAmt;
+
+    var totUnAppAmt = 0;
+    var totAppAmt = 0;
+    var LineinvAmt = 0;
+    var LineApplAmount = 0;
+    var invBalAmt = 0;
+    var lineBalDueAmt = 0
+
+    var invLineArr = this.arInvoiceForm.get('invLine').value;
+    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+
+    lineBalDueAmt = Number(invLineArr[index].balance1);
+    totUnAppAmt = Number(this.tUapplAmt);
+    totAppAmt = Number(this.tApplAmt);
+
+
+
+    if (e.target.checked) {
+      // alert("applyReceiptFlag-IF selected ");   
+      // alert("applyReceiptFlag>>> e.target.checked :"  +e.target.checked);
+
+
+      if (this.tApplAmt >= 0) { totAppAmt = this.tApplAmt; } else { totAppAmt = 0; }
+      if (this.tUapplAmt <= 0) {
+        alert("Unapplied Balance not availabe to apply to Invoice");
+        e.target.checked = false;
+        patch.controls[index].patchValue({ applyrcptFlag: false })
+        this.invLineArray().controls[index].get('applAmtNew').disable();
+        this.invLineArray().controls[index].get('glDateLine').disable();
+        return;
+      }
+      this.invLineArray().controls[index].get('applAmtNew').enable();
+      this.invLineArray().controls[index].get('glDateLine').enable();
+      if (totUnAppAmt >= lineBalDueAmt) {
+        //  alert ("in if section")
+
+        // this.invLineArray().controls[index].get('applAmtNew').enable();
+        xyz = LineinvAmt;
+        var lbDueAmt = lineBalDueAmt.toFixed(2)
+        patch.controls[index].patchValue({ applAmtNew: lbDueAmt })
+        LineApplAmount = Number(invLineArr[index].applAmtNew);
+        invBalAmt = 0;
+        var ibalAmt = invBalAmt.toFixed(2);
+        patch.controls[index].patchValue({ balDueAmt: ibalAmt })
+
+        var z1 = this.pipe.transform(this.now, 'y-MM-dd');
+        patch.controls[index].patchValue({ glDateLine: z1 })
+        // patch.controls[i].patchValue({glDate:z1})
+        this.CalculateBalance();
+      }
+      else {
+
+        var appAmt = Number(totUnAppAmt.toFixed(2));
+        patch.controls[index].patchValue({ applAmtNew: appAmt })
+        LineApplAmount = Number(invLineArr[index].applAmtNew);
+
+        invBalAmt = lineBalDueAmt - totUnAppAmt;
+        var newBal = Number(invBalAmt.toFixed(2));
+        patch.controls[index].patchValue({ balDueAmt: newBal })
+
+        var z1 = this.pipe.transform(this.now, 'y-MM-dd');
+        patch.controls[index].patchValue({ glDateLine: z1 })
+        this.CalculateBalance();
+      }
+
+    }
+    else {
+     
+      this.invLineArray().controls[index].get('applAmtNew').disable();
+      this.invLineArray().controls[index].get('glDateLine').disable();
+      xyz = LineinvAmt;
+      lineBalDueAmt = Number(invLineArr[index].balance1);
+      LineApplAmount = Number(invLineArr[index].applAmtNew);
+      invBalAmt = Number(invLineArr[index].balDueAmt);
+      var b1 = lineBalDueAmt.toFixed(2);
+      patch.controls[index].patchValue({ balDueAmt: b1 })
+      patch.controls[index].patchValue({ applAmtNew: 0 })
+      xyz = 0;
+
+      this.CalculateBalance();
+
+      // invBalAmt=invBalAmt+LineApplAmount;
+      // var tApp=Number(this.tApplAmt)-LineApplAmount;
+      // this.tApplAmt= tApp;
+      // this.tApplAmt.toFixed(2);
+      // this.tUapplAmt =Number(this.tUapplAmt)+LineApplAmount;
+      // this.tUapplAmt.toFixed(2);
+      this.arInvoiceForm.patchValue({ selectAllflag1: '' });
+    }
+  }
+
+  glPrdValidateLine(i: any) {
+
+    alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
+    
+
+    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+    var applLineArr = this.arInvoiceForm.get('invLine').value;
+    var gld = applLineArr[i].glDateLine;
+    // alert("index :"+i + "  gl date - " +gld);
+    var tglDate = new Date(gld);
+    var sDate = new Date(this.GLPeriodCheck.startDate);
+    var tDate = new Date(this.GLPeriodCheck.endDate);
+    if (tglDate < sDate || tglDate > tDate) {
+      alert("Line :" + (i + 1) + " GL date is not valid.. should be within GL period\nGL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
+      var z = this.pipe.transform(this.now, 'y-MM-dd');
+      patch.controls[i].patchValue({ glDateLine: z })
+      patch.controls[i].patchValue({ glDate: z })
+      return;
+    }
+  }
+
+  validateSave() {
+
+   
+      var applLineArr = this.arInvoiceForm.get('invLine').value;
+      var len1 = applLineArr.length;
+
+      this.validateStatus = false;
+      this.applySaveButton = false;
+
+      // for (let i = 0; i < len1 ; i++) 
+      for (let i = len1 - 1; i >= 0; i--) {
+
+        if (this.invLineArray().controls[i].get('applyrcptFlag').value != true) {
+          this.invLineArray().removeAt(i);
+        } else { this.applySaveButton = true; }
+
+        
+      }
+    
+
+     for (let i = 0; i < applLineArr.length ; i++) {
+      this.invLineArray().controls[i].get('applyrcptFlag').disable();
+      this.CheckLineValidations(i);
+    
+     }
+
+     if(this.applLineValidation==true) {this.applySaveButton=true;} else {this.applySaveButton=false;}
+
+  }
+
+
+  CheckLineValidations(i) {
+
+    // alert('addrow index '+i);
+
+    var applLineArr = this.arInvoiceForm.get('invLine').value;
+    var lineValue1 = applLineArr[i].applAmtNew;
+    var tglDate = new Date(applLineArr[i].glDateLine);
+    var chkFlag = applLineArr[i].applyrcptFlag;
+    var j = i + 1;
+
+    if (lineValue1 === undefined || lineValue1 === null || lineValue1 <= 0) {
+      alert("Line-" + j + " APPL AMT :  Should  be grater than Zero");
+      this.applLineValidation = false;
+      return;
+    }
+
+
+    var sDate = new Date(this.GLPeriodCheck.startDate);
+    var tDate = new Date(this.GLPeriodCheck.endDate);
+    if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
+      // this.checkValidation = false;
+      alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
+      // this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+      this.applLineValidation = false;
+      return;
+    }
+
+
+    // if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
+    //   alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
+    //   this.applLineValidation = false;
+    //   return;
+    // }
+
+    this.applLineValidation = true;
+  }
+      
+
+ 
+ 
+
 }
 
 

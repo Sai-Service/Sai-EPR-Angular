@@ -1006,9 +1006,9 @@
                                        
                                         </td>
                                     
-                                        <td>
+                                        <!-- <td>
                                             <button style="width: 8em;" type="button" class="btn btn-info" (click)="AppliedDetails(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Apply&nbsp;Details</button>
-                                        </td>
+                                        </td> -->
 
                                          <!-- <td style="width: 15%" class="LabelFontStyle">
                                             Customer &nbsp;Id/Site&nbsp;:&nbsp;
@@ -1060,6 +1060,7 @@
 
                                            </tr>
                                        </tbody>
+                                       
                                        <ng-container  class="center" formArrayName="invLine">
                                         <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                                                 <!-- <tr *ngFor="let com of lstinvoices let i=index" class="ItemStyle" style="text-decoration:none;"> -->
@@ -1166,6 +1167,7 @@
                               </div>
                             </div>
                           </div>
+                          
                         </ng-template>
                         <ng-template #ShowMNo> </ng-template>
 

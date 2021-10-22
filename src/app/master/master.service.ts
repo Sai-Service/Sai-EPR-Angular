@@ -1067,6 +1067,10 @@ ItemDetailsList(invItemId, taxCat, billTo):Observable<any> {
   });
 }
 
+taxCategoryListNew(taxCategoryName,hsnTaxPer):Observable<any>{
+  return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=PURCHASE&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
+}
+
 expenceItemDetailsList(invItemId):Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst/ItemDetailsExp/${invItemId}`);
 }
@@ -2186,8 +2190,13 @@ OrderCategoryList(): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
 
-
   }
+
+  getCreditMemoSearchByInvoiceNo(custAccountNo,billToSiteId,crMemoNo): Observable<any> {
+     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/cm?creditNo=${crMemoNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
+    // http://localhost:8081/arCashReceipts/apply/cm?creditNo=12121101817&custAccountNo=1212&billToSiteId=101
+  }
+
 
   PaymentModeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');
@@ -2248,6 +2257,20 @@ bulkpouploadSales(formData: FormData) {
 
   bulkpouploadSalesNew(formData: FormData) {
     return this.http.post(this.ServerUrl + `/fileImport/uploadNewItem`, formData)
+}
+
+bulkPickTickCSVold(formData: FormData) {
+  return this.http.post(this.ServerUrl + `/fileImport/uploadCS`, formData)
+}
+
+
+bulkPickTickCSV(formData: FormData ,priceListName:string,taxCategoryName:string,subInventoryId,locationId) {
+  formData.append('priceListName', priceListName);
+  formData.append('taxCategoryName', taxCategoryName);
+  formData.append('subInventoryId', subInventoryId);
+  formData.append('locationId', locationId);
+  const REQUEST_URI = this.ServerUrl +`/fileImport/uploadCS`;
+  return this.http.post(REQUEST_URI, formData);
 }
 
   bulkpouploadSparesBajaj(formData: FormData ,location:string,invcNo:string,supplierNo:string,suppSite:string,userName:string,invcDt1) {
