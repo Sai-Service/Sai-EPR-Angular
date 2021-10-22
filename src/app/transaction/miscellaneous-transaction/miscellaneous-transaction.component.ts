@@ -287,8 +287,8 @@ export class MiscellaneousTransactionComponent implements OnInit {
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       var loca=trxLnArr1[i].LocatorSegment;
-      // alert(item1);
-      if (item1 === ''||itemqty===''||loca==='') {
+      //  alert(item1+itemqty+loca);
+      if (item1 === ''||itemqty===undefined||loca===undefined||loca===''||itemqty==='') {
         alert('Please enter Blank Data');
         return;
       }
@@ -332,10 +332,21 @@ export class MiscellaneousTransactionComponent implements OnInit {
         this.miscellaneousForm.get('compileType').disable();
         this.miscellaneousForm.get('reason').disable();
         this.miscellaneousForm.get('approvedBy').disable();
+        // this.miscellaneousForm.get('cycleLinesList').get('LocatorSegment').disable();
+
         // this.Item[i+1].nativeElement.focus();
-        // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
+        // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;`
       }
+      var cylArr = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    // alert(cylArr)/
+    // debugger;
+    // cylArr.controls[i].get('LocatorSegment').disable();
+    // cylArr.controls[0].get('physicalQty').disable();
+    // this.miscellaneousForm.get('cycleLinesList').at(0).get('physicalQty').disable()
+    this.cycleLinesList().controls[len-1].get('physicalQty').disable();
+    this.cycleLinesList().controls[len-1].get('LocatorSegment').disable();
     }
+
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
@@ -685,10 +696,13 @@ filterRecord( event,i)
       return;
     }
 // alert(event);
+var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+// trxLnArr1.controls[i].get('LocatorSegment').disable();
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if(select1!=undefined){
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+    // var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    // var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
     trxLnArr1.controls[i].patchValue({ invItemId: select1.itemId })
     var compId = this.miscellaneousForm.get('compileId').value;
     var compileType1 = this.miscellaneousForm.get('compileType').value;
@@ -708,7 +722,8 @@ filterRecord( event,i)
           // trxLnArr1.controls[i].patchValue({entryStatusCode:2});
           trxLnArr1.controls[i].patchValue({ subInventory: subcode })
           trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
-
+          this.cycleLinesList().controls[i].get('LocatorSegment').enable();
+          this.cycleLinesList().controls[i].get('physicalQty').enable();
 
         }
       });

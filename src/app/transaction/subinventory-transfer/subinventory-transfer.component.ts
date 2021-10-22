@@ -188,9 +188,24 @@ lastkeydown1: number = 0;
          lineNumber: len,
        }
      );
+     var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+     var locId=trxLnArr[i].locatorId;
+     var tolocator=trxLnArr[i].transferLocatorId;
+     var tosub=this.SubinventoryTransferForm.get('transferSubInv').value;
+     var subcode=this.SubinventoryTransferForm.get('subInventoryCode').value;
 
       // this.displayaddButton=false;
-
+      if(subcode===tosub){
+        // alert('In If')
+        if(locId===tolocator)
+        {
+          // alert('In 2IF');
+          alert('Please select correct locator');
+          trxLnArr1.controls[i].patchValue({LocatorSegment: ''});
+        }
+      }
+      this.trfLinesList().controls[len-1].get('physicalQty').disable();
+      this.trfLinesList().controls[len-1].get('LocatorSegment').disable();
    }
 
    removetrfLinesList(trfLineIndex){
@@ -388,6 +403,8 @@ lastkeydown1: number = 0;
           trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description});
           trxLnArr1.controls[i].patchValue({uom:this.getItemDetail.uom});
           trxLnArr1.controls[i].patchValue({locId:Number(sessionStorage.getItem('locId'))})
+          this.trfLinesList().controls[i].get('physicalQty').disable();
+          this.trfLinesList().controls[i].get('LocatorSegment').disable();
         }
       } );
 
