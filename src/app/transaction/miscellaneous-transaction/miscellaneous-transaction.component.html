@@ -9,7 +9,7 @@
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">Stock Adjustment&nbsp;&nbsp;Number&nbsp;:</td>
                 <td>
-                    <input type="text"  class="form-control" formControlName="compNo" id="compNo" name="compNo" >
+                    <input type="text"  class="form-control" formControlName="compNo" [(ngModel)]="compNo" name="compNo" >
                 </td>
                 <td colspan="8" style="text-align: left; width: 100%;">
                     <!-- <button type="submit" class="btn btn-primary" (click)="search(compNo)" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-search"></i></button> -->
@@ -147,7 +147,7 @@
       </tr>
       <tr>
           <td style="width: 15%" class="LabelFontStyle">
-              Description:
+              Remark:
             </td>
             <td>
               <input type="text" class="form-control" formControlName="description"[(ngModel)]="description">

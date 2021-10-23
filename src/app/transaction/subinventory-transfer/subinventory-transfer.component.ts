@@ -597,10 +597,10 @@ lastkeydown1: number = 0;
               let avlqty1=0;
               avlqty1= onHand-reserve;
               if(subcode===tosub){
-                alert('In If')
+                // alert('In If')
                 if(locId===tolocator)
                 {
-                  alert('In 2IF');
+                  // alert('In 2IF');
                   alert('Please select correct locator');
                   trxLnArr1.controls[i].patchValue({LocatorSegment: ''});
                 }
@@ -748,7 +748,7 @@ validate(i:number,qty1)
   }
   if(uomCode==='NO')
   {
-    alert(Number.isInteger(qty)+'Status');
+    // alert(Number.isInteger(qty)+'Status');
     if(!(Number.isInteger(qty)))
     {
     alert('Please enter correct No');
