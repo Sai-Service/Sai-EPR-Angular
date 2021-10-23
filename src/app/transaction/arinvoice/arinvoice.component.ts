@@ -1844,6 +1844,83 @@ export class ARInvoiceComponent implements OnInit {
 
     this.applLineValidation = true;
   }
+
+  transeData1(val) {
+    delete val.divisionId;
+    delete val.division;
+    delete val.ouId;
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.ouName;
+    delete val.locName;
+    return val;
+  }
+
+
+  SaveApplyCreditMemo() {
+    // alert ("Posting data  to AR RECEIPT appl......")
+
+    var patch = this.arInvoiceForm.get('invLine') as FormArray;
+    var applLineArr = this.arInvoiceForm.get('invLine').value;
+
+    this.applLineValidation = false;
+    var len1 = applLineArr.length;
+   
+    for (let i = 0; i < len1; i++) {
+        this.CheckLineValidations(i);
+       }
+
+    if (this.applLineValidation === false) {
+      alert("Apply Validation Failed... \nPosting not done....")
+      return;
+    } else {alert("Data Validation Successful... ..") }
+    // this.CalculateRcptBalances();
+    this.applySaveButton = false;
+   
+
+    const formValue: IArInvoice = this.transeData1(this.arInvoiceForm.value);
+
+
+    let variants = <FormArray>this.invLineArray();
+    var crnNumber = this.arInvoiceForm.get('trxNumber').value;
+    var crnDate = this.arInvoiceForm.get('invoiceDate').value;
+    var customerId = this.arInvoiceForm.get('customerId').value;
+    var custAccountNo = this.arInvoiceForm.get('custAccountNo').value;
+    var customerSiteId = this.arInvoiceForm.get('customerSiteId').value;
+    var custName = this.arInvoiceForm.get('custName').value;
+
+    for (let i = 0; i < this.invLineArray().length; i++) {
+      //  let variants = <FormArray>this.invLineArray();
+
+      let variantFormGroup = <FormGroup>variants.controls[i];
+      // variantFormGroup.addControl('crnNumber', new FormControl(invoiceNumber, Validators.required));
+      // variantFormGroup.addControl('crnDate', new FormControl(invoiceDate, Validators.required));
+      variantFormGroup.addControl('customerId', new FormControl(customerId, Validators.required));
+      variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
+      variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
+      variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
+      patch.controls[i].patchValue({ applAmt: applLineArr[i].applAmtNew });
+      patch.controls[i].patchValue({ glDate: applLineArr[i].glDateLine });
+      // patch.controls[i].patchValue({trxDate: this.pipe.transform(applLineArr[i].trxDate,'y-MM-dd')});
+
+    }
+
+    console.log(variants.value);
+
+    this.service.CreditMemmoApplySubmit(variants.value, crnNumber).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFUILY');
+
+        this.arInvoiceForm.disable();
+
+      } else {
+        if (res.code === 400) {
+          alert('Error While Saving Record:-' + res.obj);
+
+        }
+      }
+    });
+  }
       
 
  

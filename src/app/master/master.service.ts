@@ -778,6 +778,9 @@ getsupplierMastSearch(): Observable<any> {
 getsearchBySuppCode(suppNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/supp/bycode/${suppNo}`);
 }
+supplierType(): Observable<any> {
+  return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppType`);
+}
 
 public SupliMasterSubmit(SupliMasterRecord) {
   const options = {
@@ -1847,6 +1850,18 @@ getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 
+ 
+
+printRTVdocument(mRtnNumber){
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/printRTV/${mRtnNumber}`;   
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
+
  getsearchByReceiptNo1(segment1,mLocId): Observable<any> {
   // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
@@ -2196,6 +2211,20 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/arCashReceipts/apply/cm?creditNo=${crMemoNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
     // http://localhost:8081/arCashReceipts/apply/cm?creditNo=12121101817&custAccountNo=1212&billToSiteId=101
   }
+
+  
+  ////////////////////////// CREDIT MEMO APPLICATION /////////////////////
+  public CreditMemmoApplySubmit(creditMemoApplyRecord,mCrmNo) {
+    alert ("MS >> "+mCrmNo);
+    const options = {
+      headers: this.headers
+    };
+    const url =(this.ServerUrl +`/arInv/apply/inv/${mCrmNo}`);
+    return this.http.post(url, creditMemoApplyRecord, options);
+
+    // http://localhost:8081/arInv/apply/inv/12121101820
+  }
+  ////////////////////////// ///////////////////////////////////////
 
 
   PaymentModeList(): Observable<any> {
@@ -2767,11 +2796,22 @@ getCostDetail(locId,ItemId):Observable<any>
 }
 
 
+
+
+getonhandqtySubinvLoc(locId,subId,Itemid):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv2?locId=${locId}&itemId=${Itemid}&subInventoryId=${subId}`)
+// http://localhost:8081/onhandqty/onhandlocsubinv2?locId=121&itemId=544&subInventoryId=42
+
+}
+
 getonhandqty(locId,subId,locatorId,Itemid):Observable<any>
 {
   // alert ("Locator Id :" +locatorId);
   return this.http.get(this.ServerUrl+`/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
 }
+
+
 // getonhandqty(locatorId):Observable<any>
 // {
 //   return this.http.get(this.ServerUrl+`/onhandqty/locator?id=${locatorId}`)

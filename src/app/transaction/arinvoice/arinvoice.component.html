@@ -1173,7 +1173,7 @@
                                         <!-- <th style="width:3rem;text-align: center;" scope="col"><button style="width: 8em;" type="button" class="btn btn-info" (click)="applyReceiptFlagAll101()">Select All</button></th> -->
                                         <!-- <button style="width: 8em;" type="button" class="btn btn-info" (click)="AppliedDetails(custAccountNo,billToSiteId,applyTo,receiptNumber)"  >Apply&nbsp;Details</button> -->
                                     
-                                        <th style="width:6rem" scope="col">Application Type</th>
+                                        <th style="width:6rem" scope="col">Type</th>
                                         <th style="width:6rem" scope="col">Invoice No</th>
                                         <th style="width:6rem" scope="col">Invoice Date</th>
                                         <th style="width:10rem" scope="col">Invoice Amt</th>
@@ -1198,15 +1198,15 @@
                                                 <td><input style="width: 140px;height: 25px;" type="text"             disabled formControlName="trxNumber" class="form-control"></td>
                                                 <td><input style="width: 130px;height: 25px;text-align: center;"       disabled type="text" formControlName="trxDate" class="form-control"></td>   
                                                 <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
-                                                <td><input style="width: 95px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
+                                                <td><input style="width: 120px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
                                                 
-                                                <td><input style="width: 95px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
+                                                <td><input style="width: 120px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
                                                 <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
                                                 <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
                                                
                                                 <td><input disabled style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew"  class="form-control" placeholder="" (change)="validateLineApplAmt(k)" > </td>
                                                 
-                                                <td><input style="width: 98px;height: 25px;text-align: right;"     disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
+                                                <td><input style="width: 120px;height: 25px;text-align: right;"     disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" >
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" >
                                                 <input style="width: 100px;height: 25px;text-align: right;"   hidden disabled   type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" >
@@ -1234,10 +1234,10 @@
                                   
                                   <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo")></div>
                                   <ng-template #appSaveYes>
-                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                      <button style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApplyCreditMemo()">Save</button>
                                   </ng-template>
                                   <ng-template #appSaveNo>
-                                      <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApply(applyTo)">Save</button>
+                                      <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="SaveApplyCreditMemo()">Save</button>
                                   </ng-template>
                                 
                                 <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>

@@ -140,7 +140,7 @@ export class ReturnToVendorComponent implements OnInit {
       rtnFromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       rtnToDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       // remarks:string;
-      remarks="52121101142";
+      remarks="52121101175";
                
       returnTo='Supplier'
 
@@ -559,6 +559,7 @@ export class ReturnToVendorComponent implements OnInit {
                 { this.rtnDocNo=this.lstReceiptHeader.receiptNo;
                   this.headerFound=false;
                   this.returnReceipt=true;
+                  this.displayButton=false;
                   this.returntoVendorForm.disable();
 
                 }
@@ -651,8 +652,11 @@ export class ReturnToVendorComponent implements OnInit {
               var patch = this.returntoVendorForm.get('rcvLines') as FormArray;
               var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
               // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
-              this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
-                .subscribe(
+
+              // this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
+               // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
+               this.service.getonhandqtySubinvLoc(this.locId,subinvId,mItemId)
+               .subscribe(
                 data => {
                   // this.ItemLocatorList = data;
                   // console.log(this.ItemLocatorList);
@@ -660,9 +664,10 @@ export class ReturnToVendorComponent implements OnInit {
                   // alert("Available Qty :" +avlQty)
                   // patch.controls[index].patchValue({qtyOnHand:avlQty})
 
-                  this.ItemLocatorList = data.obj;
+                  this.ItemLocatorList = data;
                   console.log(this.ItemLocatorList);
-                  var avlQty=this.ItemLocatorList;
+                  var avlQty=this.ItemLocatorList[0].onHandQty
+                  // var avlQty=this.ItemLocatorList;
                   patch.controls[index].patchValue({qtyOnHand:avlQty})
 
 
@@ -784,17 +789,15 @@ export class ReturnToVendorComponent implements OnInit {
       var mItemId =rtvLineArr[index].invItemId;
       var subinvId =rtvLineArr[index].subInventoryId;
       var mLocatorId=rtvLineArr[index].locatorId;
-      // mLocatorId=101;
-      // alert ("Item Id :" +mItemId  + " Index : "+ index + " Repeat Status :" +this.lineItemRepeated);
-      
+     
        if(mItemId >0) {
-       this.CheckForitemRepeat(mItemId,index)
-       if(this.lineItemRepeated) { 
-        //  alert ("Item already in the List...."); 
-        this.lineDetailsArray.removeAt(index);
-        this.CalculateTotal();
-         return;
-        }
+
+      //  this.CheckForitemRepeat(mItemId,index)
+      //  if(this.lineItemRepeated) { 
+      //   this.lineDetailsArray.removeAt(index);
+      //   this.CalculateTotal();
+      //    return;
+      //   }
 
 
       if ( e.target.checked) {
@@ -803,15 +806,16 @@ export class ReturnToVendorComponent implements OnInit {
         var len1=rtvLineArr.length;
 
         // this.service.getfrmSubLoc(this.locId,mItemId,subinvId)
-          this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
+          // this.service.getonhandqty(this.locId,subinvId,mLocatorId,mItemId)
+          this.service.getonhandqtySubinvLoc(this.locId,subinvId,mItemId)
           .subscribe(
           data => {
             // this.ItemLocatorList = data;
-            this.ItemLocatorList = data.obj;
+            this.ItemLocatorList = data;
             console.log(this.ItemLocatorList);
 
-            // var avlQty=this.ItemLocatorList[0].onHandQty
-            var avlQty=this.ItemLocatorList;
+            var avlQty=this.ItemLocatorList[0].onHandQty
+            // var avlQty=this.ItemLocatorList;
             // alert ("Onhand Quantity Available in Locator :" +mLocatorId+" - Avaialable Qty : " +avlQty);
             patch.controls[index].patchValue({qtyOnHand:avlQty})
 
@@ -1080,6 +1084,55 @@ export class ReturnToVendorComponent implements OnInit {
       
       var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
       var len1 = rtvLineArr.length;
+      var lrm=0;
+      for (let i = len1 - 1; i >= 0; i--) {
+        if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
+          this.lineDetailsArray.removeAt(i);
+          lrm=lrm+1;
+      
+        } }
+
+    
+      for (let i = 0; i < len1; i++) {
+                 
+        if (rtvLineArr[i].selectFlag === true) {
+          this.CheckLineValidations(i);
+        }
+
+      }
+     
+            if (this.lineValidation) {
+              for (let i = 0; i < len1; i++) {
+                this.lineDetailsArray.controls[i].get('selectFlag').disable();
+               }
+                  
+                  this.saveButton = true;
+                  this.showQtyRtncol=false;
+                  this.validateStatus=false;
+                  if (lrm===len1) { this.resetMast();} 
+                  else {
+                     this.saveButton = true; 
+                     this.validateStatus=false;
+                     this.showQtyRtncol=false;
+                    }
+                
+                 
+                }   else  {
+                  alert ("Data validation Failed . Please check Line Item Number/Return Qty");
+                   this.saveButton = false;
+                 }
+                   this.CalculateTotal();
+        }
+  
+
+    validateSave1() 
+    {
+
+      
+      var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
+      var len1 = rtvLineArr.length;
+
+      
     
       for (let i = 0; i < len1; i++) {
                  
@@ -1098,6 +1151,8 @@ export class ReturnToVendorComponent implements OnInit {
                     lrm=lrm+1;
                 
                   } 
+
+                 
                   
                   this.saveButton = true;
                   this.showQtyRtncol=false;
@@ -1232,6 +1287,22 @@ export class ReturnToVendorComponent implements OnInit {
     
           }
 
+    }
+
+    
+
+    printDoc(){
+      var mRtnRcptNumber=this.returntoVendorForm.get('rtnDocNo').value
+      const fileName = 'download.pdf';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.service.printRTVdocument(mRtnRcptNumber)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+          
+        });
     }
     
 
