@@ -28,7 +28,7 @@ export class PoUploadListComponent implements OnInit {
   startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   minDate = new Date();
   endDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
-
+  isPending : Array<boolean> = [];
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
@@ -50,29 +50,33 @@ export class PoUploadListComponent implements OnInit {
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
 
     // this.service.pendingPOList(Number(sessionStorage.getItem('emplId'))).subscribe((res: any) => {
-    this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
-      if (res.code === 200) {
-        this.poDetails = res.obj;
-        for (let i = 0; i < res.obj.length; i++) {
-          //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
-          var poDt = this.poDetails[i].poDate;
-          this.poDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
-          if (this.poDetails[i].rcvLines.length > 0) {
-            var recDt = this.poDetails[i].receiptDate;
-            this.poDetails[i].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
-          }else{
-            this.poDetails[i].rcvLines[0].receiptNo = "Pending";
+      this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.poDetails = res.obj;
+          for (let i = 0; i < res.obj.length; i++) {
+            //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
+            var poDt = this.poDetails[i].poDate;
+            var supInvDt = this.poDetails[i].suppInvDate;
+            this.poDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
+            this.poDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
+            if (this.poDetails[i].rcvLines.length > 0) {
+              var recDt = this.poDetails[i].rcvLines[0].receiptDate;
+              this.poDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
+              this.isPending[i] = false;
+            }else{
+                this.poDetails[i].rcvLines.push({receiptNo : "Pending"});
+                this.isPending[i] = true;
+            }
+  
           }
-
+          console.log(this.poDetails);
         }
-        console.log(this.poDetails);
-      }
-      else {
-        if (res.code === 400) {
-          alert(res.message);
+        else {
+          if (res.code === 400) {
+            alert(res.message);
+          }
         }
-      }
-    })
+      })
   }
 
 
@@ -87,10 +91,31 @@ export class PoUploadListComponent implements OnInit {
 
     this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
+<<<<<<< HEAD
           this.poDetails = res.obj;
         // for (let i = 0; i < res.obj; i++) {
         //   this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
         // }
+=======
+        this.poDetails = res.obj;
+        for (let i = 0; i < res.obj.length; i++) {
+          //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
+          var poDt = this.poDetails[i].poDate;
+          var supInvDt = this.poDetails[i].suppInvDate;
+          this.poDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
+          this.poDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
+          if (this.poDetails[i].rcvLines.length > 0) {
+            var recDt = this.poDetails[i].rcvLines[0].receiptDate;
+            this.poDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
+            this.isPending[i] = false;
+          }else{
+              this.poDetails[i].rcvLines.push({receiptNo : "Pending"});
+              this.isPending[i] = true;
+          }
+
+        }
+        console.log(this.poDetails);
+>>>>>>> 3e1b70e67e91720d2a2838b1bf7a708b5aee0e71
       }
       else {
         if (res.code === 400) {

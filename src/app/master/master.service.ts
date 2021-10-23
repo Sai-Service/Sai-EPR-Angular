@@ -785,6 +785,9 @@ getsupplierMastSearch(): Observable<any> {
 getsearchBySuppCode(suppNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/supp/bycode/${suppNo}`);
 }
+taxCategoryListSupp(locId,state):Observable<any>{
+  return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgNameSupp?locId=${locId}&custState=${state}`)
+}
 supplierType(): Observable<any> {
   return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppType`);
 }
@@ -1857,10 +1860,10 @@ getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 
- 
+
 
 printRTVdocument(mRtnNumber){
-  const REQUEST_URI = this.ServerUrl +`/rcvShipment/printRTV/${mRtnNumber}`;   
+  const REQUEST_URI = this.ServerUrl +`/rcvShipment/printRTV/${mRtnNumber}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -2219,7 +2222,7 @@ OrderCategoryList(): Observable<any> {
     // http://localhost:8081/arCashReceipts/apply/cm?creditNo=12121101817&custAccountNo=1212&billToSiteId=101
   }
 
-  
+
   ////////////////////////// CREDIT MEMO APPLICATION /////////////////////
   public CreditMemmoApplySubmit(creditMemoApplyRecord,mCrmNo) {
     alert ("MS >> "+mCrmNo);
@@ -2286,7 +2289,7 @@ bulkpouploadSales(formData: FormData) {
   pendingPOList(emplId) {
     return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
   }
-  
+
   getPOByUser(emplId, startDt, endDt){
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
   }
@@ -3035,12 +3038,31 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     toAcctLst(mLocId): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
       // http://localhost:8081/AccountTrf/toAcctList/124
-}
-   ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
+    }
 
-   getShipmentList(locId,deptId,divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
-}
+    bnkHeaderList(mLocId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/BankTrfHeader`);
+      // http://localhost:8081/cmnLookup/CmnType/BankTrfHeader
+    }
+
+
+      getFromAcList(trfType): Observable<any> {
+         return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
+        //  http://localhost:8081/AccountTrf/AcctList/CT
+       }
+
+      getPayRecAccountCode(methodId,ouId,divId,locId): Observable<any> {
+         return this.http.get(this.ServerUrl+`/AccountTrf/AcctCodeList/?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
+        //  http://localhost:8081/AccountTrf/AcctCodeList/?receiptMethodId=41&ouId=110&divisionId=2&locId=121
+
+      }
+
+    
+    ////////////////////////// Pending Shipment Lis///////////
+
+    getShipmentList(locId,deptId,divisionId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
+    }
 
 
 }

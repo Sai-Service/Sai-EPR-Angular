@@ -546,4 +546,14 @@ public rtnCntrOrderSaveSubmit(rtnRecord) {
   return this.http.post(url, rtnRecord, options);
 }
 
+printCSRtndocument(mRtnNumber){
+  const REQUEST_URI = this.ServerUrl +`/orderHeader/csReversalPrint/${mRtnNumber}`;  
+  // http://localhost:8081/orderHeader/csReversalPrint/12121101811 
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 }

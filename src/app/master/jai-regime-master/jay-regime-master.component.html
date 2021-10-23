@@ -61,7 +61,7 @@
 
                                     <td style="width: 15%" class="LabelFontStyle">  Regime&nbsp;Type&nbsp;:&nbsp;</td>
                                     <td>
-                                    <select formControlName="regimeType" id="regimeType" [ngModel]="regimeType" class="form-control">
+                                    <select formControlName="regimeType" id="regimeType" [(ngModel)]="regimeType" class="form-control">
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of regimeTypeList" [ngValue] ="sc.codeDesc">
                                                 {{sc.codeDesc}}
@@ -111,7 +111,7 @@
 
                                     <td>
                                         <select formControlName="status" id="status" class="form-control"  
-                                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                        [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
                                             {{sc.code}}
