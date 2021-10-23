@@ -1166,6 +1166,7 @@ var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
     )
   }
   search(compNo) {
+    alert(compNo);
     if (compNo != undefined) {
     this.currentOp = 'SEARCH';
     var compno = this.miscellaneousForm.get('compNo').value;
