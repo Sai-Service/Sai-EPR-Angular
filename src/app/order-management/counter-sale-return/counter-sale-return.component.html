@@ -337,6 +337,10 @@
                         <!-- ===================================Buttons======================================== -->
                         <table class="center">
                            <tr>
+                            <!-- <td>
+                                <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!counterSaleReturnOrderForm">Print</button>
+                            </td> -->
+
                                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                                <ng-template #thenBlock1>
                                    <td>

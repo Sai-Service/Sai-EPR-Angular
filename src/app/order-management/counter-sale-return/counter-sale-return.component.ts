@@ -697,9 +697,62 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
       }
 
 
-
-
       validateSave() 
+      {
+  
+        
+        this.emplId= Number(sessionStorage.getItem('emplId'));
+        var rtvLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
+        var len1 = rtvLineArr.length;
+
+
+        var lrm=0;
+        for (let i = len1 - 1; i >= 0; i--) {
+          if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
+            this.lineDetailsArray.removeAt(i);
+            lrm=lrm+1;
+        
+          } }
+  
+        var len2 = rtvLineArr.length;
+        for (let i = 0; i < len2; i++) {
+                   
+          if (rtvLineArr[i].selectFlag === true) {
+            this.CheckLineValidations(i);
+          }
+        
+  
+        }
+          
+        // alert("this.lineValidation :"+this.lineValidation);
+              if (this.lineValidation) {
+
+                for (let i = 0; i < len2; i++) {
+                  this.lineDetailsArray.controls[i].get('selectFlag').disable();
+                 }
+                    
+                    this.saveButton = true;
+                    this.showQtyRtncol=false;
+                    this.validateStatus=false;
+                    if (lrm===len1) { this.resetMast();} 
+                    else {
+                       this.saveButton = true; 
+                       this.validateStatus=false;
+                       this.showQtyRtncol=false;
+                      }
+                  
+                   
+                  }   else  {
+                    alert ("Data validation Failed . Please check Line Item Number/Return Qty");
+                     this.saveButton = false;
+                   }
+                     this.CalculateTotal();
+          }
+
+
+
+
+      validateSave1() 
       {
         this.emplId= Number(sessionStorage.getItem('emplId'));
         var rtvLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
@@ -744,6 +797,9 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
               }
                 this.CalculateTotal();
         }
+
+
+
 
 
         CheckLineValidations(i) {
@@ -809,5 +865,21 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
         delete val.orgId;
         return val;
       }
+
+      
+    printDoc(){
+      var mRtnOrderNumber=this.counterSaleReturnOrderForm.get('rtnDocNo').value
+      
+      const fileName = 'download.pdf';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.orderManagementService.printCSRtndocument(mRtnOrderNumber)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+          
+        });
+    }
 
 }

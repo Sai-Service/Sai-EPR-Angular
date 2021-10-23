@@ -22,15 +22,18 @@ export class CashBankTransferComponent implements OnInit {
 
       pipe = new DatePipe('en-US');
       now = Date.now();
-      public OUIdList           : Array<string> = [];
-      public TransferTypeList    : Array<string> = [];
+      public OUIdList            : Array<string> = [];
+      // public TransferTypeList    : Array<string> = [];
       public PeriodList          : Array<string> = [];
-      public fromAcctList          : Array<string> = [];
+      public fromAcctList        : Array<string> = [];
       public toAcctList          : Array<string> = [];
-      
-      
-      
-    
+      public bnkHeaderList       : Array<string> = [];
+      public statusList          : Array<string> = [];
+          
+      TransferTypeList:any;
+      payAccountCode :any;
+      recAccountCode :any;
+
       lstcomments: any;
 
       loginName:string;
@@ -49,19 +52,26 @@ export class CashBankTransferComponent implements OnInit {
       period:number;
       openPeriod:string;
       docTrfNo:string;
-      transferCode:string;
+      transferCode:number;
       transferDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       clearingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       reversalPeriod:string;
+      reversalStatus='NO';
       status:string;
 
       fromAcctDescp:string;
       toAcctDescp:string;
       transferAmt:number;
       amtInWords:string;
+
       recAcCode:string;
       payAcCode:string;
+      recAcCodeId:number;
+      payAcCodeId:number;
+
+      bnkHeader:number;
+      narration:string;
   
       searchDocNo:string;
 
@@ -97,6 +107,7 @@ export class CashBankTransferComponent implements OnInit {
           reversalDate:[],
           clearingDate:[],
           reversalPeriod:[],
+          reversalStatus:[],
           fromAcctDescp:[],
           toAcctDescp:[],
           status:[],
@@ -106,12 +117,14 @@ export class CashBankTransferComponent implements OnInit {
           recAcCode:[],
           payAcCode:[],
 
+          recAcCodeId:[],
+          payAcCodeId:[],
+
+          bnkHeader:[],
+          narration:[],
+
           searchDocNo:[],
       
-
-
-        
-
         });
       }
 
@@ -156,27 +169,39 @@ export class CashBankTransferComponent implements OnInit {
             }
           );
 
-          this.service.fromAcctLst(this.locId)
+          // this.service.fromAcctLst(this.locId)
+          // .subscribe(
+          //   data => {
+          //     this.fromAcctList = data;
+          //     console.log(this.fromAcctList);
+          //   }
+          // );
+
+          // this.service.toAcctLst(this.locId)
+          // .subscribe(
+          //   data => {
+          //     this.toAcctList = data;
+          //     console.log(this.toAcctList);
+          //   }
+          // );
+
+
+          this.service.bnkHeaderList(this.locId)
           .subscribe(
             data => {
-              this.fromAcctList = data;
-              console.log(this.fromAcctList);
+              this.bnkHeaderList = data;
+              console.log(this.bnkHeaderList);
             }
           );
 
-          this.service.toAcctLst(this.locId)
+          this.service.statusList()
           .subscribe(
             data => {
-              this.toAcctList = data;
-              console.log(this.toAcctList);
+              this.statusList = data;
+              console.log(this.statusList);
             }
           );
-
-
-
-          
-          
-          
+       
 
         }
 
@@ -193,10 +218,65 @@ export class CashBankTransferComponent implements OnInit {
         cashBnkTrfCopy(){alert("Cash Bank Transfer ....Copy ...Wip");}
         cashBnkTrfReversal(){alert("Cash Bank Transfer ....Reversal ...Wip");}
         searchMast(){}
-
         SearchByDocNo(mDocNo){alert("Search By Document Number .... ...Wip " +mDocNo);}
 
       
+        onSelectionTrfcode(mEvent :number) {
+         let selectedValue = this.TransferTypeList.find(v => v.lookupValueId == mEvent);
+          if( selectedValue != undefined){
+            console.log(selectedValue);
+            var lookupValue1=selectedValue.lookupValue;
+            this.fromAcctDescp=lookupValue1;
+          
+           
+           this.service.getFromAcList(lookupValue1)
+           .subscribe(
+             data => {
+               this.fromAcctList = data.obj.frmAcList;
+               this.toAcctList = data.obj.toAcList;
+                console.log(this.fromAcctList);
+                console.log(this.toAcctList);
+             });
+            }
+          }
+
+
+
+        
+          onSelectionFromAc(methodId :number) { 
+            if (methodId>0) {
+            //  alert ("From ac:"+methodId);
+
+             this.service.getPayRecAccountCode(methodId,this.ouId,this.divisionId,this.locId)
+             .subscribe(
+               data => {
+                 this.payAccountCode = data.obj;
+                 console.log(this.payAccountCode);
+
+                 this.payAcCode =this.payAccountCode.name;
+                 
+               });
+
+              }
+          }
+
+          onSelectionToAc(methodId :number) { 
+            
+            if (methodId>0) {
+              // alert ("To ac:"+methodId);
+               this.service.getPayRecAccountCode(methodId,this.ouId,this.divisionId,this.locId)
+               .subscribe(
+                 data => {
+                   this.recAccountCode = data.obj;
+                   console.log(this.recAccountCode);
+                   this.recAcCode =this.recAccountCode.name;
+                 });
+  
+                }
+
+          }
+         
+
+          
 
 }
-
