@@ -549,7 +549,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     else if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.displayDMSCDMS = false;
       this.showApplyDiscount = true;
-      this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Pick Ticket'})
+      this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Pick Ticket'});
+      this.CounterSaleOrderBookingForm.patchValue({transactionTypeName:'Spares Sale - Credit'});
     }
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
     this.CounterSaleOrderBookingForm.patchValue({ disAmt: 0 })
@@ -1984,7 +1985,6 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       });
     }
     else {
-      // alert('Hi');
       this.poLineTax = i;
       var invLine = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
       var arrayControltaxAmounts = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
