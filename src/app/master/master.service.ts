@@ -3028,12 +3028,31 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
     toAcctLst(mLocId): Observable<any> {
       return this.http.get(this.ServerUrl+`/AccountTrf/toAcctList/${mLocId}`);
       // http://localhost:8081/AccountTrf/toAcctList/124
-}
-   ///////////////////////////////////////////// Pending Shipment Lis//////////////////////
+    }
 
-   getShipmentList(locId,deptId,divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
-}
+    bnkHeaderList(mLocId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/BankTrfHeader`);
+      // http://localhost:8081/cmnLookup/CmnType/BankTrfHeader
+    }
+
+
+      getFromAcList(trfType): Observable<any> {
+         return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
+        //  http://localhost:8081/AccountTrf/AcctList/CT
+       }
+
+      getPayRecAccountCode(methodId,ouId,divId,locId): Observable<any> {
+         return this.http.get(this.ServerUrl+`/AccountTrf/AcctCodeList/?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
+        //  http://localhost:8081/AccountTrf/AcctCodeList/?receiptMethodId=41&ouId=110&divisionId=2&locId=121
+
+      }
+
+    
+    ////////////////////////// Pending Shipment Lis///////////
+
+    getShipmentList(locId,deptId,divisionId): Observable<any> {
+      return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
+    }
 
 
 }
