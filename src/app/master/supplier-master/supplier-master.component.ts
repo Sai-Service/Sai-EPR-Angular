@@ -152,11 +152,10 @@ export class SupplierMasterComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
       suppId: [],
-      suppno:[],
+      suppno:[''],
       suppNo: ['', [Validators.maxLength(10), Validators.minLength(3), Validators.pattern('[0-9]*')]],
-      name: ['', [ Validators.required, Validators.maxLength(150)], Validators.pattern('[a-zA-Z ]*')],
-      // address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z 0-9/-]*')]],
-      address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
+      name: ['', [ Validators.required, Validators.maxLength(150), Validators.pattern('[a-zA-Z ]*')]],
+     address1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address2: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       address3: ['',[Validators.maxLength(50)]],
       address4: ['',[Validators.maxLength(50)]],
@@ -164,16 +163,10 @@ export class SupplierMasterComponent implements OnInit {
       contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      // emailId: ['', [Validators.required, Validators.email]],
-      //emailId: [''],
-      //contactPerson: [''],
       contactPerson: ['',[Validators.required,Validators.pattern('[a-zA-Z /-]*')]],
-      //taxCategoryName: ['', Validators.required],
       taxCategoryName: [''],
-      //  ticketNo: ['', Validators.required],
       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
-      // creditLimit:[],
       remarks: [''],
       emailId: ['', [Validators.email]],
       state: ['', [Validators.required]],
@@ -188,22 +181,6 @@ export class SupplierMasterComponent implements OnInit {
       compId:[],
       type:[],
       locId:[],
-      // Duplicate Fields Comments start
-      // contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
-      // // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
-      // // ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      // mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength,Validators.maxLength(10)]],
-      // mobile2: ['',[Validators.pattern('[0-9]*'), Validators.minLength,Validators.minLength(10),Validators.maxLength(10)]],
-      // emailId: ['',[Validators.email]],
-
-      // taxCategoryName: [],
-      //  creditDays: ['',[Validators.required,Validators.pattern('[0-9]*')]],
-      // creditLimit: ['',[Validators.required,Validators.pattern('[0-9]*')]],
-      // remarks:[],
-      // state: ['',[Validators.required]],
-      // gstNo:['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
-      // panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"), Validators.maxLength(10)]],
-      // tanNo: [], --End
       ouId:['',[Validators.required]],
       ExeAddress: [],
       saddress1: ['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -522,6 +499,15 @@ alert(suppSiteId);
           this.lstcomments = data;
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
+          this.supplierMasterForm.patchValue({
+            panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
+            gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
+            taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
+            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
+            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
+            disPer:this.lstcomments.customerSiteMasterList[0].disPer,
+            location:this.lstcomments.customerSiteMasterList[0].location,
+          });
           this.city = this.lstcomments.city
           this.displayInactive = true;
         }
@@ -707,4 +693,3 @@ alert(suppSiteId);
           }
 
         }
-
