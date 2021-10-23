@@ -825,7 +825,6 @@ export class CounterSaleComponent implements OnInit {
               for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
                 if (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
                   this.displayLineflowStatusCode[i] = false;
-                  // this.PaymentButton = false;
                   this.displayRemoveRow[i] = false;
                 }
                 else if

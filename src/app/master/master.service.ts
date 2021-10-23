@@ -19,6 +19,13 @@ export class MasterService {
     this.ServerUrl = AppConstants.ServerUrl;
    }
 
+  //  public  getCurrentDate(): Date {
+  //   var res  : any = this.http.get('http://worldtimeapi.org/api/timezone/Asia/Kolkata');
+  //   var cDate=res.datetime.substr(0,res.datetime.indexOf('T'));
+  //   return new Date(cDate);
+  // }
+
+
    ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
