@@ -15,63 +15,76 @@
                 </div>
             </div>
         </div>
-        
+
         <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <tr>
-              <td >
-                  <table class="center">
-                      <tr>
-           
-                <td>From&nbsp;Date&nbsp;</td>&nbsp;
                 <td>
-                    <input type="date" class="form-control" formControlName="startDt"
-                        max="{{minDate | date:'yyyy-MM-dd'}}">
-                </td>
+                    <table class="center">
+                        <tr>
 
-                <td>To&nbsp;Date&nbsp;</td>&nbsp;
-                <td>
-                    <input type="date" class="form-control" formControlName="endDt"
-                        max="{{minDate | date:'yyyy-MM-dd'}}">
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary" id="search" (click)="getPO()">
-                        Get&nbsp;PO&nbsp;List
-                    </button>
+                            <td>From&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control" formControlName="startDt" 
+                                value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control" formControlName="endDt" 
+                                value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="search" (click)="getPO()">
+                                    Get&nbsp;PO&nbsp;List
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
-        </td></tr></table>
-   
-    <br>
+
+        <br>
         <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
             id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
             <tr class="GridHeader" style="font-size: 14px;">
-                <th scope="col">PO Number</th>
-                <th scope="col">PO Date</th>
-                <th scope="col">Supp Invoice</th>
-                <th scope="col">Supp Inv Date</th>
-                <th scope="col">Receipt Number</th>
-                <th scope="col">Receipt Date</th>
-                <th scope="col">Base Amount</th>
-                <th scope="col">Total Tax Amount</th>
-                <th scope="col">Total Amount</th>
-                <th scope="col">PO Status</th>
+                <th >PO No.</th>
+                <th >PO Date</th>
+                <th >Supp Invoice No.</th>
+                <th >Supp Inv Date</th>
+                <th >GRR No.</th>
+                <th >GRR Date</th>
+                <th >Base Amt</th>
+                <th >Tax Amt</th>
+                <th >Total Amt</th>
+                <th>PO Status</th>
 
             </tr>
-            <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+            <tr *ngFor="let com of poDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
                 <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
                     <a [routerLink]="['/admin/master/OPMasterDto',com.segment1]"
                         href="{{segment1}}">{{com.segment1}}</a>
                 </td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.poDate}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.suppInvNo}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.suppInvDate}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.rcvLines[0].receiptNo}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.rcvLines[0].receiptDate}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: right;" >{{com.baseAmount}}&nbsp;&nbsp;</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp;</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.authorizationStatus}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.poDate}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.suppInvNo}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.suppInvDate}}</td>
+                <td *ngIf="isPending[i]" style="padding-left: 5px; text-align: center; background-color:orangered ;" >
+                    {{com.rcvLines[0].receiptNo}}
+                </td>
+                    <td *ngIf="!isPending[i]" style="padding-left: 5px; text-align: center;">
+                     {{com.rcvLines[0].receiptNo}}
+                    </td>              
+                 
+                <td style="padding-left: 5px; text-align: center;">
+                    {{com.rcvLines[0].receiptDate}}</td>
+                <td style="padding-left: 5px; text-align: right;">{{com.baseAmount}}&nbsp;&nbsp;
+                </td>
+                <td style="padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp;
+                </td>
+                <td style="padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;
+                </td>
+                <td style="padding-left: 5px; text-align: center;">{{com.authorizationStatus}}
+                </td>
 
             </tr>
         </table>
