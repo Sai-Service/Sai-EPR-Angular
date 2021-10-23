@@ -58,7 +58,7 @@
                 <th scope="col">PO Status</th>
 
             </tr>
-            <tr *ngFor="let com of poDetails" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+            <tr *ngFor="let com of poDetails let i= index"  class="ItemStyle" style="text-decoration:none;font-size: 14px;">
                 <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
                     <a [routerLink]="['/admin/master/OPMasterDto',com.segment1]"
                         href="{{segment1}}">{{com.segment1}}</a>
@@ -66,8 +66,8 @@
                 <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.poDate}}</td>
                 <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.suppInvNo}}</td>
                 <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.suppInvDate}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.rcvLines[0].receiptNo}}</td>
-                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.rcvLines[0].receiptDate}}</td>
+                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.rcvLines[i].receiptNo}}</td>
+                <td style="border: 1px solid black;padding-left: 5px; text-align: center;">{{com.rcvLines[i].receiptDate}}</td>
                 <td style="border: 1px solid black;padding-left: 5px; text-align: right;" >{{com.baseAmount}}&nbsp;&nbsp;</td>
                 <td style="border: 1px solid black;padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp;</td>
                 <td style="border: 1px solid black;padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;</td>

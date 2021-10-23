@@ -87,12 +87,10 @@ export class PoUploadListComponent implements OnInit {
 
     this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
-        this.poDetails = res.obj;
-        for (let i = 0; i < res.obj; i++) {
-          this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
-
-        }
-
+          this.poDetails = res.obj;
+        // for (let i = 0; i < res.obj; i++) {
+        //   this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
+        // }
       }
       else {
         if (res.code === 400) {
