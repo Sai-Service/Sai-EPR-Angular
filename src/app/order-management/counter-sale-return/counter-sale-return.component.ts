@@ -561,19 +561,18 @@ export class CounterSaleReturnComponent implements OnInit {
   // alert("Length :"+arrLen);
   // if (arrLen>1) {
    if(mItemId >0) {
-   this.CheckForitemRepeat(mItemId,index)
-   if(this.lineItemRepeated) { 
-    this.lineDetailsArray.removeAt(index);
-    this.CalculateTotal();
-     return;
-    } else  {
-      this.lineDetailsArray.controls[index].get('cancelledQty').enable(); }
-  }
-       
-    // } 
+      //  this.CheckForitemRepeat(mItemId,index)
+      //  if(this.lineItemRepeated) { 
+      //   this.lineDetailsArray.removeAt(index);
+      //   this.CalculateTotal();
+      //    return;
+      //   } else  {
+          this.lineDetailsArray.controls[index].get('cancelledQty').enable(); }
+        // } 
+
     else {
-    alert ( "Line :"+(index+1) + " - Select ITEM NUMBER first and click on Checkbox...");
-    patch.controls[index].patchValue({selectFlag:''})
+          alert ( "Line :"+(index+1) + " - Select ITEM NUMBER first and click on Checkbox...");
+          patch.controls[index].patchValue({selectFlag:''})
     }
   }
 
