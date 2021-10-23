@@ -212,6 +212,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   diss: number;
   InvoiceNumber: number;
   locId: number;
+  isDisabled=false;
   contactNoSearchData: any;
   othRefNoSearchFnData: any;
   taxCat1: number;
@@ -726,6 +727,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
+    this.isDisabled=true;
+    // alert(this.isDisabled)
     // alert(this.op)
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
@@ -958,7 +961,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     const formValue: IGatePass = this.CounterSaleOrderBookingForm.value;
     formValue.orderNumber = this.orderNumber;
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
-    alert(formValue.orderNumber);
+    // alert(formValue.orderNumber);
     // let formValue1=formValue.getRawValue();
     this.orderManagementService.genrateGatePass(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -1363,25 +1366,29 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   }
 
 
-  validate(index: number, qty1) {
+  validate(index: number, qty1,Avalqty) {
+    // alert('start'+'-----'+qty1);
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
-    var Avalqty = trxLnArr[index].Avalqty;
+    // var Avalqty = trxLnArr[index].Avalqty;
     let uomCode = trxLnArr[index].uom;
+    // alert(qty1+'----'+'avai'+'---'+Avalqty);
     if (qty1 > Avalqty) {
       alert("You can not enter more than available quantity!..");
       trxLnArr1.controls[index].patchValue({ pricingQty: '' });
-      // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
-
       return false;
     }
+    // else{
+      // return true;
+    // }
     if (qty1 <= 0) {
       alert("Please enter quantity more than zero");
       trxLnArr1.controls[index].patchValue({ quantity: '' });
       (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
       return false;
     }
-    // return true;
+ 
+    
     if (uomCode === 'NO') {
       // alert(Number.isInteger(qty1)+'Status');
       if (!(Number.isInteger(qty1))) {
@@ -1390,16 +1397,20 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         return;
       }
     }
+    return true;
   }
 
   onKey(index) {
-   
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    var pricingQty = arrayControl[index].pricingQty;
-    var isvalidqty = this.validate(index, pricingQty);
-    if (isvalidqty == false) {
-      return;
-    }
+    // var pricingQty = arrayControl[index].pricingQty;
+    // var isvalidqty = this.validate(index, pricingQty);
+    // if (isvalidqty == false) {
+    //   return;
+    // }
+    // if (arrayControl[index].itemid === undefined){
+    //   return;
+    // }
+    // else{
     console.log(index);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     console.log(arrayControl);
@@ -1475,7 +1486,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
         });
-
+      // }
   }
 
 
@@ -1671,64 +1682,13 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     }
 
   }
-  // getLocatorDetails(k, itemId) {
-  //   alert(k)
-  //   // alert('Enter getLocatorDetails ');
-  //   let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-  //   var invTp = controlinv.controls[k].get('invType').value;
-  //   this.service.getfrmSubLoc(this.locId, itemId, this.subInventoryId).subscribe(
-  //     data => {
-  //       console.log(data);
-  //       if (data.length === 0) {
-  //         alert('Locator Not Found!.');
-  //         var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
-  //         controlinv.controls[k].patchValue({ frmLocatorId: lotList });
-  //         controlinv.controls[k].patchValue({ onHandQty: 0 });
-  //         controlinv.controls[k].get('frmLocatorId').disable()
-  //         return;
-  //       } else {
-  //         var getfrmSubLoc = data;
-  //         this.locData = data;
-  //         controlinv.controls[k].get('frmLocatorId').enable();
-  //         if (getfrmSubLoc.length == 1) {
-  //           controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });
-  //           controlinv.controls[k].patchValue({ frmLocatorId: getfrmSubLoc[0].locatorId });
-  //           controlinv.controls[k].patchValue({ frmLocator: getfrmSubLoc[0].segmentName });
-  //           controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
-  //           controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
-  //         }
-  //         else {
-  //           // this.getfrmSubLoc=data;;
-  //           //  trxLnArr2.controls[i].patchValue({onHandId:getfrmSubLoc});
-  //           // alert('hi---locat')
-  //           controlinv.controls[k].patchValue({ frmLocator: getfrmSubLoc[0].segmentName });
-  //           controlinv.controls[k].patchValue({frmLocatorId: getfrmSubLoc[0].locatorId });
-  //           controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty })
-  //           controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
-  //         }
-  //         this.service.getreserqty(this.locId, itemId).subscribe
-  //           (data => {
-  //             this.resrveqty = data;
-  //             controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
-  //             this.AvailQty(k, itemId);
-  //           });
-  //       }
-  //     });
-
-  //   controlinv.controls[k].patchValue({ invType: invTp });
-  // }
-
-
 
   AvailQty(i, itemId) {
-    // alert('Hi***' + i)
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     if (itemId === undefined) {
       itemId = trxLnArr[i].itemId;
     }
-    // var itemid=trxLnArr[i].itemId;
     var locId = trxLnArr[i].frmLocatorId;
-    // alert( locId+'locId');
     var onhandid = trxLnArr[i].id;
     if (locId != null) {
       this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInventoryId, locId, itemId).subscribe
@@ -1737,21 +1697,24 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
           console.log(this.onhand1);
           var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
-          // var trxLnArr=this.moveOrderForm.get('trxLinesList').value;
           let onHand = data.obj;
-          // alert(onHand+'ONHAND');
           let reserve = trxLnArr[i].resveQty;
-          // alert(reserve+'Reserve');
-          // alert(onHand+'OnHand');
-          // alert(reserve+'reserve');
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
-          // debugger;
-          // alert(avlqty1+'avail');
           var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
-          // alert(trxLnArr1 +' '+'Hi');
+          let arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+          var pricingQty = arrayControl[i].pricingQty;
+          var Avalqty = avlqty1;
+          // alert(Avalqty)
+          var isvalidqty = this.validate(i, pricingQty,Avalqty);
+          if (isvalidqty == false) {
+            return;
+          }
+          this.onKey(i);
         })
+      
+
     }
     else {
       alert('Locator Not Found!.')
@@ -2352,7 +2315,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
   uploadFile(event:any) {
-    alert(event)
+    // alert(event)
     event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
@@ -2361,7 +2324,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     let selSite = this.custSiteList.find(d => d.siteName === siteName1);
     const taxCategoryName = selSite.taxCategoryName;
     const subInvID=this.subInvCode.subInventoryId;
-    alert(subInvID);
+    // alert(subInvID);
       this.service.bulkPickTickCSV(formData,priceListName,taxCategoryName,subInvID,sessionStorage.getItem('locId')).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
@@ -2372,6 +2335,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
           var oeOrderLinesAllList1: FormGroup = this.orderlineDetailsGroup();
           control.push(oeOrderLinesAllList1);
           this.displaysegmentInvType[i] = true;
+          this.displayRemoveRow[i]=true;
           this.displayLineflowStatusCode.push(true);
           this.displayCounterSaleLine.push(false);
         }
@@ -2384,8 +2348,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             segment:res.obj[k].segment,
             orderedItem:res.obj[k].orderedItem,
             pricingQty:res.obj[k].orderedQty,
-            taxCategoryName:res.obj[k].taxCategoryName,
-            taxCategoryId:res.obj[k].taxCategoryId,
+            // taxCategoryName:res.obj[k].taxCategoryName,
+            // taxCategoryId:res.obj[k].taxCategoryId,
             unitSellingPrice:res.obj[k].unitSellingPrice,
             baseAmt:res.obj[k].baseAmt,
             hsnSacCode:res.obj[k].hsnSacCode,
@@ -2394,7 +2358,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             frmLocatorId:res.obj[k].onhandList,
           })
           this.locData[k]=res.obj[k].onhandList; 
-          // this.onKey(k);
+          this.onOptionsSelectedDescriptionNew(res.obj[k].segment, k)
         }
       }
         else{
@@ -2408,4 +2372,167 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         event.target.disabled = false;
        }, 60000);
   }
+
+
+
+  onOptionsSelectedDescriptionNew(segment: any, k) {
+    this.displayorderHedaerDetails = false;
+    var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+    this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
+    this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
+    this.CounterSaleOrderBookingForm.get('name').disable();
+    this.CounterSaleOrderBookingForm.get('custName').disable();
+    this.CounterSaleOrderBookingForm.get('mobile1').disable();
+    this.CounterSaleOrderBookingForm.get('refCustNo').disable();
+    if (this.CounterSaleOrderBookingForm.get('createOrderType').value === 'Sales Order' && this.CounterSaleOrderBookingForm.get('othRefNo').value === undefined) {
+      alert('Please Enter Reference Number First !');
+      this.CounterSaleOrderBookingForm.get('segment').disable();
+      this.orderlineDetailsArray().get('segment').disable();
+      (<any>this.CounterSaleOrderBookingForm.get('othRefNo')).nativeElement.focus();
+    }
+    else {
+      let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+      var itemType = (controlinv.controls[k]).get('invType').value;
+      let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
+      var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
+      let selSite = this.custSiteList.find(d => d.siteName === siteName1);
+      const custtaxCategoryName = selSite.taxCategoryName;
+      console.log(selSite);
+      if (custtaxCategoryName === 'Sales-IGST') {
+        this.orderManagementService.addonDescList(segment)
+          .subscribe(
+            data => {
+              this.addonDescList = data;
+              for (let i = 0; i < data.length; i++) {
+                var itemtaxCatNm: string = data[i].taxCategoryName;
+                if (itemtaxCatNm.includes('Sale-I-GST')) {
+                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[k] = data1;
+                        this.allTaxCategoryList[k] = data1;
+                        
+                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
+                        (controlinv.controls[k]).patchValue({
+                          taxCategoryId :itemCateNameList.taxCategoryId,
+                            taxCategoryName: itemCateNameList,      
+                            // taxCategoryName: itemCateNameList.taxCategoryName,
+                         })
+                      }
+                    );
+
+                }
+              }
+              // if (select.itemId != null) {
+              //   let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+              //   var invTp = controlinv.controls[k].get('invType').value;
+              //   this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
+              //     data => {
+              //       console.log(data);
+              //       if (data.length === 0) {
+              //         alert('Locator Not Found!.');
+              //         var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
+              //         controlinv.controls[k].patchValue({ frmLocatorId: lotList });
+              //         controlinv.controls[k].patchValue({ onHandQty: 0 });
+              //         controlinv.controls[k].get('frmLocatorId').disable()
+              //         return;
+              //       } else {
+              //         var getfrmSubLoc = data;
+              //         this.locData[k] = data;
+              //         controlinv.controls[k].get('frmLocatorId').enable();
+              //         if (getfrmSubLoc.length == 1) {
+              //           controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });
+              //           controlinv.controls[k].patchValue({ frmLocatorId: getfrmSubLoc[0].locatorId });
+              //           controlinv.controls[k].patchValue({ frmLocator: getfrmSubLoc[0].segmentName });
+              //           controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
+              //           controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
+              //         }
+              //         else {
+              //           controlinv.controls[k].patchValue({ frmLocator: getfrmSubLoc[0].segmentName });
+              //           controlinv.controls[k].patchValue({ frmLocatorId: getfrmSubLoc[0].locatorId });
+              //           controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty })
+              //           controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
+              //         }
+              //         this.service.getreserqty(this.locId, select.itemId).subscribe
+              //           (data => {
+              //             this.resrveqty = data;
+              //             controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+              //             this.AvailQty(k, select.itemId);
+              //           });
+              //       }
+              //     });
+              // }
+            });
+      }
+      else {
+        this.orderManagementService.addonDescList(segment)
+          .subscribe(
+            data => {
+              this.addonDescList = data; //// item iformation
+              for (let i = 0; i < data.length; i++) {
+                var taxCatNm: string = data[i].taxCategoryName;
+                if (taxCatNm.includes('Sale-S&C')) {               
+                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[k] = data1;
+                        this.allTaxCategoryList[k] = data1;
+                        
+                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
+                        (controlinv.controls[k]).patchValue({
+                          taxCategoryId :itemCateNameList.taxCategoryId,
+                            taxCategoryName: itemCateNameList,      
+                         })
+                      }
+                    );
+
+                }
+              }
+              if (select.itemId != null) {
+                let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+                var invTp = controlinv.controls[k].get('invType').value;
+                this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
+                  data => {
+                    console.log(data);
+                    if (data.length === 0) {
+                      alert('Locator Not Found!.');
+                      var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
+                      controlinv.controls[k].patchValue({ frmLocatorId: lotList });
+                      controlinv.controls[k].patchValue({ onHandQty: 0 });
+                      controlinv.controls[k].get('frmLocatorId').disable()
+                      return;
+                    } else {
+                      var getfrmSubLoc = data;
+                      this.locData[k] = data;
+                      controlinv.controls[k].get('frmLocatorId').enable();
+                      if (getfrmSubLoc.length == 1) {
+                        controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });
+                        controlinv.controls[k].patchValue({ frmLocatorId: getfrmSubLoc[0].locatorId });
+                        controlinv.controls[k].patchValue({ frmLocator: getfrmSubLoc[0].segmentName });
+                        controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
+                        controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
+                      }
+                      else {
+                        controlinv.controls[k].patchValue({ frmLocator: getfrmSubLoc[0].segmentName });
+                        controlinv.controls[k].patchValue({ frmLocatorId: getfrmSubLoc[0].locatorId });
+                        controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty })
+                        controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
+                      }
+                      this.service.getreserqty(this.locId, select.itemId).subscribe
+                        (data => {
+                          this.resrveqty = data;
+                          controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
+                          this.AvailQty(k, select.itemId);
+                        });
+                    }
+                  });
+              }
+            });
+      }
+    }
+    
+    // this.onKey(k);
+  }
+
+
 }

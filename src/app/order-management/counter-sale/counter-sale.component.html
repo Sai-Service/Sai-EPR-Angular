@@ -1394,7 +1394,7 @@
                     <td>
                         <div   *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave"></div>
                         <ng-template #thencounterSaleOrderSave>
-                            <button type="submit" class="btn btn-primary" id="register"
+                            <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
                                 (click)="counterSaleOrderSave()">Create Order</button>
                         </ng-template>
                         <ng-template #elsecounterSaleOrderSave>

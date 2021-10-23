@@ -774,7 +774,7 @@
                                 <td>
                                     <div   *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave"></div>
                                     <ng-template #thencounterSaleOrderSave>
-                                        <button type="submit" class="btn btn-primary" id="register"
+                                        <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
                                             (click)="counterSaleOrderSave()">Create Order</button>
                                     </ng-template>
                                     <ng-template #elsecounterSaleOrderSave>
@@ -920,10 +920,10 @@
                                 &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
                             </td>
                             <td colspan="3">
-                                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                                <input class="form-control" type="file" [disabled]="isDisabled" #fileInput  accept=".csv" formControlName="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
                             </td>
                             <td>
-                                <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                                <button  class="btn btn-primary" [disabled]="isDisabled" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
                             </td>
                         </tr>
                     </table>
@@ -1110,12 +1110,7 @@
                                                                 <select class="form-control"
                                                                     style="height: 20px; width: 160px;"
                                                                     formControlName="frmLocatorId"
-                                                                    (ngModelChange)="AvailQty(i)">
-                                                                    <!-- <option>--Select--</option>      (ngModelChange)='AvailQty(i)'-->
-                                                                    <!-- <option *ngFor="let locId of  locData"
-                                                                        [ngValue]="locId.locatorId"
-                                                                        [Value]="locId.segmentName">
-                                                                        {{locId.segmentName}}--{{locId.onHandQty}}</option> -->
+                                                                    (change)="AvailQty(i)">
                                                                     <option *ngFor="let locId of  locData[i]"
                                                                         [ngValue]="locId.locatorId">
                                                                         {{locId.segmentName}}--{{locId.onHandQty}}</option>
@@ -1156,15 +1151,14 @@
                                                             </td>
                                                             <td>
                                                                 <select formControlName="taxCategoryName"
-                                                                    id="taxCategoryName" (change)="onKey(i)"
-                                                                    class="form-control"
-                                                                    style="width: 160px;height: 25px;font-size: 10px;">
-                                                                    <!-- <option>--Select--</option> -->
-                                                                    <option *ngFor="let sc of  taxCategoryList[i]"
-                                                                        [ngValue]="sc">
-                                                                        {{sc.taxCategoryName}}
-                                                                    </option>
-                                                                </select>
+                                                                id="taxCategoryName" (change)="onKey(i)"
+                                                                class="form-control"
+                                                                style="width: 160px;height: 25px;font-size: 10px;">
+                                                                <option *ngFor="let sc of  taxCategoryList[i]"
+                                                                    [ngValue]="sc">
+                                                                    {{sc.taxCategoryName}}
+                                                                </option>
+                                                            </select>
                                                                 <input hidden type="number" formControlName="taxCategoryId"
                                                                     class="form-control" style="height: 20px;width: 70px;">
                                                             </td>
