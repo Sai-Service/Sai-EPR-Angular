@@ -51,6 +51,11 @@ interface IsupplierMaster {
   sstatus: string;
   emplId:number;
   aadharNo:string;
+  eTktNo:string;
+  Ename:string;
+  supTyp:string;
+  divisionId:number;
+  compId:number;
   //displayMsmeNo:
   // aadharNo:string;
 }
@@ -114,7 +119,7 @@ export class SupplierMasterComponent implements OnInit {
   endDate: Date;
   sstatus: string;
   displayInactive = true;
-
+  supTyp:string;
   Status1: any;
   // aadharNo:string;
   ouIdSelected: number;
@@ -132,9 +137,13 @@ export class SupplierMasterComponent implements OnInit {
   public YesNoList: Array<string> = [];
   displayadditional:boolean;
   aadharNo:string;
-  divId:number;
+  divisionId:number;
   compId:number;
   supplierTyp: any;
+  displaySupplier:Boolean;
+  displayEmployee :Boolean;
+  eTktNo:string;
+  Ename:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -170,9 +179,9 @@ export class SupplierMasterComponent implements OnInit {
       msmeNo: [],
       pinCode: ['', [Validators.required, Validators.minLength(6), Validators.pattern("^[0-9]{6}$")]],
       status: ['', [Validators.nullValidator]],
-      divId:[],
+      divisionId:[],
       compId:[],
-
+      supTyp:[],
       // Duplicate Fields Comments start
       // contactNo:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
       // // contactNo: ['',[Validators.pattern('[0-9]'),Validators.minLength(10),Validators.maxLength(10)]],
@@ -212,6 +221,8 @@ export class SupplierMasterComponent implements OnInit {
       cityE: [],
       pinCodeE: ['',[Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
       stateE: [],
+      eTktNo:[],
+      Ename:[],
     });
   }
 
@@ -221,7 +232,7 @@ export class SupplierMasterComponent implements OnInit {
     this.lstcomments= [];
     this.lstcomments.supplierSiteMasterList=[];
     this.emplId =Number(sessionStorage.getItem('emplId'));
-    this.divId =Number(sessionStorage.getItem('divisionId'));
+    this.divisionId =Number(sessionStorage.getItem('divisionId'));
     this.compId =41;
     this.service.cityList()
       .subscribe(
@@ -269,6 +280,25 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   supplierMaster(supplierMaster: any) {
+  }
+
+  onOptionsupTypeSelected(event: any) {
+    // alert(this.PersonType+'Type');
+    if(this.supTyp!=undefined){
+    if(event!=this.supTyp){
+       window.location.reload();
+    }}
+
+    this.supTyp = this.supplierMasterForm.get('supTyp').value;
+
+    if (event === 'Employee') {
+      alert('Hi')
+      this.displaySupplier = false;
+      this.displayEmployee = true;
+      } if (event === 'Supplier') {
+      this.displaySupplier=true;
+      this.displayEmployee=false;
+   }
   }
 
   transData(val) {
@@ -319,7 +349,10 @@ export class SupplierMasterComponent implements OnInit {
     // alert('In Validation');
     //   return;
     // }
-    const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
+    // const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
+    const formValue:IsupplierMaster=this.supplierMasterForm.value;
+    formValue.compId=41;
+    formValue.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');

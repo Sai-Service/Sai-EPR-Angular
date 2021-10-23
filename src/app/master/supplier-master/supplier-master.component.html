@@ -89,14 +89,15 @@
                         </tr>
                     </table>
                     <table class="center" style="border-top-style: ridge;border-top-color: #92a8d1;width: 100%;">
-                        <tr style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;">
+                        <!-- <tr  style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;"> -->
+                          <tr>
                           <td style="width: 15%;font-weight: bold;" class="LabelFontStyle1">
                             Supplier&nbsp;Type&nbsp;:&nbsp;</td>
                         <td>
-                          <select formControlName="supTyp" id="supTyp" class="form-control">
+                          <select formControlName="supTyp" id="supTyp" class="form-control" (ngModelChange)="onOptionsupTypeSelected($event)">
                             <!-- <option>--Select--</option> -->
-                            <option *ngFor="let sc of supplierTyp" [ngValue]="sc.code" >
-                                {{sc.codeDesc}}
+                            <option *ngFor="let sc of supplierTyp" [value]="sc.code" >
+                                {{sc.code}}
                             </option>
                         </select>
                         </td>
@@ -113,6 +114,9 @@
                              <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
                                  Enter supplier No </span> -->
                             </td>
+                            </tr>
+                            <tr *ngIf="displaySupplier">
+                                           <!-- </tr> style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;" > -->
                             <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td colspan="6">
                                     <input formControlName="name" value={{name}} class="form-control" [(ngModel)]='name'
@@ -126,10 +130,26 @@
                                 <!-- <span *ngIf="!supplierMasterForm.get('name').valid && supplierMasterForm.get('name').touched">Please
                                     Enter name </span> -->
                                    </td>
-                                   <input hidden formControlName="divId">
+                                   <input hidden formControlName="divisionId">
                                    <input hidden formControlName="compId">
                         </tr>
-                        <tr>
+                        <tr *ngIf="displayEmployee">
+                         <!-- style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;"> -->
+                          <td style="width: 15%" class="LabelFontStyle1">Employee&nbsp;Name&nbsp;:&nbsp;</td>
+                          <td colspan="4">
+                              <input formControlName="Ename" value={{Ename}} class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                              placeholder="Enter name" style="width: 75%;" >
+                          </td>
+                          <td style="width: 15%" class="LabelFontStyle1">Ticket&nbsp;No&nbsp;:&nbsp;</td>
+                          <td>
+                              <input formControlName="eTktNo" value={{eTktNo}} class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                              placeholder="Enter Ticket No" style="width: 75%;" >
+                          </td>
+
+                        </tr>
+                        <tr >
                             <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
                             <td>
                                 <input formControlName="address1" value={{address1}} [(ngModel)]='address1' class="form-control"
