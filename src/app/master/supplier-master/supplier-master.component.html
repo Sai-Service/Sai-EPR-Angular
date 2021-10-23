@@ -21,8 +21,8 @@
                                         <td style="width: 15%;font-weight: bold;" class="LabelFontStyle1">
                                             Supplier&nbsp;Code&nbsp;:&nbsp;</td>
                                         <td>
-                                            <input type = "number" formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
-                                            [ngClass]="{ 'is-invalid': submitted && f.suppNo.errors }"
+                                            <input type = "number" formControlName="suppno" value={{suppno}} class="form-control" [(ngModel)]="suppno"
+                                            [ngClass]="{ 'is-invalid': submitted && f.suppno.errors }"
                                             placeholder="Enter supplier No" >
                                         <!-- <div *ngIf="submitted && f.suppNo.errors" class="invalid-feedback">
                                             <div *ngIf="f.suppNo.errors.required">Supplier No cannot be blank</div>
@@ -33,7 +33,7 @@
                                            <!-- <span *ngIf="supplierMasterForm.suppNo.$touched && supplierMasterForm.suppNo.$error.required">Supplier Code is required.</span>   -->
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn-primary" (click)="searchBySuppCode(suppNo)" style="width: 2rem;"><i class="fa fa-search"></i></button>
+                                            <button type="submit" class="btn-primary" (click)="searchBySuppCode(suppno)" style="width: 2rem;"><i class="fa fa-search"></i></button>
                                         </td>
                                     </tr>
                                 </table>
@@ -94,7 +94,7 @@
                           <td style="width: 15%;font-weight: bold;" class="LabelFontStyle1">
                             Supplier&nbsp;Type&nbsp;:&nbsp;</td>
                         <td>
-                          <select formControlName="supTyp" id="supTyp" class="form-control" (ngModelChange)="onOptionsupTypeSelected($event)">
+                          <select formControlName="type" id="type" class="form-control" (ngModelChange)="onOptionsupTypeSelected($event)">
                             <!-- <option>--Select--</option> -->
                             <option *ngFor="let sc of supplierTyp" [value]="sc.code" >
                                 {{sc.code}}
@@ -103,7 +103,7 @@
                         </td>
                             <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Code&nbsp;:&nbsp;</td>
                             <td>
-                                <input formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
+                                <input disabled formControlName="suppNo" value={{suppNo}} class="form-control" [(ngModel)]="suppNo"
                                  [ngClass]="{ 'is-invalid': submitted && f.suppNo.errors }"
                                  placeholder="Enter supplier No" >
                                  <div *ngIf="submitted && f.suppNo.errors" class="invalid-feedback">
@@ -152,7 +152,7 @@
                         <tr >
                             <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
                             <td>
-                                <input formControlName="address1" value={{address1}} [(ngModel)]='address1' class="form-control"
+                                <input formControlName="address1" value={{address1}}  class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
                                 placeholder="Enter address" >
                             <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
@@ -243,7 +243,7 @@
 
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
                         <td>
-                            <input type="text" formControlName="taxCategoryName" [ngModel]="taxCategoryName" class="form-control">
+                            <input disabled type="text" formControlName="taxCategoryName" [ngModel]="taxCategoryName" class="form-control">
                             <!-- <span  *ngIf="!supplierMasterForm.get('status').valid && supplierMasterForm.get('status').touched">Please
                                 Enter Status </span> -->
                         </td>
@@ -252,7 +252,7 @@
                         <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Mobile1&nbsp;:&nbsp;</td>
                             <td>
-                                <input formControlName="mobile1" value={{mobile1}} class="form-control"
+                                <input type="number" formControlName="mobile1" value={{mobile1}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }"
                                 placeholder="Enter mobile1" >
                             <div *ngIf="submitted && f.mobile1.errors" class="invalid-feedback">
@@ -266,7 +266,7 @@
 
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Mobile2&nbsp;:&nbsp;</td>
                             <td>
-                                <input formControlName="mobile2" value={{mobile2}} class="form-control"
+                                <input type="number" formControlName="mobile2" value={{mobile2}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.mobile2.errors }"
                                 placeholder="Enter mobile2" >
                             <div *ngIf="submitted && f.mobile2.errors" class="invalid-feedback">
@@ -279,7 +279,7 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Credit&nbsp;Days&nbsp;:&nbsp;</td>
                             <td>
-                                <input formControlName="creditDays" value={{creditDays}} class="form-control"
+                                <input  type="number" formControlName="creditDays" value={{creditDays}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.creditDays.errors }"
                                 placeholder="Enter credit days" >
                             <div *ngIf="submitted && f.creditDays.errors" class="invalid-feedback">
@@ -292,7 +292,7 @@
                             </td>
                             <td style="width: 15%" class="LabelFontStyle1">&nbsp;Credit&nbsp;Limits&nbsp;:&nbsp;</td>
                             <td>
-                                <input formControlName="creditLimit" value={{creditLimit}} class="form-control"
+                                <input  type="number" formControlName="creditLimit" value={{creditLimit}} class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f.creditLimit.errors }"
                                 placeholder="Enter credit limits" >
                             <div *ngIf="submitted && f.creditLimit.errors" class="invalid-feedback">
@@ -334,7 +334,7 @@
                           <!-- <td></td> -->
                           <td style="width: 15%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;Number&nbsp;:&nbsp;</td>
                           <td>
-                              <input formControlName="contactNo" value={{contactNo}} [(ngModel)]='contactNo' class="form-control"
+                              <input  type="number" formControlName="contactNo" value={{contactNo}} [(ngModel)]='contactNo' class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }"
                               placeholder="Enter Contact Person number" #contno >
                           <div *ngIf="submitted && f.contactNo.errors" class="invalid-feedback">
