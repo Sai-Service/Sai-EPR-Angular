@@ -841,4 +841,27 @@ export class SubinventoryTransferComponent implements OnInit {
       }
     }
   }
+  ValLocator(i: number, loc) {
+    // alert("Validate");
+    // if(qty1)
+    var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
+    var trxLnArr1 = this.SubinventoryTransferForm.get(
+      'trfLinesList'
+    ) as FormArray;
+    var locId = trxLnArr[i].locatorId;
+    var tolocator = trxLnArr[i].transferLocatorId;
+    var tosub = this.SubinventoryTransferForm.get('transferSubInv').value;
+    var subcode = this.SubinventoryTransferForm.get('subInventoryCode').value;
+
+    // this.displayaddButton=false;
+    if (subcode === tosub) {
+      // alert('In If')
+      if (locId === tolocator) {
+        // alert('In 2IF');
+        alert('Please select correct locator');
+        trxLnArr1.controls[i].patchValue({ LocatorSegment: '' });
+        return;
+      }
+    }
+  }
 }
