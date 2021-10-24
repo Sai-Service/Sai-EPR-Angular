@@ -148,10 +148,21 @@
                                 placeholder="Enter Receipt No" style="background-color: yellow; text-align: left;" (keyup)="onKey($event)" >
                             </td>
 
+
+                            <div *ngIf ="searchButton;then ButtonYes;else ButtonNo"></div>
+                            <ng-template #ButtonYes>  
                             <td>
                                 <button type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
                                         aria-hidden="true"></i></button>
                             </td>
+                            </ng-template>
+                            <ng-template #ButtonNo>  
+                            <td>
+                                <button disabled type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+                            </ng-template>
+
                         </tr>
                         </table>
                         </td>
