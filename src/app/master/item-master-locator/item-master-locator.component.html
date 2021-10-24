@@ -92,8 +92,8 @@
                               <div class="modal-dialog">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                      <label style="text-align: center;margin-left: 7rem;"> {{ title }}</label>
-                                    <button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
+                                      <label style="text-align: center;margin-left: 7rem;">Locator + {{ title }}</label>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                   </div>
                                   <div class="modal-body text-center pagination-centered">
                                     <table class="center" style="width: 100%;">
@@ -117,7 +117,7 @@
                                               Rack&nbsp;:
                                           </td>
                                           <td>
-                          <input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;" maxLength="1" (keyup)="keytab($event, 1,'input3')"  #input2>
+                          <input formControlName="Rack" [(ngModel)]="Rack" value={{Rack}} class="form-control"placeholder="Rack" style="width: 52px;" maxlength="1"  (keyup)="keytab($event, 1,'input3')"  #input2>
                                           </td>
                                       </tr>
                                       <tr>
@@ -126,7 +126,7 @@
                                           </td>
                                           <td>
                                               <input formControlName="RackNo" [(ngModel)]="RackNo" value={{RackNo}} class="form-control"
-                                              placeholder="Rack No" style="width: 52px;" maxlength="2" (keyup)="keytab($event, 2,'input4')"  #input3>
+                                                                 placeholder="Rack No" style="width: 52px;" maxlength="2"  (keyup)="keytab($event, 2,'input4')"  #input3>
                                           </td>
                                       </tr>
                                       <tr>
@@ -134,8 +134,8 @@
                                               Row&nbsp;:
                                           </td>
                                           <td>
-                                              <input formControlName="Row" [(ngModel)]="Row" value={{Row}} class="form-control"
-                                                               placeholder="Row" style="width: 52px;" maxlength="1" (keyup)="keytab($event, 1,'input5')"  #input4>
+                                              <input formControlName="Row" [(ngModel)]="Row" value={{Row}} class="form-control" maxlength="1"  (keyup)="keytab($event, 1,'input5')"  #input4
+                                                               placeholder="Row" style="width: 52px;">
                                           </td>
                                       </tr>
                                       <tr>
@@ -143,14 +143,14 @@
                                               Row&nbsp;Number&nbsp;:
                                           </td>
                                           <td>
-                                              <input formControlName="RowNo" [(ngModel)]="RowNo" value={{RowNo}} class="form-control"
-                                                                 placeholder="Row No" style="width: 52px;" maxlength="2" (keyup)="keytab($event, 2,'input6')"  #input5>
+                                              <input formControlName="RowNo" [(ngModel)]="RowNo" value={{RowNo}} class="form-control" maxlength="2"  (keyup)="keytab($event, 2,'input6')"  #input5
+                                                                 placeholder="Row No" style="width: 52px;">
                                           </td>
                                       </tr>
                                     </table>
                                   </div>
                                   <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnok"  (click)="okLocator(content)" #input6>Ok</button>
+                                      <button type="button"  class="btn btn-primary" data-dismiss="modal" aria-hidden="true"  (click)="okLocator()" #input6>Ok</button>
                                   </div>
                                 </div>
                               </div>
