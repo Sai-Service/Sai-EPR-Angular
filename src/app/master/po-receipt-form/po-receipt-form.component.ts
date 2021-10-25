@@ -45,6 +45,7 @@ interface IpoReceipt {
   totAmount: number;
   invItemId: number;
   billToLoc: number;
+  billToLocId: number;
   categoryId: number;
   qtyReceived: number;
   polineNum: number;
@@ -1077,6 +1078,7 @@ export class PoReceiptFormComponent implements OnInit {
     formValue.baseAmount = this.poReceiptForm.get('baseAmount').value;
     formValue.taxAmt = this.poReceiptForm.get('taxAmt').value;
     formValue.totalAmt = this.poReceiptForm.get('totalAmt').value;
+    formValue.billToLocId= Number(sessionStorage.getItem('locId'));
     // formValue.subinvetoryId=this.ls
     this.locId = Number(sessionStorage.getItem('locId'));
     // alert(this.lstcompolines.poLines[i].qtyReceived)
