@@ -60,6 +60,8 @@ interface IsupplierMaster {
   locId:number;
   //displayMsmeNo:
   // aadharNo:string;
+  spanNo:string;
+  sGstNo:string;
 }
 
 
@@ -138,7 +140,7 @@ export class SupplierMasterComponent implements OnInit {
   // public cityList: Array<string>[];
   public cityList1: any;
   public YesNoList: Array<string> = [];
-  displayadditional:boolean;
+  displayadditional:boolean=true;
   aadharNo:string;
   divisionId:number;
   compId:number;
@@ -148,6 +150,12 @@ export class SupplierMasterComponent implements OnInit {
   eTktNo:string;
   Ename:string;
   locId:number;
+  displaySaveBtn: boolean=true;
+  displayUpdBtn: boolean;
+  spanNo:string;
+  sGstNo:string;
+  sprePayAcct:string;
+      sliabilityAcct:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -206,6 +214,10 @@ export class SupplierMasterComponent implements OnInit {
       stateE: [],
       eTktNo:[],
       Ename:[],
+      spanNo:[],
+      sGstNo:[],
+      sprePayAcct:[],
+      sliabilityAcct:[],
     });
   }
 
@@ -421,6 +433,7 @@ export class SupplierMasterComponent implements OnInit {
     this.service.SupliMasterSubmitForSite(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
+        this.displayadditional=false;
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -499,17 +512,18 @@ alert(suppSiteId);
           this.lstcomments = data;
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
-          this.supplierMasterForm.patchValue({
-            panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
-            gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
-            taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
-            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
-            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
-            disPer:this.lstcomments.customerSiteMasterList[0].disPer,
-            location:this.lstcomments.customerSiteMasterList[0].location,
-          });
+          // this.supplierMasterForm.patchValue({
+          //   // panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
+          //   // gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
+          //   taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
+          //   contactPerson:this.lstcomments.customerSiteMasterList[0].contactPerson,
+          // });
           this.city = this.lstcomments.city
           this.displayInactive = true;
+          // (document.getElementById("saveBtn") as HTMLInputElement).disabled = true;
+          this.displaySaveBtn=false;
+          this.displayUpdBtn=true;
+          this.displayadditional=false;
         }
       );
   }
