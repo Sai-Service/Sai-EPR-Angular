@@ -643,18 +643,27 @@ export class SubinventoryTransferComponent implements OnInit {
           let reserve = trxLnArr[i].resveQty;
           //alert(onHand+'OnHand');
           // alert(reserve+'reserve');
+
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
+
           if (subcode === tosub) {
             // alert('In If')
             if (locId === tolocator) {
               // alert('In 2IF');
               alert('Please select correct locator');
-              trxLnArr1.controls[i].patchValue({ LocatorSegment: '' });
+              trxLnArr1.controls[i].patchValue({ onHandQty: '' });
             }
           }
           // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
           trxLnArr1.controls[i].patchValue({ onHandQty: avlqty1 });
+          if(avlqty1<0)
+          {
+            alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
+            this.trfLinesList().clear();
+            this.addnewtrfLinesList(i);
+            // trxLnArr1.controls[i].patchValue({segment:'' });
+          }
         });
     }
   }

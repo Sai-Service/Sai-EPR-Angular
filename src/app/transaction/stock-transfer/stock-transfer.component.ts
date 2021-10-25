@@ -445,8 +445,15 @@ export class StockTransferComponent implements OnInit {
   //alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
+
   // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
+  if(avlqty1<0)
+  {
+    alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
+    this.trxLinesList().clear();
+    this.addnewtrxLinesList(i);
+  }
     })
 
 }

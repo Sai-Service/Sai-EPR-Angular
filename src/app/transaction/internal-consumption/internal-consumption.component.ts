@@ -708,7 +708,12 @@ this.router.navigate(['admin']);
       avlqty1= data.obj-reserve;
       trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
       trxLnArr1.controls[i].patchValue({resveQty: reserve});
-
+      if(avlqty1<0)
+      {
+        alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
+        this.cycleLinesList().clear();
+        this.addnewcycleLinesList(i);
+      }
 
     });
     console.log(this.onhand);
