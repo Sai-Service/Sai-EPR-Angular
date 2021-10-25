@@ -25,11 +25,13 @@ export class CashBankTransferComponent implements OnInit {
       public OUIdList            : Array<string> = [];
       // public TransferTypeList    : Array<string> = [];
       public PeriodList          : Array<string> = [];
-      public fromAcctList        : Array<string> = [];
-      public toAcctList          : Array<string> = [];
+      // public fromAcctList        : Array<string> = [];
+      // public toAcctList          : Array<string> = [];
       public bnkHeaderList       : Array<string> = [];
       public statusList          : Array<string> = [];
           
+      fromAcctList :any;
+      toAcctList:any;
       TransferTypeList:any;
       payAccountCode :any;
       recAccountCode :any;
@@ -48,38 +50,52 @@ export class CashBankTransferComponent implements OnInit {
       deptId:number; 
       emplId :number;
 
-      branch:number;
-      period:number;
+      // branch:number;
+      // period:number;
       openPeriod:string;
       docTrfNo:string;
       transferCode:number;
+      transferDescp:string;
       transferDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-      reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+      // reversalDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+     
       clearingDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-      reversalPeriod:string;
-      reversalStatus='NO';
+     
       status:string;
 
       fromAcctDescp:string;
       toAcctDescp:string;
-      transferAmt:number;
+
+      fromAcctDescpId:number;
+      toAcctDescpId:number;
+
+      trfAmount:number;
       amtInWords:string;
 
-      recAcCode:string;
-      payAcCode:string;
-      recAcCodeId:number;
-      payAcCodeId:number;
+      toAcctCode:string;
+      fromAcctCode:string;
 
-      bnkHeader:number;
-      narration:string;
+      toGlCodeId:number;
+      fromGlCodeId:number;
+
+      trfHeader:string;
+      trfNarration:string;
+
+     reversalPeriod:string=null;
+     reversalStatus='NO';
+     reversalDate:Date=null;
+     reversalDocNo:string=null;
+     reversalDocDt:Date=null;
+     toReceiptId:number=null;
+     fromReceiptId:number=null;
+
   
       searchDocNo:string;
-
-
-
       display = true;
       displayButton = true;
       displaySuccess=false;
+      statusPost =false;
+      statusSave=false;
 
       get f() { return this.cashBankTransferForm.controls; }
       cashBankTransfer(cashBankTransferForm:any) {  }
@@ -98,11 +114,12 @@ export class CashBankTransferComponent implements OnInit {
           emplId:[''],
           orgId:[''],
 
-          branch:[],
-          period:[],
+          // branch:[],
+          // period:[],
           openPeriod:[],
           docTrfNo:[],
           transferCode:[],
+          transferDescp:[],
           transferDate:[],
           reversalDate:[],
           clearingDate:[],
@@ -110,18 +127,26 @@ export class CashBankTransferComponent implements OnInit {
           reversalStatus:[],
           fromAcctDescp:[],
           toAcctDescp:[],
+          fromAcctDescpId:[],
+          toAcctDescpId:[],
+    
           status:[],
 
-          transferAmt:[],
+          trfAmount:[],
           amtInWords:[],
-          recAcCode:[],
-          payAcCode:[],
+          toAcctCode:[],
+          fromAcctCode:[],
 
-          recAcCodeId:[],
-          payAcCodeId:[],
+          toGlCodeId:[],
+          fromGlCodeId:[],
 
-          bnkHeader:[],
-          narration:[],
+          trfHeader:[],
+          trfNarration:[],
+
+          reversalDocNo:[],
+          reversalDocDt:[],
+          toReceiptId:[],
+          fromReceiptId:[],
 
           searchDocNo:[],
       
@@ -205,6 +230,20 @@ export class CashBankTransferComponent implements OnInit {
 
         }
 
+        onOptionsSelected(event: any) {
+        var status1 = this.cashBankTransferForm.get('status').value;
+        // alert ("Status :"+status1);
+        if(status1=='SAVE') {
+           this.statusSave=true;
+           this.statusPost=false;
+        }
+        if(status1=='POST') {
+          this.statusPost=true;
+          this.statusSave=false;
+       }
+         
+       }
+
         resetMast() {
           window.location.reload();
         }
@@ -212,8 +251,51 @@ export class CashBankTransferComponent implements OnInit {
         closeMast() {
           this.router.navigate(['admin']);
         }
+        transeData(val) {
+          delete val.loginArray;
+          delete val.loginName;
+          delete val.ouName;
+          delete val.divisionId;
+          // delete val.locId;
+          delete val.locName;
+          // delete val.ouId;
+          delete val.deptId;
+          delete val.orgId;
+       
+          return val;
+        }
+       
+         
 
-        cashBnkTrfSave() {alert("Cash Bank Transfer ....Save ...Wip");}
+         cashBnkTrfSave() {
+          // this.CheckDataValidations();
+
+          // if (this.checkValidation===true) {
+          //   alert("Data Validation Sucessfull....\nPosting data  to MCP ITEM MASTER TABLE")
+         
+          
+          const formValue: ICashBankTransfer =this.transeData(this.cashBankTransferForm.value);
+          this.service.CashBankTrfSaveSubmit(formValue,this.emplId).subscribe((res: any) => {
+            if (res.code === 200) {
+              alert('RECORD INSERTED SUCCESSFUILY');
+              this.docTrfNo=res.obj;
+              this.cashBankTransferForm.disable();
+            } else {
+              if (res.code === 400) {
+                var x=res.obj;
+                // alert('Code already present in the data base');
+                alert(x);
+                  
+              }
+            }
+          });
+
+        // }else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
+        
+      }
+
+
+
         cashBnkTrfPost(){alert("Cash Bank Transfer ....Post ...Wip");}
         cashBnkTrfCopy(){alert("Cash Bank Transfer ....Copy ...Wip");}
         cashBnkTrfReversal(){alert("Cash Bank Transfer ....Reversal ...Wip");}
@@ -226,7 +308,8 @@ export class CashBankTransferComponent implements OnInit {
           if( selectedValue != undefined){
             console.log(selectedValue);
             var lookupValue1=selectedValue.lookupValue;
-            this.fromAcctDescp=lookupValue1;
+            // this.fromAcctDescp=lookupValue1;
+            this.transferDescp=selectedValue.lookupValueDesc;
           
            
            this.service.getFromAcList(lookupValue1)
@@ -246,6 +329,12 @@ export class CashBankTransferComponent implements OnInit {
           onSelectionFromAc(methodId :number) { 
             if (methodId>0) {
             //  alert ("From ac:"+methodId);
+            let selectedValue = this.fromAcctList.find(v => v.bankAccountId == methodId);
+            if( selectedValue != undefined){
+              console.log(selectedValue);
+             this.fromAcctDescp=selectedValue.methodName;
+            }
+
 
              this.service.getPayRecAccountCode(methodId,this.ouId,this.divisionId,this.locId)
              .subscribe(
@@ -253,7 +342,8 @@ export class CashBankTransferComponent implements OnInit {
                  this.payAccountCode = data.obj;
                  console.log(this.payAccountCode);
 
-                 this.payAcCode =this.payAccountCode.name;
+                 this.fromAcctCode =this.payAccountCode.name;
+                 this.fromGlCodeId=this.payAccountCode.id;
                  
                });
 
@@ -261,22 +351,26 @@ export class CashBankTransferComponent implements OnInit {
           }
 
           onSelectionToAc(methodId :number) { 
-            
             if (methodId>0) {
               // alert ("To ac:"+methodId);
+              let selectedValue = this.toAcctList.find(v => v.bankAccountId == methodId);
+              if( selectedValue != undefined){
+                console.log(selectedValue);
+               this.toAcctDescp=selectedValue.methodName;
+              }
+  
                this.service.getPayRecAccountCode(methodId,this.ouId,this.divisionId,this.locId)
                .subscribe(
                  data => {
                    this.recAccountCode = data.obj;
                    console.log(this.recAccountCode);
-                   this.recAcCode =this.recAccountCode.name;
-                 });
+                   this.toAcctCode =this.recAccountCode.name;
+                   this.toGlCodeId=this.recAccountCode.id;
+                });
   
                 }
-
+                this.toAcctCode='12PU.101.21.13998.0001';
+                this.toGlCodeId=10651;
           }
-         
-
-          
-
+ 
 }

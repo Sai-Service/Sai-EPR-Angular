@@ -3058,6 +3058,16 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
     
+      public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + `/AccountTrf/AcctTrfSave?emplId=${mEmplId}`;
+        return this.http.post(url, CashBankTrfRecord, options);
+      }
+
+     
+
     ////////////////////////// Pending Shipment Lis///////////
 
     getShipmentList(locId,deptId,divisionId): Observable<any> {

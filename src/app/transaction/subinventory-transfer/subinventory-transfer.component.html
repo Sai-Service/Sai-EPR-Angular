@@ -105,7 +105,7 @@
                               <th scope="col">Item Description</th>
                               <th scope="col">UOM</th>
                               <th scope="col">From Locator</th>
-                              <th scope="col">OnHand</th>
+                              <th scope="col">Available Quantity</th>
                               <th scope="col">To Locator</th>
                               <th scope="col">Quantity</th>
                               <th scope="col">Add</th>
@@ -162,7 +162,7 @@
                           </div>
                           <ng-template #thenBlock>
                             <td>
-                          <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment">
+                          <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment" (change)="ValLocator(trfLineIndex,loc)" #loc>
                             <option>--Select--</option>
                             <option *ngFor="let locId of  gettoSubLoc" [value]="locId.segmentName">{{locId.segmentName}}</option>
                             <!-- [ngValue]="locId.locatorId" -->
@@ -176,9 +176,9 @@
                            <td>
                                  <input hidden type="text" class="form-control" style="height: 20px;"formControlName="transferLocatorId" >
 
-                                <input   data-toggle="modal" data-target="#myModal1"
+                                <input   data-toggle="modal" data-target="#myModal1" (change)="ValLocator(trfLineIndex,loc)"
                                 formControlName="LocatorSegment"  value={{LocatorSegment}} (click)="OpenLocator(trfLineIndex)"
-                                class="form-control" style="height: 20px;width: 100px;">
+                                class="form-control" style="height: 20px;width: 100px;" #loc>
                                 <span
                                 *ngIf="getGroupControllinewise(trfLineIndex,'transferLocatorId').touched && getGroupControllinewise(trfLineIndex,'transferLocatorId').invalid" class="error">Valid Item
                                </span>

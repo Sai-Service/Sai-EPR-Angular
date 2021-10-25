@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
@@ -85,6 +85,14 @@ export class ItemMasterLocatorComponent implements OnInit {
   subInventoryCode:string;
   locCode:string;
   itemLocatorId:number;
+
+
+  @ViewChild('input1') input1: ElementRef;
+  @ViewChild('input2') input2: ElementRef;
+  @ViewChild('input3') input3: ElementRef;
+  @ViewChild('input4') input4: ElementRef;
+  @ViewChild('input5') input5: ElementRef;
+  @ViewChild('input6') input6: ElementRef;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.ItemlocatorMasterForm = fb.group({
@@ -215,7 +223,7 @@ export class ItemMasterLocatorComponent implements OnInit {
 
     var LocatorSegment1=this.LocatorSegment;
     // alert(this.LocatorSegment1);
-    
+
     this.ItemlocatorMasterForm.patchValue({'LocatorSegment': this.LocatorSegment})
 
     this.service.LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),subInventoryId).subscribe
@@ -308,6 +316,38 @@ export class ItemMasterLocatorComponent implements OnInit {
     return val;
   }
 
+  keytab(event, maxLength, nxtEle) {
+    // this.input1.nativeElement.focus();
+    console.log(event);
+    // let sib=event.srcElement.nextElementSibling;
+    // alert(sib);
+    // alert(event.target.value+'Event'+event.target.value.length);
+    if (event.target.value.length === maxLength) {
+      // alert('Focus'+nxtEle);
+      if (nxtEle === 'input2') {
+        // alert('Input2');
+        event.target.value = event.target.value.toUpperCase();
+        this.input2.nativeElement.focus();
+      }
+      if (nxtEle === 'input3') {
+        event.target.value = event.target.value.toUpperCase();
+        this.input3.nativeElement.focus();
+      }
+      if (nxtEle === 'input4') {
+        event.target.value = event.target.value.toUpperCase();
+        this.input4.nativeElement.focus();
+      }
+      if (nxtEle === 'input5') {
+        event.target.value = event.target.value.toUpperCase();
+        this.input5.nativeElement.focus();
+        (document.getElementById('btnok') as HTMLInputElement).disabled = false;
+      }
+      if (nxtEle === 'input6') {
+        this.input6.nativeElement.focus();
+      }
+    }
+  }
+
   newMast() {
     // this.submitted = true;
     // if(this.ItemlocatorMasterForm.invalid){
@@ -367,7 +407,7 @@ export class ItemMasterLocatorComponent implements OnInit {
         data => {
           this.lstcomments = data;
           console.log(this.lstcomments);
-          
+
         }
       );
   };

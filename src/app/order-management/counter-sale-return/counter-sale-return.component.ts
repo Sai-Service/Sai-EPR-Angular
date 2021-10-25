@@ -121,6 +121,7 @@ export class CounterSaleReturnComponent implements OnInit {
 
   showQtyRtncol=false;
   lineValidation=false;
+  searchButton=true;
 
   constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
     this.counterSaleReturnOrderForm = fb.group({ 
@@ -342,6 +343,7 @@ export class CounterSaleReturnComponent implements OnInit {
           console.log(this.lstOrderHeader);
          if(data.code===200){
           this.dispOrderDetails=true;
+          this.searchButton=false;
           // if(this.lstOrderHeader !=null) {
             this.showLineLov(this.lstOrderHeader.orderNumber);
             this.orderedDate=this.lstOrderHeader.orderedDate;
@@ -653,6 +655,8 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
           //  this.validQtyEntered=false;
             this.validateStatus=true;
             this.saveButton=false;
+            this.validateStatus=true;
+            this.saveButton=false;
           } 
           else 
           {
@@ -696,11 +700,59 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
               //   this.rtnTotAmt=Number(nAmt);
       }
 
-
       validateSave() 
       {
+        this.emplId= Number(sessionStorage.getItem('emplId'));
+        var rtvLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
+        var len1 = rtvLineArr.length;
   
+        var lrm=0;
+        for (let i = len1 - 1; i >= 0; i--) {
+          if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
+            this.lineDetailsArray.removeAt(i);
+            lrm=lrm+1;
         
+          } }
+  
+          if (lrm===len1) { this.resetMast();} 
+          else {
+             this.saveButton = true; 
+             this.validateStatus=false;
+             this.showQtyRtncol=false;
+            }
+  
+          var rtvLineArr1 = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
+          var len2 = this.lineDetailsArray.length;
+            
+        for (let i = 0; i < len2; i++) {
+                   
+          if (rtvLineArr1[i].selectFlag === true) {
+            this.CheckLineValidations(i);
+          }
+  
+        }
+          
+              if (this.lineValidation) {
+                for (let i = 0; i < len1; i++) {
+                  this.lineDetailsArray.controls[i].get('selectFlag').disable();
+                 }
+                    this.saveButton = true;
+                    this.showQtyRtncol=false;
+                    this.validateStatus=false;
+                   
+                  }   else  {
+                    alert ("Data validation Failed . Please check Line Item Number/Return Qty");
+                     this.saveButton = false;
+                     this.validateStatus=true;
+                   }
+                     this.CalculateTotal();
+          }
+
+
+
+
+      validateSave1() 
+      {
         this.emplId= Number(sessionStorage.getItem('emplId'));
         var rtvLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
         var len1 = rtvLineArr.length;
@@ -752,51 +804,7 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
 
 
 
-      validateSave1() 
-      {
-        this.emplId= Number(sessionStorage.getItem('emplId'));
-        var rtvLineArr = this.counterSaleReturnOrderForm.get('oeOrderLinesAllList').value;
-        var len1 = rtvLineArr.length;
-
-        for (let i = 0; i < len1; i++) {
-                  
-          if (rtvLineArr[i].selectFlag === true) {
-            this.CheckLineValidations(i);
-          }
-
-        }
-
-      
-        if (this.lineValidation) {
-                  var lrm=0;
-                  for (let i = len1 - 1; i >= 0; i--) {
-                    if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
-                      this.lineDetailsArray.removeAt(i);
-                      lrm=lrm+1;
-                  
-                    } 
-                    
-                    this.saveButton = true;
-                    this.showQtyRtncol=false;
-                    this.validateStatus=false;
-                    // this.lineDetailsArray.controls[i].get('qtyReturn').disable();
-                    this.lineDetailsArray.controls[i].get('selectFlag').disable();
-                  
-                  } 
-                  
-                  if(lrm===len1) { this.resetMast();} 
-                  else {
-                    this.saveButton = true; 
-                    this.validateStatus=false;
-                    this.showQtyRtncol=false;
-                    }
-
-        } else  {
-              alert ("Data validation Failed . Please check Line Item Number/Return Qty");
-                this.saveButton = false;
-              }
-                this.CalculateTotal();
-        }
+    
 
 
 
