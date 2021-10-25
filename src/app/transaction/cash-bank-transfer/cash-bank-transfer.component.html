@@ -61,7 +61,7 @@
                             <tr>
 
                                     
-                                <td style="width: 15%" class="LabelFontStyle">Period:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Open&nbsp;Period:&nbsp;</td>
                                 <td>  
                                     <select   formControlName="openPeriod" id="openPeriod" [(ngModel)]="openPeriod"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
@@ -69,10 +69,27 @@
                                     </option>
                                     </select>
                                 </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Desc:&nbsp;</td>
+                                <td colspan="3">
+                                    <input  disabled  type="text"  formControlName="transferDescp"  id="transferDescp" [(ngModel)]="transferDescp" class="form-control" style=" width: 100%;" >
+                                </td>
                                     
                                
   
-                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Period:&nbsp;</td>
+                                
+                               
+                             </tr>
+
+
+                            <tr>
+
+                            <td style="width: 15%" class="LabelFontStyle">Clearing&nbsp;Date:&nbsp;</td>
+                            <td>
+                                <input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" style="background-color: yellow;" >
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Period:&nbsp;</td>
                                 <td>  
                                     <select   formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
@@ -86,16 +103,6 @@
                                 <td>
                                     <input    type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
                                 </td>
-                               
-                             </tr>
-
-
-                            <tr>
-
-                            <td style="width: 15%" class="LabelFontStyle">Clearing&nbsp;Date:&nbsp;</td>
-                            <td>
-                                <input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" style="background-color: yellow;" >
-                            </td>
 
                          
 
@@ -104,8 +111,8 @@
 
                             <td style="width: 15%" class="LabelFontStyle">Header&nbsp;:&nbsp;</td>
                             <td>  
-                                <select   formControlName="bnkHeader" id="bnkHeader" [(ngModel)]="bnkHeader"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
-                                <option *ngFor="let sc of  bnkHeaderList" [ngValue]="sc.cmnId">
+                                <select   formControlName="trfHeader" id="trfHeader" [(ngModel)]="trfHeader"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
+                                <option *ngFor="let sc of  bnkHeaderList" [ngValue]="sc.codeDesc">
                                 {{sc.code}}-{{sc.codeDesc}}
                                 </option>
                                 </select>
@@ -115,7 +122,7 @@
                            
                                 <td style="width: 15%" class="LabelFontStyle">Narration&nbsp;:&nbsp;</td>
                                 <td colspan="5">
-                                    <input    type="text"  formControlName="narration"  id="narration" [(ngModel)]="narration" class="form-control" style="width: 100%;">
+                                    <input    type="text"  formControlName="trfNarration"  id="trfNarration" [(ngModel)]="trfNarration" class="form-control" style="width: 100%;">
                                  </td>
                             </tr>
 
@@ -134,9 +141,9 @@
                             
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                             <td>
-                                <select  formControlName="status"  id ="status"  [(ngModel)]="status"  class="form-control" style="background-color: yellow;"  >
-                                    <!-- (ngModelChange)='OnApplyTypeSelected($event)'  -->
-                                    <option value="SAVE">SAVE</option>
+                                <select  formControlName="status"  id ="status"  [(ngModel)]="status"  class="form-control" style="background-color: yellow;" 
+                                        (ngModelChange)='onOptionsSelected($event)' >
+                                     <option value="SAVE">SAVE</option>
                                     <option value="POST">POST</option>
                                 </select>
                             </td>
@@ -158,12 +165,12 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
 
-                                <!-- <td>
-                                    <input  disabled  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control" style="background-color: yellow;" >
-                                 </td> -->
+                                
+                                    <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control" style="background-color: yellow;" >
+                                 
 
                                 <td>  
-                                    <select   formControlName="fromAcctDescp" id="fromAcctDescp" [(ngModel)]="fromAcctDescp"  class="form-control"   (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
+                                    <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"   (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  fromAcctList" [ngValue]="sc.bankAccountId">
                                     {{sc.methodName}}
@@ -174,11 +181,11 @@
                                     
                                 <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c:&nbsp;</td>
 
-                                <!-- <td>
-                                    <input  disabled  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control" style="background-color: yellow;" >
-                                 </td> -->
+                                
+                                    <input  hidden  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control" style="background-color: yellow;" >
+                                 
                                 <td>  
-                                    <select   formControlName="toAcctDescp" id="toAcctDescp" [(ngModel)]="toAcctDescp"  class="form-control"   (ngModelChange)="onSelectionToAc($event)" style="background-color: yellow;">   
+                                    <select   formControlName="toAcctDescpId" id="toAcctDescpId" [(ngModel)]="toAcctDescpId"  class="form-control"   (ngModelChange)="onSelectionToAc($event)" style="background-color: yellow;">   
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  toAcctList" [ngValue]="sc.bankAccountId">
                                     {{sc.methodName}}
@@ -196,23 +203,28 @@
 
                             <tr>
 
-                                <input  hidden     formControlName="payAcCodeId"  id="payAcCodeId" [(ngModel)]="payAcCodeId" class="form-control" >
-                                <input  hidden     formControlName="recAcCodeId"  id="recAcCodeId" [(ngModel)]="recAcCodeId" class="form-control" >
+                                <input  hidden  type="text"   formControlName="reversalDocNo"  id="reversalDocNo" [(ngModel)]="reversalDocNo" class="form-control" >
+                                <input  hidden  type="date"    formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" >
+                                <input  hidden  type="number"   formControlName="toReceiptId"  id="toReceiptId" [(ngModel)]="toReceiptId" class="form-control" >
+                                <input  hidden  type="number"    formControlName="fromReceiptId"  id="fromReceiptId" [(ngModel)]="fromReceiptId" class="form-control" >
+
+                                <input  hidden     formControlName="fromGlCodeId"  id="fromGlCodeId" [(ngModel)]="fromGlCodeId" class="form-control" >
+                                <input  hidden     formControlName="toGlCodeId"  id="toGlCodeId" [(ngModel)]="toGlCodeId" class="form-control" >
                                
                                 <td style="width: 15%" class="LabelFontStyle">Payable&nbsp;A/c&nbsp;Code:&nbsp;</td>
                                 <td>
-                                    <input  disabled   type="text"  formControlName="payAcCode"  id="payAcCode" [(ngModel)]="payAcCode" class="form-control" >
+                                    <input  disabled   type="text"  formControlName="fromAcctCode"  id="fromAcctCode" [(ngModel)]="fromAcctCode" class="form-control" >
                                 </td>
 
                                     
                                 <td style="width: 15%" class="LabelFontStyle">Receivable&nbsp;A/c&nbsp;Code:&nbsp;</td>
                                 <td>
-                                    <input  disabled   type="text"  formControlName="recAcCode"  id="recAcCode" [(ngModel)]="recAcCode" class="form-control" >
+                                    <input  disabled   type="text"  formControlName="toAcctCode"  id="toAcctCode" [(ngModel)]="toAcctCode" class="form-control" >
                                 </td>
 
                                 <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Amt:&nbsp;</td>
                                 <td>
-                                    <input     type="nunber"  min="1" formControlName="transferAmt"  id="transferAmt" [(ngModel)]="transferAmt" class="form-control" style="background-color: yellow;text-align: right;" >
+                                    <input     type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" class="form-control" style="background-color: yellow;text-align: right;" >
                                 </td>
                             </tr>
                             <tr>
@@ -236,174 +248,90 @@
 
 
 
-                    <br>
+                     <br>
                     <!-- ===================================Buttons======================================== -->
-                    <br>
-                    <!-- ===================================Buttons======================================== -->
-                      <!-- <br> -->
-                      <table class="center">
+                       <table class="center">
                           <tr>
-                              <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                              <ng-template #thenBlock1>
-  
-                                     <td>
-                                          <button type="button" class="btn btn-info" (click)="cashBnkTrfSave()" [disabled]="!cashBankTransferForm">Save</button>
-                                      </td>
-                                      <td>
-                                        <button type="button" class="btn btn-info" (click)="cashBnkTrfPost()" [disabled]="!cashBankTransferForm">Post</button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" [disabled]="!cashBankTransferForm">Copy</button>
-                                    </td>
+                                    <div *ngIf="statusSave; then saveYes; else saveNo"></div>
+                                    <ng-template #saveYes> 
+                                       <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfSave()" >Save</button> </td> 
+                                    </ng-template>
+                                    <ng-template #saveNo>
+                                        <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfSave()">Save</button> </td>
+                                    </ng-template> 
 
-                                    <td>
-                                        <button type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" [disabled]="!cashBankTransferForm">Reversal</button>
-                                    </td>
+                                    <div *ngIf="statusPost; then postYes; else postNo"></div>
+                                    <ng-template #postYes> 
+                                        <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
+                                    </ng-template>
+                                    <ng-template #postNo> 
+                                      <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
+                                    </ng-template>
+
+                                     <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" [disabled]="!cashBankTransferForm">Copy</button></td>
+                                     <td><button type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" [disabled]="!cashBankTransferForm">Reversal</button></td>
                                    
-                                  <!-- <td>
-                                      <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                  </td> -->
+                                                            
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
+                                </td>
+                        <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                            Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                        </label>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <table class="center">
+                                            <tr>
+                                                <td>
+                                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                        <!-- =====================Close Dialog Box====================== -->
+                                <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                </td>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                            </label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <table class="center">
+                                                <tr>
+                                                    <td>
+                                                    <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                    </td>
+                                                    <td>
+                                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
   
-                                      <!-- ====================Reset Dialog ======================== -->
-  
-                                  <td>
-                                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                                  </td>
-                                   <!-- Modal -->
-                                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
-                                          <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                              <div class="modal-body">
-                                                  <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
-                                                      <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                      Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                                                  </label>
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <table class="center">
-                                                      <tr>
-                                                          <td>
-                                                              <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                                          </td>
-                                                          <td>
-                                                              <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                              </div>
-                                          </div>
-                                          </div>
-                                      </div>
-  
-                                          <!-- =====================Close Dialog Box====================== -->
-                                          <td>
-                                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
-                                          </td>
-                                          <!-- Modal -->
-                                          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
-                                              <div class="modal-dialog" role="document">
-                                              <div class="modal-content">
-                                                  <div class="modal-body">
-                                                      <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                                                          <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                          Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                                                      </label>
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                      <table class="center">
-                                                          <tr>
-                                                              <td>
-                                                              <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
-                                                              </td>
-                                                              <td>
-                                                              <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                                              </td>
-                                                          </tr>
-                                                      </table>
-                                                  </div>
-                                              </div>
-                                              </div>
-                                          </div>
-                                      </ng-template>
-                          <!-- ==================================================== -->
-  
-                                    
-                                      <ng-template #elseBlock1>
-                                     
-                                              <td>
-                                                  <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!cashBankTransferForm">Update</button>
-                                              </td>
-                                              <!-- <td>
-                                                  <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                              </td>
-   -->
-                                       
-  
-                          <td>
-                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                          </td>
-                          <!-- Modal -->
-                                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
-                                          <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                              <div class="modal-body">
-                                                  <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
-                                                      <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                      Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                                                  </label>
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <table class="center">
-                                                      <tr>
-                                                          <td>
-                                                              <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                                          </td>
-                                                          <td>
-                                                              <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                              </div>
-                                          </div>
-                                          </div>
-                                      </div>
-  
-                      <!-- =====================Close Dialog Box====================== -->
-                              <td>
-                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
-                              </td>
-                                      <!-- Modal -->
-                                      <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
-                                          <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                              <div class="modal-body">
-                                                  <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                                                      <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                                      Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                                                  </label>
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <table class="center">
-                                                      <tr>
-                                                          <td>
-                                                          <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
-                                                          </td>
-                                                          <td>
-                                                          <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                              </div>
-                                          </div>
-                                          </div>
-                                      </div>
-                      <!-- ==================================================== -->
-                                      </ng-template>
-                                      <!-- <td>
-                                          <button type="button" class="btn btn-info" (click)="getEwStatus(this.vehRegNo)" >Validate</button>
-                                      </td> -->
-                                          
-                                  </tr>
+                                </tr>
                               </table>
                    <!-- ==================================================== -->
                             

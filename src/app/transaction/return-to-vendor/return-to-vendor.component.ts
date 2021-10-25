@@ -113,7 +113,7 @@ export class ReturnToVendorComponent implements OnInit {
       suppNo:number;
       supplierName:string;
       shipmentNo:number;
-      receiptNo:number;
+      receiptNo:number=52121101175;
       originalReceiptNo:number;
       totalAmt:number;
       PoRctTotalAmt:number;
@@ -178,6 +178,7 @@ export class ReturnToVendorComponent implements OnInit {
       lineStatus = false;
       dispReceiptLines=false;
       indReturn=false;
+      searchButton=true;
 
       userList2: any[] = [];
       lastkeydown1: number = 0;
@@ -393,6 +394,8 @@ export class ReturnToVendorComponent implements OnInit {
              this.lineDetailsArray.controls[index].get('qtyReturn').disable();
              this.showLocator=false;
              this.validQtyEntered=false;
+             this.validateStatus=true;
+             this.saveButton=false;
             } 
             else 
             {
@@ -534,7 +537,7 @@ export class ReturnToVendorComponent implements OnInit {
             return;
           }
 
-          this.returntoVendorForm.get("searchReceiptNo").disable();
+       
           
           // this.lineDetailsArray.controls[0].get('itemName').disable();
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
@@ -547,6 +550,8 @@ export class ReturnToVendorComponent implements OnInit {
              if(data.code===200){
               
                 this.dispReceiptLines=true;
+                this.searchButton=false;
+                this.returntoVendorForm.get("receiptNo").disable();
               // alert("PO /Receipt Number :"+this.lstReceiptHeader.segment1+"," +mRcptNumber);
               // if(this.lstReceiptHeader !=null) {
                 if(this.lstReceiptHeader.originalReceiptNo===null) 
@@ -1081,9 +1086,9 @@ export class ReturnToVendorComponent implements OnInit {
     validateSave() 
     {
 
-      
       var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
       var len1 = rtvLineArr.length;
+
       var lrm=0;
       for (let i = len1 - 1; i >= 0; i--) {
         if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
@@ -1092,48 +1097,51 @@ export class ReturnToVendorComponent implements OnInit {
       
         } }
 
-    
-      for (let i = 0; i < len1; i++) {
+        if (lrm===len1) { this.resetMast();} 
+        else {
+           this.saveButton = true; 
+           this.validateStatus=false;
+           this.showQtyRtncol=false;
+          }
+
+        var rtvLineArr1 = this.returntoVendorForm.get('rcvLines').value;
+        var len2 = this.lineDetailsArray.length;
+        // alert ("len2 :"+len2);
+        
+      for (let i = 0; i < len2; i++) {
                  
-        if (rtvLineArr[i].selectFlag === true) {
+        if (rtvLineArr1[i].selectFlag === true) {
           this.CheckLineValidations(i);
         }
 
       }
+          //  alert("this.lineValidation :"+this.lineValidation);
      
             if (this.lineValidation) {
               for (let i = 0; i < len1; i++) {
                 this.lineDetailsArray.controls[i].get('selectFlag').disable();
                }
-                  
                   this.saveButton = true;
                   this.showQtyRtncol=false;
                   this.validateStatus=false;
-                  if (lrm===len1) { this.resetMast();} 
-                  else {
-                     this.saveButton = true; 
-                     this.validateStatus=false;
-                     this.showQtyRtncol=false;
-                    }
-                
+                  // alert (" this.validateStatus :"+ this.validateStatus);
                  
                 }   else  {
                   alert ("Data validation Failed . Please check Line Item Number/Return Qty");
                    this.saveButton = false;
+                   this.validateStatus=true;
                  }
                    this.CalculateTotal();
         }
+
   
 
     validateSave1() 
     {
-
       
       var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
       var len1 = rtvLineArr.length;
 
-      
-    
       for (let i = 0; i < len1; i++) {
                  
         if (rtvLineArr[i].selectFlag === true) {
@@ -1141,9 +1149,7 @@ export class ReturnToVendorComponent implements OnInit {
         }
 
       }
-
-     
-      if (this.lineValidation) {
+    if (this.lineValidation) {
                 var lrm=0;
                 for (let i = len1 - 1; i >= 0; i--) {
                   if (this.lineDetailsArray.controls[i].get('selectFlag').value != true) {
@@ -1152,8 +1158,6 @@ export class ReturnToVendorComponent implements OnInit {
                 
                   } 
 
-                 
-                  
                   this.saveButton = true;
                   this.showQtyRtncol=false;
                   this.validateStatus=false;
@@ -1174,13 +1178,10 @@ export class ReturnToVendorComponent implements OnInit {
               this.saveButton = false;
             }
               this.CalculateTotal();
-             
-
-    }
+     }
 
 
     CheckLineValidations(i) {
-
        
       var rtvLineArr = this.returntoVendorForm.get('rcvLines').value;
       var itemcd = rtvLineArr[i].itemName;
