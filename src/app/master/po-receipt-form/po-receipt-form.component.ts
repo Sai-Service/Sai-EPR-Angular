@@ -80,6 +80,7 @@ export class PoReceiptFormComponent implements OnInit {
   poReceiptForm: FormGroup;
   ouName: string;
   poNumber: string;
+  docSeqValue:string;
   isVisible:boolean=true;
   public minDate = new Date();
   recdate1:Date;
@@ -268,6 +269,7 @@ export class PoReceiptFormComponent implements OnInit {
       name1: [''],
       runningTotalDr: [''],
       runningTotalCr: [''],
+      docSeqValue:[''],
       shipmentNo: [''],
       segment3: [],
       segment11: [],
@@ -1121,6 +1123,7 @@ export class PoReceiptFormComponent implements OnInit {
         this.ledgerId = res.obj.ledgerId;
         this.runningTotalDr = res.obj.runningTotalDr;
         this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue=res.obj.docSeqValue;
         console.log(this.description);
 
         this.viewAccounting1 = res.obj.glLines;

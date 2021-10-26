@@ -543,6 +543,12 @@ displayThirdButtonDisplay=true;
           console.log(this.BillShipList);
         }
       );
+      this.service.hsnSacCodeData('HSN').subscribe(
+        data=>{
+          this.hsnSacCodeList=data;
+        }
+      )
+
     this.service.getLocationSearch1(this.ouId)
       .subscribe(
         data => {
@@ -924,9 +930,19 @@ displayThirdButtonDisplay=true;
                   {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
                   });
-
+                  if (data.obj.poLines[j].itemType==='GOODS'){
+                    this.displayHSN[j]=true;
+                    this.lineDetailsArray.controls[j].get('segmentName').disable();
+                    // this.searchrelatedCall(data.obj.poLines[j].invItemId,data.obj.supplierSiteId,j)
+                  }
+                  else{
+                    this.displayHSN[j]=false;
+                    this.lineDetailsArray.controls[j].get('segmentName').enable();
+                  }
+                 
                 // alert('***taxCat****' + this.lineDetailsArray.controls[j].get('taxCategoryName').value)
               }
+              
               //this.taxCategoryList = this.lstcomments1.poLines[j].taxCategoryName;
               for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
                 let taxControl = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
@@ -1031,6 +1047,22 @@ displayThirdButtonDisplay=true;
         }
       );
   }
+
+
+
+//   searchrelatedCall(invItemId,supplierSiteId, index) {
+//   alert(invItemId +'----' + index);
+//   console.log(this.supplierCodeList);
+//   console.log(this.supplierCodeList[index].supplierSiteMasterList);
+  
+//   let selectedValue = this.supplierCodeList[index].supplierSiteMasterList.find(v => v.suppSiteId == supplierSiteId);
+//   console.log(selectedValue);
+//  this.service.ItemDetailsList(invItemId, selectedValue.taxCategoryName, this.billToLoc).subscribe((res: any) => {
+//   if (res.code === 200) {
+//     this.ItemDetailsList = res.obj;
+//     console.log(this.ItemDetailsList);
+//   }})
+//   }
 
   goReceiptForm(segment1) {
     this.router.navigate(['/admin/master/PoReceiptForm', segment1]);
@@ -1885,9 +1917,9 @@ displayThirdButtonDisplay=true;
   onOptioninvitemTypeSelected(e: any, lineNum) {
     var itemType = e.target.value;
     // alert(itemType)
-    // if (this.itemMap.has(itemType)){
-    //   this.invItemList = this.itemMap.get(itemType);
-    // }
+    if (this.itemMap.has(itemType)){
+      this.invItemList = this.itemMap.get(itemType);
+    }
     this.lineDetailsArray.controls[lineNum].get('segment').setValue('');
     this.lineDetailsArray.controls[lineNum].get('segment').disable();
     this.lineDetailsArray.controls[lineNum].reset();
@@ -1913,7 +1945,7 @@ displayThirdButtonDisplay=true;
               data => {
                 this.lineDetailsArray.controls[lineNum].get('segment').disable();
                 this.invItemList = data;
-                // this.itemMap.set(itemType,data);
+                this.itemMap.set(itemType,data);
                 console.log(this.invItemList);
                 this.lineDetailsArray.controls[lineNum].get('segment').enable();
                 // this.displaysegmentList[lineNum]=true;
@@ -1952,7 +1984,7 @@ displayThirdButtonDisplay=true;
           .subscribe(
             data => {
               this.invItemList = data;
-              // this.itemMap.set(itemType,data);
+              this.itemMap.set(itemType,data);
               console.log(this.invItemList);
               this.lineDetailsArray.controls[lineNum].get('invDescription').enable();
               this.lineDetailsArray.controls[lineNum].get('hsnSacCode').enable();

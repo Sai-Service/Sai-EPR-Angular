@@ -1149,7 +1149,6 @@ export class CounterSaleComponent implements OnInit {
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
-
             // if (this.custSiteList.length === 1) {
             //   this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             // }
@@ -1165,9 +1164,11 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedcustSiteName(siteName) {
-   // alert(siteName)
+  //  alert(siteName);
+  //  alert(sessionStorage.getItem('ouId'));
        let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
+    // alert(selSite.ouId);
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
