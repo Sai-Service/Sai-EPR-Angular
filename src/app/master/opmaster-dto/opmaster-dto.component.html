@@ -987,7 +987,7 @@
                                                                 </select>
                                                             </td>
                                                             <td> <input type="number" min="0"
-                                                                    formControlName="orderedQty" oninput="this.value = Math.abs(this.value)" style="width: 4rem;"
+                                                                    formControlName="orderedQty"  (keydown.tab)="onKey(i)" oninput="this.value = Math.abs(this.value)" style="width: 4rem;"
                                                                     class="form-control">
                                                             </td>
                                                             <!-- <td> <input type="number" min="0"  formControlName="orderedQty"
