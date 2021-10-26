@@ -45,6 +45,7 @@ interface IpoReceipt {
   totAmount: number;
   invItemId: number;
   billToLoc: number;
+  billToLocId: number;
   categoryId: number;
   qtyReceived: number;
   polineNum: number;
@@ -79,6 +80,7 @@ export class PoReceiptFormComponent implements OnInit {
   poReceiptForm: FormGroup;
   ouName: string;
   poNumber: string;
+  docSeqValue:string;
   isVisible:boolean=true;
   public minDate = new Date();
   recdate1:Date;
@@ -267,6 +269,7 @@ export class PoReceiptFormComponent implements OnInit {
       name1: [''],
       runningTotalDr: [''],
       runningTotalCr: [''],
+      docSeqValue:[''],
       shipmentNo: [''],
       segment3: [],
       segment11: [],
@@ -1077,6 +1080,7 @@ export class PoReceiptFormComponent implements OnInit {
     formValue.baseAmount = this.poReceiptForm.get('baseAmount').value;
     formValue.taxAmt = this.poReceiptForm.get('taxAmt').value;
     formValue.totalAmt = this.poReceiptForm.get('totalAmt').value;
+    formValue.billToLocId= Number(sessionStorage.getItem('locId'));
     // formValue.subinvetoryId=this.ls
     this.locId = Number(sessionStorage.getItem('locId'));
     // alert(this.lstcompolines.poLines[i].qtyReceived)
@@ -1119,6 +1123,7 @@ export class PoReceiptFormComponent implements OnInit {
         this.ledgerId = res.obj.ledgerId;
         this.runningTotalDr = res.obj.runningTotalDr;
         this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue=res.obj.docSeqValue;
         console.log(this.description);
 
         this.viewAccounting1 = res.obj.glLines;

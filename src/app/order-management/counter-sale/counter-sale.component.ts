@@ -825,7 +825,6 @@ export class CounterSaleComponent implements OnInit {
               for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
                 if (this.allDatastore.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
                   this.displayLineflowStatusCode[i] = false;
-                  // this.PaymentButton = false;
                   this.displayRemoveRow[i] = false;
                 }
                 else if
@@ -943,6 +942,10 @@ export class CounterSaleComponent implements OnInit {
 
   pickTicketupdateFunction() {
     const formValue: ISalesBookingForm = this.CounterSaleOrderBookingForm.value;
+    // var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    // for (let i=0;i<orderLines.length; i++){
+    //   orderLines[i].taxCategoryName=orderLines[i].taxCategoryName.taxCategoryName;
+    // }
     this.orderManagementService.UpdateCounterSaleInv(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message + 'res.message');
@@ -1146,7 +1149,6 @@ export class CounterSaleComponent implements OnInit {
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
-
             // if (this.custSiteList.length === 1) {
             //   this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             // }
@@ -1162,9 +1164,11 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedcustSiteName(siteName) {
-   // alert(siteName)
+  //  alert(siteName);
+  //  alert(sessionStorage.getItem('ouId'));
        let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
+    // alert(selSite.ouId);
 
     if (selSite.ouId != (sessionStorage.getItem('ouId'))) {
       alert('First Create OU wise Site to continue process!')
@@ -1544,6 +1548,7 @@ export class CounterSaleComponent implements OnInit {
                         (controlinv.controls[k]).patchValue({
                           taxCategoryId :itemCateNameList.taxCategoryId,
                             taxCategoryName: itemCateNameList,      
+                            // taxCategoryName: itemCateNameList.taxCategoryName,
                          })
                       }
                     );
@@ -1835,8 +1840,12 @@ export class CounterSaleComponent implements OnInit {
     // return;
     // } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    for (let i=0;i<orderLines.length; i++){
+      orderLines[i].taxCategoryName=orderLines[i].taxCategoryName.taxCategoryName;
+    }
     // let jsonData = this.CounterSaleOrderBookingForm.value;
     let jsonData = this.CounterSaleOrderBookingForm.getRawValue();
+   
     jsonData.orderedDate = this.pipe.transform(this.now, 'yyyy-MM-dd');
     jsonData.refCustNo = this.CounterSaleOrderBookingForm.get('refCustNo').value;
     // alert(jsonData.refCustNo);

@@ -19,6 +19,13 @@ export class MasterService {
     this.ServerUrl = AppConstants.ServerUrl;
    }
 
+  //  public  getCurrentDate(): Date {
+  //   var res  : any = this.http.get('http://worldtimeapi.org/api/timezone/Asia/Kolkata');
+  //   var cDate=res.datetime.substr(0,res.datetime.indexOf('T'));
+  //   return new Date(cDate);
+  // }
+
+
    ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -1849,7 +1856,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
-   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&billToLocId=${mLocId}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 
@@ -2267,11 +2274,10 @@ OrderCategoryList(): Observable<any> {
     var userId1=sessionStorage.getItem('userId');
     console.log(docType);
     var docType1=formData.get('docType');
-
     // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`);
-
       return this.http.post(this.ServerUrl + `/pricelist/uploadprc`, formData)
-      // URL :- http://localhost:8081/pricelist/uploadprc
+      // URL :- http://localhost:8081/pricelist/uploadprc  -- old api ( Nishant)
+      // http://localhost:8081/fileImport/uploadBJprc  --- new api - Nishant in october-21
     }
 
 ////////////////////////////// bulk po upload /////////
@@ -3045,7 +3051,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
        }
 
       getPayRecAccountCode(methodId,ouId,divId,locId): Observable<any> {
-         return this.http.get(this.ServerUrl+`/AccountTrf/AcctCodeList/?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
+         return this.http.get(this.ServerUrl+`/AccountTrf/AcctCodeList?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
         //  http://localhost:8081/AccountTrf/AcctCodeList/?receiptMethodId=41&ouId=110&divisionId=2&locId=121
 
       }
@@ -3058,6 +3064,36 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         const url = this.ServerUrl + `/AccountTrf/AcctTrfSave?emplId=${mEmplId}`;
         return this.http.post(url, CashBankTrfRecord, options);
       }
+
+      public CashBankTrfPostSubmit(CashBankTrfRecord,mEmplId) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + `/AccountTrf/AcctTrfPost?emplId=${mEmplId}`;
+        return this.http.post(url, CashBankTrfRecord, options);
+
+        // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+
+      }
+
+      public CashBankTrfReversalSubmit(CashBankTrfRecord,mEmplId,docTrfNo) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
+        return this.http.post(url, CashBankTrfRecord, options);
+
+      }
+
+      
+
+
+      getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
+        return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
+        // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
+     }
+
+      
 
      
 
