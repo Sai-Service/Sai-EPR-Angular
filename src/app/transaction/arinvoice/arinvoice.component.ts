@@ -1484,7 +1484,7 @@ export class ARInvoiceComponent implements OnInit {
     this.applySaveButton=false;
     this.invLineArray().clear();
 
-      this.service.getCreditMemoSearchByInvoiceNo(custAcno, billToSite, creditMemoNum)
+      this.service.getCreditMemoSearchByInvoiceNo(custAcno, this.ouId, creditMemoNum)
         .subscribe(
           data => {
             this.lstinvoices = data.obj.invLine;
