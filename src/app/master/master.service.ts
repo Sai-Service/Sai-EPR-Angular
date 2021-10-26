@@ -19,6 +19,13 @@ export class MasterService {
     this.ServerUrl = AppConstants.ServerUrl;
    }
 
+  //  public  getCurrentDate(): Date {
+  //   var res  : any = this.http.get('http://worldtimeapi.org/api/timezone/Asia/Kolkata');
+  //   var cDate=res.datetime.substr(0,res.datetime.indexOf('T'));
+  //   return new Date(cDate);
+  // }
+
+
    ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -1849,7 +1856,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
-   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&billToLocId=${mLocId}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 

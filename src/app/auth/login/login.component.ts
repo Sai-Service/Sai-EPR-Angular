@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
   divisionCode:string;
   ticketNo:string;
 
+  currentDateList:any=[];
+
   constructor(private router: Router, private loginService: LoginService ) { }
 
   ngOnInit(): void {

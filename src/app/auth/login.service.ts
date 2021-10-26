@@ -26,9 +26,9 @@ export class LoginService {
     let options = {
       headers: this.headers
     };
-    // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
     const url = 'http://localhost:8081/loginpage';
-    // const url='http://saihorizon.com:8080/ErpReplica/loginpage'
+    // const url='http://saihorizon.com:8080/ErpReplica/loginpage';
+    // const url='http://saidev.horizon.org:8080/ErpReplica/loginpage';
     console.log(body);
     return this.httpclient.post(url, body, options)
     // .pipe(
@@ -48,5 +48,7 @@ export class LoginService {
   //   window.alert(errorMessage);
   //   return throwError(errorMessage);
   // }
+
+
 
 }
