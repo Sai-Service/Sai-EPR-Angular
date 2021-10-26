@@ -1276,7 +1276,7 @@ export class PaymentArComponent implements OnInit {
       //  this.totUnAppliedtAmount=this.paymentAmt;
       // this.totAppliedtAmount =0;
 
-      this.service.getArReceiptSearchByInvoiceNo(custActNo, billToSiteId, rcptNo)
+      this.service.getArReceiptSearchByInvoiceNo(custActNo, this.ouId, rcptNo)
         .subscribe(
           data => {
             this.lstinvoices = data.obj.invLine;
@@ -2121,6 +2121,7 @@ export class PaymentArComponent implements OnInit {
     this.paymentArForm.get('searchByRcptNo').reset();
     this.paymentArForm.get('searchByCustNo').reset();
     this.paymentArForm.get('searchByDate').reset();
+    
     this.paymentArForm.get('searchByRcptNo').enable();
     this.paymentArForm.get('searchByCustNo').enable();
     this.paymentArForm.get('searchByDate').enable();

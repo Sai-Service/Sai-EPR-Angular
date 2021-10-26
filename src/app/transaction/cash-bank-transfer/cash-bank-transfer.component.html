@@ -74,37 +74,62 @@
                                 <td colspan="3">
                                     <input  disabled  type="text"  formControlName="transferDescp"  id="transferDescp" [(ngModel)]="transferDescp" class="form-control" style=" width: 100%;" >
                                 </td>
-                                    
-                               
-  
-                                
-                               
+                        
                              </tr>
 
 
                             <tr>
 
-                            <td style="width: 15%" class="LabelFontStyle">Clearing&nbsp;Date:&nbsp;</td>
-                            <td>
-                                <input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" style="background-color: yellow;" >
-                            </td>
+                                <td style="width: 15%" class="LabelFontStyle">Rev&nbsp;Status&nbsp;:&nbsp;</td>
+                                <td>
+                                    <select formControlName="reversalStatus" id="reversalStatus" class="form-control"  [(ngModel)]="reversalStatus" 
+                                    (ngModelChange)="onSelectionRevStatus($event)" style="background-color: yellow;">
+                                     <option value="N">N</option>
+                                     <option value="Y">Y</option>
+                                </select>
+                                </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Period:&nbsp;</td>
-                                <td>  
-                                    <select   formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" style="background-color: yellow;" >                                    <option disabled>--Select--</option>
+                           
+
+                           <div *ngIf="statusReversal; then revYes1; else revNo1"></div>
+                            <ng-template #revYes1> 
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Period:&nbsp;</td>
+                                 <td>  
+                                    <select  formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control" style="background-color: yellow;"  >       
+                                    <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
                                     {{sc.periodName}}
                                     </option>
                                     </select>
                                 </td>
 
-                                    
-                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Date:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Date:&nbsp;</td>
                                 <td>
                                     <input    type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control" style="background-color: yellow;" >
                                 </td>
 
-                         
+                                <input   hidden type="date"  formControlName="reversalDocDt"  id="reversalDocDt" [(ngModel)]="reversalDocDt" class="form-control" style="background-color: yellow;" >
+                            
+
+                            </ng-template>
+                            <ng-template #revNo1> 
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Rev&nbsp;Period:&nbsp;</td>
+                        
+                                <td>  
+                                    <select  disabled formControlName="reversalPeriod" id="reversalPeriod" [(ngModel)]="reversalPeriod"  class="form-control"  >       
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let sc of  PeriodList" [ngValue]="sc.periodName">
+                                    {{sc.periodName}}
+                                    </option>
+                                    </select>
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Reversal&nbsp;Date:&nbsp;</td>
+                                <td>
+                                    <input disabled   type="date"  formControlName="reversalDate"  id="reversalDate" [(ngModel)]="reversalDate" class="form-control"  >
+                                </td>
+                            </ng-template>
+
+
 
                             </tr>
                             <tr>
@@ -122,34 +147,11 @@
                            
                                 <td style="width: 15%" class="LabelFontStyle">Narration&nbsp;:&nbsp;</td>
                                 <td colspan="5">
-                                    <input    type="text"  formControlName="trfNarration"  id="trfNarration" [(ngModel)]="trfNarration" class="form-control" style="width: 100%;">
+                                    <input    type="text"  formControlName="trfNarration"  id="trfNarration" [(ngModel)]="trfNarration" class="form-control" style="width: 100%;background-color: yellow;">
                                  </td>
                             </tr>
 
-                            <tr>
-
-                            <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Status&nbsp;:&nbsp;</td>
-                            <td>
-                                <select formControlName="reversalStatus" id="reversalStatus" class="form-control"  [(ngModel)]="reversalStatus" style="background-color: yellow;">
-                                 <option value="NO">NO</option>
-                                 <option value="YES">YES</option>
-                            </select>
-                            </td>
-
-                            <td></td> <td></td> 
-
-                            
-                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
-                            <td>
-                                <select  formControlName="status"  id ="status"  [(ngModel)]="status"  class="form-control" style="background-color: yellow;" 
-                                        (ngModelChange)='onOptionsSelected($event)' >
-                                     <option value="SAVE">SAVE</option>
-                                    <option value="POST">POST</option>
-                                </select>
-                            </td>
-    
-    
-                            </tr>
+                          
 
                         
 
@@ -162,13 +164,11 @@
                         <table class="center"> -->
 
                             <tr>
-
-                                <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
-
-                                
-                                    <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control" style="background-color: yellow;" >
-                                 
-
+                              
+                                <div *ngIf="selectdisp; then disp1; else disp2"></div>
+                                 <ng-template #disp2> 
+                                    <input  hidden  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"  >
+                                    <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
                                 <td>  
                                     <select   formControlName="fromAcctDescpId" id="fromAcctDescpId" [(ngModel)]="fromAcctDescpId"  class="form-control"   (ngModelChange)="onSelectionFromAc($event)" style="background-color: yellow;" >     
                                     <option disabled>--Select--</option>
@@ -178,25 +178,31 @@
                                     </select>
                                 </td>
 
-                                    
                                 <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c:&nbsp;</td>
-
-                                
-                                    <input  hidden  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control" style="background-color: yellow;" >
-                                 
+                                    <input  hidden  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control" >
                                 <td>  
                                     <select   formControlName="toAcctDescpId" id="toAcctDescpId" [(ngModel)]="toAcctDescpId"  class="form-control"   (ngModelChange)="onSelectionToAc($event)" style="background-color: yellow;">   
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  toAcctList" [ngValue]="sc.bankAccountId">
-                                    {{sc.methodName}}
+                                    {{sc.methodName}}-{{sc.bankAccountNo}}
                                     </option>
                                     </select>
                                 </td>
 
-                                    
+                                 </ng-template>
+
+                                 <ng-template #disp1> 
+                                    <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c:&nbsp;</td>
+                                    <td><input  disabled  type="text"  formControlName="fromAcctDescp"  id="fromAcctDescp" [(ngModel)]="fromAcctDescp" class="form-control"></td> 
+                                    <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c:&nbsp;</td>
+                                    <td><input  disabled  type="text"  formControlName="toAcctDescp"  id="toAcctDescp" [(ngModel)]="toAcctDescp" class="form-control"></td>
+                                </ng-template>
+                                 
                                
-                                    
-                               
+                                <td style="width: 15%" class="LabelFontStyle">Clearing&nbsp;Date:&nbsp;</td>
+                                <td>
+                                    <input    type="date"  formControlName="clearingDate"  id="clearingDate" [(ngModel)]="clearingDate" class="form-control" style="background-color: yellow;" >
+                                </td>
                         
                             </tr>
 
@@ -211,33 +217,49 @@
                                 <input  hidden     formControlName="fromGlCodeId"  id="fromGlCodeId" [(ngModel)]="fromGlCodeId" class="form-control" >
                                 <input  hidden     formControlName="toGlCodeId"  id="toGlCodeId" [(ngModel)]="toGlCodeId" class="form-control" >
                                
-                                <td style="width: 15%" class="LabelFontStyle">Payable&nbsp;A/c&nbsp;Code:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">From&nbsp;A/c&nbsp;Code:&nbsp;</td>
                                 <td>
                                     <input  disabled   type="text"  formControlName="fromAcctCode"  id="fromAcctCode" [(ngModel)]="fromAcctCode" class="form-control" >
                                 </td>
 
                                     
-                                <td style="width: 15%" class="LabelFontStyle">Receivable&nbsp;A/c&nbsp;Code:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">To&nbsp;A/c&nbsp;Code:&nbsp;</td>
                                 <td>
                                     <input  disabled   type="text"  formControlName="toAcctCode"  id="toAcctCode" [(ngModel)]="toAcctCode" class="form-control" >
                                 </td>
-
-                                <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Amt:&nbsp;</td>
+                               
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
+                                <!-- <td>
+                                    <select  formControlName="status"  id ="status"  [(ngModel)]="status"  class="form-control" style="background-color: yellow;" 
+                                            (ngModelChange)='onOptionsSelected($event)' >
+                                         <option value="Save">Save</option>
+                                        <option value="Post">Post</option>
+                                    </select>
+                                </td> -->
                                 <td>
-                                    <input     type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" class="form-control" style="background-color: yellow;text-align: right;" >
+                                    <input  disabled   type="text"  formControlName="status"  id="status" [(ngModel)]="status" class="form-control" >
                                 </td>
+
+                                
                             </tr>
                             <tr>
                                     
-                                  
+                                <td style="width: 15%" class="LabelFontStyle">Transfer&nbsp;Amt:&nbsp;</td>
+                                <td>
+                                    <input     type="nunber"  min="1" formControlName="trfAmount"  id="trfAmount" [(ngModel)]="trfAmount" class="form-control" style="background-color: yellow;text-align: right;" >
+                                </td> 
                                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Amt&nbsp;In&nbsp;Words:&nbsp;</td>
                                
-                                <td colspan="5">
+                                <td colspan="3">
                                     <input disabled  style="width: 100%"   type="text"  formControlName="amtInWords"  id="amtInWords" [(ngModel)]="amtInWords" class="form-control" >
                                 </td>
                              
     
                             </tr>
+                         
+                                
+                         
+
 
                             
 
@@ -252,25 +274,39 @@
                     <!-- ===================================Buttons======================================== -->
                        <table class="center">
                           <tr>
-                                    <div *ngIf="statusSave; then saveYes; else saveNo"></div>
-                                    <ng-template #saveYes> 
-                                       <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfSave()" >Save</button> </td> 
+                                    <div *ngIf="displayButton; then Block1; else Block12"></div>
+                                    <ng-template #Block1> 
+                                        <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfSave()" >Save</button> </td> 
                                     </ng-template>
-                                    <ng-template #saveNo>
-                                        <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfSave()">Save</button> </td>
-                                    </ng-template> 
+                                        
+                                    <ng-template #Block12> 
+                                        <div *ngIf="statusPost; then Block2; else Block21"></div>
+                                        <ng-template #Block2> 
+                                             <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
+                                        </ng-template>
+                                        <ng-template #Block21> 
+                                            <!-- <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td> -->
+                                        </ng-template>
 
-                                    <div *ngIf="statusPost; then postYes; else postNo"></div>
-                                    <ng-template #postYes> 
-                                        <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
-                                    </ng-template>
-                                    <ng-template #postNo> 
-                                      <td> <button disabled type="button" class="btn btn-info" (click)="cashBnkTrfPost()" >Post</button>  </td>
-                                    </ng-template>
+                                        
+                                       
+                                        <div *ngIf="revButton; then Block3; else Block31"></div>
+                                        <ng-template #Block3> 
+                                        <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" >Reversal</button></td>
+                                        </ng-template>
+                                        <ng-template #Block31> 
+                                         </ng-template>
 
-                                     <td> <button type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" [disabled]="!cashBankTransferForm">Copy</button></td>
-                                     <td><button type="button" class="btn btn-info" (click)="cashBnkTrfReversal()" [disabled]="!cashBankTransferForm">Reversal</button></td>
-                                   
+                                        <div *ngIf="copyButton; then Block4; else Block41"></div>
+                                        <ng-template #Block4> 
+                                            <td> <button  type="button" class="btn btn-info" (click)="cashBnkTrfCopy()" >Copy</button></td>
+                                        </ng-template>
+                                        <ng-template #Block41></ng-template>
+
+                                        
+
+                                    </ng-template>
+                                    
                                                             
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
@@ -346,12 +382,29 @@
                                 <td  style="background-color: #FFE4B5;">Document&nbsp;&nbsp;No:&nbsp;</td>
                                <td style="background-color: #FFE4B5;">
                                     <input class="form-control" formControlName="searchDocNo" [(ngModel)]='searchDocNo'
-                                        value={{searchDocNo}} style="text-transform:uppercase;">
+                                        style="text-transform:uppercase;width: 150px;">
                                 </td>
 
                                 <td style="background-color: #FFE4B5;">
                                     <button type="button" class="btn-primary" (click)="SearchByDocNo(searchDocNo)"><i class="fa fa-search"
                                             aria-hidden="true"></i></button>
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date:&nbsp;</td>
+                                <td> <input   type="date"  formControlName="fromDate"  id="fromDate" [(ngModel)]="fromDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 150px;" ></td>
+                                
+                                <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date:&nbsp;</td>
+                                <td> <input   type="date"  formControlName="toDate"  id="toDate" [(ngModel)]="toDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}"  style="width: 150px;"></td>
+                                
+
+                                <td style="background-color: #FFE4B5;">
+                                    <button type="button" class="btn-primary" (click)="SearchByDate()"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </td>
+
+                               
+                                <td>
+                                    <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Clear</button>
                                 </td>
                 
                               
@@ -361,6 +414,8 @@
                     </tr>
                 </table>
                 </fieldset>
+
+
                     
                     
                     
@@ -372,7 +427,7 @@
     </div>
 </div>
 
-<!-- <br>
+<br>
 
 <div class="container1">
     <div class="grid_scroll">
@@ -380,25 +435,33 @@
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th> 
-                <th style="width:5rem" scope="col">Item&nbsp;Number&nbsp;</th>
-                <th style="width:15rem" scope="col"> Item&nbsp;Name</th>
-                <th style="width:6rem" scope="col"> Item&nbsp;Type</th>
-                <th style="width:10rem" scope="col">Discount&nbsp;</th>
-                <th style="width:12rem" scope="col">Start&nbsp;Date</th>
+                <th style="width:5rem" scope="col">Trf&nbsp;No&nbsp;</th>
+                <th style="width:5rem" scope="col">Trf&nbsp;No&nbsp;</th>
+                <th style="width:5rem" scope="col"> Trf&nbsp;Date</th>
+                <th style="width:10rem" scope="col"> Trf&nbsp;Header</th>
+                <th style="width:6rem" scope="col">Trf&nbsp;Amt</th>
+                <th style="width:10rem" scope="col">From&nbsp;A/c</th>
+                <th style="width:10rem" scope="col">To&nbsp;A/c</th>
+                <th style="width:4rem" scope="col">Status&nbsp;</th>
+                <th style="width:3rem" scope="col">Rev&nbsp;Stat</th>
                 <th style="width:6rem" scope="col">Select</th>
             </tr>
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.itemNumber}}</td>
-                <td>{{com.itemName}}</td>   
-                <td style="text-align: center;">{{com.itemType}}</td>   
-                <td style="text-align: center;">{{com.discount}}</td> 
-                <td style="text-align: center;">{{com.startDate | date:'dd-MM-y'}}</td>
-                <td><button class="btn btn-info" (click)="Select(com.itemId)">Select</button></td>   
+                <td>{{com.docTrfNo}}</td>
+                <td>{{com.transferDate| date:'dd-MM-y'}}</td>   
+                <td style="text-align: center;">{{com.transferDescp}}</td>   
+                <td style="text-align: center;">{{com.trfHeader}}</td> 
+                <td style="text-align: center;">{{com.trfAmount}}</td>
+                <td style="text-align: center;">{{com.fromAcctDescp}}</td>
+                <td style="text-align: center;">{{com.toAcctDescp}}</td>
+                <td style="text-align: center;">{{com.status}}</td>
+                <td style="text-align: center;">{{com.reversalStatus}}</td>
+                <td><button class="btn btn-info" (click)="Select(com.tranId)">Select</button></td>   
         </tr> 
     </table>
 </div>
 </div>
 
- -->
+
