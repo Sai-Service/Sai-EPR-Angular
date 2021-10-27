@@ -359,14 +359,18 @@ displayThirdButtonDisplay=true;
     this.poMasterDtoForm = this.fb.group({
 
       poHeaderId: [],
-      ouId: ['', [Validators.required]],
-      poDate: ['', [Validators.required]],
-      poType: ['', [Validators.required]],
+      // ouId: ['', [Validators.required]],
+      // poDate: ['', [Validators.required]],
+      // poType: ['', [Validators.required]],
+      ouId: [''],
+      poDate: [''],
+      poType: [''],
       segment1: [''],
-      supplierSiteId: [],
+      supplierSiteId: ['', [Validators.required]],
       // segmentName: [],
       // polineNum:[],
       supplierCode: ['', [Validators.required]],
+      // supplierCode: [''],
       supplierName: [],
       billToLoc: [],
       shipToLoc: [],
@@ -374,12 +378,14 @@ displayThirdButtonDisplay=true;
       authorizationStatus: [],
       totalAmt: [],
       supplierAddress: [],
-      suppInvNo: ['', [Validators.minLength(3)]],
+      // suppInvNo: ['', [Validators.minLength(3)]],
+      suppInvNo: [''],
       suppInvDate:[''],
       // [ Validators.minLength(3), Validators.maxLength(30)]
       ewayBillNo: [],
       iRNNo: [],
-      approveDate: ['', [Validators.nullValidator, Validators.maxLength(30)]],
+      // approveDate: ['', [Validators.nullValidator, Validators.maxLength(30)]],
+      approveDate: [''],
       TransactionNature: [],
       dept: [],
       baseAmount: [],
@@ -396,14 +402,16 @@ displayThirdButtonDisplay=true;
       recoverableFlag: [],
       selfAssesedFlag: [],
       inclusiveFlag: [],
-      description: ['', [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z 0-9]*')]],
+      // description: ['', [Validators.minLength(3), Validators.maxLength(20), Validators.pattern('[a-zA-Z 0-9]*')]],
+      description: [''],
       totTaxAmt: [],
       ouName: [],
       name: [],
       contextValue: [],
       divisionName: [],
       address: [],
-      mobileNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
+      // mobileNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*')]],
+      mobileNo: [''],
       kilometer: [],
       transferToNewCarACNo: [],
       paymentToBank: [],
@@ -752,15 +760,15 @@ displayThirdButtonDisplay=true;
       diss1: [],
       itemType: [],
       unitPrice: ['',[Validators.required]],
-      orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
+      // orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
+      // orderedQty: ['', [Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
+      orderedQty: [''],
       baseAmtLineWise: [],
       poChargeAcc: [],
       taxCategoryId: [],
       segmentName: [],
-
       taxAmtLineWise: [],
       totAmtLineWise: [],
-
       taxAmounts: this.fb.array([])
 
     });
@@ -2379,6 +2387,77 @@ displayThirdButtonDisplay=true;
     // });
   }
 
+   message1: string = "Please Fix the Errors !";
+    msgType:string ="Close";
+    getMessage(msgType: string) {
+      this.msgType = msgType;
+  // alert("check");
+      if (msgType.includes("Save")) {
+        this.submitted = true;
+        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+        if (this.poMasterDtoForm.invalid) {
+           alert("Validator error");
+          //this.submitted = false;
+          (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+          return;
+        }
+        this.message1 = "Do you want to SAVE the changes(Yes/No)?"
+        
+      }
+      if (msgType.includes("Update")) {
+          this.message1 = "Do you want to Update the Form(Yes/No)?"
+        }
+      if (msgType.includes("Approve")) {
+            this.message1 = "Do you want to Approve this PO (Yes/No)?"
+        }
+      if (msgType.includes("poCancel")) {
+              this.message1 = "Do you want to Cancel this PO (Yes/No)?"
+          }
+     if (msgType.includes("goReceiptForm")) {
+                this.message1 = "Nevigate to Receipt form (Yes/No)?"
+        }
+     if (msgType.includes("Reset")) {
+        this.message1 = "Do you want to Reset the changes(Yes/No)?"
+      }
+      
+      if (msgType.includes("Close")) {
+        this.message1 = "Do you want to Close the Form(Yes/No)?"
+      }
+      return;
+    }
+  
+   executeAction() {
+      if(this.msgType.includes("Save")) {
+        this.newPOMast();
+      }
+
+      if (this.msgType.includes("Update")) {
+    //       alert("Update button clicked");
+          this.UpdatePOMast();
+        }
+       if (this.msgType.includes("Approve")) {
+            this.Approve();
+         }
+         if (this.msgType.includes("poCancel")) {
+             this.poCancel(this.segment1);
+           }
+     if (this.msgType.includes("goReceiptForm")) {
+               this.goReceiptForm(this.segment1);
+      }
+  
+      if (this.msgType.includes("Reset")) {
+    //       alert("reset clicked");
+        this.clearFormArray();
+      }
+      
+      if (this.msgType.includes("Close")) {
+        this.router.navigate(['admin']);
+      }
+      return;
+    }
+  
+  
+  
 
 
   onHsnCodeSelected(event,index){

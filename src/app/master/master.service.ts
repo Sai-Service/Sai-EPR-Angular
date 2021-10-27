@@ -287,6 +287,9 @@ CostCenterList(): Observable<any> {
 NaturalAccountList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
 }
+NaturalAccountList1():Observable<any>{
+  return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
+}
 InterBrancList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
 }
