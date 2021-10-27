@@ -6,7 +6,7 @@ import { MasterService } from '../../master/master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
-import { DatePipe } from '@angular/common';
+import { DatePipe ,Location} from '@angular/common';
 
 
 interface IAvgCostUpdate {
@@ -140,7 +140,7 @@ export class AvgCostUpdateComponent implements OnInit {
   // public locatorId=999
   // public subInventoryCode='SP'
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router,private location1: Location) 
     {
       this.avgCostUpdateForm  = fb.group({
 
@@ -531,8 +531,12 @@ export class AvgCostUpdateComponent implements OnInit {
 
   searchMast(locId:any,itemId:any,frmDate:any,toDate:any) {
     frmDate=this.pipe.transform(frmDate, 'dd/MM/y');
-    toDate=this.pipe.transform(toDate, 'dd/MM/y');
-    this.service.getAvgHistoryList(locId,itemId,frmDate,toDate)
+    // toDate=this.pipe.transform(toDate, 'dd/MM/y');
+    var endDtSt = this.avgCostUpdateForm.get('toDate').value;
+    var endDt1 = new Date(endDtSt);
+    endDt1.setDate(endDt1.getDate() + 1);
+    this.toDate = this.pipe.transform(endDt1, 'dd/MM/yyyy');
+    this.service.getAvgHistoryList(locId,itemId,frmDate,this.toDate)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -809,7 +813,13 @@ export class AvgCostUpdateComponent implements OnInit {
     }
 
 
-
+    refresh() {
+      window.location.reload();
+    }
+  
+    close() {
+      this.location1.back();
+    }
 }
 
 
