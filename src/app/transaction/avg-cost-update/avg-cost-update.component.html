@@ -35,12 +35,16 @@
 
                         <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                         <td>
-                            <input style="width: 240px;" disabled  type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName"   class="form-control" placeholder="item description" >
+                            <input style="width: 230px;" disabled  type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName"   class="form-control" placeholder="item description" >
                         </td>
 
                         <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date:&nbsp;</td>
                         <td>
+<<<<<<< HEAD
                             <input style="width: 170px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control" >
+=======
+                            <input style="width: 140px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}">
+>>>>>>> 160078770596991ed741968ed36ee6a397a8821d
                         </td>
     
     
@@ -48,11 +52,15 @@
         
                         <td>
                             <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
+<<<<<<< HEAD
                             <input  style="width: 170px;"  type="date"  formControlName="toDate"  id="toDate" max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="toDate" class="form-control" >
+=======
+                            <input  style="width: 140px;"  type="date"  formControlName="toDate"  id="toDate" [(ngModel)]="toDate" class="form-control" max="{{minDate | date:'yyyy-MM-dd'}}" >
+>>>>>>> 160078770596991ed741968ed36ee6a397a8821d
                         </td>
     
                         <td colspan="8" style="text-align: left; width: 100%;">
-                            <button type="submit"  (click)="searchMast(locId,searchItemId,fromDate,toDate)" class="btn btn-primary" style="width: 4em;"><i
+                            <button type="submit"  (click)="searchMast(locId,searchItemId,fromDate,toDate)" class="btn btn-primary" style="width: 3em;"><i
                                     class="fa fa-search"></i></button> 
 
 

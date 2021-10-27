@@ -36,6 +36,10 @@ interface IAvgCostUpdate {
 export class AvgCostUpdateComponent implements OnInit {
   avgCostUpdateForm : FormGroup;
 
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+
   priceListId :number;
   priceListName:string;
   priceListDesc:string;
@@ -61,11 +65,18 @@ export class AvgCostUpdateComponent implements OnInit {
   endDate:Date;
 
 
+<<<<<<< HEAD
   fromDate:Date;
   // toDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
   toDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
+=======
+  // fromDate:Date;
+  // toDate:Date;
+  fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
+  toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
+>>>>>>> 160078770596991ed741968ed36ee6a397a8821d
   searchItemId:number;
 
   showOu=false;
@@ -109,9 +120,14 @@ export class AvgCostUpdateComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
+<<<<<<< HEAD
   // pipe = new DatePipe('en-US');
   // now = Date.now();
   transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+=======
+  
+  transDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+>>>>>>> 160078770596991ed741968ed36ee6a397a8821d
 
   divisionId : number;
   loginName:string;
