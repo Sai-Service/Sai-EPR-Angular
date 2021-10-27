@@ -36,6 +36,7 @@ interface IOrderType {
 export class OrderTypeMasterComponent implements OnInit {
   orderTypeMasterForm : FormGroup;
   pipe = new DatePipe('en-US');
+  public minDate = new Date();
    
     public DivisionIDList : Array<string>=[];
     public OUIdList: Array<string> = [];
@@ -274,7 +275,7 @@ export class OrderTypeMasterComponent implements OnInit {
       }
 
       Select(transactionTypeId: number) {
-        alert ('OrderTypeId='+transactionTypeId);
+        // alert ('OrderTypeId='+transactionTypeId);
         // this.orderTypeMasterForm.get('ouId').reset();
         this.orderTypeMasterForm.get('locId').reset();
         this.orderTypeMasterForm.reset();
@@ -283,16 +284,12 @@ export class OrderTypeMasterComponent implements OnInit {
         if (select) {
           this.orderTypeMasterForm.patchValue(select);
           this.transactionTypeId = select.transactionTypeId;
+        
+          this.ouId = select.ouId.ouId;
           this.displayButton = false;
           this.showOrg=false;
           this.display = false;
-          this.ouId = select.ouId.ouId;
-          // this.divisionId=select.ouId.divisionId.divisionId;
-        }
-        alert('transtypeid='+transactionTypeId+"  OU :" + this.ouId );
-        alert(" divisionid: "+this.divisionId);
-        alert(" InvoiceSource: "+this.invoiceSource);
-      }
+        }}
       
 
       searchMast() {
@@ -341,17 +338,18 @@ export class OrderTypeMasterComponent implements OnInit {
 
         const formValue: IOrderType = this.orderTypeMasterForm.value;
         // const formValue: IOrderType =this.transeData(this.orderTypeMasterForm.value);
-        alert("OrderType -Transactiontypeid:" +formValue.transactionTypeId);
-        alert("OrderType -formvalue:" +formValue);
+        // alert("OrderType -Transactiontypeid:" +formValue.transactionTypeId);
+        // alert("OrderType -formvalue:" +formValue);
         // this.service.UpdateOrderTypeMasterById(formValue, formValue.transactionTypeId).subscribe((res: any) => {
           this.service.UpdateOrderTypeMasterById1(formValue).subscribe((res: any) => {
           if (res.code === 200) {
             alert('RECORD UPDATED SUCCESSFULLY');
-            window.location.reload();
+            // window.location.reload();
+            this.orderTypeMasterForm.disable();
           } else {
             if (res.code === 400) {
               alert('ERROR OCCOURED IN PROCEESS');
-              this.orderTypeMasterForm.reset();
+             
             }
           }
         });

@@ -804,7 +804,7 @@ export class PricelistMasterComponent implements OnInit {
 
 
   uploadFile() {
-    alert(".............WIP");
+    // alert(".............WIP");
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])

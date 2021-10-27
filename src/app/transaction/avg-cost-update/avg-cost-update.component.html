@@ -447,12 +447,12 @@
 
                         <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                         <td>
-                            <input style="width: 240px;" disabled  type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName"   class="form-control" placeholder="item description" >
+                            <input style="width: 230px;" disabled  type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName"   class="form-control" placeholder="item description" >
                         </td>
 
                         <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date:&nbsp;</td>
                         <td>
-                            <input style="width: 134px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control" >
+                            <input style="width: 140px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}">
                         </td>
     
     
@@ -460,11 +460,11 @@
         
                         <td>
                             <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
-                            <input  style="width: 134px;"  type="date"  formControlName="toDate"  id="toDate" [(ngModel)]="toDate" class="form-control" >
+                            <input  style="width: 140px;"  type="date"  formControlName="toDate"  id="toDate" [(ngModel)]="toDate" class="form-control" max="{{minDate | date:'yyyy-MM-dd'}}" >
                         </td>
     
                         <td colspan="8" style="text-align: left; width: 100%;">
-                            <button type="submit"  (click)="searchMast(locId,searchItemId,fromDate,toDate)" class="btn btn-primary" style="width: 4em;"><i
+                            <button type="submit"  (click)="searchMast(locId,searchItemId,fromDate,toDate)" class="btn btn-primary" style="width: 3em;"><i
                                     class="fa fa-search"></i></button> 
 
 
@@ -509,15 +509,15 @@
    </tbody>
             <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
             
-                <td>{{i+1}}</td>
-                <td style="text-align: right;">{{com.transactionId}}</td>
-                <td>{{com.creationDate}}</td>
-                <td>{{com.itemId}}/{{segment}}</td>
+                <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;">{{com.transactionId}}</td>
+                <td style="text-align: center;">{{com.creationDate}}</td>
+                <td style="text-align: left;">{{com.itemId}}/{{segment}}</td>
                 <td>{{itemName}}</td> 
-                <td style="text-align: right;">{{com.rate}}</td> 
-                <td style="text-align: right;">{{com.oldRate}}</td>
-                <td>{{com.locationId}}</td>  
-                <td>{{com.transSourceTypeId}}</td>
+                <td style="text-align: center;">{{com.rate}}</td> 
+                <td style="text-align: center;">{{com.oldRate}}</td>
+                <td style="text-align: center;">{{com.locationId}}</td>  
+                <td style="text-align: center;">{{com.transSourceTypeId}}</td>
                
                 <!-- <td><button class="btn btn-secondary" (click)="Select(com.avgCostId)">Select</button></td>    -->
             </tr>

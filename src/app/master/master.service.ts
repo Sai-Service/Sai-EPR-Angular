@@ -2274,8 +2274,9 @@ OrderCategoryList(): Observable<any> {
     var userId1=sessionStorage.getItem('userId');
     console.log(docType);
     var docType1=formData.get('docType');
-    // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`);
-      return this.http.post(this.ServerUrl + `/pricelist/uploadprc`, formData)
+      return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`, formData)
+      // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`);  --old url nishant
+      // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`, formData) --- old url nishant
       // URL :- http://localhost:8081/pricelist/uploadprc  -- old api ( Nishant)
       // http://localhost:8081/fileImport/uploadBJprc  --- new api - Nishant in october-21
     }
