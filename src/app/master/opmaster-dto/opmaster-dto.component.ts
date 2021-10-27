@@ -232,6 +232,7 @@ export class OPMasterDtoComponent implements OnInit {
   public delearCodeList: Array<string> = [];
   hsnSacCodeList: any=[];
   public taxCategoryList: any=[];
+  public taxCategoryListNew:any=[];
    public allTaxCategoryList: any[];
   public dispbut = true;
   lineNumber: number;
@@ -898,11 +899,6 @@ displayThirdButtonDisplay=true;
             // alert(approveDate2);
             const status = this.lstcomments1.authorizationStatus; 
             if (status === 'Inprogress') {
-              // this.displayNewButtonApprove = true;
-              // this.displayNewButtonUpdate = true;
-              // this.displayNewButtonSave = false;
-              // this.displayNewButtonpoCancel = false;
-              // this.displayNewButtonReset = false;
               this.displayFirstButtonDisplay=true;
               this.displaySecondButtonDisplay=false;
               this.displaytaxDisscountButton=true;
@@ -910,7 +906,9 @@ displayThirdButtonDisplay=true;
               this.displayButton = false;
               this.displayNewButton = false;
               this.displayTaxDetailForm = true;
-              let control = this.poMasterDtoForm.get('poLines') as FormArray;
+              var control = this.poMasterDtoForm.get('poLines') as FormArray;
+              console.log(control);
+              
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
@@ -918,8 +916,6 @@ displayThirdButtonDisplay=true;
                 this.hideArray[i] = true;
                 control.push(poLine);
               }
-
-
               var len = this.lstcomments1.poLines.length - 1
               this.lineDetailsArray.removeAt(len);
               this.poMasterDtoForm.patchValue(this.lstcomments1, { emitEvent: false });
@@ -929,11 +925,20 @@ displayThirdButtonDisplay=true;
                 (control.controls[j]).patchValue(
                   {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
+                    taxCategoryName:this.lstcomments1.poLines[j].taxCategoryName,
+                    taxCategoryId:this.lstcomments1.poLines[j].taxCategoryId,
                   });
                   if (data.obj.poLines[j].itemType==='GOODS'){
                     this.displayHSN[j]=true;
                     this.lineDetailsArray.controls[j].get('segmentName').disable();
-                    // this.searchrelatedCall(data.obj.poLines[j].invItemId,data.obj.supplierSiteId,j)
+                    this.service.taxCategoryListNew(data.obj.taxCategoryName,data.obj.poLines[j].gstPercentage)
+                    .subscribe(
+                      data1 => {
+                        this.taxCategoryList[j] = data1;
+                        console.log(this.taxCategoryList[j]);
+                      }
+                    );
+                    
                   }
                   else{
                     this.displayHSN[j]=false;
@@ -1576,10 +1581,9 @@ displayThirdButtonDisplay=true;
               this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
             }
           } else if (this.segmentNameList.code === 400) {
+            alert(data.message)
             var arrayControl = this.poMasterDtoForm.get('poLines').value
               (patch.controls[index]).patchValue({ segmentName: '' })
-
-
           }
         }
       );
@@ -2382,10 +2386,9 @@ displayThirdButtonDisplay=true;
 
 
   onHsnCodeSelected(event,index){
-    // alert(event +'----'+ index);
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
+    if (gstPercentage != undefined){
     var gstPercentage = selectgstPercentage.gstPercentage;  
-    // alert(gstPercentage); 
     let control = this.poMasterDtoForm.get('poLines') as FormArray;
     (control.controls[index]).patchValue(
       {
@@ -2405,5 +2408,6 @@ let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
       }
     );
   }
+}
 }
 }

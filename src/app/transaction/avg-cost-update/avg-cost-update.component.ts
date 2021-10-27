@@ -40,7 +40,7 @@ export class AvgCostUpdateComponent implements OnInit {
   priceListName:string;
   priceListDesc:string;
   priceListType:string;
-  
+  public minDate = new Date();
   priceListHeaderId : number;
   
  
@@ -62,7 +62,10 @@ export class AvgCostUpdateComponent implements OnInit {
 
 
   fromDate:Date;
-  toDate:Date;
+  // toDate:Date;
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  toDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
   searchItemId:number;
 
   showOu=false;
@@ -106,9 +109,9 @@ export class AvgCostUpdateComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
-  pipe = new DatePipe('en-US');
-  now = Date.now();
-  transDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
   divisionId : number;
   loginName:string;
@@ -210,7 +213,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
  
      ngOnInit(): void {
-
+      $("#wrapper").toggleClass("toggled");
       this.name=  sessionStorage.getItem('name');
       this.loginArray=sessionStorage.getItem('divisionName');
       this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -233,13 +236,13 @@ export class AvgCostUpdateComponent implements OnInit {
     //   data => {this.subInvCode = data;
     // });
 
-    this.service.subinventoryIdList()
-    .subscribe(
-      data => {
-        this.subinventoryIdList = data;
-        console.log(this.subinventoryIdList);
-      }
-    );
+    // this.service.subinventoryIdList()
+    // .subscribe(
+    //   data => {
+    //     this.subinventoryIdList = data;
+    //     console.log(this.subinventoryIdList);
+    //   }
+    // );
 
      this.service.invItemList1()
       .subscribe(
@@ -641,7 +644,7 @@ export class AvgCostUpdateComponent implements OnInit {
     //  alert('item function');
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
-      alert(selectedValue.itemId);
+      // alert(selectedValue.itemId);
       console.log(selectedValue);
       this.searchItemId = selectedValue.itemId;
       this.itemName=selectedValue.description;

@@ -1,7 +1,7 @@
 <div class="center">
     <table style="width: 100%;background-color: white;">
         <tr>
-            <td class="PageHeader"> &nbsp;AVERAGE&nbsp;COST&nbsp;UPDATE</td>
+            <td class="PageHeader"> &nbsp;AVERAGE&nbsp;COST&nbsp;</td>
         </tr>
     </table>
 
@@ -9,425 +9,17 @@
         <div class="form-bg">
             <div class="center" style="width: 100%;">
                 <form [formGroup]="avgCostUpdateForm" (ngSubmit)="avgCostUpdate(avgCostUpdateForm.value)">
-                    <table class="center" >
-
-                        <td><input hidden type="text" disabled formControlName="divisionId"
-                            class="form-control" [(ngModel)]="divisionId"> </td>
-                   
-                       
-                        <tr>
-
-                            <td style="width: 15%" class="LabelFontStyle">Division&nbsp;Name:&nbsp;</td>
-                        <td   style="border: none;color: black;">
-                            <input type="text" disabled formControlName="loginArray"
-                                class="form-control" [(ngModel)]="loginArray" placeholder="">
-                        </td>
-                        <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td>
-                        
-                        <!-- <td>
-                            <input   style="width:30px ;"  disabled type="text" formControlName="orgId"
-                            class="form-control" [(ngModel)]="orgId" >
-                        </td> -->
-
-                        <td>  
-                            <select disabled  formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control">
-                                <!-- (ngModelChange)='onOuIdSelected($event)' -->
-                               
-                            <option disabled>--Select--</option>
-                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                               {{sc.ouId}}-{{sc.ouName}}
-                            </option>
-                            </select>
-                        </td>
-
-                     <td style="width: 15%" class="LabelFontStyle">Location&nbsp;Name:&nbsp;</td>
-                        <!-- <td>
-                            <input  style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  placeholder="Location Name">
-                        </td> -->
-
-                        <td>
-                            <select  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control">
-                                <!-- (ngModelChange)='onLocationSelected1($event,i)' -->
-                                <option disabled>--Select--</option>
-                                <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
-                                {{sc.locId}} {{sc.locCode}} {{sc.locName}}
-                                </option>
-                            </select>
-                            </td>
-
-                 
-
-                        <td >
-                            <input   hidden  type="text" disabled formControlName="emplId"
-                            class="form-control" [(ngModel)]="emplId" placeholder="">
-
-                        </td>
-                                            
-                    </tr>
-
-
-
-                    <!-- ==========================Line 2=================================== -->
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">Date&nbsp;:&nbsp;</td>
-    
-                            <td>
-                                <input  disabled type="text"  formControlName="transDate"  id="transDate" [(ngModel)]="transDate" class="form-control" >
-                            </td>
-
-                            <td style="width: 15%" class="LabelFontStyle">Source&nbsp;Type:&nbsp;</td>
-                            <td>
-                                <input   type="number"  formControlName="transSourceTypeId"  id="transSourceTypeId" [(ngModel)]="transSourceTypeId" class="form-control" >
-                            </td>
-                       
-                            <td style="width: 15%" class="LabelFontStyle">Reason&nbsp;Code:&nbsp;</td>
-                            <td>
-                                <input   type="text"  formControlName="reasonCode"  id="reasonCode" [(ngModel)]="reasonCode" class="form-control" >
-                            </td>
-                    </tr>
-                     <tr> 
-
-                        <td style="width: 15%" class="LabelFontStyle">Account&nbsp;Code:&nbsp;</td>
-                        <td>
-                            <input   type="number"  formControlName="codeCombinationId"  id="codeCombinationId" [(ngModel)]="codeCombinationId" class="form-control" >
-                        </td>
-                       
-
-                    </tr>
-                    <!-- ============================================================= -->      
-                        
-                
-                 </table>
-                        
-                        <table style="width: 100%; background-color: #FFE4B5;">
-                            <tr>
-                                <td class="SubHeading2"> Item Line Details&nbsp;</td>
-                            </tr>
-                        </table>
-
-                        <table class="center" style=" width:100%; background-color:beige" >
-                           
-
-                           <tr>
-
-                                <div *ngIf="showItemSearch; then thenBlockSearchItem; else elseBlockSearchItem"> </div>
-
-                                <ng-template #thenBlockSearchItem>
-                                <td  style="width: 15%" class="LabelFontStyle">Search&nbsp;Item&nbsp;By&nbsp;:</td>
-                                <td> 
-                                    <select   formControlName="searchBy" id="searchBy" [(ngModel)]="searchBy" class="form-control">
-                                        <!-- <option value=""></option> -->
-                                        <option value="ITEM CODE">ITEM CODE</option>
-                                        <option value="ITEM DESCRIPTION">ITEM DESCRIPTION</option>
-                                </select>
-                                </td>
-
-                                <td style="width: 15%" class="LabelFontStyle">Search&nbsp;Value&nbsp;:</td>
-
-                                <td>
-                                    <input style="width: 330px;"   type="text" formControlName="searchValue" [(ngModel)]="searchValue" class="form-control" placeholder="Enter Search value"   >
-                                </td>
-
-                                <td>
-                                    <button style="width: 10em;" type="button" class="btn btn-info"  id="register" (click)="findByCode(searchBy,searchValue)" >Search</button>
-                                    <!-- <button type="button" class="btn btn-info"  id="register" (click)="searchMast()" >Search</button> -->
-                                </td>
-                                </ng-template>
-
-                                <ng-template #elseBlockSearchItem >
-                                    <!-- <Label> Search area</Label> -->
-                                </ng-template>
-                           </tr>
-
-                          
-
-                        </table>
-
-                        <!-- <table style="width: 100%; background-color: #FFE4B5;">
-                            <tr>
-                                <td class="SubHeading2">&nbsp;Item Details&nbsp;</td>
-                            </tr>
-                        </table> -->
-
-
-                        <div class="center">
-                            <!-- <br> -->
-                           <div class="center" formArrayName="priceListDetailList">
-      
-                                <div class="grid_scroll">
-
-                                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
-                                              cellspacing="0" cellpadding="4" rules="all" class="center">
-                                              <thead>
-                                                <tr class="GridHeader">
-                                                      <!-- <th scope="col">No.</th> -->
-                                                      <th scope="col">Item Code</th>
-                                                      <th scope="col">Item Description</th>
-                                                      <th scope="col">Item Category</th>
-                                                      <th scope="col">UOM</th>
-                                                      <th scope="col">New Avg Cost</th>
-                                                      <th scope="col">Current Avg Cost</th>
-                                                      <th scope="col">Locator</th>
-                                                      <th scope="col">SubInventory</th>
-                                                      <th scope="col">Add+</th>
-                                                      <th scope="col">Del-</th>
-                                                  </tr>
-                                              </thead>
-
-                                            <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
-                                                
-                                              <!-- <input type="text" hidden formControlName="priceListLineId"> -->
-                                                <td>
-                                                    <!-- <input hidden  type="text" formControlName="itemId" id="itemId" >
-                                                    <input   type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName" class="form-control" placeholder="Item Code "  > -->
-                                                    <input type="text" formControlName="segment"
-                                                    (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                    list="dynmicUserIds1" class="form-control"
-                                                    (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
-                                                    <datalist id="dynmicUserIds1">
-                                                        <option *ngFor="let item of invItemList"
-                                                            [ngValue]="item.itemId">{{item.segment}}
-                                                        </option>
-                                                    </datalist>
-                                                    <!-- onfocusout="itemValidate($event)" -->
-                                                </td> 
-                                                
-                                                
-
-                                                <td>
-                                                    <input disabled style="width: 250px;" type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
-                                                </td>
-                                                <td>
-                                                    <input disabled style="width: 150px;"  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
-                                                </td>
-                                                <td>
-                                                    <input disabled  style="width: 70px;" type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
-                                                </td>
-                                                
-                                                <td>
-                                                    <input  style="width: 100px; text-align: right;"  type="number" formControlName="actualCost"  class="form-control" (change)="validateAvgPrice(i)" placeholder="New Avg Cost "  >
-                                                </td>
-                                                <td>
-                                                    <input disabled style="width: 100px; text-align: right;"  type="text" formControlName="priorCost"  class="form-control" placeholder="Current Avg Cost "  >
-                                                </td>
-                                                <td>
-                                                <input  style="width: 100px;"  type="text" formControlName="locatorId" [(ngModel)]="locatorId" class="form-control" placeholder="locatorId "  >
-                                                </td>
-
-                                                 <td>
-                                                    <!-- <select style="width: 100px;" class="form-control" formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
-                                                    <option disabled>--Select--</option>
-                                                    <option *ngFor="let subCode of subInvCode" [ngValue]="subCode">
-                                                        {{subCode.subInventoryCode}}
-                                                    </option>
-                                                    </select> -->
-                                               
-
-                                                        <select style="width: 100px;" formControlName="subInventoryCode" id="subInventoryCode" class="form-control">
-                                                            <option>--Select--</option>
-                                                            <option *ngFor="let sc of subinventoryIdList" [ngValue]="sc.subInventoryCode"  >
-                                                                <!-- {{sc.subInventoryId}}- -->
-                                                            {{sc.subInventoryCode}}
-                                                            </option>
-                                                        </select>
-                                                </td>
-
-                                                <td>
-                                                    <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
-                                                    class="fa fa-plus"></i></button>
-                                                </td>
-
-                                                <td>
-                                                        <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
-                                                        class="fa fa-trash"></i></button>
-                                                </td>
-
-                                              </tr>
-                                    </table>
-                                </div>
-                           </div>
-                        </div>
-
-                        <table style="width: 100%; background-color: #FFE4B5;">
-                            <tr>
-                                <td class="SubHeading2">&nbsp;</td>
-                            </tr>
-                        </table>
-
-                    <!-- ===================================Buttons======================================== -->
-                    <!-- <br> -->
-                    <table class="center">
-                        <tr>
-                            <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
-                            <ng-template #thenBlock1>
-                                <td>
-                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!avgCostUpdateForm">Save</button>
-                                </td>
-                                
-                    <!-- <td>
-                        <button type="button" class="btn btn-info" (click)="searchMast(locId,itemId,fromDate,toDate)">History</button>
-                    </td> -->
-
-                 <!-- ====================Reset Dialog ======================== -->
-
-                    <td>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                    </td>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
-                                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                            </label>
-                        </div>
-                        <div class="modal-footer">
-                            <table class="center">
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-
-                        <!-- =====================Close Dialog Box====================== -->
-                        <td>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
-                        </td>
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                                    </label>
-                                </div>
-                                <div class="modal-footer">
-                                    <table class="center">
-                                        <tr>
-                                            <td>
-                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
-                                            </td>
-                                            <td>
-                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <!-- ==================================================== -->
-
-                </ng-template>
-                <ng-template #elseBlock1>
-                
-                         <!-- <td>
-                             <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!avgCostUpdateForm">Update</button>
-                         </td> -->
-                         <td>
-                             <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                         </td>
-                         <!-- <td>
-                             <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
-                         </td>
-                         <td>
-                             <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
-                         </td> -->
-                    <!-- ====================Reset Dialog ======================== -->
-
-                    <td>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
-                    </td>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-body">
-                        <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
-                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                            Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                        </label>
-                    </div>
-                    <div class="modal-footer">
-                        <table class="center">
-                            <tr>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                                </td>
-                                <td>
-                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Yes</button> 
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-
-                        <!-- =====================Close Dialog Box====================== -->
-                        <td>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
-                        </td>
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
-                                    </label>
-                                </div>
-                                <div class="modal-footer">
-                                    <table class="center">
-                                        <tr>
-                                            <td>
-                                            <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
-                                            </td>
-                                            <td>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <!-- ==================================================== -->
-
-
-                </ng-template>
-                </tr>
-                </table>
                 <br>
-                <table style="width: 100%;background-color: white;">
+                <!-- <table style="width: 100%;background-color: white;">
                     <tr>
                         <td class="PageHeader"> &nbsp;AVERAGE&nbsp;COST&nbsp;HISTORY</td>
                     </tr>
-                </table>
+                </table> -->
                 <table style="width: 100%; background-color: #FFE4B5;">
                             
                                  
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
-                        <!-- <td>
-                            <input   type="text" formControlName="searchItemId" [(ngModel)]="searchItemId"   class="form-control" placeholder="Enter Item Number here" >
-                        </td> -->
-    
                         <td>
                             
                             <input type="text" formControlName="searchItemId"
@@ -437,12 +29,8 @@
                             <datalist id="dynmicUserIds1">
                                 <option *ngFor="let item of invItemList"
                                     [ngValue]="item.itemId"> 
-                                    <!-- {{item.itemId}}
-                                    {{item.segment}}
-                                    {{item.description}} -->
                                 </option>
                             </datalist>
-                            <!-- onfocusout="itemValidate($event)" -->
                         </td> 
 
                         <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
@@ -452,7 +40,7 @@
 
                         <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date:&nbsp;</td>
                         <td>
-                            <input style="width: 134px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control" >
+                            <input style="width: 170px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control" >
                         </td>
     
     
@@ -460,7 +48,7 @@
         
                         <td>
                             <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
-                            <input  style="width: 134px;"  type="date"  formControlName="toDate"  id="toDate" [(ngModel)]="toDate" class="form-control" >
+                            <input  style="width: 170px;"  type="date"  formControlName="toDate"  id="toDate" max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="toDate" class="form-control" >
                         </td>
     
                         <td colspan="8" style="text-align: left; width: 100%;">
@@ -492,32 +80,33 @@
 
 <div class="container1">
     <div class="grid_scroll">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
+        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
+        id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
    <tbody>
-        <tr class="GridHeader">
-            <th style="width:10rem" scope="col">Srl&nbsp;No</th>
-            <th style="width:10rem" scope="col">TransactionId</th>
-            <th style="width:10rem" scope="col">Date</th>
-            <th style="width:6rem" scope="col">ItemId/Code</th>
-            <th style="width:10rem" scope="col">Description</th>
-            <th style="width:10rem" scope="col">Rate</th>
-            <th style="width:10rem" scope="col">Old Rate</th>
-            <th style="width:6rem" scope="col">Location</th>
-            <th style="width:6rem" scope="col">Source Type</th>
+        <tr class="GridHeader" style="font-size: 14px;">
+            <th  scope="col">Srl&nbsp;No</th>
+            <th  scope="col">TransactionId</th>
+            <th  scope="col">Date</th>
+            <th  scope="col">ItemId/Code</th>
+            <th  scope="col">Description</th>
+            <th  scope="col">Rate</th>
+            <th  scope="col">Old Rate</th>
+            <th  scope="col">Location</th>
+            <th  scope="col">Source Type</th>
            <!-- <th style="width:6rem" scope="col">Select</th> -->
     </tr>
    </tbody>
-            <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
+            <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: 14px;text-align: center;">
             
-                <td>{{i+1}}</td>
-                <td style="text-align: right;">{{com.transactionId}}</td>
-                <td>{{com.creationDate}}</td>
-                <td>{{com.itemId}}/{{segment}}</td>
-                <td>{{itemName}}</td> 
-                <td style="text-align: right;">{{com.rate}}</td> 
-                <td style="text-align: right;">{{com.oldRate}}</td>
-                <td>{{com.locationId}}</td>  
-                <td>{{com.transSourceTypeId}}</td>
+                <td style="width: fit-content;">{{i+1}}</td>
+                <td style="width: fit-content;text-align: right;padding-right: 5px;">{{com.transactionId}}</td>
+                <td style="width: fit-content;">{{com.creationDate}}</td>
+                <td style="width: fit-content;">{{com.itemId}}/{{segment}}</td>
+                <td style="width: fit-content;">{{itemName}}</td> 
+                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.rate}}</td> 
+                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.oldRate}}</td>
+                <td style="width: fit-content;">{{com.locationId}}</td>  
+                <td style="width: fit-content;">{{com.transSourceTypeId}}</td>
                
                 <!-- <td><button class="btn btn-secondary" (click)="Select(com.avgCostId)">Select</button></td>    -->
             </tr>
