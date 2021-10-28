@@ -1520,6 +1520,10 @@ export class CounterSaleComponent implements OnInit {
           .subscribe(
             data => {
               this.addonDescList = data;
+              if (data.length ===0){
+                alert('Selected Item Setup not completed...!') ;
+                return;
+               }
               for (let i = 0; i < data.length; i++) {
                 var itemtaxCatNm: string = data[i].taxCategoryName;
                 if (itemtaxCatNm.includes('Sale-I-GST')) {
@@ -1601,6 +1605,11 @@ export class CounterSaleComponent implements OnInit {
           .subscribe(
             data => {
               this.addonDescList = data; //// item iformation
+              // alert(data.length);
+              if (data.length ===0){
+               alert('Selected Item Setup not completed...!') ;
+               return;
+              }
               for (let i = 0; i < data.length; i++) {
                 var taxCatNm: string = data[i].taxCategoryName;
                 if (taxCatNm.includes('Sale-S&C')) {
@@ -1608,8 +1617,6 @@ export class CounterSaleComponent implements OnInit {
                     itemId: data[i].itemId,
                     orderedItem: data[i].description,
                     hsnSacCode: data[i].hsnSacCode,
-                    // taxCategoryId: data[i].taxCategoryId,
-                    // taxCategoryName: data[i].taxCategoryName,
                     uom: data[i].uom,
                     unitSellingPrice: data[i].priceValue,
                   });
