@@ -224,7 +224,8 @@ export class PoReceiptFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private location: Location, private router: Router, private service: MasterService, private router1: ActivatedRoute) {
     this.poReceiptForm = fb.group({
       ouName: [''],
-      poNumber: ['', Validators.required],
+      // poNumber: ['', Validators.required],
+      poNumber: [''],
       supplier: [''],
       item: [''],
       poInvNum: [''],
@@ -314,11 +315,16 @@ export class PoReceiptFormComponent implements OnInit {
       invItemId: [''],
       billToLoc: [''],
       categoryId: [''],
-      segment11: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
-      segment2: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
-      segment3: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
-      segment4: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
-      segment5: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      // segment11: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      // segment2: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      // segment3: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      // segment4: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      // segment5: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+      segment11: [''],
+      segment2: [''],
+      segment3:  [''],
+      segment4: [''],
+      segment5:  [''],
       polineNum: [''],
       locatorId: [''],
       selectFlag: [],
@@ -1220,7 +1226,62 @@ export class PoReceiptFormComponent implements OnInit {
     
 
   }
-}
+
+   message: string = "Please Fix the Errors !";
+    msgType:string ="Close";
+    getMessage(msgType: string) {
+      this.msgType = msgType;
+      if (msgType.includes("Save")) {
+        this.submitted = true;
+        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+        if (this.poReceiptForm.invalid) {
+          
+          //this.submitted = false;
+          (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+            alert('saving PO - Validator error');
+          return;
+        }
+        this.message = "Do you want to SAVE the changes(Yes/No)?"
+        
+      }
+  
+      if (msgType.includes("Reset")) {
+        this.message = "Do you want to Reset the changes(Yes/No)?"
+      }
+      
+      if (msgType.includes("Close")) {
+        this.message = "Do you want to Close the Form(Yes/No)?"
+      }
+      if (msgType.includes("poInvoiceCreation")) {
+          this.message = "Do you want to Create PO AP Invoice(Yes/No)?"
+        }
+
+      return;
+    }
+  
+   executeAction() {
+      if(this.msgType.includes("Save")) {
+    alert('saving PO');
+        this.poSave();  
+      }
+  
+      if (this.msgType.includes("Reset")) {
+        window.location.reload();
+      }
+      
+      if (this.msgType.includes("Close")) {
+       this.close();
+      }
+
+      if (this.msgType.includes("poInvoiceCreation")) {
+        alert('PO Invoice creation');
+        this.poInvoiceCreation(this.segment1);
+      }
+      return;
+    }
+  
+  }
+  
 
 
 
