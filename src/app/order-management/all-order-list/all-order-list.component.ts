@@ -1,26 +1,22 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef ,NgModule} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray, FormControlName } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-import { from } from 'rxjs';
+import { from,Observable } from 'rxjs';
 import { Url } from 'url';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-// import { MasterService } from '../master.service';
 import { MasterService } from 'src/app/master/master.service'
-import { DatePipe } from '@angular/common';
+import { DatePipe ,Location} from '@angular/common';
 import { data, get } from 'jquery';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Location, } from "@angular/common";
+import { ActivatedRoute, ParamMap,Router } from '@angular/router';
 import * as xlsx from 'xlsx';
 
 @Component({
-  selector: 'app-po-upload-list',
-  templateUrl: './po-upload-list.component.html',
-  styleUrls: ['./po-upload-list.component.css']
+  selector: 'app-all-order-list',
+  templateUrl: './all-order-list.component.html',
+  styleUrls: ['./all-order-list.component.css']
 })
-export class PoUploadListComponent implements OnInit {
+export class AllOrderListComponent implements OnInit {
+  orderListForm: FormGroup;
   poPendingListForm: FormGroup;
   pipe = new DatePipe('en-US');
   poDetails: any = [];
@@ -32,15 +28,14 @@ export class PoUploadListComponent implements OnInit {
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
-    this.poPendingListForm = this.fb.group({
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) { 
+    this.orderListForm = this.fb.group({
       startDt: [],
       endDt: [],
     })
   }
 
-  poPendingList(poPendingListForm) {
-
+  orderList(orderListForm) {
   }
 
   ngOnInit(): void {
@@ -48,13 +43,10 @@ export class PoUploadListComponent implements OnInit {
     var endDt1 = new Date(this.today);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
-
-    // this.service.pendingPOList(Number(sessionStorage.getItem('emplId'))).subscribe((res: any) => {
       this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
         if (res.code === 200) {
           this.poDetails = res.obj;
           for (let i = 0; i < res.obj.length; i++) {
-            //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
             var poDt = this.poDetails[i].poDate;
             var supInvDt = this.poDetails[i].suppInvDate;
             this.poDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
@@ -80,11 +72,12 @@ export class PoUploadListComponent implements OnInit {
   }
 
 
+
   getPO() {
-    var stDt = this.poPendingListForm.get('startDt').value;
+    var stDt = this.orderListForm.get('startDt').value;
     this.startDt = this.pipe.transform(stDt, 'dd-MMM-yyyy');
 
-    var endDtSt = this.poPendingListForm.get('endDt').value;
+    var endDtSt = this.orderListForm.get('endDt').value;
     var endDt1 = new Date(endDtSt);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');

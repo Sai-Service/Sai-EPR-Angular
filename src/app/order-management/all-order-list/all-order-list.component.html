@@ -1,13 +1,11 @@
-<form [formGroup]="poPendingListForm" (ngSubmit)="poPendingList(poPendingListForm.value)">
+<form [formGroup]="orderListForm" (ngSubmit)="orderList(orderListForm.value)">
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                Purchase&nbsp;Order&nbsp;Pending&nbsp;List&nbsp;
+                Order&nbsp;List&nbsp;
             </td>
         </tr>
     </table>
-    <!-- <br> -->
-   <!-- <div class="grid_scroll"> -->
     <div class="col-md-12 table-responsive" #epltable>
         <div style="padding-bottom: 10px;padding-top: 10px;">
             <div class="row">
@@ -89,8 +87,6 @@
         </table>
         </div>
     </div>
-    <!-- </div> -->
-    
     <table class="center">
         <tr>
             <td>

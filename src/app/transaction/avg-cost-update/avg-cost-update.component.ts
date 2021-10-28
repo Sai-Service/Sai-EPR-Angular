@@ -6,7 +6,7 @@ import { MasterService } from '../../master/master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
-import { DatePipe } from '@angular/common';
+import { DatePipe ,Location} from '@angular/common';
 
 
 interface IAvgCostUpdate {
@@ -36,11 +36,15 @@ interface IAvgCostUpdate {
 export class AvgCostUpdateComponent implements OnInit {
   avgCostUpdateForm : FormGroup;
 
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+
   priceListId :number;
   priceListName:string;
   priceListDesc:string;
   priceListType:string;
-  
+  public minDate = new Date();
   priceListHeaderId : number;
   
  
@@ -61,8 +65,18 @@ export class AvgCostUpdateComponent implements OnInit {
   endDate:Date;
 
 
+<<<<<<< HEAD
   fromDate:Date;
-  toDate:Date;
+  // toDate:Date;
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  toDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
+=======
+  // fromDate:Date;
+  // toDate:Date;
+  fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
+  toDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
+>>>>>>> 160078770596991ed741968ed36ee6a397a8821d
   searchItemId:number;
 
   showOu=false;
@@ -106,9 +120,14 @@ export class AvgCostUpdateComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
-  pipe = new DatePipe('en-US');
-  now = Date.now();
+<<<<<<< HEAD
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+=======
+  
   transDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+>>>>>>> 160078770596991ed741968ed36ee6a397a8821d
 
   divisionId : number;
   loginName:string;
@@ -137,7 +156,7 @@ export class AvgCostUpdateComponent implements OnInit {
   // public locatorId=999
   // public subInventoryCode='SP'
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router,private location1: Location) 
     {
       this.avgCostUpdateForm  = fb.group({
 
@@ -210,7 +229,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
  
      ngOnInit(): void {
-
+      $("#wrapper").toggleClass("toggled");
       this.name=  sessionStorage.getItem('name');
       this.loginArray=sessionStorage.getItem('divisionName');
       this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -233,13 +252,13 @@ export class AvgCostUpdateComponent implements OnInit {
     //   data => {this.subInvCode = data;
     // });
 
-    this.service.subinventoryIdList()
-    .subscribe(
-      data => {
-        this.subinventoryIdList = data;
-        console.log(this.subinventoryIdList);
-      }
-    );
+    // this.service.subinventoryIdList()
+    // .subscribe(
+    //   data => {
+    //     this.subinventoryIdList = data;
+    //     console.log(this.subinventoryIdList);
+    //   }
+    // );
 
      this.service.invItemList1()
       .subscribe(
@@ -528,8 +547,12 @@ export class AvgCostUpdateComponent implements OnInit {
 
   searchMast(locId:any,itemId:any,frmDate:any,toDate:any) {
     frmDate=this.pipe.transform(frmDate, 'dd/MM/y');
-    toDate=this.pipe.transform(toDate, 'dd/MM/y');
-    this.service.getAvgHistoryList(locId,itemId,frmDate,toDate)
+    // toDate=this.pipe.transform(toDate, 'dd/MM/y');
+    var endDtSt = this.avgCostUpdateForm.get('toDate').value;
+    var endDt1 = new Date(endDtSt);
+    endDt1.setDate(endDt1.getDate() + 1);
+    this.toDate = this.pipe.transform(endDt1, 'dd/MM/yyyy');
+    this.service.getAvgHistoryList(locId,itemId,frmDate,this.toDate)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -641,7 +664,7 @@ export class AvgCostUpdateComponent implements OnInit {
     //  alert('item function');
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
-      alert(selectedValue.itemId);
+      // alert(selectedValue.itemId);
       console.log(selectedValue);
       this.searchItemId = selectedValue.itemId;
       this.itemName=selectedValue.description;
@@ -806,7 +829,13 @@ export class AvgCostUpdateComponent implements OnInit {
     }
 
 
-
+    refresh() {
+      window.location.reload();
+    }
+  
+    close() {
+      this.location1.back();
+    }
 }
 
 
