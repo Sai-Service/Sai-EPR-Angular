@@ -28,11 +28,15 @@
                 &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
             </td>
             <td colspan="3">
-                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
             </td>
             <td>
                 <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
             </td>
+            <div *ngIf="itemButton1; then thenBlockitemButton; else elseBlockitemButton"></div>
+            <ng-template #thenBlockitemButton>
+            </ng-template>
+            <ng-template #elseBlockitemButton>  
             <td>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#errorLis">
                     Error&nbsp;List
@@ -77,6 +81,7 @@
                     </div>
                 </div>
             </td>
+            </ng-template>
         </tr>
         </table>
         <table class="center">

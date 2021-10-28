@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
 import { DatePipe } from '@angular/common';
-import { get } from 'jquery';
+import { data, get } from 'jquery';
 // import Keyboard from 'keyboard-events';
 // import Keyboard from 'keyboard';
 // import MyActions from 'my-actions.js';
@@ -232,6 +232,7 @@ export class OPMasterDtoComponent implements OnInit {
   public delearCodeList: Array<string> = [];
   hsnSacCodeList: any=[];
   public taxCategoryList: any=[];
+  public taxCategoryListNew:any=[];
    public allTaxCategoryList: any[];
   public dispbut = true;
   lineNumber: number;
@@ -519,14 +520,15 @@ displayThirdButtonDisplay=true;
     //     }
     //   );
 
-    // this.service.taxCategoryList()
-    //   .subscribe(
-    //     data1 => {
-    //       this.taxCategoryList = data1;
-    //       console.log(this.taxCategoryList);
-    //       data1 = this.taxCategoryList;
-    //     }
-    //   );
+    this.service.taxCategoryList()
+      .subscribe(
+        data1 => {
+          for (let i=0; i<data.length; i++){
+          this.taxCategoryList[i] = data1;
+        }
+        }
+        // let currCustomer = this.taxCategoryList[i].filter((customer) => (customer.custAccountNo === custAccountNo));
+      );
 
 
     this.service.supplierCodeList()
@@ -887,16 +889,30 @@ displayThirdButtonDisplay=true;
           console.log(data);
           if (data.code === 400) {
             alert(data.message)
-            // this.displayNewButtonApprove = false;
-            // this.displayNewButtonUpdate = false;
-            // this.displayNewButtonSave = false;
-            // this.displayNewButtonReset = false;
-            alert(data.message);
             window.location.reload();
           } if (data.code === 200) {
+            // this.lineDetailsArray.clear();
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
             this.lstcomments1 = data.obj;
+            var taxCatcontrol = this.poMasterDtoForm.get('poLines') as FormArray;
+            for (let i=0;i<data.obj.poLines.length;i++){
+              this.service.taxCategoryListNew(data.obj.taxCategoryName,data.obj.poLines[i].gstPercentage)
+              .subscribe(
+                data1 => {
+                  this.taxCategoryList[i] = data1;
+                  console.log(this.taxCategoryList[i]);
+                 for (let k=0;k<data1.length;k++){
+                  (taxCatcontrol.controls[k]).patchValue(
+                    {
+                      taxCategoryName:data.obj.poLines[k].taxCategoryName,
+                      taxCategoryId:data.obj.poLines[k].taxCategoryId,
+                    }
+                    );
+                 }  
+                }
+              );
+            }
             var approveDate1 = data.obj.approveDate;
             var approveDate2 = this.pipe.transform(approveDate1, 'dd-MM-yyyy');
             this.poMasterDtoForm.patchValue({approveDate: approveDate2});
@@ -906,11 +922,6 @@ displayThirdButtonDisplay=true;
             // alert(approveDate2);
             const status = this.lstcomments1.authorizationStatus; 
             if (status === 'Inprogress') {
-              // this.displayNewButtonApprove = true;
-              // this.displayNewButtonUpdate = true;
-              // this.displayNewButtonSave = false;
-              // this.displayNewButtonpoCancel = false;
-              // this.displayNewButtonReset = false;
               this.displayFirstButtonDisplay=true;
               this.displaySecondButtonDisplay=false;
               this.displaytaxDisscountButton=true;
@@ -918,7 +929,9 @@ displayThirdButtonDisplay=true;
               this.displayButton = false;
               this.displayNewButton = false;
               this.displayTaxDetailForm = true;
-              let control = this.poMasterDtoForm.get('poLines') as FormArray;
+              var control = this.poMasterDtoForm.get('poLines') as FormArray;
+              console.log(control);
+              
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
                 let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
@@ -926,32 +939,28 @@ displayThirdButtonDisplay=true;
                 this.hideArray[i] = true;
                 control.push(poLine);
               }
-
-
               var len = this.lstcomments1.poLines.length - 1
               this.lineDetailsArray.removeAt(len);
               this.poMasterDtoForm.patchValue(this.lstcomments1, { emitEvent: false });
               for (var j = 0; j < this.lstcomments1.poLines.length; j++) {
-                this.lineDetailsArray.controls[j].get('taxCategoryId').setValue(this.lstcomments1.poLines[j].taxCategoryId, { emitEvent: false });
-                this.lineDetailsArray.controls[j].get('taxCategoryName').setValue(this.lstcomments1.poLines[j].taxCategoryName), { emitEvent: false };
+               
+                // this.lineDetailsArray.controls[j].get('taxCategoryId').setValue(this.lstcomments1.poLines[j].taxCategoryId, { emitEvent: false });
+                // this.lineDetailsArray.controls[j].get('taxCategoryName').setValue(this.lstcomments1.poLines[j].taxCategoryName), { emitEvent: false };
                 (control.controls[j]).patchValue(
                   {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
-                  });
+                  }
+                  );
+                  // debugger;
                   if (data.obj.poLines[j].itemType==='GOODS'){
                     this.displayHSN[j]=true;
-                    this.lineDetailsArray.controls[j].get('segmentName').disable();
-                    // this.searchrelatedCall(data.obj.poLines[j].invItemId,data.obj.supplierSiteId,j)
+                    this.lineDetailsArray.controls[j].get('segmentName').disable();     
                   }
                   else{
                     this.displayHSN[j]=false;
                     this.lineDetailsArray.controls[j].get('segmentName').enable();
                   }
-                 
-                // alert('***taxCat****' + this.lineDetailsArray.controls[j].get('taxCategoryName').value)
               }
-              
-              //this.taxCategoryList = this.lstcomments1.poLines[j].taxCategoryName;
               for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
                 let taxControl = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
                 taxControl.clear();
@@ -986,14 +995,8 @@ displayThirdButtonDisplay=true;
                 });
                 // this.taxDetails('Search',i, 'taxCategoryId');
               }
-              // this.lineDetailsArray.removeAt(this.lstcomments1.poLines.length - 1);
             }
             if (status === "APPROVED") {
-              // this.displayNewButtonApprove = false;
-              // this.displayNewButtonUpdate = false;
-              // this.displayNewButtonSave = false;
-              // this.displayNewButtonReset = false;
-              // this.displayNewButtonpoCancel = false;
               this.displaySecondButtonDisplay=true;
               this.displayFirstButtonDisplay=true;
               this.displayThirdButtonDisplay=false;
@@ -1584,10 +1587,9 @@ displayThirdButtonDisplay=true;
               this.poChargeAcc = Number(this.segmentNameList.codeCombinationId)
             }
           } else if (this.segmentNameList.code === 400) {
+            alert(data.message)
             var arrayControl = this.poMasterDtoForm.get('poLines').value
               (patch.controls[index]).patchValue({ segmentName: '' })
-
-
           }
         }
       );
@@ -2461,10 +2463,9 @@ displayThirdButtonDisplay=true;
 
 
   onHsnCodeSelected(event,index){
-    // alert(event +'----'+ index);
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
+    if (gstPercentage != undefined){
     var gstPercentage = selectgstPercentage.gstPercentage;  
-    // alert(gstPercentage); 
     let control = this.poMasterDtoForm.get('poLines') as FormArray;
     (control.controls[index]).patchValue(
       {
@@ -2484,5 +2485,6 @@ let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
       }
     );
   }
+}
 }
 }

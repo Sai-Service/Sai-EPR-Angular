@@ -118,8 +118,8 @@
                                                 class="form-control">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
-                                                    {{sc.suppSiteId}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
-                                                    {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
+                                                    {{sc.suppSiteId}}-{{sc.state1}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
+                                                    {{sc.address4}} {{sc.city}}-{{sc.pinCd}} 
                                                 </option>
                                             </select>
                                         </ng-template>
@@ -129,8 +129,8 @@
                                                 (ngModelChange)='onSiteSelected($event)' class="form-control">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
-                                                    {{sc.suppSiteId}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
-                                                    {{sc.address4}} {{sc.city}}-{{sc.pinCd}} {{sc.state1}}
+                                                    {{sc.suppSiteId}}-{{sc.state1}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
+                                                    {{sc.address4}} {{sc.city}}-{{sc.pinCd}} 
                                                 </option>
                                             </select>
                                         </ng-template>

@@ -32,6 +32,7 @@ export class BulkItemUploadCSVComponent implements OnInit {
   itemUploadedList:any=[];
   files:string;
   public maxDate = new Date();
+  itemButton1=true;
 
 
   @ViewChild('fileInput') fileInput;
@@ -58,7 +59,11 @@ export class BulkItemUploadCSVComponent implements OnInit {
 
 
   uploadFile(event:any) {
-    // alert(event)
+    var file =this.bulkUploadCSVForm.get('files').value;
+    if (file===undefined){
+      alert('First Select CSV & Then Click upload Button !..');
+      return;
+    }
     event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
@@ -70,11 +75,11 @@ export class BulkItemUploadCSVComponent implements OnInit {
          this.bulkUploadCSVForm.get('files').reset();
         }
         else{
-          if (res.code===400){
-            
+          if (res.code===400){    
             alert(res.message);
             this.itemList = res.obj;
             this.bulkUploadCSVForm.get('files').reset();
+            this.itemButton1=false;
           }
         }
       })
