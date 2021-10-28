@@ -602,6 +602,7 @@ export class SupplierMasterComponent implements OnInit {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
         this.suppNo=res.obj.suppNo;
+        this.searchBySuppCode(this.suppNo);
         this.displayadditional=false;
         this.displaySaveBtn=false;
         // this.supplierMasterForm.reset();
