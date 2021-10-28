@@ -44,15 +44,23 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
         transTypeName:string;
         transTypeDesc:string;
+        rClass:string;
+        creationSign:string;
+
+        tranStatus:string;
+        creditMemoType:string;
+
+        startDate:string=this.pipe.transform(Date.now(), 'y-MM-dd');  
+        endDate:string;
 
         displayButton = true;
-
+      
 
   
     get f() { return this.recTransTypeMasterForm.controls; }
     recTransTypeMaster(recTransTypeMasterForm:any) {  }
   
-  constructor(private service: MasterService,private  fb: FormBuilder, private router: Router) {
+    constructor(private service: MasterService,private  fb: FormBuilder, private router: Router) {
     this.recTransTypeMasterForm = fb.group({ 
 
       loginArray:[''],
@@ -68,6 +76,12 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
       transTypeName:[],
       transTypeDesc:[],
+      rClass:[],
+      creationSign:[],
+      tranStatus:[],
+      creditMemoType:[],
+      startDate:[],
+      endDate:[],
   
   
     });
@@ -115,6 +129,19 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
   closeMast() {
     this.router.navigate(['admin']);
+  }
+
+  onOptionsSelected(event: any) {
+    var status1 = this.recTransTypeMasterForm.get('tranStatus').value;
+    // alert(this.Status1);
+    if (status1=== 'Closed') {
+      // this.displayInactive = false;
+      this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');  
+    }
+    else if (status1 === 'Open') {
+      this.recTransTypeMasterForm.get('endDate').reset();
+      // this.displayInactive=true;
+    }
   }
 
 

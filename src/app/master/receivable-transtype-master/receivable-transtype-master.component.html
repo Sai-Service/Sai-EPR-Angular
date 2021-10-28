@@ -51,22 +51,52 @@
                                 </td>
 
                             </tr>
-                            <td style="width: 15%" class="LabelFontStyle">Name&nbsp;:&nbsp;</td>
-
-                            <td>
-                                <input    type="text" formControlName="transTypeName"  id="transTypeName" [(ngModel)]="transTypeName" class="form-control" placeholder="Trans Type Name" style="background-color: yellow;"   >
-                            </td>
-    
-                            <td style="width: 15%" class="LabelFontStyle">Description:&nbsp;</td>
-    
-                            <td>
-                                <input   type="text" formControlName="transTypeDesc"  id="transTypeDesc" [(ngModel)]="transTypeDesc"  class="form-control" placeholder="Trans Type Description " style="background-color: yellow;"  >
-                            </td>
 
                             <tr>
-
-
+                                <td style="width: 15%" class="LabelFontStyle">Name&nbsp;:&nbsp;</td>
+                                <td><input    type="text" formControlName="transTypeName"  id="transTypeName" [(ngModel)]="transTypeName" class="form-control" placeholder="Trans Type Name" style="background-color: yellow;"   > </td>
+                                <td style="width: 15%" class="LabelFontStyle">Description:&nbsp;</td>
+                                <td><input   type="text" formControlName="transTypeDesc"  id="transTypeDesc" [(ngModel)]="transTypeDesc"  class="form-control" placeholder="Trans Type Description " style="background-color: yellow;"  > </td>
                             </tr>
+
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Class:&nbsp;</td>
+                                <td><input    type="text" formControlName="rClass"  id="rClass" [(ngModel)]="rClass" class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                                <td style="width: 15%" class="LabelFontStyle">Creation&nbsp;Sign:&nbsp;</td>
+                               <td>
+                                <select formControlName="creationSign" id="creationSign" class="form-control"  [(ngModel)]="creationSign" 
+                                    style="background-color: yellow;">
+                                    <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
+                                     <option value="Any">Any</option>
+                                     <option value="Positive">Positive</option>
+                                     <option value="Negative">Negative</option>
+                                    </select> 
+                                </td>
+                                </tr>
+
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Transaction&nbsp;Status:&nbsp;</td>
+                               <td>
+                                <select formControlName="tranStatus" id="tranStatus" class="form-control"  [(ngModel)]="tranStatus" 
+                                    style="background-color: yellow;"  (ngModelChange)="onOptionsSelected($event)">
+                                    <option value="Open">Open</option>
+                                    <option value="Closed">Closed</option>
+                                </select> 
+                               </td>
+                               
+                                <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Memo&nbsp;Type:&nbsp;</td>
+                                <td><input   type="text" formControlName="creditMemoType"  id="creditMemoType" [(ngModel)]="creditMemoType"  class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:&nbsp;</td>
+                                <td><input    type="date" formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control"  
+                                    style="background-color: yellow;" placeholder="LOV" max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
+                                <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input  disabled  type="date" formControlName="endDate"  id="endDate" [(ngModel)]="endDate"  class="form-control"  > </td>
+                            </tr>
+
+
                         </table>
                     </fieldset>
 
