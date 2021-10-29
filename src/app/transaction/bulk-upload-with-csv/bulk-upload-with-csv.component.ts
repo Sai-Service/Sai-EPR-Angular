@@ -47,6 +47,7 @@ export class CsvData {
   public Amount: any;
 }
 
+
 @Component({
   selector: 'app-bulk-upload-with-csv',
   templateUrl: './bulk-upload-with-csv.component.html',
@@ -86,6 +87,9 @@ export class BulkUploadWithCsvComponent implements OnInit {
   message: string;
   allUsers: Observable<BulkUploadWithCsvComponent[]>;
   @ViewChild("itemButton") itemButton: ElementRef;
+
+  progress: number = 0;
+
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.bulkUploadCSVForm = this.fb.group({
       deptName: ['', [Validators.required]],
@@ -140,20 +144,14 @@ export class BulkUploadWithCsvComponent implements OnInit {
   //   this.allUsers = this.service.BindUser();
     // }
 
-  uploadFile() {
+  uploadFile(event) {
     // event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
     // alert(this.deptName);
     if (this.deptName === 'Sales') {
-      this.service.bulkpouploadSales(formData).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.message);
-          // this.bulkUploadCSVForm.get('invcDt1').reset();
-          // this.bulkUploadCSVForm.get('invcNo').reset();
-          // this.bulkUploadCSVForm.get('supplierNo').reset();
-          // this.bulkUploadCSVForm.get('supplierSite').reset();
-          // this.bulkUploadCSVForm.get('file').reset();
+      this.service.bulkpouploadSales(formData).subscribe((res: any) => {  
+       if (res.code === 200) {        
           this.poDetails = res.obj;
           for (let i = 0; i < res.obj; i++) {
             this.bulkUploadCSVForm.patchValue({ segment1: res[i].obj.segment1 })
@@ -319,9 +317,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
     event.target.disabled = true;
     let text = [];
     //let files = $event.srcElement.files;
-
     if (this.isValidCSVFile(this.fileInput.nativeElement.files[0])) {
-
       //let input = $event.target;
       let reader = new FileReader();
       //  reader.readAsText(input.files[0]);
@@ -332,7 +328,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
 
         let headersRow = this.getHeaderArray(csvRecordsArray);
         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
-       this.uploadFile();
+       this.uploadFile(event);
       };
 
       reader.onerror = function () {

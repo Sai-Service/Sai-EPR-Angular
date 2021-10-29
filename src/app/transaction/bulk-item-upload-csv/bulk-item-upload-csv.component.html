@@ -22,6 +22,10 @@
                 </td>
             </tr>
         </table>
+        <div class="progress form-group" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+            </div>
+        </div>
         <table style="width: 50%;" class="center">
         <tr>
             <td class="LabelFontStyle">

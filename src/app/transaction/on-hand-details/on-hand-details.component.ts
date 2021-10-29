@@ -293,6 +293,9 @@ onhandDetailsForm:FormGroup;
        resetMast() {
         window.location.reload();
       }
-    
+
+      closeMast(){
+        this.router.navigate(['admin']); 
+      }
 
 }
