@@ -634,7 +634,7 @@
 
 
                             <td>
-                                <button type="button"  class="btn btn-primary" 
+                                <button type="button"  class="btn btn-primary"  (click)="plUpload()"
                                 data-toggle="modal" data-target="#exampleModal3" style="width: 8rem;color: black;">
                                 Price&nbsp;List&nbsp;Upload</button>
                             </td>
@@ -665,9 +665,9 @@
                                                                 </option>
                                                             </select>
                                                         </td>
-                                                    </tr>
+                                                   
 
-                                                    <tr>
+                                                   
 
                                                      <td style="width: 15%" class="LabelFontStyle">Select&nbsp;Upload&nbsp;File(.CSV&nbsp;only):&nbsp; </td>
                                                             
@@ -684,17 +684,42 @@
                                                         </tr>
                                                         </table>
                                                     </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register" (click)="refershForm()" style="width: 8rem;font-size: 11px;">View/download log</button>
-                                                        </td>
+                                                        </td> -->
+                                                    
                                                     </tr>
-
                                                     <tr>
 
-                                                        <td>
+                                                        <td colspan="5">
                                                             {{resMsg}}
                                                         </td>
                                                     </tr>
+                                                </table>
+
+                                                    <div class="container1">
+                                                        <div class="grid_scroll_3">
+                                                          <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+                                                       
+                                                           <tbody>
+                                                                     <tr class="GridHeader">
+                                                                         <th style="width:3rem" scope="col">Srl#</th>
+                                                                        <th style="width:10rem" scope="col">Segment</th>
+                                                                         <th style="width:20rem" scope="col">Item Descreption</th>
+                                                                         <th style="width:30rem" scope="col">Status</th>
+                                                                                                                                                                                         
+                                                                 </tr>
+                                                             </tbody>
+                                                           
+                                                                 <tr *ngFor="let com of lstMessage let i= index" class="ItemStyle" style="text-decoration:none;">
+                                                                     <td style="text-align: center;">{{i+1}}</td>
+                                                                     <td style="width:10rem;text-align: center;">{{com.segment}}</td>
+                                                                     <td style="width:20rem;text-align: left;">{{com.itemDescription}}</td>
+                                                                     <td style="width:30rem;text-align: left;">{{com.status}}</td>
+                                                                 </tr>
+                                                         </table>
+                                                       </div>
+                                                     </div>
 
                                                         <!-- <td>
                                                             <input type="submit"  value="Submit">
@@ -705,7 +730,7 @@
                                                         </td> -->
                                                      
                                                     
-                                                </table>
+                                               
 
 
                                                 <div class="modal-footer">

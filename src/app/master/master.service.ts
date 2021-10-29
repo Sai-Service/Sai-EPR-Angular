@@ -2214,6 +2214,12 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
     }
 
+    getArReceiptAppliedHistory (rcptNumber): Observable<any> {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    }
+
+
+
   getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
@@ -2279,8 +2285,6 @@ OrderCategoryList(): Observable<any> {
     var docType1=formData.get('docType');
     formData.append('priceListName', uploadPl);
     return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`,formData)
-
-    
     }
 
 ////////////////////////////// bulk po upload /////////

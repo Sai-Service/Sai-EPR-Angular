@@ -59,6 +59,7 @@ export class PricelistMasterComponent implements OnInit {
   now = Date.now();
 
    resMsg : string;
+   lstMessage: any;
 
    
  
@@ -806,26 +807,26 @@ export class PricelistMasterComponent implements OnInit {
   //   this.allUsers = this.service.BindUser();
   // }
 
+  plUpload() {
+    this.priceListMasterForm.get('upldPricelistName').reset();
+    this.lstMessage=null;
+  }
 
   uploadFile() {
-    // alert(".............WIP");
-    var upldPl =this.priceListMasterForm.get('upldPricelistName').value;
-    alert ("PL name  :"+upldPl +","+this.docType);
-    console.log('doctype-check'+this.docType)
+   
 
+    var upldPl =this.priceListMasterForm.get('upldPricelistName').value;
+    console.log('doctype-check'+this.docType)
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
-    // this.service.UploadExcel(formData,this.docType).subscribe(result => {
       this.service.UploadExcel(formData,this.docType,upldPl).subscribe(result => {
       this.message = result.toString();
-      // this.loadAllUser();
-      // this.service.UploadExcel(formData,this.docType).subscribe((res: any) => {
-        this.service.UploadExcel(formData,this.docType,upldPl).subscribe((res: any) => {
+       this.service.UploadExcel(formData,this.docType,upldPl).subscribe((res: any) => {
    
         if (res.code === 200) {
           alert('FILE UPLOADED SUCCESSFUILY');
-           this.resMsg = res.obj;
-           
+           this.resMsg = res.message;
+           this.lstMessage=res.obj.priceListDetailList;
           // window.location.reload();
    
         } else {
