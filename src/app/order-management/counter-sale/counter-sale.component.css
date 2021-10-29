@@ -22,6 +22,7 @@ legend {
 
 
 
+
 fieldset {
     display: block;
     margin-inline-start: 1px;
@@ -127,6 +128,9 @@ fieldset {
         100% { transform: rotate(360deg); }
     }
     
-
+    /* .modal-dialog {
+        margin-left: 55%;
+        margin-right: auto;
+      } */
 
   

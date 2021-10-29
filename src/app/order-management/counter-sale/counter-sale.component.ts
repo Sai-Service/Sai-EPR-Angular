@@ -329,6 +329,9 @@ export class CounterSaleComponent implements OnInit {
   // customerId:number;
 
 
+  display='none';
+  @ViewChild("myinput") myInputField: ElementRef;
+
   @ViewChild("paymentButton") paymentButton: ElementRef;
 
 
@@ -1156,7 +1159,8 @@ export class CounterSaleComponent implements OnInit {
           else {
             if (data.code === 400) {
               alert('res' + data.message);
-              this.displaycreateCustomer = false;
+              this.display='block'; 
+              // this.displaycreateCustomer = false;
             }
           }
         });
@@ -1520,6 +1524,10 @@ export class CounterSaleComponent implements OnInit {
           .subscribe(
             data => {
               this.addonDescList = data;
+              if (data.length ===0){
+                alert('Selected Item Setup not completed...!') ;
+                return;
+               }
               for (let i = 0; i < data.length; i++) {
                 var itemtaxCatNm: string = data[i].taxCategoryName;
                 if (itemtaxCatNm.includes('Sale-I-GST')) {
@@ -1601,6 +1609,11 @@ export class CounterSaleComponent implements OnInit {
           .subscribe(
             data => {
               this.addonDescList = data; //// item iformation
+              // alert(data.length);
+              if (data.length ===0){
+               alert('Selected Item Setup not completed...!') ;
+               return;
+              }
               for (let i = 0; i < data.length; i++) {
                 var taxCatNm: string = data[i].taxCategoryName;
                 if (taxCatNm.includes('Sale-S&C')) {
@@ -1608,8 +1621,6 @@ export class CounterSaleComponent implements OnInit {
                     itemId: data[i].itemId,
                     orderedItem: data[i].description,
                     hsnSacCode: data[i].hsnSacCode,
-                    // taxCategoryId: data[i].taxCategoryId,
-                    // taxCategoryName: data[i].taxCategoryName,
                     uom: data[i].uom,
                     unitSellingPrice: data[i].priceValue,
                   });
@@ -2354,4 +2365,24 @@ export class CounterSaleComponent implements OnInit {
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
   }
+
+   message1: string = "Please Fix the Errors !";
+    msgType:string ="Navigate";
+   getMessage(msgType: string) {
+     if (msgType.includes("Navigate")) {
+      this.message1 = "Do you want to Navigate the Form(Yes/No)?"
+      }
+  }
+  
+   executeAction() { 
+     if(this.msgType.includes("Navigate")) {
+         this.router.navigate(['/admin/master/customerMaster'])
+    }
+  }
+
+
+  closeModalDialog(){
+    this.display='none'; //set none css after close dialog
+    this.myInputField.nativeElement.focus();
+   }
 }

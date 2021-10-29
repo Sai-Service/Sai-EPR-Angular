@@ -32,13 +32,14 @@ export class BulkItemUploadCSVComponent implements OnInit {
   itemUploadedList:any=[];
   files:string;
   public maxDate = new Date();
+  itemButton1=true;
 
 
   @ViewChild('fileInput') fileInput;
   message: string;
   allUsers: Observable<BulkItemUploadCSVComponent[]>;
 
-  
+  progress: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.bulkUploadCSVForm = this.fb.group({
@@ -58,23 +59,29 @@ export class BulkItemUploadCSVComponent implements OnInit {
 
 
   uploadFile(event:any) {
-    // alert(event)
+    var file =this.bulkUploadCSVForm.get('files').value;
+    if (file===undefined){
+      alert('First Select CSV & Then Click upload Button !..');
+      return;
+    }
     event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
     // if ((sessionStorage.getItem('deptName'))=== 'Sales') {
       this.service.bulkpouploadSalesNew(formData).subscribe((res: any) => {
         if (res.code === 200) {
+       
+        
           alert(res.message);
           this.itemUploadedList=res.obj;  
          this.bulkUploadCSVForm.get('files').reset();
         }
         else{
-          if (res.code===400){
-            
+          if (res.code===400){    
             alert(res.message);
             this.itemList = res.obj;
             this.bulkUploadCSVForm.get('files').reset();
+            this.itemButton1=false;
           }
         }
       })

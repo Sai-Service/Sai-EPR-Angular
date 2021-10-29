@@ -12,6 +12,7 @@ import { SalesGatePassComponent } from './sales-gate-pass/sales-gate-pass.compon
 import { SalesOrderBookingComponent } from './sales-order-booking/sales-order-booking.component';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
+import { AllOrderListComponent } from './all-order-list/all-order-list.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:'OMSalesOrder',component:OmSalesOrderFormComponent},
   {path:'CounterSaleWithCSV',component:CounterSaleWithCSVModuleComponent},
   {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
+  {path:'orderList',component:AllOrderListComponent},
   // {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

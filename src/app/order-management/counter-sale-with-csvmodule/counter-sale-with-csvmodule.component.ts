@@ -2399,6 +2399,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       const custtaxCategoryName = selSite.taxCategoryName;
       console.log(selSite);
       if (custtaxCategoryName === 'Sales-IGST') {
+        
         this.orderManagementService.addonDescList(segment)
           .subscribe(
             data => {
@@ -2471,23 +2472,25 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
               this.addonDescList = data; //// item iformation
               for (let i = 0; i < data.length; i++) {
                 var taxCatNm: string = data[i].taxCategoryName;
-                if (taxCatNm.includes('Sale-S&C')) {               
+                if (taxCatNm.includes('Sale-S&C')) {    
+                  // alert(k +'------'+ data[i].taxCategoryName +'----'+ data[i].taxPercentage)           
                   this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
                     .subscribe(
                       data1 => {
                         this.taxCategoryList[k] = data1;
-                        this.allTaxCategoryList[k] = data1;
-                        
+                        this.allTaxCategoryList[k] = data1;            
                         let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
                         (controlinv.controls[k]).patchValue({
                           taxCategoryId :itemCateNameList.taxCategoryId,
                             taxCategoryName: itemCateNameList,      
                          })
-                      }
+                      }              
                     );
 
                 }
               }
+              // let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[0].taxCategoryName);
+              // controlinv[0].patchValue({taxCategoryName: itemCateNameList})
               if (select.itemId != null) {
                 let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                 var invTp = controlinv.controls[k].get('invType').value;
