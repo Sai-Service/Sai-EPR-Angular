@@ -355,6 +355,11 @@ displayFirstButtonDisplay=true;
 displaySecondButtonDisplay=true;
 displayThirdButtonDisplay=true;
 
+isVisible :Boolean= false;
+@ViewChild('poCancel1') poCancel1:ElementRef;
+// @ViewChild("poCancel1") myInputField1: ElementRef;
+@ViewChild("hsnSacCode1") hsnSacCode1: ElementRef;
+displaypoCancel=true;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
@@ -890,13 +895,23 @@ displayThirdButtonDisplay=true;
             alert(data.message)
             window.location.reload();
           } if (data.code === 200) {
-            // window.location.reload();
-            // this.lineDetailsArray.clear();
-            // this.lineDetailsArray[0].clear();
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
             this.lstcomments1 = data.obj;
             for (let i=0;i<data.obj.poLines.length;i++){
+              if (data.obj.poLines[i].itemType==='EXPENCE'){
+               var hsnSacCode = data.obj.poLines[i].hsnSacCode;
+               let hsnSacCodeValue = this.hsnSacCodeList.find(v => v.hsnsaccode == data.obj.poLines[i].hsnSacCode);
+               console.log(hsnSacCodeValue);
+               this.service.taxCategoryListNew(data.obj.taxCategoryName,hsnSacCodeValue.gstPercentage)
+               .subscribe(
+                 data1 => {
+                   this.taxCategoryList[i] = data1;
+                   console.log(this.taxCategoryList[i]);
+                 }
+               );
+              }
+          else{
               this.service.taxCategoryListNew(data.obj.taxCategoryName,data.obj.poLines[i].gstPercentage)
               .subscribe(
                 data1 => {
@@ -905,6 +920,7 @@ displayThirdButtonDisplay=true;
                 }
               );
             }
+          }
             var approveDate1 = data.obj.approveDate;
             var approveDate2 = this.pipe.transform(approveDate1, 'dd-MM-yyyy');
             this.poMasterDtoForm.patchValue({approveDate: approveDate2});
@@ -1010,6 +1026,16 @@ displayThirdButtonDisplay=true;
               this.displaygoReceiptForm = false;
               this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
+           
+              if (data.obj.rcvLines.length >0){
+                alert(data.obj.rcvLines.length);
+                this.isVisible=false;
+              // this.poCancel1.nativeElement.hidden=true;
+              }
+              else{
+                this.isVisible=true;
+                // this.poCancel1.nativeElement.hidden=false;
+              }
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
@@ -1055,6 +1081,7 @@ displayThirdButtonDisplay=true;
                 });
                 // this.taxDetails('Search',i, 'taxCategoryId');
               }
+             
             }
           }
         }
@@ -1514,6 +1541,7 @@ displayThirdButtonDisplay=true;
                     gstPercentage:this.ItemDetailsList.gstPercentage,
                   }
                 );
+                this.hsnSacCode1.nativeElement.focus();
               }
             );
         }

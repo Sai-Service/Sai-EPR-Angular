@@ -1031,7 +1031,7 @@
                                                                 </ng-template>
                                                                 <ng-template #elseBlockHSN>
                                                                     <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
-                                                                        (ngModelChange)='onHsnCodeSelected($event,i)'>
+                                                                        (ngModelChange)='onHsnCodeSelected($event,i)' #hsnSacCode1>
                                                                         <option></option>
                                                                         <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
                                                                             {{sc.hsnsaccode}}-{{sc.description}}
@@ -1161,7 +1161,7 @@
                                                                         id="hsnSacCode" style="width: 5rem;"
                                                                         class="form-control"> -->
                                                                         <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
-                                                                        (ngModelChange)='onHsnCodeSelected($event)'>
+                                                                        (ngModelChange)='onHsnCodeSelected($event)' #hsnSacCode1>
                                                                         <option></option>
                                                                         <option *ngFor="let sc of hsnSacCodeList[i]" [ngValue]="sc.hsnsaccode">
                                                                             {{sc.hsnsaccode}}-{{sc.description}}
@@ -1743,12 +1743,16 @@
             data-target="#confirmAlert" (click)="getMessage('Approve')">Approve</button>
         </td>
         <td>
+       <!-- hi2 -->
             <input hidden type="text" disabled formControlName="segment1" class="form-control" [(ngModel)]='segment1' placeholder="">
             <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
-            <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;"
-                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')">PO Cancelled</button>
-         </td>
+            <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;" 
+                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')" #poCancel1>PO Cancelled</button>
+
+            </td>
+            
         <td>
+            
             <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
             data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                 <!-- (click)="resetItemCatMast()" -->
@@ -1775,11 +1779,13 @@
                 <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
             </td> -->
             <td>
+              
                 <input hidden type="text" disabled formControlName="segment1" class="form-control" [(ngModel)]='segment1' placeholder="">
                 <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
+                <div [style.display]="isVisible ? 'block' : 'none'">
                 <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;"
-                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')">PO Cancelled</button>
-      
+                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')" #poCancel1>PO Cancelled</button>
+                </div>
             </td>
             <td>
                 <!-- <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;">New Receipt Creation</button> -->

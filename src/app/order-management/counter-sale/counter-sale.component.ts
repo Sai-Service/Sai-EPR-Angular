@@ -329,6 +329,9 @@ export class CounterSaleComponent implements OnInit {
   // customerId:number;
 
 
+  display='none';
+  @ViewChild("myinput") myInputField: ElementRef;
+
   @ViewChild("paymentButton") paymentButton: ElementRef;
 
 
@@ -1156,7 +1159,8 @@ export class CounterSaleComponent implements OnInit {
           else {
             if (data.code === 400) {
               alert('res' + data.message);
-              this.displaycreateCustomer = false;
+              this.display='block'; 
+              // this.displaycreateCustomer = false;
             }
           }
         });
@@ -2361,4 +2365,24 @@ export class CounterSaleComponent implements OnInit {
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
   }
+
+   message1: string = "Please Fix the Errors !";
+    msgType:string ="Navigate";
+   getMessage(msgType: string) {
+     if (msgType.includes("Navigate")) {
+      this.message1 = "Do you want to Navigate the Form(Yes/No)?"
+      }
+  }
+  
+   executeAction() { 
+     if(this.msgType.includes("Navigate")) {
+         this.router.navigate(['/admin/master/customerMaster'])
+    }
+  }
+
+
+  closeModalDialog(){
+    this.display='none'; //set none css after close dialog
+    this.myInputField.nativeElement.focus();
+   }
 }

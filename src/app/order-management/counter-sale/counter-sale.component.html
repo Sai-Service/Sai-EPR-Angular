@@ -46,12 +46,12 @@
                         <div class="modal-body">
                             <table class="center" style="width: 100%;">
                                 <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">
                                         Contact&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" style="width: 150px;">
-                                    </td>
+                                    </td> -->
                                     <td style="width: 15%" class="LabelFontStyle">
                                         State&nbsp;:&nbsp;
                                     </td>
@@ -108,7 +108,7 @@
                                             [(ngModel)]='panNo' value={{panNo}} style="width: 150px;">
                                     </td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         DMS&nbsp;INS&nbsp;:&nbsp;
                                     </td>
@@ -121,21 +121,23 @@
                                     <td>
                                         <input type="text" class="form-control" style="width: 150px;">
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                            <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button> -->
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-success" id="resetBtn" data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Navigate')" style="width: fit-content;">New Customer Creation</button> -->
         </legend>
-
+      
         <table class="center" style="width: 100%;">
-            <div *ngIf="displaycreateCustomer; then thencreateCustomer; else elsecreateCustomer"></div>
-            <ng-template #thencreateCustomer>
+            <!-- <div *ngIf="displaycreateCustomer; then thencreateCustomer; else elsecreateCustomer"></div>
+            <ng-template #thencreateCustomer> -->
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1">
                         Customer&nbsp;No&nbsp;:&nbsp;
@@ -144,7 +146,7 @@
                         <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
                             [(ngModel)]='custAccountNo' value={{custAccountNo}}
                             [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
-                            (keydown.tab)="accountNoSearch(custAccountNo)">
+                            (keydown.tab)="accountNoSearch(custAccountNo)"  #myinput>
                         <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
                             <div *ngIf="f.custAccountNo.errors.required">Code cannot be blank</div>
                         </div>
@@ -312,15 +314,20 @@
                     </td>
                 </tr>
             </ng-template>
-        </ng-template>
+        <!-- </ng-template> -->
         <tr>
             <td>
-                <ng-template #elsecreateCustomer>
-                    <button type="button" class="btn btn-primary" style="width: 10rem;" data-toggle="modal"
+                <!-- <ng-template #elsecreateCustomer> -->
+                <!-- <button type="button" class="btn btn-primary" style="width: 10rem;"  data-toggle="modal"  data-target="#confirmAlert" >
+                    Create New Customer
+                </button> -->
+                <!-- <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                data-target="#confirmAlert" (click)="getMessage('Navigate')">Navigate</button> -->
+                    <!-- <button type="button" class="btn btn-primary" style="width: 10rem;" data-toggle="modal"
                         data-target="#createNewCustomer">
                         Create New Customer
-                    </button>
-                </ng-template>
+                    </button> -->
+                <!-- </ng-template> -->
             </td>
         </tr>
         </table>
@@ -1536,3 +1543,43 @@
     <!-- Modal -->
 
 </form>
+
+
+
+
+
+
+
+
+
+<!-- Confirmation Message -->
+
+
+
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}"
+ aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message1}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center" style="width: 50%;">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info"  (click)="closeModalDialog()">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
