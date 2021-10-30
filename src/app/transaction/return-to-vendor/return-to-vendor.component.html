@@ -279,32 +279,18 @@
 
                                    </div>
                                     </td>
-
-                                  
-
-
-                                
+                               
                                </tr>
                             </table>
+
                             <table class="auto-style4" class="GridFont" cellspacing="0"
                             cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
                             style="border-color:#959595;width:100%;border-collapse:collapse;">
 
-                            
-
                             <thead>
                                 <tr class="GridHeader">
-                                    <!-- <th scope="col">Tax Details</th> -->
-                                    <!-- <th scope="col">Select</th> -->
-                                    
+                                    <th scope="col">Select</th> -->
                                     <th scope="col">Select</th>
-                                    <!-- <th scope="col">PO LINEID</th>
-                                    <th scope="col">PO HEADID</th>
-                                    <th scope="col">PO SH HEADID</th>
-                                    <th scope="col">PO SH LINEID</th>
-                                    <th scope="col">BILL TOLOCID</th>
-                                    <th scope="col">INV ITMID</th>
-                                    <th scope="col">SUB INVID</th> -->
                                     <th scope="col">Item Number</th>
                                     <th scope="col" style="width: 3rem;">Return Qty </th>
                                     <th scope="col" style="width: 3rem;">Received Qty</th>
@@ -337,7 +323,9 @@
                             </thead>
 
                             <tbody>
+                                
                                 <ng-container class="center" formArrayName="rcvLines">
+
                                     <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"; [formGroupName]="i" class="auto-style5">
 
                                         <!-- <div *ngIf="disabledLine; then thenBlockLine; else elseBlockLine"></div>

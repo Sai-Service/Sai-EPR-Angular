@@ -886,8 +886,24 @@
                                         </td>
                                     </ng-template>
 
+                                      <div *ngIf="applHistory; then hList1; else hList2"></div>
+                                      <ng-template #hList1>  
+                                        <td>
+                                            <button type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#applHistory"  (click)="receiptApplyHist()" style="width: 7rem;color: black;">
+                                            &nbsp;Apply History</button>
+                                        </td>
+                                      </ng-template>
+                                      <ng-template #hList2>  
+                                        <td>
+                                            <button  disabled type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#applHistory"  (click)="receiptApplyHist()" style="width: 7rem;color: black;">
+                                            &nbsp;Apply History</button>
+                                        </td>
+                                      </ng-template>
 
-                                                             <!-- ==========================SEARCH & APPLY =============================== -->
+
+                                   <!-- ==========================SEARCH & APPLY =============================== -->
 
                             <div *ngIf="enableApplyButton; then ApplyButtonYes; else ApplyButtonNo"></div>
                             <ng-template #ApplyButtonYes>
@@ -905,9 +921,6 @@
                                     &nbsp;Apply</button>
                                 </td>
                             </ng-template>
-
-
-
 
                         <div *ngIf="showModalForm; then ShowMYes; else ShowMNo"></div>
                         <ng-template #ShowMYes>
@@ -1304,9 +1317,100 @@
                     </tr>
                 </table>
                 </fieldset>
-             
-                    
-                </form>
+
+
+                <!-- --------------------------------------RECEIPT APPY HISTORY---------------------------- -->
+                <!-- <div *ngIf="applHistory; then hList1; else hList2"></div>
+                <ng-template #hList1>   -->
+
+                   <div class="modal fade" id="applHistory" tabindex="-1" role="dialog" aria-labelledby="applHistoryLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-content">
+                        
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="applHistoryLabel" style="text-align: center;" >&nbsp;RECEIPT&nbsp;APPLICATION  HISTORY&nbsp; RECEIPT No:&nbsp;{{this.receiptNumber}}&nbsp;</h5>
+                         
+                          <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <table class="center" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle"> Customer &nbsp;No&nbsp;:&nbsp;</td> <td style="font-weight: bold;">{{this.custAccountNo}}</td>
+                                    <!-- <td><input  readonly type="text" class="form-control" formControlName="custAccountNo"  [(ngModel)]="custAccountNo"> </td>  -->
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">Customer &nbsp;Name&nbsp;:&nbsp;</td> <td style="font-weight: bold;">{{this.custName}}</td>
+                                    <!-- <td> <input readonly type="text" class="form-control" formControlName="custName"  [(ng Model)]="custName" style="width: 300px;"></td>  -->
+                                   </tr>
+
+                                <tr>
+                                       
+                                    <td style="width: 15%" class="LabelFontStyle">Receipt &nbsp;Amt&nbsp;:&nbsp;</td> <td style="font-weight: bold;">{{this.receiptAmount}}</td>
+                                    <!-- <td> <input readonly type="number" class="form-control" formControlName="receiptAmount"  [(ngModel)]="receiptAmount"></td> -->
+                              
+
+                                    <td style="width: 15%" class="LabelFontStyle"> Applied &nbsp;Amt&nbsp;:&nbsp; </td> <td style="font-weight: bold;">{{this.tApplAmt}}</td>
+                                    <!-- <td><input readonly  type="number" class="form-control" formControlName="tApplAmt"  [(ngModel)]="tApplAmt"></td> -->
+                                  
+                                    <td style="width: 15%" class="LabelFontStyle">UnApplied &nbsp;Amt&nbsp;:&nbsp; </td> <td style="font-weight: bold;">{{this.tUapplAmt}}</td>
+                                    <!-- <td><input readonly type="number" class="form-control" formControlName="tUapplAmt"  [(ngModel)]="tUapplAmt"></td> -->
+                                        
+                                    
+                                     <td><input readonly hidden type="number" class="form-control" formControlName="balanceAmount"  [(ngModel)]="balanceAmount"></td>
+                                    
+                                    
+                                </tr>
+                            </table>
+
+
+                            <div class="container1">
+                               <div class="grid_scroll_3">
+                                 <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+                              
+                                  <tbody>
+                                            <tr class="GridHeader">
+                                                <th style="width:6rem" scope="col">Srl#</th>
+                                               <th style="width:10rem" scope="col">Application Type</th>
+                                                <th style="width:10rem" scope="col">Invoice No</th>
+                                                <th style="width:10rem" scope="col">Invoice Date</th>
+                                                <th style="width:10rem" scope="col">Invoice Amt</th>
+                                                <th style="width:10rem" scope="col">Applied Amt</th>
+                                                <th style="width:10rem" scope="col">Applied Date</th>
+                                                <th style="width:10rem" scope="col">GL Date</th>
+                                                <!-- <th style="width:10rem" scope="col">Balance  Due</th> -->
+                                                                                         
+                                        </tr>
+                                    </tbody>
+                                  
+                                        <tr *ngFor="let com of lstApplyHistory let i= index" class="ItemStyle" style="text-decoration:none;">
+                                            <td style="text-align: center;">{{i+1}}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.applyTo}}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.trxNumber}}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.trxDate}}</td>
+                                            <td style="width:10rem;text-align: right;">{{com.invoiceAmount | number:'0.00'}}</td>
+                                            <td style="width:10rem;text-align: right;">{{com.applAmt | number:'0.00'}}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.applDate }}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.glDate }}</td>
+                                            <!-- <td style="width:6rem;text-align: center;">{{com.balanceDue | number:'0.00'}}</td> -->
+                                        </tr>
+                                </table>
+                              </div>
+                            </div>
+                             <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- </ng-template>
+                <ng-template #hList2></ng-template> -->
+                <!-- ------------------------------------------------------------------------------------------------------- -->
+               </form>
+
             </div>
         </div>
     </div>
