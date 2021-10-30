@@ -550,7 +550,6 @@ export class CounterSaleComponent implements OnInit {
   ngOnInit(): void {
 
     $("#wrapper").toggleClass("toggled");
-
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.displayDMSCDMS = true;
       this.showApplyDiscount = false;
@@ -773,9 +772,6 @@ export class CounterSaleComponent implements OnInit {
             this.createOrderType = data.obj.createOrderType;
             this.priceListName = data.obj.priceListName;
             this.CounterSaleOrderBookingForm.patchValue({ trxNumber: data.obj.trxNumber })
-            // this.totTax = data.obj.totTax;
-            // this.totAmt = data.obj.totAmt;
-            // this.subtotal = data.obj.subtotal;
             this.totTax = Math.round((data.obj.totTax + Number.EPSILON) * 100) / 100;
             this.totAmt = Math.round((data.obj.totAmt + Number.EPSILON) * 100) / 100;
             this.subtotal = Math.round((data.obj.subtotal + Number.EPSILON) * 100) / 100;
@@ -788,24 +784,18 @@ export class CounterSaleComponent implements OnInit {
             this.transactionTypeName = data.obj.transactionTypeName;
             for (let k = 0; k < data.obj.oeOrderLinesAllList.length; k++) {
               this.CounterSaleOrderBookingForm.patchValue({ baseAmt: this.lstgetOrderLineDetails[k].baseAmt });
-              // this.CounterSaleOrderBookingForm.patchValue({taxAmt:this.lstgetOrderLineDetails[k].taxAmt});
               let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
               (controlinv.controls[k]).patchValue({
-                // baseAmt: data.obj.oeOrderLinesAllList[k].baseAmt,
-                // taxAmt: data.obj.oeOrderLinesAllList[k].taxAmt,
-                // totAmt: data.obj.oeOrderLinesAllList[k].totAmt,
                 baseAmt: Math.round((data.obj.oeOrderLinesAllList[k].baseAmt + Number.EPSILON) * 100) / 100,
                 taxAmt: Math.round((data.obj.oeOrderLinesAllList[k].taxAmt + Number.EPSILON) * 100) / 100,
                 totAmt: Math.round((data.obj.oeOrderLinesAllList[k].totAmt + Number.EPSILON) * 100) / 100,
                 unitSellingPrice: Math.round((data.obj.oeOrderLinesAllList[k].unitSellingPrice + Number.EPSILON) * 100) / 100,
                 disPer: data.obj.oeOrderLinesAllList[k].disPer,
-                // unitSellingPrice: data.obj.oeOrderLinesAllList[k].unitSellingPrice,
                 taxCategoryId: data.obj.oeOrderLinesAllList[k].taxCategoryId,
               });
             }
 
             for (let k = 0; k < data.obj.taxAmounts.length; k++) {
-              // alert('check for tax details')
               let controlinv = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
               (controlinv.controls[k]).patchValue({
                 totTaxAmt: data.obj.taxAmounts[k].totTaxAmt,
@@ -814,6 +804,13 @@ export class CounterSaleComponent implements OnInit {
             }
             this.CounterSaleOrderBookingForm.patchValue({ orderedDate: data.obj.orderedDate });
             this.CounterSaleOrderBookingForm.get('orderedDate').disable();
+            // alert( data.obj.orderStatus +'-----' + data.obj.trxNumber);
+            if (data.obj.orderStatus !='BOOKED' && data.obj.trxNumber !=null ){
+              this.isVisible=true;
+            }
+            else{
+              this.isVisible=false;
+            }
             this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
             if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
               this.CounterSaleOrderBookingForm.get('custName').disable();
@@ -877,7 +874,6 @@ export class CounterSaleComponent implements OnInit {
               }
             }
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
-
               this.displayAfterGatePass = false;
               this.isVisible = false;
             } else {
@@ -1523,8 +1519,10 @@ export class CounterSaleComponent implements OnInit {
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
       const custtaxCategoryName = selSite.taxCategoryName;
       console.log(selSite);
+      var priceListId=this.CounterSaleOrderBookingForm.get('priceListId').value;
+      console.log(priceListId);     
       if (custtaxCategoryName === 'Sales-IGST') {
-        this.orderManagementService.addonDescList(segment)
+        this.orderManagementService.addonDescList1(segment,selSite.taxCategoryName,priceListId)
           .subscribe(
             data => {
               this.addonDescList = data;
@@ -1609,7 +1607,7 @@ export class CounterSaleComponent implements OnInit {
             });
       }
       else {
-        this.orderManagementService.addonDescList(segment)
+        this.orderManagementService.addonDescList1(segment,selSite.taxCategoryName,priceListId)
           .subscribe(
             data => {
               this.addonDescList = data; //// item iformation

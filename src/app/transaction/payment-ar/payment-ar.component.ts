@@ -84,6 +84,7 @@ export class PaymentArComponent implements OnInit {
   lstcomments: any[];
   lstinvoices: any[];
   lstCustomer: any[];
+  lstApplyHistory : any[];
 
   
 
@@ -219,6 +220,7 @@ export class PaymentArComponent implements OnInit {
   applySaveButton = false;
   validateStatus = false;
   showRefYellow = false;
+  applHistory=false;
 
 
   showInvoiceGrid = false;
@@ -795,7 +797,24 @@ export class PaymentArComponent implements OnInit {
         data => {
           this.receiptDetails = data.obj.oePayList[0];
           console.log(this.receiptDetails);
+       
+          // ---------------------------Applied history
+          this.lstApplyHistory= data.obj.invApplyLst;
+          console.log(this.lstApplyHistory);
+
+          var len1=data.obj.invApplyLst.length;
+
+          if(len1>0) {
+            this.applHistory=true
+          } else {
+            this.applHistory=false;
+          }
+
+
+          // --------------------------------------------
+
           this.paymentArForm.patchValue(this.receiptDetails);
+
           // this.locId=Number(this.locationId);
           //  alert("this.status  "+this.status);
           this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
@@ -2207,6 +2226,14 @@ export class PaymentArComponent implements OnInit {
     this.applLineValidation = true;
   }
 
+
+ 
+    receiptApplyHist(){ 
+      this.receiptAmount=this.paymentAmt;
+      this.tApplAmt = this.totAppliedtAmount;
+      this.tUapplAmt = this.totUnAppliedtAmount;
+
+    }
 
 
 

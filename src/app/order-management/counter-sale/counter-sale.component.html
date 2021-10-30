@@ -1389,9 +1389,11 @@
                                         </button>
                                     </td>
                                     <td>
+                                        <div [style.display]="isVisible ? 'block' : 'none'">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gatePassParameterModal" style="width: 8rem;">
                                             Generate&nbsp;Gate&nbsp;Pass
                                           </button>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
@@ -1448,6 +1450,7 @@
                         </button>
                     </td>
                     <td>
+                        <div [style.display]="isVisible ? 'block' : 'none'">
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gatePassParameterModal" style="width: 8rem;">
     Generate&nbsp;Gate&nbsp;Pass
   </button>
@@ -1492,6 +1495,7 @@
       </div>
     </div>
   </div>
+                        </div>
                     </td>
                     <td>
                         <div *ngIf="PaymentButton; then thenBlockPaymentButton; else elseBlockPaymentButton"></div>

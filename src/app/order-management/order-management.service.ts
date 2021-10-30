@@ -199,8 +199,21 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
 
-  //http://localhost:8081/itemMst/segmentLike?segment=AN101149&taxCategoryName=Sales-S%26CGST&priceListHeaderId=221
+  // addonDescList1(segment,taxCategoryName,priceListHeaderId): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/itemMst/segmentLike?segment=${segment}&taxCategoryName=${taxCategoryName}&priceListHeaderId=${priceListHeaderId}`);
+  // }
 
+
+  addonDescList1(segment, taxCategoryName, priceListHeaderId):Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('segment', segment)
+    .set('taxCategoryName', taxCategoryName)
+    .set('priceListHeaderId', priceListHeaderId)
+    const REQUEST_URI = this.ServerUrl +'/itemMst/segmentLike';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+  
+    });
+  }
  
   getTaxCategoriesForSales(taxCategoryName,hsnTaxPer):Observable<any>{
     return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=SALES&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);

@@ -10,6 +10,7 @@
             <div class="center" style="width: 100%;">
               <form [formGroup]="priceListMasterForm" (ngSubmit)="priceListMaster(priceListMasterForm.value)">
                     
+             
                     <table class="center">
                         <tr>
                             <td  hidden style="border: none;color: black;">
@@ -37,17 +38,93 @@
                         </tr>
                     </table>
                     
-                    <table class="center">
+                    <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">PL Header Details</legend>
+                   <table class="center">
+
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
+                             <td>
+                                <input disabled type="text"  formControlName="divisionName" id="divisionName"  [(ngModel)]="divisionName" class="form-control">
+                              </td>
+                            
+                              <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
+                              
+                              <div *ngIf="displayButton; then thenBlock112; else elseBlock112"></div>
+                              <ng-template #thenBlock112>
+                                     <td>  
+                                        <select formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
+                                            {{sc.cmnTypeId}}-{{sc.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </ng-template>
+                                <ng-template #elseBlock112>
+                                    <td>  
+                                        <select disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
+                                            {{sc.cmnTypeId}}-{{sc.code}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </ng-template>
+
+                              
+
+                              
+
+                            
+                                <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:</td>
+                               
+                                <div *ngIf="showOu; then thenBlockShowOu; else elseBlockShowOu"></div>
+                                 <ng-template #thenBlockShowOu> 
+
+                                    <div *ngIf="displayButton; then thenBlock114; else elseBlock114"></div>
+                                    <ng-template #thenBlock114>
+
+                                     <td>  
+                                        <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                        {{sc.ouId}}-{{sc.ouName}}
+                                        </option>
+                                        </select>
+                                    </td>
+                                    </ng-template>
+
+                                    <ng-template #elseBlock114>
+                                        <td>  
+                                            <select  disabled formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                            {{sc.ouId}}-{{sc.ouName}}
+                                            </option>
+                                            </select>
+                                        </td>
+
+                                    </ng-template>
+
+                                </ng-template>
+
+                                <ng-template #elseBlockShowOu> 
+                                    <td>  
+                                        <select  disabled  formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                        {{sc.ouId}}-{{sc.ouName}}
+                                        </option>
+                                        </select>
+                                    </td>
+
+                                </ng-template>
+
+                       </tr>
                            <tr>
                               <td style="width: 15%" class="LabelFontStyle">PL&nbsp;Type:&nbsp;</td>
-                                    <!-- <div *ngIf="display1; then thenBlock11; else elseBlock11"></div>
-                                    <ng-template #thenBlock11> -->
-                                         <!-- </ng-template>
-
-                                    <ng-template #elseBlock11>
-                                        <input formControlName="priceListType" class="form-control">
-                                    </ng-template> -->
-                                    <div *ngIf="displayButton; then thenBlock111; else elseBlock111"></div>
+                                <div *ngIf="displayButton; then thenBlock111; else elseBlock111"></div>
                                 <ng-template #thenBlock111>
 
                                     <td> 
@@ -86,98 +163,7 @@
                             </tr>
 
 
-                                <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
-
-                                <!-- <td>  
-                                    <select   formControlName="divisionId" id="divisionId" [(ngModel)]="divisionId" class="form-control"  >
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
-                                       {{sc.divisionId}}-{{sc.divisionName}}
-                                    </option>
-                                    </select>
-                                </td> -->
-                                  <td>
-                                    <input disabled type="text"  formControlName="divisionName" id="divisionName"  [(ngModel)]="divisionName" class="form-control">
-                                  </td>
-                                
-                                  <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
-                                  
-                                  <div *ngIf="displayButton; then thenBlock112; else elseBlock112"></div>
-                                  <ng-template #thenBlock112>
-                                         <td>  
-                                            <select formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
-                                                <option disabled>--Select--</option>
-                                                <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
-                                                {{sc.cmnTypeId}}-{{sc.code}}
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </ng-template>
-                                    <ng-template #elseBlock112>
-                                        <td>  
-                                            <select disabled formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control">
-                                                <option disabled>--Select--</option>
-                                                <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
-                                                {{sc.cmnTypeId}}-{{sc.code}}
-                                                </option>
-                                            </select>
-                                        </td>
-                                    </ng-template>
-
-                                  
-
-                                  
-
-                                
-                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:</td>
-                                   
-                                    <div *ngIf="showOu; then thenBlockShowOu; else elseBlockShowOu"></div>
-                                     <ng-template #thenBlockShowOu> 
-
-                                        <div *ngIf="displayButton; then thenBlock114; else elseBlock114"></div>
-                                        <ng-template #thenBlock114>
-
-                                         <td>  
-                                            <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
-                                            <option disabled>--Select--</option>
-                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                            {{sc.ouId}}-{{sc.ouName}}
-                                            </option>
-                                            </select>
-                                        </td>
-                                        </ng-template>
-
-                                        <ng-template #elseBlock114>
-                                            <td>  
-                                                <select  disabled formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
-                                                <option disabled>--Select--</option>
-                                                <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                                {{sc.ouId}}-{{sc.ouName}}
-                                                </option>
-                                                </select>
-                                            </td>
-
-                                        </ng-template>
-
-                                    </ng-template>
-
-                                    <ng-template #elseBlockShowOu> 
-                                        <td>  
-                                            <select  disabled  formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"  >
-                                            <option disabled>--Select--</option>
-                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
-                                            {{sc.ouId}}-{{sc.ouName}}
-                                            </option>
-                                            </select>
-                                        </td>
-
-                                    </ng-template>
-
-
-
                               
-                            </tr>
 
                                         <!-- ==========================Status / Start Date /End Date =================================== -->
                              <tr>
@@ -250,13 +236,11 @@
 
 
                                 </tr>
-                                     <!-- ==========================Status / Start Date /End Date =================================== -->      
-                        
-                                <!-- <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">PL&nbsp;Id:&nbsp;</td>
-                                    <td><input disabled type="text"  formControlName="priceListHeaderId" id="priceListHeaderId" [(ngModel)]="priceListHeaderId" class="form-control"></td>
-                                </tr> -->
+                                     
                     </table>
+                    </fieldset>
+
+
                                     
                     <table style="width: 100%; background-color: #FFE4B5;">
                         <tr>
@@ -299,42 +283,50 @@
 
                         <br>
 
+                      
+                       
+
                         <div class="center">
                             <!-- <br> -->
                            <div class="center" formArrayName="priceListDetailList">
       
                                 <div class="grid_scroll">
 
-                                    <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                                 <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
                                               cellspacing="0" cellpadding="4" rules="all" class="center">
+
+                                              <!-- <table class="auto-style4" class="GridFont" cellspacing="0"
+                                              cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
+                                              style="border-color:#959595;width:100%;border-collapse:collapse;">  -->
+                      
                                               <thead>
                                                 <tr class="GridHeader">
-                                                      <!-- <th scope="col">No.</th> -->
-                                                      <th scope="col">Item Code</th>
+                                                      <th style="width:4rem" scope="col">Srl No.</th>
+                                                      <th style="width:15rem" scope="col">Item Code</th>
                                                       <!-- <th scope="col">Item Id</th> -->
-                                                      <th scope="col">Item Description</th>
-                                                      <th scope="col">Item Category</th>
-                                                      <th scope="col">UOM</th>
-                                                      <th scope="col">Batch Code</th>
-                                                      <th scope="col">Price</th>
+                                                      <th style="width:20rem" scope="col">Item Description</th>
+                                                      <th style="width:6rem" scope="col">Item Category</th>
+                                                      <th style="width:3rem" scope="col">UOM</th>
+                                                      <th style="width:6rem" scope="col">Batch Code</th>
+                                                      <th style="width:6rem" scope="col">Price</th>
                                                       <!-- <th scope="col">Start Date</th> -->
                                                       <!-- <th scope="col">End Date</th> -->
-                                                      <th scope="col">Add+</th>
-                                                      <th scope="col">Del-</th>
+                                                      <th style="width:2rem" scope="col">Add+</th>
+                                                      <th style="width:2rem" scope="col">Del-</th>
                                                   </tr>
                                               </thead>
 
                                             <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
                                                 
                                             <input type="text" hidden formControlName="priceListLineId">
+                                            
+                                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                                 
-                                            <td>
-                                                    <!-- <input hidden  type="text" formControlName="itemId" id="itemId" >
-                                                    <input   type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName" class="form-control" placeholder="Item Code "  > -->
-                                                   
+                                                 <td>
+                                                      
                                                     <input type="text" formControlName="segment"
                                                     (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                                                    list="dynmicUserIds1" class="form-control"
+                                                    list="dynmicUserIds1" class="form-control"  style="width: 16rem;"
                                                     (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                 <datalist id="dynmicUserIds1">
                                                     <option *ngFor="let item of invItemList" [ngValue]="item.itemId">
@@ -347,19 +339,19 @@
                                                     <input disabled  type="text" formControlName="itemId"  class="form-control" placeholder="Item Description "  >
                                                 </td> -->
                                                 <td>
-                                                    <input disabled  type="text" formControlName="itemDescription"  class="form-control" placeholder="Item Description "  >
+                                                    <input disabled style="width:22rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width: 150px;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
+                                                    <input style="width:7rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width: 100px;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
+                                                    <input style="width: 3rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width: 150px;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  >
+                                                    <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  >
                                                 </td>
                                                 <td>
-                                                    <input style="text-align: right;width: 150px;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
+                                                    <input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
                                                 </td>
                                                 <!-- <td>
                                                     <input   type="date" formControlName="startDate"  class="form-control" placeholder="Start Date "  >
@@ -564,7 +556,8 @@
                                                 <select formControlName="primaryPriceListId" id="primaryPriceListId" [(ngModel)]="primaryPriceListId" class="form-control">
                                                     <option>--Select--</option>
                                                     <option *ngFor="let sc of  PriceListIdList" [ngValue]="sc.priceListHeaderId" >
-                                                        {{sc.priceListHeaderId}}-{{sc.priceListName}}
+                                                        <!-- {{sc.priceListHeaderId}}- -->
+                                                        {{sc.priceListName}}
                                                     </option>
                                                 </select>
                                             </td>
@@ -640,7 +633,7 @@
 
 
                             <td>
-                                <button type="button"  class="btn btn-primary" 
+                                <button type="button"  class="btn btn-primary"  (click)="plUpload()"
                                 data-toggle="modal" data-target="#exampleModal3" style="width: 8rem;color: black;">
                                 Price&nbsp;List&nbsp;Upload</button>
                             </td>
@@ -659,13 +652,24 @@
                                                 <div class="modal-body">
                                                 <table class="center" style="width: 100%;">
                                                     <tr>
-                                                        <td style="width: 15%" class="LabelFontStyle">
-                                                            Select&nbsp;File&nbsp;to&nbsp;upload(.CSV&nbsp;only):&nbsp;
-                                                        </td>
 
-                                                        <!-- <td>
-                                                            <input type="file" id="myfile" name="myfile">
-                                                        </td> -->
+                                                        <td style="width: 15%" class="LabelFontStyle">Price&nbsp;List&nbsp;:&nbsp; </td>
+                                                          
+                                                        <td>  
+                                                            <select formControlName="upldPricelistName" id="upldPricelistName" [(ngModel)]="upldPricelistName" class="form-control" style="background-color: yellow;">
+                                                                <option>--Select--</option>
+                                                                <option *ngFor="let sc of  PriceListIdList" [ngValue]="sc.priceListName" >
+                                                                    <!-- {{sc.priceListHeaderId}}- -->
+                                                                    {{sc.priceListName}}
+                                                                </option>
+                                                            </select>
+                                                        </td>
+                                                   
+
+                                                   
+
+                                                     <td style="width: 15%" class="LabelFontStyle">Select&nbsp;Upload&nbsp;File(.CSV&nbsp;only):&nbsp; </td>
+                                                            
                                                     <td>
                                                         <table>
                                                         <tr>
@@ -679,17 +683,42 @@
                                                         </tr>
                                                         </table>
                                                     </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <button type="submit" class="btn btn-primary" id="register" (click)="refershForm()" style="width: 8rem;font-size: 11px;">View/download log</button>
-                                                        </td>
+                                                        </td> -->
+                                                    
                                                     </tr>
-
                                                     <tr>
 
-                                                        <td>
+                                                        <td colspan="5">
                                                             {{resMsg}}
                                                         </td>
                                                     </tr>
+                                                </table>
+
+                                                    <div class="container1">
+                                                        <div class="grid_scroll_3">
+                                                          <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+                                                       
+                                                           <tbody>
+                                                                     <tr class="GridHeader">
+                                                                         <th style="width:3rem" scope="col">Srl#</th>
+                                                                        <th style="width:10rem" scope="col">Segment</th>
+                                                                         <th style="width:20rem" scope="col">Item Descreption</th>
+                                                                         <th style="width:30rem" scope="col">Status</th>
+                                                                                                                                                                                         
+                                                                 </tr>
+                                                             </tbody>
+                                                           
+                                                                 <tr *ngFor="let com of lstMessage let i= index" class="ItemStyle" style="text-decoration:none;">
+                                                                     <td style="text-align: center;">{{i+1}}</td>
+                                                                     <td style="width:10rem;text-align: center;">{{com.segment}}</td>
+                                                                     <td style="width:20rem;text-align: left;">{{com.itemDescription}}</td>
+                                                                     <td style="width:30rem;text-align: left;">{{com.status}}</td>
+                                                                 </tr>
+                                                         </table>
+                                                       </div>
+                                                     </div>
 
                                                         <!-- <td>
                                                             <input type="submit"  value="Submit">
@@ -700,7 +729,7 @@
                                                         </td> -->
                                                      
                                                     
-                                                </table>
+                                               
 
 
                                                 <div class="modal-footer">
