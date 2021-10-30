@@ -13,7 +13,6 @@
                 <form [formGroup]="paymentReceiptForm" (ngSubmit)="paymentReceipt(paymentReceiptForm.value)">
                     <table class="center">
                         <tr>
-
                             <!-- <td style="width: 15%" class="LabelFontStyle">
                                 Division&nbsp;:&nbsp;
                             </td> -->
@@ -58,7 +57,6 @@
                     <!-- <table class="center"> -->
                       <tr>
                             <td style="width: 15%" class="LabelFontStyle">Receipt&nbsp;No:&nbsp;</td>
-
                             <td>
                                 <input  disabled   type="text" formControlName="receiptNumber"  id="receiptNumber" [(ngModel)]="receiptNumber" class="form-control">
                             </td>
@@ -68,7 +66,6 @@
                             <td>
                                 <input  disabled type="text"  formControlName="receiptDate"  id="receiptDate" [(ngModel)]="receiptDate" class="form-control" >
                             </td>
-
                             <td style="width: 15%" class="LabelFontStyle">Department&nbsp;:</td>
 
                             <td>  
@@ -83,39 +80,28 @@
                         </tr>
                         <tr>
 
-                            <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id:&nbsp;</td>
+                            <!-- <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id:&nbsp;</td> -->
 
-                            <td>
-                                <input disabled type="number" class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
+                            <!-- <td> -->
+                                <input hidden disabled type="number" class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
                                 <!-- <input   type="text" formControlName="customerId"  id="customerId" class="form-control"  placeholder="Customer Id"> -->
-                            </td>
+                            <!-- </td> -->
 
                             <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
                             
                             <td>
                                 <input disabled type="text" class="form-control" formControlName="custName" [(ngModel)]='custName'>
-                                <!-- <input   type="text" formControlName="customerName"  id="customerName" class="form-control"  placeholder="Customer Name"> -->
                             </td>
-                            
-                            
-
+                            <td style="width: 15%" class="LabelFontStyle">Balance&nbsp;Amount&nbsp;:&nbsp;</td>
+                            <td>
+                                <input  disabled   type="number" formControlName="balancePay"  id="balancePay" [(ngModel)]="balancePay" class="form-control">
+                            </td>
                             <td style="width: 15%" class="LabelFontStyle">Order/Ref.&nbsp;Number:&nbsp;</td>
-
                             <td>
                                 <input disabled type="text" class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'>
                                 <!-- <input   type="text" formControlName="orderNumber"  id="orderNumber" class="form-control"  placeholder="Order/Ref. Number"> -->
                             </td>
                         </tr>
-                    <!-- </table> -->
-
-                    <!-- <table style="width: 100%; background-color: #FFE4B5;">
-                        <tr>
-                            <td class="SubHeading2">Payment&nbsp;Details&nbsp;</td>
-                        </tr>
-                    </table> -->
-
-                    <!-- <table class="center"> -->
-
                         <tr>
                             <td   style="width: 15%" class="LabelFontStyle">Receipt&nbsp;Amount:&nbsp;</td>
 
@@ -126,7 +112,6 @@
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Mode:&nbsp;</td>
 
                             <td>  
-                                <!-- payType -->
                                 <select formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control" (ngModelChange)='onPayTypeSelected($event,"Active")' >
                                     <option>--Select--</option>
                                     <option *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue"  >
@@ -137,22 +122,15 @@
 
                             <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Method:&nbsp;</td>
                             <td>  
-                                <select  formControlName="receiptMethodId" [(ngModel)]='receiptMethodId' value={{receiptMethodId}}   class="form-control">
+                                <select  formControlName="receiptMethodName" [(ngModel)]='receiptMethodName' value={{receiptMethodName}} (ngModelChange)='onmethodNameSelected($event)'  class="form-control">
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  ReceiptMethodList "  [ngValue]="sc.receiptMethodId">
+                                    <option *ngFor="let sc of  ReceiptMethodList ">
                                         {{sc.methodName}} 
                                     </option>
                                 </select>
-
-
-                                <!-- <input  type="text" formControlName="color" [(ngModel)]='color' value={{color}} class="form-control" style="width: 170px;"> -->
-                                <!-- [ngValue]="sc.receiptMethodName" -->
-                                <!-- <input hidden formControlName="receiptMethodId" [(ngModel)]="receiptMethodId" > -->
-
+                                <input hidden type="number" formControlName="receiptMethodId">
                             </td>
                         </tr>
-
-
                         <tr>
                             <div *ngIf="showBankDetails; then thenBlock3; else elseBlock3"></div>
                             <ng-template #thenBlock3>
@@ -213,17 +191,7 @@
                                 <td>
                                     <input disabled  type="date" formControlName="checkDate"  id="checkDate"  [(ngModel)] ="checkDate" class="form-control"  placeholder="Bank Name">
                                 </td>
-                            </ng-template>
-                                        <!-- </table> -->
-                                
-                                    <!-- <table style="width: 100%; background-color: #4d3f28;" >
-                                        <tr>
-                                            <td class="SubHeading2">&nbsp;&nbsp;</td>
-                                        </tr>
-                                    </table> -->
-
-                                    <!-- <table class="center"> -->
-                    
+                            </ng-template>                    
                                 <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Date:&nbsp;</td>
     
                             <td>
@@ -233,10 +201,6 @@
                             <ng-template #thenBlock2>
 
                             <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Reason:&nbsp;</td>
-
-                            <!-- <td>
-                                <input   type="text" formControlName="cancelReason"  id="cancelReason" class="form-control" placeholder="Enter Reason here....">
-                            </td> -->
                             <td>
                                 <select formControlName="cancelReason" id="cancelReason" [(ngModel)]="cancelReason" class="form-control">
                                     <option>--Select--</option>
@@ -250,11 +214,6 @@
 
                                 <ng-template #elseBlock2>
                                     <td style="width: 15%" class="LabelFontStyle">Reversal&nbsp;Reason:&nbsp;</td>
-
-                                    <!-- <td>
-                                        <input disabled   type="text" formControlName="cancelReason"  id="cancelReason" class="form-control">
-                                    </td> -->
-
                                     <td>
                                         <select disabled formControlName="cancelReason" id="cancelReason" [(ngModel)]="cancelReason" class="form-control">
                                             <option>--Select--</option>
@@ -265,8 +224,6 @@
                                     </td>
 
                                 </ng-template>
-
-                                <!-- <td></td> -->
 
                         </tr>
 
@@ -390,7 +347,9 @@
                                                                         <button style="width: 10em;" type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel/Reverse</button>
                                                                     </td> -->
                         <!-- ====================Reset Dialog ======================== -->
-
+                           <td>
+                             <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">  View&nbsp;Receipt </button>
+                                                                    </td>
                         <td>
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                         </td>
@@ -543,7 +502,7 @@
                 <!-- <td>{{com.orderNumber}}</td> -->
                 <td>{{custName}}</td>
                 <td>{{com.paymentAmt}}</td>
-                <td> {{com.receiptMethodId}}-{{com.receiptMethodName}}</td>
+                <td> {{com.receiptMethodName}}</td>
                 
                 <td><button class="btn btn-secondary" (click)="Select(com.receiptNumber)">Select</button></td>   
             </tr>
