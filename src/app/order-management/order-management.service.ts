@@ -199,6 +199,8 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${segment}`);
   }
 
+  //http://localhost:8081/itemMst/segmentLike?segment=AN101149&taxCategoryName=Sales-S%26CGST&priceListHeaderId=221
+
  
   getTaxCategoriesForSales(taxCategoryName,hsnTaxPer):Observable<any>{
     return this.http.get(this.ServerUrl +`/JaiTaxCatg/taxCateDtls?taxCatType=SALES&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
