@@ -650,7 +650,9 @@ export class PricelistMasterComponent implements OnInit {
 
   
   searchMast() {
-    this.service.getPriceListSearch(this.ouId,this.deptId)
+  //  this.service.getPriceListSearch(this.ouId,this.deptId)
+  alert(this.divisionId);
+     this.service.getPriceListSearch(this.ouId,this.divisionId)
       .subscribe(
         data => {
           this.lstcomments = data;

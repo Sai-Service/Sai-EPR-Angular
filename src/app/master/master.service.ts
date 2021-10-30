@@ -2080,9 +2080,14 @@ PriceListIdList(): Observable<any> {
       return this.http.put(url, OrderTypeMasterRecord, options);
     }
 
-    getPriceListSearch(ouId,deptId): Observable<any> {
+    // getPriceListSearch(ouId,deptId): Observable<any> {
+    //   // return this.http.get(this.ServerUrl + '/pricelist');
+    //   return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
+    // }
+
+    getPriceListSearch(ouId,divisionId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&divisionId=${divisionId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {

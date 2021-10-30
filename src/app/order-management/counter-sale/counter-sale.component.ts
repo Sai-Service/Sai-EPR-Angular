@@ -216,7 +216,7 @@ export class CounterSaleComponent implements OnInit {
   showApplyDiscount = true;
   selectedLine = 0;
   categoryList: any[];
-  custSiteList: any[];
+  custSiteList: any = [];
   // orderedDate:Date;
   diss: number;
   InvoiceNumber: number;
@@ -715,6 +715,7 @@ export class CounterSaleComponent implements OnInit {
 
     // this.lnflowStatusCode='BOOKED'
 
+    this.custSiteList.push({'siteName' : '--Select--'});
   }
 
 
@@ -1148,17 +1149,18 @@ export class CounterSaleComponent implements OnInit {
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
+            this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
-            // if (this.custSiteList.length === 1) {
-            //   this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
-            // }
+            if (this.custSiteList.length === 1) {
+              this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+            }
           }
           else {
             if (data.code === 400) {
-              alert('res' + data.message);
+             // alert('Error :' + data.message);
               this.display='block'; 
               // this.displaycreateCustomer = false;
             }
@@ -1514,7 +1516,9 @@ export class CounterSaleComponent implements OnInit {
       // alert(itemType)
       let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
       //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
+      if(select != undefined){
       this.itemId = select.itemId;
+      debugger;
       var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
       const custtaxCategoryName = selSite.taxCategoryName;
@@ -1686,6 +1690,7 @@ export class CounterSaleComponent implements OnInit {
               }
             });
       }
+    }
     }
 
   }
@@ -2366,7 +2371,7 @@ export class CounterSaleComponent implements OnInit {
     }
   }
 
-   message1: string = "Please Fix the Errors !";
+    message1: string = "Customer Not Found !  Do you want to create new Customer?";
     msgType:string ="Navigate";
    getMessage(msgType: string) {
      if (msgType.includes("Navigate")) {
