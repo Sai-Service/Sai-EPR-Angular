@@ -382,6 +382,9 @@ export class StockTransferComponent implements OnInit {
           (data =>{
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
+            if(this.CostDetail.rate===0.0){
+              alert(this.CostDetail.segment);
+            }
             // this.transCost[i]=this.CostDetail.rate;
           });
       this.service.getfrmSubLoc(this.locId, itemId, this.subInvCode.subInventoryId).subscribe(
@@ -441,8 +444,8 @@ export class StockTransferComponent implements OnInit {
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
-  //alert(onHand+'OnHand');
-  //alert(reserve+'reserve');
+  alert(onHand+'OnHand');
+  alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
 
@@ -451,8 +454,8 @@ export class StockTransferComponent implements OnInit {
   if(avlqty1<0)
   {
     alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
-    this.trxLinesList().clear();
-    this.addnewtrxLinesList(i);
+    // this.trxLinesList().clear();
+    // this.addnewtrxLinesList(i);
   }
     })
 

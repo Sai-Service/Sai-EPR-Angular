@@ -35,9 +35,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl +`/taxCtgHeader/${ouId}`);
   }
   taxCategoryList1(locId,state):Observable<any>{
-    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`)
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`);
   }
-
+  taxCategorySiteList1(ouId,state):Observable<any>{
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgNameSuppSitewise?ouId=${ouId}&custState=${state}`);
+  }
   memberTicketNo(locCode, deptId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
   }
@@ -3060,7 +3062,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       }
 
-    
+
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
         const options = {
           headers: this.headers
@@ -3089,7 +3091,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
 
       }
 
-      
+
 
 
       getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
@@ -3097,9 +3099,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
      }
 
-      
 
-     
+
+
 
     ////////////////////////// Pending Shipment Lis///////////
 
