@@ -72,6 +72,8 @@ interface IsupplierMaster {
   prepayCodeCombId:number;
   sacctsPayCodeCombId:number;
   sprepayCodeCombId:number;
+  displaysite:boolean;
+  createDebitMemoFlag:string;
 }
 
 
@@ -195,6 +197,8 @@ export class SupplierMasterComponent implements OnInit {
   liabilityAcct:string;
   prePayAcct: string;
   prepayCodeCombId: number;
+  displaysite:boolean=true;
+  createDebitMemoFlag:string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -277,7 +281,7 @@ export class SupplierMasterComponent implements OnInit {
   prepayCodeCombId: [],
   sacctsPayCodeCombId:[],
    sprepayCodeCombId:[],
-
+   createDebitMemoFlag:[],
     });
   }
 
@@ -376,7 +380,7 @@ export class SupplierMasterComponent implements OnInit {
   currentAcctTyp:string;
   openCodeCombination(accountType:string)
   {
- 
+
     let SegmentName1=this.supplierMasterForm.get(accountType).value;
     alert(SegmentName1);
     this.currentAcctTyp=accountType;
@@ -408,13 +412,13 @@ export class SupplierMasterComponent implements OnInit {
   }
   fnCancatination()
   {
-    
+
    var AcctCode=this.supplierMasterForm.get('segment11').value+'.'+
                      this.supplierMasterForm.get('segment2').value+'.'+
                      this.supplierMasterForm.get('segment3').value+'.'+
                      this.supplierMasterForm.get('segment4').value+'.'+
                      this.supplierMasterForm.get('segment5').value;
-    
+
     alert(AcctCode);
 
     this.service.segmentNameList(AcctCode)
@@ -429,7 +433,7 @@ export class SupplierMasterComponent implements OnInit {
             alert('Invalid Code Combination');
           } else {
             console.log(this.segmentNameList);
-           
+
             if(this.currentAcctTyp==='liabilityAcct')
             {
               this.acctsPayCodeCombId = Number(this.segmentNameList.codeCombinationId);
@@ -517,7 +521,7 @@ export class SupplierMasterComponent implements OnInit {
 
       }
     );
-  
+
       var natdesc= this.NaturalAccountList.find(d => d.naturalaccount === segment);
       if(natdesc!=undefined){
       this.lookupValueDesc4=natdesc.description;
@@ -595,7 +599,7 @@ export class SupplierMasterComponent implements OnInit {
     // const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     const formValue:IsupplierMaster=this.supplierMasterForm.value;
     formValue.compId=41;
-    formValue.siteName=this.supplierMasterForm.get('city').value+this.supplierMasterForm.get('state').value;
+    formValue.siteName=this.supplierMasterForm.get('city').value+'-'+this.supplierMasterForm.get('state').value;
     formValue.ouId=(sessionStorage.getItem('ouId'));
     formValue.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
@@ -695,6 +699,7 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   Select(suppSiteId: number) {
+    this.displaysite=false;
 alert(suppSiteId);
     this.lstcomments2 = this.lstcomments.supplierSiteMasterList;
     console.log(this.lstcomments2);
@@ -722,10 +727,14 @@ alert(suppSiteId);
                                           staxCatName:select.taxCategoryName,
                                           sstatus:select.status,
                                           souId:select.ouId,
-                                          siteName:select.siteName});
+                                          siteName:select.siteName,
+                                          sliabilityAcct:select.attribute2,
+                                          sprePayAcct:select.attribute1});
       // ticketNo not in  json
 
       // this.displayButton = false;
+      // this.displaysite=true;
+      // this
     }
   }
   ExeAddressEvent(e) {
@@ -737,6 +746,7 @@ alert(suppSiteId);
       this.scity = this.city
       this.pinCd = this.pinCode
       this.sstate = this.state
+      // this.displaysite=false;
     }
     else {
       this.saddress1 = null;
@@ -766,11 +776,14 @@ alert(suppSiteId);
           this.lstcomments = data;
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
-          // this.supplierMasterForm.patchValue({
-          //   // panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
-          //   // gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
-          //   taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
-          //   contactPerson:this.lstcomments.customerSiteMasterList[0].contactPerson,
+          this.supplierMasterForm.patchValue({
+            panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
+            gstNo:this.lstcomments.supplierSiteMasterList[0].gstNo,
+            prePayAcct:this.lstcomments.supplierSiteMasterList[0].attribute1,
+            liabilityAcct:this.lstcomments.supplierSiteMasterList[0].attribute2});
+            // contactPerson:this.lstcomments.customerSiteMasterList[0].contactPerson,
+            // contactNo:this.lstcomments.customerSiteMasterList[0].contactNo});
+
           // });
           this.city = this.lstcomments.city
           this.displayInactive = true;
@@ -843,7 +856,8 @@ alert(suppSiteId);
       data => {
         this.cityList1 = data;
         console.log(this.cityList1);
-        this.state=this.cityList1.attribute1;
+        // this.state=this.cityList1.attribute1;
+        this.supplierMasterForm.patchValue({state:this.cityList1.attribute1});
         console.log(this.cityList1.attribute1);
         // this.country = 'INDIA';
          this.service.taxCategoryList1(this.locId,this.state)
@@ -859,7 +873,29 @@ alert(suppSiteId);
     );
   }
 
+  onOptionSiteStateSeleted(event:any)
+  {
+    this.service.cityList1(event)
+    .subscribe(
+      data => {
+        this.cityList1 = data;
+        // console.log(this.cityList1);
+        this.sstate=this.cityList1.attribute1;
+        // console.log(this.cityList1.attribute1);
+        // this.country = 'INDIA';
 
+        //  this.service.taxCategoryList1(this.souId,this.state)
+        // .subscribe(
+        //   data => {
+        //     // this.taxCategoryNameList = data;
+        //     this.staxCatName=data.taxCategoryName;
+        //     // console.log(this.taxCategoryNameList);
+
+        //   }
+        // );
+      }
+    );
+  }
   onKey(event: any) {
     const gstNo1 = this.gstNo.substr(3,10);
     this.panNo = gstNo1;
@@ -875,10 +911,22 @@ alert(suppSiteId);
             console.log(this.cityList1);
             // this.state=this.cityList1.attribute1;
             this.sstate=this.cityList1.attribute1;
+            this.supplierMasterForm.patchValue({sstate:this.cityList1.attribute1});
             console.log(this.cityList1.attribute1);
             // this.country = 'INDIA';
+            var ouId=this.supplierMasterForm.get('souId').value;
+
+            this.service.taxCategorySiteList1(ouId,this.sstate)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            // this.staxCatName=data.taxCategoryName;
+            this.supplierMasterForm.patchValue({staxCatName:data.taxCategoryName});
+            // console.log(this.taxCategoryNameList);
+
           }
         );
+          });
       }
       onOptionGstno(event:any,tanNo)
       {
