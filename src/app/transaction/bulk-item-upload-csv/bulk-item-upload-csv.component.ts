@@ -39,7 +39,7 @@ export class BulkItemUploadCSVComponent implements OnInit {
   message: string;
   allUsers: Observable<BulkItemUploadCSVComponent[]>;
 
-  
+  progress: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.bulkUploadCSVForm = this.fb.group({
@@ -70,6 +70,8 @@ export class BulkItemUploadCSVComponent implements OnInit {
     // if ((sessionStorage.getItem('deptName'))=== 'Sales') {
       this.service.bulkpouploadSalesNew(formData).subscribe((res: any) => {
         if (res.code === 200) {
+       
+        
           alert(res.message);
           this.itemUploadedList=res.obj;  
          this.bulkUploadCSVForm.get('files').reset();

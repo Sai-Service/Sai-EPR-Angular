@@ -2082,9 +2082,9 @@ PriceListIdList(): Observable<any> {
       return this.http.put(url, OrderTypeMasterRecord, options);
     }
 
-    getPriceListSearch(ouId,deptId): Observable<any> {
+    getPriceListSearch(ouId,divId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&divisionId=${divId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {
@@ -2216,6 +2216,12 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
     }
 
+    getArReceiptAppliedHistory (rcptNumber): Observable<any> {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    }
+
+
+
   getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
@@ -2274,16 +2280,13 @@ OrderCategoryList(): Observable<any> {
     }
 
   ///////////////////Price list File upload/////////////////////
-  UploadExcel(formData: FormData,docType:string) {
+  UploadExcel(formData: FormData,docType:string,uploadPl:string) {
     let headers1 = new HttpHeaders();
     var userId1=sessionStorage.getItem('userId');
     console.log(docType);
     var docType1=formData.get('docType');
-      return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`, formData)
-      // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`);  --old url nishant
-      // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`, formData) --- old url nishant
-      // URL :- http://localhost:8081/pricelist/uploadprc  -- old api ( Nishant)
-      // http://localhost:8081/fileImport/uploadBJprc  --- new api - Nishant in october-21
+    formData.append('priceListName', uploadPl);
+    return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`,formData)
     }
 
 ////////////////////////////// bulk po upload /////////

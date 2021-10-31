@@ -395,11 +395,16 @@
         <table class="center">
           <tr>
              <td>
-              <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" >Close</button>
+              <!-- <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" >Close</button> -->
+              <button type="submit" class="btn btn-primary" id="closeBtn"
+              data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+
             </td>
             <td>
-              <button type="submit" class="btn btn-primary" (click)="resetMoveOrder()" >Reset</button>
-            </td>
+              <!-- <button type="submit" class="btn btn-primary" (click)="resetMoveOrder()" >Reset</button> -->
+              <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+              data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+           </td>
             <td>
               <table class="center">
                 <tr>
@@ -407,25 +412,33 @@
                   </div>
                   <ng-template #thenBlock>
                     <td>
-                      <button type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button>
+                      <!-- <button type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button> -->
+                      <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                      data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                     </td>
 
                     </ng-template>
                     <ng-template #elseBlock>
                       <td>
-                        <button disabled type="submit"  class="btn btn-primary" (click)="newStkTransfer()">Save</button>
-                      </td>
+                        <!-- <button disabled type="submit"  class="btn btn-primary" (click)="newStkTransfer()">Save</button> -->
+                        <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                        data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+                     </td>
                     </ng-template>
                     <div *ngIf="displayUp; then thenBlockUp; else elseBlockUp">
                     </div>
                     <ng-template #thenBlockUp>
                       <td>
-                        <button disabled type="submit"  class="btn btn-primary" (click)="EwayUpdate()">Update</button>
+                        <!-- <button disabled type="submit"  class="btn btn-primary" (click)="EwayUpdate()">Update</button> -->
+                        <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                        data-target="#confirmAlert" (click)="getMessage('Update')" >Update</button>
                       </td>
                       </ng-template>
                       <ng-template #elseBlockUp>
                         <td>
-                          <button  type="submit" id="btnUpdate" class="btn btn-primary" (click)="EwayUpdate()">Update</button>
+                          <!-- <button  type="submit" id="btnUpdate" class="btn btn-primary" (click)="EwayUpdate()">Update</button> -->
+                          <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                          data-target="#confirmAlert" (click)="getMessage('Update')" >Update</button>
                         </td>
                         </ng-template>
                         <td>
@@ -590,5 +603,33 @@
 </form>
 
   </div>
+
+
+  <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
 
 

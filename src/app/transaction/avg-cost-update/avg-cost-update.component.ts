@@ -65,10 +65,11 @@ export class AvgCostUpdateComponent implements OnInit {
   endDate:Date;
 
 
-  // fromDate:Date;
+  fromDate:Date;
   // toDate:Date;
-  fromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
-  toDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  toDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
   searchItemId:number;
 
   showOu=false;
@@ -112,8 +113,9 @@ export class AvgCostUpdateComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
-
-  transDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
   divisionId : number;
   loginName:string;

@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -355,6 +355,11 @@ displayFirstButtonDisplay=true;
 displaySecondButtonDisplay=true;
 displayThirdButtonDisplay=true;
 
+isVisible :Boolean= false;
+@ViewChild('poCancel1') poCancel1:ElementRef;
+// @ViewChild("poCancel1") myInputField1: ElementRef;
+@ViewChild("hsnSacCode1") hsnSacCode1: ElementRef;
+displaypoCancel=true;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute,private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
@@ -520,15 +525,15 @@ displayThirdButtonDisplay=true;
     //     }
     //   );
 
-    this.service.taxCategoryList()
-      .subscribe(
-        data1 => {
-          for (let i=0; i<data.length; i++){
-          this.taxCategoryList[i] = data1;
-        }
-        }
-        // let currCustomer = this.taxCategoryList[i].filter((customer) => (customer.custAccountNo === custAccountNo));
-      );
+    
+    // this.service.taxCategoryList()
+    //   .subscribe(
+    //     data1 => {
+    //       for (let i=0; i<data.length; i++){
+    //       this.taxCategoryList[i] = data1;
+    //     }
+    //     }
+    //   );
 
 
     this.service.supplierCodeList()
@@ -880,7 +885,6 @@ displayThirdButtonDisplay=true;
 
   Search(poNo) {
     // alert(poNo);
-    this.poMasterDtoForm.reset();
     this.currentOp = 'Search';
     console.log(this.poMasterDtoForm.value);
     this.service.getsearchByPOHeder(poNo)
@@ -891,28 +895,32 @@ displayThirdButtonDisplay=true;
             alert(data.message)
             window.location.reload();
           } if (data.code === 200) {
-            // this.lineDetailsArray.clear();
             let control3 = this.poMasterDtoForm.get('poLines') as FormArray;
             var lenC = control3.length
             this.lstcomments1 = data.obj;
-            var taxCatcontrol = this.poMasterDtoForm.get('poLines') as FormArray;
             for (let i=0;i<data.obj.poLines.length;i++){
+              if (data.obj.poLines[i].itemType==='EXPENCE'){
+               var hsnSacCode = data.obj.poLines[i].hsnSacCode;
+               let hsnSacCodeValue = this.hsnSacCodeList.find(v => v.hsnsaccode == data.obj.poLines[i].hsnSacCode);
+               console.log(hsnSacCodeValue);
+               this.service.taxCategoryListNew(data.obj.taxCategoryName,hsnSacCodeValue.gstPercentage)
+               .subscribe(
+                 data1 => {
+                   this.taxCategoryList[i] = data1;
+                   console.log(this.taxCategoryList[i]);
+                 }
+               );
+              }
+          else{
               this.service.taxCategoryListNew(data.obj.taxCategoryName,data.obj.poLines[i].gstPercentage)
               .subscribe(
                 data1 => {
                   this.taxCategoryList[i] = data1;
                   console.log(this.taxCategoryList[i]);
-                 for (let k=0;k<data1.length;k++){
-                  (taxCatcontrol.controls[k]).patchValue(
-                    {
-                      taxCategoryName:data.obj.poLines[k].taxCategoryName,
-                      taxCategoryId:data.obj.poLines[k].taxCategoryId,
-                    }
-                    );
-                 }  
                 }
               );
             }
+          }
             var approveDate1 = data.obj.approveDate;
             var approveDate2 = this.pipe.transform(approveDate1, 'dd-MM-yyyy');
             this.poMasterDtoForm.patchValue({approveDate: approveDate2});
@@ -930,6 +938,7 @@ displayThirdButtonDisplay=true;
               this.displayNewButton = false;
               this.displayTaxDetailForm = true;
               var control = this.poMasterDtoForm.get('poLines') as FormArray;
+              var taxcatecontrol = this.poMasterDtoForm.get('poLines') as FormArray;
               console.log(control);
               
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
@@ -943,15 +952,24 @@ displayThirdButtonDisplay=true;
               this.lineDetailsArray.removeAt(len);
               this.poMasterDtoForm.patchValue(this.lstcomments1, { emitEvent: false });
               for (var j = 0; j < this.lstcomments1.poLines.length; j++) {
-               
+                let selectedtaxValue = this.taxCategoryList[j].find(v => v.taxCategoryName == this.lstcomments1.poLines[j].taxCategoryName);
+                console.log(selectedtaxValue);
+                console.log(selectedtaxValue.taxCategoryName);
+                (taxcatecontrol.controls[j]).patchValue(
+                  {
+                    taxCategoryName:selectedtaxValue.taxCategoryName,
+                    taxCategoryId:selectedtaxValue.taxCategoryId,
+                  }
+                  );
                 // this.lineDetailsArray.controls[j].get('taxCategoryId').setValue(this.lstcomments1.poLines[j].taxCategoryId, { emitEvent: false });
                 // this.lineDetailsArray.controls[j].get('taxCategoryName').setValue(this.lstcomments1.poLines[j].taxCategoryName), { emitEvent: false };
                 (control.controls[j]).patchValue(
                   {
                     diss1: this.lstcomments1.poLines[j].taxAmounts[0].totTaxAmt,
+                    // taxCategoryName:selectedtaxValue.taxCategoryName,
+                    // taxCategoryId:selectedtaxValue.taxCategoryId,
                   }
                   );
-                  // debugger;
                   if (data.obj.poLines[j].itemType==='GOODS'){
                     this.displayHSN[j]=true;
                     this.lineDetailsArray.controls[j].get('segmentName').disable();     
@@ -993,8 +1011,8 @@ displayThirdButtonDisplay=true;
 
                   }));
                 });
-                // this.taxDetails('Search',i, 'taxCategoryId');
               }
+             
             }
             if (status === "APPROVED") {
               this.displaySecondButtonDisplay=true;
@@ -1008,6 +1026,16 @@ displayThirdButtonDisplay=true;
               this.displaygoReceiptForm = false;
               this.approvedArray = this.lstcomments1.poLines;
               console.log(this.approvedArray);
+           
+              if (data.obj.rcvLines.length >0){
+                alert(data.obj.rcvLines.length);
+                this.isVisible=false;
+              // this.poCancel1.nativeElement.hidden=true;
+              }
+              else{
+                this.isVisible=true;
+                // this.poCancel1.nativeElement.hidden=false;
+              }
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
@@ -1053,6 +1081,7 @@ displayThirdButtonDisplay=true;
                 });
                 // this.taxDetails('Search',i, 'taxCategoryId');
               }
+             
             }
           }
         }
@@ -1279,6 +1308,8 @@ displayThirdButtonDisplay=true;
 
       if (res.code === 200) {
         alert(res.message);
+        // window.location.reload();
+        this.poMasterDtoForm.reset();
         this.segment1 = sessionStorage.getItem('poNo');
         this.Search(this.segment1);
         this.displaySecondButtonDisplay=false;
@@ -1342,7 +1373,8 @@ displayThirdButtonDisplay=true;
       var arrayControl = this.poMasterDtoForm.get('poLines').value
       var patch = this.poMasterDtoForm.get('poLines') as FormArray;
       // var itemId = this.ItemDetailsList.itemId;
-      var itemId=this.poMasterDtoForm.get('itemId').value;
+      // var itemId=this.poMasterDtoForm.get('itemId').value;
+      var itemId=arrayControl[i].invItemId;
       var diss = 0;
       var sum = 0;
       var baseAmount = arrayControl[i].baseAmtLineWise
@@ -1509,6 +1541,7 @@ displayThirdButtonDisplay=true;
                     gstPercentage:this.ItemDetailsList.gstPercentage,
                   }
                 );
+                this.hsnSacCode1.nativeElement.focus();
               }
             );
         }
@@ -2462,9 +2495,13 @@ displayThirdButtonDisplay=true;
   
 
 
-  onHsnCodeSelected(event,index){
+  onHsnCodeSelected(event,index){ 
+    // alert(event);  
+    console.log(event);
+    
     let selectgstPercentage = this.hsnSacCodeList.find(v => v.hsnsaccode == event);
-    if (gstPercentage != undefined){
+    if (event != null && event !='NA'){
+      if (this.currentOp != 'Search' ) {
     var gstPercentage = selectgstPercentage.gstPercentage;  
     let control = this.poMasterDtoForm.get('poLines') as FormArray;
     (control.controls[index]).patchValue(
@@ -2485,6 +2522,8 @@ let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
       }
     );
   }
+// }
 }
+    }
 }
 }

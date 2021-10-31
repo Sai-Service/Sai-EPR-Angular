@@ -348,14 +348,10 @@ export class PaymentReceiptComponent implements OnInit  {
 
 
   Select(receiptNumber: number) {
-    // alert ("receipt Number :" +receiptNumber);
-    
     let select = this.lstcomments.find(d => d.receiptNumber === receiptNumber);
     if (select) {
-           
       this.paymentReceiptForm.patchValue(select);
       this.receiptNumber = select.receiptNumber;
-      // this.orderNumber=this.lstcomments1;
       this.displayButton = false;
       this.display = false;
       this.paymentReceiptForm.disable();

@@ -118,8 +118,8 @@
                                                 class="form-control">
                                                 <option>--Select--</option>
                                                 <option *ngFor="let sc of  suppIdList" [ngValue]="sc.suppSiteId">
-                                                    {{sc.suppSiteId}}-{{sc.state1}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
-                                                    {{sc.address4}} {{sc.city}}-{{sc.pinCd}} 
+                                                   {{sc.state1}}-{{sc.address1}} {{sc.address2}} {{sc.address3}}
+                                                    {{sc.address4}} {{sc.city}}-{{sc.pinCd}}-{{sc.suppSiteId}}
                                                 </option>
                                             </select>
                                         </ng-template>
@@ -862,7 +862,7 @@
                                                         <th scope="col">Base Amount</th>
                                                         <th scope="col">Tax Amount</th>
                                                         <th scope="col">Total Amount</th>
-                                                        <th scope="col">HSN/ SAC code</th>
+                                                        <th scope="col" style="width:100%;text-align: center;">HSN/ SAC code</th>
                                                         <th scope="col">PO Charge Account</th>
                                                         <th scope="col">Add Row</th>
                                                         <th scope="col">Delete Row</th>
@@ -938,7 +938,7 @@
                                                             <td>
                                                                 <!-- <div  *ngIf="displaysegmentList[i]; then thensegmentList; else elsesegmentList"> </div>
                                                                 <ng-template #thensegmentList> -->
-                                                                <input type="text" formControlName="segment"
+                                                                <input type="text" formControlName="segment"  
                                                                     list="dynmicUserIds1" class="form-control"
                                                                     (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                                 <datalist id="dynmicUserIds1">
@@ -951,7 +951,7 @@
                                                                     <input disabled type="text" formControlName="segment" class="form-control">
                                                                 </ng-template> -->
                                                             </td>
-                                                            <input hidden type="text" formControlName="invItemId">
+                                                            <input hidden type="number" formControlName="invItemId">
                                                             <td> <input disabled type="text"
                                                                     formControlName="invCategory" class="form-control"
                                                                     style="width: 4rem;"></td>
@@ -981,7 +981,7 @@
                                                                     (change)='onOptionTaxCatSelected(i)'
                                                                     class="form-control">
                                                                     <option>--Select--</option>
-                                                                    <option *ngFor="let sc of  taxCategoryList[i]" [value]="sc.taxCategoryName">
+                                                                    <option *ngFor="let sc of  taxCategoryList[i]" [ngValue]="sc.taxCategoryName">
                                                                         {{sc.taxCategoryName}}
                                                                     </option>
                                                                 </select>
@@ -1022,16 +1022,16 @@
                                                                 <!-- firs -->
                                                                 <div *ngIf="displayHSN[i]; then thenBlockHSN; else elseBlockHSN">  </div>
                                                                 <ng-template #thenBlockHSN>
-                                                                    <input disabled type="text"
-                                                                        formControlName="hsnSacCode"
-                                                                        style="width: 5rem;" class="form-control">
+                                                                    <input disabled type="text"  style="width: fit-content;text-align: center;"
+                                                                        formControlName="hsnSacCode" 
+                                                                         class="form-control">
                                                                         <input hidden type="number"
                                                                         formControlName="gstPercentage"
-                                                                        style="width: 5rem;" class="form-control">
+                                                                       class="form-control">
                                                                 </ng-template>
                                                                 <ng-template #elseBlockHSN>
                                                                     <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
-                                                                        (ngModelChange)='onHsnCodeSelected($event,i)'>
+                                                                        (ngModelChange)='onHsnCodeSelected($event,i)' #hsnSacCode1>
                                                                         <option></option>
                                                                         <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
                                                                             {{sc.hsnsaccode}}-{{sc.description}}
@@ -1151,9 +1151,9 @@
                                                                 <div  *ngIf="displayHSN[i]; then thenBlockHSN; else elseBlockHSN">
                                                                 </div>
                                                                 <ng-template #thenBlockHSN>
-                                                                    <input disabled type="text"
+                                                                    <input disabled type="text" style="width: fit-content;text-align: center;"
                                                                         formControlName="hsnSacCode"
-                                                                        style="width: 5rem;" class="form-control">
+                                                                        class="form-control">
                                                                         <input hidden type="number" formControlName="gstPercentage">
                                                                 </ng-template>
                                                                 <ng-template #elseBlockHSN>
@@ -1161,7 +1161,7 @@
                                                                         id="hsnSacCode" style="width: 5rem;"
                                                                         class="form-control"> -->
                                                                         <select  style="width:fit-content" formControlName="hsnSacCode" id="hsnSacCode" class="form-control"
-                                                                        (ngModelChange)='onHsnCodeSelected($event)'>
+                                                                        (ngModelChange)='onHsnCodeSelected($event)' #hsnSacCode1>
                                                                         <option></option>
                                                                         <option *ngFor="let sc of hsnSacCodeList[i]" [ngValue]="sc.hsnsaccode">
                                                                             {{sc.hsnsaccode}}-{{sc.description}}
@@ -1743,12 +1743,16 @@
             data-target="#confirmAlert" (click)="getMessage('Approve')">Approve</button>
         </td>
         <td>
+       <!-- hi2 -->
             <input hidden type="text" disabled formControlName="segment1" class="form-control" [(ngModel)]='segment1' placeholder="">
             <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
-            <button type="submit" class="btn btn-primary" id="poCancel"
-                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')">PO Cancelled</button>
-         </td>
+            <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;" 
+                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')" #poCancel1>PO Cancelled</button>
+
+            </td>
+            
         <td>
+            
             <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
             data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
                 <!-- (click)="resetItemCatMast()" -->
@@ -1775,16 +1779,18 @@
                 <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
             </td> -->
             <td>
+              
                 <input hidden type="text" disabled formControlName="segment1" class="form-control" [(ngModel)]='segment1' placeholder="">
                 <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
-                <button type="submit" class="btn btn-primary" id="poCancel"
-                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')">PO Cancelled</button>
-      
+                <div [style.display]="isVisible ? 'block' : 'none'">
+                <button type="submit" class="btn btn-primary" id="poCancel" style="width: fit-content;"
+                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')" #poCancel1>PO Cancelled</button>
+                </div>
             </td>
             <td>
                 <!-- <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;">New Receipt Creation</button> -->
-                <button type="submit" class="btn btn-primary" id="goReceiptForm"
-                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('goReceiptForm(segment1))')">New Receipt Creation</button>
+                <button type="submit" class="btn btn-primary" id="goReceiptForm" style="width: fit-content;"
+                data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('goReceiptForm(segment1))')">New GRR Creation</button>
       
             </td>
             <td>
