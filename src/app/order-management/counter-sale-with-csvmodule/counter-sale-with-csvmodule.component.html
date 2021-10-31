@@ -169,7 +169,7 @@
                                             [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                                             (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
                                             <option>--Select--</option>
-                                            <option *ngFor="let custSite of custSiteList">
+                                            <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName">
                                                 {{custSite.siteName}}
                                             </option>
                                         </select>

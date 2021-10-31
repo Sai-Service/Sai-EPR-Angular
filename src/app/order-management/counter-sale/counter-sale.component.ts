@@ -1421,9 +1421,7 @@ export class CounterSaleComponent implements OnInit {
     patch.controls[index].patchValue({ taxCategoryName: select });
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
-    // alert(arrayControl[index].pricingQty);
-    console.log(baseAmt);
-    // debugger; disAmt1 === null &&
+        
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
     if (disPer > 0) {
@@ -1514,7 +1512,6 @@ export class CounterSaleComponent implements OnInit {
       //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
       if(select != undefined){
       this.itemId = select.itemId;
-      debugger;
       var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
       const custtaxCategoryName = selSite.taxCategoryName;
@@ -1661,8 +1658,7 @@ export class CounterSaleComponent implements OnInit {
                     } else {
                       var getfrmSubLoc = data;
                       this.locData[k] = data;
-                      // debugger;
-                      // let select = this.locData.find(d => d.frmLocatorId === getfrmSubLoc[0].locatorId);
+                     
                       controlinv.controls[k].get('frmLocatorId').enable();
                       if (getfrmSubLoc.length == 1) {
                         controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });
@@ -1767,8 +1763,7 @@ export class CounterSaleComponent implements OnInit {
           // alert(reserve+'reserve');
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
-          // debugger;
-          // alert(avlqty1+'avail');
+          
           var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
           // alert(trxLnArr1 +' '+'Hi');
