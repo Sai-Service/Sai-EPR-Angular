@@ -2363,7 +2363,6 @@ export class CounterSaleComponent implements OnInit {
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
   }
-
     message1: string = "Customer Not Found !  Do you want to create new Customer?";
     msgType:string ="Navigate";
    getMessage(msgType: string) {
