@@ -216,7 +216,7 @@ export class CounterSaleComponent implements OnInit {
   showApplyDiscount = true;
   selectedLine = 0;
   categoryList: any[];
-  custSiteList: any[];
+  custSiteList: any = [];
   // orderedDate:Date;
   diss: number;
   InvoiceNumber: number;
@@ -714,6 +714,7 @@ export class CounterSaleComponent implements OnInit {
 
     // this.lnflowStatusCode='BOOKED'
 
+    this.custSiteList.push({'siteName' : '--Select--'});
   }
 
 
@@ -1144,17 +1145,18 @@ export class CounterSaleComponent implements OnInit {
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
+            this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
-            // if (this.custSiteList.length === 1) {
-            //   this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
-            // }
+            if (this.custSiteList.length === 1) {
+              this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
+            }
           }
           else {
             if (data.code === 400) {
-              alert('res' + data.message);
+             // alert('Error :' + data.message);
               this.display='block'; 
               // this.displaycreateCustomer = false;
             }
@@ -1419,9 +1421,7 @@ export class CounterSaleComponent implements OnInit {
     patch.controls[index].patchValue({ taxCategoryName: select });
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
-    // alert(arrayControl[index].pricingQty);
-    console.log(baseAmt);
-    // debugger; disAmt1 === null &&
+        
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
     if (disPer > 0) {
@@ -1510,6 +1510,7 @@ export class CounterSaleComponent implements OnInit {
       // alert(itemType)
       let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
       //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
+      if(select != undefined){
       this.itemId = select.itemId;
       var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
@@ -1657,8 +1658,7 @@ export class CounterSaleComponent implements OnInit {
                     } else {
                       var getfrmSubLoc = data;
                       this.locData[k] = data;
-                      // debugger;
-                      // let select = this.locData.find(d => d.frmLocatorId === getfrmSubLoc[0].locatorId);
+                     
                       controlinv.controls[k].get('frmLocatorId').enable();
                       if (getfrmSubLoc.length == 1) {
                         controlinv.controls[k].patchValue({ onHandId: getfrmSubLoc[0].segmentName });
@@ -1684,6 +1684,7 @@ export class CounterSaleComponent implements OnInit {
               }
             });
       }
+    }
     }
 
   }
@@ -1762,8 +1763,7 @@ export class CounterSaleComponent implements OnInit {
           // alert(reserve+'reserve');
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
-          // debugger;
-          // alert(avlqty1+'avail');
+          
           var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           trxLnArr1.controls[i].patchValue({ Avalqty: avlqty1 });
           // alert(trxLnArr1 +' '+'Hi');
@@ -2363,8 +2363,7 @@ export class CounterSaleComponent implements OnInit {
       //   this.CounterSaleOrderBookingForm.patchValue({disPer: this.custSiteList[0].disPer })    }
     }
   }
-
-   message1: string = "Please Fix the Errors !";
+    message1: string = "Customer Not Found !  Do you want to create new Customer?";
     msgType:string ="Navigate";
    getMessage(msgType: string) {
      if (msgType.includes("Navigate")) {

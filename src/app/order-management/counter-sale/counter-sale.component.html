@@ -154,15 +154,15 @@
                     <td style="width: 15%" class="LabelFontStyle">
                         Customer&nbsp;Site&nbsp;:&nbsp;
                     </td>
-                    <!-- <td> -->
+               
                     <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
                     <ng-template #thenCustomerSite>
                         <td>
                             <select formControlName="name" id="name" class="form-control" style="width: 200px;"
                                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                                 (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
-                                <option>--Select--</option>
-                                <option *ngFor="let custSite of custSiteList">
+                                <!-- <option>--Select--</option> -->
+                                <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName"> 
                                     {{custSite.siteName}}
                                 </option>
                             </select>
