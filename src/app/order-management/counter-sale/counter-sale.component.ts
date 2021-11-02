@@ -1145,12 +1145,13 @@ export class CounterSaleComponent implements OnInit {
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
-            this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
+            // this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.paymentType = select.lookupValue;
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
+              this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
           }
@@ -1522,11 +1523,8 @@ export class CounterSaleComponent implements OnInit {
         this.orderManagementService.addonDescList1(segment,selSite.taxCategoryName,priceListId)
           .subscribe(
             data => {
+              if (data.code === 200) {
               this.addonDescList = data;
-              if (data.length ===0){
-                alert('Selected Item Setup not completed...!') ;
-                return;
-               }
               for (let i = 0; i < data.length; i++) {
                 var itemtaxCatNm: string = data[i].taxCategoryName;
                 if (itemtaxCatNm.includes('Sale-I-GST')) {
@@ -1601,18 +1599,19 @@ export class CounterSaleComponent implements OnInit {
                     }
                   });
               }
-            });
+            }
+            else if (data.code === 400){
+              alert(data.message)
+            }
+          })
+            ;   
       }
       else {
         this.orderManagementService.addonDescList1(segment,selSite.taxCategoryName,priceListId)
           .subscribe(
             data => {
+              if (data.code === 200) {
               this.addonDescList = data; //// item iformation
-              // alert(data.length);
-              if (data.length ===0){
-               alert('Selected Item Setup not completed...!') ;
-               return;
-              }
               for (let i = 0; i < data.length; i++) {
                 var taxCatNm: string = data[i].taxCategoryName;
                 if (taxCatNm.includes('Sale-S&C')) {
@@ -1682,7 +1681,12 @@ export class CounterSaleComponent implements OnInit {
                     }
                   });
               }
-            });
+            }
+            else  if (data.code === 400){
+              alert(data.message);
+            }}
+        
+            );
       }
     }
     }

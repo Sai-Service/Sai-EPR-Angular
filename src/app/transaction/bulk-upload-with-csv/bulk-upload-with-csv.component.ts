@@ -55,6 +55,7 @@ export class CsvData {
 })
 export class BulkUploadWithCsvComponent implements OnInit {
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
+ 
   public records: any[] = [];
   submitted = false;
   jsondatadisplay: any;
@@ -87,6 +88,8 @@ export class BulkUploadWithCsvComponent implements OnInit {
   message: string;
   allUsers: Observable<BulkUploadWithCsvComponent[]>;
   @ViewChild("itemButton") itemButton: ElementRef;
+  
+  @ViewChild("myinput") myInputField: ElementRef;
 
   progress: number = 0;
 
@@ -112,6 +115,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+   
     this.deptName = (sessionStorage.getItem('deptName'));
     this.bulkUploadCSVForm.patchValue({ location: sessionStorage.getItem('locCode') });
     this.bulkUploadCSVForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
@@ -126,6 +130,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
         }
       );
     this.itemButton1 = true;
+    this.myInputField.nativeElement.focus();
     // this.itemButton.nativeElement.hidden=true;
   }
 
