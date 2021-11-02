@@ -548,10 +548,6 @@
                                                             Transaction&nbsp;Nature&nbsp;:&nbsp;
                                                         </td>
                                                         <td colspan="">
-                                                            <!-- <input type="text" formControlName="TransactionNature"
-                                                                class="form-control" style="width: 100%;"
-                                                                placeholder="Please enter transaction nature"> -->
-
                                                             <select formControlName="TransactionNature"
                                                                 id="TransactionNature" class="form-control"
                                                                 style="width: 100%; height: 20px;"
@@ -820,9 +816,17 @@
                                             <table>
                                                 <tr>
 
-                                                    <td style="margin-right: 20%;"><button type="button"
+                                                    <!-- <td style="margin-right: 20%;"><button type="button"
                                                             class="btn btn-primary" data-dismiss="modal" class="close"
-                                                            (click)="Submit()">Ok</button></td>
+                                                            (click)="Submit()">Ok</button></td> -->
+                                                            <td>
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-dismiss="modal" (click)="Submit()">Ok</button>
+                                                            </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary"
+                                                            data-dismiss="modal">Close</button>
+                                                    </td>
                                                 </tr>
                                             </table>
                                         </div>

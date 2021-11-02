@@ -1524,36 +1524,26 @@ export class CounterSaleComponent implements OnInit {
           .subscribe(
             data => {
               if (data.code === 200) {
-              this.addonDescList = data;
-              for (let i = 0; i < data.length; i++) {
-                var itemtaxCatNm: string = data[i].taxCategoryName;
+              this.addonDescList = data.obj;
+              for (let i = 0; i < data.obj.length; i++) {
+                var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                 if (itemtaxCatNm.includes('Sale-I-GST')) {
                   (controlinv.controls[k]).patchValue({
-                    itemId: data[i].itemId,
-                    orderedItem: data[i].description,
-                    hsnSacCode: data[i].hsnSacCode,
-                    // taxCategoryId: data[i].taxCategoryId,
-                    // taxCategoryName: data[i].taxCategoryName,
-                    uom: data[i].uom,
-                    unitSellingPrice: data[i].priceValue,
+                    itemId: data.obj[i].itemId,
+                    orderedItem: data.obj[i].description,
+                    hsnSacCode: data.obj[i].hsnSacCode,
+                    uom: data.obj[i].uom,
+                    unitSellingPrice: data.obj[i].priceValue,
                   });
-
-                  // this.taxCategoryList = this.taxCategoryList.filter(function (d) { return itemtaxCatNm.includes(d.gstPercentage) });
-                  // if (data[i].uom==='NO'){
-                  //   data[i].pricingQty.includes('.')
-                  //   return;
-                  // }
-                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
+                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                     .subscribe(
                       data1 => {
                         this.taxCategoryList[k] = data1;
                         this.allTaxCategoryList[k] = data1;
-                        
                         let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
                         (controlinv.controls[k]).patchValue({
                           taxCategoryId :itemCateNameList.taxCategoryId,
-                            taxCategoryName: itemCateNameList,      
-                            // taxCategoryName: itemCateNameList.taxCategoryName,
+                            taxCategoryName: itemCateNameList,   
                          })
                       }
                     );
@@ -1611,25 +1601,25 @@ export class CounterSaleComponent implements OnInit {
           .subscribe(
             data => {
               if (data.code === 200) {
-              this.addonDescList = data; //// item iformation
-              for (let i = 0; i < data.length; i++) {
-                var taxCatNm: string = data[i].taxCategoryName;
+              this.addonDescList = data.obj; //// item iformation
+              for (let i = 0; i < data.obj.length; i++) {
+                var taxCatNm: string = data.obj[i].taxCategoryName;
                 if (taxCatNm.includes('Sale-S&C')) {
                   (controlinv.controls[k]).patchValue({
-                    itemId: data[i].itemId,
-                    orderedItem: data[i].description,
-                    hsnSacCode: data[i].hsnSacCode,
-                    uom: data[i].uom,
-                    unitSellingPrice: data[i].priceValue,
+                    itemId: data.obj[i].itemId,
+                    orderedItem: data.obj[i].description,
+                    hsnSacCode: data.obj[i].hsnSacCode,
+                    uom: data.obj[i].uom,
+                    unitSellingPrice: data.obj[i].priceValue,
                   });
                 
-                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data[i].taxPercentage)
+                  this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                     .subscribe(
                       data1 => {
                         this.taxCategoryList[k] = data1;
                         this.allTaxCategoryList[k] = data1;
                         
-                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
+                        let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
                         (controlinv.controls[k]).patchValue({
                           taxCategoryId :itemCateNameList.taxCategoryId,
                             taxCategoryName: itemCateNameList,      
