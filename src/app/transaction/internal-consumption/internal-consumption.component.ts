@@ -618,6 +618,9 @@ this.router.navigate(['admin']);
       (data =>{
         this.CostDetail=data;
         trxLnArr1.controls[i].patchValue({itemUnitCost:this.CostDetail.rate});
+        if(this.CostDetail.rate===0.0){
+          alert(this.CostDetail.segment);
+        }
       });
       this.service.getreserqty(Number(sessionStorage.getItem('locId')),select1.itemId).subscribe
       (data=>{

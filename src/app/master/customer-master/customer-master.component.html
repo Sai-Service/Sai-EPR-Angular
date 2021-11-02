@@ -670,14 +670,13 @@
                                 <td>
                                     <!-- (keyup)="onKey($event)"  -->
                                     <input formControlName="panNo"  value={{panNo}}
-                                        class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
-                                        placeholder="Enter panNo">
-                                    <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
-                                        <div *ngIf="f.panNo.errors.required">PAN numbher cannot be blank</div>
-                                        <div *ngIf="f.panNo.errors.pattern">Invalid PAN format</div>
-                                        <div *ngIf="f.panNo.errors.maxLength">pan No must</div>
-                                    </div>
+                                        class="form-control" type="text" maxlength="10"
+                                        placeholder="Enter panNo" pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" >
+                                    <!-- <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback"> -->
+                                      <!-- [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }" -->
+                                        <!-- <div *ngIf="f.panNo.errors.pattern">Invalid PAN format</div> -->
+                                        <!-- <div *ngIf="f.panNo.errors.maxLength">pan No must</div> -->
+                                    <!-- </div> -->
                                     <!-- <span
                                         *ngIf="!customerMasterForm.get('panNo').valid && customerMasterForm.get('panNo').touched">Please
                                         Enter pan no must</span> -->
@@ -1401,7 +1400,7 @@
         </div>
     </div>
 </div>
-<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
     <div class="modal-content">
         <div class="modal-header">

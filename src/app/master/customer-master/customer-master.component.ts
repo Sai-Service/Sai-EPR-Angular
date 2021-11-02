@@ -1,6 +1,6 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
@@ -259,7 +259,7 @@ export class CustomerMasterComponent implements OnInit {
       weddingDate: [''],
       startDate: [''],
       endDate: [''],
-      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"),Validators.minLength(15), Validators.maxLength(15)]],
+      gstNo: ['',[Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}$"),Validators.minLength(15), Validators.maxLength(15)]],
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10),Validators.maxLength(10)]],
       tanNo: [''],
@@ -561,7 +561,7 @@ onOptionClassCode(event:any){
   gstVerification(event: any) {
     var gstno=this.customerMasterForm.get('gstNo').value
 const gstNo1 = gstno.substr(2,10);
-this.panNo = gstNo1;;
+this.panNo = gstNo1;
     // alert('Gst verificaition');
 
     var res = gstno.substr(0, 2);
@@ -684,6 +684,7 @@ if (person === 'Person'){
     });
   }
   newMast() {
+    alert('validating')
     var isvaliddata=this.validation();
     if(isvaliddata===false)
     {
@@ -1043,6 +1044,7 @@ if (person === 'Person'){
         var  validdata:boolean;
         // alert('in Validation');
         const formValue:IcustomerMaster = this.customerMasterForm.value;
+        alert('Pan'+formValue.panNo);
         // var type=this.customerMasterForm.get('custType').value;
         // alert(formValue.dealerType);
         if(formValue.custType ==='Person')
@@ -1090,6 +1092,20 @@ if (person === 'Person'){
         }
         return validdata;
       }
+
+      if(formValue.panNo!='')
+      {
+        // alert('Pan'+formValue.panNo);
+        var regex:string = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
+        var  p=new PatternValidator();
+        var patt = new RegExp('[A-Z]{5}[0-9]{4}[A-Z]{1}');
+        validdata =patt.test(formValue.panNo);
+        if(validdata === false ){
+        alert('Please enter correct pan No');
+        }
+        return validdata;
+
+      }
   }
 
  message: string = "Please Fix the Errors !";
@@ -1097,6 +1113,12 @@ if (person === 'Person'){
   getMessage(msgType: string) {
     this.msgType = msgType;
     if (msgType.includes("Save")) {
+  var isvaliddata=this.validation();
+  if(isvaliddata===false)
+  {
+    alert('In Validation (v)');
+    return;
+  }
       this.submitted = true;
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
@@ -1121,7 +1143,7 @@ if (person === 'Person'){
 
  executeAction() {
     if(this.msgType.includes("Save")) {
-
+alert('validat');
       this.newMast();
     }
     if(this.msgType.includes("Update")){

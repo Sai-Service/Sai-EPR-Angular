@@ -359,6 +359,15 @@
                           <!-- <span *ngIf="!supplierMasterForm.get('remarks').valid && supplierMasterForm.get('remarks').touched">Please
                               remarks </span> -->
                           </td>
+                          <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Memo&nbsp;:&nbsp;</td>
+                          <td>
+                              <select formControlName="createDebitMemoFlag" id="createDebitMemoFlag"  [ngModel]="createDebitMemoFlag" class="form-control">
+                                <option value="Yes" selected>Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                              <!-- <span  *ngIf="!supplierMasterForm.get('status').valid && supplierMasterForm.get('status').touched">Please
+                                  Enter Status </span> -->
+                          </td>
                           <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                           <td>
                               <select formControlName="status" id="status"  [ngModel]="status" class="form-control" (ngModelChange)='onOptionsSelectedSupp($event)'>
@@ -371,17 +380,20 @@
                                   Enter Status </span> -->
                           </td>
 
-                              <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                              <ng-template #thenBlockInactive>
-                              </ng-template>
-                              <ng-template #elseBlockInactive>
-                                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Inactive&nbsp;Date&nbsp;:&nbsp;</td>
-                                  <td>
-                                      <input disabled type="text" formControlName="endDate" class="form-control"
-                                      placeholder="Enter end date"  [ngModel]="endDate | date:'yyyy-MM-dd'">
-                                  </td>
-                              </ng-template>
 
+                      </tr>
+                      <tr>
+
+                        <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                        <ng-template #thenBlockInactive>
+                        </ng-template>
+                        <ng-template #elseBlockInactive>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Inactive&nbsp;Date&nbsp;:&nbsp;</td>
+                            <td>
+                                <input disabled type="text" formControlName="endDate" class="form-control"
+                                placeholder="Enter end date"  [ngModel]="endDate | date:'yyyy-MM-dd'">
+                            </td>
+                        </ng-template>
                       </tr>
                       <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                         <td style="width: 15%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
@@ -475,7 +487,7 @@
                                 (click)="openCodeCombination('liabilityAcct')"[(ngModel)]="liabilityAcct">
                                 <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
                         aria-hidden="true" style="width: 500px; margin-left:350px">
-                
+
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -573,7 +585,7 @@
                                         <tr>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Inter&nbsp;Branch&nbsp;:
-                
+
                                             </td>
                                             <td>
                                                 <select formControlName="segment5" id="segment5" class="form-control"
@@ -592,29 +604,29 @@
                                                 <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
                                             </td>
                                         </tr>
-                
+
                                     </table>
                                     <div class="modal-footer">
                                       <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button> -->
                                       <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
                                        (click)="fnCancatination()">OK</button>
-                
+
                                   </div>
-                
+
                                 </div>
-                
+
                             </div>
                         </div>
                     </div>
                             </td>
                               <td style="width: 15%" class="LabelFontStyle1">&nbsp;Prepayment&nbsp;Account&nbsp;:&nbsp;</td>
-                              <td> 
+                              <td>
                                 <input hidden formControlName="prepayCodeCombId">
-                                <input formControlName="prePayAcct" value={{prePayAcct}} 
+                                <input formControlName="prePayAcct" value={{prePayAcct}}
                                 data-toggle="modal" data-target="#myModel"
                                 placeholder="Select Prepayment Code" class="form-control"
                                 (click)="openCodeCombination('prePayAcct')"[(ngModel)]="prePayAcct">
-                            </td> 
+                            </td>
                       </tr>
 
                       <tr>
@@ -993,15 +1005,29 @@
                   </table>
                   <table class="center">
                       <tr>
+                        <div *ngIf="displaysite; then thenBlocksitebtn; else elseBlocksitebtn"></div>
+                        <ng-template #thenBlocksitebtn>
                           <td>
                             <!-- [disabled]="!supplierMasterForm.valid" -->
                               <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
                                    (click)="createSitesupplierMast()">Create EXSite</button>
                           </td>
                           <td>
+                              <button disabled type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                                   (click)="UpdateSitesupplierMastExeSite()">Update EXSite</button>
+                          </td>
+                        </ng-template>
+                        <ng-template #elseBlocksitebtn>
+                          <td>
+                            <!-- [disabled]="!supplierMasterForm.valid" -->
+                              <button disabled type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                                   (click)="createSitesupplierMast()">Create EXSite</button>
+                          </td>
+                          <td>
                               <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
                                    (click)="UpdateSitesupplierMastExeSite()">Update EXSite</button>
                           </td>
+                        </ng-template>
                           <!-- <td>
                             <button type="submit" class="btn btn-primary" id="register"
                                  (click)="newsupplierMast()">New site</button>
