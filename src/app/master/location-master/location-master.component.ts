@@ -107,6 +107,7 @@ export class LocationMasterComponent implements OnInit {
     });
   }
   get f() { return this.LocationMasterForm.controls; }
+
   Orgmaster(LocationMasterForm: any) {
     this.submitted = true;
     console.log(LocationMasterForm);
@@ -172,7 +173,7 @@ export class LocationMasterComponent implements OnInit {
   savegstNo() {
     const gstaa=this.LocationMasterForm.get('gstNo').value;
      var res = gstaa.substr(2,10);
- this.panNo = res;
+     this.panNo = res;
    }
 
 
@@ -181,6 +182,7 @@ export class LocationMasterComponent implements OnInit {
     if(this.LocationMasterForm.invalid){
     return;
     } 
+
     const formValue: ILocationMaster = this.transData(this.LocationMasterForm.value);
     this.service.LocationMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {

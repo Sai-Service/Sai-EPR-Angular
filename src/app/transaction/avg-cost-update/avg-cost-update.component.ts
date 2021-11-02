@@ -126,7 +126,7 @@ export class AvgCostUpdateComponent implements OnInit {
   locId: number;
   locName : string;
   deptId :number;
-  // emplId :number;
+  emplId :number;
   orgId:number;
   priorCost:number;
   actualCost:number;
@@ -137,7 +137,7 @@ export class AvgCostUpdateComponent implements OnInit {
   lastUpdatedBy:number
 
 
-  public emplId =6;
+  // public emplId =6;
   public codeCombinationId=2079;
   public reasonCode='IC001';
   public transSourceTypeId=17;
@@ -227,7 +227,7 @@ export class AvgCostUpdateComponent implements OnInit {
       this.locId=Number(sessionStorage.getItem('locId'));
       // this.locName=(sessionStorage.getItem('locName'));
       this.deptId=Number(sessionStorage.getItem('dept'));
-      // this.emplId= Number(sessionStorage.getItem('emplId'));
+      this.emplId= Number(sessionStorage.getItem('emplId'));
      
       this.orgId=this.ouId;
       console.log(this.loginArray);

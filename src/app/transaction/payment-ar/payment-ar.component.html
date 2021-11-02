@@ -171,10 +171,10 @@
                                             <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
                                         </td>
 
-                                        <td style="width: 15%" class="LabelFontStyle1">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+                                        <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
                 
                                         <td>
-                                            <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" >
+                                            <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" required maxlength="10" style="background-color:lightgrey;" >
                                         </td>
                                        
                                      
@@ -403,15 +403,15 @@
                                 </table>
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;Name:&nbsp;</td>
-                            <td colspan="3">
-                                <input  style="width: 100%;" disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control" >
+                            <td colspan="4">
+                                <input  style="width:300px;" disabled   type="text" formControlName="custName"  id="custName" [(ngModel)]="custName"   class="form-control" >
                             </td>
-                            <!-- <td></td> -->
+                            
                       
                             <td>
                                 <button type="button"  class="btn btn-primary" 
-                                data-toggle="modal" data-target="#customerDetails"   style="width: 5rem;color: black;">
-                                &nbsp;Customer...&nbsp;</button>
+                                data-toggle="modal" data-target="#customerDetails"   style="width: 2rem;color: black;">
+                                &nbsp;...&nbsp;</button>
                             </td>
 
                              
@@ -580,8 +580,8 @@
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
-                                        <td>  
-                                            <select  formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control"  style="background-color: yellow;">
+                                        <td colspan="2">  
+                                            <select  formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control"  style="background-color: yellow;width: 100%;">
                                                 <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
                                                     {{sc.receiptMethodId}}-{{sc.methodName}} 
@@ -676,7 +676,7 @@
                                      <td style="width: 15%" class="LabelFontStyle">Remarks&nbsp;:&nbsp;</td>
         
                                         <td colspan="7">
-                                            <input style="width: 100%;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here">
+                                            <input style="width: 100%; text-transform: uppercase;"   type="text" formControlName="comments"  id="comments" [(ngModel)] ="comments" class="form-control" placeholder="Enter remarks here" >
                                         </td>
                                     </tr>
 
@@ -942,18 +942,26 @@
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Customer &nbsp;No&nbsp;:&nbsp;
                                         </td>
+                                        <td style="font-weight: bold;">{{this.custAccountNo}}
 
-                                        <td>
+
+                                        <!-- <td>
                                             <input  readonly type="text" class="form-control" formControlName="custAccountNo"  [(ngModel)]="custAccountNo">
-                                        </td>
+                                        </td> -->
 
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Customer &nbsp;Name&nbsp;:&nbsp;
                                         </td>
+                                         <td style="font-weight: bold;">{{this.custName}}
 
-                                        <td>
+                                        <!-- <td colspan="4">
                                             <input readonly type="text" class="form-control" formControlName="custName"  [(ngModel)]="custName">
-                                        </td> 
+                                        </td>  -->
+
+                                       
+                                        
+                                    </tr>
+                                    <tr>
 
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Receipt &nbsp;Amt&nbsp;:&nbsp;
@@ -962,9 +970,6 @@
                                         <td>
                                             <input readonly type="number" class="form-control" formControlName="receiptAmount"  [(ngModel)]="receiptAmount">
                                         </td>
-                                        
-                                    </tr>
-                                    <tr>
 
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Applied &nbsp;Amt&nbsp;:&nbsp;
@@ -974,13 +979,13 @@
                                             <input readonly  type="number" class="form-control" formControlName="tApplAmt"  [(ngModel)]="tApplAmt">
                                         </td>
 
-                                        <td style="width: 15%" class="LabelFontStyle">
+                                        <!-- <td style="width: 15%" class="LabelFontStyle">
                                             On Account&nbsp;Amt&nbsp;:&nbsp;
                                         </td>
 
                                         <td>
                                             <input readonly  type="number" class="form-control" formControlName="onAccountAmt"  [(ngModel)]="onAccountAmt">
-                                        </td> 
+                                        </td>  -->
 
                                         <td style="width: 15%" class="LabelFontStyle">
                                             Un Applied &nbsp;Amt&nbsp;:&nbsp;
@@ -1069,6 +1074,8 @@
                                                 <!-- <th style="width:10rem" scope="col">Balance</th> -->
                                                 <!-- <th style="width:10rem" scope="col">billToCustId</th> -->
                                                 <!-- <th style="width:10rem" scope="col">billToSiteId</th>  -->
+                                                <!-- <th style="width:10rem" scope="col">GLD</th> -->
+
 
 
                                            </tr>
@@ -1094,6 +1101,8 @@
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="billToCustId" class="form-control" placeholder="custid" ></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"   hidden disabled   type="text" formControlName="billToSiteId" class="form-control" placeholder="siteid" ></td>
+                                                    <!-- <td><input  style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDate"  class="form-control" ></td> -->
+
                                                     <!-- <td>  <button  class="btn btn-secondary" (click)="ApplyRcpt(com.trxNumber,receiptNumber)">Apply</button></td>   -->
                                                 </tr>
                                                 </ng-container>
@@ -1307,7 +1316,7 @@
 
                                
                                 <td>
-                                    <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Clear</button>
+                                    <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Reset</button>
                                 </td>
 
 
