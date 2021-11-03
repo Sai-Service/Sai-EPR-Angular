@@ -610,17 +610,7 @@
                             Sales&nbsp;Person&nbsp;:&nbsp;
                         </td>
                         <td>
-                            <!-- <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
-                            <ng-template #thensalesRepName>
-                            <select formControlName="salesRepName" id="salesRepName" class="form-control"
-                                (ngModelChange)="onOptionsSelectedTL($event)" style="width: 160px;">
-                                <option>--Select--</option>
-                                <option *ngFor="let pt of salesRepNameList" [(ngModel)]='salesRepName'>
-                                    {{pt.ticketNo}}
-                                </option>
-                            </select>
-                            </ng-template>
-                            <ng-template #elsesalesRepName> -->
+                            
                             <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
                                 value={{salesRepName}} class="form-control" style="width: 160px;">
                         </td>

@@ -1162,6 +1162,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code === 200) {
+            this.isVisible=true;
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
