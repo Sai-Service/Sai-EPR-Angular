@@ -14,11 +14,11 @@
 
                      <table class="center">
                         <tr>
-                       <td> <input  style="width:50px ;"  disabled type="text"  formControlName="loginArray" class="form-control" [(ngModel)]="loginArray"></td>
-                       <td> <input  style="width:30px ;"  disabled type="text"  formControlName="ouId"       class="form-control" [(ngModel)]="ouId" ></td>
-                       <td> <input  style="width:30px ;"  disabled type="text"  formControlName="locId"      class="form-control" [(ngModel)]="locId" ></td>
-                       <td> <input  style="width:30px ;"  disabled type="text"  formControlName="deptId"     class="form-control" [(ngModel)]="deptId"></td>
-                       <td> <input  style="width: 30px;"  disabled type="text"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"> </td>
+                       <td> <input  style="width:50px ;" hidden disabled type="text"  formControlName="loginArray" class="form-control" [(ngModel)]="loginArray"></td>
+                       <td> <input  style="width:30px ;" hidden disabled type="text"  formControlName="ouId"       class="form-control" [(ngModel)]="ouId" ></td>
+                       <td> <input  style="width:30px ;" hidden disabled type="text"  formControlName="locId"      class="form-control" [(ngModel)]="locId" ></td>
+                       <td> <input  style="width:30px ;" hidden disabled type="text"  formControlName="deptId"     class="form-control" [(ngModel)]="deptId"></td>
+                       <td> <input  style="width: 30px;" hidden disabled type="text"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"> </td>
                        </tr>
                     </table>
 
@@ -26,7 +26,7 @@
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Transaction Type Master Details</legend>
                         <table class="center"> 
                             <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit:&nbsp;</td>
+                                <td style="width: 15%" class="LabelFontStyle">Op&nbsp;Unit:&nbsp;</td>
                        
                                 <td>  
                                     <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"    style="background-color: yellow;"  >
@@ -50,6 +50,10 @@
                                     </select>
                                 </td>
 
+                                <td style="width: 15%" class="LabelFontStyle">Class:&nbsp;</td>
+                                <td><input    type="text" formControlName="rClass"  id="rClass" [(ngModel)]="rClass" class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                               
+
                             </tr>
 
                             <tr>
@@ -57,48 +61,113 @@
                                 <td><input    type="text" formControlName="transTypeName"  id="transTypeName" [(ngModel)]="transTypeName" class="form-control" placeholder="Trans Type Name" style="background-color: yellow;"   > </td>
                                 <td style="width: 15%" class="LabelFontStyle">Description:&nbsp;</td>
                                 <td><input   type="text" formControlName="transTypeDesc"  id="transTypeDesc" [(ngModel)]="transTypeDesc"  class="form-control" placeholder="Trans Type Description " style="background-color: yellow;"  > </td>
-                            </tr>
-
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Class:&nbsp;</td>
-                                <td><input    type="text" formControlName="rClass"  id="rClass" [(ngModel)]="rClass" class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                            
                                 <td style="width: 15%" class="LabelFontStyle">Creation&nbsp;Sign:&nbsp;</td>
-                               <td>
-                                <select formControlName="creationSign" id="creationSign" class="form-control"  [(ngModel)]="creationSign" 
-                                    style="background-color: yellow;">
-                                    <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
-                                     <option value="Any">Any</option>
-                                     <option value="Positive">Positive</option>
-                                     <option value="Negative">Negative</option>
-                                    </select> 
-                                </td>
-                                </tr>
-
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle">Transaction&nbsp;Status:&nbsp;</td>
-                               <td>
-                                <select formControlName="tranStatus" id="tranStatus" class="form-control"  [(ngModel)]="tranStatus" 
-                                    style="background-color: yellow;"  (ngModelChange)="onOptionsSelected($event)">
-                                    <option value="Open">Open</option>
-                                    <option value="Closed">Closed</option>
-                                </select> 
-                               </td>
-                               
-                                <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Memo&nbsp;Type:&nbsp;</td>
-                                <td><input   type="text" formControlName="creditMemoType"  id="creditMemoType" [(ngModel)]="creditMemoType"  class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                                <td>
+                                 <select formControlName="creationSign" id="creationSign" class="form-control"  [(ngModel)]="creationSign" 
+                                     style="background-color: yellow;">
+                                     <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
+                                      <option value="Any">Any</option>
+                                      <option value="Positive">Positive</option>
+                                      <option value="Negative">Negative</option>
+                                     </select> 
+                                 </td>
                             </tr>
 
+                         
+
                             <tr>
+                               
+                               
+                                <td style="width: 15%" class="LabelFontStyle">Cr&nbsp;Memo&nbsp;Type:&nbsp;</td>
+                                <td><input   type="text" formControlName="creditMemoType"  id="creditMemoType" [(ngModel)]="creditMemoType"  class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                           
+                                <td style="width: 15%" class="LabelFontStyle">Trans&nbsp;Status:&nbsp;</td>
+                                <td>
+                                 <select formControlName="tranStatus" id="tranStatus" class="form-control"  [(ngModel)]="tranStatus" 
+                                     style="background-color: yellow;"  (ngModelChange)="onOptionsSelected($event)">
+                                     <option value="Open">Open</option>
+                                     <option value="Closed">Closed</option>
+                                 </select> 
+                                </td>
+
                                 <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:&nbsp;</td>
                                 <td><input    type="date" formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control"  
-                                    style="background-color: yellow;" placeholder="LOV" max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
+                                    style="background-color: yellow;"  max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
+                            </tr>
+
+                            <tr>
+                             
+
+                                <td style="width: 15%" class="LabelFontStyle">Receivable A/c:&nbsp;</td>
+                                <td><input    type="text" formControlName="recAccount"  id="recAccount" [(ngModel)]="recAccount" class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                               
+                                <td style="width: 15%" class="LabelFontStyle">Revenue A/c:&nbsp;</td>
+                                <td><input    type="text" formControlName="revAccount"  id="revAccount" [(ngModel)]="revAccount" class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
+                               
+                                
                                 <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date&nbsp;:&nbsp;</td>
                                 <td><input  disabled  type="date" formControlName="endDate"  id="endDate" [(ngModel)]="endDate"  class="form-control"  > </td>
                             </tr>
 
 
-                        </table>
+                        <tr>
+
+                            <td  style="width: 15%" class="LabelFontStyle"> Open&nbsp;Receivable&nbsp;: </td>
+                            <td>
+                                <div *ngIf="recFlagDiss">   
+                                    <input  type="checkbox"  name="recoverableFlag" formControlName="recoverableFlag"  [(ngModel)]="recoverableFlag"  (change)="recoverableFlg1($event)">
+                                </div> 
+                                <div *ngIf="TRUER">
+                                    <input  type="checkbox"  name="recoverableFlag" [formControl]="recoverableFlag"  [(ngModel)]="recoverableFlag" (change)="recoverableFlag1=$event.target.checked?'Y':'N'">
+                                </div>
+                                <div *ngIf="FALSER">
+                                    <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   [(ngModel)]="recoverableFlag" (change)="recoverableFlag1=$event.target.checked?'Y':'N'">
+                                </div>
+
+                            </td> 
+
+                            <td  style="width: 15%" class="LabelFontStyle">Post&nbsp;To&nbsp;GL&nbsp;:</td>
+                            <td>
+                                   
+
+                                <div *ngIf="offsetFlagFagDiss"> 
+                                      <input  type="checkbox"  name="offsetFlag" formControlName="offsetFlag"  [(ngModel)]="offsetFlag"   (change)="offsetFlg($event)">
+                                    </div> 
+                                    <div *ngIf="TRUEo">
+                                        <input  type="checkbox"  name="offsetFlag" [formControl]="offsetFlag"  [(ngModel)]="offsetFlag" (change)="offsetFlag=$event.target.checked?'Y':'N'">
+                                    </div>
+                                    <div *ngIf="FALSEo">
+                                        <input  type="checkbox" checked   id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlag=$event.target.checked?'Y':'N'">
+                                    </div>
+                            </td>
+
+                            <td  style="width: 15%" class="LabelFontStyle">Allow&nbsp;Adjustment&nbsp;Posting&nbsp;:</td>
+                           
+                            <td>
+                               
+                                <div *ngIf="selfAssesedFagDiss">   
+                                   <input  type="checkbox"  name="selfAssesedFlag" formControlName="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag"  (change)="selfAssesedFlg($event)">
+                                </div> 
+                                <div *ngIf="TRUEs">
+                                    <input  type="checkbox"  name="selfAssesedFlag" [formControl]="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlag=$event.target.checked?'Y':'N'">
+                                </div>
+                                <div *ngIf="FALSEs">
+                                    <input  type="checkbox" checked   id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlag=$event.target.checked?'Y':'N'">
+                                </div>
+
+                            </td>
+
+                           
+                            
+
+                           
+
+                        </tr>
+
+                    </table>
                     </fieldset>
+                    <br>
 
                       <!-- ===================================Buttons======================================== -->
                     <!-- <br> -->

@@ -53,6 +53,23 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         startDate:string=this.pipe.transform(Date.now(), 'y-MM-dd');  
         endDate:string;
 
+        recoverableFlag: string;
+        offsetFlag: string;
+        selfAssesedFlag: string;
+
+        TRUER = false; FALSER = false;
+        TRUEs = false; FALSEs = false;
+        TRUEo = false; FALSEo = false;
+
+        recFlagDiss = true;
+        offsetFlagFagDiss = true;
+        selfAssesedFagDiss = true;
+
+        recAccount:string;
+        revAccount:string;
+
+
+
         displayButton = true;
       
 
@@ -82,6 +99,13 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
       creditMemoType:[],
       startDate:[],
       endDate:[],
+
+      recAccount:[],
+      revAccount:[],
+
+      recoverableFlag: ['', [Validators.required]],
+      offsetFlag: ['', [Validators.required]],
+      selfAssesedFlag: ['', [Validators.required]],
   
   
     });
@@ -141,6 +165,36 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
     else if (status1 === 'Open') {
       this.recTransTypeMasterForm.get('endDate').reset();
       // this.displayInactive=true;
+    }
+  }
+
+  recoverableFlg1(e) {
+    if (e.target.checked === true) {
+      this.recoverableFlag = 'Y'
+    }
+    if (e.target.checked === false) {
+      this.recoverableFlag = 'N'
+    }
+
+    // alert ('Recoverable flag =' + this.recoverableFlag);
+  }
+
+  ///////////////////////Applicable for Offset  CheckBox/////////////////////////
+  offsetFlg(e) {
+    if (e.target.checked === true) {
+      this.offsetFlag = 'Y'
+    }
+    if (e.target.checked === false) {
+      this.offsetFlag = 'N'
+    }
+  }
+  ///////////////////////Self Assessed /Reverse Change  CheckBox/////////////////////////
+  selfAssesedFlg(e) {
+    if (e.target.checked === true) {
+      this.selfAssesedFlag = 'Y'
+    }
+    if (e.target.checked === false) {
+      this.selfAssesedFlag = 'N'
     }
   }
 

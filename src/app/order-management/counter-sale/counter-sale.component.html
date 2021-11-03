@@ -154,15 +154,15 @@
                     <td style="width: 15%" class="LabelFontStyle">
                         Customer&nbsp;Site&nbsp;:&nbsp;
                     </td>
-                    <!-- <td> -->
+               
                     <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
                     <ng-template #thenCustomerSite>
                         <td>
                             <select formControlName="name" id="name" class="form-control" style="width: 200px;"
                                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                                 (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
-                                <option>--Select--</option>
-                                <option *ngFor="let custSite of custSiteList">
+                                <!-- <option>--Select--</option> -->
+                                <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName"> 
                                     {{custSite.siteName}}
                                 </option>
                             </select>
@@ -314,22 +314,7 @@
                     </td>
                 </tr>
             </ng-template>
-        <!-- </ng-template> -->
-        <tr>
-            <td>
-                <!-- <ng-template #elsecreateCustomer> -->
-                <!-- <button type="button" class="btn btn-primary" style="width: 10rem;"  data-toggle="modal"  data-target="#confirmAlert" >
-                    Create New Customer
-                </button> -->
-                <!-- <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
-                data-target="#confirmAlert" (click)="getMessage('Navigate')">Navigate</button> -->
-                    <!-- <button type="button" class="btn btn-primary" style="width: 10rem;" data-toggle="modal"
-                        data-target="#createNewCustomer">
-                        Create New Customer
-                    </button> -->
-                <!-- </ng-template> -->
-            </td>
-        </tr>
+   
         </table>
     </fieldset>
     <fieldset class="RFS">
@@ -625,17 +610,7 @@
                             Sales&nbsp;Person&nbsp;:&nbsp;
                         </td>
                         <td>
-                            <!-- <div *ngIf="displaysalesRepName; then thensalesRepName; else elsesalesRepName"></div>
-                            <ng-template #thensalesRepName>
-                            <select formControlName="salesRepName" id="salesRepName" class="form-control"
-                                (ngModelChange)="onOptionsSelectedTL($event)" style="width: 160px;">
-                                <option>--Select--</option>
-                                <option *ngFor="let pt of salesRepNameList" [(ngModel)]='salesRepName'>
-                                    {{pt.ticketNo}}
-                                </option>
-                            </select>
-                            </ng-template>
-                            <ng-template #elsesalesRepName> -->
+                            
                             <input disabled type="text" formControlName="salesRepName" [(ngModel)]='salesRepName'
                                 value={{salesRepName}} class="form-control" style="width: 160px;">
                         </td>
@@ -1561,7 +1536,7 @@
 
 
 <div class="modal" id="confirmAlert" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}"
- aria-hidden="true" style="width: 500px; text-align: center;">
+ aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
     <div class="modal-content">
         <div class="modal-header">

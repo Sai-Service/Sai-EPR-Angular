@@ -810,6 +810,7 @@ export class PricelistMasterComponent implements OnInit {
   plUpload() {
     this.priceListMasterForm.get('upldPricelistName').reset();
     this.lstMessage=null;
+    this.resMsg=null;
   }
 
   uploadFile() {
@@ -825,15 +826,17 @@ export class PricelistMasterComponent implements OnInit {
    
         if (res.code === 200) {
           alert('FILE UPLOADED SUCCESSFUILY');
-           this.resMsg = res.message;
+           this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
           // window.location.reload();
    
         } else {
           if (res.code === 400) {
-            alert(res.message)
-            alert('Error In File : \n' + res.obj);
-            window.location.reload();
+            // alert(res.message)
+            this.resMsg = res.message +",  Code : "+res.code;
+            this.lstMessage=res.obj.priceListDetailList;
+            // alert('Error In File : \n' + res.obj);
+            // window.location.reload();
 
           }
         }
