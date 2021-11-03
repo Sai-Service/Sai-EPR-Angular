@@ -30,9 +30,11 @@
             <li class="nav-item waves-effect waves-light">
               <a class="nav-link active" id="header-tab-md" data-toggle="tab" href="#header-md" role="tab" aria-controls="home-md" aria-selected="true">Header&nbsp;Details</a>
             </li>&nbsp;&nbsp;&nbsp;
+            <div [style.display]="isVisible ? 'block' : 'none'">
             <li class="nav-item waves-effect waves-light">
               <a class="nav-link" id="lineDetails-tab-md" data-toggle="tab" href="#lineDetails-md" role="tab" aria-controls="profile-md" aria-selected="false">Lines&nbsp;Details</a>
             </li>
+            </div>
           </ul>
           <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
             <div class="tab-pane fade show active" id="header-md" role="tabpanel" aria-labelledby="header-tab-md">
@@ -144,8 +146,6 @@
                     </legend>
             
                     <table class="center" style="width: 100%;">
-                        <div *ngIf="displaycreateCustomer; then thencreateCustomer; else elsecreateCustomer"></div>
-                        <ng-template #thencreateCustomer>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle1">
                                     Customer&nbsp;No&nbsp;:&nbsp;
@@ -154,7 +154,7 @@
                                     <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
                                         [(ngModel)]='custAccountNo' value={{custAccountNo}}
                                         [ngClass]="{ 'is-invalid': submitted && f.custAccountNo.errors }"
-                                        (keydown.tab)="accountNoSearch(custAccountNo)">
+                                        (keydown.tab)="accountNoSearch(custAccountNo)"  #myinput>
                                     <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.custAccountNo.errors.required">Code cannot be blank</div>
                                     </div>
@@ -168,7 +168,7 @@
                                         <select formControlName="name" id="name" class="form-control" style="width: 200px;"
                                             [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                                             (ngModelChange)='onOptionsSelectedcustSiteName($event)'>
-                                            <option>--Select--</option>
+                                            <!-- <option>--Select--</option> -->
                                             <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName">
                                                 {{custSite.siteName}}
                                             </option>
@@ -318,17 +318,7 @@
                                 </td>
                             </tr>
                         </ng-template>
-                    </ng-template>
-                    <tr>
-                        <td>
-                            <ng-template #elsecreateCustomer>
-                                <button type="button" class="btn btn-primary" style="width: 10rem;" data-toggle="modal"
-                                    data-target="#createNewCustomer">
-                                    Create New Customer
-                                </button>
-                            </ng-template>
-                        </td>
-                    </tr>
+                    <!-- </ng-template> -->
                     </table>
                 </fieldset>
                 <fieldset class="RFS">
@@ -351,18 +341,14 @@
                                 <td>
             
                                     <!-- (ngModelChange)='onOptionsSelectedlncategoryType'  (ngModelChange)="onOptionsSelectedTransactionType($event)"-->
-                                    <select formControlName="transactionTypeName" [(ngModel)]="transactionTypeName"
-                                        id="transactionTypeName" (ngModelChange)="onOptionsSelectedTransactionType($event)"
-                                        [ngClass]="{ 'is-invalid': submitted && f.transactionTypeName.errors }" class="form-control"
+                                    <select formControlName="transactionTypeName" 
+                                        id="transactionTypeName" (change)="onOptionsSelectedTransactionType($event)" class="form-control"
                                         style="width: fit-content;">
                                         <option>--Select--</option>
-                                        <option *ngFor="let orderType of orderTypeList" [Value]="orderType.transactionTypeName">
+                                        <option *ngFor="let orderType of orderTypeList" [value]="orderType.transactionTypeName">
                                             {{orderType.transactionTypeName}}
                                         </option>
                                     </select>
-                                    <div *ngIf="submitted && f.transactionTypeName.errors" class="invalid-feedback">
-                                        <div *ngIf="f.transactionTypeName.errors.required">Code cannot be blank</div>
-                                    </div>
                                     <input hidden type="number" formControlName="transactionTypeId" value={{transactionTypeId}}
                                         class="form-control" style="width: 160px;">
                                     <!-- <span  *ngIf="!CounterSaleOrderBookingForm.get('transactionTypeName').valid && CounterSaleOrderBookingForm.get('transactionTypeName').touched" class="cross-validation-error-message alert">
@@ -485,17 +471,12 @@
                                     Issue&nbsp;Code&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <select formControlName="issueCodeType" id="issueCodeType"
-                                        [ngClass]="{ 'is-invalid': submitted && f.issueCodeType.errors }" class="form-control"
-                                        style="width: 160px;">
+                                    <select formControlName="issueCodeType" id="issueCodeType" class="form-control" style="width: 160px;">
                                         <option>--Select--</option>
-                                        <option *ngFor="let issueCodeType of issueCodeTypeList" (ngModel)='issueCodeType'>
+                                        <option *ngFor="let issueCodeType of issueCodeTypeList" [value]="issueCodeType.codeDesc">
                                             {{issueCodeType.code}}--{{issueCodeType.codeDesc}}
                                         </option>
                                     </select>
-                                    <div *ngIf="submitted && f.issueCodeType.errors" class="invalid-feedback">
-                                        <div *ngIf="f.issueCodeType.errors.required">Code cannot be blank</div>
-                                    </div>
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">
                                     Subtotal&nbsp;Amount&nbsp;:&nbsp;
@@ -567,7 +548,7 @@
                                 </td>
                                 <td>
                                     <input disabled type="text" formControlName="transactionTypeName"
-                                        [(ngModel)]='transactionTypeName' value={{transactionTypeName}} class="form-control"
+                                        value={{transactionTypeName}} class="form-control"
                                         style="width: 160px;">
                                 </td>
                                 <td>
@@ -762,9 +743,11 @@
                                                     </button>
                                                 </td>
                                                 <td>
+                                                    <div [style.display]="isVisible ? 'block' : 'none'">
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gatePassParameterModal" style="width: 8rem;">
                                                         Generate&nbsp;Gate&nbsp;Pass
                                                       </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -821,6 +804,7 @@
                                     </button>
                                 </td>
                                 <td>
+                                    <div [style.display]="isVisible ? 'block' : 'none'">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gatePassParameterModal" style="width: 8rem;">
                 Generate&nbsp;Gate&nbsp;Pass
               </button>
@@ -865,6 +849,7 @@
                   </div>
                 </div>
               </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <div *ngIf="PaymentButton; then thenBlockPaymentButton; else elseBlockPaymentButton"></div>
@@ -924,6 +909,9 @@
                             </td>
                             <td>
                                 <button  class="btn btn-primary" [disabled]="isDisabled" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                            </td>
+                            <td>
+                                <button  class="btn btn-primary" [disabled]="isDisabled" (click)="reloadlineAndTaxArray()" style="width: 100%;font-size: 11px;">Refresh</button>    
                             </td>
                         </tr>
                     </table>
@@ -1022,23 +1010,7 @@
                                                     *ngFor="let group of orderlineDetailsArray().controls; let i= index"
                                                     [formGroupName]="i" class="auto-style5">
                                                     <tr>
-                                                        <!-- <td>
-                                                            <div
-                                                                *ngIf="displayCounterSaleLine[i]; then thenBlockPoLine; else elseBlockPoLine">
-                                                            </div>
-                                                            <ng-template #thenBlockPoLine>
-                                                               
-                                                                <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
-                                                                    data-toggle="tab" href="#panel1006" 
-                                                                    (click)="taxDetails('insert', i, taxCategoryId)">
-                                                                    {{i+1}}
-                                                                </a>
-                                                            </ng-template>
-                                                            <ng-template #elseBlockPoLine>
-                                                                <a id="line{{i}}" data-toggle="tab" href="#panel1006"  [value]="i+1" 
-                                                                (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
-                                                            </ng-template>
-                                                        </td> -->
+                                                       
                                                         <div  *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"></div>
                                                         <ng-template #thensegmentInvType>
                                                             <td>
@@ -1159,7 +1131,7 @@
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                                <input hidden type="number" formControlName="taxCategoryId"
+                                                                <input  type="number" formControlName="taxCategoryId"
                                                                     class="form-control" style="height: 20px;width: 70px;">
                                                             </td>
     
@@ -1177,6 +1149,8 @@
                                                                 <!-- hsnSacCode -->
                                                                 <input disabled type="text" formControlName="hsnSacCode"
                                                                     class="form-control" style="height: 20px;width: 70px;">
+                                                                    <!-- <input disabled type="number" formControlName="taxPercentage"
+                                                                    class="form-control" style="height: 20px;width: 70px;"> -->
                                                             </td>
                                                             <td>
                                                                 <input disabled type="text" formControlName="flowStatusCode"
@@ -1542,3 +1516,37 @@
           </div>
     </section>
 </form>
+
+
+
+
+
+
+
+
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message1}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center" style="width: 50%;">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info"  (click)="closeModalDialog()">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>

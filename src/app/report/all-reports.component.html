@@ -7,6 +7,7 @@
         </tr>
         </table>
         <br>
+        <div class="grid_scroll">
         <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" style="border-color:#959595;border-collapse:collapse;width: 100%;">
             <tr class="GridHeader" style="font-size: 14px;">
                 <th scope="col"> Report&nbsp;Name</th>
@@ -26,7 +27,7 @@
                         <tr>
                             <td>Location&nbsp;Id&nbsp;</td>&nbsp;
                                <td>
-                                <input disabled type="number" class="form-control"  formControlName="location" >
+                                <input disabled type="text" class="form-control"  formControlName="location" >
                             </td>
                         </tr>
                     </table>
@@ -55,13 +56,13 @@
                         <tr>
                             <td>Location&nbsp;Id&nbsp;</td>&nbsp;
                                <td>
-                                <input disabled type="number" class="form-control"  formControlName="location" >
+                                <input disabled type="text" class="form-control"  formControlName="location" >
                             </td>
                         </tr>
                         <tr>
                             <td>Department&nbsp;Id&nbsp;</td>&nbsp; 
                             <td>
-                                <input disabled type="number" class="form-control"  formControlName="deptId" >
+                                <input disabled type="text" class="form-control"  formControlName="deptId" >
                             </td>
                         </tr>
                     </table>
@@ -70,7 +71,171 @@
                     <button class="btn-primary" (click)="spReceiptRegister()">View Report</button>
                 </td>
             </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Details Report</td>
+                <td style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                    <tr>
+                        <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control"  formControlName="sidfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control"  formControlName="sidtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                        <td>
+                         <input disabled type="text" class="form-control"  formControlName="location" >
+                     </td>
+                    </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spIssueDetails()">View Report</button>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Issue Summary</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spIssueSummfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spIssueSummtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                       
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spIssueSummary()">View Report</button>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Proforma Register</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="performafromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="performatoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location&nbsp;Id&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="performaReg()">View Report</button>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Transfer Made Report - Details</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>From&nbsp;Location&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="spstktrfMdToLoc" id="spstktrfMdToLoc" [(ngModel)]="spstktrfMdToLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                         </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spstktrfMd(spstktrfMdToLoc)">View Report</button>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Spares Stock Transfer Made Report - Summary</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdSumfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="spstktrfMdSumtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>From&nbsp;Location&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Location&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="spstktrfMdSumToLoc" id="spstktrfMdSumToLoc" [(ngModel)]="spstktrfMdSumToLoc" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  BillShipList" [ngValue]="sc.locId">
+                                        {{sc.locCode}}
+                                    </option>
+                                </select>
+                         </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="spstktrfMdSummary(spstktrfMdSumToLoc)">View Report</button>
+                </td>
+            </tr>
         </table>
+    </div>
         <table class="center">
             <tr>
                 <td>
