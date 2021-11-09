@@ -169,7 +169,7 @@ export class PoInvoiceComponent implements OnInit {
   now = Date.now();
 
   invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
-  accountingDate = new Date();
+  // accountingDate = new Date();
   suppInvDate: Date;
   termsDate: Date;
   termsId: number;
@@ -182,7 +182,10 @@ export class PoInvoiceComponent implements OnInit {
   // public glDate =this.datepipe.transform(this.glDate1, 'yyyy-MM-dd');
   // pipe = new DatePipe('en-US');
   // now = Date.now();
+  // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+ 
   glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  accountingDate=this.pipe.transform(this.now, 'dd-MM-yyyy');
   paymentMethod = 'CHEQUE';
 
 
@@ -642,6 +645,7 @@ export class PoInvoiceComponent implements OnInit {
   get g() { return this.poInvoiceForm.controls; }
 
   ngOnInit(): void {
+   
    
     // this.invoiceDate = new Date()
    // this.localCompleteDate = this.invoiceDate.toISOString();
@@ -1297,13 +1301,13 @@ export class PoInvoiceComponent implements OnInit {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.poInvoiceForm.reset();
+        this.poInvoiceForm.disable();
         // alert(res.obj);
         this.internalSeqNo = res.obj;
       } else {
         if (res.code === 400) {
           alert(res.message);
-          this.poInvoiceForm.reset();
+          // this.poInvoiceForm.reset();
         }
       }
     });

@@ -244,8 +244,8 @@
                 <input  class="form-control" formControlName="glDate" value={{glDate}} style="width: 90px;height: 25px;font-size: 10px;">
                 </ng-template>
                 <ng-template #elseglDate>
-                    <input  type="text" formControlName="glDate" value={{glDate}} class="form-control"
-                     style="width: 80px;height: 25px;font-size: 10px;">
+                    <input  type="text" disabled formControlName="glDate" value={{glDate}} class="form-control" [(ngModel)]='glDate'
+                     style="width: 130px;height: 25px;font-size: 10px;">
 
                      <!-- [ngModel]="glDate | date:'yyyy-MM-dd'" -->
                 <!-- <input  class="form-control" formControlName="glDate" value={{glDate}} style="width: 90px;height: 25px;font-size: 10px;"> -->
@@ -667,12 +667,13 @@
                                             </span> -->
                             </td>
                             <td>
-                                <input type="text"  formControlName="accountingDate"  class="form-control"  style="width: 140px;height: 25px;">
+                                <input type="text" disabled formControlName="accountingDate"  class="form-control"  [(ngModel)]="accountingDate" style="width: 140px;height: 25px;">
                             </td>
                             <!-- [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" -->
                             <td>
                                 <div *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode"></div>
                                 <ng-template #thendispAccountCode>
+                                    
                                 <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;">
                                 <input formControlName="distCodeCombSeg"  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
                                 <!-- <span
@@ -1762,8 +1763,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel"
                             style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                            Code
-                            Combination for + {{ title }}</h4>
+                            {{ title }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body text-center pagination-centered">
@@ -1784,7 +1784,7 @@
                                 <td>
                                     <input type="text" style="width: 150px; background-color: white; border: none;"
                                         formControlName="lookupValueDesc1"
-                                        class="form-control" >/td>
+                                        class="form-control" >
                             </tr>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">
@@ -1868,9 +1868,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >Ok</button>
                         <!-- []="(segment6.value === null || segment5.value=== null)" -->
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                        []="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                            (click)="fnCancatination(content)">Clear</button>
+                        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
+                            (click)="fnCancatination(content)">Clear</button> -->
                         <!-- <button type="button" class="btn btn-primary"
                             []="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                             (click)="fnCancatination(content)" data-dismiss="modal">Ok</button> -->
