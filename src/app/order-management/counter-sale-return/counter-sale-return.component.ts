@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { TransactionService } from 'src/app/transaction/transaction.service';
 import { trigger } from '@angular/animations';
 
 interface IRtnToVendor { 
@@ -26,6 +27,8 @@ export class CounterSaleReturnComponent implements OnInit {
   lstOrderItemLines:any;
   
   lstOrderLines: any;
+  lstCntrRtnDetails:any;
+  lstCreditNotes:any;
 
   pipe = new DatePipe('en-US');
 
@@ -63,7 +66,7 @@ export class CounterSaleReturnComponent implements OnInit {
   discType :string;
 
   rtnDocNo:string;
-  rtnDocDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+  rtnDocDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
   rtnBaseAmt:number;
   rtnTaxAmt:number;
   rtnTotAmt:number;
@@ -91,7 +94,7 @@ export class CounterSaleReturnComponent implements OnInit {
   flowStatusCode :string;
   tlName :string;
   // remarks :string;
-  remarks='2021101121181';
+  remarks='2021101121227';
 
   othRefNo :string;
   issuedBy:string;
@@ -123,7 +126,9 @@ export class CounterSaleReturnComponent implements OnInit {
   lineValidation=false;
   searchButton=true;
 
-  constructor(private service: MasterService,private orderManagementService:OrderManagementService,private  fb: FormBuilder, private router: Router) {
+  rtnSearch=false;
+
+  constructor(private service: MasterService,private orderManagementService:OrderManagementService,private transactionService: TransactionService , private  fb: FormBuilder, private router: Router) {
     this.counterSaleReturnOrderForm = fb.group({ 
 
       loginArray:[''],
@@ -340,6 +345,7 @@ export class CounterSaleReturnComponent implements OnInit {
         data => {
           this.lstOrderHeader = data.obj;
           this.lstOrderItemLines=data.obj.oeOrderLinesAllList;
+          this.lstCreditNotes=data.obj.cmList;
           console.log(this.lstOrderHeader);
          if(data.code===200){
           this.dispOrderDetails=true;
@@ -661,10 +667,10 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
           else 
           {
             var baseAmt =lineRtnQty *uPrice;
-            var lineDisAmt =baseAmt*dPer/100;
-            var txbleAmt  =baseAmt-lineDisAmt;
-            var taxAmt   =(txbleAmt * taxP/100);
-            var totAmt   =txbleAmt+taxAmt;
+            var lineDisAmt =baseAmt*dPer/100; lineDisAmt.toFixed(2);
+            var txbleAmt  =baseAmt-lineDisAmt; txbleAmt.toFixed(2);
+            var taxAmt   =(txbleAmt * taxP/100); taxAmt.toFixed(2);
+            var totAmt   =txbleAmt+taxAmt; totAmt.toFixed(2);
             
           // alert ("base amt,taxamt.totamt :" +baseAmt+","+taxAmt +","+totAmt);
           patch.controls[index].patchValue({baseAmt:baseAmt})
@@ -741,7 +747,7 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
                     this.validateStatus=false;
                    
                   }   else  {
-                    alert ("Data validation Failed . Please check Line Item Number/Return Qty");
+                    alert ("Data Validation Failed.Please check Item Number & Return Qty");
                      this.saveButton = false;
                      this.validateStatus=true;
                    }
@@ -889,5 +895,29 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
           
         });
     }
+
+
+    Select(mrtnNo){
+      // alert("PO / Receipt Number :"+this.segment1 +","+this.receiptNo);
+      this.enableCheckBox=false;
+      this.rtnSearch=true;
+
+      let select = this.lstCreditNotes.find(d => d.trxNumber === mrtnNo);
+       this.rtnDocNo=select.trxNumber;
+       this.rtnDocDate=select.trxDate;
+       this.rtnTotAmt=select.invoiceAmount;
+      // alert( "Rtn date : "+this.rtnDocDate);
+      
+       this.transactionService.searchByInvoiceNoAR(mrtnNo)
+       .subscribe(
+         data => {
+           if(data.invLines.length >0) {
+            this.lstCntrRtnDetails = data.invLines;
+            console.log(this.lstCntrRtnDetails);
+              } else {alert ( "No Line Items Found.");}
+              
+          } );    
+          
+        }
 
 }

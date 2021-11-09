@@ -6,7 +6,7 @@
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td class="PageHeader">
-                    &nbsp;&nbsp;COUNTER&nbsp;SALE&nbsp;RETURN&nbsp;&nbsp;
+                    &nbsp;&nbsp;Counter&nbsp;Sale&nbsp;Return&nbsp;&nbsp;
                 </td>
             </tr>
         </table>
@@ -49,12 +49,9 @@
                             <input hidden disabled  style="width:50px ;"  type="text"  formControlName="divisionId"  class="form-control" [(ngModel)]="divisionId">
                             <input hidden disabled style="width:30px ;"   type="text" formControlName="ouId" class="form-control" [(ngModel)]="ouId" >
                             <input hidden disabled style="width:60px ;"   type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
-                            <!-- <td> -->
                             <input hidden disabled style="width:100px;"   type="text" formControlName="emplId"  [(ngModel)]="emplId" class="form-control"  >
-                            <!-- </td> -->
                             <input hidden disabled style="width:30px ;"   type="text" disabled formControlName="deptId"  class="form-control" [(ngModel)]="deptId" >
                             <input hidden disabled style="width:30px ;"   type="text" disabled formControlName="customerId"  class="form-control" [(ngModel)]="customerId" >
-
                             <input hidden   formControlName="headerId"       [(ngModel)] ="headerId"  class="form-control">
                             <input hidden   formControlName="priceListId"   [(ngModel)] ="priceListId"  class="form-control">
                             <input hidden   formControlName="priceListName"  [(ngModel)] ="priceListName" class="form-control"> 
@@ -92,15 +89,19 @@
                                 <td style="width: 15%" class="LabelFontStyle">
                                     &nbsp;Order&nbsp;No:&nbsp;
                                 </td>  
-                                <td>
+
+                                <td> <input disabled type="text"   formControlName="searchCntrSaleOrderNo" [(ngModel)]='searchCntrSaleOrderNo'
+                                    value={{searchCntrSaleOrderNo}} class="form-control"   >
+                                </td>
+                                
+                                <!-- <td>
                                 <table>
                                 <tr>
                                     <td>
                                         <input autofocus type ="number"  formControlName="searchCntrSaleOrderNo" [(ngModel)]='searchCntrSaleOrderNo' style="background-color: yellow; text-align: left;"
                                         value={{searchCntrSaleOrderNo}} class="form-control" (change)="SearchByCntrSaleOrderNoHeader(searchCntrSaleOrderNo)"
                                         placeholder="Enter Order No"  (keyup)="onKey($event)"   >
-                                        <!-- [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }" -->
-                                    </td>
+                                     </td>
 
                                     <div *ngIf ="searchButton;then ButtonYes;else ButtonNo"></div>
                                     <ng-template #ButtonYes>              
@@ -115,11 +116,9 @@
                                                 aria-hidden="true"></i></button>
                                     </td>
                                     </ng-template>
-
-
                                 </tr>
                                 </table>
-                                </td>
+                                </td> -->
                               
                                 
                               
@@ -138,7 +137,7 @@
                         </td>  
 
                         <td>
-                        <input  type ="date" disabled formControlName="rtnDocDate" [(ngModel)]='rtnDocDate'
+                        <input  type ="text" disabled formControlName="rtnDocDate" [(ngModel)]='rtnDocDate'
                                                 value={{rtnDocDate}} class="form-control"
                                                 placeholder="" >
                         </td>
@@ -208,6 +207,49 @@
                            </table>
                         </fieldset>
 
+                        <div *ngIf ="rtnSearch;then Blk1;else Blk2"></div>
+                        <ng-template #Blk1>
+                                                    
+                                <div class="container1">
+                                    <div class="grid_scroll">
+                                    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size: small;border-color:#959595;border-collapse:collapse;width: 100%;">
+                                        <tbody>
+                                                <tr class="GridHeader">
+                                                <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
+                                                <th style="width:10rem"  scope="col">Item&nbsp;No&nbsp;</th>
+                                                <th style="width:15rem" scope="col">Item&nbsp;Desc</th>
+                                                <th style="width:5rem"  scope="col">HSN&nbsp;No&nbsp;</th>
+                                                <th style="width:4rem"  scope="col">Rtn&nbsp;Qty&nbsp;</th>
+                                                <th style="width:5rem"  scope="col">Unit&nbsp;Price&nbsp;</th> 
+                                                <th style="width:5rem"  scope="col">Base&nbsp;Amt&nbsp;</th>
+                                                <th style="width:12rem" scope="col">Tax%&nbsp;</th>
+                                                <th style="width:5rem"  scope="col">Tax&nbsp;Amt&nbsp;</th>
+                                                <th style="width:5rem"  scope="col">Total&nbsp;Amt&nbsp;</th>
+                                                
+                                            </tr>
+                                        </tbody>
+                                        <tr *ngFor="let com of lstCntrRtnDetails let i= index" class="ItemStyle" style="text-decoration:none;" >
+                                                <td style="text-align: center;">{{i+1}}</td>
+                                                <td style="text-align: left;">{{com.segment}}</td>
+                                                <td style="text-align: left;">{{com.description}}</td>
+                                                <td style="text-align: center;">{{com.hsnSacCode}}</td>
+                                                <td style="text-align: center;">{{com.orderedQty}}</td>
+                                                <td style="text-align: right;">{{com.unitSellingPrice | number:'0.00'}}</td>
+                                                <td style="text-align: right;">{{com.basicAmt | number:'0.00'}}</td>
+                                                <!-- <td style="text-align: right;">{{com.taxPercentage | number:'0.00'}}</td> -->
+                                                <td style="text-align: center;">{{com.taxCategoryName}}</td>
+                                                <td style="text-align: right;">{{com.taxRecoverable | number:'0.00'}}</td>
+                                                <td style="text-align: right;">{{com.extendedAmount | number:'0.00'}}</td>
+                                                
+                                        </tr> 
+                                    </table>
+                                </div>
+                                </div>
+    
+                            </ng-template>
+                        <!-- ------------------------------------------- -->
+                        <ng-template #Blk2>
+
                        
                         <div class="grid_scroll">   
                             <!-- <fieldset class="RFS" style="background-color: white;"> -->
@@ -251,8 +293,6 @@
                                 <table class="auto-style4" class="GridFont" cellspacing="0"
                                 cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
                                 style="border-color:#959595;width:100%;border-collapse:collapse;">
-    
-                                
     
                                 <thead>
                                     <tr class="GridHeader">
@@ -342,6 +382,7 @@
                         </table>
                          <!-- </fieldset> -->
                         </div>
+                        </ng-template>
                      
 
                         <br>
@@ -354,6 +395,15 @@
 
                                <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                                <ng-template #thenBlock1>
+
+                                <div *ngIf="rtnSearch ,then rtn1; else rtn2")></div>
+                                <ng-template #rtn1> 
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!counterSaleReturnOrderForm">Print</button>
+                                    </td>
+
+                                </ng-template>
+                                <ng-template #rtn2>
                                    <td>
                                    <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
                                    <ng-template #vStatusYes>
@@ -374,6 +424,7 @@
                                    </ng-template>
    
                                </td>
+                                </ng-template>
                                    
                                    <!-- <td>
                                        <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
@@ -774,4 +825,61 @@
           </div>
         </div>
     </div>
+
+    <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+        SEARCH</legend>
+    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+        <tr>
+        <td >
+            <table class="center">
+                <tr>
+                    <td  style="background-color: #FFE4B5;">&nbsp;Order&nbsp;No&nbsp;:&nbsp;</td>
+                    
+                    <td style="background-color: #FFE4B5;">
+                        <input class="form-control" formControlName="searchCntrSaleOrderNo" [(ngModel)]='searchCntrSaleOrderNo'
+                            value={{searchCntrSaleOrderNo}} style="text-transform:uppercase;">
+                    </td>
+
+                    <td style="background-color: #FFE4B5;">
+                        <button type="button" class="btn-primary" (click)="SearchByCntrSaleOrderNoHeader(searchCntrSaleOrderNo)"><i class="fa fa-search"
+                                aria-hidden="true"></i></button>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+        </tr>
+    </table>
+    </fieldset>
 </form>
+
+<br>
+
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small ; border-color:#959595;border-collapse:collapse;width: 100%;">
+        <tbody>
+                <tr class="GridHeader">
+                <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
+                <th style="width:5rem"  scope="col">CreditNote&nbsp;No&nbsp;</th>
+                <th style="width:10rem" scope="col">CreditNote&nbsp;Date</th>
+                <th style="width:10rem" scope="col">Return&nbsp;Amt&nbsp;</th>
+                <th style="width:10rem" scope="col">Reference&nbsp;No&nbsp;</th>
+                <th style="width:10rem" scope="col">Invoice&nbsp;Type&nbsp;</th>
+                 <th style="width:6rem" scope="col">Select</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstCreditNotes let i= index" class="ItemStyle" style="text-decoration:none;" >
+                <td style="text-align: center;">{{i+1}}</td>
+                <td style="text-align: center;">{{com.trxNumber}}</td>
+                <td style="text-align: center;">{{com.trxDate}}</td>
+                <!-- <td style="text-align: center;">{{com.trxDate | date:'dd-MM-y'}}</td> -->
+                <td style="text-align: right;">{{com.invoiceAmount}}</td>
+                <td style="text-align: center;">{{com.referenceNo}}</td>   
+                <td style="text-align: center;">{{com.invType }}</td>  
+                <td><button class="btn btn-info" (click)="Select(com.trxNumber)">Select</button></td>   
+        </tr> 
+    </table>
+</div>
+</div>
