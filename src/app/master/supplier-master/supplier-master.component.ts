@@ -796,7 +796,7 @@ alert(suppSiteId);
       this.saddress4 = select.address4
       this.scity = select.city
       this.pinCd = select.pinCd
-      this.sstate = select.state
+      // this.sstate = select.state
       this.contactNo = select.contactNo
       this.contactPerson = select.contactPerson
       this.emailId = select.emailId

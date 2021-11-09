@@ -138,7 +138,7 @@ export class ReturnToVendorComponent implements OnInit {
       public itemType= 'RETURN';
 
       rtnDocNo:string;
-      rtnDocDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+      rtnDocDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
       rtnFromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       rtnToDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       // remarks:string;
@@ -1299,6 +1299,8 @@ export class ReturnToVendorComponent implements OnInit {
 
       let select = this.lstDebtiNotes.find(d => d.receiptNo === mrtnNo);
        this.rtnDocNo=select.receiptNo;
+      //  this.rtnDocDate=select.receiptDate;
+       this.rtnDocDate=this.pipe.transform(select.receiptDate, 'dd-MM-yyyy');
        this.totalAmt=select.totalAmt;
       
        this.service.getsearchByReceiptNoLine(this.segment1,mrtnNo)

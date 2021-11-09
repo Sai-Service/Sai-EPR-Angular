@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
 import { data } from 'jquery';
+import { DatePipe } from '@angular/common';
 
 
 interface IserialMaster {
@@ -28,8 +29,9 @@ interface IserialMaster {
   styleUrls: ['./document-sequence-master.component.css']
 })
 export class DocumentSequenceMasterComponent implements OnInit {
-
   DocSeriealMasterForm: FormGroup;
+
+  pipe = new DatePipe('en-US');
   submitted = false;
   docSrlId: number;
   docSrlNo: number;
@@ -41,7 +43,8 @@ export class DocumentSequenceMasterComponent implements OnInit {
   docSrlType: string;
   docSrlOu: number;
   docSrlLoc: any;
-  startDate: Date;
+  // startDate: Date;
+  startDate=this.pipe.transform(Date.now(), 'y-MM-dd');
   endDate: Date;
   organizationCode:any;
   tySrlNo:number;
