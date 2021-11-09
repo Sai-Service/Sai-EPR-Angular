@@ -71,7 +71,7 @@ export class PaymentReceiptComponent implements OnInit  {
      customerId:number;
     // paymentCollection: string;
 
-    
+    balancePay:number;
     // refNumber:number;
    
        
@@ -141,6 +141,7 @@ export class PaymentReceiptComponent implements OnInit  {
       // paymentCollection: [],
       searchValue :[],
       searchBy :[],
+      balancePay:[],
       comment: ['', [Validators.required]],
       cancelReason:[],
       cancelDate:[],
@@ -205,17 +206,6 @@ export class PaymentReceiptComponent implements OnInit  {
       }
     );
 
-   
-
-    // this.service.DivisionIDList()
-    // .subscribe(
-    //   data => {
-    //     this.DivisionIDList = data;
-    //     console.log(this.DivisionIDList);
-    //   }
-    // );
-
-
         
     this.service.DepartmentList()
     .subscribe(
@@ -252,6 +242,7 @@ export class PaymentReceiptComponent implements OnInit  {
         this.lstcomments = data.obj.oePayList;
         this.custName=data.obj.custName;
         this.customerId=data.obj.customerId;
+        this.paymentReceiptForm.patchValue({balancePay:data.obj.balancePay})
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
         console.log(this.lstcomments);
@@ -281,11 +272,13 @@ export class PaymentReceiptComponent implements OnInit  {
               this.ReceiptMethodList = data.obj;
               console.log(this.ReceiptMethodList);
               this.showBankDetails=false;
+              this.paymentReceiptForm.get('checkNo').reset();
+              this.paymentReceiptForm.get('bankName').reset();
+              this.paymentReceiptForm.get('bankBranch').reset();
+              this.paymentReceiptForm.get('checkDate').reset();
             }
           );
           } else{
-
-            // alert("cash selected");
           this.service.ReceiptMethodList(payType ,this.ouId,rmStatus)
           .subscribe(
             data => {
@@ -298,7 +291,7 @@ export class PaymentReceiptComponent implements OnInit  {
   }
 
   searchMastNew(rcptNo : any,ordNo: any,custNo: any) {
-    alert("Receipt No : "+ rcptNo + " Order no :"+ordNo + " Cust Ac No :" + custNo);
+    // alert("Receipt No : "+ rcptNo + " Order no :"+ordNo + " Cust Ac No :" + custNo);
     this.orderManagementService.getOmReceiptSearchBy(rcptNo,ordNo,custNo)
     .subscribe(
     data => {
@@ -318,6 +311,7 @@ export class PaymentReceiptComponent implements OnInit  {
         .subscribe(
         data => {
           this.lstcomments = data.obj.oePayList;
+          this.paymentReceiptForm.patchValue({balancePay:data.obj.balancePay})
           console.log(this.lstcomments);
          }
         );
@@ -350,10 +344,13 @@ export class PaymentReceiptComponent implements OnInit  {
     // alert ("receipt Number :" +receiptNumber);
     
     let select = this.lstcomments.find(d => d.receiptNumber === receiptNumber);
-    if (select) {
-           
+    if (select) {       
       this.paymentReceiptForm.patchValue(select);
       this.receiptNumber = select.receiptNumber;
+      alert(select.receiptMethodName);
+      // let recValue =this.ReceiptMethodList.find(d => d.methodName === select.receiptMethodName);
+      // console.log(recValue);
+      this.paymentReceiptForm.patchValue({receiptMethodName:select.receiptMethodName});
       this.displayButton = false;
       this.display = false;
       this.paymentReceiptForm.disable();
@@ -379,16 +376,26 @@ export class PaymentReceiptComponent implements OnInit  {
     delete val.searchByCustNo;
     delete val.searchByOrderNo;
     delete val.searchByRcptNo;
-
+    // delete val.receiptMethodId;
 
     return val;
   }
 
+  
+  onmethodNameSelected(event){
+     let selectReceipt=this.ReceiptMethodList.find(d=>d.methodName===event);
+    this.paymentReceiptForm.patchValue({receiptMethodId:selectReceipt.receiptMethodId})
+  }
+  
+
   newMast() {
+    // alert(this.paymentReceiptForm.get('receiptMethodName').value)
+    // alert(this.paymentReceiptForm.get('methodName').value);
     const formValue: IPaymentRcpt =this.transeData(this.paymentReceiptForm.value);
-   let selectReceipt=this.ReceiptMethodList.find(d=>d.receiptMethodId===this.receiptMethodId);
-   console.log(selectReceipt); 
-   formValue.receiptMethodName = selectReceipt.methodName;
+    // var receiptMethodName=this.paymentReceiptForm.get('methodName').value;
+  //  let selectReceipt=this.ReceiptMethodList.find(d=>d.receiptMethodId===receiptMethodId);
+  //  console.log(selectReceipt); 
+  //  formValue.receiptMethodName = receiptMethodName;
    formValue.deptName=(sessionStorage.getItem('deptName'));
     // alert(selectReceipt.methodName +'----'+ this.receiptMethodId );
     this.orderManagementService.OrderReceiptSubmit(formValue).subscribe((res: any) => {
@@ -403,6 +410,7 @@ export class PaymentReceiptComponent implements OnInit  {
         this.lstcomments = data.obj.oePayList;
         this.custName=data.obj.custName;
         this.customerId=data.obj.customerId;
+        this.paymentReceiptForm.patchValue({balancePay:data.obj.balancePay})
         // this.lstcomments = data.obj;
         // this.lstcomments = data;
         console.log(this.lstcomments);

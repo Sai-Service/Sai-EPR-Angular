@@ -55,6 +55,7 @@ export  class StockTransferRow {
 })
 
 export class StockTransferComponent implements OnInit {
+  submitted = false;
   stockTranferForm: FormGroup;
   ShipmentNo: string;
   shipmentNumber: string;
@@ -382,6 +383,9 @@ export class StockTransferComponent implements OnInit {
           (data =>{
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
+            if(this.CostDetail.rate===0.0){
+              alert(this.CostDetail.segment);
+            }
             // this.transCost[i]=this.CostDetail.rate;
           });
       this.service.getfrmSubLoc(this.locId, itemId, this.subInvCode.subInventoryId).subscribe(
@@ -441,12 +445,19 @@ export class StockTransferComponent implements OnInit {
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
-  //alert(onHand+'OnHand');
-  //alert(reserve+'reserve');
+  alert(onHand+'OnHand');
+  alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
+
   // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
   trxLnArr1.controls[i].patchValue({avlqty: avlqty1});
+  if(avlqty1<0)
+  {
+    alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
+    // this.trxLinesList().clear();
+    // this.addnewtrxLinesList(i);
+  }
     })
 
 }
@@ -457,7 +468,7 @@ transdata(val){
 EwayUpdate(){
  // const formValue:IStockTransfer = this.transdata(this.stockTranferForm.value);
  const formValue:IEway = this.stockTranferForm.value;
- debugger;
+//  debugger;
     this.service.UpdateStkEway(formValue).subscribe((res: any) => {
     if (res.code === 200) {
       alert('RECORD UPDATED SUCCESSFULLY');
@@ -668,7 +679,7 @@ deleteReserveLinewise(i)
     if(ShipmentNo!=undefined){
     this.currentOp='SEARCH';
     // alert('1'+ShipmentNo);
-    this.display = true;
+    this.display = false;
     this.stockTranferForm.get('ewayBill').disable();
       this.stockTranferForm.get('ewayBillDate').disable();
     // var shipNo = (this.stockTranferForm.get('ShipmentNo').value);
@@ -698,17 +709,17 @@ deleteReserveLinewise(i)
           })
         }
         var eway=this.stockTranferForm.get('ewayBill').value;
-        alert(eway);
+        // alert(eway);
         if(eway===''){
-          alert('In If');
+          // alert('In If');
+          this.displayUp=false;
           this.stockTranferForm.get('ewayBill').enable();
           this.stockTranferForm.get('ewayBillDate').enable();
-          this.displayUp=false;
         }
         this.currentOp='INSERT';
         this.displayOp=false;
         // (document.getElementById('btnUpdate') as HTMLInputElement).disabled = false;
-        this.displayUp=true;
+        // this.displayUp=true;
       }
       );
     }
@@ -904,4 +915,58 @@ viewStockgatePass() {
     }}
   )
   }
+
+  message: string = "Please Fix the Errors !";
+  msgType:string ="Close";
+  getMessage(msgType: string) {
+    this.msgType = msgType;
+    if (msgType.includes("Save")) {
+      this.submitted = true;
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.stockTranferForm.invalid) {
+        
+        //this.submitted = false;
+        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+        alert('Please enter all Mandatory fields');
+        return;
+      }
+      this.message = "Do you want to SAVE the changes(Yes/No)?"
+      
+    }
+
+    if (msgType.includes("Reset")) {
+      this.message = "Do you want to Reset the changes(Yes/No)?"
+    }
+
+    if (msgType.includes("Update")) {
+        this.message = "Do you want to Update the changes(Yes/No)?"
+      }
+    
+    if (msgType.includes("Close")) {
+      this.message = "Do you want to Close the Form(Yes/No)?"
+    }
+    return; 
+  }
+
+ executeAction() {
+    if(this.msgType.includes("Save")) {
+      this.newStkTransfer();
+    }
+
+    if (this.msgType.includes("Reset")) {
+      this.resetMoveOrder();
+    }
+
+    if (this.msgType.includes("Update")) {
+        this.EwayUpdate();
+      }
+    
+    if (this.msgType.includes("Close")) {
+      this.router.navigate(['admin']);
+    }
+
+    return;
+  }
+
 }
+

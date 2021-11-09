@@ -19,6 +19,13 @@ export class MasterService {
     this.ServerUrl = AppConstants.ServerUrl;
    }
 
+  //  public  getCurrentDate(): Date {
+  //   var res  : any = this.http.get('http://worldtimeapi.org/api/timezone/Asia/Kolkata');
+  //   var cDate=res.datetime.substr(0,res.datetime.indexOf('T'));
+  //   return new Date(cDate);
+  // }
+
+
    ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////
    statusList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
@@ -28,9 +35,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl +`/taxCtgHeader/${ouId}`);
   }
   taxCategoryList1(locId,state):Observable<any>{
-    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`)
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`);
   }
-
+  taxCategorySiteList1(ouId,state):Observable<any>{
+    return this.http.get(this.ServerUrl +`/taxCtgHeader/taxCtgNameSuppSitewise?ouId=${ouId}&custState=${state}`);
+  }
   memberTicketNo(locCode, deptId,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl +`/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
   }
@@ -279,6 +288,9 @@ CostCenterList(): Observable<any> {
 }
 NaturalAccountList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+}
+NaturalAccountList1():Observable<any>{
+  return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
 }
 InterBrancList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
@@ -1849,7 +1861,7 @@ receiptdonetaxDeatils(trxId,trxLineId): Observable<any> {
 
 getsearchByReceiptNo(segment1,mLocId): Observable<any> {
   // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
-   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+   return this.http.get(this.ServerUrl +`/rcvShipment/receiptNoWise?receiptNo=${segment1}&billToLocId=${mLocId}`);
   // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
  }
 
@@ -2070,9 +2082,9 @@ PriceListIdList(): Observable<any> {
       return this.http.put(url, OrderTypeMasterRecord, options);
     }
 
-    getPriceListSearch(ouId,deptId): Observable<any> {
+    getPriceListSearch(ouId,divId): Observable<any> {
       // return this.http.get(this.ServerUrl + '/pricelist');
-      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${999}&deptId=${deptId}`);
+      return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&divisionId=${divId}`);
     }
 
     getPriceListHistorySearch(priceListId,itemId): Observable<any> {
@@ -2204,6 +2216,12 @@ OrderCategoryList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
     }
 
+    getArReceiptAppliedHistory (rcptNumber): Observable<any> {
+      return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    }
+
+
+
   getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
     return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
@@ -2262,16 +2280,13 @@ OrderCategoryList(): Observable<any> {
     }
 
   ///////////////////Price list File upload/////////////////////
-  UploadExcel(formData: FormData,docType:string) {
+  UploadExcel(formData: FormData,docType:string,uploadPl:string) {
     let headers1 = new HttpHeaders();
     var userId1=sessionStorage.getItem('userId');
     console.log(docType);
     var docType1=formData.get('docType');
-
-    // return this.http.post(this.ServerUrl + `/pricelist/uploadprc`);
-
-      return this.http.post(this.ServerUrl + `/pricelist/uploadprc`, formData)
-      // URL :- http://localhost:8081/pricelist/uploadprc
+    formData.append('priceListName', uploadPl);
+    return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`,formData)
     }
 
 ////////////////////////////// bulk po upload /////////
@@ -3045,12 +3060,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
        }
 
       getPayRecAccountCode(methodId,ouId,divId,locId): Observable<any> {
-         return this.http.get(this.ServerUrl+`/AccountTrf/AcctCodeList/?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
+         return this.http.get(this.ServerUrl+`/AccountTrf/AcctCodeList?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
         //  http://localhost:8081/AccountTrf/AcctCodeList/?receiptMethodId=41&ouId=110&divisionId=2&locId=121
 
       }
 
-    
+
       public CashBankTrfSaveSubmit(CashBankTrfRecord,mEmplId) {
         const options = {
           headers: this.headers
@@ -3059,7 +3074,37 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.post(url, CashBankTrfRecord, options);
       }
 
-     
+      public CashBankTrfPostSubmit(CashBankTrfRecord,mEmplId) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + `/AccountTrf/AcctTrfPost?emplId=${mEmplId}`;
+        return this.http.post(url, CashBankTrfRecord, options);
+
+        // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+
+      }
+
+      public CashBankTrfReversalSubmit(CashBankTrfRecord,mEmplId,docTrfNo) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
+        return this.http.post(url, CashBankTrfRecord, options);
+
+      }
+
+
+
+
+      getBnkTrfSearchByDate(fDate,tDate): Observable<any> {
+        return this.http.get(this.ServerUrl+`/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}`);
+        // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
+     }
+
+
+
+
 
     ////////////////////////// Pending Shipment Lis///////////
 

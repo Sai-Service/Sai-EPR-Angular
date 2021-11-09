@@ -7,6 +7,11 @@
             </td>
         </tr>
         </table>
+        <div class="progress form-group" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+            </div>
+        </div>
+
     <table class="center">
         <tr>
             <td class="LabelFontStyle">
@@ -27,7 +32,7 @@
                 &nbsp;&nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
             </td>
             <td>
-                <input type="text" class="form-control"  formControlName="invcNo"  >
+                <input type="text" class="form-control"  formControlName="invcNo"   #myinput >
                 <div *ngIf="submitted && f.invcNo.errors" class="invalid-feedback">
                     <div *ngIf="f.invcNo.errors.required">Code cannot be blank</div>
                 </div>
@@ -50,7 +55,7 @@
                 <input type="text" formControlName="supplierNo"
                     (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
                     list="dynmicUserIds" class="form-control" placeholder="Supplier details"
-                    (ngModelChange)="onSupplierCodeSelected($event)" />
+                    (ngModelChange)="onSupplierCodeSelected($event)">
                 <datalist id="dynmicUserIds">
                     <option *ngFor="let item of supplierCodeList" [ngValue]="item.suppNo">
                         {{item.name}}@{{item.suppNo}}</option>

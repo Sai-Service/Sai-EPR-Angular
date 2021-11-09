@@ -139,8 +139,14 @@
                     <table class="center" style="width: 100;" style="width: 100%;">
                         <tr>
 
-                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;No:&nbsp; </td> 
-                        <td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                &nbsp;Receipt&nbsp;No:&nbsp;
+                            </td>   
+                        <td> <input disabled type="text"   formControlName="receiptNo" [(ngModel)]='receiptNo'
+                            value={{receiptNo}} class="form-control"   >
+                        </td>
+
+                        <!-- <td>
                         <table>
                         <tr>
                             <td> <input autofocus type="number"   formControlName="receiptNo" [(ngModel)]='receiptNo'
@@ -165,7 +171,7 @@
 
                         </tr>
                         </table>
-                        </td>
+                        </td> -->
 
 
                         <td style="width: 15%" class="LabelFontStyle">
@@ -182,7 +188,7 @@
                             &nbsp;Return&nbsp;Date:&nbsp;
                         </td>  
                         <td>
-                            <input  type ="date" disabled formControlName="rtnDocDate" [(ngModel)]='rtnDocDate'
+                            <input  type ="text" disabled formControlName="rtnDocDate" [(ngModel)]='rtnDocDate'
                                                     value={{rtnDocDate}} class="form-control"
                                                     placeholder="" >
                             </td>
@@ -245,6 +251,50 @@
 
                     </fieldset>
 
+
+                    <!-- ------------------------------------ -->
+
+                    <div *ngIf ="rtnSearch;then Blk1;else Blk2"></div>
+                    <ng-template #Blk1>
+                                                
+                            <div class="container1">
+                                <div class="grid_scroll">
+                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size: small;border-color:#959595;border-collapse:collapse;width: 100%;">
+                                    <tbody>
+                                            <tr class="GridHeader">
+                                            <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
+                                            <th style="width:10rem"  scope="col">Item&nbsp;No&nbsp;</th>
+                                            <th style="width:15rem" scope="col">Item&nbsp;Desc</th>
+                                            <th style="width:5rem"  scope="col">HSN&nbsp;No&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Rtn&nbsp;Qty&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Unit&nbsp;Price&nbsp;</th> 
+                                            <th style="width:5rem"  scope="col">Base&nbsp;Amt&nbsp;</th>
+                                            <th style="width:2rem" scope="col">Tax%&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Tax&nbsp;Amt&nbsp;</th>
+                                            <th style="width:5rem"  scope="col">Total&nbsp;Amt&nbsp;</th>
+                                            
+                                        </tr>
+                                    </tbody>
+                                    <tr *ngFor="let com of lstRtnDetails let i= index" class="ItemStyle" style="text-decoration:none;" >
+                                            <td style="text-align: center;">{{i+1}}</td>
+                                            <td style="text-align: left;">{{com.itemName}}</td>
+                                            <td style="text-align: left;">{{com.itemDesc}}</td>
+                                            <td style="text-align: center;">{{com.hsnCode}}</td>
+                                            <td style="text-align: center;">{{com.qtyReceived}}</td>
+                                            <td style="text-align: right;">{{com.unitPrice | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.baseAmount | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.taxPercentage | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.taxAmount | number:'0.00'}}</td>
+                                            <td style="text-align: right;">{{com.totAmount | number:'0.00'}}</td>
+                                            
+                                    </tr> 
+                                </table>
+                            </div>
+                            </div>
+
+                        </ng-template>
+                    <!-- ------------------------------------------- -->
+                    <ng-template #Blk2>
                     <div class="grid_scroll">
                         <!-- <fieldset class="RFS" style="background-color: white;"> -->
                             <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Line Item Details</legend> -->
@@ -279,32 +329,18 @@
 
                                    </div>
                                     </td>
-
-                                  
-
-
-                                
+                               
                                </tr>
                             </table>
+
                             <table class="auto-style4" class="GridFont" cellspacing="0"
                             cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
                             style="border-color:#959595;width:100%;border-collapse:collapse;">
 
-                            
-
                             <thead>
                                 <tr class="GridHeader">
-                                    <!-- <th scope="col">Tax Details</th> -->
-                                    <!-- <th scope="col">Select</th> -->
-                                    
                                     <th scope="col">Select</th>
-                                    <!-- <th scope="col">PO LINEID</th>
-                                    <th scope="col">PO HEADID</th>
-                                    <th scope="col">PO SH HEADID</th>
-                                    <th scope="col">PO SH LINEID</th>
-                                    <th scope="col">BILL TOLOCID</th>
-                                    <th scope="col">INV ITMID</th>
-                                    <th scope="col">SUB INVID</th> -->
+                                    <!-- <th scope="col">Select</th> -->
                                     <th scope="col">Item Number</th>
                                     <th scope="col" style="width: 3rem;">Return Qty </th>
                                     <th scope="col" style="width: 3rem;">Received Qty</th>
@@ -337,7 +373,9 @@
                             </thead>
 
                             <tbody>
+                                
                                 <ng-container class="center" formArrayName="rcvLines">
+
                                     <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"; [formGroupName]="i" class="auto-style5">
 
                                         <!-- <div *ngIf="disabledLine; then thenBlockLine; else elseBlockLine"></div>
@@ -529,6 +567,7 @@
                         <!-- </fieldset> -->
                  
                     </div> 
+                    </ng-template>
 
 
                     <br>
@@ -537,14 +576,18 @@
                         <tr>
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
+                                <div *ngIf="rtnSearch ,then rtn1; else rtn2")></div>
+                                <ng-template #rtn1> </ng-template>
+                                <ng-template #rtn2>
                                 <td>
                                 <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
                                 <ng-template #vStatusYes>
-                                    <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
+                                     <button style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
                                 </ng-template>
                                 <ng-template #vStatusNo>
                                    <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="validateSave(applyTo)">Validate</button>
                                </ng-template>
+                             
                             </td>
                                 
                                 <td>
@@ -557,6 +600,7 @@
                                 </ng-template>
 
                             </td>
+                        </ng-template>
                                 
                                 <!-- <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
@@ -764,7 +808,8 @@
 
                     <!-- ============================== show item list modal======================= -->
 
-                    <div class="modal fade" id="PoReceiptLineItems" tabindex="-1" role="dialog" aria-labelledby="PoReceiptLineItemsLabel" aria-hidden="true">
+                    <div class="modal fade" id="PoReceiptLineItems" tabindex="-1" role="dialog" 
+                         aria-labelledby="PoReceiptLineItemsLabel" aria-hidden="true" >
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                             
@@ -912,7 +957,9 @@
                                         </tbody>
                                         <!-- <tr *ngFor="let com of PoRcptLineItemList" class="ItemStyle" style="text-decoration:none;"> -->
 
-                                            <tr *ngFor="let com of lstReceiptItemLines let i= index" class="ItemStyle" style="text-decoration:none;">
+                                            <!-- <tr *ngFor="let com of lstRtnDetails let i= index" class="ItemStyle" style="text-decoration:none;"> -->
+                                                <tr *ngFor="let com of lstReceiptItemLines let i= index" class="ItemStyle" style="text-decoration:none;">
+                                                <!-- lstRtnDetails -->
                                                 <td style="text-align: center;">{{i+1}}</td>
                                                 <td style="width:10rem;text-align: left;">{{com.itemName}}</td>
                                                 <td style="width:25rem;text-align: left;">{{com.itemDesc}}</td>
@@ -948,42 +995,75 @@
         </div>
     </div>
 </div>
+
+
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                    SEARCH</legend>
+                <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                    <tr>
+                    <td >
+                        <table class="center">
+                            <tr>
+                                <td  style="background-color: #FFE4B5;">&nbsp;Receipt&nbsp;No&nbsp;:&nbsp;</td>
+                                
+                                <td style="background-color: #FFE4B5;">
+                                    <input class="form-control" formControlName="receiptNo" [(ngModel)]='receiptNo'
+                                        value={{receiptNo}} style="text-transform:uppercase;">
+                                </td>
+
+                                <td style="background-color: #FFE4B5;">
+                                    <button type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </td>
+
+                                <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Reg&nbsp;No:&nbsp;</td>
+                    
+                                <td>
+                                    <input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control" style="text-transform:uppercase;">
+                                </td>
+
+                                <td style="background-color: #FFE4B5;">
+                                    <button type="button" class="btn-primary" (click)="SearchByMcpRegNo(searchRegno)"><i class="fa fa-search"
+                                            aria-hidden="true"></i></button>
+                                </td>
+
+                                <td>
+                                    <button style="width: 5em;" type="button" class="btn btn-info" (click)="clearSearch()">Clear</button>
+                                </td> -->
+                            </tr>
+                        </table>
+                    </td>
+                    </tr>
+                </table>
+                </fieldset>
+
 </form>
 <br>
 
-<!-- <div class="container1">
+<div class="container1">
     <div class="grid_scroll">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small ; border-color:#959595;border-collapse:collapse;width: 100%;">
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem"  scope="col">Srl&nbsp;No&nbsp;</th> 
                 <th style="width:5rem"  scope="col">Return&nbsp;No&nbsp;</th>
                 <th style="width:10rem" scope="col">Return&nbsp;Date</th>
-                <th style="width:5rem"  scope="col">Receipt&nbsp;No&nbsp;</th>
-                <th style="width:10rem" scope="col">Receipt&nbsp;Date</th>
-                <th style="width:10rem" scope="col">PO&nbsp;No</th>
-                <th style="width:10rem" scope="col">PO&nbsp;Date</th>
-                <th style="width:10rem" scope="col">Taxable&nbsp;Amt&nbsp;</th>
-                <th style="width:10rem" scope="col">Tax&nbsp;Amt&nbsp;</th>
-                <th style="width:10rem" scope="col">Total&nbsp;Amt&nbsp;</th>
-                <th style="width:20rem" scope="col">Supplier&nbsp;</th>
-                <th style="width:6rem" scope="col">Select</th>
+                <th style="width:5rem"  scope="col">DebitNote&nbsp;No&nbsp;</th>
+                <th style="width:10rem" scope="col">DebitNote&nbsp;Date</th>
+                <th style="width:10rem" scope="col">Return&nbsp;Amt&nbsp;</th>
+                 <th style="width:6rem" scope="col">Select</th>
             </tr>
         </tbody>
-        <tr *ngFor="let com of lstReceiptRtnHeader let i= index" class="ItemStyle" style="text-decoration:none;" >
+        <tr *ngFor="let com of lstDebtiNotes let i= index" class="ItemStyle" style="text-decoration:none;" >
                 <td style="text-align: center;">{{i+1}}</td>
                 <td style="text-align: center;">{{com.receiptNo}}</td>
                 <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>
-                <td style="text-align: center;">{{com.receiptNo}}</td>
-                <td style="text-align: center;">{{com.receiptDate | date:'dd-MM-y'}}</td>   
-                <td style="text-align: center;">{{com.segment1 }}</td>  
-                <td style="text-align: center;">{{com.poDate | date:'dd-MM-y'}}</td>
-                <td style="text-align: center;">{{com.baseAmount}}</td> 
-                <td style="text-align: center;">{{com.taxAmt}}</td>  
-                <td style="text-align: center;">{{com.totAmt}}</td>  
-                <td style="text-align: center;">{{com.supplierName}}</td> 
-               <td><button class="btn btn-info" (click)="Select(com.receiptNo)">Select</button></td>   
+                <td style="text-align: center;">{{com.debitNoteNo}}</td>
+                <td style="text-align: center;">{{com.debitNoteDate | date:'dd-MM-y'}}</td>   
+                <td style="text-align: center;">{{com.totalAmt }}</td>  
+                <td><button class="btn btn-info" (click)="Select(com.receiptNo)">Select</button></td>   
         </tr> 
     </table>
 </div>
-</div> -->
+</div>

@@ -147,7 +147,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
                             placeholder="Enter Ticket No" style="width: 75%;" >
                         </td>
-
+                        <input hidden formControlName="ouId">
                       </tr>
                       <tr >
                           <td style="width: 10%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
@@ -359,6 +359,15 @@
                           <!-- <span *ngIf="!supplierMasterForm.get('remarks').valid && supplierMasterForm.get('remarks').touched">Please
                               remarks </span> -->
                           </td>
+                          <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Memo&nbsp;:&nbsp;</td>
+                          <td>
+                              <select formControlName="createDebitMemoFlag" id="createDebitMemoFlag"  [ngModel]="createDebitMemoFlag" class="form-control">
+                                <option value="Yes" selected>Yes</option>
+                                <option value="No">No</option>
+                              </select>
+                              <!-- <span  *ngIf="!supplierMasterForm.get('status').valid && supplierMasterForm.get('status').touched">Please
+                                  Enter Status </span> -->
+                          </td>
                           <td style="width: 15%" class="LabelFontStyle">&nbsp;Status&nbsp;:&nbsp;</td>
                           <td>
                               <select formControlName="status" id="status"  [ngModel]="status" class="form-control" (ngModelChange)='onOptionsSelectedSupp($event)'>
@@ -371,17 +380,20 @@
                                   Enter Status </span> -->
                           </td>
 
-                              <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
-                              <ng-template #thenBlockInactive>
-                              </ng-template>
-                              <ng-template #elseBlockInactive>
-                                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Inactive&nbsp;Date&nbsp;:&nbsp;</td>
-                                  <td>
-                                      <input disabled type="text" formControlName="endDate" class="form-control"
-                                      placeholder="Enter end date"  [ngModel]="endDate | date:'yyyy-MM-dd'">
-                                  </td>
-                              </ng-template>
 
+                      </tr>
+                      <tr>
+
+                        <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                        <ng-template #thenBlockInactive>
+                        </ng-template>
+                        <ng-template #elseBlockInactive>
+                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Inactive&nbsp;Date&nbsp;:&nbsp;</td>
+                            <td>
+                                <input disabled type="text" formControlName="endDate" class="form-control"
+                                placeholder="Enter end date"  [ngModel]="endDate | date:'yyyy-MM-dd'">
+                            </td>
+                        </ng-template>
                       </tr>
                       <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                         <td style="width: 15%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
@@ -403,11 +415,11 @@
                             <input  formControlName="panNo" value={{panNo}} [(ngModel)]='panNo' class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                             placeholder="Enter PAN no" >
-                            <div *ngIf="submitted && f.PanNo.errors" class="invalid-feedback">
+                            <!-- <div *ngIf="submitted && f.PanNo.errors" class="invalid-feedback">
                                 <div *ngIf="f.panNo.errors.required">Enter PAN no </div>
                                 <div *ngIf="f.panNo.errors.maxLength">Enter PAN No
-                                </div>
-                            </div>
+                                </div> -->
+                            <!-- </div> -->
                             <!-- <span *ngIf="!supplierMasterForm.get('panNo').valid && supplierMasterForm.get('panNo').touched"  >Please
                                 PAN no </span>                                 -->
                         </td>
@@ -466,6 +478,155 @@
                                       placeholder="Enter MSME No">
                                   </td>
                               </ng-template>
+                              <td style="width: 15%" class="LabelFontStyle1">&nbsp;Liability&nbsp;Account&nbsp;:&nbsp;</td>
+                              <td>
+                                  <input hidden formControlName="acctsPayCodeCombId">
+                                <input formControlName="liabilityAcct" value={{liabilityAcct}}
+                                data-toggle="modal" data-target="#myModel"
+                                placeholder="Select Liability Code" class="form-control"
+                                (click)="openCodeCombination('liabilityAcct')"[(ngModel)]="liabilityAcct">
+                                <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
+                        aria-hidden="true" style="width: 500px; margin-left:350px">
+
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel"
+                                        style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                        Account Code Combination
+                                        </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body text-center pagination-centered">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Branch&nbsp;:
+                                            </td>
+                                            <td>
+                                                <select formControlName="segment11" id="segment11" [(ngModel)]="segment11"
+                                                    class="form-control" (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  BranchList">
+                                                        {{sc.lookupValue}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" style="width: 150px; background-color: white; border: none;"
+                                                    formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"
+                                                    class="form-control" disabled>
+                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"  style="border:none;"> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;Location&nbsp;:
+                                            </td>
+                                            <td>
+                                                <select formControlName="segment2" id="segment2" [(ngModel)]="segment2"
+                                                    class="form-control"
+                                                    (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  locIdList">
+                                                        {{sc.lookupValue}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" style="width: 150px; background-color: white; border: none;"
+                                                    formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2"
+                                                    class="form-control" disabled>
+                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" style="border:none;"> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Cost&nbsp;Center&nbsp;:
+                                            </td>
+                                            <td>
+                                                <select formControlName="segment3" id="segment3" class="form-control"
+                                                    [(ngModel)]="segment3"
+                                                    (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  CostCenterList">
+                                                        {{sc.lookupValue}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" style="width: 150px; background-color: white; border: none;"
+                                                    formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
+                                                    class="form-control" disabled>
+                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Natural&nbsp;Account&nbsp;:
+                                            </td>
+                                            <td>
+                                                <select formControlName="segment4" id="segment4" class="form-control"
+                                                    [(ngModel)]="segment4"
+                                                    (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  NaturalAccountList">
+                                                        {{sc.naturalaccount}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" style="width: 150px; background-color: white; border: none;"
+                                                    formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4"
+                                                    class="form-control" disabled>
+                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4"  [(ngModel)]="lookupValueDesc4"  style="border:none;"> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Inter&nbsp;Branch&nbsp;:
+
+                                            </td>
+                                            <td>
+                                                <select formControlName="segment5" id="segment5" class="form-control"
+                                                    [(ngModel)]="segment5"
+                                                    (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  InterBrancList">
+                                                        {{sc.lookupValue}}
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" style="width: 150px; background-color: white; border: none;"
+                                                    formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5"
+                                                    class="form-control" disabled>
+                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <div class="modal-footer">
+                                      <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button> -->
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
+                                       (click)="fnCancatination()">OK</button>
+
+                                  </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                            </td>
+                              <td style="width: 15%" class="LabelFontStyle1">&nbsp;Prepayment&nbsp;Account&nbsp;:&nbsp;</td>
+                              <td>
+                                <input hidden formControlName="prepayCodeCombId">
+                                <input formControlName="prePayAcct" value={{prePayAcct}}
+                                data-toggle="modal" data-target="#myModel"
+                                placeholder="Select Prepayment Code" class="form-control"
+                                (click)="openCodeCombination('prePayAcct')"[(ngModel)]="prePayAcct">
+                            </td>
                       </tr>
 
                       <tr>
@@ -487,14 +648,32 @@
                               (click)="newsupplierMast()">Save</button>
 
                           </td> -->
-                          <td class="center">
+                          <div *ngIf="displaySaveBtn; then thenOpenSave; else elseBlockSave"></div>
+                          <ng-template #thenOpenSave>
+                           <td class="center">
                               <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                               data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                           </td>
+                          </ng-template>
+                          <ng-template #elseBlockSave>
+                            <td class="center">
+                              <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
+                              data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+                          </td>
+                          </ng-template>
+                          <div *ngIf="displayUpdBtn; then thenOpenUpdate; else elseBlockUpdate"></div>
+                          <ng-template #thenOpenUpdate>
                           <td>
-                              <button type="submit" class="btn btn-primary" id="register"
+                              <button  type="submit" class="btn btn-primary" id="register"
                               (click)="updatesupplierMast()" style="width: 6rem;">Update</button>
                           </td>
+                        </ng-template>
+                        <ng-template #elseBlockUpdate>
+                          <td>
+                            <button disabled type="submit" class="btn btn-primary" id="register"
+                            (click)="updatesupplierMast()" style="width: 6rem;">Update</button>
+                        </td>
+                        </ng-template>
                           <td>
                               <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                               data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
@@ -574,23 +753,6 @@
                   </table>
                   <table>
                       <tr>
-                             <td style="width: 15%" class="LabelFontStyle" style="text-align: left;">Select&nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                              <td>
-                                  <select formControlName="ouId" id="ouId" class="form-control" [(ngModel)]='ouIdSelected'  (ngModelChange)='onOuIdSelected($event)'>
-                                      <option>--Select--</option>
-                                      <option *ngFor="let sc of ouIdList" [ngValue]="sc.ouId">
-                                          {{sc.ouName}}
-                                      </option>
-                                  </select>
-                                  <div *ngIf="submitted && f.ouId.errors" class="invalid-feedback">
-                                      <div *ngIf="f.ouId.errors.required">Enter Operating Unit</div>
-                                      <div *ngIf="f.ouId.errors.maxLength">Enter Operating Unit
-                                      </div>
-                                  </div>
-                                  <!-- <span
-                                      *ngIf="!supplierMasterForm.get('ouId').valid && supplierMasterForm.get('ouId').touched">Please
-                                      Enter Operating Unit</span> -->
-                              </td>
                               <!-- <td style="width: 15%"></td> -->
                               <td>
                                   <div class="custom-control custom-checkbox">
@@ -598,10 +760,90 @@
                                       <label class="custom-control-label" for="defaultUnchecked">With&nbsp;Existing&nbsp;Site&nbsp;</label>
                                   </div>
                               </td>
+                              <td style="width: 15%" class="LabelFontStyle">&nbsp;Site&nbsp;Name&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input formControlName="siteName" value={{siteName}}
+                                        class="form-control" placeholder="Enter Site Name"
+                                        [ngClass]="{ 'is-invalid': submitted && f.siteName.errors }">
+                                  <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
+                                  </div>
+                              </td>
                       </tr>
                   </table>
                   <table class="center" style="width: 100%;">
                       <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
+                        <td style="width: 15%" class="LabelFontStyle" style="text-align: left;">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                        <td>
+                            <select formControlName="souId" id="souId" class="form-control" [(ngModel)]='ouIdSelected'  (ngModelChange)='onOuIdSelected($event)'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of ouIdList" [ngValue]="sc.ouId">
+                                    {{sc.ouName}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f.ouId.errors" class="invalid-feedback">
+                                <div *ngIf="f.ouId.errors.required">Enter Operating Unit</div>
+                                <div *ngIf="f.ouId.errors.maxLength">Enter Operating Unit
+                                </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!supplierMasterForm.get('ouId').valid && supplierMasterForm.get('ouId').touched">Please
+                                Enter Operating Unit</span> -->
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
+                        <td>
+                            <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
+                                class="form-control"
+                                placeholder="Enter GSTN"
+                                [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }">
+
+                                <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
+                                    <div *ngIf="f.sGstNo.errors.pattern">Invalid GSTIN number format</div>
+                                    <div *ngIf="f.sGstNo.errors.required">GST number cannot be blank</div>
+                                    <!-- <div *ngIf="f.sGstNo.errors.maxLength">GSTIN Max length error</div> -->
+                                </div>
+                            </td>
+                        <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
+                        <td>
+                            <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
+                                class="form-control"
+                             placeholder="Enter Pan No"
+                             [ngClass]="{ 'is-invalid': submitted && f.spanNo.errors }">
+                             <div *ngIf="submitted && f.spanNo.errors" class="invalid-feedback">
+                                <div *ngIf="f.spanNo.errors.required">PAN numbher cannot be blank</div>
+                                <div *ngIf="f.spanNo.errors.pattern">Invalid PAN format</div>
+                                <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
+                            </div>
+                         </td>
+                         </tr>
+                         <tr>
+                          <td style="width: 15%" class="LabelFontStyle">Liability&nbsp;Account&nbsp;:&nbsp;</td>
+                          <td>
+                              <input hidden formControlName="acctsPayCodeCombId">
+                              <input formControlName="sliabilityAcct" value={{sliabilityAcct}}
+                              data-toggle="modal" data-target="#myModel"
+                              placeholder="Select Liability Code" class="form-control"
+                              (click)="openCodeCombination('sliabilityAcct')"[(ngModel)]="sliabilityAcct">
+                               <div *ngIf="submitted && f.sliabilityAcct.errors" class="invalid-feedback">
+                                  <!-- <div *ngIf="f.sliabilityAcct.errors.required">PAN numbher cannot be blank</div> -->
+                                  <!-- <div *ngIf="f.sliabilityAcct.errors.pattern">Invalid PAN format</div> -->
+                                  <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
+                              </div>
+                           </td>
+                           <td style="width: 15%" class="LabelFontStyle">Prepayment&nbsp;Account&nbsp;:&nbsp;</td>
+                          <td>
+                              <input hidden formContolName="sprepayCodeCombId">
+                              <input formControlName="sprePayAcct" value={{sprePayAcct}}
+                              data-toggle="modal" data-target="#myModel"
+                              placeholder="Select Prepayment Code" class="form-control"
+                              (click)="openCodeCombination('sprePayAcct')"[(ngModel)]="sprePayAcct">
+                              <div *ngIf="submitted && f.sprePayAcct.errors" class="invalid-feedback">
+                                  <!-- <div *ngIf="f.sliabilityAcct.errors.required">PAN numbher cannot be blank</div> -->
+                                  <!-- <div *ngIf="f.sliabilityAcct.errors.pattern">Invalid PAN format</div> -->
+                                  <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
+                              </div>
+                           </td>
+                         </tr>
+                         <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                           <td style="width: 15%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
                           <td>
                               <input formControlName="saddress1" value={{saddress1}} [(ngModel)]='saddress1' class="form-control"
@@ -641,21 +883,22 @@
                           <!-- <span *ngIf="!supplierMasterForm.get('saddress3').valid && supplierMasterForm.get('saddress3').touched">Please
                               Enter address </span> -->
                           </td>
-                          <td style="width: 15%" class="LabelFontStyle">&nbsp;Address4&nbsp;:&nbsp;</td>
-                          <td>
-                              <input formControlName="saddress4" value={{saddress4}} [(ngModel)]='saddress4' class="form-control"
-                              [ngClass]="{ 'is-invalid': submitted && f.saddress4.errors }"
-                              placeholder="Enter address" >
-                          <div *ngIf="submitted && f.saddress4.errors" class="invalid-feedback">
-                              <div *ngIf="f.saddress4.errors.required">Enter address </div>
-                              <div *ngIf="f.saddress4.errors.maxLength">Enter address
-                              </div>
-                          </div>
-                          <!-- <span *ngIf="!supplierMasterForm.get('saddress4').valid && supplierMasterForm.get('saddress4').touched">Please
-                              Enter address </span> -->
-                          </td>
+
                       </tr>
                       <tr>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Address4&nbsp;:&nbsp;</td>
+                        <td>
+                            <input formControlName="saddress4" value={{saddress4}} [(ngModel)]='saddress4' class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.saddress4.errors }"
+                            placeholder="Enter address" >
+                        <div *ngIf="submitted && f.saddress4.errors" class="invalid-feedback">
+                            <div *ngIf="f.saddress4.errors.required">Enter address </div>
+                            <div *ngIf="f.saddress4.errors.maxLength">Enter address
+                            </div>
+                        </div>
+                        <!-- <span *ngIf="!supplierMasterForm.get('saddress4').valid && supplierMasterForm.get('saddress4').touched">Please
+                            Enter address </span> -->
+                        </td>
                           <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
                           <td>
                               <select formControlName="scity" id="scity" [(ngModel)]='scity' (ngModelChange)='onOptionsSelectedCity1($event)' class="form-control">
@@ -683,12 +926,17 @@
                               <!-- <span *ngIf="!supplierMasterForm.get('pinCd').valid && supplierMasterForm.get('pinCd').touched">Please
                                   Enter pin code </span> -->
                           </td>
-                          <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
-                          <td>
-                              <input type="text" disabled formControlName="sstate" [ngModel]="sstate"
-                              class="form-control">
-                          </td>
-                      </tr>
+                       </tr>
+                       <tr>
+                        <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                        <td>
+                            <input type="text" disabled formControlName="sstate" class="form-control">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;:&nbsp;</td>
+                        <td>
+                            <input type="text" disabled formControlName="staxCatName" class="form-control">
+                        </td>
+                       </tr>
                        <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                           <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>
                           <td>
@@ -729,19 +977,20 @@
                           <!-- <span *ngIf="!supplierMasterForm.get('emailId').valid && supplierMasterForm.get('emailId').touched">Please
                               Enter email Id </span>  -->
                           </td>
-                          <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
-                          <td>
-                              <select formControlName="sstatus" id="sstatus"  [ngModel]="sstatus" (ngModelChange)='onOptionsSelected($event)' class="form-control">
-                                  <option>--Select--</option>
-                                  <option *ngFor="let sc of statusList">
-                                      {{sc.codeDesc}}
-                                  </option>
-                              </select>
-                              <!-- <span *ngIf="!supplierMasterForm.get('sstatus').valid && supplierMasterForm.get('sstatus').touched">Please
-                                  Enter Status </span> -->
-                          </td>
+
                       </tr>
                       <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
+                        <td>
+                            <select formControlName="sstatus" id="sstatus"  [ngModel]="sstatus" (ngModelChange)='onOptionsSelected($event)' class="form-control">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of statusList">
+                                    {{sc.codeDesc}}
+                                </option>
+                            </select>
+                            <!-- <span *ngIf="!supplierMasterForm.get('sstatus').valid && supplierMasterForm.get('sstatus').touched">Please
+                                Enter Status </span> -->
+                        </td>
                           <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
                           <ng-template #thenBlockInactive></ng-template>
                           <ng-template #elseBlockInactive>
@@ -756,15 +1005,29 @@
                   </table>
                   <table class="center">
                       <tr>
+                        <div *ngIf="displaysite; then thenBlocksitebtn; else elseBlocksitebtn"></div>
+                        <ng-template #thenBlocksitebtn>
                           <td>
                             <!-- [disabled]="!supplierMasterForm.valid" -->
                               <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
                                    (click)="createSitesupplierMast()">Create EXSite</button>
                           </td>
                           <td>
+                              <button disabled type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                                   (click)="UpdateSitesupplierMastExeSite()">Update EXSite</button>
+                          </td>
+                        </ng-template>
+                        <ng-template #elseBlocksitebtn>
+                          <td>
+                            <!-- [disabled]="!supplierMasterForm.valid" -->
+                              <button disabled type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                                   (click)="createSitesupplierMast()">Create EXSite</button>
+                          </td>
+                          <td>
                               <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
                                    (click)="UpdateSitesupplierMastExeSite()">Update EXSite</button>
                           </td>
+                        </ng-template>
                           <!-- <td>
                             <button type="submit" class="btn btn-primary" id="register"
                                  (click)="newsupplierMast()">New site</button>

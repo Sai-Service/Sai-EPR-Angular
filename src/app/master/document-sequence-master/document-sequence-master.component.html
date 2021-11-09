@@ -14,14 +14,14 @@
                 <ng-template #thenBlock>
                     <tr>
                         <td style="width: 18%" class="LabelFontStyle1">
-                            Document&nbsp;Sequence&nbsp;No:
+                            Doc&nbsp;Seq&nbsp;No:
                         </td>
                         <td>
                             <input disabled formControlName="docSrlNo" [(ngModel)]="docSrlNo" value={{docSrlNo}} class="form-control"
                              placeholder="Enter document sequence no">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
-                          Division&nbsp;Name&nbsp;:
+                          Division&nbsp;&nbsp;:
                       </td>
                       <td>
                           <select formControlName="divisionId" id="divisionId" class="form-control" (ngModelChange)='onOptionSelectedOrganization($event)'>
@@ -48,7 +48,7 @@
                     </td>
                       
                     <td style="width: 15%" class="LabelFontStyle1">
-                        Location&nbsp;Code&nbsp;:
+                        Location&nbsp;&nbsp;:
                     </td>
                     <td>
                         <select formControlName="docSrlLoc" id="docSrlLoc" class="form-control" ngModel='docSrlLoc'>
@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                       <td style="width: 15%" class="LabelFontStyle1">
-                        Department&nbsp;&nbsp;:
+                        Dept&nbsp;&nbsp;:
                     </td>
                     <td>
                         <select formControlName="deptId" [(ngModel)]="deptId" id="deptId" class="form-control" (ngModelChange)="onOptionSelectedCostCentre($event)">
@@ -77,7 +77,7 @@
                     </td>
 
                         <td style="width: 15%" class="LabelFontStyle1">
-                            Financial&nbsp;Year&nbsp;:
+                            Fin&nbsp;Year&nbsp;:
                         </td>
                         <td>
                             <select formControlName="financialYear" [(ngModel)]='financialYear'  class="form-control"
@@ -96,7 +96,7 @@
                             <input hidden formControlName="attribute1" [(ngModel)]="attribute1">
                         </td>
                         <td style="width: 20%" class="LabelFontStyle1">
-                            Document&nbsp;Type:
+                            Doc&nbsp;Type:
                         </td>
                         <td>
                             <select formControlName="docSrlType" [(ngModel)]="docSrlType" value={{docSrlType}} class="form-control"
@@ -135,12 +135,12 @@
                     </tr>
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
-                            Intial&nbsp;Value&nbsp;:
+                            Doc&nbsp;Prefix&nbsp;:
                         </td>
 <td>                       <!-- (keyup)="documentSequence($event)" <td> -->
-                            <input formControlName="docSrlPrefix" [(ngModel)]="docSrlPrefix" value={{docSrlPrefix}} class="form-control"
+                            <input disabled formControlName="docSrlPrefix" [(ngModel)]="docSrlPrefix" value={{docSrlPrefix}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.docSrlPrefix.errors }"
-                            placeholder="Enter Intial Value">
+                            placeholder="Doc Prefix Value">
                         <div *ngIf="submitted && f. docSrlPrefix.errors" class="invalid-feedback">
                             <div *ngIf="f.docSrlPrefix.errors.required">Intial Value must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
@@ -156,7 +156,7 @@
                             Start&nbsp;Date&nbsp;:
                         </td>
                         <td>
-                            <input type="date" formControlName="startDate" class="form-control"
+                            <input type="date" formControlName="startDate"  [(ngModel)]="startDate" class="form-control"
                             placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}" >
                         <span *ngIf="!DocSeriealMasterForm.get('startDate').valid && DocSeriealMasterForm.get('startDate').touched">Please
                             Enter start Date </span>
@@ -174,14 +174,14 @@
                 <ng-template #elseBlock>
                     <tr>
                         <td style="width: 18%" class="LabelFontStyle1">
-                            Document&nbsp;Sequence&nbsp;No:
+                            Doc&nbsp;Sequence&nbsp;No:
                         </td>
                         <td>
                             <input disabled formControlName="docSrlNo" [(ngModel)]="docSrlNo" value={{docSrlNo}} class="form-control"
                               placeholder="Enter document sequence no">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
-                          Division&nbsp;Name&nbsp;:
+                          Division&nbsp;&nbsp;:
                       </td>
                       <td>
                           <input disabled formControlName="divisionId" class="form-control">
@@ -199,7 +199,7 @@
                         <input  disabled formControlName="docSrlOu" id="docSrlOu" class="form-control">
                     </td>
                         <td style="width: 15%" class="LabelFontStyle1">
-                            Location&nbsp;Code&nbsp;:
+                            Location&nbsp;&nbsp;:
                         </td>
                         <td>
                             <input formControlName="docSrlLoc" id="docSrlLoc" class="form-control">
@@ -209,14 +209,14 @@
                     </tr>
                     <tr>
                       <td style="width: 15%" class="LabelFontStyle1">
-                        Department&nbsp;&nbsp;:
+                        Dept&nbsp;&nbsp;:
                     </td>
                     <td>
                         <input disabled formControlName="deptId" class="form-control">
                     </td>
 
                         <td style="width: 15%" class="LabelFontStyle1">
-                            Financial&nbsp;Year&nbsp;:
+                            Fin&nbsp;Year&nbsp;:
                         </td>
                         <td>
                             <input disabled formControlName="financialYear" [(ngModel)]='financialYear' value={{financialYear}} class="form-control"
@@ -234,7 +234,7 @@
                             Enter Financial Year </span>
                         </td>
                         <td style="width: 20%" class="LabelFontStyle1">
-                            Document&nbsp;Type:
+                            Doc&nbsp;Type:
                         </td>
                         <td>
                             <input disabled formControlName="docSrlType" [(ngModel)]='docSrlType' value={{docSrlType}} class="form-control"

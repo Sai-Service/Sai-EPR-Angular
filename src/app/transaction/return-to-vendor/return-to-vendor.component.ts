@@ -75,6 +75,8 @@ export class ReturnToVendorComponent implements OnInit {
   getPoReceiptDetails:  Array<any> = [];
   lstReceiptRtnHeader: any;
   lstReceiptRtnItemLines:any;
+  lstRtnDetails:any;
+  lstDebtiNotes:any;
   
   // public ItemLocatorList: Array<string> = [];
 
@@ -113,7 +115,7 @@ export class ReturnToVendorComponent implements OnInit {
       suppNo:number;
       supplierName:string;
       shipmentNo:number;
-      receiptNo:number=52121101175;
+      receiptNo:number;
       originalReceiptNo:number;
       totalAmt:number;
       PoRctTotalAmt:number;
@@ -136,7 +138,7 @@ export class ReturnToVendorComponent implements OnInit {
       public itemType= 'RETURN';
 
       rtnDocNo:string;
-      rtnDocDate=this.pipe.transform(Date.now(), 'y-MM-dd');
+      rtnDocDate=this.pipe.transform(Date.now(), 'dd-MM-yyyy');
       rtnFromDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       rtnToDate=this.pipe.transform(Date.now(), 'y-MM-dd');
       // remarks:string;
@@ -179,6 +181,10 @@ export class ReturnToVendorComponent implements OnInit {
       dispReceiptLines=false;
       indReturn=false;
       searchButton=true;
+
+      rtnSearch=false;
+
+      sRcptNo:number;
 
       userList2: any[] = [];
       lastkeydown1: number = 0;
@@ -240,6 +246,7 @@ export class ReturnToVendorComponent implements OnInit {
             rtnFromDate:[],
             rtnToDate:[],
             remarks:[],
+            sRcptNo:[],
           
             rcvLines: this.fb.array([this.lineDetailsGroup()]), 
             // poLines: this.fb.array([this.lineDetailsGroup()]),
@@ -493,40 +500,9 @@ export class ReturnToVendorComponent implements OnInit {
         this.router.navigate(['admin']);
       }
 
-      Select(rcptNo: any) {
+    
 
-        return;
 
-        // alert("Select >> :"+rcptNo);
-        this.returntoVendorForm.reset();
-        this.display1= false;
-        let select = this.lstcomments.find(d => d.receiptNo === rcptNo);
-       
-        for(let i=0; i<this.lineDetailsArray.length; i++){ 
-          this.lineDetailsArray.removeAt(i);
-        }
-    
-        // alert("rcvLines LENGTH: "+ select.rcvLines.length);
-        if(select.rcvLines1.length>0){
-    
-           this.lineDetailsArray.clear();
-    
-          if (select) {
-              var control = this.returntoVendorForm.get('rcvLines') as FormArray;
-             
-              for (let i=0; i<select.rcvLines.length;i++) 
-                {
-                 var rcvLines:FormGroup=this.lineDetailsGroup();
-                  control.push(rcvLines);
-                }
-              }
-        }
-          this.receiptNo = select.receiptNo;
-          this.displayButton = false;
-          this.display = false;
-          // this.showItemSearch=true;
-          this.returntoVendorForm.patchValue(select);
-        }
      
        SearchByPoRcptNumberHeader(mRcptNumber:any){
           // this.resetMast();
@@ -537,14 +513,13 @@ export class ReturnToVendorComponent implements OnInit {
             return;
           }
 
-       
-          
           // this.lineDetailsArray.controls[0].get('itemName').disable();
           this.service.getsearchByReceiptNo(mRcptNumber,this.locId)
           .subscribe(
             data => {
               this.lstReceiptHeader = data.obj;
               this.lstReceiptItemLines=data.obj.rcvLines;
+              this.lstDebtiNotes=data.obj.rtvLines;
               console.log(this.lstReceiptHeader);
 
              if(data.code===200){
@@ -1305,7 +1280,42 @@ export class ReturnToVendorComponent implements OnInit {
           
         });
     }
-    
+
+    // searchMast() {
+    //   this.service.getPriceListSearch(999,this.divisionId)
+    //     .subscribe(
+    //       data => {
+    //         this.lstcomments = data;
+    //         console.log(this.lstcomments);
+    //       }
+    //     );
+    // }
+
+
+    Select(mrtnNo){
+      // alert("PO / Receipt Number :"+this.segment1 +","+this.receiptNo);
+      this.enableCheckBox=false;
+      this.rtnSearch=true;
+
+      let select = this.lstDebtiNotes.find(d => d.receiptNo === mrtnNo);
+       this.rtnDocNo=select.receiptNo;
+      //  this.rtnDocDate=select.receiptDate;
+       this.rtnDocDate=this.pipe.transform(select.receiptDate, 'dd-MM-yyyy');
+       this.totalAmt=select.totalAmt;
+      
+       this.service.getsearchByReceiptNoLine(this.segment1,mrtnNo)
+       .subscribe(
+         data => {
+           if(data.obj !=null) {
+            this.lstRtnDetails = data.obj;
+            console.log(this.lstRtnDetails);
+              } else {alert ( "No Line Items Found in this PO Receipt.");}
+              
+          } );    
+          
+        }
+
+
 
  
 }

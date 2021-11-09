@@ -36,6 +36,7 @@ interface IsupplierMaster {
   panNo: string;
   tanNo: string;
   ouId: string;
+  souId:number;
   existing: string;
   ExeAddress: string;
   saddress1: string;
@@ -60,7 +61,21 @@ interface IsupplierMaster {
   locId:number;
   //displayMsmeNo:
   // aadharNo:string;
+  spanNo:string;
+  sGstNo:string;
+  sprePayAcct:string;
+  prePayAcct:string;
+  sliabilityAcct:string;
+  staxCatName:string
+  siteName:string;
+  acctsPayCodeCombId:number;
+  prepayCodeCombId:number;
+  sacctsPayCodeCombId:number;
+  sprepayCodeCombId:number;
+  displaysite:boolean;
+  createDebitMemoFlag:string;
 }
+
 
 
 @Component({
@@ -107,6 +122,7 @@ export class SupplierMasterComponent implements OnInit {
   lstcommentsId: any[];
   displayButton = true;
   ouId: string;
+  souId:number;
   existing: string;
   ExeAddress: string;
   saddress1: string;
@@ -138,7 +154,7 @@ export class SupplierMasterComponent implements OnInit {
   // public cityList: Array<string>[];
   public cityList1: any;
   public YesNoList: Array<string> = [];
-  displayadditional:boolean;
+  displayadditional:boolean=true;
   aadharNo:string;
   divisionId:number;
   compId:number;
@@ -148,6 +164,42 @@ export class SupplierMasterComponent implements OnInit {
   eTktNo:string;
   Ename:string;
   locId:number;
+  displaySaveBtn: boolean=true;
+  displayUpdBtn: boolean;
+  spanNo:string;
+  sGstNo:string;
+  sprePayAcct:string;
+  sacctsPayCodeCombId:number;
+  sprepayCodeCombId:number;
+  sliabilityAcct:string;
+  staxCatName:string;
+  siteName:string;
+  public InterBrancList:Array<string>=[];
+  public BranchList:Array<string>=[];
+  public CostCenterList:Array<string>=[];
+  public NaturalAccountList:any=[];
+  public locIdList:Array<string>=[];
+  segment11:string;
+  lookupValueDesc1:string;
+  segment2:number;
+  lookupValueDesc2:string;
+  segment3:number;
+  trans:string;
+  lookupValueDesc3:string;
+  segment4:number;
+  lookupValueDesc4:string;
+  segment5:string;
+  lookupValueDesc5:string;
+  showModal:boolean;
+  segmentNameList: any;
+  branch:any;
+  acctsPayCodeCombId:number;
+  liabilityAcct:string;
+  prePayAcct: string;
+  prepayCodeCombId: number;
+  displaysite:boolean=true;
+  createDebitMemoFlag:string;
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -181,7 +233,8 @@ export class SupplierMasterComponent implements OnInit {
       compId:[],
       type:[],
       locId:[],
-      ouId:['',[Validators.required]],
+      ouId:[''],
+      souId:[''],
       ExeAddress: [],
       saddress1: ['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
       saddress2: ['', [Validators.minLength(10),Validators.maxLength(100),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -206,6 +259,29 @@ export class SupplierMasterComponent implements OnInit {
       stateE: [],
       eTktNo:[],
       Ename:[],
+      spanNo:[],
+      sGstNo:[],
+      sprePayAcct:[],
+      sliabilityAcct:[],
+      staxCatName:[],
+      siteName:[],
+      acctsPayCodeCombId:[],
+      liabilityAcct:[],
+      segment11:[],
+  lookupValueDesc1:[],
+  segment2:[],
+  lookupValueDesc2:[],
+  segment3:[],
+  lookupValueDesc3:[],
+  segment4:[],
+  lookupValueDesc4:[],
+  segment5:[],
+  lookupValueDesc5:[],
+  prePayAcct: [],
+  prepayCodeCombId: [],
+  sacctsPayCodeCombId:[],
+   sprepayCodeCombId:[],
+   createDebitMemoFlag:[],
     });
   }
 
@@ -218,6 +294,7 @@ export class SupplierMasterComponent implements OnInit {
     this.emplId =Number(sessionStorage.getItem('emplId'));
     this.divisionId =Number(sessionStorage.getItem('divisionId'));
     this.locId=Number(sessionStorage.getItem('locId'));
+    this.ouId=(sessionStorage.getItem('ouId'));
     this.compId =41;
     this.service.cityList()
       .subscribe(
@@ -262,10 +339,194 @@ export class SupplierMasterComponent implements OnInit {
           console.log(this.ouIdList);
         }
       );
+      this.service.BranchList()
+      .subscribe(
+        data => {
+          this.BranchList = data;
+          console.log(this.BranchList);
+        }
+      );
+    this.service.CostCenterList()
+      .subscribe(
+        data => {
+          this.CostCenterList = data;
+          console.log(this.CostCenterList);
+        }
+      );
+    this.service.NaturalAccountList1()
+      .subscribe(
+        data => {
+          this.NaturalAccountList = data.obj;
+          console.log(this.NaturalAccountList);
+        }
+      ); this.service.InterBrancList()
+        .subscribe(
+          data => {
+            this.InterBrancList = data;
+            console.log(this.InterBrancList);
+          }
+        );
+        this.service.locationCodeList()
+        .subscribe(
+          data => {
+            this.locIdList = data;
+            console.log(this.locIdList);
+          }
+        );
   }
 
   supplierMaster(supplierMaster: any) {
   }
+  currentAcctTyp:string;
+  openCodeCombination(accountType:string)
+  {
+
+    let SegmentName1=this.supplierMasterForm.get(accountType).value;
+    alert(SegmentName1);
+    this.currentAcctTyp=accountType;
+    if(SegmentName1===null)
+    {this.supplierMasterForm.get('segment11').reset();
+    this.supplierMasterForm.get('segment2').reset();
+    this.supplierMasterForm.get('segment3').reset();
+    this.supplierMasterForm.get('segment4').reset();
+    this.supplierMasterForm.get('segment5').reset();
+
+    this.supplierMasterForm.get('lookupValueDesc1').reset();
+    this.supplierMasterForm.get('lookupValueDesc2').reset();
+    this.supplierMasterForm.get('lookupValueDesc3').reset();
+    this.supplierMasterForm.get('lookupValueDesc4').reset();
+    this.supplierMasterForm.get('lookupValueDesc5').reset();
+  }
+  if(SegmentName1!=null)
+  {
+    var temp = SegmentName1.split('.');
+    // alert(temp[0]);
+    this.segment11 = temp[0];
+    this.segment2 = temp[1];
+    this.segment3 = temp[2];
+    this.segment4 = temp[3];
+    this.segment5 = temp[4];
+  }
+    this.showModal = true;
+
+  }
+  fnCancatination()
+  {
+
+   var AcctCode=this.supplierMasterForm.get('segment11').value+'.'+
+                     this.supplierMasterForm.get('segment2').value+'.'+
+                     this.supplierMasterForm.get('segment3').value+'.'+
+                     this.supplierMasterForm.get('segment4').value+'.'+
+                     this.supplierMasterForm.get('segment5').value;
+
+    alert(AcctCode);
+
+    this.service.segmentNameList(AcctCode)
+    .subscribe(
+      data => {
+
+        this.segmentNameList = data.obj;
+        alert(this.currentAcctTyp+'type')
+        if (data.code=== 200) {
+          // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+          if (data.obj.length == 0) {
+            alert('Invalid Code Combination');
+          } else {
+            console.log(this.segmentNameList);
+
+            if(this.currentAcctTyp==='liabilityAcct')
+            {
+              this.acctsPayCodeCombId = Number(this.segmentNameList.codeCombinationId);
+              this.supplierMasterForm.patchValue({'acctsPayCodeCombId': Number(this.segmentNameList.codeCombinationId)});
+              this.liabilityAcct=AcctCode;
+            }
+            if(this.currentAcctTyp==='sliabilityAcct')
+            {
+              this.sacctsPayCodeCombId = Number(this.segmentNameList.codeCombinationId);
+              this.supplierMasterForm.patchValue({'sacctsPayCodeCombId': Number(this.segmentNameList.codeCombinationId)});
+              this.sliabilityAcct=AcctCode;
+            }
+            if(this.currentAcctTyp==='prePayAcct')
+            {
+              this.prepayCodeCombId = Number(this.segmentNameList.codeCombinationId);
+              alert(this.segmentNameList.codeCombinationId);
+              this.supplierMasterForm.patchValue({'prepayCodeCombId': Number(this.segmentNameList.codeCombinationId)});
+              this.prePayAcct=AcctCode;
+            }
+            if(this.currentAcctTyp==='sprePayAcct')
+            {
+              this.sprepayCodeCombId = Number(this.segmentNameList.codeCombinationId);
+              this.supplierMasterForm.patchValue({'sprePayAcct': Number(this.segmentNameList.codeCombinationId)});
+              this.sprePayAcct=AcctCode;
+            }
+          }
+        } else if (data.code=== 400) {
+          // this.supplierMasterForm.patchValue({liabilityAcct:''});
+          if(this.currentAcctTyp==='liabilityAcct')
+            {
+              this.supplierMasterForm.patchValue({liabilityAcct:''});
+            }
+            if(this.currentAcctTyp==='sliabilityAcct')
+            {
+              this.supplierMasterForm.patchValue({sliabilityAcct:''});
+            }
+            if(this.currentAcctTyp==='prePayAcct')
+            {
+              this.supplierMasterForm.patchValue({prePayAcct:''});
+            }
+            if(this.currentAcctTyp==='sprePayAcct')
+            {
+              this.supplierMasterForm.patchValue({sprePayAcct:''});
+            }
+          // alert(this.segmentNameList.message);
+
+        }
+      }
+    );
+   this.supplierMasterForm.get('segment11').reset();
+        this.supplierMasterForm.get('segment2').reset();
+        this.supplierMasterForm.get('segment3').reset();
+        this.supplierMasterForm.get('segment4').reset();
+        this.supplierMasterForm.get('segment5').reset();
+
+        this.supplierMasterForm.get('lookupValueDesc1').reset();
+        this.supplierMasterForm.get('lookupValueDesc2').reset();
+        this.supplierMasterForm.get('lookupValueDesc3').reset();
+        this.supplierMasterForm.get('lookupValueDesc4').reset();
+        this.supplierMasterForm.get('lookupValueDesc5').reset();
+  }
+  onOptionsSelectedBranch(segment: any, lType: string) {
+
+    this.service.getInterBranch(segment, lType).subscribe(
+      data => {
+        this.branch = data;
+        console.log(this.branch);
+        if (this.branch != null) {
+           if (lType === 'SS_Interbranch') {
+            this.lookupValueDesc5 = this.branch.lookupValueDesc;
+          }
+          // if (lType === 'NaturalAccount') {
+          //   this.lookupValueDesc4 = this.branch.lookupValueDesc;
+          //   }
+          if (lType === 'CostCentre') {
+            this.lookupValueDesc3 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'SS_Location') {
+            this.lookupValueDesc2 = this.branch.lookupValueDesc;
+          }
+          if (lType === 'SS_Branch') {
+            this.lookupValueDesc1 = this.branch.lookupValueDesc;
+          }
+        }
+
+      }
+    );
+
+      var natdesc= this.NaturalAccountList.find(d => d.naturalaccount === segment);
+      if(natdesc!=undefined){
+      this.lookupValueDesc4=natdesc.description;
+      }
+      }
 
 
   onOptionsupTypeSelected(event: any) {
@@ -338,11 +599,16 @@ export class SupplierMasterComponent implements OnInit {
     // const formValue: IsupplierMaster = this.transData(this.supplierMasterForm.value);
     const formValue:IsupplierMaster=this.supplierMasterForm.value;
     formValue.compId=41;
+    formValue.siteName=this.supplierMasterForm.get('city').value+'-'+this.supplierMasterForm.get('state').value;
+    formValue.ouId=(sessionStorage.getItem('ouId'));
     formValue.divisionId=Number(sessionStorage.getItem('divisionId'));
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
         this.suppNo=res.obj.suppNo;
+        this.searchBySuppCode(this.suppNo);
+        this.displayadditional=false;
+        this.displaySaveBtn=false;
         // this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -421,6 +687,7 @@ export class SupplierMasterComponent implements OnInit {
     this.service.SupliMasterSubmitForSite(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
+        this.displayadditional=false;
         this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -432,6 +699,7 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   Select(suppSiteId: number) {
+    this.displaysite=false;
 alert(suppSiteId);
     this.lstcomments2 = this.lstcomments.supplierSiteMasterList;
     console.log(this.lstcomments2);
@@ -445,20 +713,28 @@ alert(suppSiteId);
       this.saddress4 = select.address4
       this.scity = select.city
       this.pinCd = select.pinCd
-      this.sstate = select.state
+      // this.sstate = select.state
       this.contactNo = select.contactNo
       this.contactPerson = select.contactPerson
       this.emailId = select.emailId
       this.gstNo = select.gstNo
       this.smobile1 = select.mobile1
       this.smobile2 = select.mobile2
-      this.ouId = select.ouId
-      this.panNo = select.panNo
-      this.tanNo = select.tanNo
       this.taxCategoryName = select.taxCategoryDesc
+      this.supplierMasterForm.patchValue({sGstNo:select.gstNo,
+                                          spanNo:select.panNo,
+                                          sstate:select.state1,
+                                          staxCatName:select.taxCategoryName,
+                                          sstatus:select.status,
+                                          souId:select.ouId,
+                                          siteName:select.siteName,
+                                          sliabilityAcct:select.attribute2,
+                                          sprePayAcct:select.attribute1});
       // ticketNo not in  json
 
       // this.displayButton = false;
+      // this.displaysite=true;
+      // this
     }
   }
   ExeAddressEvent(e) {
@@ -470,6 +746,7 @@ alert(suppSiteId);
       this.scity = this.city
       this.pinCd = this.pinCode
       this.sstate = this.state
+      // this.displaysite=false;
     }
     else {
       this.saddress1 = null;
@@ -501,15 +778,19 @@ alert(suppSiteId);
           this.supplierMasterForm.patchValue(this.lstcomments);
           this.supplierMasterForm.patchValue({
             panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
-            gstNo:this.lstcomments.customerSiteMasterList[0].gstNo,
-            taxCategoryName:this.lstcomments.customerSiteMasterList[0].taxCategoryName,
-            highAmt:this.lstcomments.customerSiteMasterList[0].highAmt,
-            creditAmt:this.lstcomments.customerSiteMasterList[0].creditAmt,
-            disPer:this.lstcomments.customerSiteMasterList[0].disPer,
-            location:this.lstcomments.customerSiteMasterList[0].location,
-          });
+            gstNo:this.lstcomments.supplierSiteMasterList[0].gstNo,
+            prePayAcct:this.lstcomments.supplierSiteMasterList[0].attribute1,
+            liabilityAcct:this.lstcomments.supplierSiteMasterList[0].attribute2});
+            // contactPerson:this.lstcomments.customerSiteMasterList[0].contactPerson,
+            // contactNo:this.lstcomments.customerSiteMasterList[0].contactNo});
+
+          // });
           this.city = this.lstcomments.city
           this.displayInactive = true;
+          // (document.getElementById("saveBtn") as HTMLInputElement).disabled = true;
+          this.displaySaveBtn=false;
+          this.displayUpdBtn=true;
+          this.displayadditional=false;
         }
       );
   }
@@ -575,7 +856,8 @@ alert(suppSiteId);
       data => {
         this.cityList1 = data;
         console.log(this.cityList1);
-        this.state=this.cityList1.attribute1;
+        // this.state=this.cityList1.attribute1;
+        this.supplierMasterForm.patchValue({state:this.cityList1.attribute1});
         console.log(this.cityList1.attribute1);
         // this.country = 'INDIA';
          this.service.taxCategoryList1(this.locId,this.state)
@@ -591,7 +873,29 @@ alert(suppSiteId);
     );
   }
 
+  onOptionSiteStateSeleted(event:any)
+  {
+    this.service.cityList1(event)
+    .subscribe(
+      data => {
+        this.cityList1 = data;
+        // console.log(this.cityList1);
+        this.sstate=this.cityList1.attribute1;
+        // console.log(this.cityList1.attribute1);
+        // this.country = 'INDIA';
 
+        //  this.service.taxCategoryList1(this.souId,this.state)
+        // .subscribe(
+        //   data => {
+        //     // this.taxCategoryNameList = data;
+        //     this.staxCatName=data.taxCategoryName;
+        //     // console.log(this.taxCategoryNameList);
+
+        //   }
+        // );
+      }
+    );
+  }
   onKey(event: any) {
     const gstNo1 = this.gstNo.substr(3,10);
     this.panNo = gstNo1;
@@ -607,10 +911,22 @@ alert(suppSiteId);
             console.log(this.cityList1);
             // this.state=this.cityList1.attribute1;
             this.sstate=this.cityList1.attribute1;
+            this.supplierMasterForm.patchValue({sstate:this.cityList1.attribute1});
             console.log(this.cityList1.attribute1);
             // this.country = 'INDIA';
+            var ouId=this.supplierMasterForm.get('souId').value;
+
+            this.service.taxCategorySiteList1(ouId,this.sstate)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            // this.staxCatName=data.taxCategoryName;
+            this.supplierMasterForm.patchValue({staxCatName:data.taxCategoryName});
+            // console.log(this.taxCategoryNameList);
+
           }
         );
+          });
       }
       onOptionGstno(event:any,tanNo)
       {
@@ -654,12 +970,13 @@ alert(suppSiteId);
             if (msgType.includes("Save")) {
               this.submitted = true;
               (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-              if (this.supplierMasterForm.invalid) {
+        //       if (this.supplierMasterForm.invalid) {
 
-                //this.submitted = false;
-                (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
-                return;
-              }
+        //         //this.submitted = false;
+
+        //         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+        //         return;
+        //       }
               this.message = "Do you want to SAVE the changes(Yes/No)?"
 
             }

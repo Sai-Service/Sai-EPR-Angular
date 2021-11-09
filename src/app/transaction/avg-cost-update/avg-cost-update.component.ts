@@ -6,7 +6,7 @@ import { MasterService } from '../../master/master.service';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
-import { DatePipe } from '@angular/common';
+import { DatePipe ,Location} from '@angular/common';
 
 
 interface IAvgCostUpdate {
@@ -23,7 +23,7 @@ interface IAvgCostUpdate {
   codeCombinationId:number;
   reasonCode:string;
   transSourceTypeId:number;
-  
+
 
 }
 
@@ -36,18 +36,22 @@ interface IAvgCostUpdate {
 export class AvgCostUpdateComponent implements OnInit {
   avgCostUpdateForm : FormGroup;
 
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+
   priceListId :number;
   priceListName:string;
   priceListDesc:string;
   priceListType:string;
-  
+  // public minDate = new Date();
   priceListHeaderId : number;
-  
- 
-  
-  description : string; 
-  
-  itemId : number;  
+
+
+
+  description : string;
+
+  itemId : number;
   itemDescription : string ;
   itemName :string;
   segmentName:string;
@@ -62,7 +66,10 @@ export class AvgCostUpdateComponent implements OnInit {
 
 
   fromDate:Date;
-  toDate:Date;
+  // toDate:Date;
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  toDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
   searchItemId:number;
 
   showOu=false;
@@ -82,17 +89,17 @@ export class AvgCostUpdateComponent implements OnInit {
   public priceDescList  :any;
 
   public OUIdList: Array<string> = [];
-  
+
   public DivisionIDList : Array<string>=[];
   public itemIdList : Array<string>=[];
   public subinventoryIdList: Array<string> = [];
-  
+
   // public subInvCode:any[];
   public itemNameList: any;
   public priceListNameList: any;
 
   enableDesc=false;
-  
+
   public status = "Active";
   headerValidation=false;
   lineValidation=false;
@@ -106,9 +113,9 @@ export class AvgCostUpdateComponent implements OnInit {
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
-  pipe = new DatePipe('en-US');
-  now = Date.now();
-  transDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
+  // pipe = new DatePipe('en-US');
+  // now = Date.now();
+  transDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
   divisionId : number;
   loginName:string;
@@ -119,7 +126,7 @@ export class AvgCostUpdateComponent implements OnInit {
   locId: number;
   locName : string;
   deptId :number;
-  // emplId :number;
+  emplId :number;
   orgId:number;
   priorCost:number;
   actualCost:number;
@@ -130,14 +137,14 @@ export class AvgCostUpdateComponent implements OnInit {
   lastUpdatedBy:number
 
 
-  public emplId =6;
+  // public emplId =6;
   public codeCombinationId=2079;
   public reasonCode='IC001';
   public transSourceTypeId=17;
   // public locatorId=999
   // public subInventoryCode='SP'
 
-  constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
+  constructor(private service: MasterService, private fb: FormBuilder, private router: Router,private location1: Location)
     {
       this.avgCostUpdateForm  = fb.group({
 
@@ -153,7 +160,7 @@ export class AvgCostUpdateComponent implements OnInit {
       toDate:[],
       searchItemId:[],
       itemName:[],
-        
+
         // priceListHeaderId: [],
         // priceListType:[],
         divisionId: [],
@@ -165,7 +172,7 @@ export class AvgCostUpdateComponent implements OnInit {
         // priceListName:['', [Validators.required]],
         searchBy:['', [Validators.required]],
         searchValue:['', [Validators.required]],
-        
+
         transDate:[],
         codeCombinationId:[],
         reasonCode:[],
@@ -177,15 +184,15 @@ export class AvgCostUpdateComponent implements OnInit {
         createdBy :[],
         lastUpdatedBy:[],
 
-        priceListDetailList: this.fb.array([this.lineDetailsGroup()])   
+        priceListDetailList: this.fb.array([this.lineDetailsGroup()])
       });
     }
 
     lineDetailsGroup() {
       return this.fb.group({
         // priceListLineId:[''],
-        itemId :['', [Validators.required]],   
-        segment: ['', [Validators.required]], 
+        itemId :['', [Validators.required]],
+        segment: ['', [Validators.required]],
         itemDescription: ['', [Validators.required]],
         itemCategory: ['', [Validators.required]],
         uom: ['', [Validators.required]],
@@ -193,24 +200,24 @@ export class AvgCostUpdateComponent implements OnInit {
         priorCost: ['', [Validators.required]],
         locatorId:[],
         subInventoryCode:[],
-            
+
         // codeCombinationId:[],
         // reason:[],
         // transSourceTypeId:[],
        });
     }
-  
+
    lineDetailsArray() :FormArray{
       return <FormArray>this.avgCostUpdateForm .get('priceListDetailList')
     }
-   
+
 
      get f() { return this.avgCostUpdateForm .controls; }
      avgCostUpdate(avgCostUpdateForm:any) {  }
 
- 
-     ngOnInit(): void {
 
+     ngOnInit(): void {
+      $("#wrapper").toggleClass("toggled");
       this.name=  sessionStorage.getItem('name');
       this.loginArray=sessionStorage.getItem('divisionName');
       this.divisionId=Number(sessionStorage.getItem('divisionId'));
@@ -221,7 +228,7 @@ export class AvgCostUpdateComponent implements OnInit {
       // this.locName=(sessionStorage.getItem('locName'));
       this.deptId=Number(sessionStorage.getItem('dept'));
       // this.emplId= Number(sessionStorage.getItem('emplId'));
-     
+
       this.orgId=this.ouId;
       console.log(this.loginArray);
       console.log(this.locId);
@@ -233,13 +240,13 @@ export class AvgCostUpdateComponent implements OnInit {
     //   data => {this.subInvCode = data;
     // });
 
-    this.service.subinventoryIdList()
-    .subscribe(
-      data => {
-        this.subinventoryIdList = data;
-        console.log(this.subinventoryIdList);
-      }
-    );
+    // this.service.subinventoryIdList()
+    // .subscribe(
+    //   data => {
+    //     this.subinventoryIdList = data;
+    //     console.log(this.subinventoryIdList);
+    //   }
+    // );
 
      this.service.invItemList1()
       .subscribe(
@@ -249,7 +256,7 @@ export class AvgCostUpdateComponent implements OnInit {
         }
       );
 
-   
+
 
     this.service.OUIdList()
     .subscribe(
@@ -282,7 +289,7 @@ export class AvgCostUpdateComponent implements OnInit {
     //     console.log(this.statusList);
     //   }
     // );
-    
+
     // this.service.DepartmentList()
     // .subscribe(
     //   data => {
@@ -291,7 +298,7 @@ export class AvgCostUpdateComponent implements OnInit {
     //   }
     // );
 
-    
+
     this.service.itemIdList()
     .subscribe(
       data => {
@@ -302,7 +309,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
   }
 
-  
+
   onOptionsSelectedStatus(event: any) {
     this.Status1 = this.avgCostUpdateForm .get('status').value;
     // alert(this.Status1);
@@ -317,22 +324,22 @@ export class AvgCostUpdateComponent implements OnInit {
   }
 
 
-  
 
- 
-  
-  
- 
+
+
+
+
+
 
   addRow(index) {
-    
+
      this.CheckLineValidations(index);
 
-        if (this.lineValidation) 
+        if (this.lineValidation)
       {
         //  alert(this.lineValidation);
           this.lineDetailsArray().push(this.lineDetailsGroup());
-         
+
       }
 
   }
@@ -345,7 +352,7 @@ export class AvgCostUpdateComponent implements OnInit {
     else {
       this.lineDetailsArray().removeAt(index);
     }
-  
+
   }
 
   ////////////////////////// Reset Button module
@@ -354,7 +361,7 @@ export class AvgCostUpdateComponent implements OnInit {
   ////////////////////////// Close Button module
   closeMast() {  this.router.navigate(['admin']);  }
 
-  //////////////////////////////////////New Button 
+  //////////////////////////////////////New Button
   transeData(val) {
     delete val.priceDesc;
     // delete val.itemDescription;
@@ -380,7 +387,7 @@ export class AvgCostUpdateComponent implements OnInit {
 
    return val;
   }
-  
+
     newMast1() {
 
       const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
@@ -395,7 +402,7 @@ export class AvgCostUpdateComponent implements OnInit {
           }
         }
       });
-  
+
     }
 
     newMast() {
@@ -407,23 +414,23 @@ export class AvgCostUpdateComponent implements OnInit {
           this.lineValidation=false;
           var prcLineArr = this.avgCostUpdateForm.get('priceListDetailList').value;
           var len1=prcLineArr.length;
-          
-          for (let i = 0; i < len1 ; i++) 
+
+          for (let i = 0; i < len1 ; i++)
             {
               this.CheckLineValidations(i);
             }
 
             // alert("Line Validation :" + this.lineValidation);
 
-            if(this.lineValidation===false) { 
+            if(this.lineValidation===false) {
               alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
               return;
             }
-          
-        
+
+
           alert("Heder Validation : "+this.headerValidation +"\nLine Validation : "+this.lineValidation);
-          
-          if (this.headerValidation  && this.lineValidation ) 
+
+          if (this.headerValidation  && this.lineValidation )
           {
             alert("Data Validation Sucessfull....\nPosting data  to AVG COST UPDATE TABLE")
           // alert(this.avgCostUpdateForm.get('locId').value);
@@ -448,9 +455,9 @@ export class AvgCostUpdateComponent implements OnInit {
           }
           console.log(variants.value);
 
-          
+
           this.service.AvgCostUpdateSubmit(variants.value).subscribe((res: any) => {
-          
+
             if (res.code === 200) {
               alert("Record inserted Successfully");
               // this.avgCostUpdateForm .reset();
@@ -468,7 +475,7 @@ export class AvgCostUpdateComponent implements OnInit {
     }
 
     // updateMast() {
-  
+
     //   const formValue: IAvgCostUpdate =this.transeData(this.avgCostUpdateForm .value);
     //   this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
     //     if (res.code === 200) {
@@ -492,8 +499,8 @@ export class AvgCostUpdateComponent implements OnInit {
     let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
     console.log(select.priceListDetailList[0]);
     // alert(this.lineDetailsArray.length);
- 
-    for(let i=0; i<this.lineDetailsArray.length; i++){ 
+
+    for(let i=0; i<this.lineDetailsArray.length; i++){
       this.lineDetailsArray().removeAt(i);
     }
     this.lineDetailsArray().clear();
@@ -501,7 +508,7 @@ export class AvgCostUpdateComponent implements OnInit {
     if (select) {
       this.priceListType = select.priceListType+ "-" + select.priceListName;
       var control = this.avgCostUpdateForm .get('priceListDetailList') as FormArray;
-      
+
       // alert("PL LENGTH: "+ select.priceListDetailList.length);
       for (let i=0; i<select.priceListDetailList.length;i++) {
         var priceListDetailList:FormGroup=this.lineDetailsGroup();
@@ -516,7 +523,7 @@ export class AvgCostUpdateComponent implements OnInit {
       // let controlinv1 = this.priceListMasterForm.get('priceListDetailList') as FormArray;
       // for (let i=0; i<select.priceListDetailList.length;i++) {
       //   alert('Item '+select.priceListDetailList[i].itemId);
-      //   alert('priceValue '+select.priceListDetailList[i].priceValue); 
+      //   alert('priceValue '+select.priceListDetailList[i].priceValue);
       //   // controlinv1.controls[i].patchValue(select.priceListDetailList[i]);
       // // this.priceListMasterForm.get('priceListDetailList').patchValue(select.priceListDetailList);
       // }
@@ -528,8 +535,12 @@ export class AvgCostUpdateComponent implements OnInit {
 
   searchMast(locId:any,itemId:any,frmDate:any,toDate:any) {
     frmDate=this.pipe.transform(frmDate, 'dd/MM/y');
-    toDate=this.pipe.transform(toDate, 'dd/MM/y');
-    this.service.getAvgHistoryList(locId,itemId,frmDate,toDate)
+    // toDate=this.pipe.transform(toDate, 'dd/MM/y');
+    var endDtSt = this.avgCostUpdateForm.get('toDate').value;
+    var endDt1 = new Date(endDtSt);
+    endDt1.setDate(endDt1.getDate() + 1);
+    this.toDate = this.pipe.transform(endDt1, 'dd/MM/yyyy');
+    this.service.getAvgHistoryList(locId,itemId,frmDate,this.toDate)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -538,8 +549,8 @@ export class AvgCostUpdateComponent implements OnInit {
       );
   }
 
-   
-  onItemSelected(itemId: any) 
+
+  onItemSelected(itemId: any)
   {
       alert("ITEM ID :" + itemId);
     if(itemId>0)
@@ -576,7 +587,7 @@ export class AvgCostUpdateComponent implements OnInit {
       }
     }
   }
-  
+
   searchFromArray1(arr, regex) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
@@ -588,13 +599,13 @@ export class AvgCostUpdateComponent implements OnInit {
   };
 
   onOptioninvItemIdSelected(itemId, index) {
- 
+
     //  alert('item function');
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
       // alert(selectedValue.itemId);
       console.log(selectedValue);
-      
+
       var arrayControl = this.avgCostUpdateForm .get('priceListDetailList').value
       var patch = this.avgCostUpdateForm .get('priceListDetailList') as FormArray;
       // this.itemType = arrayControl[index].itemType
@@ -603,21 +614,21 @@ export class AvgCostUpdateComponent implements OnInit {
       // console.log(this.invItemId, this.taxCat);
 
         // ---------------------Prior Cost picking--------------------------
-        var patch = this.avgCostUpdateForm.get('priceListDetailList') as FormArray; 
+        var patch = this.avgCostUpdateForm.get('priceListDetailList') as FormArray;
         this.service.avgCurrentCost(this.itemId,this.locId)
         .subscribe(
           data => {
             this.avgCurrrentCost = data;
             console.log(this.avgCurrrentCost);
-    
+
             // this.avgCostUpdateForm.patchValue(this.avgCurrrentCost.rate);
-           
+
             this.priorCost=this.avgCurrrentCost.rate;
             (patch.controls[index]).patchValue({priorCost: this.priorCost})
             // alert("Prior cost Rate:" +this.priorCost +" Item Id:"+this.itemId+" Location Id:"+this.locId);
           }
         );
-  
+
         // ---------------------Prior Cost picking--------------------------
       (patch.controls[index]).patchValue(
         {
@@ -627,21 +638,21 @@ export class AvgCostUpdateComponent implements OnInit {
           itemCategory: selectedValue.categoryId.attribute1,
           itemId: selectedValue.itemId,
           itemName:selectedValue.segment,
-        
+
         }
       );
-  
+
     }
   }
 // ======================================================================
 
 
   onOptioninvItemIdSelectedSingle(itemId) {
- 
+
     //  alert('item function');
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
-      alert(selectedValue.itemId);
+      // alert(selectedValue.itemId);
       console.log(selectedValue);
       this.searchItemId = selectedValue.itemId;
       this.itemName=selectedValue.description;
@@ -673,7 +684,7 @@ export class AvgCostUpdateComponent implements OnInit {
     console.log(data);
     // let select = (select1.priceListDetailList).find(d => d.itemDescription.includes(searchValue));
     // console.log(select);
-    for(let i=0; i<this.lineDetailsArray.length; i++){ 
+    for(let i=0; i<this.lineDetailsArray.length; i++){
       this.lineDetailsArray().removeAt(i);
     }
     this.lineDetailsArray().clear();
@@ -692,9 +703,9 @@ export class AvgCostUpdateComponent implements OnInit {
 
     var priceLineArr = this.avgCostUpdateForm.get('priceListDetailList').value;
     var linePrice = priceLineArr[index].actualCost;
-    
 
-    if (linePrice <=0 ) 
+
+    if (linePrice <=0 )
     {
        alert (linePrice+" << Invalid Avg Price Rate. Avg Price value should be above 0")
 
@@ -702,63 +713,63 @@ export class AvgCostUpdateComponent implements OnInit {
        patch.controls[index].patchValue({actualCost:''})
     }
     // return;
-    
+
   }
 
   CheckHeaderValidations(){
-    
+
     const formValue: IAvgCostUpdate = this.avgCostUpdateForm.value;
 
         if (formValue.divisionId===undefined || formValue.divisionId===null)
         {
-          this.headerValidation=false; 
+          this.headerValidation=false;
           alert ("DIVISION : Should not be null....");
             return;
-        } 
+        }
 
         if (formValue.ouId===undefined || formValue.ouId===null )
         {
-          this.headerValidation=false; 
+          this.headerValidation=false;
           alert ("OPERATING UNIT: Should not be null....");
             return;
-        } 
+        }
 
         if (formValue.locId===undefined || formValue.locId===null )
         {
-            this.headerValidation=false; 
+            this.headerValidation=false;
             alert ("LOCATION : Should not be null....");
             return;
-          } 
-       
+          }
+
         if (formValue.ouId===undefined || formValue.ouId===null)
         {
-          this.headerValidation=false; 
+          this.headerValidation=false;
           alert ("OPERATING UNIT : Should not be null....");
           return;
-        } 
-        
-        if(formValue.transSourceTypeId===undefined || formValue.transSourceTypeId===null || formValue.transSourceTypeId<=0 ) 
+        }
+
+        if(formValue.transSourceTypeId===undefined || formValue.transSourceTypeId===null || formValue.transSourceTypeId<=0 )
         {
             this.headerValidation=false;
             alert ("SOURCE TYPE: Should not be null value");
-            return; 
+            return;
          }
-         
+
         //  alert("Reason :"+ formValue.reasonCode);
-        if(formValue.reasonCode===undefined || formValue.reasonCode===null || formValue.reasonCode.trim()==='' ) 
+        if(formValue.reasonCode===undefined || formValue.reasonCode===null || formValue.reasonCode.trim()==='' )
         {
             this.headerValidation=false;
             alert ("REASON CODE: Should not be null value");
-            return; 
+            return;
          }
 
-         if(formValue.codeCombinationId===undefined || formValue.codeCombinationId===null || formValue.codeCombinationId<=0 ) 
+         if(formValue.codeCombinationId===undefined || formValue.codeCombinationId===null || formValue.codeCombinationId<=0 )
          {
              this.headerValidation=false;
              alert ("ACCOUNT CODE: Should not be null value");
-             return; 
+             return;
           }
-      
+
       this.headerValidation=true
 
   }
@@ -766,48 +777,54 @@ export class AvgCostUpdateComponent implements OnInit {
   CheckLineValidations(i) {
 
     // alert('CheckLineValidations index '+i);
-  
+
     var pkgLineArr = this.avgCostUpdateForm.get('priceListDetailList').value;
     var lineValue1=pkgLineArr[i].itemId;
     var lineValue2=pkgLineArr[i].actualCost;
     var lineValue3=pkgLineArr[i].locatorId;
     var lineValue4=pkgLineArr[i].subInventoryCode;
-    
-  
+
+
     // alert("Line Value :"+lineValue1);
      var j=i+1;
     if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
       alert("Line-"+j+ " ITEM NUMBER :  should not be null value/ Select valid item from the list");
       this.lineValidation=false;
       return;
-    } 
+    }
 
     if(lineValue2===undefined || lineValue2===null  || lineValue2 <=0){
       alert("Line-"+j+ " AVG COST NEW :  should be above Zero");
       this.lineValidation=false;
       return;
-    } 
-    
+    }
+
     if(lineValue3===undefined || lineValue3===null || lineValue3.trim()===''){
       alert("Line-"+j+ " LOCATOR :  should not be null value");
       this.lineValidation=false;
       return;
-    } 
-  
+    }
+
     if(lineValue4===undefined || lineValue4===null || lineValue4.trim()===''){
       alert("Line-"+j+ " SUB INVENTORY CODE :  should not be null value");
       this.lineValidation=false;
       return;
-    } 
-   
+    }
+
     this.lineValidation=true;
       // alert("Chek line valid - "+this.lineValidation);
-  
+
     }
 
 
+    refresh() {
+      window.location.reload();
+    }
 
+    close() {
+      this.location1.back();
+    }
 }
 
 
- 
+

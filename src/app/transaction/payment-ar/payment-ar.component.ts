@@ -84,6 +84,7 @@ export class PaymentArComponent implements OnInit {
   lstcomments: any[];
   lstinvoices: any[];
   lstCustomer: any[];
+  lstApplyHistory : any[];
 
   
 
@@ -144,7 +145,8 @@ export class PaymentArComponent implements OnInit {
   // glDate:Date;
   now = Date.now();
   public minDate = new Date();
-  checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  // checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  checkDate :string;
   receiptDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   
   // trxDate= this.pipe.transform(this.now, 'dd-MM-y');
@@ -219,6 +221,7 @@ export class PaymentArComponent implements OnInit {
   applySaveButton = false;
   validateStatus = false;
   showRefYellow = false;
+  applHistory=false;
 
 
   showInvoiceGrid = false;
@@ -605,14 +608,17 @@ export class PaymentArComponent implements OnInit {
   serchByRegNo(mRegNo) {
 
     // alert(mRegNo);
+
+
     this.service.getVehRegDetails(mRegNo)
       .subscribe(
         data => {
           this.getVehRegDetails = data;
+
+          if(this.getVehRegDetails !=null){
           console.log(this.getVehRegDetails);
 
           this.paymentArForm.patchValue({
-
             customerId: this.getVehRegDetails.customerId,
           });
 
@@ -620,9 +626,11 @@ export class PaymentArComponent implements OnInit {
           this.enableCustAccount = false;
           this.GetCustomerDetails(this.customerId);
           this.GetCustomerSiteDetails(this.customerId);
-
+        }  else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
 
         });
+        
+      
   }
 
 
@@ -713,6 +721,7 @@ export class PaymentArComponent implements OnInit {
             this.ReceiptMethodList = data.obj;
             console.log(this.ReceiptMethodList);
             this.showBankDetails = false;
+            this.paymentArForm.get("checkDate").reset();
           }
         );
     } else {
@@ -724,6 +733,8 @@ export class PaymentArComponent implements OnInit {
             this.ReceiptMethodList = data.obj;
             console.log(this.ReceiptMethodList);
             this.showBankDetails = true;
+            if(this.displayButton==true) {
+            this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd'); }
           });
     }
 
@@ -795,7 +806,24 @@ export class PaymentArComponent implements OnInit {
         data => {
           this.receiptDetails = data.obj.oePayList[0];
           console.log(this.receiptDetails);
+       
+          // ---------------------------Applied history
+          this.lstApplyHistory= data.obj.invApplyLst;
+          console.log(this.lstApplyHistory);
+
+          var len1=data.obj.invApplyLst.length;
+
+          if(len1>0) {
+            this.applHistory=true
+          } else {
+            this.applHistory=false;
+          }
+
+
+          // --------------------------------------------
+
           this.paymentArForm.patchValue(this.receiptDetails);
+
           // this.locId=Number(this.locationId);
           //  alert("this.status  "+this.status);
           this.totAppliedtAmount = data.obj.oePayList[0].totAppliedtAmount.toFixed(2);
@@ -1276,7 +1304,7 @@ export class PaymentArComponent implements OnInit {
       //  this.totUnAppliedtAmount=this.paymentAmt;
       // this.totAppliedtAmount =0;
 
-      this.service.getArReceiptSearchByInvoiceNo(custActNo, billToSiteId, rcptNo)
+      this.service.getArReceiptSearchByInvoiceNo(custActNo, this.ouId, rcptNo)
         .subscribe(
           data => {
             this.lstinvoices = data.obj.invLine;
@@ -1665,7 +1693,7 @@ export class PaymentArComponent implements OnInit {
     if (mType === 'INVOICE') {
 
       var applLineArr = this.paymentArForm.get('invLine').value;
-      var len1 = applLineArr.length;
+       var len1 = applLineArr.length;
 
       this.validateStatus = false;
       this.applySaveButton = false;
@@ -1676,14 +1704,22 @@ export class PaymentArComponent implements OnInit {
         if (this.invLineArray().controls[i].get('applyrcptFlag').value != true) {
           this.invLineArray().removeAt(i);
         } else { this.applySaveButton = true; }
-
-        
+     
       }
     }
 
+      var applLineArr1 = this.paymentArForm.get('invLine').value;
+      var patch = this.paymentArForm.get('invLine') as FormArray;
     
-     for (let i = 0; i < applLineArr.length ; i++) {
+     for (let i = 0; i < applLineArr1.length ; i++) {
+      
+      patch.controls[i].patchValue({ applAmt: applLineArr1[i].applAmtNew });
+      patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });
+
       this.invLineArray().controls[i].get('applyrcptFlag').disable();
+      this.invLineArray().controls[i].get('applAmtNew').disable();
+      this.invLineArray().controls[i].get('glDateLine').disable();
+
       this.CheckLineValidations(i);
     
      }
@@ -1743,8 +1779,9 @@ export class PaymentArComponent implements OnInit {
       variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
       variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
       variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
-      patch.controls[i].patchValue({ applAmt: applLineArr[i].applAmtNew });
-      patch.controls[i].patchValue({ glDate: applLineArr[i].glDateLine });
+
+      // patch.controls[i].patchValue({ applAmt: applLineArr[i].applAmtNew });
+      // patch.controls[i].patchValue({ glDate: applLineArr[i].glDateLine });
       // patch.controls[i].patchValue({trxDate: this.pipe.transform(applLineArr[i].trxDate,'y-MM-dd')});
 
     }
@@ -1843,6 +1880,13 @@ export class PaymentArComponent implements OnInit {
 
 
   newMast() {
+
+    // alert ("GL period..." +this.GLPeriodCheck);
+    if(this.GLPeriodCheck===null) {
+      this.checkValidation = false;
+      alert("GL PERIOD is null. Please update GL period.");
+      return;
+    }
 
     this.CheckDataValidations();
 
@@ -2001,6 +2045,8 @@ export class PaymentArComponent implements OnInit {
 
     // alert ("OPERATING UNIT :" +formValue.ouId);
 
+   
+
     if (formValue.ouId === undefined || formValue.ouId === null) {
       this.checkValidation = false;
       alert("OPERATING UNIT: Should not be null....");
@@ -2037,9 +2083,7 @@ export class PaymentArComponent implements OnInit {
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
 
-    //  alert("Gl date :"+tglDate +"\nGl prd startdate :"+sDate+"\nGl prd enddate :"+tDate);
-
-    // if(formValue.glDate===undefined || formValue.glDate===null || formValue.glDate<this.GLPeriodCheck.startDate || formValue.glDate >this.GLPeriodCheck.endDate ) 
+   
     if (formValue.glDate === undefined || formValue.glDate === null || tglDate < sDate || tglDate > tDate) {
       this.checkValidation = false;
       alert("GL DATE: " + this.pipe.transform(tglDate, 'y-MM-dd') + " Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
@@ -2121,6 +2165,7 @@ export class PaymentArComponent implements OnInit {
     this.paymentArForm.get('searchByRcptNo').reset();
     this.paymentArForm.get('searchByCustNo').reset();
     this.paymentArForm.get('searchByDate').reset();
+    
     this.paymentArForm.get('searchByRcptNo').enable();
     this.paymentArForm.get('searchByCustNo').enable();
     this.paymentArForm.get('searchByDate').enable();
@@ -2132,8 +2177,8 @@ export class PaymentArComponent implements OnInit {
     // alert('addrow index '+i);
 
     var applLineArr = this.paymentArForm.get('invLine').value;
-    var lineValue1 = applLineArr[i].applAmtNew;
-    var tglDate = new Date(applLineArr[i].glDateLine);
+    var lineValue1 = applLineArr[i].applAmt;
+    var tglDate = new Date(applLineArr[i].glDate);
     var chkFlag = applLineArr[i].applyrcptFlag;
     var j = i + 1;
 
@@ -2206,6 +2251,14 @@ export class PaymentArComponent implements OnInit {
     this.applLineValidation = true;
   }
 
+
+ 
+    receiptApplyHist(){ 
+      this.receiptAmount=this.paymentAmt;
+      this.tApplAmt = this.totAppliedtAmount;
+      this.tUapplAmt = this.totUnAppliedtAmount;
+
+    }
 
 
 

@@ -1129,24 +1129,39 @@
                         <td>
                             <table class="center">
                                 <tr>
-                                    <td>
+                                    <!-- <td>
                                         <button type="submit" class="btn btn-primary" id="register" 
                                             (click)="refresh()">
                                             Clear
                                         </button>
-                                    </td>
+                                    </td> -->
+                                  
+        
                                     <td>
                                         <div *ngIf="displaySaveButton; then thenBlockSave; else elseBlockSave"></div>
                         <ng-template #thenBlockSave>
                                         <!-- [disabled]="!poReceiptForm.valid" -->
-                                        <button type="submit" class="btn btn-primary"   (click)="poSave()">Save</button>
-                                        </ng-template>
+                                        <!-- <button type="submit" class="btn btn-primary"   (click)="poSave()">Save</button> -->
+                                        <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+           
+                                    </ng-template>
                                         <ng-template #elseBlockSave>
-                                            <button disabled type="submit" class="btn btn-primary"   (click)="poSave()">Save</button>
+                                            <!-- <button disabled type="submit" class="btn btn-primary"   (click)="poSave()">Save</button> -->
+                                            <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                            data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+            
                                         </ng-template>
                                     </td>
                                     <td>
-                                        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                                        <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                                     </td>
+                                    <td>
+                                        <!-- <button type="submit" (click)="close()" class="btn btn-primary">Close</button> -->
+                                        <button type="submit" class="btn btn-primary" id="closeBtn"
+                                        data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+        
                                     </td>
                                     <div *ngIf="disabledViewAccounting; then thenBlockViewAccounting; else elseBlockViewAccounting"></div>
                                     <ng-template #thenBlockViewAccounting>
@@ -1179,10 +1194,10 @@
                         <input disabled formControlName="name1" id="name1" class="form-control" [ngModel]="name1" >
                     </td>
                     <td style="width: 18%" class="LabelFontStyle">
-                        Discription&nbsp;:&nbsp;
+                        Description&nbsp;:&nbsp;
                     </td>
                     <td>
-                        <input disabled formControlName="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                        <input disabled formControlName="docSeqValue" class="form-control" [ngModel]="docSeqValue" >
                     </td>
                     
                     <td style="width: 18%" class="LabelFontStyle">
@@ -1278,9 +1293,12 @@
                                         </td>
                                         <td >
                                             <div [style.display]="isVisible ? 'block' : 'none'">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal10" style="width: 8rem;">
+                                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal10" style="width: 8rem;">
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PO&nbsp;Inv&nbsp;Creation
-                                            </button>
+                                            </button> -->
+                                            <button type="submit" class="btn btn-primary" id="poInvoiceCreation" style="width: fit-content;"
+                                            data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poInvoiceCreation')">PO Inv Creation</button>
+            
                                         </div>
                                             <!-- Modal -->
                                             <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel10" aria-hidden="true">
@@ -1291,6 +1309,7 @@
                                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                   </button>
+                                                  
                                                 </div>
                                                 <div class="modal-body">
                                                  <table class="center">
@@ -1396,3 +1415,29 @@
         </div>
     </div>
 </div>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>

@@ -22,17 +22,25 @@
                 </td>
             </tr>
         </table>
+        <div class="progress form-group" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
+            </div>
+        </div>
         <table style="width: 50%;" class="center">
         <tr>
             <td class="LabelFontStyle">
                 &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
             </td>
             <td colspan="3">
-                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
             </td>
             <td>
                 <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
             </td>
+            <div *ngIf="itemButton1; then thenBlockitemButton; else elseBlockitemButton"></div>
+            <ng-template #thenBlockitemButton>
+            </ng-template>
+            <ng-template #elseBlockitemButton>  
             <td>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#errorLis">
                     Error&nbsp;List
@@ -70,25 +78,42 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Close1</button>
                         </div>
                         
                       </div>
                     </div>
                 </div>
             </td>
+            </ng-template>
         </tr>
         </table>
         <table class="center">
             <tr>
-                <td>
+                <!-- <td>
                     <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
                         Clear
                     </button>
                 </td>
                 <td>
                     <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                </td> -->
+
+                <!-- <td class="center">
+                    <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                    data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+                </td> -->
+                <td>
+                    <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                    data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                        <!-- (click)="resetItemCatMast()" -->
                 </td>
+                <td>
+                    <button type="submit" class="btn btn-primary" id="closeBtn"
+                    data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                </td>
+                <td>
+
             </tr>
         </table>
          <div class="col-md-12 table-responsive" #epltable1>
@@ -119,3 +144,30 @@
                </table>
         </div>
 </form>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
+
