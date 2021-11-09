@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, RequiredValidator } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, RequiredValidator, PatternValidator } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { Url } from 'url';
@@ -75,6 +75,7 @@ interface IsupplierMaster {
   displaysite:boolean;
   createDebitMemoFlag:string;
   semailId:string;
+  screateDebitMemoFlag:string;
 }
 
 
@@ -202,6 +203,8 @@ export class SupplierMasterComponent implements OnInit {
   createDebitMemoFlag:string;
   currentOp: string;
   semailId:string;
+  screateDebitMemoFlag:string;
+  displayenable = true;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -215,10 +218,10 @@ export class SupplierMasterComponent implements OnInit {
       address3: ['',[Validators.maxLength(50)]],
       address4: ['',[Validators.maxLength(50)]],
       city: ['', [Validators.required,Validators.minLength(3),Validators.maxLength(50),Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
-      contactNo: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
+      contactNo: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile1: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
       mobile2: ['', [Validators.pattern('[0-9]*'), Validators.maxLength(10)]],
-      contactPerson: ['',[Validators.required,Validators.pattern('[a-zA-Z /-]*')]],
+      contactPerson: ['',[Validators.pattern('[a-zA-Z /-]*')]],
       taxCategoryName: [''],
       creditDays: ['', [Validators.required, Validators.pattern('[0-9]*')]],
       creditLimit: ['', [Validators.required, Validators.pattern('[0-9]*')]],
@@ -286,6 +289,7 @@ export class SupplierMasterComponent implements OnInit {
    sprepayCodeCombId:[],
    createDebitMemoFlag:[],
    semailId:[],
+   screateDebitMemoFlag:[],
     });
   }
 
@@ -594,6 +598,11 @@ export class SupplierMasterComponent implements OnInit {
   }
 
   newsupplierMast() {
+    var isvaliddata = this.validation();
+    if (isvaliddata === false) {
+      alert('In Validation (v)');
+      return;
+    }
 
     // this.submitted = true;
     // if(this.supplierMasterForm.invalid){
@@ -606,6 +615,9 @@ export class SupplierMasterComponent implements OnInit {
     formValue.siteName=this.supplierMasterForm.get('city').value+'-'+this.supplierMasterForm.get('state').value;
     formValue.ouId=(sessionStorage.getItem('ouId'));
     formValue.divisionId=Number(sessionStorage.getItem('divisionId'));
+    if(formValue.gstNo===''){
+      formValue.gstNo='GSTUNREGISTERED';
+    }
     this.service.SupliMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
@@ -631,7 +643,7 @@ export class SupplierMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('ERROR OCCOURED IN PROCEESS');
-          this.supplierMasterForm.reset();
+          // this.supplierMasterForm.reset();
         }
       }
     });
@@ -664,6 +676,17 @@ export class SupplierMasterComponent implements OnInit {
     return val;
   }
   updatesupplierMast() {
+    var isvaliddata = this.validation();
+    if (isvaliddata === false) {
+      // alert('In Validation (v)');
+      return;
+    }
+
+    // this.submitted = true;
+    // if (this.supplierMasterForm.invalid) {
+    //   // alert('In Validation(d) ');
+    //   return;
+    // }
     const formValue: IsupplierMaster = this.transDataSupp(this.supplierMasterForm.value);
     this.service.UpdateSupliMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -677,6 +700,60 @@ export class SupplierMasterComponent implements OnInit {
       }
     });
   };
+
+  gstVerification(event: any) {
+    var gstno = this.supplierMasterForm.get('gstNo').value
+    const gstNo1 = gstno.substr(2, 10);
+    this.panNo = gstNo1;
+    // alert('Gst verificaition');
+    this.supplierMasterForm.patchValue({'panNo':gstNo1});
+    var res = gstno.substr(0, 2);
+    console.log(res);
+    const state = this.supplierMasterForm.get('state').value;
+    console.log(state);
+    console.log(this.state === 'MAHARASHTRA' && res === 27);
+    switch (state) {
+      case 'MAHARASHTRA':
+        if (res != 27) {
+          alert('Kindly entered correct GST No Start with 27');
+          this.supplierMasterForm.get('gstnNo').reset();
+        }
+        break;
+      case 'GOA':
+        if (res != 30) {
+          alert('Kindly entered correct GST No Start with 30');
+          this.supplierMasterForm.get('gstnNo').reset();
+        }
+        break;
+      case 'ANDHRA PRADESH':
+        if (res != 28) {
+          alert('Kindly entered correct GST No Start with 28');
+          this.supplierMasterForm.get('gstnNo').reset();
+        }
+        break;
+      case 'KARNATAKA':
+        if (res != 29) {
+          alert('Kindly entered correct GST No Start with 29');
+          this.supplierMasterForm.get('gstnNo').reset();
+        }
+        break;
+      case 'KERALA':
+        if (res != 32) {
+          alert('Kindly entered correct GST No Start with 32');
+          this.supplierMasterForm.get('gstnNo').reset();
+        }
+        break;
+      case 'TELANGANA':
+        if (res != 36) {
+          alert('Kindly entered correct GST No Start with 36');
+          this.supplierMasterForm.get('gstnNo').reset();
+        }
+        break;
+    }
+
+
+
+  }
 
   resetsupplierMast() {
     window.location.reload();
@@ -698,7 +775,7 @@ export class SupplierMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('Code already present in the data base');
-          this.supplierMasterForm.reset();
+          // this.supplierMasterForm.reset();s
         }
       }
     });
@@ -736,7 +813,8 @@ alert(suppSiteId);
                                           souId:select.ouId,
                                           siteName:select.siteName,
                                           sliabilityAcct:select.attribute2,
-                                          sprePayAcct:select.attribute1});
+                                          sprePayAcct:select.attribute1,
+                                          screateDebitMemoFlag:select.createDebitMemoFlag});
       // ticketNo not in  json
 
       // this.displayButton = false;
@@ -746,6 +824,10 @@ alert(suppSiteId);
   }
   ExeAddressEvent(e) {
     if (e.target.checked) {
+      this.supplierMasterForm.get('siteName').reset();
+      this.supplierMasterForm.get('souId').reset();
+      this.supplierMasterForm.get('sliabilityAcct').reset();
+      this.supplierMasterForm.get('sprePayAcct').reset();
       this.saddress1 = this.supplierMasterForm.get('address1').value;
       this.saddress2 = this.address2
       this.saddress3 = this.address3
@@ -757,6 +839,7 @@ alert(suppSiteId);
       this.supplierMasterForm.patchValue({semailId:this.supplierMasterForm.get('emailId').value});
       this.supplierMasterForm.patchValue({spanNo:this.supplierMasterForm.get('panNo').value});
       this.supplierMasterForm.patchValue({sGstNo:this.supplierMasterForm.get('gstNo').value});
+      this.displaysite=true;
     }
     else {
       this.saddress1 = null;
@@ -787,12 +870,17 @@ alert(suppSiteId);
           this.lstcomments = data;
           console.log(this.lstcomments.supplierSiteMasterList);
           this.supplierMasterForm.patchValue(this.lstcomments);
+          this.displayenable = false;
+          this.supplierMasterForm.get('type').disable();
           this.supplierMasterForm.patchValue({
             panNo:this.lstcomments.supplierSiteMasterList[0].panNo,
             gstNo:this.lstcomments.supplierSiteMasterList[0].gstNo,
             prePayAcct:this.lstcomments.supplierSiteMasterList[0].attribute1,
             liabilityAcct:this.lstcomments.supplierSiteMasterList[0].attribute2,
-            taxCategoryName:this.lstcomments.supplierSiteMasterList[0].taxCategoryName});
+            taxCategoryName:this.lstcomments.supplierSiteMasterList[0].taxCategoryName,
+            createDebitMemoFlag:this.lstcomments.supplierSiteMasterList[0].createDebitMemoFlag,
+            contactPerson:this.lstcomments.supplierSiteMasterList[0].contactPerson,
+            contactNo:this.lstcomments.supplierSiteMasterList[0].contactNo});
 
             // contactPerson:this.lstcomments.customerSiteMasterList[0].contactPerson,
             // contactNo:this.lstcomments.customerSiteMasterList[0].contactNo});
@@ -804,6 +892,12 @@ alert(suppSiteId);
           this.displaySaveBtn=false;
           this.displayUpdBtn=true;
           this.displayadditional=false;
+          this.supplierMasterForm.get('gstNo').disable();
+          this.supplierMasterForm.get('panNo').disable();
+          this.supplierMasterForm.get('tanNo').disable();
+          this.supplierMasterForm.get('liabilityAcct').disable();
+          this.supplierMasterForm.get('prePayAcct').disable();
+          this.supplierMasterForm.get('prePayAcct').disable();
           this.currentOp = 'INSERT';
         }
       );
@@ -1051,4 +1145,35 @@ alert(suppSiteId);
             return;
           }
 
+        public validation(): boolean {
+          var validdata: boolean;
+            const formValue:IsupplierMaster = this.supplierMasterForm.value;
+            if (formValue.type === 'Supplier') {
+            if (formValue.contactPerson === undefined) {
+              alert('Please enter Contact  Person Name');
+              validdata = false;
+            }
+            if (formValue.contactNo === undefined) {
+              alert('Please enter Contact  No');
+              validdata = false;
+
+            }
+            return validdata;
+          }
+          if (formValue.panNo != '') {
+
+            var regex: string = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
+            var p = new PatternValidator();
+            var patt = new RegExp('[A-Z]{5}[0-9]{4}[A-Z]{1}');
+            validdata = patt.test(formValue.panNo);
+            if (validdata === false) {
+              alert('Please enter valid PAN Number');
+            }
+            return validdata;
+
+          }else{
+            alert('Please enter valid PAN Number');
+            return false;
+          }
+        }
         }

@@ -529,7 +529,7 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   onOptioncustTypeSelected(event: any) {
-    
+
     if (this.PersonType != undefined) {
       if (event != this.PersonType) {
         // this.customerMasterForm.reset();
@@ -884,6 +884,7 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments);
           this.displayenable = false;
+
           // this.city = this.lstcomments.city
 
           // let birDate =this.pipe.transform(this.lstcomments[0].birthDate, 'yyyy-MM-dd');
@@ -1071,9 +1072,9 @@ export class CustomerMasterComponent implements OnInit {
       }
       return validdata;
     }
-   
+
     if (formValue.panNo != '') {
-     
+
       var regex: string = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
       var p = new PatternValidator();
       var patt = new RegExp('[A-Z]{5}[0-9]{4}[A-Z]{1}');
@@ -1124,7 +1125,7 @@ export class CustomerMasterComponent implements OnInit {
 
   executeAction() {
     if (this.msgType.includes("Save")) {
-     
+
       this.newMast();
     }
     if (this.msgType.includes("Update")) {
