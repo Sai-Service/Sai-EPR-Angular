@@ -395,11 +395,13 @@
                             </td>
                         </ng-template>
                       </tr>
+                      <!-- <div *ngIf="displayenable; then thenBlockenable; else elseBlockdisable"></div>
+                      <ng-template #thenBlockenable> -->
                       <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                         <td style="width: 15%" class="LabelFontStyle1">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                         <td>
                             <input formControlName="gstNo" value={{gstNo}} [(ngModel)]='gstNo' class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }"
+                            [ngClass]="{ 'is-invalid': submitted && f.gstNo.errors }" (keyup)="gstVerification($event)"
                             placeholder="Enter GST no"  (focusout)="onOptionGstno($event,tanno)">
                             <!-- (keyup)="onKey($event)" -->
                         <div *ngIf="submitted && f.gstNo.errors" class="invalid-feedback">
@@ -496,7 +498,8 @@
                                 (click)="openCodeCombination('prePayAcct')"[(ngModel)]="prePayAcct">
                             </td>
                       </tr>
-
+                      <!-- </ng-template>
+                      <ng-template #elseBlockdisable></ng-template> -->
                       <tr>
                           <tr>
 
@@ -607,7 +610,7 @@
                           <td>{{com.address4}}</td>
                           <td>{{com.city}}</td>
                           <td>{{com.pinCd}}</td>
-                          <td>{{com.state}}</td>
+                          <td>{{com.state1}}</td>
                           <td>{{com.mobile1}}</td>
                           <td>{{com.mobile2}}</td>
                           <td>{{com.emailId}}</td>
@@ -630,7 +633,7 @@
                               </td>
                               <td style="width: 15%" class="LabelFontStyle">&nbsp;Site&nbsp;Name&nbsp;:&nbsp;</td>
                                 <td>
-                                    <input formControlName="siteName" value={{siteName}}
+                                    <input formControlName="siteName" value={{siteName}} [(ngModel)]='siteName'
                                         class="form-control" placeholder="Enter Site Name"
                                         [ngClass]="{ 'is-invalid': submitted && f.siteName.errors }">
                                   <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
@@ -712,7 +715,7 @@
 
                            <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Memo&nbsp;:&nbsp;</td>
                           <td>
-                              <select formControlName="createDebitMemoFlag" id="createDebitMemoFlag"  [ngModel]="createDebitMemoFlag" class="form-control">
+                              <select formControlName="screateDebitMemoFlag" id="screateDebitMemoFlag"  [ngModel]="screateDebitMemoFlag" class="form-control">
                                 <option value="Y" selected>Yes</option>
                                 <option value="N">No</option>
                               </select>
@@ -818,7 +821,7 @@
                           <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>
                           <td>
                               <input formControlName="smobile1" value={{smobile1}} class="form-control"
-                              [ngClass]="{ 'is-invalid': submitted && f.smobile1.errors }"
+                              [ngClass]="{ 'is-invalid': submitted && f.smobile1.errors }" [(ngModel)]="smobile1"
                               placeholder="Enter mobile1" >
                           <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
                               <div *ngIf="f.smobile1.errors.required">Enter mobile1 </div>
@@ -1054,7 +1057,7 @@
       </div>
   </div>
 </div>
-<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" >
   <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
   <div class="modal-content">
       <div class="modal-header">
