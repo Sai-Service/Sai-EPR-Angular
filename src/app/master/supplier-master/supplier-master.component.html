@@ -362,8 +362,8 @@
                           <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Memo&nbsp;:&nbsp;</td>
                           <td>
                               <select formControlName="createDebitMemoFlag" id="createDebitMemoFlag"  [ngModel]="createDebitMemoFlag" class="form-control">
-                                <option value="Yes" selected>Yes</option>
-                                <option value="No">No</option>
+                                <option value="Y" selected>Yes</option>
+                                <option value="N">No</option>
                               </select>
                               <!-- <span  *ngIf="!supplierMasterForm.get('status').valid && supplierMasterForm.get('status').touched">Please
                                   Enter Status </span> -->
@@ -485,139 +485,6 @@
                                 data-toggle="modal" data-target="#myModel"
                                 placeholder="Select Liability Code" class="form-control"
                                 (click)="openCodeCombination('liabilityAcct')"[(ngModel)]="liabilityAcct">
-                                <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
-                        aria-hidden="true" style="width: 500px; margin-left:350px">
-
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myModalLabel"
-                                        style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                                        Account Code Combination
-                                        </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body text-center pagination-centered">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 15%" class="LabelFontStyle">
-                                                Branch&nbsp;:
-                                            </td>
-                                            <td>
-                                                <select formControlName="segment11" id="segment11" [(ngModel)]="segment11"
-                                                    class="form-control" (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  BranchList">
-                                                        {{sc.lookupValue}}
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" style="width: 150px; background-color: white; border: none;"
-                                                    formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"
-                                                    class="form-control" disabled>
-                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"  style="border:none;"> -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 15%" class="LabelFontStyle">
-                                                &nbsp;Location&nbsp;:
-                                            </td>
-                                            <td>
-                                                <select formControlName="segment2" id="segment2" [(ngModel)]="segment2"
-                                                    class="form-control"
-                                                    (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  locIdList">
-                                                        {{sc.lookupValue}}
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" style="width: 150px; background-color: white; border: none;"
-                                                    formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2"
-                                                    class="form-control" disabled>
-                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" style="border:none;"> -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 15%" class="LabelFontStyle">
-                                                Cost&nbsp;Center&nbsp;:
-                                            </td>
-                                            <td>
-                                                <select formControlName="segment3" id="segment3" class="form-control"
-                                                    [(ngModel)]="segment3"
-                                                    (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  CostCenterList">
-                                                        {{sc.lookupValue}}
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" style="width: 150px; background-color: white; border: none;"
-                                                    formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
-                                                    class="form-control" disabled>
-                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 15%" class="LabelFontStyle">
-                                                Natural&nbsp;Account&nbsp;:
-                                            </td>
-                                            <td>
-                                                <select formControlName="segment4" id="segment4" class="form-control"
-                                                    [(ngModel)]="segment4"
-                                                    (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  NaturalAccountList">
-                                                        {{sc.naturalaccount}}
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" style="width: 150px; background-color: white; border: none;"
-                                                    formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4"
-                                                    class="form-control" disabled>
-                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4"  [(ngModel)]="lookupValueDesc4"  style="border:none;"> -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 15%" class="LabelFontStyle">
-                                                Inter&nbsp;Branch&nbsp;:
-
-                                            </td>
-                                            <td>
-                                                <select formControlName="segment5" id="segment5" class="form-control"
-                                                    [(ngModel)]="segment5"
-                                                    (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  InterBrancList">
-                                                        {{sc.lookupValue}}
-                                                    </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input type="text" style="width: 150px; background-color: white; border: none;"
-                                                    formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5"
-                                                    class="form-control" disabled>
-                                                <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                    <div class="modal-footer">
-                                      <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button> -->
-                                      <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                                       (click)="fnCancatination()">OK</button>
-
-                                  </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                             </td>
                               <td style="width: 15%" class="LabelFontStyle1">&nbsp;Prepayment&nbsp;Account&nbsp;:&nbsp;</td>
                               <td>
@@ -804,8 +671,7 @@
                             </td>
                         <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
                         <td>
-                            <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
-                                class="form-control"
+                            <input formControlName="spanNo" value={{spanNo}} class="form-control"
                              placeholder="Enter Pan No"
                              [ngClass]="{ 'is-invalid': submitted && f.spanNo.errors }">
                              <div *ngIf="submitted && f.spanNo.errors" class="invalid-feedback">
@@ -842,6 +708,16 @@
                                   <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
                               </div>
                            </td>
+
+                           <td style="width: 15%" class="LabelFontStyle">&nbsp;Debit&nbsp;Memo&nbsp;:&nbsp;</td>
+                          <td>
+                              <select formControlName="createDebitMemoFlag" id="createDebitMemoFlag"  [ngModel]="createDebitMemoFlag" class="form-control">
+                                <option value="Y" selected>Yes</option>
+                                <option value="N">No</option>
+                              </select>
+                              <!-- <span  *ngIf="!supplierMasterForm.get('status').valid && supplierMasterForm.get('status').touched">Please
+                                  Enter Status </span> -->
+                          </td>
                          </tr>
                          <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                           <td style="width: 15%" class="LabelFontStyle1">&nbsp;Address1&nbsp;:&nbsp;</td>
@@ -940,7 +816,7 @@
                        <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                           <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>
                           <td>
-                              <input formControlName="smobile1" value={{smobile1}} [(ngModel)]='smobile1' class="form-control"
+                              <input formControlName="smobile1" value={{smobile1}} class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.smobile1.errors }"
                               placeholder="Enter mobile1" >
                           <div *ngIf="submitted && f.smobile1.errors" class="invalid-feedback">
@@ -966,7 +842,7 @@
                           </td>
                           <td style="width: 15%" class="LabelFontStyle">Email&nbsp;ID&nbsp;:&nbsp;</td>
                           <td>
-                              <input formControlName="emailId" value={{emailId}} [(ngModel)]='emailId' class="form-control"
+                              <input formControlName="semailId" value={{semailId}} [(ngModel)]='semailId' class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
                               placeholder="Enter emailId" >
                            <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
@@ -1039,6 +915,139 @@
                 </div>
                 </div>
                   </div>
+                  <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
+                  aria-hidden="true" style="width: 500px; margin-left:350px">
+
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h4 class="modal-title" id="myModalLabel"
+                                  style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
+                                  Account Code Combination
+                                  </h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          </div>
+                          <div class="modal-body text-center pagination-centered">
+                              <table>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">
+                                          Branch&nbsp;:
+                                      </td>
+                                      <td>
+                                          <select formControlName="segment11" id="segment11" [(ngModel)]="segment11"
+                                              class="form-control" (ngModelChange)="onOptionsSelectedBranch($event,'SS_Branch')">
+                                              <option>--Select--</option>
+                                              <option *ngFor="let sc of  BranchList">
+                                                  {{sc.lookupValue}}
+                                              </option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" style="width: 150px; background-color: white; border: none;"
+                                              formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"
+                                              class="form-control" disabled>
+                                          <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"  style="border:none;"> -->
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">
+                                          &nbsp;Location&nbsp;:
+                                      </td>
+                                      <td>
+                                          <select formControlName="segment2" id="segment2" [(ngModel)]="segment2"
+                                              class="form-control"
+                                              (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
+                                              <option>--Select--</option>
+                                              <option *ngFor="let sc of  locIdList">
+                                                  {{sc.lookupValue}}
+                                              </option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" style="width: 150px; background-color: white; border: none;"
+                                              formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2"
+                                              class="form-control" disabled>
+                                          <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" style="border:none;"> -->
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">
+                                          Cost&nbsp;Center&nbsp;:
+                                      </td>
+                                      <td>
+                                          <select formControlName="segment3" id="segment3" class="form-control"
+                                              [(ngModel)]="segment3"
+                                              (ngModelChange)="onOptionsSelectedBranch($event,'CostCentre')">
+                                              <option>--Select--</option>
+                                              <option *ngFor="let sc of  CostCenterList">
+                                                  {{sc.lookupValue}}
+                                              </option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" style="width: 150px; background-color: white; border: none;"
+                                              formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
+                                              class="form-control" disabled>
+                                          <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">
+                                          Natural&nbsp;Account&nbsp;:
+                                      </td>
+                                      <td>
+                                          <select formControlName="segment4" id="segment4" class="form-control"
+                                              [(ngModel)]="segment4"
+                                              (ngModelChange)="onOptionsSelectedBranch($event,'NaturalAccount')">
+                                              <option>--Select--</option>
+                                              <option *ngFor="let sc of  NaturalAccountList">
+                                                  {{sc.naturalaccount}}
+                                              </option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" style="width: 150px; background-color: white; border: none;"
+                                              formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4"
+                                              class="form-control" disabled>
+                                          <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4"  [(ngModel)]="lookupValueDesc4"  style="border:none;"> -->
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">
+                                          Inter&nbsp;Branch&nbsp;:
+
+                                      </td>
+                                      <td>
+                                          <select formControlName="segment5" id="segment5" class="form-control"
+                                              [(ngModel)]="segment5"
+                                              (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
+                                              <option>--Select--</option>
+                                              <option *ngFor="let sc of  InterBrancList">
+                                                  {{sc.lookupValue}}
+                                              </option>
+                                          </select>
+                                      </td>
+                                      <td>
+                                          <input type="text" style="width: 150px; background-color: white; border: none;"
+                                              formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5"
+                                              class="form-control" disabled>
+                                          <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
+                                      </td>
+                                  </tr>
+
+                              </table>
+                              <div class="modal-footer">
+                                <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button> -->
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
+                                 (click)="fnCancatination()">OK</button>
+
+                            </div>
+
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
               </form>
           </div>
       </div>

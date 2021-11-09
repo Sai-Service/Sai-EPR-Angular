@@ -30,9 +30,11 @@
             <li class="nav-item waves-effect waves-light">
               <a class="nav-link active" id="header-tab-md" data-toggle="tab" href="#header-md" role="tab" aria-controls="home-md" aria-selected="true">Header&nbsp;Details</a>
             </li>&nbsp;&nbsp;&nbsp;
+            <div [style.display]="isVisible ? 'block' : 'none'">
             <li class="nav-item waves-effect waves-light">
               <a class="nav-link" id="lineDetails-tab-md" data-toggle="tab" href="#lineDetails-md" role="tab" aria-controls="profile-md" aria-selected="false">Lines&nbsp;Details</a>
             </li>
+            </div>
           </ul>
           <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
             <div class="tab-pane fade show active" id="header-md" role="tabpanel" aria-labelledby="header-tab-md">
@@ -904,11 +906,19 @@
                             </td>
                             <td colspan="3">
                                 <input class="form-control" type="file" [disabled]="isDisabled" #fileInput  accept=".csv" formControlName="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+<<<<<<< HEAD
                             </td>
                             <td>
                                 <button  class="btn btn-primary" [disabled]="isDisabled" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
                             </td>
                             <td>
+=======
+                            </td>
+                            <td>
+                                <button  class="btn btn-primary" [disabled]="isDisabled" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+                            </td>
+                            <td>
+>>>>>>> f2ab78ff71e59452717279ae0ae79d4b31cb81f5
                                 <button  class="btn btn-primary" [disabled]="isDisabled" (click)="reloadlineAndTaxArray()" style="width: 100%;font-size: 11px;">Refresh</button>    
                             </td>
                         </tr>

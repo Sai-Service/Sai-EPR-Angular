@@ -51,10 +51,10 @@ declare var $: any;
   lastkeydown1: number = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService){
-  // constructor(private router: Router ) { 
+  // constructor(private router: Router ) {
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
 
-    this.adminForm1 = fb.group({ 
+    this.adminForm1 = fb.group({
       searchItemCode:[],
       searchItemName:[],
 
@@ -63,15 +63,15 @@ declare var $: any;
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event); 
-  
+    console.log(event);
+
 
     if (event.keyCode === KEY_CODE.F9_KEY) {
       this.f9Key();
     }
 
   }
-  
+
 
   get f() { return this.adminForm1.controls; }
   admin(adminForm1:any) {  }
@@ -92,7 +92,7 @@ declare var $: any;
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
     // $('[data-submenu]').submenupicker();
-
+// alert('In admin');
     this.service.ItemIdDivisionList(this.divisionId).subscribe(
           data =>{ this.ItemIdList = data;
             console.log(this.ItemIdList);
@@ -105,13 +105,13 @@ declare var $: any;
       }
       var $subMenu = $(this).next(".dropdown-menu");
       $subMenu.toggleClass('show');
-    
-    
+
+
       $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
         $('.dropdown-submenu .show').removeClass("show");
       });
-    
-    
+
+
       return false;
     });
 
@@ -124,7 +124,7 @@ declare var $: any;
   }
 
 
-   
+
   f9Key() {
     // alert( "Key F9 pressed");
     // this.router.navigate(['/admin/transaction/OnHandDetails']);
@@ -166,7 +166,7 @@ declare var $: any;
   F9Search() {
 
     // const formValue: IAdmin = this.adminForm1.value;
-    // alert ("WIP...." + this.adminForm1.get('searchItemName').value); 
+    // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
 
     var segment1=this.adminForm1.get('searchItemCode').value
 
@@ -184,7 +184,7 @@ declare var $: any;
         this.lstcomments= data;
         console.log(data);
       })
-  
+
   }
 
     // var segment1=this.onhandDetailsForm.get('searchItemCode').value
@@ -198,7 +198,7 @@ declare var $: any;
 
     onOptioninvItemIdSelectedSingle(searchItemCode) {
       // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
-       
+
       let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
         if( selectedValue != undefined){
          console.log(selectedValue);
@@ -206,7 +206,7 @@ declare var $: any;
         this.searchItemCode=selectedValue.SEGMENT;
       }
       // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
-   
+
     }
 
 
