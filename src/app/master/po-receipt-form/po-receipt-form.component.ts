@@ -546,7 +546,7 @@ export class PoReceiptFormComponent implements OnInit {
     this.poReceiptForm.get('receiptNo').reset();
     this.poReceiptForm.get('recDate').reset();
     this.poReceiptForm.get('taxAmt').reset();
-    this.poReceiptForm.get('loginName').reset();
+    // this.poReceiptForm.get('loginName').reset();
     this.poReceiptForm.get('gstDocNo').reset();
     this.poReceiptForm.get('docDate').reset();
     this.poReceiptForm.get('totalAmt').reset();
@@ -566,7 +566,7 @@ export class PoReceiptFormComponent implements OnInit {
         data => {
           if (data.code === 200) {
             this.lstcompolines = data.obj;
-            alert(data.obj.receiptNo);
+            // alert(data.obj.receiptNo);
             if (data.obj.shipmentNumber != null){
               // alert(data.obj.shipmentNo);
               this.isVisible=false;
