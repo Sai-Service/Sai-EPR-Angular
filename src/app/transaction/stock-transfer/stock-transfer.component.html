@@ -402,7 +402,7 @@
             </td>
             <td>
               <!-- <button type="submit" class="btn btn-primary" (click)="resetMoveOrder()" >Reset</button> -->
-              <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+              <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal"
               data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
            </td>
             <td>
@@ -413,7 +413,7 @@
                   <ng-template #thenBlock>
                     <td>
                       <!-- <button type="submit" class="btn btn-primary" (click)="newStkTransfer()">Save</button> -->
-                      <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                      <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                       data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                     </td>
 
@@ -421,7 +421,7 @@
                     <ng-template #elseBlock>
                       <td>
                         <!-- <button disabled type="submit"  class="btn btn-primary" (click)="newStkTransfer()">Save</button> -->
-                        <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                        <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                         data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
                      </td>
                     </ng-template>
@@ -430,14 +430,14 @@
                     <ng-template #thenBlockUp>
                       <td>
                         <!-- <button disabled type="submit"  class="btn btn-primary" (click)="EwayUpdate()">Update</button> -->
-                        <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                        <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                         data-target="#confirmAlert" (click)="getMessage('Update')" >Update</button>
                       </td>
                       </ng-template>
                       <ng-template #elseBlockUp>
                         <td>
                           <!-- <button  type="submit" id="btnUpdate" class="btn btn-primary" (click)="EwayUpdate()">Update</button> -->
-                          <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                          <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                           data-target="#confirmAlert" (click)="getMessage('Update')" >Update</button>
                         </td>
                         </ng-template>
@@ -512,6 +512,7 @@
                         <th scope="col">From Location</th>
                         <th scope="col">To Location</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Aging</th>
                         <th scope="col">remark</th>
                         <!-- <th scope="col">View</th> -->
                       </tr>
@@ -521,6 +522,7 @@
                         <td>{{com.fromLoc}}</td>
                         <td>{{com.toLoc}}</td>
                         <td>{{com.creationDate}}</td>
+                        <td style="text-align: right;">{{com.aging}}</td>
                         <td>{{com.remark}}</td>
                         <!-- <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button> -->
                       </tr>
@@ -541,6 +543,7 @@
                         <th scope="col">From Location</th>
                         <th scope="col">To Location</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Aging</th>
                         <th scope="col">remark</th>
                         <th scope="col">View</th>
                       </tr>
@@ -550,6 +553,7 @@
                         <td>{{com.fromLoc}}</td>
                         <td>{{com.toLoc}}</td>
                         <td>{{com.creationDate}}</td>
+                        <td style="text-align: right;">{{com.aging}}</td>
                         <td>{{com.remark}}</td>
                         <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button>
                       </tr>

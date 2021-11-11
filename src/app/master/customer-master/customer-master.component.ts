@@ -73,6 +73,7 @@ interface IcustomerMaster {
   creditAmt: number;
   highAmt: number;
   disPer: number;
+  tdsPer:number;
   screditAmt: number;
   shighAmt: number;
   sdisPer: number;
@@ -202,6 +203,7 @@ export class CustomerMasterComponent implements OnInit {
   screditAmt: number;
   shighAmt: number;
   disPer: number;
+  tdsPer:number;
   sdisPer: number;
   displayadditional = true;
   termId: number;
@@ -303,6 +305,7 @@ export class CustomerMasterComponent implements OnInit {
       screditAmt: [],
       shighAmt: [],
       disPer: [],
+      tdsPer:[],
       sdisPer: [],
       termId: [],
       dealerCode: [],
