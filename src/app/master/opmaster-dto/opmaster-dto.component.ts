@@ -1560,7 +1560,7 @@ displaypoCancel=true;
         }
       }
       else{
-        alert('Select Proper Item.. This Item Not In Master.!')
+        // alert('Select Proper Item.. This Item Not In Master.!')
         this.lineDetailsArray.controls[index].get('invCategory').reset();
    this.lineDetailsArray.controls[index].get('invDescription').reset();
     this.lineDetailsArray.controls[index].get('uom').reset();
@@ -2043,7 +2043,8 @@ displaypoCancel=true;
       }
       // if (this.invItemList.length <= 0) {
       if (itemType === 'EXPENCE') {
-        alert('This is Expence item First Select Please Select First HSN/SAC Code!')
+        this.lineDetailsArray.controls[lineNum].get('segmentName').enable();
+        // alert('This is Expence item First Select Please Select First HSN/SAC Code!')
         this.displayHSN[lineNum]=false;
         var deptName = 'NA';
         this.service.hsnSacCodeData('HSN').subscribe(

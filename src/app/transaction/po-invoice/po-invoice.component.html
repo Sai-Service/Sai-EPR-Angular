@@ -292,8 +292,7 @@
                 <select formControlName="paymentMethod" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
                     <!-- <option>--Select--</option>
                     [selected]="sc.paymentMethod==='CHEQUE'" [selected]="sc.lookupValueId===69"-->
-                    <option *ngFor="let sc of  paymentMethodList" [ngValue]="sc.lookupValueId"
-                    >
+                    <option *ngFor="let sc of  paymentMethodList" [ngValue]="sc.lookupValueId">
                         {{sc.lookupValue}}
                     </option>
                 </select>

@@ -163,6 +163,7 @@ export class PoInvoiceComponent implements OnInit {
   amount:number;
   invoiceDistId:number;
   // segment1:string
+  lookupValue:string;
 
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
@@ -273,7 +274,7 @@ export class PoInvoiceComponent implements OnInit {
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
-  public paymentMethodList: Array<string> = [];
+  paymentMethodList: any = [];
   public prepayTypeList: Array<string> = [];
   public poTypeList: Array<string> = [];
   public APitemtYPE: Array<string> = [];
@@ -646,7 +647,7 @@ export class PoInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
    
-   
+   this.poInvoiceForm.patchValue({paymentMethod:'CASH'})
     // this.invoiceDate = new Date()
    // this.localCompleteDate = this.invoiceDate.toISOString();
     // this.localCompleteDate = this.localCompleteDate.substring(0, this.localCompleteDate.length - 1);
@@ -688,8 +689,15 @@ export class PoInvoiceComponent implements OnInit {
         data => {
           this.paymentMethodList = data;
           console.log(this.paymentMethodList);
+          let selectPayment = this.paymentMethodList.find(v => v.lookupValue == 'CASH');
+      console.log(selectPayment);
+      this.poInvoiceForm.patchValue({paymentMethod:selectPayment.lookupValue});
+      console.log(selectPayment.lookupValue);
         }
       );
+
+     
+      
 
     this.transactionService.prepayTypeList()
       .subscribe(
@@ -1074,11 +1082,11 @@ export class PoInvoiceComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
+    alert(i)
     this.selectedLine=i;
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
     this.invLineDetailsArray().clear();
-
     this.transactionService.getApInvLineDetails(invoiceNum)
       .subscribe(
         data => {
@@ -1868,8 +1876,8 @@ export class PoInvoiceComponent implements OnInit {
     }
 
   }
-  Validate() {
-    // alert();
+  Validate() { 
+    alert(this.selectedLine);
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
