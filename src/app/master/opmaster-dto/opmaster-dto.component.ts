@@ -1028,7 +1028,7 @@ displaypoCancel=true;
               console.log(this.approvedArray);
            
               if (data.obj.rcvLines.length >0){
-                alert(data.obj.rcvLines.length);
+                // alert(data.obj.rcvLines.length);
                 this.isVisible=false;
               // this.poCancel1.nativeElement.hidden=true;
               }
@@ -1404,9 +1404,11 @@ displaypoCancel=true;
     }
   }
   onOptioninvItemIdSelected(itemId, index) {
-    // alert(itemId);
+    
     if (itemId != null) {
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
+      console.log(selectedValue);
+      
       if (selectedValue != undefined) {
         console.log(selectedValue);
         this.selectedInvItem.push(selectedValue);
@@ -1415,6 +1417,9 @@ displaypoCancel=true;
         this.itemType = arrayControl[index].itemType
         this.invItemId = selectedValue.itemId;
         console.log(this.invItemId, this.taxCat);
+        this.lineDetailsArray.controls[index].get('taxCategoryName').enable(); 
+        this.lineDetailsArray.controls[index].get('orderedQty').enable();
+        this.lineDetailsArray.controls[index].get('unitPrice').enable();
         if (this.itemType === "GOODS") {
           this.service.ItemDetailsList(this.invItemId, this.taxCat, this.billToLoc).subscribe((res: any) => {
             if (res.code === 200) {
@@ -1423,7 +1428,15 @@ displaypoCancel=true;
                 var patch = this.poMasterDtoForm.get('poLines') as FormArray;  
                 (patch.controls[index]).patchValue({
                   segment:' ',
-                }) 
+                }) ;
+                this.lineDetailsArray.controls[index].get('invCategory').reset();
+                this.lineDetailsArray.controls[index].get('invDescription').reset();
+                this.lineDetailsArray.controls[index].get('uom').reset();
+                this.lineDetailsArray.controls[index].get('hsnSacCode').reset();
+                this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
+                this.lineDetailsArray.controls[index].get('segmentName').reset(); 
+                this.lineDetailsArray.controls[index].get('hsnSacCode').disable();
+                this.lineDetailsArray.controls[index].get('taxCategoryName').disable();
                 return;
               }
               else{
@@ -1545,6 +1558,18 @@ displaypoCancel=true;
               }
             );
         }
+      }
+      else{
+        alert('Select Proper Item.. This Item Not In Master.!')
+        this.lineDetailsArray.controls[index].get('invCategory').reset();
+   this.lineDetailsArray.controls[index].get('invDescription').reset();
+    this.lineDetailsArray.controls[index].get('uom').reset();
+    this.lineDetailsArray.controls[index].get('hsnSacCode').reset();
+    this.lineDetailsArray.controls[index].get('taxCategoryName').reset();
+    this.lineDetailsArray.controls[index].get('segmentName').reset(); 
+        this.lineDetailsArray.controls[index].get('taxCategoryName').disable(); 
+        this.lineDetailsArray.controls[index].get('orderedQty').disable();
+        this.lineDetailsArray.controls[index].get('unitPrice').disable();
       }
     }
    
@@ -1961,6 +1986,7 @@ displaypoCancel=true;
   onOptioninvitemTypeSelected(e: any, lineNum) {
     var itemType = e.target.value;
     // alert(itemType)
+    
     if (this.itemMap.has(itemType)){
       this.invItemList = this.itemMap.get(itemType);
     }
@@ -1977,7 +2003,7 @@ displaypoCancel=true;
     }
     else {
       if (itemType === 'GOODS') {
-        // alert('GOODS')
+      //  alert()
         var deptName1 = this.poMasterDtoForm.get('dept').value;
         this.lineDetailsArray.controls[lineNum].get('segment').disable();
         this.lineDetailsArray.controls[lineNum].get('segmentName').disable();
@@ -1996,6 +2022,7 @@ displaypoCancel=true;
               }
             );    
         // }
+        // alert(this.invItemList.length)
             this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
             this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
             this.lineDetailsArray.controls[lineNum].get('segment').enable();
@@ -2526,4 +2553,8 @@ let selectedValue = this.suppIdList.find(v => v.suppSiteId == supplierSiteId);
 }
     }
 }
+
+
+
+
 }

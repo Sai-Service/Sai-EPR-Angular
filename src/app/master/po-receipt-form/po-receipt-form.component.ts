@@ -537,6 +537,26 @@ export class PoReceiptFormComponent implements OnInit {
 
   ReceiptFind(segment1) {
     this.lineDetailsArray.clear();
+    this.poReceiptForm.get('loginArray').reset();
+    this.poReceiptForm.get('ouName').reset();
+    this.poReceiptForm.get('segment1').reset();
+    this.poReceiptForm.get('poType').reset();
+    this.poReceiptForm.get('baseAmount').reset();
+    this.poReceiptForm.get('supplierName').reset();
+    this.poReceiptForm.get('receiptNo').reset();
+    this.poReceiptForm.get('recDate').reset();
+    this.poReceiptForm.get('taxAmt').reset();
+    this.poReceiptForm.get('loginName').reset();
+    this.poReceiptForm.get('gstDocNo').reset();
+    this.poReceiptForm.get('docDate').reset();
+    this.poReceiptForm.get('totalAmt').reset();
+    this.poReceiptForm.get('ewayBillNo').reset();
+    this.poReceiptForm.get('ewayBillDate').reset();
+    this.poReceiptForm.get('suppInvDate').reset();
+    this.poReceiptForm.get('suppInvNo').reset();
+    this.poReceiptForm.get('poInvNum').reset();
+    this.poReceiptForm.get('poInvDate').reset();
+    this.poReceiptForm.get('Comments').reset();
     this.displaySaveButton = false;
     this.displayrecDate=false;
     // alert(segment1);
@@ -546,6 +566,14 @@ export class PoReceiptFormComponent implements OnInit {
         data => {
           if (data.code === 200) {
             this.lstcompolines = data.obj;
+            alert(data.obj.receiptNo);
+            if (data.obj.shipmentNumber != null){
+              // alert(data.obj.shipmentNo);
+              this.isVisible=false;
+            }
+            else{
+              this.isVisible=true;
+            }
             var recDate1 = (data.obj.recDate,'dd-MM-yyyy');
             this.poReceiptForm.patchValue(({recDate: (data.obj.recDate,'dd-MM-yyyy')}));
             let control = this.poReceiptForm.get('poLines') as FormArray;
@@ -567,6 +595,7 @@ export class PoReceiptFormComponent implements OnInit {
             for (let j = 0; j < data.obj.poLines.length; j++) {
               this.lineDetailsArray[i].patchValue({ subInventoryId: data.obj.poLines[i].subInventoryId })
             }
+          
           }
           else if (data.code === 400) {
             alert(data.message)
@@ -715,19 +744,16 @@ export class PoReceiptFormComponent implements OnInit {
             this.lineDetailsArray.clear();
             this.lstcompolines = data.obj;
             if (this.lstcompolines.poStatus === 'Receipt Generated') {
+             this.disabledViewAccounting=false;
               console.log(this.poStatus);
               this.displaySaveButton = true;
               this.disabled = false;
+              this.isVisible=false;
               this.disabledLine = false;
               let control = this.poReceiptForm.get('poLines') as FormArray;
-              // var poLines:FormGroup=this.lineDetailsGroup();
-              // var length1=this.lstcompolines.poLines.length-1;
-              // this.lineDetailsArray.removeAt(length1);
-              // control.push(poLines);
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
-                // debugger;
               }
               this.displaySaveButton = false;
               this.poReceiptForm.patchValue(this.lstcompolines);
@@ -735,12 +761,9 @@ export class PoReceiptFormComponent implements OnInit {
             else {
               this.lstcompolines = data.obj;
               this.disabled = true;
+              this.isVisible=false;
               this.disabledLine = true;
               let control = this.poReceiptForm.get('poLines') as FormArray;
-              // var poLines:FormGroup=this.lineDetailsGroup();
-              // var length1=this.lstcompolines.poLines.length-1;
-              // this.lineDetailsArray.removeAt(length1);
-              // control.push(poLines);
               for (let i = 0; i < this.lstcompolines.poLines.length; i++) {
                 var poLines: FormGroup = this.lineDetailsGroup();
                 control.push(poLines);
