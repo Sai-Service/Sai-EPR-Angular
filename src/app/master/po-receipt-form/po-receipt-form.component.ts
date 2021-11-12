@@ -537,10 +537,10 @@ export class PoReceiptFormComponent implements OnInit {
 
   ReceiptFind(segment1) {
     this.lineDetailsArray.clear();
-    this.poReceiptForm.get('loginArray').reset();
-    this.poReceiptForm.get('ouName').reset();
+    // this.poReceiptForm.get('loginArray').reset();
+    // this.poReceiptForm.get('ouName').reset();
     this.poReceiptForm.get('segment1').reset();
-    this.poReceiptForm.get('poType').reset();
+    // this.poReceiptForm.get('poType').reset();
     this.poReceiptForm.get('baseAmount').reset();
     this.poReceiptForm.get('supplierName').reset();
     this.poReceiptForm.get('receiptNo').reset();
