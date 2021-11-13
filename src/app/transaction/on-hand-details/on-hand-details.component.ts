@@ -113,11 +113,14 @@ onhandDetailsForm:FormGroup;
     // this.locId=Number(sessionStorage.getItem('locId'));
     // this.locName=(sessionStorage.getItem('locName'));
 
+
     this.service.ItemIdDivisionList(this.divisionId).subscribe(
       data =>{ this.ItemIdList = data;
         console.log(this.ItemIdList);
 
    });
+
+
 
   //  this.service.OUIdList()
   //  .subscribe(
@@ -179,20 +182,23 @@ onhandDetailsForm:FormGroup;
     return matches;
   };
  
+
  searchByItem(segment)
  {
    
-  //  alert(this.onhandDetailsForm.get('segment').value);
+   alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
    if(segment1 ==undefined || segment1==null) {
     alert ("Please select Item Code ....") ;return;
    }
    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+  
+
    if (select1==undefined) {
     alert ("Please select valid Item Code ....") ;return;
    }
   
-  //  alert("select1.itemId  :"+select1.itemId );
+   alert("select1.itemId  :"+select1.itemId +","+segment1 );
    
  
   this.service.searchByItemByLoc(this.locId,select1.itemId,this.ouId,this.divisionId).subscribe(
@@ -212,26 +218,47 @@ onhandDetailsForm:FormGroup;
           this.gstPer=this.Itemdata[0].taxcategoryName;
           this.onhandDetailsForm.patchValue(data.obj);
 
-      } else { alert(segment1+" - Stock not Available/Wrong Item Code...");}
- })
+      } else { alert(segment1+" - Stock not Available...");}
+   })
+  }
+
+  searchByItemF9(xyz) {
+    var segment1=this.onhandDetailsForm.get('segment').value
+    alert("Segment :" +segment1);
+
+    if(segment1 ==undefined || segment1==null) {
+      alert ("Please select Item Code ....") ;
+      return;
+     }
+
+    let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+
+    if (select1==undefined) {
+      alert ("Please select valid Item Code ....") ;
+      return;
+     }
 
 
-}
+    this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+      data =>{
+       
+        this.Itemdata= data;
+        console.log(this.Itemdata);
+        this.segment=this.Itemdata[0].SEGMENT;
+        this.desc=this.Itemdata[0].DESCRIPTION;
+        this.uom=this.Itemdata[0].UOM;
+        this.mrp=this.Itemdata[0].MRP;
+        this.hsnSacCode=this.Itemdata[0].HSNSACCODE;
+        this.purchPrice=this.Itemdata[0].NDP;
+        this.gstPer=this.Itemdata[0].GSTPERCENTAGE;
+        this.onhandDetailsForm.patchValue(data);
 
-   
+      });
 
-    F9Search() {
-      var segment1=this.onhandDetailsForm.get('searchItemCode').value
-      // alert ("item code segment1 :"+segment1);
-      let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+    
 
-      this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
-        data =>{
-          this.lstcomments= data;
-          console.log(data);
-        })
-      }
-
+  }
+  
       onOptioninvItemIdSelectedSingle(searchItemCode) {
         // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
           let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);

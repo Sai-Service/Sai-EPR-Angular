@@ -275,7 +275,7 @@
 
     <!-- ------------------------------ F9 SEARCH -->
     <li class="nav-item dropdown">
-      <a class="list-group-item list-group-item-action bg-light"  data-toggle="modal" data-target="#partSearch">
+      <a class="list-group-item list-group-item-action bg-light" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">
          &nbsp;&nbsp;Search&nbsp;&nbsp;</a>
     </li>
     <!-- ------------------------------ F9 SEARCH -->
@@ -418,11 +418,12 @@
 
                 <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
                    id="invItemIdFirstWay"  list="dynmicUserIds1" 
-                   class="form-control"  (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
+                   class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
                    style="width: 250px; background-color: yellow;"  />
                   <datalist id="dynmicUserIds1" >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
                       {{item.SEGMENT}} 
+                       <!-- - {{item.DESCRIPTION}} -->
                   </datalist>
                 </td>
 
@@ -459,6 +460,7 @@
                         <th style="width:10rem" scope="col">Category&nbsp;</th>
                         <th style="width:10rem" scope="col">Locator&nbsp;</th>
                         <th style="width:8rem"  scope="col">Hsn/Sac&nbsp;</th>
+                        <th style="width:8rem"  scope="col">Tax%&nbsp;</th>
                         <th style="width:3rem"  scope="col">UOM&nbsp;</th>
                         <th style="width:6rem"  scope="col">Quantity&nbsp;</th>
                         <th style="width:6rem"  scope="col">MRP&nbsp;</th>
@@ -475,6 +477,7 @@
                         <td style="width:10rem;text-align: center;">{{com.CATEGDESC}}</td>      
                         <td style="width:10rem;text-align: center;">{{com.STOCKLOCTR}}</td> 
                         <td style="width:10rem;text-align: center;">{{com.HSNSACCODE}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.GSTPERCENTAGE}}</td>
                         <td style="width:10rem;text-align: center;">{{com.UOM}}</td>
                         <td style="width:10rem;text-align: center;">{{com.ONHANDQTY}}</td>
                         <td style="width:10rem;text-align: center;">{{com.MRP}}</td>

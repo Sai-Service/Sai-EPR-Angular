@@ -816,32 +816,32 @@ export class PricelistMasterComponent implements OnInit {
   uploadFile() {
    
 
-    var upldPl =this.priceListMasterForm.get('upldPricelistName').value;
+    var upldPlName =this.priceListMasterForm.get('upldPricelistName').value;
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
-      this.service.UploadExcel(formData,this.docType,upldPl).subscribe(result => {
+      this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
       this.message = result.toString();
-       this.service.UploadExcel(formData,this.docType,upldPl).subscribe((res: any) => {
+       this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
    
         if (res.code === 200) {
-          alert('FILE UPLOADED SUCCESSFUILY');
+          alert('FILE UPLOADED SUCCESSFULLY');
            this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
-          // window.location.reload();
-   
+             
         } else {
           if (res.code === 400) {
-            // alert(res.message)
+            alert('FILE UPLOAD FAILED');
             this.resMsg = res.message +",  Code : "+res.code;
             this.lstMessage=res.obj.priceListDetailList;
-            // alert('Error In File : \n' + res.obj);
-            // window.location.reload();
-
           }
+
+         
+
         }
       });
-    });
+    } );
+   
   }
 
   refershForm(){

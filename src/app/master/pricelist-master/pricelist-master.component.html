@@ -591,15 +591,15 @@
 
                                         <div class="container1">
                                         <div class="grid_scroll_3">
-                                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                                        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size: small;  border-color:#959595;border-collapse:collapse;width: 100%;">
                                             <tbody>
                                                     <tr class="GridHeader">
                                                     <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th>
                                                     <th style="width:7rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
                                                     <th style="width:5rem" scope="col"> Price&nbsp;List&nbsp;Type</th>
-                                                    <th style="width:12rem" scope="col">Item&nbsp;id&Name</th>
-                                                    <th style="width:10rem" scope="col">Rate&nbsp;</th>
-                                                    <th style="width:10rem" scope="col">Old&nbsp;Rate</th>
+                                                    <th style="width:20rem" scope="col">Item&nbsp; Deescreption</th>
+                                                    <th style="width:7rem" scope="col">Rate&nbsp;</th>
+                                                    <th style="width:7rem" scope="col">Old&nbsp;Rate</th>
                                                     <th style="width:12rem" scope="col">Revision&nbsp;Date</th>
                                                     <!-- <th style="width:10rem" scope="col">Status</th> -->
                                                     <!-- <th style="width:6rem" scope="col">Select</th> -->
@@ -664,6 +664,8 @@
                                                                 </option>
                                                             </select>
                                                         </td>
+
+                                                       
                                                    
 
                                                    
@@ -687,6 +689,15 @@
                                                             <button type="submit" class="btn btn-primary" id="register" (click)="refershForm()" style="width: 8rem;font-size: 11px;">View/download log</button>
                                                         </td> -->
                                                     
+                                                    </tr>
+
+                                                    <tr>
+                                                        <div class="progress">
+                                                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50"
+                                                            aria-valuemin="0" aria-valuemax="100" style="width:50%">
+                                                              50% Complete (info)
+                                                            </div>
+                                                          </div>
                                                     </tr>
                                                     <tr>
 
@@ -715,9 +726,9 @@
                                                                  <tr *ngFor="let com of lstMessage let i= index" class="ItemStyle" style="text-decoration:none;">
                                                                      <td style="text-align: center;">{{i+1}}</td>
                                                                      <td style="width:10rem;text-align: center;">{{com.segment}}</td>
-                                                                     <td style="width:20rem;text-align: left;">{{com.itemDescription}}</td>
-                                                                     <td style="width:15rem;text-align: left;">{{com.itemCategory}}</td>
-                                                                     <td style="width:25rem;text-align: left;">{{com.status}}</td>
+                                                                     <td style="width:15rem;text-align: left;">{{com.itemDescription}}</td>
+                                                                     <td style="width:20rem;text-align: left;">{{com.itemCategory}}</td>
+                                                                     <td style="width:20rem;text-align: left;">{{com.status}}</td>
                                                                  </tr>
                                                          </table>
                                                        </div>

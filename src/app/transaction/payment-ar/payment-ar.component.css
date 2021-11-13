@@ -1,3 +1,19 @@
+
+.centerModal1 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.centerModal2 {
+/* position: absolute; */
+float: left;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+}
+
 .auto-style4
 {
     color:#333333;
@@ -201,6 +217,14 @@
 
   .modal-dialog {
     max-width: 1200px;
+    margin: 0 auto;
+    /* vertical-align: top; */
+    /* display: inline-block;  */
+    text-align: left; 
+  }
+
+  .modal-dialog1 {
+    max-width: 500px;
     margin: 0 auto;
     /* vertical-align: top; */
     /* display: inline-block;  */

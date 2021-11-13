@@ -76,7 +76,9 @@
                             formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" 
                             class="form-control"  style="width: 200px;background-color: yellow;" />
                             <datalist id="dynmicUserIds1">
-                              <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">{{item.SEGMENT}}
+                              <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">
+                                {{item.SEGMENT}} 
+                                <!-- - {{item.DESCRIPTION}} -->
                                 </option>
                                </datalist>
                           </td>
@@ -163,7 +165,7 @@
 
                 <tr>
 
-                  <td style="width: 15%" class="LabelFontStyle"> Tax&nbsp;Category:&nbsp;</td>
+                  <td style="width: 15%" class="LabelFontStyle"> Tax&nbsp;%:&nbsp;</td>
                   <td >
                       <input disabled formControlName="gstPer" [(ngModel)]="gstPer"
                           value={{gstPer}} class="form-control"  style="width:250px;" >
@@ -204,11 +206,11 @@
   
                           <tr *ngFor="let com of Itemdata" class="ItemStyle" style="text-decoration:none;">
                           <td style="text-align: center;">{{com.ouName}}</td>
-                          <td style="text-align: center;">{{com.locCode}}</td>
+                          <td style="text-align: center;">{{com.locCode}}</td> 
                           <td style="text-align: center;">{{com.subInventoryCode}}</td>
                           <td style="text-align: center;">{{com.qty}}</td>
                           <td style="text-align: center;">{{com.segmentName}}</td>
-                          
+                                              
                         </tr>
   
   
@@ -294,9 +296,9 @@
                           </datalist>
                         </td>
 
-                        <td> 
+                        <!-- <td> 
                           <button style="width: 8em;" type="button" class="btn btn-primary" (click)="F9Search()" >Search1</button>
-                       </td>
+                       </td> -->
                       </tr>
                         <!-- <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td> -->
                        <!-- <td></td> -->

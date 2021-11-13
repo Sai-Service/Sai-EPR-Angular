@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
 import { style } from '@angular/animations';
+import { NgModule } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 interface IEmployeeMaster {
   emplId: number;
@@ -41,7 +45,9 @@ export class EpmloyeeMasterComponent implements OnInit {
   emplId: number;
   ticketNo: string;
   divisionId: number;
-  title: string= '';
+  // title: string= '';
+  title: string;
+  // test:string;
   fname: string= '';
   mname: string= '';
   lname: string= '';
@@ -96,7 +102,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       emplId: [],
       ticketNo: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10),Validators.pattern('[a-zA-Z0-9.]*')]],
       divisionId: ['', [Validators.required,]],
-      title: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10)],[style]],
+      // title: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(10)],[style]],
+      title: ['', [Validators.required]],
       fname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
       mname: ['', [Validators.maxLength(35)]],
       lname: ['', [Validators.required,Validators.minLength(1),Validators.maxLength(35)]],
@@ -120,11 +127,14 @@ export class EpmloyeeMasterComponent implements OnInit {
       locCode:[],
       teamRole:[],
       empId:[],
+      test:[],
     });
 
   }
 
   get f() { return this.employeeMasterForm.controls; }
+  employeeMaster(employeeMasterForm: any) {  }
+ 
 
   ngOnInit(): void {
     this.deptName=(sessionStorage.getItem('deptName'));
@@ -179,13 +189,11 @@ export class EpmloyeeMasterComponent implements OnInit {
     //   }
     // );
   }
-  employeeMaster(employeeMasterForm: any) {
-
-  }
+  
   
   onOptionsSelected(event: any) {
     this.Status1 = this.employeeMasterForm.get('status').value;
-    // alert(this.Status1);
+    alert(this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = false;
       this.endDate = new Date();
@@ -194,6 +202,9 @@ export class EpmloyeeMasterComponent implements OnInit {
       this.employeeMasterForm.get('endDate').reset();
     }
   }
+
+
+
     transData(val) {
     delete val.emplId;
     return val;
@@ -279,6 +290,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       }
     );
   }
+
   Select(emplId: number) {
     
     let select = this.lstcomments.find(d => d.emplId === emplId);
@@ -307,11 +319,25 @@ export class EpmloyeeMasterComponent implements OnInit {
     }
   }
   onKey(event: any) {
-    const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+    var title =this.employeeMasterForm.get("title").value;
+    // const aaa = this.title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+    const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
     this.fullName = aaa;
   }
 
-  onOptionsDEPTSelected(event){   
+  onTitleSelected(mTitle: any) {
+    if(mTitle !=null){
+      var title =this.employeeMasterForm.get("title").value;
+    // alert ("title : "+mTitle +","+title);
+    
+    const aaa = title + '.'+' ' + this.fname + ' ' + this.mname + ' ' + this.lname ;
+    this.fullName = aaa;
+    }
+  }
+
+  onOptionsDEPTSelected(event){  
+    // alert ("Dept :"+event) ;
+
     let select = this.DepartmentList.find(d => d.cmnTypeId === event);
     this.service.DesignationList(select.code)
       .subscribe(
@@ -368,6 +394,7 @@ export class EpmloyeeMasterComponent implements OnInit {
 
    message: string = "Please Fix the Errors !";
     msgType:string ="Close";
+  
     getMessage(msgType: string) {
       this.msgType = msgType;
       if (msgType.includes("Save")) {

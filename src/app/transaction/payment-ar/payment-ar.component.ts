@@ -53,7 +53,9 @@ export class PaymentArComponent implements OnInit {
   paymentArForm: FormGroup;
   applyRcptFlag1: boolean
   pipe = new DatePipe('en-US');
-
+  
+  message: string = "Please Fix the Errors !";
+  msgType:string ="Close";
   // public DivisionIDList : Array<string>=[];
   // public OUIdList: Array<string> = [];
 
@@ -1690,6 +1692,12 @@ export class PaymentArComponent implements OnInit {
 
   validateSave(mType) {
 
+    if(this.GLPeriodCheck===null) {
+      this.checkValidation = false;
+      alert("GL PERIOD is null. Please update GL period.");
+      return;
+    }
+
     if (mType === 'INVOICE') {
 
       var applLineArr = this.paymentArForm.get('invLine').value;
@@ -1882,16 +1890,12 @@ export class PaymentArComponent implements OnInit {
   newMast() {
 
     // alert ("GL period..." +this.GLPeriodCheck);
-    if(this.GLPeriodCheck===null) {
-      this.checkValidation = false;
-      alert("GL PERIOD is null. Please update GL period.");
-      return;
-    }
+  
 
     this.CheckDataValidations();
 
     if (this.checkValidation === true) {
-      alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
+      // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
 
       const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
 
@@ -1916,7 +1920,8 @@ export class PaymentArComponent implements OnInit {
           }
         }
       });
-    } else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
+    } 
+    // else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
 
   }
 
@@ -2038,19 +2043,36 @@ export class PaymentArComponent implements OnInit {
 
   }
 
+   
 
   CheckDataValidations() {
 
     const formValue: IPaymentRcptAr = this.paymentArForm.value;
 
     // alert ("OPERATING UNIT :" +formValue.ouId);
-
+    var msg1;
+    if(this.GLPeriodCheck===null) {
+      this.checkValidation = false;
+      // alert("GL PERIOD is null. Please update GL period.");
+      // return;
+      msg1 ='GL PERIOD is null. Please update GL period.';
+      // this.executeAlertMsg(msg1);
+      alert(msg1);
+      // (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      //  this.message = "GL PERIOD is null. Please update GL period."
+       return;
+    }
    
 
     if (formValue.ouId === undefined || formValue.ouId === null) {
       this.checkValidation = false;
-      alert("OPERATING UNIT: Should not be null....");
+      // alert("OPERATING UNIT: Should not be null....");
+      msg1="OPERATING UNIT: Should not be null....";
+      // this.executeAlertMsg(msg1);
+      alert(msg1);
       return;
+     
+     
     }
 
     if (formValue.locId === undefined || formValue.locId === null) {
@@ -2157,8 +2179,17 @@ export class PaymentArComponent implements OnInit {
       alert("RECEIPT STATUS: Should not be null....");
       return;
     }
+
+    
     this.checkValidation = true
 
+  }
+
+  executeAlertMsg(msg1) {
+    if (this.checkValidation==false){
+      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+       this.message = msg1;
+    }
   }
 
   clearSearch() {
