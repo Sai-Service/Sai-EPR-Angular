@@ -97,13 +97,12 @@
                 <input  type="text" formControlName="ouName" value={{ouName}} class="form-control" style="width: 80px;height: 25px;">
                 </ng-template>
                 <ng-template #elseOUName>
-                    <select formControlName="ouId"  id="ouId" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
+                    <!-- <select formControlName="ouId"  id="ouId" class="form-control" style="width: 100px;height: 25px;font-size: 10px;">
                     <option>--Select--</option>
                     <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">{{sc.ouName}}</option>
-                    </select>
-                    <!-- <span
-                    *ngIf="getGroupControl(i, 'obj','ouId').touched && getGroupControl(i,'obj', 'ouId').invalid">Valid name
-                                </span> -->
+                    </select> -->
+                    <input disabled  type="text" formControlName="ouName" value={{ouName}} class="form-control" style="width: 80px;height: 25px;">
+                    <input hidden  type="number" formControlName="ouId" value={{ouId}} class="form-control" style="width: 80px;height: 25px;">
                 </ng-template>
             </td>
             <td>
@@ -244,8 +243,8 @@
                 <input  class="form-control" formControlName="glDate" value={{glDate}} style="width: 90px;height: 25px;font-size: 10px;">
                 </ng-template>
                 <ng-template #elseglDate>
-                    <input  type="text" formControlName="glDate" value={{glDate}} class="form-control"
-                     style="width: 80px;height: 25px;font-size: 10px;">
+                    <input  type="text" disabled formControlName="glDate" value={{glDate}} class="form-control" [(ngModel)]='glDate'
+                     style="width: 130px;height: 25px;font-size: 10px;">
 
                      <!-- [ngModel]="glDate | date:'yyyy-MM-dd'" -->
                 <!-- <input  class="form-control" formControlName="glDate" value={{glDate}} style="width: 90px;height: 25px;font-size: 10px;"> -->
@@ -288,18 +287,13 @@
                 <input type="number" min="0"  class="form-control" formControlName="terms" value={{terms}} style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
-                <!-- <input type="text" class="form-control" formControlName="paymentMethod" value={{paymentMethod}}  style="width: 120px;height: 25px;font-size: 10px;"> -->
-                <select formControlName="paymentMethod" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
-                    <!-- <option>--Select--</option>
-                    [selected]="sc.paymentMethod==='CHEQUE'" [selected]="sc.lookupValueId===69"-->
-                    <option *ngFor="let sc of  paymentMethodList" [ngValue]="sc.lookupValueId"
-                    >
+               
+                <select formControlName="paymentMethod" class="form-control" style="width: 120px;height: 25px;font-size: 10px;"  (change)='onOptionSelectedSectionPaymentMethod($event)'>
+                    <option *ngFor="let sc of  paymentMethodList" [value]="sc.lookupValue" >
                         {{sc.lookupValue}}
                     </option>
                 </select>
-                <!-- <span
-                    *ngIf="getGroupControl(i,'obj', 'paymentMethod').touched && getGroupControl(i,'obj', 'paymentMethod').invalid">Valid name
-                                </span> -->
+                <!-- [ngValue]="sc.lookupValueId" <input type="text" class="form-control" formControlName="payGroup" value={{payGroup}}  style="width: 120px;height: 25px;font-size: 10px;"> -->
             </td>
 
             <!-- <td>
@@ -422,28 +416,19 @@
                             <td  class="LabelFontStyle">&nbsp;PO&nbsp;Shipment&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                {{sc.lookupValue}}
-            </option> -->
                                 </select> </td>
                         </tr>
-                        <!-- <hr> --><th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;</th>
+                       <th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;</th>
                         <tr style="border-top: solid 1px gray; width: 100%;">
                            <td  class="LabelFontStyle">INV&nbsp;No&nbsp;:</td>
                             <td><input type="text"  formControlName="invoiceNum" value={{invoiceNum}} class="form-control"> </td>
                             <td  class="LabelFontStyle">&nbsp;Type&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
                         </tr>
                         <tr>
-                            <!-- <td  class="LabelFontStyle">&nbsp;Amount&nbsp;:</td> -->
-                            <!-- <td><input type="number" min="0"  formControlName="invoiceAmt" value={{invoiceAmt}} class="form-control"> </td> -->
                             <td  class="LabelFontStyle">&nbsp;Amount&nbsp;:</td>
-                            <!-- <td><input type="number" min="0"  class="form-control"> </td> -->
                             <td>
                                <table>
                                    <tr>
@@ -462,72 +447,43 @@
                             <td  style="vertical-align:bottom;">
                                 <date-range-picker [instanceId]="'secondDateRange'" [options]="secondFieldOptions" [controlName]="'secondDateRange'" #dateRangePicker
                                 style="vertical-align: bottom;">
-                            <!-- <div class="form-group">
-                                <div class="input-group">
-                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="date-range-icon">
-                                            <i class="material-icons">Event</i>
-                                        </span>
-                                    </div>
-                                    <input id="secondDateRange" class="form-control" type="text" name="dateRange" [value]="dateRangePicker.range" placeholder="From - To" formControlName="secondDateRange"/>
-                                </div>
-                            </div> -->
                             <input id="secondDateRange" class="form-control" type="text" name="dateRange" [value]="dateRangePicker.range" placeholder="From - To" formControlName="secondDateRange"/>
                         </date-range-picker>
                             </td>
-                            <!-- <td><input type="date" formControlName="invoiceDate" value={{invoiceDate}} class="form-control"> </td> -->
                         </tr>
-                        <th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;Status&nbsp;</th>
+                        <!-- <th colspan="4" style="text-align: left;">&nbsp;Invoice&nbsp;Status&nbsp;</th>
                         <tr style="border-top: solid 1px gray; width: 100%;">
                             <td  class="LabelFontStyle">&nbsp;Status&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
                                 <td  class="LabelFontStyle">&nbsp;Accounting&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
                         </tr>
                         <tr>
                                 <td  class="LabelFontStyle">&nbsp;Approval&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
                                 <td  class="LabelFontStyle">&nbsp;Payment&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
-                        </tr>
-                        <th colspan="4" style="text-align: left;">&nbsp;Voucher&nbsp;Audit&nbsp;</th>
+                        </tr> -->
+                        <!-- <th colspan="4" style="text-align: left;">&nbsp;Voucher&nbsp;Audit&nbsp;</th>
                         <tr style="border-top: solid 1px gray; width: 100%;">
                             <td  class="LabelFontStyle">&nbsp;Category&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
                                 <td  class="LabelFontStyle">&nbsp;Status&nbsp;:</td>
                             <td><select class="form-control">
                                     <option>--Select--</option>
-                                    <!-- <option *ngFor="let sc of  BranchList">
-                                            {{sc.lookupValue}}
-                                    </option> -->
                                 </select> </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!-- <tr>
                             <td  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
                             <td><input type="text" formControlName="invoiceDate" value={{invoiceDate}} class="form-control"> </td>
                             <td  class="LabelFontStyle">&nbsp;Name&nbsp;:</td>
@@ -539,19 +495,12 @@
 
                             <td  class="LabelFontStyle">&nbsp;Reason&nbsp;:</td>
                             <td><input type="text" formControlName="invoiceDate" value={{invoiceDate}}  class="form-control"> </td>
-                        </tr>
+                        </tr> -->
 
-                        <!-- <tr> -->
-                            <!-- <date-range-picker
-    [minDate]={{minDate }}
-
-    id="'myDateRange'">
-    </date-range-picker> -->
-                        <!-- </tr> -->
                     </table>
 
                 </div>
-                <!-- </div> -->
+            
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal"
                         (click)="apInvFind(content)">Find</button>
@@ -565,16 +514,16 @@
 
             <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Number&nbsp;:</td>
             <td>
-                <input type="text" formControlName="invoiceNum"  class="form-control">
+                <input disabled type="text" formControlName="invoiceNum"  class="form-control">
             </td>
             <td style="width: 15%" class="LabelFontStyle">Invoice&nbsp;Status&nbsp;:</td>
-            <td  style="height: 22px;color: black;">
+            <td class="LabelFontStyle" style="font-weight: bold;">
                 {{INVStatus}}
                 <!-- <input type="text" formControlName="INVStatus"  class="form-control"> -->
             </td>
             <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
             <td>
-                <input type="text" formControlName="segment1"  class="form-control" >
+                <input disabled type="text" formControlName="segment1"  class="form-control" >
             </td>
         </tr>
 
@@ -667,12 +616,13 @@
                                             </span> -->
                             </td>
                             <td>
-                                <input type="text"  formControlName="accountingDate"  class="form-control"  style="width: 140px;height: 25px;">
+                                <input type="text" disabled formControlName="accountingDate"  class="form-control"  [(ngModel)]="accountingDate" style="width: 140px;height: 25px;">
                             </td>
                             <!-- [ngModel]="accountingDate | date:'yyyy-MM-dd'" min="{{minDate | date:'yyyy-MM-dd'}}" -->
                             <td>
                                 <div *ngIf="dispAccountCode; then thendispAccountCode; else elsedispAccountCode"></div>
                                 <ng-template #thendispAccountCode>
+                                    
                                 <input formControlName="distCodeCombId" hidden class="form-control"  style="width: 160px;height: 25px;">
                                 <input formControlName="distCodeCombSeg"  (click)="openCodeComb1(k)" data-toggle="modal" data-target="#myModel1" class="form-control"  style="width: 160px;height: 25px;">
                                 <!-- <span
@@ -1762,8 +1712,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel"
                             style="text-align: center; font-size: medium; margin-left: 20%; font-family: Verdana,Sans-serif, Arial, Helvetica;font-weight: bold;">
-                            Code
-                            Combination for + {{ title }}</h4>
+                            {{ title }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body text-center pagination-centered">
@@ -1784,7 +1733,7 @@
                                 <td>
                                     <input type="text" style="width: 150px; background-color: white; border: none;"
                                         formControlName="lookupValueDesc1"
-                                        class="form-control" >/td>
+                                        class="form-control" >
                             </tr>
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">
@@ -1868,9 +1817,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >Ok</button>
                         <!-- []="(segment6.value === null || segment5.value=== null)" -->
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                        []="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                            (click)="fnCancatination(content)">Clear</button>
+                        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
+                            (click)="fnCancatination(content)">Clear</button> -->
                         <!-- <button type="button" class="btn btn-primary"
                             []="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                             (click)="fnCancatination(content)" data-dismiss="modal">Ok</button> -->

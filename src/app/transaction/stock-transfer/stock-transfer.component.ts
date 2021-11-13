@@ -684,6 +684,7 @@ deleteReserveLinewise(i)
       this.stockTranferForm.get('ewayBillDate').disable();
     // var shipNo = (this.stockTranferForm.get('ShipmentNo').value);
     // alert('2'+shipNo)
+    this.trxLinesList().clear();
     this.service.getsearchByShipmentNo(ShipmentNo).subscribe
       (data => {
         this.lstcomment = data;
@@ -945,7 +946,7 @@ viewStockgatePass() {
     if (msgType.includes("Close")) {
       this.message = "Do you want to Close the Form(Yes/No)?"
     }
-    return; 
+    return;
   }
 
  executeAction() {

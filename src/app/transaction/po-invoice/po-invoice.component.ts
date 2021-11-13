@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { ManualInvoiceObj } from './manual-invoice-obj';
 import {InvoiceSearchObj} from './invoice-search';
 import { from } from 'rxjs';
+import { data } from 'jquery';
 
 interface IpoInvoice {
   suppInvDate: Date;
@@ -163,13 +164,14 @@ export class PoInvoiceComponent implements OnInit {
   amount:number;
   invoiceDistId:number;
   // segment1:string
+  lookupValue:string;
 
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
 
   invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
-  accountingDate = new Date();
+  // accountingDate = new Date();
   suppInvDate: Date;
   termsDate: Date;
   termsId: number;
@@ -182,8 +184,11 @@ export class PoInvoiceComponent implements OnInit {
   // public glDate =this.datepipe.transform(this.glDate1, 'yyyy-MM-dd');
   // pipe = new DatePipe('en-US');
   // now = Date.now();
+  // glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
+ 
   glDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
-  paymentMethod = 'CHEQUE';
+  accountingDate=this.pipe.transform(this.now, 'dd-MM-yyyy');
+  // paymentMethod = 'CHEQUE';
 
 
   currency: 'INR';
@@ -270,7 +275,7 @@ export class PoInvoiceComponent implements OnInit {
   public CostCenterList: Array<string> = [];
   public NaturalAccountList: Array<string> = [];
   public InterBrancList: Array<string> = [];
-  public paymentMethodList: Array<string> = [];
+  paymentMethodList: any = [];
   public prepayTypeList: Array<string> = [];
   public poTypeList: Array<string> = [];
   public APitemtYPE: Array<string> = [];
@@ -643,6 +648,16 @@ export class PoInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
    
+
+    var patch = this.poInvoiceForm.get('obj') as FormArray;
+    (patch.controls[0]).patchValue(
+      {
+        ouName: (sessionStorage.getItem('ouName')),
+        ouId:(sessionStorage.getItem('ouId')),
+        INVStatus:'Never Validated'
+      }
+    );
+   
     // this.invoiceDate = new Date()
    // this.localCompleteDate = this.invoiceDate.toISOString();
     // this.localCompleteDate = this.localCompleteDate.substring(0, this.localCompleteDate.length - 1);
@@ -684,8 +699,19 @@ export class PoInvoiceComponent implements OnInit {
         data => {
           this.paymentMethodList = data;
           console.log(this.paymentMethodList);
+          let selectPayment = this.paymentMethodList.find(v => v.lookupValue == 'CASH');
+      console.log(selectPayment);
+      var patch = this.poInvoiceForm.get('obj') as FormArray;
+      (patch.controls[0]).patchValue(
+        {
+          paymentMethod: selectPayment.lookupValue,
         }
       );
+        }
+      );
+
+     
+      
 
     this.transactionService.prepayTypeList()
       .subscribe(
@@ -907,20 +933,12 @@ export class PoInvoiceComponent implements OnInit {
     this.displayitemName = true;
     this.displaydescription = true;
     this.displaydistributionSet = true;
-    // const formValue:InvoiceSearchObj = this.poInvoiceForm.value
-
     let jsonData=this.poInvoiceForm.value;
     let invSearch:ISearch = Object.assign({},jsonData);
 
     var searchObj:InvoiceSearchObj=new InvoiceSearchObj();
-    // searchObj.segment1=this.poInvoiceForm.get('segment1').value;
-    // searchObj.attribute1=this.poInvoiceForm.get('attribute1').value;
     if(this.poInvoiceForm.get('segment1').value != null){searchObj.segment1=this.poInvoiceForm.get('segment1').value}
     if(this.poInvoiceForm.get('suppNo').value != null){searchObj.suppNo=this.poInvoiceForm.get('suppNo').value}
-    
-    // searchObj.suppNo=this.poInvoiceForm.get('suppNo').value;
-    // searchObj.suppSiteId=this.poInvoiceForm.get('suppSiteId').val ue;
-    
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.lstsearchapinv = res.obj;
@@ -929,7 +947,7 @@ export class PoInvoiceComponent implements OnInit {
           this.lineDetailsArray().push(invLnGrp);
         });
         this.poInvoiceForm.get('obj').patchValue(this.lstsearchapinv);
-//        debugger;
+        var patch = this.poInvoiceForm.get('obj') as FormArray;
         for (let i = 0; i < this.lstsearchapinv.length; i++) {
           let invDate = moment(this.lstsearchapinv[i].invoiceDate, 'dd-MM-yyyy hh:mm:ss');
           let invDtString = invDate.format('yyyy-MM-DD');
@@ -937,6 +955,16 @@ export class PoInvoiceComponent implements OnInit {
           let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
           let payDtString = payDate.format('yyyy-MM-DD');
           this.lineDetailsArray().controls[i].patchValue({ invoiceDate: invDtString,  paymentRateDate:payDtString, invoiceId1:this.lstsearchapinv[i].invoiceId });
+          if (res.obj.paymentMethod===undefined){
+            (patch.controls[i]).patchValue(
+              {
+                paymentMethod: 'CASH',
+              }
+            );
+          }
+          if (res.obj.invoiceStatus===null){
+            this.poInvoiceForm.patchValue({})
+          }
         }
         this.displayValidateButton = false;
         this.INVStatus = this.lstsearchapinv.invoiceStatus;
@@ -944,8 +972,6 @@ export class PoInvoiceComponent implements OnInit {
       else {
         if (res.code === 400) {
           alert(res.message);
-          // this.LocationMasterForm.reset();
-          // window.location.reload();
         }
       }
     });
@@ -1070,11 +1096,11 @@ export class PoInvoiceComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
+    alert(i)
     this.selectedLine=i;
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
     this.invLineDetailsArray().clear();
-
     this.transactionService.getApInvLineDetails(invoiceNum)
       .subscribe(
         data => {
@@ -1297,13 +1323,13 @@ export class PoInvoiceComponent implements OnInit {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.poInvoiceForm.reset();
+        this.poInvoiceForm.disable();
         // alert(res.obj);
         this.internalSeqNo = res.obj;
       } else {
         if (res.code === 400) {
           alert(res.message);
-          this.poInvoiceForm.reset();
+          // this.poInvoiceForm.reset();
         }
       }
     });
@@ -1864,8 +1890,8 @@ export class PoInvoiceComponent implements OnInit {
     }
 
   }
-  Validate() {
-    // alert();
+  Validate() { 
+    alert(this.selectedLine);
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
@@ -2442,6 +2468,10 @@ export class PoInvoiceComponent implements OnInit {
 
         }
       );
+
+  }
+
+  onOptionSelectedSectionPaymentMethod(event){
 
   }
 

@@ -6,25 +6,9 @@
             </td>
         </tr>
     </table>
-    <!-- <table style="background-color: #FFE4B5;" align="center">
-        <tr>
-            <td>
-                &nbsp;Sub-Inventory&nbsp;:&nbsp;
-            </td>
-            <td>
-                <select class="form-control" formControlName="subInv" [(ngModel)]="subInv">
-                    <option value="SP">SP</option>
-                    <option value="AC">AC</option>
-                </select>
-            </td>
-            <td>
-                <button type="button" class="btn-primary" (click)="pendingList(subInv)"><i class="fa fa-search"
-                        aria-hidden="true"></i></button>
-            </td>
-        </tr>
-    </table> -->
+   <br>
     <div class="grid_scroll">
-        <table class="GridFont" id="excel-table" style="width: 40%;" cellspacing="0" cellpadding="4">
+        <table class="GridFont" id="excel-table">
             <thead>
                 <tr class="GridHeader" style="font-size: 14px;">
                     <th scope="col" style="border: 1px solid black;">Shipment Number</th>
@@ -33,6 +17,7 @@
                     <th scope="col" style="border: 1px solid black;">Location</th>
                     <th scope="col" style="border: 1px solid black;">View</th>
                 </tr>
+            </thead>
                 <tr *ngFor="let com of ShipPendingList" class="ItemStyle" style="text-decoration:none;font-size: 12px;">
                     <td style="border: 1px solid black;padding-left: 5px;">{{com.shipmentNumber}}</td>
                     <td style="border: 1px solid black;padding-left: 5px;">{{com.transDate}}</td>
@@ -43,8 +28,9 @@
                             (click)="viewShipDetails(com.shipmentNumber)">View</button>
                     </td>
                 </tr>
-            </thead>
+           
         </table>
+    </div>
         <table class="center">
             <tr>
                 <td>
@@ -57,5 +43,5 @@
                 </td>
             </tr>
         </table>
-    </div>
+    
 </form>

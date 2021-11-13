@@ -763,8 +763,9 @@
                 </fieldset>
 
                 
-                <div class="grid_scroll">
+               
                 <fieldset class="RFS" style="background-color: white;">
+                    <div class="grid_scroll">
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Receipt Lines Details</legend>
                     
                     <table class="auto-style4" class="GridFont" cellspacing="0"
@@ -876,10 +877,10 @@
                                         class="form-control" style="height: 20px;">
                                 </td>
                                 <td>
-                                    <div *ngIf="displaysubInvDesc[i]; then thensubInvDesc; else elsesubInvDesc"></div>
+                                    <!-- <div *ngIf="displaysubInvDesc[i]; then thensubInvDesc; else elsesubInvDesc"></div>
                                     <ng-template #thensubInvDesc>
                                     </ng-template>
-                                    <ng-template #elsesubInvDesc> 
+                                    <ng-template #elsesubInvDesc>  -->
                                         <input disabled type="text"
                                         formControlName="subInvDesc"
                                         class="form-control" style="height: 20px;width:60px;">
@@ -887,7 +888,7 @@
                                         formControlName="subInventoryId" 
                                         class="form-control" style="height: 20px;width:60px;">
                                         
-                                    </ng-template>
+                                    <!-- </ng-template> -->
                                 </td>
                                 <td> <input disabled type="number"
                                     formControlName="unitPrice"
@@ -1118,9 +1119,10 @@
                             <!-- </div> -->
                         </ng-container>
                     </tbody>
-                </table>      
+                </table> 
+            </div>     
                 </fieldset>
-            </div>
+            
 
             <!-- ================================= -->
             <fieldset class="RFS" style="background-color: white;">

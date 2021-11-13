@@ -757,6 +757,21 @@
                                                     <input type="checkbox" formControlName="tcs" [(ngModel)]="tcs"  (change)="tcssel($event)">
                                                 </td>
                                     <!-- </td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Percentage&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input type="number" formControlName="tdsPer" value={{tdsPer}} [(ngModel)]='tdsPer' type="number"
+                                            class="form-control" min='0.0' max='99' oninput="this.value = Math.abs(this.value)"
+                                            [ngClass]="{ 'is-invalid': submitted && f.disPer.errors }"
+                                            placeholder="Enter Tds Percentage" >
+                                        <div *ngIf="submitted && f.disPer.errors" class="invalid-feedback">
+                                            <div *ngIf="f.disPer.errors.required">Enter discount Percentage </div>
+                                            <div *ngIf="f.disPer.errors.maxLength">Enter discount Percentage
+                                            </div>
+                                        </div>
+                                        <!-- <span
+                                            *ngIf="!customerMasterForm.get('smobile3').valid && customerMasterForm.get('smobile3').touched">Please
+                                            Enter mobile2 </span> -->
+                                    </td>
                             </tr>
                             </ng-template>
                             <ng-template #elseBlockdisable>
@@ -1400,12 +1415,8 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true">
-=======
 <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" 
 style="width: 500px; text-align: center;margin-left: 35%;">
->>>>>>> f2ab78ff71e59452717279ae0ae79d4b31cb81f5
     <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
     <div class="modal-content">
         <div class="modal-header">

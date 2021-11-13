@@ -248,15 +248,18 @@ export class AvgCostUpdateComponent implements OnInit {
     //   }
     // );
 
-     this.service.invItemList1()
-      .subscribe(
-        data => {
-          this.invItemList = data;
+    //  this.service.invItemList1()
+    //   .subscribe(
+    //     data => {
+    //       this.invItemList = data;
+    //       console.log(this.invItemList);
+    //     }
+    //   );
+
+      this.service.ItemIdDivisionList(this.divisionId).subscribe(
+        data =>{ this.invItemList = data;
           console.log(this.invItemList);
-        }
-      );
-
-
+    });
 
     this.service.OUIdList()
     .subscribe(
@@ -299,13 +302,13 @@ export class AvgCostUpdateComponent implements OnInit {
     // );
 
 
-    this.service.itemIdList()
-    .subscribe(
-      data => {
-        this.itemIdList = data;
-        console.log(this.itemIdList);
-      }
-    );
+    // this.service.itemIdList()
+    // .subscribe(
+    //   data => {
+    //     this.itemIdList = data;
+    //     console.log(this.itemIdList);
+    //   }
+    // );
 
   }
 
@@ -598,52 +601,52 @@ export class AvgCostUpdateComponent implements OnInit {
     return matches;
   };
 
-  onOptioninvItemIdSelected(itemId, index) {
+  // onOptioninvItemIdSelected(itemId, index) {
 
-    //  alert('item function');
-      let selectedValue = this.invItemList.find(v => v.segment == itemId);
-      if( selectedValue != undefined){
-      // alert(selectedValue.itemId);
-      console.log(selectedValue);
+  //   //  alert('item function');
+  //     let selectedValue = this.invItemList.find(v => v.segment == itemId);
+  //     if( selectedValue != undefined){
+  //     // alert(selectedValue.itemId);
+  //     console.log(selectedValue);
 
-      var arrayControl = this.avgCostUpdateForm .get('priceListDetailList').value
-      var patch = this.avgCostUpdateForm .get('priceListDetailList') as FormArray;
-      // this.itemType = arrayControl[index].itemType
-      // alert(this.itemType)
-      this.itemId = selectedValue.itemId;
-      // console.log(this.invItemId, this.taxCat);
+  //     var arrayControl = this.avgCostUpdateForm .get('priceListDetailList').value
+  //     var patch = this.avgCostUpdateForm .get('priceListDetailList') as FormArray;
+  //     // this.itemType = arrayControl[index].itemType
+  //     // alert(this.itemType)
+  //     this.itemId = selectedValue.itemId;
+  //     // console.log(this.invItemId, this.taxCat);
 
-        // ---------------------Prior Cost picking--------------------------
-        var patch = this.avgCostUpdateForm.get('priceListDetailList') as FormArray;
-        this.service.avgCurrentCost(this.itemId,this.locId)
-        .subscribe(
-          data => {
-            this.avgCurrrentCost = data;
-            console.log(this.avgCurrrentCost);
+  //       // ---------------------Prior Cost picking--------------------------
+  //       var patch = this.avgCostUpdateForm.get('priceListDetailList') as FormArray;
+  //       this.service.avgCurrentCost(this.itemId,this.locId)
+  //       .subscribe(
+  //         data => {
+  //           this.avgCurrrentCost = data;
+  //           console.log(this.avgCurrrentCost);
 
-            // this.avgCostUpdateForm.patchValue(this.avgCurrrentCost.rate);
+  //           // this.avgCostUpdateForm.patchValue(this.avgCurrrentCost.rate);
 
-            this.priorCost=this.avgCurrrentCost.rate;
-            (patch.controls[index]).patchValue({priorCost: this.priorCost})
-            // alert("Prior cost Rate:" +this.priorCost +" Item Id:"+this.itemId+" Location Id:"+this.locId);
-          }
-        );
+  //           this.priorCost=this.avgCurrrentCost.rate;
+  //           (patch.controls[index]).patchValue({priorCost: this.priorCost})
+  //           // alert("Prior cost Rate:" +this.priorCost +" Item Id:"+this.itemId+" Location Id:"+this.locId);
+  //         }
+  //       );
 
-        // ---------------------Prior Cost picking--------------------------
-      (patch.controls[index]).patchValue(
-        {
-          uom: selectedValue.uom,
-          // itemDescription: selectedValue.description,
-          itemDescription: selectedValue.description,
-          itemCategory: selectedValue.categoryId.attribute1,
-          itemId: selectedValue.itemId,
-          itemName:selectedValue.segment,
+  //       // ---------------------Prior Cost picking--------------------------
+  //     (patch.controls[index]).patchValue(
+  //       {
+  //         uom: selectedValue.uom,
+         
+  //         itemDescription: selectedValue.description,
+  //         itemCategory: selectedValue.categoryId.attribute1,
+  //         itemId: selectedValue.itemId,
+  //         itemName:selectedValue.segment,
 
-        }
-      );
+  //       }
+  //     );
 
-    }
-  }
+  //   }
+  // }
 // ======================================================================
 
 

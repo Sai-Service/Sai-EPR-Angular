@@ -53,7 +53,7 @@ interface IsupplierMaster {
   sstatus: string;
   emplId:number;
   aadharNo:string;
-  eTktNo:string;
+  // ticketNo:string;
   Ename:string;
   type:string;
   divisionId:number;
@@ -163,7 +163,7 @@ export class SupplierMasterComponent implements OnInit {
   supplierTyp: any;
   displaySupplier:Boolean;
   displayEmployee :Boolean;
-  eTktNo:string;
+  // ticketNo:string;
   Ename:string;
   locId:number;
   displaySaveBtn: boolean=true;
@@ -263,7 +263,7 @@ export class SupplierMasterComponent implements OnInit {
       cityE: [],
       pinCodeE: ['',[Validators.pattern('[0-9]*'),Validators.minLength(10),Validators.maxLength(10)]],
       stateE: [],
-      eTktNo:[],
+      ticketNo:[],
       Ename:[],
       spanNo:[],
       sGstNo:[],
@@ -676,11 +676,11 @@ export class SupplierMasterComponent implements OnInit {
     return val;
   }
   updatesupplierMast() {
-    var isvaliddata = this.validation();
-    if (isvaliddata === false) {
-      // alert('In Validation (v)');
-      return;
-    }
+    // var isvaliddata = this.validation();
+    // if (isvaliddata === false) {
+    //   // alert('In Validation (v)');
+    //   return;
+    // }
 
     // this.submitted = true;
     // if (this.supplierMasterForm.invalid) {
@@ -917,7 +917,7 @@ alert(suppSiteId);
     // if(ouId!=undefined){
       var siteState=this.supplierMasterForm.get('sstate').value;
       alert(siteState+'state');
-      if(ouId!=undefined){
+      if(ouId!=undefined && siteState!=undefined){
       this.service.taxCategorySiteList1(ouId,siteState)
   .subscribe(
     data => {
@@ -986,7 +986,7 @@ alert(suppSiteId);
         this.supplierMasterForm.patchValue({state:select.attribute1});
         // console.log(this.cityList1.attribute1);
         // this.country = 'INDIA';
-        if(this.ouId!=undefined){
+        if(this.ouId!=undefined && select.attribute1!=undefined){
          this.service.taxCategorySiteList1(this.ouId,select.attribute1)
         .subscribe(
           data => {
@@ -1036,7 +1036,7 @@ alert(suppSiteId);
   }
 
 
-    onOptionsSelectedCity1(city: any){
+    onOptionsSelectedCity1(event:any){
         // alert(city);
         // this.service.cityList1(city)
         // .subscribe(
@@ -1045,14 +1045,14 @@ alert(suppSiteId);
         //     console.log(this.cityList1);
         //     // this.state=this.cityList1.attribute1;
         //     this.sstate=this.cityList1.attribute1;
-            let select1 = this.cityList.find(d => d.codeDesc=== city);
+            let select1 = this.cityList.find(d => d.codeDesc=== event);
 
             this.supplierMasterForm.patchValue({sstate:select1.attribute1});
-            console.log(this.cityList1.attribute1);
+            // console.log(this.cityList1.attribute1);
             // this.country = 'INDIA';
             var ouId=this.supplierMasterForm.get('souId').value;
-            if(ouId!=undefined){
-            this.service.taxCategorySiteList1(ouId,this.sstate)
+            if(ouId!=undefined && this.supplierMasterForm.get('sstate').value!=undefined){
+            this.service.taxCategorySiteList1(ouId,this.supplierMasterForm.get('sstate').value)
         .subscribe(
           data => {
             // this.taxCategoryNameList = data;
