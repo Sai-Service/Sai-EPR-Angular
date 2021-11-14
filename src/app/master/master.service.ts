@@ -3112,5 +3112,27 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
     }
 
+    /////////////////////////RECEIVABLE TRANSACTION TYPE MASTER ///////////////////////
+
+    recTypeClass() {
+    return this.http.get(this.ServerUrl +'/cmnLookup/type/RcvClass');
+    }
+
+    recCategoryBase() {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/AccountingBase');
+      }
+
+    recRecAcList() {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+      }
+
+    recRevAcList() {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+      }
+
+   
+      
+
+      
 
 }

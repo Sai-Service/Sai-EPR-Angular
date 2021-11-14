@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 // import { now } from 'jquery';
 // import { saveAs } from 'file-saver';
 
@@ -55,11 +56,14 @@ interface IPriceList {
 export class PricelistMasterComponent implements OnInit {
   priceListMasterForm: FormGroup;
 
+  progress = 0;
+  // message = '';
+  selectFile?: File;
+
   pipe = new DatePipe('en-US');
   now = Date.now();
-
-   resMsg : string;
-   lstMessage: any;
+  resMsg : string;
+  lstMessage: any;
 
    
  
@@ -90,7 +94,7 @@ export class PricelistMasterComponent implements OnInit {
   endDate:Date;
 
   upldPricelistName : string;
-  
+  public PriceListIdList : Array<string> = [];
   
   
   // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
@@ -110,7 +114,7 @@ export class PricelistMasterComponent implements OnInit {
   public PriceSubTypeList: Array<string> = [];
   public DepartmentList: Array<string> = [];
 
-  public PriceListIdList : Array<string> = [];
+ 
   public priceDescList  :any;
 
   public OUIdList: Array<string> = [];
@@ -815,13 +819,26 @@ export class PricelistMasterComponent implements OnInit {
 
   uploadFile() {
    
+    this.progress = 0;
 
     var upldPlName =this.priceListMasterForm.get('upldPricelistName').value;
+    var event=this.fileInput.nativeElement.files[0];
     console.log('doctype-check'+this.docType)
     let formData = new FormData();
-    formData.append('file', this.fileInput.nativeElement.files[0])
+    // formData.append('file', this.fileInput.nativeElement.files[0])
+    formData.append('file', event)
+
       this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
       this.message = result.toString();
+
+      // if (event.type === HttpEventType.UploadProgress) {
+      // this.progress = Math.round(100 * event.loaded / event.total);
+      // } else if (event instanceof HttpResponse) {
+      //   this.message = event.body.message;
+       
+      // }
+      // alert ( "this.message :" + this.message);
+
        this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
    
         if (res.code === 200) {

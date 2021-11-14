@@ -198,7 +198,7 @@ onhandDetailsForm:FormGroup;
     alert ("Please select valid Item Code ....") ;return;
    }
   
-   alert("select1.itemId  :"+select1.itemId +","+segment1 );
+  //  alert("select1.itemId  :"+select1.itemId +","+segment1 );
    
  
   this.service.searchByItemByLoc(this.locId,select1.itemId,this.ouId,this.divisionId).subscribe(
@@ -224,7 +224,7 @@ onhandDetailsForm:FormGroup;
 
   searchByItemF9(xyz) {
     var segment1=this.onhandDetailsForm.get('segment').value
-    alert("Segment :" +segment1);
+    // alert("Segment :" +segment1);
 
     if(segment1 ==undefined || segment1==null) {
       alert ("Please select Item Code ....") ;
