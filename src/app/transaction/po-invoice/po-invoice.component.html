@@ -1606,9 +1606,14 @@
             <td>
                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
             </td>
+            <div [style.display]="isVisible1 ? 'block' : 'none'">
+            <td>
+                <button type="submit" (click)="apInvCancelled()" class="btn btn-primary">AP Inv Cancelled</button>
+            </td>
+        </div>
             <div [style.display]="isVisible ? 'block' : 'none'">
             <td>
-                <button type="submit" class="btn btn-primary"   (click)=" apInvoiceSave()">Save</button>
+                <button type="submit" class="btn btn-primary"   (click)="apInvoiceSave()">Save</button>
             </td>
             <td>
                 <div *ngIf="displayValidateButton; then thenValidateButton; else elseValidateButton"></div>

@@ -44,6 +44,15 @@ UpdateValidate(invoiceNum) {
   const url = (this.ServerUrl + `/apInv/invValidate/${invoiceNum}`);
   return this.http.put(url, invoiceNum, options);
 }
+
+apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
+  const options = {
+    headers: this.headers
+  };
+  const url = (this.ServerUrl + `/apInv/apInvCancel?invNum=${invoiceNum}&emplId=${emplId}`);
+  return this.http.put(url, invoiceNum, options);
+}
+
   getApInvLineDetails(invoiceNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/invDtls/${invoiceNum}`);
   }

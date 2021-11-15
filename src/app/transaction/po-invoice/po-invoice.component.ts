@@ -170,6 +170,7 @@ export class PoInvoiceComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   isVisible: boolean = true;
+  isVisible1:boolean=false;
 
   invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   // accountingDate = new Date();
@@ -969,15 +970,16 @@ export class PoInvoiceComponent implements OnInit {
             );
           }
           // alert(res.obj[i].invoiceStatus);
-          // if (res.obj[i].invoiceStatus===null){
-          //   this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
-          // }
-          // else{
-          //   this.poInvoiceForm.patchValue({INVStatus:res.obj[i].invoiceStatus})
-          // }
-          // if (res.obj[i].invoiceStatus==='Validated'){
-          //   this.poInvoiceForm.disable();
-          // }
+          if (res.obj[i].invoiceStatus===null){
+            this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
+            this.isVisible1=true;
+          }
+          else{
+            this.poInvoiceForm.patchValue({INVStatus:res.obj[i].invoiceStatus})
+          }
+          if (res.obj[i].invoiceStatus==='Validated'){
+            this.poInvoiceForm.disable();
+          }
           this.lineDetailsArray().controls[i].get('locationId').disable();
           this.lineDetailsArray().controls[i].get('invTypeLookupCode').disable();
           this.lineDetailsArray().controls[i].get('segment1').disable();
@@ -1123,10 +1125,10 @@ export class PoInvoiceComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
-    alert(i)
+    // alert(i)
     this.selectedLine=i;
     var arrayControl = this.poInvoiceForm.get('obj').value;
-    // var invStatus = arrayControl[this.selectedLine].INVStatus;
+    var invStatus = arrayControl[this.selectedLine].INVStatus;
     // alert(invStatus)
     // if (arrayControl[this.selectedLine].INVStatus===null){
     //   this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
@@ -1137,7 +1139,7 @@ export class PoInvoiceComponent implements OnInit {
     // if (arrayControl[this.selectedLine].INVStatus==='Validated'){
     //   this.poInvoiceForm.disable();
     // }
-    // var INVStatus = arrayControl[this.selectedLine].INVStatus;
+    var INVStatus = arrayControl[this.selectedLine].INVStatus;
     var INVStatus1=this.poInvoiceForm.get('INVStatus').value;
     // alert(INVStatus +'----'+ INVStatus1)
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
@@ -1283,8 +1285,18 @@ export class PoInvoiceComponent implements OnInit {
 
 if (INVStatus1==='Validated'){
   this.isVisible=false;
+  this.isVisible1=false;
 }
 else{
+  this.isVisible=true;
+   this.isVisible1=true;
+}
+if (INVStatus1==='CANCELLED'){
+  this.isVisible1=false;
+  this.isVisible=false;
+}
+else{
+  this.isVisible1=true;
   this.isVisible=true;
 }
 
@@ -1370,7 +1382,7 @@ else{
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.poInvoiceForm.disable();
+        // this.poInvoiceForm.disable();
         // alert(res.obj);
         this.internalSeqNo = res.obj;
       } else {
@@ -1938,17 +1950,17 @@ else{
 
   }
   Validate() { 
-    alert(this.selectedLine);
+    // alert(this.selectedLine);
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount = arrayControl[this.selectedLine].invoiceAmt;
-    alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
+    // alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
     }
-    alert(totalOfInvLineAmout);
+    // alert(totalOfInvLineAmout);
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       totalOfDistributionAmout = totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)
@@ -1960,12 +1972,15 @@ else{
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       // alert('in validate')
       var arrayControl = this.poInvoiceForm.get('obj').value;
-      var invoiceNum = arrayControl[this.selectedLine].invoiceNum;
-      alert(invoiceNum);
+      // var invoiceNum = arrayControl[this.selectedLine].invoiceNum;
+      var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+      // alert(invoiceNum);
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
           this.poInvoiceForm.disable();
+          this.poInvoiceForm.patchValue({INVStatus:'Validate'})
+          this.isVisible=false;
           // window.location.reload();
         } else {
           if (res.code === 400) {
@@ -1981,6 +1996,25 @@ else{
     }
 
   }
+
+
+  apInvCancelled(){
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    this.transactionService.apInvoiceCancellation(invoiceNum,sessionStorage.getItem('emplId'))
+    .subscribe(
+      data => {
+       if (data.code===200){
+         alert(data.message);
+       }
+       else if (data.code===400){
+         alert(data.message);
+       }
+      }
+    );
+  }
+
+
+
   validateNum(index, j) {
     // var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;
     // // this.poMasterDtoForm.get('poLines').value
