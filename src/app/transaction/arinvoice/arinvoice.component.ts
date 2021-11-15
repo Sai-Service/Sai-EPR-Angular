@@ -159,6 +159,8 @@ export class ARInvoiceComponent implements OnInit {
   custAccountNo:number;
   custName:string;
 
+  hsnSacCodeList: any=[];
+
   GLPeriodCheck: any;
   glPrdStartDate: string;
   glPrdEndDate: string;
@@ -517,6 +519,11 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.GLPeriodCheck);
         }
       );
+      this.service.hsnSacCodeData('HSN').subscribe(
+        data=>{
+          this.hsnSacCodeList=data;
+        }
+      )
 
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate

@@ -70,7 +70,7 @@
                                                     Journal&nbsp;Type&nbsp;:
                                                 </td>
                                                 <td >
-                                                    <select class="form-control" formControlName="jeCategory">
+                                                    <select class="form-control" formControlName="jeCategory" (ngModelChange)="OnSelectJournalType($event)">
                                                         <option>--Select--</option>
                                                         <option *ngFor="let jt of JournalType">{{jt.lookupValue}}</option>
                                                     </select>
@@ -160,7 +160,7 @@
                             </table>
                             </td>
             </tr>
-          
+
         </table>
     </div>
    </div>
@@ -200,7 +200,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                                <input  disabled  data-target="#myModal1" formControlName="segmentName" value={{segmentName}}  
+                                                <input  disabled  data-target="#myModal1" formControlName="segmentName" value={{segmentName}}
                                                 class="form-control" style="height: 20px;width: 250px;">
                                         </td>
                                         <td>
@@ -208,9 +208,9 @@
                                         </td>
                                     </tr>
                                 </table>
-                                    
+
                             </td>
-                            <input hidden formControlName="codeCombinationId">
+                            <input hidden formControlName="codeCombinationId"  [(ngModel)]="codeCombinationId">
                             <td>
                                     <input type="text" class="form-control"  style="height: 20px;width: 100px;text-align: right;"formControlName="enteredDr"(ngModelChange)="debitTotalCal()">
                             </td>
@@ -237,7 +237,7 @@
                   </table>
                  <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
                     <tr class="ItemStyle">
-                        
+
                         <td  colspan="4"><b>Total:&nbsp;</b></td>
                         <td style="width: 14.7rem;"></td>
                         <!-- <td style="width: 6rem;"></td> -->
@@ -248,7 +248,7 @@
                             <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control"  style="height: 20px;width: 100px;text-align: right;">
                         </td>
                         <td style="width: 8rem;">
-                            
+
                         </td>
                         <td style="width: 8rem;" hidden>	</td>
                         <td style="width: 8rem;" hidden>	</td>
@@ -258,12 +258,12 @@
                   </td>
               </tr>
             </table>
-        
+
 
     </div>
 <!-- </div> -->
-                 
-    
+
+
     <table class="center">
             <tr>
                <td>
@@ -288,7 +288,7 @@
           </table>
           <div id="myModal1" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
           aria-hidden="true" style="width: 500px; margin-left:350px">
-  
+
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
@@ -379,7 +379,7 @@
                                    <datalist id="dynmicUserIds1">
                                         <option>--Select--</option>
                                       <option *ngFor="let sc of  NaturalAccountList" >
-                                          {{sc.lookupValue}}--{{sc.lookupValueDesc}}
+                                          {{sc.naturalaccount}}--{{sc.description}}
                                       </option>
                                    </datalist>
                               </td>
@@ -393,7 +393,7 @@
                           <tr>
                               <td style="width: 15%" class="LabelFontStyle">
                                   Inter&nbsp;Branch&nbsp;:
-  
+
                               </td>
                               <td>
                                   <select formControlName="segment5" id="segment5" class="form-control"
@@ -412,18 +412,18 @@
                                   <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
                               </td>
                           </tr>
-  
+
                       </table>
                       <div class="modal-footer">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >&times;</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
                         [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                             (click)="fnCancatination(content)">OK</button>
-  
+
                     </div>
-  
+
                   </div>
-  
+
               </div>
           </div>
       </div>

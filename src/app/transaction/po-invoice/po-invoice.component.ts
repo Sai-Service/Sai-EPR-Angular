@@ -169,6 +169,8 @@ export class PoInvoiceComponent implements OnInit {
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
   now = Date.now();
+  isVisible: boolean = true;
+  isVisible1:boolean=false;
 
   invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   // accountingDate = new Date();
@@ -238,7 +240,7 @@ export class PoInvoiceComponent implements OnInit {
   totalDistBaseAmt: number;
   distLineNumber: number;
   invTransferStatus: string = "Never Validated";
-  INVStatus: string = 'Never Validated';
+  INVStatus: string ;
   poChargeDesc: string = 'Unprocessed';
   dispStatus = true;
   displayTdsButton = false;
@@ -333,6 +335,7 @@ export class PoInvoiceComponent implements OnInit {
     this.poInvoiceForm = fb.group({
       emplId: [],
       ouId: [''],
+      INVStatus:[''],
       suppNo: [''],
       suppId: [''],
       invoiceNum: [''],
@@ -528,6 +531,7 @@ export class PoInvoiceComponent implements OnInit {
       locationId: ['', [Validators.required]],
       emplId: [],
       ouName: [],
+      INVStatus:[],
       invTypeLookupCode: ['', [Validators.required]],
       segment1: [],
       name: ['', [Validators.required]],
@@ -648,22 +652,24 @@ export class PoInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
    
-
+    $("#wrapper").toggleClass("toggled");
     var patch = this.poInvoiceForm.get('obj') as FormArray;
     (patch.controls[0]).patchValue(
       {
         ouName: (sessionStorage.getItem('ouName')),
         ouId:(sessionStorage.getItem('ouId')),
-        INVStatus:'Never Validated'
+        
       }
     );
+
+    this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
    
     // this.invoiceDate = new Date()
    // this.localCompleteDate = this.invoiceDate.toISOString();
     // this.localCompleteDate = this.localCompleteDate.substring(0, this.localCompleteDate.length - 1);
     // this.glDate = new Date();
    
-    this.INVStatus = 'Never Validated';
+    // this.INVStatus = 'Never Validated';
     this.paymentMethod1 = 69;
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.emplId = Number(sessionStorage.getItem('emplId'));
@@ -935,13 +941,14 @@ export class PoInvoiceComponent implements OnInit {
     this.displaydistributionSet = true;
     let jsonData=this.poInvoiceForm.value;
     let invSearch:ISearch = Object.assign({},jsonData);
-
+    // this.lineDetailsArray().disable();
     var searchObj:InvoiceSearchObj=new InvoiceSearchObj();
     if(this.poInvoiceForm.get('segment1').value != null){searchObj.segment1=this.poInvoiceForm.get('segment1').value}
     if(this.poInvoiceForm.get('suppNo').value != null){searchObj.suppNo=this.poInvoiceForm.get('suppNo').value}
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.lstsearchapinv = res.obj;
+       
         this.lstsearchapinv.forEach(f => {
           var invLnGrp: FormGroup = this.lineDetailsGroup();
           this.lineDetailsArray().push(invLnGrp);
@@ -962,12 +969,34 @@ export class PoInvoiceComponent implements OnInit {
               }
             );
           }
-          if (res.obj.invoiceStatus===null){
-            this.poInvoiceForm.patchValue({})
+          // alert(res.obj[i].invoiceStatus);
+          if (res.obj[i].invoiceStatus===null){
+            this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
+            this.isVisible1=true;
           }
+          else{
+            this.poInvoiceForm.patchValue({INVStatus:res.obj[i].invoiceStatus})
+          }
+          if (res.obj[i].invoiceStatus==='Validated'){
+            this.poInvoiceForm.disable();
+          }
+          this.lineDetailsArray().controls[i].get('locationId').disable();
+          this.lineDetailsArray().controls[i].get('invTypeLookupCode').disable();
+          this.lineDetailsArray().controls[i].get('segment1').disable();
+          this.lineDetailsArray().controls[i].get('name').disable();
+          this.lineDetailsArray().controls[i].get('suppNo').disable();
+          this.lineDetailsArray().controls[i].get('siteName').disable();
+          this.lineDetailsArray().controls[i].get('invoiceDate').disable();
+          this.lineDetailsArray().controls[i].get('invoiceNum').disable();
+          this.lineDetailsArray().controls[i].get('invoiceId1').disable();
+          this.lineDetailsArray().controls[i].get('glDate').disable();
+          this.lineDetailsArray().controls[i].get('currency').disable();
+          this.lineDetailsArray().controls[i].get('paymentRateDate').disable();
+          this.lineDetailsArray().controls[i].get('ouName').disable();
+          
         }
         this.displayValidateButton = false;
-        this.INVStatus = this.lstsearchapinv.invoiceStatus;
+       
       }
       else {
         if (res.code === 400) {
@@ -1096,8 +1125,23 @@ export class PoInvoiceComponent implements OnInit {
 
 
   selectINVLineDtl(i) {
-    alert(i)
+    // alert(i)
     this.selectedLine=i;
+    var arrayControl = this.poInvoiceForm.get('obj').value;
+    var invStatus = arrayControl[this.selectedLine].INVStatus;
+    // alert(invStatus)
+    // if (arrayControl[this.selectedLine].INVStatus===null){
+    //   this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
+    // }
+    // else{
+    //   this.poInvoiceForm.patchValue({INVStatus:this.lstsearchapinv[i].invoiceStatus})
+    // }
+    // if (arrayControl[this.selectedLine].INVStatus==='Validated'){
+    //   this.poInvoiceForm.disable();
+    // }
+    var INVStatus = arrayControl[this.selectedLine].INVStatus;
+    var INVStatus1=this.poInvoiceForm.get('INVStatus').value;
+    // alert(INVStatus +'----'+ INVStatus1)
     var invoiceNum = this.lineDetailsArray().controls[i].get('invoiceNum').value;
     // alert(invoiceNum);
     this.invLineDetailsArray().clear();
@@ -1239,7 +1283,22 @@ export class PoInvoiceComponent implements OnInit {
         }
       )
 
-
+if (INVStatus1==='Validated'){
+  this.isVisible=false;
+  this.isVisible1=false;
+}
+else{
+  this.isVisible=true;
+   this.isVisible1=true;
+}
+if (INVStatus1==='CANCELLED'){
+  this.isVisible1=false;
+  this.isVisible=false;
+}
+else{
+  this.isVisible1=true;
+  this.isVisible=true;
+}
 
   }
 
@@ -1323,7 +1382,7 @@ export class PoInvoiceComponent implements OnInit {
     this.transactionService.apInvSaveSubmit(JSON.stringify(manInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        this.poInvoiceForm.disable();
+        // this.poInvoiceForm.disable();
         // alert(res.obj);
         this.internalSeqNo = res.obj;
       } else {
@@ -1891,17 +1950,17 @@ export class PoInvoiceComponent implements OnInit {
 
   }
   Validate() { 
-    alert(this.selectedLine);
+    // alert(this.selectedLine);
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     var amount = arrayControl[this.selectedLine].invoiceAmt;
-    alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
+    // alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
     }
-    alert(totalOfInvLineAmout);
+    // alert(totalOfInvLineAmout);
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
       totalOfDistributionAmout = totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)
@@ -1913,12 +1972,15 @@ export class PoInvoiceComponent implements OnInit {
     if (amount == totalOfInvLineAmout && amount == totalOfDistributionAmout) {
       // alert('in validate')
       var arrayControl = this.poInvoiceForm.get('obj').value;
-      var invoiceNum = arrayControl[this.selectedLine].invoiceNum;
+      // var invoiceNum = arrayControl[this.selectedLine].invoiceNum;
+      var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
       // alert(invoiceNum);
       this.transactionService.UpdateValidate(invoiceNum).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
           this.poInvoiceForm.disable();
+          this.poInvoiceForm.patchValue({INVStatus:'Validate'})
+          this.isVisible=false;
           // window.location.reload();
         } else {
           if (res.code === 400) {
@@ -1934,6 +1996,25 @@ export class PoInvoiceComponent implements OnInit {
     }
 
   }
+
+
+  apInvCancelled(){
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    this.transactionService.apInvoiceCancellation(invoiceNum,sessionStorage.getItem('emplId'))
+    .subscribe(
+      data => {
+       if (data.code===200){
+         alert(data.message);
+       }
+       else if (data.code===400){
+         alert(data.message);
+       }
+      }
+    );
+  }
+
+
+
   validateNum(index, j) {
     // var arrayControl =this.lineDetailsArray.controls[index].get('taxAmounts').value;
     // // this.poMasterDtoForm.get('poLines').value
