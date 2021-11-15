@@ -245,13 +245,22 @@ export class PricelistMasterComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
     
-     this.service.invItemList1()
+    //  this.service.invItemList1()
+    //   .subscribe(
+    //     data => {
+    //       this.invItemList = data;
+    //       console.log(this.invItemList);
+    //     }
+    //   );
+
+ this.service.invItemListNew(sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           this.invItemList = data;
           console.log(this.invItemList);
         }
       );
+ 
 
     this.service.PriceListIdList()
     .subscribe(
@@ -310,13 +319,13 @@ export class PricelistMasterComponent implements OnInit {
     );
     
 
-    this.service.itemIdList()
-    .subscribe(
-      data => {
-        this.itemIdList = data;
-        console.log(this.itemIdList);
-      }
-    );
+    // this.service.itemIdList()
+    // .subscribe(
+    //   data => {
+    //     this.itemIdList = data;
+    //     console.log(this.itemIdList);
+    //   }
+    // );
 
   }
 
@@ -610,52 +619,81 @@ export class PricelistMasterComponent implements OnInit {
   // ============================================================
 
   Select(priceListHeaderId: number) {
+    alert(priceListHeaderId);
     this.priceListMasterForm.reset();
     this.display1= false;
-    // alert ('priceListHeaderId='+priceListHeaderId);
-    let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
-    console.log(select.priceListDetailList[0]);
-    // alert(this.lineDetailsArray.length);
-
-    // alert("lineDetailsArray Length=" +this.lineDetailsArray.length);
+   
+    // let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
+    // console.log(select.priceListDetailList[0]);
 
     for(let i=0; i<this.lineDetailsArray.length; i++){ 
       this.lineDetailsArray().removeAt(i);
     }
-    // alert("priceListDetailList LENGTH: "+ select.priceListDetailList.length);
-    // alert("lineDetailsArray Length=" +this.lineDetailsArray.length);
+    this.lineDetailsArray().clear();
+   
+    // if(select.priceListDetailList.length>0){
 
-    if(select.priceListDetailList.length>0){
+    //    
 
-       this.lineDetailsArray().clear();
+    //   if (select) {
 
-      if (select) {
-
-          this.priceListType = select.priceListType+ "-" + select.priceListName;
-          // alert("priceListDetailList LENGTH: "+ select.priceListDetailList.length);
-          var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+    //       this.priceListType = select.priceListType+ "-" + select.priceListName;
+        
+    //       var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
          
-          for (let i=0; i<select.priceListDetailList.length;i++) 
-            {
-              var priceListDetailList:FormGroup=this.lineDetailsGroup();
-              control.push(priceListDetailList);
-            }
+    //       for (let i=0; i<select.priceListDetailList.length;i++) 
+    //         {
+    //           var priceListDetailList:FormGroup=this.lineDetailsGroup();
+    //           control.push(priceListDetailList);
+    //         }
     
-        }
-    }
+    //     }
+    // }
 
-      this.priceListHeaderId = select.priceListHeaderId;
+    this.service.getLineDetails(priceListHeaderId)  .subscribe(
+      data => {
+        console.log(data);
+        var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+        for (let i = 0; i < data.length ; i++) {
+          var priceListDetailList:FormGroup=this.lineDetailsGroup();
+              control.push(priceListDetailList);
+              this.priceListMasterForm.patchValue(data);
+        }
+        // this.priceListMasterForm.patchValue(data);
+       var pricelistHeaderDetails= this.lstcomments;
+        // let controlinv = this.priceListMasterForm.get('oeOrderLinesAllList') as FormArray;
+        // (controlinv.controls[k]).patchValue({
+        //   baseAmt: Math.round((data.obj.oeOrderLinesAllList[k].baseAmt + Number.EPSILON) * 100) / 100,
+        //   taxAmt: Math.round((data.obj.oeOrderLinesAllList[k].taxAmt + Number.EPSILON) * 100) / 100,
+        //   totAmt: Math.round((data.obj.oeOrderLinesAllList[k].totAmt + Number.EPSILON) * 100) / 100,
+        //   unitSellingPrice: Math.round((data.obj.oeOrderLinesAllList[k].unitSellingPrice + Number.EPSILON) * 100) / 100,
+        //   disPer: data.obj.oeOrderLinesAllList[k].disPer,
+        //   taxCategoryId: data.obj.oeOrderLinesAllList[k].taxCategoryId,
+        // });
+      }
+     
+    )
+   
+      // this.priceListHeaderId = select.priceListHeaderId;
       this.displayButton = false;
       this.display = false;
       this.showItemSearch=true;
-      this.priceListMasterForm.patchValue(select);
+      // this.priceListMasterForm.patchValue(select);
     }
   
 
 
   
   searchMast() {
-    this.service.getPriceListSearch(999,this.divisionId)
+    // this.service.getPriceListSearch(999,this.divisionId)
+    //   .subscribe(
+    //     data => {
+    //       this.lstcomments = data;
+    //       console.log(this.lstcomments);
+    //     }
+    //   );
+
+    this.service.getPriceListSearchNew(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -727,6 +765,8 @@ export class PricelistMasterComponent implements OnInit {
  
     //  alert('item function-'+itemId);
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
+      console.log(selectedValue);
+      
       if( selectedValue != undefined){
       // alert('Item Id :' +selectedValue.itemId);
       console.log(selectedValue);
@@ -740,8 +780,8 @@ export class PricelistMasterComponent implements OnInit {
       (patch.controls[index]).patchValue(
         {
           uom: selectedValue.uom,
-          itemDescription: selectedValue.description,
-          itemCategory: selectedValue.categoryId.attribute1,
+          itemDescription: selectedValue.itemDescription,
+          itemCategory: selectedValue.itemCategory,
           itemId: selectedValue.itemId,
           itemName:selectedValue.segment,
         }

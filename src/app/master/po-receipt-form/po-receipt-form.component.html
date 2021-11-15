@@ -491,7 +491,7 @@
                                                 [(ngModel)]="supplierName" value={{supplierName}}  class="form-control">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Receipt&nbsp;Number&nbsp;:&nbsp;
+                                            GRR&nbsp;Number&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <input type="text" disabled formControlName="receiptNo" [(ngModel)]="receiptNo"
@@ -499,7 +499,7 @@
                                                 [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
-                                            Receipt&nbsp;Date&nbsp;:&nbsp;
+                                            GRR&nbsp;Date&nbsp;:&nbsp;
                                         </td>
                                         <td>
                                             <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
@@ -1190,13 +1190,13 @@
             <table class="center">
                 <tr>
                     <td style="width: 18%" class="LabelFontStyle">
-                        Journal&nbsp;:&nbsp;
+                        Desc/GRR&nbsp;No&nbsp;:&nbsp;
                     </td> 
                     <td>
-                        <input disabled formControlName="name1" id="name1" class="form-control" [ngModel]="name1" >
+                        <input disabled formControlName="name1" id="name1" class="form-control" [ngModel]="name1" style="width: fit-content;">
                     </td>
                     <td style="width: 18%" class="LabelFontStyle">
-                        Description&nbsp;:&nbsp;
+                        Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
                     </td>
                     <td>
                         <input disabled formControlName="docSeqValue" class="form-control" [ngModel]="docSeqValue" >
