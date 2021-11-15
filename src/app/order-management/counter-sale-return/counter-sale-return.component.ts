@@ -644,7 +644,7 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
         // this.showLocator=true;
         // this.validQtyEntered=true;
 
-        if ((mUom==='NO' && lineRtnQty < 1)  || lineRtnQty>lineIssQty  ) 
+        if ((mUom==='NO' && Number.isInteger(lineRtnQty)==false ) || lineRtnQty<=0 || lineRtnQty>lineIssQty  ) 
         {
           alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [ISSUED QTY] ")
 
@@ -671,6 +671,14 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
             var txbleAmt  =baseAmt-lineDisAmt; txbleAmt.toFixed(2);
             var taxAmt   =(txbleAmt * taxP/100); taxAmt.toFixed(2);
             var totAmt   =txbleAmt+taxAmt; totAmt.toFixed(2);
+
+            
+            baseAmt=Math.round((baseAmt + Number.EPSILON) * 100) / 100;
+            lineDisAmt=Math.round((lineDisAmt + Number.EPSILON) * 100) / 100;
+            txbleAmt=Math.round((txbleAmt + Number.EPSILON) * 100) / 100;
+            taxAmt=Math.round((taxAmt + Number.EPSILON) * 100) / 100;
+            totAmt=Math.round((totAmt + Number.EPSILON) * 100) / 100;
+
             
           // alert ("base amt,taxamt.totamt :" +baseAmt+","+taxAmt +","+totAmt);
           patch.controls[index].patchValue({baseAmt:baseAmt})

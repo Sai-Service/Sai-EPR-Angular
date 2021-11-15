@@ -186,6 +186,7 @@ export class ReturnToVendorComponent implements OnInit {
       dispReceiptLines=false;
       indReturn=false;
       searchButton=true;
+      integerNum=true;
 
       rtnSearch=false;
 
@@ -389,10 +390,11 @@ export class ReturnToVendorComponent implements OnInit {
           this.showLocator=true;
           this.validQtyEntered=true;
           
+          // if(Number.isInteger(lineRtnQty)) {this.integerNum=true; } else {this.integerNum=false;}
         
-           
+          // if ((mUom=='NO' && this.integerNum==false ) || lineRtnQty<=0 || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
         
-          if ((mUom=='NO' && lineRtnQty < 1)  || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
+          if ((mUom=='NO' && Number.isInteger(lineRtnQty)==false ) || lineRtnQty<=0 || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
           {
              alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [QTY RECEIVED] Or [ON HAND QTY]")
       
@@ -414,7 +416,11 @@ export class ReturnToVendorComponent implements OnInit {
               var baseAmt =lineRtnQty *uPrice;
               var taxAmt   =baseAmt * taxP/100;
               var totAmt   =baseAmt+taxAmt;
-            // alert ("base amt,taxamt.totamt :" +baseAmt+","+taxAmt +","+totAmt);
+
+              baseAmt=Math.round((baseAmt + Number.EPSILON) * 100) / 100
+              taxAmt=Math.round((taxAmt + Number.EPSILON) * 100) / 100
+              totAmt=Math.round((totAmt + Number.EPSILON) * 100) / 100
+
             patch.controls[index].patchValue({baseAmount:baseAmt})
             patch.controls[index].patchValue({taxAmount:taxAmt})
             patch.controls[index].patchValue({totAmount:totAmt})
@@ -1118,7 +1124,7 @@ export class ReturnToVendorComponent implements OnInit {
                   // alert (" this.validateStatus :"+ this.validateStatus);
                  
                 }   else  {
-                  alert ("Data validation Failed . Please check Line Item Number/Return Qty");
+                  alert ("Data Validation Failed . Please check Line Item Number| Return Qty");
                    this.saveButton = false;
                    this.validateStatus=true;
                  }
