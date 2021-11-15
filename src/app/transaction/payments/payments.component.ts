@@ -31,8 +31,9 @@ interface Ipayment{
 paymentNarration: string,
 paymentDocName:string,
 invoiceId:number,
-amount:number; 
+amount:number;
 statusLookupCode:string;
+appAmt:number;
 }
 
 @Component({
@@ -82,20 +83,22 @@ export class PaymentsComponent implements OnInit {
   displayouId=false;
   displaysiteAddress=false;
   displaystatus=false;
-  TRUER=false; recFagDiss=true; 
+  TRUER=false; recFagDiss=true;
   public bankAccountNumList: any;
   public paymentDocNameList:Array<string>=[];
   public statusLookupCodeList:Array<string>=[];
 public paymentIdListList:Array<string>=[];
 public PaymentReturnArr:any;
+appAmt:number;
 // public invAmtArr : any [];
   constructor(private fb: FormBuilder, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
       suppNo:[],
       ouName: [],
       paymentAmt:[],
-      totAmt:[],  
+      totAmt:[],
       INVNO:[],
+      appAmt:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -106,7 +109,7 @@ public PaymentReturnArr:any;
   payInvoiceLineDtlArray() : FormArray{
     return <FormArray>this.paymentForm.get('obj')
   }
-  
+
   payInvoiceLineDtl(){
     return this.fb.group({
       invoiceNum:[],
@@ -114,7 +117,8 @@ public PaymentReturnArr:any;
       selectFlag:[],
       invoiceId:[],
       unPaidAmt:[],
-    }) 
+      // appAmt:[],
+    })
   }
 
    payHeaderLineDtl(){
@@ -147,6 +151,7 @@ voucherNo:[],
       bankAccountNo:[],
       partyId:[],
       totAmount:[],
+      // appAmt:[],
     });
    }
 
@@ -165,7 +170,7 @@ voucherNo:[],
         console.log(this.supplierCodeList);
         data1 = this.supplierCodeList;
       }
-     
+
     );
 
     this.transactionService.bankAccountNumList(this.ouId)
@@ -175,14 +180,14 @@ voucherNo:[],
         console.log(this.bankAccountNumList);
       }
     );
-    
+
     this.transactionService.statusLookupCodeList()
     .subscribe(
       data => {
         this.statusLookupCodeList = data;
         console.log(this.statusLookupCodeList);
       }
-    );  
+    );
     this.transactionService.paymentIdListList()
     .subscribe(
       data => {
@@ -242,11 +247,12 @@ voucherNo:[],
       });
       this.paymentForm.get('obj1').patchValue(this.lstsearchpayminv);
      }
-     )} 
+     )}
 
 
      paymentInvoiceFind(suppNo:number,ouId:number){
-      var suppNo1=this.paymentForm.get('obj1').value; 
+       
+      var suppNo1=this.paymentForm.get('obj1').value;
       this.payInvoiceLineDtlArray().clear();
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
        this.lstinvoiceDetls=res.obj;
@@ -260,17 +266,21 @@ voucherNo:[],
        this.lstinvoiceDetls.forEach(f => {
          var payInvGrp: FormGroup = this.payInvoiceLineDtl();
          this.payInvoiceLineDtlArray().push(payInvGrp);
-         
+
        });
        this.paymentForm.get('obj').patchValue(this.lstinvoiceDetls);
 
       }
-      )} 
-     
+      );
+      (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+        
+      
+    }
+
  changeAmount(i){
   var totlCalControls=this.paymentForm.get('obj').value;
     var sum=0;
-   
+
     for (let i=0;i< this.payInvoiceLineDtlArray().length;i++){
      sum=sum+ Number(totlCalControls[i].invoiceAmt);
     //  alert(totlCalControls[i].invoiceAmt);
@@ -285,7 +295,7 @@ voucherNo:[],
           unPaidAmt: unPaidAmt1,
         }
       );
-  //  } 
+  //  }
  }
 
 
@@ -308,7 +318,7 @@ voucherNo:[],
         }
       );
        }
-      
+
     }
 
 
@@ -367,7 +377,7 @@ voucherNo:[],
             console.log(this.supplierCodeList1);
             this.suppNo=name;
             console.log(this.supplierCodeList1);
-           
+
           }
         );
         let selectedValue = this.supplierCodeList.find(v => v.suppNo == name);
@@ -375,7 +385,7 @@ voucherNo:[],
         this.service.suppIdList1(selectedValue.suppId, this.ouId)
         .subscribe(
           data => {
-  
+
             this.suppIdList1 = data;
             if (this.suppIdList1.length == 0) {
               alert('Supplier site not attached to supplier');
@@ -395,22 +405,53 @@ voucherNo:[],
                 console.log(this.siteIdList);
               }
             );
-        }  
+        }
 
-        
+
         selectFlag1(e) {
           if (e.target.checked=== true) {
             this.selectFlag = 'Y'
-         } 
+         }
          if (e.target.checked=== false) {
            this.selectFlag='N'
          }
+         this.appAmt=0;
+         var arrayControle=this.paymentForm.get('obj').value;
+         for (let i=0;i<this.payInvoiceLineDtlArray().length;i++){
+          alert(arrayControle[i].selectFlag+'SelectFlag');
+       if (arrayControle[i].selectFlag==true)
+      {
+        alert('yyyy '+arrayControle[i].invoiceAmt)
+       this.appAmt = this.appAmt + Number(arrayControle[i].invoiceAmt);
+       alert(this.appAmt);
+         // invPayment.push(id)
+       //
+       }
+     }
+     const totlPayHeaderControls=this.paymentForm.get('obj1').value;
+        if(this.appAmt>totlPayHeaderControls[0].PayAmount)
+        {
+          // (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+          alert("You can not apply payment where actual amount is greater than selected Amount");
+          
+        }
+        else{
+          (document.getElementById('btnSave') as HTMLInputElement).disabled = false;
+        }
+      
  }
 
 paymentSave(){
-  this.totAmt=0; 
+  const totlPayHeaderControls=this.paymentForm.get('obj1').value;
+  if(this.totAmount>totlPayHeaderControls[0].PayAmount)
+  {
+    (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+    alert("You can not apply payment where actual amount is greater than selected Amount");
+    
+  }
+  this.totAmt=0;
   const totlCalControls=this.paymentForm.get('obj').value;
-  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {          
+  for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
     this.totAmt=this.totAmt+totlCalControls[k].totAmt;
   }
   const formValue: Ipayment = this.paymentForm.value;
@@ -439,13 +480,14 @@ paymentSave(){
     var id = {"invoiceId": arrayControle[i].invoiceId}
     var id2 = {"amount": arrayControle[i].invoiceAmt}
     // invPayment.push(id)
-    // 
+    //
     invPayment.push({
       invoiceId:arrayControle[i].invoiceId,
       amount:arrayControle[i].invoiceAmt,
     })
   }
   }
+ 
   jsonData.totAmount = this.totAmount;
   // alert(this.totAmount);
   jsonData.invPayment=invPayment;
@@ -458,7 +500,7 @@ console.log(jsonData);
       // alert(res.message);
       // alert(res.obj);
       console.log(res.obj);
-      
+
       this.PaymentReturnArr =res.obj;
       console.log(this.PaymentReturnArr);
       patch.controls[0].patchValue({docNo: this.PaymentReturnArr.checkNumber})
@@ -480,4 +522,4 @@ refresh()
         window.location.reload();
       }
 
-}
+    }

@@ -18,7 +18,7 @@
                         </td>
                         <td>
                             <input disabled formControlName="docSrlNo" [(ngModel)]="docSrlNo" value={{docSrlNo}} class="form-control"
-                             placeholder="Enter document sequence no">
+                             placeholder="Document Seq No">
                         </td>
                         <td style="width: 15%" class="LabelFontStyle1">
                           Division&nbsp;&nbsp;:
@@ -33,6 +33,7 @@
                               <span  *ngIf="!DocSeriealMasterForm.get('divisionId').valid && DocSeriealMasterForm.get('divisionId').touched">Please
                                   Enter valid Division Name </span>
                       </td>
+
                       <td style="width: 15%" class="LabelFontStyle1">
                         Operating&nbsp;Unit&nbsp;:
                     </td>
@@ -117,6 +118,7 @@
                         <td style="width: 20%" class="LabelFontStyle1">
                             Transaction&nbsp;Type&nbsp;:
                         </td>
+
                         <td>
                           <div *ngIf="trandistype; then thenBlock1; else elseBlock1"></div>
                           <ng-template #thenBlock1>
@@ -135,12 +137,12 @@
                     </tr>
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
-                            Doc&nbsp;Prefix&nbsp;:
+                            Initial&nbsp;Value&nbsp;:
                         </td>
 <td>                       <!-- (keyup)="documentSequence($event)" <td> -->
-                            <input disabled formControlName="docSrlPrefix" [(ngModel)]="docSrlPrefix" value={{docSrlPrefix}} class="form-control"
+                            <input  formControlName="docSrlPrefix" [(ngModel)]="docSrlPrefix" value={{docSrlPrefix}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.docSrlPrefix.errors }"
-                            placeholder="Doc Prefix Value">
+                            placeholder="Doc Intial Value">
                         <div *ngIf="submitted && f. docSrlPrefix.errors" class="invalid-feedback">
                             <div *ngIf="f.docSrlPrefix.errors.required">Intial Value must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
@@ -174,7 +176,7 @@
                 <ng-template #elseBlock>
                     <tr>
                         <td style="width: 18%" class="LabelFontStyle1">
-                            Doc&nbsp;Sequence&nbsp;No:
+                            Doc&nbsp;Seq&nbsp;No:
                         </td>
                         <td>
                             <input disabled formControlName="docSrlNo" [(ngModel)]="docSrlNo" value={{docSrlNo}} class="form-control"
@@ -183,7 +185,8 @@
                         <td style="width: 15%" class="LabelFontStyle1">
                           Division&nbsp;&nbsp;:
                       </td>
-                      <td>
+
+                      <!-- <td>
                           <input disabled formControlName="divisionId" class="form-control">
                           <div *ngIf="submitted && f.divisionId.errors" class="invalid-feedback">
                               <div *ngIf="f.divisionId.errors.required">Division Name is required</div>
@@ -191,52 +194,114 @@
                                   *ngIf="!DocSeriealMasterForm.get('divisionId').valid && DocSeriealMasterForm.get('divisionId').touched">Please
                                   Enter valid Division Name </span>
                           </div>
-                      </td>
+                      </td> -->
+
+                      <td>
+                        <select disabled formControlName="divisionId" id="divisionId" class="form-control" (ngModelChange)='onOptionSelectedOrganization($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId"  >
+                                {{sc.divisionName}}
+                            </option>
+                        </select>
+                            
+                    </td>
+
+
                       <td style="width: 15%" class="LabelFontStyle1">
                         Operating&nbsp;Unit&nbsp;:
                     </td>
-                    <td>
+
+                    <!-- <td>
                         <input  disabled formControlName="docSrlOu" id="docSrlOu" class="form-control">
+                    </td> -->
+                    <td>
+                        <select disabled formControlName="docSrlOu" id="docSrlOu"  [(ngModel)]="docSrlOu"  class="form-control"  >
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of ouIdList" [ngValue]="sc.id">
+                             {{sc.name}}
+                            </option>
+                        </select>
                     </td>
+
+
                         <td style="width: 15%" class="LabelFontStyle1">
                             Location&nbsp;&nbsp;:
                         </td>
-                        <td>
+
+                        <!-- <td>
                             <input formControlName="docSrlLoc" id="docSrlLoc" class="form-control">
-                 <span *ngIf="!DocSeriealMasterForm.get('docSrlLoc').valid && DocSeriealMasterForm.get('docSrlLoc').touched">Please
+                             <span *ngIf="!DocSeriealMasterForm.get('docSrlLoc').valid && DocSeriealMasterForm.get('docSrlLoc').touched">Please
                                     Enter Location code</span>
+                        </td> -->
+
+                        <td>
+                            <select disabled formControlName="docSrlLoc" id="docSrlLoc"  [(ngModel)]="docSrlLoc" class="form-control" ngModel='docSrlLoc'>
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId" >
+                                    {{sc.locId}}-{{sc.locCode}}
+                                </option>
+                            </select>
                         </td>
+
                     </tr>
                     <tr>
                       <td style="width: 15%" class="LabelFontStyle1">
                         Dept&nbsp;&nbsp;:
                     </td>
-                    <td>
+                    <!-- <td>
                         <input disabled formControlName="deptId" class="form-control">
+                    </td> -->
+
+                    <td>
+                        <select disabled formControlName="deptId" [(ngModel)]="deptId" id="deptId" class="form-control" (ngModelChange)="onOptionSelectedCostCentre($event)">
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
+                                {{sc.code}}
+                            </option>
+                        </select>
                     </td>
 
                         <td style="width: 15%" class="LabelFontStyle1">
                             Fin&nbsp;Year&nbsp;:
                         </td>
-                        <td>
+
+
+                        <!-- <td>
                             <input disabled formControlName="financialYear" [(ngModel)]='financialYear' value={{financialYear}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.financialYear.errors }"
                             placeholder="Enter Financial Year">
                         <div *ngIf="submitted && f. financialYear.errors" class="invalid-feedback">
                             <div *ngIf="f.financialYear.errors.required">Financial Year must be a valid</div>
-                            <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
-                    </div> -->
+                           
                             <div *ngIf="f.financialYear.errors?.maxLength">Financial Year must be a valid
                             </div>
                         </div>
                         <span
                             *ngIf="!DocSeriealMasterForm.get('financialYear').valid && DocSeriealMasterForm.get('financialYear').touched">Please
                             Enter Financial Year </span>
+                        </td> -->
+
+
+                        <!-- <td>
+                            <select  formControlName="financialYear" id="financialYear" [(ngModel)]='financialYear'  class="form-control" >
+                            <option>--Select--</option>
+                            <option *ngFor="let fy of FinancialYear" [ngValue]="fy.actualYr">
+                                {{fy.actualYr}} - {{fy.financialYear}}
+                            </option>
+                            </select>
+                                               
+                        </td> -->
+                        <td>
+                            <input disabled formControlName="financialYear" [(ngModel)]="financialYear" class="form-control" >
+                            <input hidden formControlName="attribute1" [(ngModel)]="attribute1">
                         </td>
+                        
+
                         <td style="width: 20%" class="LabelFontStyle1">
                             Doc&nbsp;Type:
                         </td>
-                        <td>
+
+                        <!-- <td>
                             <input disabled formControlName="docSrlType" [(ngModel)]='docSrlType' value={{docSrlType}} class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.docSrlType.errors }"
                             placeholder="Enter Document Serieal type">
@@ -247,13 +312,44 @@
                         </div>
                         <span *ngIf="!DocSeriealMasterForm.get('docSrlType').valid && DocSeriealMasterForm.get('docSrlType').touched">Please
                             Enter Document  type </span>
-                        </td>
-                        <td style="width: 20%" class="LabelFontStyle1">
-                            Transaction&nbsp;Type&nbsp;:
-                        </td>
+                        </td> -->
+
                         <td>
-                            <input disabled formControlName="recvTypeId" class="form-control">
+                            <select formControlName="docSrlType" [(ngModel)]="docSrlType"  class="form-control"
+                              (ngModelChange)='onOptionSelectedtransType($event )'>
+                            <option>--Select--</option>
+                            <option *ngFor="let dt of docTypeList">
+                                {{dt.lookupValue}}
+                            </option>
+                            </select>
                         </td>
+
+
+
+                        <td style="width: 20%" class="LabelFontStyle1">
+                            Trans&nbsp;Type&nbsp;:
+                        </td>
+                        <!-- <td>
+                            <input disabled formControlName="recvTypeId" class="form-control">
+                        </td> -->
+
+                        
+                        <td>
+                            <div *ngIf="trandistype; then thenBlock1; else elseBlock1"></div>
+                            <ng-template #thenBlock1>
+                              <select  formControlName="recvTypeId" class="form-control" [(ngModel)]="recvTypeId" value={{recvTypeId}} >
+                              <!-- (ngModelChange)="onOptionSelectedSerialType($event)"> -->
+                                <option>--Select--</option>
+                                <option *ngFor="let tt of transtype" [ngValue]="tt.transId">{{tt.name}}</option>
+                                </select>
+                            </ng-template >
+                            <ng-template #elseBlock1>
+                              <input disabled formControlName="recvTypeId" class="form-control" [(ngModel)]="recvTypeId">
+                            </ng-template>
+                            <input hidden formControlName="tySrlNo" [(ngModel)]="tySrlNo">
+                          </td>
+
+
                     </tr>
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle1">
@@ -286,7 +382,7 @@
                             Status&nbsp;:
                         </td>
                         <td>
-                            <select formControlName="status" id="status" class="form-control"
+                            <select formControlName="status" id="status" [(ngModel)]="status"  class="form-control"
                             [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  statusList">
@@ -315,10 +411,20 @@
                     </tr>
                 </ng-template>
             </table>
+
+            <br>
+
             <table class="center">
                 <tr>
+                    <!-- <td>
+                        <button type="button" class="btn btn-primary" id="register"
+                            (click)="CreateSrl()">Test</button>
+                    </td> -->
+
                     <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                     <ng-template #thenBlock1>
+
+
                     <td>
                         <button type="submit" class="btn btn-primary" id="register"
                             [disabled]="!DocSeriealMasterForm.valid" (click)="newMast()">Save</button>
@@ -384,18 +490,20 @@
     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
     <tbody>
         <tr class="GridHeader">
-            <th scope="col">Document Sequence Id</th>
-            <th scope="col">Document Sequence No</th>
-            <th scope="col">Department ID</th>
+            <th scope="col">Srl No</th>
+            <th scope="col">Doc Seq Id</th>
+            <th scope="col">Doc Seq No</th>
+            <th scope="col">Dept Id</th>
             <th scope="col">Location ID</th>
             <th scope="col">Division ID</th>
-            <th scope="col">transaction Type</th>
+            <th scope="col">Transaction Type</th>
             <th scope="col">Financial Year</th>
             <th scope="col">Intial Value</th>
             <th scope="col">Select one</th>
         </tr>
     </tbody>
-    <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+    <tr *ngFor="let com of lstcomments  let i=index" class="ItemStyle" style="text-decoration:none;">
+        <td>{{i+1}}</td>
         <td>{{com.docSrlId}}</td>
         <td>{{com.docSrlNo}}</td>
         <td>{{com.deptId}}</td>

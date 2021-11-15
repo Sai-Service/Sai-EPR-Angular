@@ -11,20 +11,7 @@
 }
 
 
-.auto-style4
-{
-    color:#333333;
-    font-family:Verdana;
-    font-size:small;
-    height:16px;
-    width: 100%;
-    text-align: left; 
-    margin-right:0px; 
-    margin-left: 0px;
-    border-color: #35357c;
-    border-style: ridge;
 
-}
 
 .grid_scroll_1
 {
@@ -109,6 +96,21 @@
     height: 360px;
     width: 100%;
   }
+
+  .auto-style4
+{
+    color:#333333;
+    font-family:Verdana;
+    font-size:small;
+    height:16px;
+    width: 100%;
+    text-align: left; 
+    margin-right:0px; 
+    margin-left: 0px;
+    border-color: #35357c;
+    border-style: ridge;
+
+}
   
 
 .btn-info{

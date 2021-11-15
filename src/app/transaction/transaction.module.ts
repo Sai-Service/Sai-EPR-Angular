@@ -37,6 +37,7 @@ import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upl
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
 import { RelatedItemPartComponent } from './related-item-part/related-item-part.component';
+import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-upload-pricelist.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 
@@ -78,6 +79,7 @@ import { RelatedItemPartComponent } from './related-item-part/related-item-part.
     InternalConsumptionComponent,
     PoUploadListComponent,
     RelatedItemPartComponent,
+    BulkUploadPricelistComponent,
     // CounterSaleReturnComponent
   ],
   

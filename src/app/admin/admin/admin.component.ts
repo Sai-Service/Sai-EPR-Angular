@@ -14,6 +14,7 @@ export enum KEY_CODE {
 }
 
 interface IAdmin {
+  searchItemId  :number;
   searchItemCode: string;
   searchItemName: string;
 }
@@ -45,6 +46,7 @@ declare var $: any;
   loginArray:string;
   locId:number;
   ouId:number;
+  searchItemId  :number;
   searchItemCode: string;
   searchItemName: string;
   userList2: any[] = [];
@@ -125,15 +127,7 @@ declare var $: any;
 
 
 
-  f9Key() {
-    // alert( "Key F9 pressed");
-    // this.router.navigate(['/admin/transaction/OnHandDetails']);
-     // this.partSearch.open();
-    $("#partSearch").modal('show');
-  }
-
-
-
+ 
   close(){
     this.router.navigate(['login']);
   }
@@ -163,12 +157,32 @@ declare var $: any;
     return matches;
   };
 
+  LoadModal(){
+    // alert("loading Search form....");
+    this.adminForm1.get('searchItemCode').reset();
+    this.searchItemId=null;
+    this.searchItemCode=null;
+    this.searchItemName=null;
+    this.lstcomments=null;
+  }
+
+  f9Key() {
+    // alert( "Key F9 pressed");
+    // this.router.navigate(['/admin/transaction/OnHandDetails']);
+     // this.partSearch.open();
+     this.LoadModal();
+    $("#partSearch").modal('show');
+  }
+
+
   F9Search() {
 
     // const formValue: IAdmin = this.adminForm1.value;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
 
     var segment1=this.adminForm1.get('searchItemCode').value
+
+    alert("Segment :" +segment1);
 
     if(segment1 ==undefined || segment1==null) {
       alert ("Please select Item Code ....") ;return;
@@ -196,16 +210,17 @@ declare var $: any;
     //   })
     // }
 
-    onOptioninvItemIdSelectedSingle(searchItemCode) {
-      // alert ("in fn onOptioninvItemIdSelectedSingle "+searchItemCode);
+    onOptioninvItemIdSelectedSingle(mItem) {
+      // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
 
-      let selectedValue = this.ItemIdList.find(v => v.SEGMENT == searchItemCode);
+      let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
         if( selectedValue != undefined){
          console.log(selectedValue);
+        this.searchItemId=selectedValue.itemId;
         this.searchItemName=selectedValue.DESCRIPTION;
         this.searchItemCode=selectedValue.SEGMENT;
       }
-      // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+      alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
 
     }
 

@@ -63,6 +63,11 @@ interface IRtnToVendor {
 })
 export class ReturnToVendorComponent implements OnInit {
   returntoVendorForm : FormGroup;
+
+   // message: string = "Please Fix the Errors !";
+   message: string;
+   msgType:string ="Close";
+ 
   pipe = new DatePipe('en-US');
   public DepartmentList: Array<string> = [];
   public locIdList: Array<string> = [];
@@ -567,7 +572,12 @@ export class ReturnToVendorComponent implements OnInit {
                 // this.shipHeaderId=null;
               } 
               
-              else{alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
+              else{
+                // alert ("PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No.");
+                (document.getElementById('findBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+                 this.message = "PO Reeceipt Number : "+mRcptNumber +" Not Found in this Location\nOr Return process already done for this Receipt No."
+                 return;
+                
                 this.headerFound=false;
                 this.resetMast();
                 // this.returntoVendorForm.get("showAllItem").disable();
@@ -575,6 +585,7 @@ export class ReturnToVendorComponent implements OnInit {
               
             }
           } );  
+         
          }
 
 
@@ -1315,6 +1326,8 @@ export class ReturnToVendorComponent implements OnInit {
           
         }
 
+
+       
 
 
  

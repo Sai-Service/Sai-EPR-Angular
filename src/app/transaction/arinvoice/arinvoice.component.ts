@@ -159,6 +159,8 @@ export class ARInvoiceComponent implements OnInit {
   custAccountNo:number;
   custName:string;
 
+  hsnSacCodeList: any=[];
+
   GLPeriodCheck: any;
   glPrdStartDate: string;
   glPrdEndDate: string;
@@ -517,6 +519,11 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.GLPeriodCheck);
         }
       );
+      this.service.hsnSacCodeData('HSN').subscribe(
+        data=>{
+          this.hsnSacCodeList=data;
+        }
+      )
 
     this.glPrdStartDate = this.GLPeriodCheck.startDate;
     this.glPrdEndDate = this.GLPeriodCheck.endDate
@@ -1779,7 +1786,12 @@ export class ARInvoiceComponent implements OnInit {
 
   validateSave() {
 
-   
+    if(this.GLPeriodCheck===null) {
+      this.checkValidation = false;
+      alert("GL PERIOD is null. Please update GL period.");
+      return;
+    }
+
       var applLineArr = this.arInvoiceForm.get('invLine').value;
       var len1 = applLineArr.length;
 
@@ -1859,6 +1871,12 @@ export class ARInvoiceComponent implements OnInit {
 
   SaveApplyCreditMemo() {
     // alert ("Posting data  to AR RECEIPT appl......")
+
+    if(this.GLPeriodCheck===null) {
+      this.checkValidation = false;
+      alert("GL PERIOD is null. Please update GL period.");
+      return;
+    }
 
     var patch = this.arInvoiceForm.get('invLine') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invLine').value;

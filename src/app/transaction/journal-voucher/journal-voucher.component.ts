@@ -24,7 +24,7 @@ interface IJournalVoucher{
   jeCategory:string;
   jeSource:string;
   name:string;
-  
+
   reversalPeriod:string;
   reversalDate:Date;
 
@@ -34,8 +34,8 @@ interface IJournalVoucher{
   description:string;
   jeLineNum:number;
   docSeqVal1:number;
-  
-} 
+
+}
 @Component({
   selector: 'app-journal-voucher',
   templateUrl: './journal-voucher.component.html',
@@ -77,7 +77,7 @@ export class JournalVoucherComponent implements OnInit {
   public InterBrancList:Array<string>=[];
   public BranchList:Array<string>=[];
   public CostCenterList:Array<string>=[];
-  public NaturalAccountList:Array<string>=[];
+  public NaturalAccountList:any=[];
   public locIdList:Array<string>=[];
   public TypeList:Array<string>=[];
   public issueByList:Array<string>=[];
@@ -92,7 +92,7 @@ export class JournalVoucherComponent implements OnInit {
   content: number;
   userList2: any[] = [];
   lastkeydown1: number = 0;
-  
+
   jeLineNum:number;
   enteredDr:number;
   enteredCr:number;
@@ -110,7 +110,9 @@ export class JournalVoucherComponent implements OnInit {
   ngAfterViewInit() {
     this.perName.nativeElement.focus();
   }
- 
+
+  duplicateLineItem=false;
+
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.JournalVoucherForm=fb.group({
 
@@ -157,7 +159,7 @@ export class JournalVoucherComponent implements OnInit {
       enteredDr:[],
       enteredCr:[],
       description:[],
-     
+
      })
    }
 
@@ -168,14 +170,14 @@ export class JournalVoucherComponent implements OnInit {
       // alert('inside IF');
       var trxLnArr1 = this.JournalVoucherForm.get('glLines').value;
       console.log(trxLnArr1);
-      // console.log(trxArr1[i].segmentName);     
-      // 
+      // console.log(trxArr1[i].segmentName);
+      //
       // alert(trxLnArr1[i].segmentName);
         var segName=trxLnArr1[i].segmentName;
         var drAmt=trxLnArr1[i].enteredDr;
         var crAmt=trxLnArr1[i].enteredDr;
         // alert(drAmt+'Amt'+crAmt);
-        if(segName===null||(drAmt===null || crAmt===null))
+        if(segName===null&&(drAmt===null || crAmt===null))
        { alert('Please enter Blank Data');
        return;
     }
@@ -234,7 +236,7 @@ export class JournalVoucherComponent implements OnInit {
         jeLineNum: 1,
       }
     );
-  
+
     this.service.FinancialPeriod()
     .subscribe(
       data => {this.PeriodName = data.obj;
@@ -266,10 +268,10 @@ export class JournalVoucherComponent implements OnInit {
         console.log(this.CostCenterList);
       }
     );
-  this.service.NaturalAccountList()
+  this.service.NaturalAccountListJV()
     .subscribe(
       data => {
-        this.NaturalAccountList = data;
+        this.NaturalAccountList = data.obj;
         console.log(this.NaturalAccountList);
       }
     ); this.service.InterBrancList()
@@ -304,9 +306,9 @@ var segment = temp1[0];}
          if (lType === 'SS_Interbranch') {
           this.lookupValueDesc5 = this.branch.lookupValueDesc;
         }
-        if (lType === 'NaturalAccount') {
-          this.lookupValueDesc4 = this.branch.lookupValueDesc;
-          }
+        // if (lType === 'NaturalAccount') {
+        //   this.lookupValueDesc4 = this.branch.lookupValueDesc;
+        //   }
         if (lType === 'CostCentre') {
           this.lookupValueDesc3 = this.branch.lookupValueDesc;
         }
@@ -349,12 +351,29 @@ var segment = temp1[0];}
           this.segmentNameList = data;
           if (this.segmentNameList.code === 200) {
             this.JournalVoucherForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+            this.codeCombinationId=this.segmentNameList.obj.codeCombinationId;
+            alert(this.codeCombinationId +'inside fnca');
+            this.CheckForDuplicateLineItem(this.codeCombinationId,i);
+            if(this.duplicateLineItem ==false) {
+
+              this.codeCombinationId = this.codeCombinationId;
+
+                }
             if (this.segmentNameList.length == 0) {
               alert('Invalid Code Combination');
             } else {
               console.log(this.segmentNameList);
-              this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
+              this.JournalVoucherForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
+              this.codeCombinationId = Number(this.segmentNameList.obj.codeCombinationId);
+              this.CheckForDuplicateLineItem(this.codeCombinationId,i);
+              // if(this.duplicateLineItem ==false) {
+
+              //   this.codeCombinationId = this.codeCombinationId;
+
+              //     }
             }
+            // this.CheckForDuplicateLineItem(this.codeCombinationId,i);
+
           } else if (this.segmentNameList.code === 400) {
             // var arraycontrol =this.JournalVoucherForm.get('glLines').value;
             patch.controls[i].patchValue({segmentName : ''});
@@ -431,6 +450,7 @@ var segment = temp1[0];}
     searchFromArray1(arr, regex) {
       let matches = [], i;
       for (i = 0; i < arr.length; i++) {
+        alert(arr[i]+'Array i');
         if (arr[i].match(regex)) {
           matches.push(arr[i]);
         }
@@ -438,7 +458,7 @@ var segment = temp1[0];}
       return matches;
     };
 
-   
+
     creditTotalCal()
     {
 
@@ -446,7 +466,7 @@ var segment = temp1[0];}
       // this.JournalVoucherForm.get('runningTotalCr').value
       // alert(totalcr);
       this.runningTotalCr=0
-          
+
       for(var i=0;i<arrayControl.length;i++)
       {
         // alert(arrayControl[i].enteredCr);
@@ -459,7 +479,7 @@ var segment = temp1[0];}
     {
       var arrayControl=this.JournalVoucherForm.get('glLines').value
      this.runningTotalDr=0;
-      
+
       for(var i=0;i<arrayControl.length;i++)
       {
        this.runningTotalDr=this.runningTotalDr+Number(arrayControl[i].enteredDr);
@@ -500,7 +520,7 @@ var segment = temp1[0];}
           }
           else
          {
-            if (res.code === 400) 
+            if (res.code === 400)
             {
               alert("Code already present in data base");
               this.JournalVoucherForm.reset();
@@ -514,7 +534,7 @@ var segment = temp1[0];}
     }
 
     saveGl()
-    { 
+    {
         const formValue:IJournalVoucher=this.JournalVoucherForm.value;
         this.service.glSave(formValue).subscribe((res:any)=>{
           if(res.code===200)
@@ -526,7 +546,7 @@ var segment = temp1[0];}
           }
           else
          {
-            if (res.code === 400) 
+            if (res.code === 400)
             {
               alert("Code already present in data base");
               this.JournalVoucherForm.reset();
@@ -536,7 +556,7 @@ var segment = temp1[0];}
 }
 
 copyGl()
-{ 
+{
     const formValue:IJournalVoucher=this.JournalVoucherForm.value;
     this.service.glCopy(formValue).subscribe((res:any)=>{
       if(res.code===200)
@@ -548,7 +568,7 @@ copyGl()
       }
       else
      {
-        if (res.code === 400) 
+        if (res.code === 400)
         {
           alert("Code already present in data base");
           this.JournalVoucherForm.reset();
@@ -576,17 +596,17 @@ copyGl()
            data.obj.glLines.forEach(f => {
              var trxList:FormGroup=this.newglLines();
              this.glLines().push(trxList);
-   
+
            });
            this.JournalVoucherForm.patchValue(data.obj);
            this.JournalVoucherForm.patchValue({periodName:data.obj.periodName});
            this.JournalVoucherForm.patchValue({runningTotalCr:data.obj.runningTotalCr});
            this.JournalVoucherForm.patchValue({runningTotalDr:data.obj.runningTotalDr});
-                    
+
            this.JournalVoucherForm.patchValue(data.obj.glLines);
            this.JournalVoucherForm.patchValue({emplId:sessionStorage.getItem('emplId')})
           // for (let i = 0; i < data.obj.glLines().length; i++) {
-           
+
           //  this.JournalVoucherForm.get('trxLinesList').patchValue(data.obj.glLines);
           // }
           if(data.obj.status==='INCOMPLETE')
@@ -599,14 +619,14 @@ copyGl()
             this.JournalVoucherForm.disable();
             // this.JournalVoucherForm.get('glLines').disable();
             // this.JournalVoucherForm.get('glLines').get('segmentName').disable();
-            
-          
+
+
             (document.getElementById("btnSave") as HTMLInputElement).disabled = true;
             (document.getElementById("btnPost") as HTMLInputElement).disabled = true;
              this.JournalVoucherForm.get('reversalPeriod').enable();
               this.JournalVoucherForm.get('reversalDate').enable();
               (document.getElementById("btnRev") as HTMLInputElement).disabled = false;
-        
+
                 var len= this.JournalVoucherForm.get('glLines')as FormArray;
             // // var len=this.glLines.length;
             // // alert(len.length);
@@ -617,16 +637,16 @@ copyGl()
             (document.getElementById("btnRm"+i) as HTMLInputElement).disabled = true;
             }
             }
-            
 
-          
+
+
          }
        }
        );
       //  this.emplId=Number((sessionStorage.getItem('emplId')));
     }
     reverseGl()
-{ 
+{
     // alert("Hello");
     const formValue:IJournalVoucher=this.JournalVoucherForm.value;
     var stat=this.JournalVoucherForm.get('status').value;
@@ -640,13 +660,13 @@ copyGl()
         this.docSeqValue=res.obj.DocSeqValue;
         this.status=res.obj.Status;
         this.search(res.obj.DocSeqValue);
-      
+
         // this.status
         this.JournalVoucherForm.disable();
       }
       else
      {
-        if (res.code === 400) 
+        if (res.code === 400)
         {
           alert("Code already present in data base");
           this.JournalVoucherForm.reset();
@@ -662,20 +682,53 @@ else
     }
 
     onOptionGlPeriod(event){
-     
+
        var selPer=this.PeriodName.find(d=>d.periodName===event);
        if(selPer!=undefined){
       (document.getElementById('postDate') as HTMLInputElement).setAttribute('min',selPer.startDate);
       (document.getElementById('postDate') as HTMLInputElement).setAttribute('max',selPer.endDate);
     }
   }
+  OnSelectJournalType(event:any){
+    alert(event);
+    this.JournalVoucherForm.patchValue({'jeSource':event});
+  }
     resetJv()
     {
       window.location.reload();
     }
-  
+
     close(){
       this.router.navigate(['admin']);
       }
+
+      CheckForDuplicateLineItem(codeCombId,i){
+        alert(codeCombId+'code in func'+i);
+        var glcombArr = this.JournalVoucherForm.get('glLines').value;
+        var patch = this.JournalVoucherForm.get('glLines') as FormArray;
+        var len1=glcombArr.length;
+        alert("line item array length :"+len1 + "," +codeCombId);
+
+        for (let j = 0; j < len1 ; j++)
+          {
+            alert("inside for loop");
+            var lineCombinationId=glcombArr[j].codeCombinationId;
+            alert(lineCombinationId);
+             if(i != j) {
+               alert('Inside 1st If');
+
+             if (lineCombinationId===codeCombId ) {
+               this.duplicateLineItem=true;
+               alert(lineCombinationId+" DUPLICATE line item. Please check  item  in Line - " +(j+1));
+               patch.controls[i].patchValue({segmentName:'',codeCombinationId:''});
+               return;
+              }
+
+              }else{this.duplicateLineItem=false;}
+
+               this.duplicateLineItem=false;
+          }
+
+
+      }
   }
-  
