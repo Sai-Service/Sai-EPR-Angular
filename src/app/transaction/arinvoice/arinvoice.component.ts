@@ -1802,11 +1802,30 @@ export class ARInvoiceComponent implements OnInit {
       }
     
 
-     for (let i = 0; i < applLineArr.length ; i++) {
-      this.invLineArray().controls[i].get('applyrcptFlag').disable();
-      this.CheckLineValidations(i);
+    //  for (let i = 0; i < applLineArr.length ; i++) {
+    //   this.invLineArray().controls[i].get('applyrcptFlag').disable();
+    //   this.CheckLineValidations(i);
     
-     }
+    //  }
+
+     var applLineArr1 = this.arInvoiceForm.get('invLine').value;
+     var patch = this.arInvoiceForm.get('invLine') as FormArray;
+   
+    for (let i = 0; i < applLineArr1.length ; i++) {
+     
+     patch.controls[i].patchValue({ applAmt: applLineArr1[i].applAmtNew });
+     patch.controls[i].patchValue({ glDate: applLineArr1[i].glDateLine });
+
+     this.invLineArray().controls[i].get('applyrcptFlag').disable();
+     this.invLineArray().controls[i].get('applAmtNew').disable();
+     this.invLineArray().controls[i].get('glDateLine').disable();
+
+     this.CheckLineValidations(i);
+   
+    }
+
+
+
 
      if(this.applLineValidation==true) {this.applySaveButton=true;} else {this.applySaveButton=false;}
 
@@ -1818,8 +1837,8 @@ export class ARInvoiceComponent implements OnInit {
     // alert('addrow index '+i);
 
     var applLineArr = this.arInvoiceForm.get('invLine').value;
-    var lineValue1 = applLineArr[i].applAmtNew;
-    var tglDate = new Date(applLineArr[i].glDateLine);
+    var lineValue1 = applLineArr[i].applAmt;
+    var tglDate = new Date(applLineArr[i].glDate);
     var chkFlag = applLineArr[i].applyrcptFlag;
     var j = i + 1;
 
@@ -1910,8 +1929,9 @@ export class ARInvoiceComponent implements OnInit {
       variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
       variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
       variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
-      patch.controls[i].patchValue({ applAmt: applLineArr[i].applAmtNew });
-      patch.controls[i].patchValue({ glDate: applLineArr[i].glDateLine });
+     
+      // patch.controls[i].patchValue({ applAmt: applLineArr[i].applAmtNew });
+      // patch.controls[i].patchValue({ glDate: applLineArr[i].glDateLine });
       // patch.controls[i].patchValue({trxDate: this.pipe.transform(applLineArr[i].trxDate,'y-MM-dd')});
 
     }

@@ -34,6 +34,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         categoryBaseList:any;
         receivableAccountList:any;
         revenueAccountList:any;
+        creditMemoTypeList:any;
 
 
         lstcomments: any;
@@ -56,7 +57,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         creationSign:string;
 
         tranStatus:string;
-        creditMemoType:string;
+        creditMemoTypeId:number;
 
         startDate:string=this.pipe.transform(Date.now(), 'y-MM-dd');  
         endDate:string;
@@ -106,7 +107,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
       type:[],
       creationSign:[],
       tranStatus:[],
-      creditMemoType:[],
+      creditMemoTypeId:[],
       startDate:[],
       endDate:[],
 
@@ -188,12 +189,16 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
     );
 
 
+  }
 
-    
-
-    
-
-
+  onSelectClassType(event){
+  this.service.recCreditMemoType(event)
+  .subscribe(
+    data => {
+      this.creditMemoTypeList = data;
+      console.log(this.creditMemoTypeList);
+    }
+  );
   }
 
   resetMast() {

@@ -64,9 +64,10 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">Class:&nbsp;</td>
                                 <td>  
-                                    <select formControlName="type" id="type" [(ngModel)]="type" class="form-control" style="background-color: yellow;" >
+                                    <select formControlName="type" id="type" [(ngModel)]="type" class="form-control" style="background-color: yellow;" 
+                                            (ngModelChange)="onSelectClassType($event)">
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of  classTypeList" [ngValue]="sc.codeDesc"  >
+                                        <option *ngFor="let sc of  classTypeList" [ngValue]="sc.code"  >
                                             {{sc.codeDesc}}-{{sc.code}}
                                         </option>
                                     </select>
@@ -96,9 +97,17 @@
                                
                                
                                 <td style="width: 15%" class="LabelFontStyle">Cr&nbsp;Memo&nbsp;Type:&nbsp;</td>
-                                <td><input   type="text" formControlName="creditMemoType"  id="creditMemoType" [(ngModel)]="creditMemoType"  class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td>
-                           
+                                <!-- <td><input   type="text" formControlName="creditMemoType"  id="creditMemoType" [(ngModel)]="creditMemoType"  class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td> -->
+                                <td>  
+                                    <select formControlName="creditMemoTypeId" id="creditMemoTypeId" [(ngModel)]="creditMemoTypeId" class="form-control" style="background-color: yellow;" >
+                                        <option disabled>--Select--</option>
+                                        <option *ngFor="let sc of  creditMemoTypeList" [ngValue]="sc.creditMemoTypeId"  >
+                                            {{sc.creditMemoTypeId}}-{{sc.name}}
+                                        </option>
+                                    </select>
+                                </td>
                                
+                                
 
                                 <td style="width: 15%" class="LabelFontStyle">Category&nbsp;Base:&nbsp;</td>
                                 

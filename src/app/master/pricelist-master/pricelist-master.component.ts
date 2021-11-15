@@ -828,8 +828,8 @@ export class PricelistMasterComponent implements OnInit {
     // formData.append('file', this.fileInput.nativeElement.files[0])
     formData.append('file', event)
 
-      this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
-      this.message = result.toString();
+      // this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
+      // this.message = result.toString();
 
       // if (event.type === HttpEventType.UploadProgress) {
       // this.progress = Math.round(100 * event.loaded / event.total);
@@ -857,7 +857,7 @@ export class PricelistMasterComponent implements OnInit {
 
         }
       });
-    } );
+    // } );
    
   }
 

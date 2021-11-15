@@ -16,6 +16,7 @@ import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-bulk-upload-pricelist',
   templateUrl: './bulk-upload-pricelist.component.html',
@@ -51,6 +52,9 @@ export class BulkUploadPricelistComponent implements OnInit {
   docType :string;
   public PriceListIdList : Array<string> = [];
   upldPricelistName : string;
+  
+  updStatus =false;
+  fileValidation=false;
   
   @ViewChild('fileInput') fileInput;
 
@@ -111,7 +115,31 @@ export class BulkUploadPricelistComponent implements OnInit {
     );
   }
 
+  CheckValidations() {
+
+    var upldPlName =this.bulkUploadPriceListForm.get('upldPricelistName').value;
+    var csvFileName=this.fileInput.nativeElement.files[0];
+
+    if(upldPlName==null || upldPlName==undefined) {
+      alert ("Select Price List Name..."+upldPlName)  ;
+      this.fileValidation=false;
+      return;
+    }
+    if(csvFileName==null || csvFileName==undefined) {
+      alert ("Select CSV File Name..."+csvFileName );
+      this.fileValidation=false;
+      return;
+    }
+    
+      this.fileValidation=true;
+
+  }
+
   uploadFile() {
+    this.CheckValidations()
+
+    if (this.fileValidation===true) {
+      this.updStatus=true;
    
     this.progress = 0;
 
@@ -129,8 +157,8 @@ export class BulkUploadPricelistComponent implements OnInit {
       this.progress = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
         this.message = event.body.message;
-       
       }
+
       // alert ( "this.message :" + this.message);
 
        this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
@@ -139,6 +167,7 @@ export class BulkUploadPricelistComponent implements OnInit {
           alert('FILE UPLOADED SUCCESSFULLY');
            this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
+          
              
         } else {
           if (res.code === 400) {
@@ -152,6 +181,7 @@ export class BulkUploadPricelistComponent implements OnInit {
         }
       });
     // } );
+    } 
    
   }
 

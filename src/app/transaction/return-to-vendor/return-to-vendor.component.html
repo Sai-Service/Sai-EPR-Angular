@@ -577,7 +577,13 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <div *ngIf="rtnSearch ,then rtn1; else rtn2")></div>
-                                <ng-template #rtn1> </ng-template>
+                                <ng-template #rtn1> 
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!returntoVendorForm">Print</button>
+                                    </td>
+
+                                </ng-template>
+
                                 <ng-template #rtn2>
                                 <td>
                                 <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>

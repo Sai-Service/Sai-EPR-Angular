@@ -392,7 +392,7 @@ export class ReturnToVendorComponent implements OnInit {
         
            
         
-          if ((mUom==='NO' && lineRtnQty < 1)  || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
+          if ((mUom=='NO' && lineRtnQty < 1)  || lineRtnQty>lineRcdQty || lineRtnQty > avlQty ) 
           {
              alert ("Invalid Quantity.\n[RETURN QTY] should be as per UOM  Or \nShould not be grater than [QTY RECEIVED] Or [ON HAND QTY]")
       
@@ -464,10 +464,15 @@ export class ReturnToVendorComponent implements OnInit {
 
           }
 
-                var bAmt=totBaseAmt.toFixed(2);
-                var tAmt=totTaxAmt.toFixed(2);
-                var nAmt=netTotalAmt.toFixed(2);
-                this.baseAmount=Number(bAmt); 
+                // var bAmt=totBaseAmt.toFixed(2);
+                // var tAmt=totTaxAmt.toFixed(2);
+                // var nAmt=netTotalAmt.toFixed(2);
+
+                var bAmt=totBaseAmt;
+                var tAmt=totTaxAmt;
+                var nAmt=netTotalAmt;
+
+                this.baseAmount=Number(bAmt);
                 this.taxAmt=Number(tAmt);
                 this.totalAmt=Number(nAmt);
         }
