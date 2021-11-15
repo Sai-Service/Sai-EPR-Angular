@@ -292,6 +292,9 @@ NaturalAccountList(): Observable<any> {
 NaturalAccountList1():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
 }
+NaturalAccountListJV():Observable<any>{
+  return this.http.get(this.ServerUrl +'/naturalAcc/JV');
+}
 InterBrancList(): Observable<any> {
   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/SS_Interbranch');
 }
