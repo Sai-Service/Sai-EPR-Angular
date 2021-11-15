@@ -570,7 +570,7 @@ export class CustomerMasterComponent implements OnInit {
     const state = this.customerMasterForm.get('state').value;
     console.log(state);
     console.log(this.state === 'MAHARASHTRA' && res === 27);
-    switch (state) {
+    switch (state.toUpperCase()) {
       case 'MAHARASHTRA':
         if (res != 27) {
           alert('Kindly entered correct GST No Start with 27');

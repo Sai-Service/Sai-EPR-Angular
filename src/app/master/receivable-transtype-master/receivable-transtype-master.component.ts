@@ -28,6 +28,14 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
         public OUIdList            : Array<string> = [];
         public DepartmentList      : Array<string> = [];
+        // public classTypeList       : Array<string> = [];
+
+        classTypeList:any;
+        categoryBaseList:any;
+        receivableAccountList:any;
+        revenueAccountList:any;
+
+
         lstcomments: any;
 
         loginName:string;
@@ -44,7 +52,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
         transTypeName:string;
         transTypeDesc:string;
-        rClass:string;
+        type:string;
         creationSign:string;
 
         tranStatus:string;
@@ -65,8 +73,10 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         offsetFlagFagDiss = true;
         selfAssesedFagDiss = true;
 
-        recAccount:string;
-        revAccount:string;
+        glIdRecAcct:number;
+        glIdRevAcct:number;
+
+        attributeCategory:number;
 
 
 
@@ -93,15 +103,16 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
       transTypeName:[],
       transTypeDesc:[],
-      rClass:[],
+      type:[],
       creationSign:[],
       tranStatus:[],
       creditMemoType:[],
       startDate:[],
       endDate:[],
 
-      recAccount:[],
-      revAccount:[],
+      glIdRecAcct:[],
+      glIdRevAcct:[],
+      attributeCategory:[],
 
       recoverableFlag: ['', [Validators.required]],
       offsetFlag: ['', [Validators.required]],
@@ -143,6 +154,44 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         console.log(this.DepartmentList);
       }
     );
+
+    this.service.recTypeClass()
+    .subscribe(
+      data => {
+        this.classTypeList = data;
+        console.log(this.classTypeList);
+      }
+    );
+
+    this.service.recCategoryBase()
+    .subscribe(
+      data => {
+        this.categoryBaseList = data;
+        console.log(this.categoryBaseList);
+      }
+    );
+
+    this.service.recRecAcList()
+    .subscribe(
+      data => {
+        this.receivableAccountList = data;
+        console.log(this.receivableAccountList);
+      }
+    );
+
+    this.service.recRevAcList()
+    .subscribe(
+      data => {
+        this.revenueAccountList = data;
+        console.log(this.revenueAccountList);
+      }
+    );
+
+
+
+    
+
+    
 
 
   }
@@ -197,6 +246,34 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
       this.selfAssesedFlag = 'N'
     }
   }
+
+  onGlRecAcctSelected(event){
+    if(event >0) {
+ 
+    var rec =this.recTransTypeMasterForm.get("glIdRecAcct").value
+    var rev=this.recTransTypeMasterForm.get("glIdRevAcct").value
+    // alert("Receivable A/c :"+event +" ,Rec= "+rec +" ,Rev= "+rev)
+    if(rec===rev) {
+      alert ("RECEIVABLE A/c  and  REVENUE A/c should not be same.");
+      this.recTransTypeMasterForm.get("glIdRecAcct").reset();
+    }
+
+  } }
+
+  onGlRevAcctSelected(event){
+    if(event >0) {
+ 
+    var rec =this.recTransTypeMasterForm.get("glIdRecAcct").value
+    var rev=this.recTransTypeMasterForm.get("glIdRevAcct").value
+    // alert("Revenue A/c :"+event +" ,Rec= "+rec +" ,Rev= "+rev)
+    if(rec===rev) {
+      alert ("RECEIVABLE A/c  and  REVENUE A/c should not be same.");
+      this.recTransTypeMasterForm.get("glIdRevAcct").reset();
+    }
+  }}
+
+
+  
 
 
 

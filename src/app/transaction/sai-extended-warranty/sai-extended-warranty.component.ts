@@ -65,8 +65,10 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   public ItemEWList         : Array<string> = [];
   
   pipe = new DatePipe('en-US');
-
   resMsg : string;
+
+  message: string = "Please Fix the Errors !";
+  msgType:string ="Close";
 
   invItemListEw: any[];
   VehicleRegDetails:any;
@@ -1235,7 +1237,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
           this.CheckDataValidations();
 
           if (this.checkValidation===true) {
-            alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
+            // alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
             const formValue: IExtendedWarranty =this.transeData(this.saiEwForm.value);
             console.log(formValue);
             this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
@@ -1253,7 +1255,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             }
             });
 
-          } else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
+          } 
+          // else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
         }
 
 
@@ -1335,78 +1338,103 @@ getInvItemId($event) {
        
      
         const formValue: IExtendedWarranty = this.saiEwForm.value;
-       
+
+         var msg1;
         if(formValue.variant===undefined || formValue.variant===null ) {
             this.checkValidation=false;
-            alert ("REGNO/MODEL/VARIANT: Should not be null value");
+            // alert ("REGNO/MODEL/VARIANT: Should not be null value");
+            msg1 ='REGNO/MODEL/VARIANT: Should not be null value';
+            //  this.executeAlertMsg(msg1);
+             alert(msg1);
             return; 
          }
 
          if(formValue.deliveryDate===undefined || formValue.deliveryDate===null ) {
           this.checkValidation=false;
-          alert ("SALE DATE: Should not be null value");
-          return; 
+          // alert ("SALE DATE: Should not be null value");
+          msg1 ="SALE DATE: Should not be null value";
+          // this.executeAlertMsg(msg1);
+          alert(msg1);
+         return; 
        }
 
          if(formValue.custId===undefined || formValue.custId===null) {
           this.checkValidation=false;
-          alert ("CUSTOMER NO: Should not be null value");
+          msg1="CUSTOMER NO: Should not be null value";
+          // this.executeAlertMsg(msg1);
+          alert(msg1);
           return; 
        }
 
         if (formValue.kmsEwSale <=0 || formValue.kmsEwSale===undefined || formValue.kmsEwSale===null )
         {
             this.checkValidation=false;  
-            alert ("MILEAGE: Should be above Zero");
+            msg1="MILEAGE: Should be above Zero";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
             return;
          } 
 
          if (formValue.soldByEmpId===undefined || formValue.soldByEmpId===null)
          {
             this.checkValidation=false; 
-            alert ("SOLD BY: Please Select SoldBy Employee....");
+            msg1="SOLD BY: Please Select SoldBy Employee....";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
              return;
           } 
         
           if (formValue.ewSchemeId===undefined || formValue.ewSchemeId===null)
           {
               this.checkValidation=false;
-              alert ("EW SCHEME: Please Select EW Scheme....");
+              msg1="EW SCHEME: Please Select EW Scheme....";
+              // this.executeAlertMsg(msg1);
+              alert(msg1);
               return;
            } 
           //  alert("item code :" +formValue.itemId);
            if (formValue.itemId===undefined || formValue.itemId===null || formValue.itemId<=0 )
            {
               this.checkValidation=false;   
-              alert ("EW ITEM : Please Select EW ITEM CODE....");
+              msg1="EW ITEM : Please Select EW ITEM CODE....";
+              // this.executeAlertMsg(msg1);
+              alert(msg1);
                return;
             } 
 
             if (formValue.ewBookletNo===undefined || formValue.ewBookletNo===null || formValue.ewBookletNo.trim()==='')
             {
                 this.checkValidation=false;  
-                alert ("EW BOOKLETNO : Please Select EW BOOKLETNO....");
+                msg1="EW BOOKLETNO : Please Select EW BOOKLETNO....";
+                // this.executeAlertMsg(msg1);
+                alert(msg1);
                 return;
              } 
 
             if (formValue.ewInsurerId===undefined || formValue.ewInsurerId===null)
             {
                 this.checkValidation=false;
-                alert ("EW INSURANCE: Please Select ewInsurer....");
+                msg1="EW INSURANCE: Please Select ewInsurer....";
+                // this.executeAlertMsg(msg1);
+                alert(msg1);
                 return;
              } 
 
              if (formValue.ewStartDate===undefined || formValue.ewStartDate===null || formValue.ewStartDate < formValue.ewSaleDate )
              {
                  this.checkValidation=false;
-                 alert ("EW START DATE: should not be null / grater than EW Sales date...");
+                 msg1="EW START DATE: should not be null / grater than EW Sales date...";
+                //  this.executeAlertMsg(msg1);
+                alert(msg1);
                  return;
               } 
 
               if (formValue.ewEndDate===undefined || formValue.ewEndDate===null || formValue.ewEndDate<=formValue.ewStartDate)
               {
                   this.checkValidation=false;  
-                  alert ("EW END DATE: should not be null / grater than Start Date");
+                  msg1="EW END DATE: should not be null / grater than Start Date";
+                  // this.executeAlertMsg(msg1);
+                  alert(msg1);
                   return;
                } 
 
@@ -1415,7 +1443,9 @@ getInvItemId($event) {
                if (formValue.paymentAmt <=0 || formValue.paymentAmt===undefined || formValue.paymentAmt===null )
                {
                    this.checkValidation=false;  
-                   alert ("RECEIPT AMT: Should be above Zero");
+                   msg1="RECEIPT AMT: Should be above Zero";
+                  //  this.executeAlertMsg(msg1);
+                  alert(msg1);
                    return;
                 } 
 
@@ -1423,7 +1453,9 @@ getInvItemId($event) {
                if (formValue.payType===undefined || formValue.payType===null)
                {
                   this.checkValidation=false;   
-                  alert ("PAY MODE: Please Select payment Type....");
+                  msg1="PAY MODE: Please Select payment Type....";
+                  // this.executeAlertMsg(msg1);
+                  alert(msg1);
                    return;
                 } 
                 // alert( "receiptMethodId : "+formValue.receiptMethodId);
@@ -1431,7 +1463,9 @@ getInvItemId($event) {
                 if (formValue.receiptMethodId===undefined || formValue.receiptMethodId===null || formValue.receiptMethodId<=0)
                 {
                   this.checkValidation=false;  
-                  alert ("PAY METHOD: Please Select Receipt Method....");
+                  msg1="PAY METHOD: Please Select Receipt Method....";
+                  // this.executeAlertMsg(msg1);
+                  alert(msg1);
                   
                   return;
                  } 
@@ -1442,37 +1476,52 @@ getInvItemId($event) {
                     if (formValue.bankName===undefined || formValue.bankName===null || formValue.bankName.trim()==='')
                     {
                         this.checkValidation=false;  
-                        alert ("BANK : Please Enter Bank Name....");
+                        msg1="BANK : Please Enter Bank Name....";
+                        // this.executeAlertMsg(msg1);
+                        alert(msg1);
                         return;
                      } 
 
                      if (formValue.bankBranch===undefined || formValue.bankBranch===null || formValue.bankBranch.trim()==='')
                      {
                          this.checkValidation=false;  
-                         alert ("BANK BRANCH : Please Enter Bank Branch....");
+                         msg1="BANK BRANCH : Please Enter Bank Branch....";
+                        //  this.executeAlertMsg(msg1);
+                        alert(msg1);
                          return;
                       } 
 
                       if (formValue.checkNo===undefined || formValue.checkNo===null || formValue.checkNo.trim()==='')
                       {
                           this.checkValidation=false;  
-                          alert ("CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...");
+                          msg1="CHECK/DD/CRD/NEFT NO: Please Enter Cheq/dd no...";
+                          // this.executeAlertMsg(msg1);
+                          alert(msg1);
                           return;
                        } 
 
                        if (formValue.checkDate===undefined || formValue.checkDate===null)
                        {
                            this.checkValidation=false;  
-                           alert ("CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....");
+                           msg1="CHECK/DD/CRD/NEF DATE: Please Select Chq/dd.. Date....";
+                          //  this.executeAlertMsg(msg1);
+                          alert(msg1);
                            return;
                         } 
                    }
                   
                   }
                   this.checkValidation=true;
+                 
       }
 
 
-     
+            executeAlertMsg(msg1) 
+            {
+              if (this.checkValidation==false){
+                (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+                 this.message = msg1;
+              }
+            }
  
 }

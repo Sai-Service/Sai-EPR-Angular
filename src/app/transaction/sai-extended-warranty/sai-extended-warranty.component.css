@@ -237,4 +237,11 @@
     color: black;
   }
 
+  .modal-dialog1 {
+    max-width: 500px;
+    margin: 0 auto;
+    /* vertical-align: top; */
+    /* display: inline-block;  */
+    text-align: left; 
+  }
  

@@ -51,23 +51,43 @@
                         <td style="width: 10%" class="LabelFontStyle1">
                             Title&nbsp;&nbsp;:
                         </td>
+
+                       
+
                         <td>
-                            <select formControlName="title" id="title" (keyup)="onKey($event)" 
+                            <select formControlName="title" id="title"   (ngModelChange)='onTitleSelected($event)'
                             [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
                             [(ngModel)]='title' class="form-control" uppercase  style="text-transform: uppercase;">
-                                <option></option>
-                                <option *ngFor="let sc of  titleList" >
-                                    {{sc.code}}
+                            <option disabled>--Select--</option>
+                                <option *ngFor="let sc of  titleList" [ngValue]="sc.code">
+                                {{sc.code}}
                                 </option>
                             </select>
                             <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
                                 <div *ngIf="f.title.errors.required">Title is required</div>
-                                <!-- <span
-                                    *ngIf="!employeeMasterForm.get('title').valid && employeeMasterForm.get('title').touched">Please
-                                    Enter valid title </span> -->
+                             
                             </div>    
                         </td>
+
+                        
+                        <!-- <td>
+                            <select formControlName="deptId" id="deptId" class="form-control" (ngModelChange)='onOptionsDEPTSelected($event)'
+                            [ngClass]="{ 'is-invalid': submitted && f.deptId.errors }">
+                                <option></option>
+                                <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
+                                  {{sc.cmnTypeId}}-{{sc.code}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f.deptId.errors" class="invalid-feedback">
+                                <div *ngIf="f.deptId.errors.required">Please enter Department</div>
+                            </div>
+                          
+                        </td> -->
+
+
+
                     </tr>
+
                     <tr>
                         <td style="width: 10%" class="LabelFontStyle1">
                             First&nbsp;Name&nbsp;:
@@ -767,6 +787,7 @@
     </table>
 </div>
 </div>
+
 <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
     <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
     <div class="modal-content">

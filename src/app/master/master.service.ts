@@ -2283,12 +2283,12 @@ OrderCategoryList(): Observable<any> {
     }
 
   ///////////////////Price list File upload/////////////////////
-  UploadExcel(formData: FormData,docType:string,uploadPl:string) {
+  UploadExcel(formData: FormData,docType:string,uploadPlName:string) {
     let headers1 = new HttpHeaders();
     var userId1=sessionStorage.getItem('userId');
     console.log(docType);
     var docType1=formData.get('docType');
-    formData.append('priceListName', uploadPl);
+    formData.append('priceListName', uploadPlName);
     return this.http.post(this.ServerUrl + `/fileImport/uploadBJprc`,formData)
     }
 
@@ -3115,5 +3115,27 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl+`/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
     }
 
+    /////////////////////////RECEIVABLE TRANSACTION TYPE MASTER ///////////////////////
+
+    recTypeClass() {
+    return this.http.get(this.ServerUrl +'/cmnLookup/type/RcvClass');
+    }
+
+    recCategoryBase() {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/AccountingBase');
+      }
+
+    recRecAcList() {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+      }
+
+    recRevAcList() {
+      return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
+      }
+
+   
+      
+
+      
 
 }

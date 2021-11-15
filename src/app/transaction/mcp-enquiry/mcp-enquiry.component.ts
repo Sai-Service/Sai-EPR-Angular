@@ -27,11 +27,11 @@ interface IMcpEnquiry {
   styleUrls: ['./mcp-enquiry.component.css']
 })
 export class McpEnquiryComponent implements OnInit {
-  
   mcpEnquiryForm : FormGroup;
 
   pipe = new DatePipe('en-US');
-  
+  message: string = "Please Fix the Errors !";
+  msgType: string = "Close";
 
   public OUIdList           : Array<string> = [];
   public VehRegNoList       : Array<string> = [];
@@ -1010,7 +1010,10 @@ export class McpEnquiryComponent implements OnInit {
       
              this.checkHeaderValidations();
              if (this.headerValidation==true ) { 
-               alert("Header Validation Sucessfull...") 
+              //  alert("Header Validation Sucessfull...") 
+
+              // var msg1 ="Data Validation Successful";
+              // this.executeAlertMsg(msg1);
 
             const formValue: IMcpEnquiry =this.transeData(this.mcpEnquiryForm.value);
             // var pkId = formValue.packageNumber;
@@ -1020,6 +1023,8 @@ export class McpEnquiryComponent implements OnInit {
             this.service.McpEnquiryMasterSubmit(formValue).subscribe((res: any) => {
               if (res.code === 200) {
                 alert('RECORD INSERTED SUCCESSFUILY');
+                // var msg1='RECORD INSERTED SUCCESSFUILY'
+                // this.executeAlertMsg(msg1);
                 this.displayButton=false;
                 this.enqNo=res.obj;
                 this.mcpEnquiryForm.disable();
@@ -1035,7 +1040,13 @@ export class McpEnquiryComponent implements OnInit {
               }
             });
           }
-          else { alert("Header Validation Failed... Please Check");  return;   }
+          else { 
+            
+            // alert("Header Validation Failed... Please Check");  
+            // var msg1="Data  Validation Failed. Please Fix the errors and proceed."
+            // this.executeAlertMsg(msg1);
+         
+            return;   }
          
     } 
 
@@ -1231,13 +1242,15 @@ export class McpEnquiryComponent implements OnInit {
         const formValue: IMcpEnquiry = this.mcpEnquiryForm.value
 
         // if(this.sourceDesc==='SERVICE') {
-
+          var msg1;
+     
         if (formValue.regNo===undefined || formValue.regNo===null || formValue.regNo.trim()==='')
         {
            this.headerValidation=false; 
-           alert ("VEHICLE REGISTRATION NUMBER : Should not be null....");
-           
-            return;
+           msg1 ="VEHICLE REGISTRATION NUMBER : Should not be null....";
+           alert(msg1);
+          //  this.executeAlertMsg(msg1);
+           return; 
          } 
         // }
 
@@ -1246,9 +1259,10 @@ export class McpEnquiryComponent implements OnInit {
           if (formValue.orderNumber===undefined || formValue.orderNumber===null || formValue.orderNumber<=0)
           {
              this.headerValidation=false; 
-             alert ("VEHICLE SALE ORDER NUMBER : Should not be null....\nAttach Reg.Number to Order and Try again.");
-             
-              return;
+             msg1 ="VEHICLE SALE ORDER NUMBER : Should not be null....\nAttach Reg.Number to Order and Try again.";
+            //  this.executeAlertMsg(msg1);
+            alert(msg1);
+             return; 
            } 
           }
 
@@ -1256,49 +1270,67 @@ export class McpEnquiryComponent implements OnInit {
          if (formValue.customerId===undefined || formValue.customerId===null || formValue.customerId<=0)
          {
             this.headerValidation=false; 
-            alert ("CUSTOMER DETAILS : Not Found....");
-            
-             return;
+            msg1 ="CUSTOMER DETAILS : Not Found....";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
+            return; 
           } 
 
           
          if (formValue.customerSiteId===undefined || formValue.customerSiteId===null || formValue.customerSiteId<=0)
          {
             this.headerValidation=false; 
-            alert ("CUSTOMER SITE DETAILS : Not Found...");
-            
-             return;
+            msg1 ="CUSTOMER SITE DETAILS : Not Found...";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
+            return; 
           } 
 
     
          if (formValue.startKms===undefined || formValue.startKms===null || formValue.startKms<=0)
          {
             this.headerValidation=false; 
-            alert ("KM READING : Should not be null....");
-           
-             return;
+            msg1 ="KM READING : Should not be null....";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
+            return; 
           } 
 
         if (formValue.pkgEnquired===undefined || formValue.pkgEnquired===null)
         {
-            alert ("PACKAGE : Select Package Name");
-            return;
+            msg1 ="PACKAGE : Select Package Name";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
+            return; 
          } 
 
         if (formValue.executive===undefined || formValue.executive===null)
         {
             this.headerValidation=false;   
-            alert ("SALES PERSON: Select Sales Person");
-            return;
+            msg1 ="SALES PERSON: Select Sales Person";
+            // this.executeAlertMsg(msg1);
+            alert(msg1);
+            return; 
          } 
         
-          this.headerValidation=true;
+            this.headerValidation=true;
+
+         
+         
       }
 
       clearSearch() {
         this.mcpEnquiryForm.get('searchRegno').reset();
         this.mcpEnquiryForm.get('searchEnqNo').reset();
         this.lstMcplines=null;
+      }
+
+      executeAlertMsg(msg1) 
+      {
+        if (this.headerValidation==false){
+          (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+           this.message = msg1;
+        }
       }
 
 }
