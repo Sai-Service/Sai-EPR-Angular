@@ -1169,19 +1169,16 @@ export class PoInvoiceComponent implements OnInit {
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
-
           }
 
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
-
           }
 
           for (let i = 0; i < data.taxLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
-
           }
 
 

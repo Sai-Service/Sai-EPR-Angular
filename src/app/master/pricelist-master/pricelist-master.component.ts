@@ -55,7 +55,8 @@ interface IPriceList {
 })
 export class PricelistMasterComponent implements OnInit {
   priceListMasterForm: FormGroup;
-
+  isVisible1:boolean=false;
+  isVisible:boolean=false;
   progress = 0;
   // message = '';
   selectFile?: File;
@@ -95,8 +96,8 @@ export class PricelistMasterComponent implements OnInit {
 
   upldPricelistName : string;
   public PriceListIdList : Array<string> = [];
-  
-  
+  priceListLineDetails : any=[];
+  displayLineDetails=true;
   // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
 
   // startDate= Date.now();
@@ -160,6 +161,8 @@ export class PricelistMasterComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput;
   message: string;
+
+  public ItemIdList:any[];
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
@@ -257,14 +260,19 @@ export class PricelistMasterComponent implements OnInit {
     //     }
     //   );
 
- this.service.invItemListNew(sessionStorage.getItem('divisionId'))
-      .subscribe(
-        data => {
-          this.invItemList = data;
-          console.log(this.invItemList);
-        }
-      );
+//  this.service.invItemListNew(sessionStorage.getItem('divisionId'))
+//       .subscribe(
+//         data => {
+//           this.invItemList = data;
+//           console.log(this.invItemList);
+//         }
+//       );
  
+this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
+  data =>{ this.ItemIdList = data;
+    console.log(this.ItemIdList);
+
+});
 
     this.service.PriceListIdList()
     .subscribe(
@@ -450,11 +458,14 @@ export class PricelistMasterComponent implements OnInit {
 
 
   addRow(index) {
-    //  alert('addrow index '+index);
+     alert('addrow index '+index);
 
      this.CheckLineValidations(index);
      if (this.lineValidation==true) 
       {
+      //  this.isVisible1=true;
+        // this.isVisible=false;
+        this.displayLineDetails=false;
           this.lineDetailsArray().push(this.lineDetailsGroup());
       }
 
@@ -623,11 +634,13 @@ export class PricelistMasterComponent implements OnInit {
   // ============================================================
 
   Select(priceListHeaderId: number) {
-    alert(priceListHeaderId);
+    // alert(priceListHeaderId);
+    // this.isVisible=true;
+    // this.isVisible1=false;
     this.priceListMasterForm.reset();
     this.display1= false;
-   
-    // let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
+    let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
+    this.priceListMasterForm.patchValue(select);
     // console.log(select.priceListDetailList[0]);
 
     for(let i=0; i<this.lineDetailsArray.length; i++){ 
@@ -657,23 +670,14 @@ export class PricelistMasterComponent implements OnInit {
     this.service.getLineDetails(priceListHeaderId)  .subscribe(
       data => {
         console.log(data);
+        // this.displayLineDetails=true;
+        this.priceListLineDetails=data;
+        console.log(this.priceListLineDetails);
+        
         var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-        for (let i = 0; i < data.length ; i++) {
-          var priceListDetailList:FormGroup=this.lineDetailsGroup();
-              control.push(priceListDetailList);
-              this.priceListMasterForm.patchValue(data);
-        }
-        // this.priceListMasterForm.patchValue(data);
-       var pricelistHeaderDetails= this.lstcomments;
-        // let controlinv = this.priceListMasterForm.get('oeOrderLinesAllList') as FormArray;
-        // (controlinv.controls[k]).patchValue({
-        //   baseAmt: Math.round((data.obj.oeOrderLinesAllList[k].baseAmt + Number.EPSILON) * 100) / 100,
-        //   taxAmt: Math.round((data.obj.oeOrderLinesAllList[k].taxAmt + Number.EPSILON) * 100) / 100,
-        //   totAmt: Math.round((data.obj.oeOrderLinesAllList[k].totAmt + Number.EPSILON) * 100) / 100,
-        //   unitSellingPrice: Math.round((data.obj.oeOrderLinesAllList[k].unitSellingPrice + Number.EPSILON) * 100) / 100,
-        //   disPer: data.obj.oeOrderLinesAllList[k].disPer,
-        //   taxCategoryId: data.obj.oeOrderLinesAllList[k].taxCategoryId,
-        // });
+        alert(data.length);
+      
+        this.priceListMasterForm.patchValue(data);
       }
      
     )
@@ -682,7 +686,7 @@ export class PricelistMasterComponent implements OnInit {
       this.displayButton = false;
       this.display = false;
       this.showItemSearch=true;
-      // this.priceListMasterForm.patchValue(select);
+     
     }
   
 
@@ -744,17 +748,17 @@ export class PricelistMasterComponent implements OnInit {
    
   // ===============================================================================
 
-  getInvItemId($event) {
-    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
-    this.userList2 = [];
-
-    if (userId.length > 2) {
+  getInvItemId($event)
+  {
+    // alert('in getInvItemId')
+     let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+     this.userList2=[];
+     if (userId.length > 2) {
       if ($event.timeStamp - this.lastkeydown1 > 200) {
-        this.userList2 = this.searchFromArray1(this.invItemList, userId);
+        this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
       }
     }
   }
-  
   searchFromArray1(arr, regex) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
@@ -809,24 +813,29 @@ export class PricelistMasterComponent implements OnInit {
 
 
   findByCode(searchBy,searchValue){
+    // alert(searchValue)
+    this.displayLineDetails=false;
+    // this.isVisible=true;
     // var arrayControl = this.priceListMasterForm.get('priceListDetailList').value
     var priceListHeaderId= this.priceListMasterForm.get('priceListHeaderId').value;
-    let select1 = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
-    console.log('(select1.priceListDetailList) ' +select1.priceListDetailList);
-    console.log(select1.priceListDetailList.length);
+    alert(priceListHeaderId);
+    let select1 = this.priceListLineDetails.find(d => d.segment === searchValue);
+    // console.log('(select1.priceListDetailList) ' +select1.priceListDetailList);
+    console.log(select1);
     var data : any=[] ;
     if(searchBy== 'ITEM DESCRIPTION'){
-      for(let i=0; i<select1.priceListDetailList.length; i++){
-        if(select1.priceListDetailList[i].itemDescription.includes(searchValue)){
+      for(let i=0; i<select1.length; i++){
+        if(select1.priceListLineDetails[i].itemDescription.includes(searchValue)){
           data.push(select1.priceListDetailList[i])
         }
       }
     }
-    if(searchBy== 'ITEM CODE'){
-      for(let i=0; i<select1.priceListDetailList.length; i++){
-        if(select1.priceListDetailList[i].segment.includes(searchValue)){
-          data.push(select1.priceListDetailList[i])
-        }
+    if(searchBy== 'ITEM CODE'){ 
+      // alert(select1 + '-----' +'hi' + searchBy);
+      // for(let i=0; i<select1.length; i++){
+        if(select1.segment.includes(searchValue)){
+          data.push(select1)
+        // }
       }
     }
     console.log(data);
@@ -990,10 +999,12 @@ export class PricelistMasterComponent implements OnInit {
   }
 
   CheckLineValidations(i) {
-
+    // alert(this.priceListLineDetails[i].itemId)
     // alert('addrow index '+i);
   
-    var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
+    // var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
+    var prcLineArr1= this.priceListLineDetails;
+    alert(prcLineArr1[i].itemId);
     var lineValue1=prcLineArr1[i].itemId;
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;

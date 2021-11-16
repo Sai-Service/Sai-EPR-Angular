@@ -63,6 +63,14 @@ export class ReportServiceService {
   }
 
 
+  stklgrtReport(invcDt1,invcDt4,subInv,segment,locId,stkLgrUserName){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StockLedger?fromDate=${invcDt1}&toDate=${invcDt4}&subInvCode=${subInv}&partNo=${segment}&locId=${locId}&userName=${stkLgrUserName}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   spstktrfMdSummaryReport(invcDt1,invcDt4,locId,tolocId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}`;
     return this.http.get(REQUEST_URI, {

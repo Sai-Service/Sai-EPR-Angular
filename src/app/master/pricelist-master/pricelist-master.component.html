@@ -267,7 +267,14 @@
                                 <td style="width: 15%" class="LabelFontStyle">Search&nbsp;Value&nbsp;:</td>
 
                                 <td>
-                                    <input style="width: 330px;"   type="text" formControlName="searchValue" [(ngModel)]="searchValue" class="form-control" placeholder="Enter Search value"   >
+                                    <input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchValue"  [(ngModel)]="searchValue"
+                                    id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                                    class="form-control" />
+                                   <datalist id="dynmicUserIds1" >
+                                     <option *ngFor="let item of ItemIdList" >
+                                       {{item.SEGMENT}} 
+                                   </datalist>
+                                    <!-- <input style="width: 330px;"   type="text" formControlName="searchValue" [(ngModel)]="searchValue" class="form-control" placeholder="Enter Search value"   > -->
                                 </td>
 
                                 <td>
@@ -295,28 +302,42 @@
                                  <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
                                               cellspacing="0" cellpadding="4" rules="all" class="center">
 
-                                              <!-- <table class="auto-style4" class="GridFont" cellspacing="0"
-                                              cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
-                                              style="border-color:#959595;width:100%;border-collapse:collapse;">  -->
-                      
                                               <thead>
                                                 <tr class="GridHeader">
                                                       <th style="width:4rem" scope="col">Srl No.</th>
                                                       <th style="width:15rem" scope="col">Item Code</th>
-                                                      <!-- <th scope="col">Item Id</th> -->
                                                       <th style="width:20rem" scope="col">Item Description</th>
                                                       <th style="width:6rem" scope="col">Item Category</th>
                                                       <th style="width:3rem" scope="col">UOM</th>
                                                       <th style="width:6rem" scope="col">Batch Code</th>
                                                       <th style="width:6rem" scope="col">Price</th>
-                                                      <!-- <th scope="col">Start Date</th> -->
-                                                      <!-- <th scope="col">End Date</th> -->
                                                       <th style="width:2rem" scope="col">Add+</th>
                                                       <th style="width:2rem" scope="col">Del-</th>
                                                   </tr>
                                               </thead>
-
-                                            <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i">
+                                              <div *ngIf="displayLineDetails; then thenLineDetails; else elseLineDetails"> </div>
+                                              <ng-template #thenLineDetails>
+                                                <tr *ngFor="let com of priceListLineDetails let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+                                                    <td style="border: 1px solid black;padding-left: 5px;">{{i+1}}</td>
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.segment}}</td>
+                                                    <!-- <td style="border: 1px solid black;padding-left: 5px;"> {{com.itemId}}</td> -->
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.itemDescription}}</td>
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.itemCategory}}</td>
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.uom}}</td>
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.batchCode}}</td>
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.priceValue}}</td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
+                                                        class="fa fa-plus"></i></button>
+                                                    </td>
+                                                    <td>
+                                                            <button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i
+                                                            class="fa fa-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                              </ng-template>
+                                              <ng-template #elseLineDetails>
+                                            <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
                                                 
                                             <input type="text" hidden formControlName="priceListLineId">
                                             
@@ -333,11 +354,9 @@
                                                         {{item.segment}}
                                                     </option>
                                                 </datalist>
-                                                    <!-- onfocusout="itemValidate($event)" -->
+                                                   
                                                 </td> 
-                                                 <!-- <td>
-                                                    <input disabled  type="text" formControlName="itemId"  class="form-control" placeholder="Item Description "  >
-                                                </td> -->
+                                              
                                                 <td>
                                                     <input disabled style="width:22rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
                                                 </td>
@@ -353,12 +372,7 @@
                                                 <td>
                                                     <input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
                                                 </td>
-                                                <!-- <td>
-                                                    <input   type="date" formControlName="startDate"  class="form-control" placeholder="Start Date "  >
-                                                </td>
-                                                <td>
-                                                    <input   type="date" formControlName="endDate"  class="form-control" placeholder="End Date "  >
-                                                </td> -->
+                                               
 
                                                 <td>
                                                     <button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i
@@ -371,6 +385,8 @@
                                                 </td>
 
                                               </tr>
+                                            <!-- </div> -->
+                                            </ng-template>
                                     </table>
                                 </div>
                            </div>

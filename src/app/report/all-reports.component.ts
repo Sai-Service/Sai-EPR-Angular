@@ -13,7 +13,13 @@ import { data, get } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
+import { MasterService } from 'src/app/master/master.service';
 
+interface IAdmin {
+  searchItemId  :number;
+  searchItemCode: string;
+  searchItemName: string;
+}
 
 @Component({
   selector: 'app-all-reports',
@@ -37,8 +43,19 @@ export class AllReportsComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = new Date();
   invcDt1 = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  public ItemIdList:any[];
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
+  searchItemId  :number;
+  searchItemName: string;
+  searchItemCode: string;
+  stkLgrUserName:string;
+  stklgrsubInv:string;
+  stockLegfromDate:Date;
+  stockLegtoDate:Date;
+ 
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
+  constructor(private fb: FormBuilder, private router: Router,private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({ 
       invcDt1:[],
       location:[],
@@ -57,6 +74,11 @@ export class AllReportsComponent implements OnInit {
       spstktrfMdSumfromDate:[],
       spstktrfMdSumtoDate:[],
       spstktrfMdSumToLoc:[],
+      searchItemCode: [],
+  stkLgrUserName:[],
+  stklgrsubInv:[],
+  stockLegfromDate:[],
+  stockLegtoDate:[],
     })
   }
 
@@ -77,6 +99,12 @@ export class AllReportsComponent implements OnInit {
        console.log(this.BillShipList);
      }
    );
+
+   this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
+    data =>{ this.ItemIdList = data;
+      console.log(this.ItemIdList);
+
+});
   }
   SPdebtorsReport(){
     var invcDt2 = this.reportForm.get('invcDt1').value;
@@ -196,6 +224,68 @@ export class AllReportsComponent implements OnInit {
         printWindow.open
       })
   }
+
+
+  getInvItemId($event)
+  {
+    // alert('in getInvItemId')
+     let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+     this.userList2=[];
+     if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+      }
+    }
+  }
+  searchFromArray1(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
+
+  onOptioninvItemIdSelectedSingle(mItem) {
+    // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
+
+    let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
+      if( selectedValue != undefined){
+       console.log(selectedValue);
+      this.searchItemId=selectedValue.itemId;
+      this.searchItemName=selectedValue.DESCRIPTION;
+      this.searchItemCode=selectedValue.SEGMENT;
+    }
+    // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+
+  }
+
+
+
+
+  stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName){
+    // alert(stklgrsubInv,searchItemCode,stkLgrUserName);
+    var invcDt2 = this.reportForm.get('stockLegfromDate').value;
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('stockLegtoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    // var subInv =this.reportForm.get('stklgrsubInv');
+//  var segment=this.reportForm.get('searchItemCode');
+    // alert(stklgrsubInv+'----'+searchItemCode+'----'+stkLgrUserName)
+    // var spstktrfMdToLoc=this.reportForm.get('spstktrfMdSumToLoc');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.stklgrtReport(invcDt1,invcDt4,stklgrsubInv,searchItemCode,sessionStorage.getItem('locId'),stkLgrUserName)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
   refresh() {
     window.location.reload();
   }

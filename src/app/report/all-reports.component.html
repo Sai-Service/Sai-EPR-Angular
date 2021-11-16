@@ -234,6 +234,63 @@
                     <button class="btn-primary" (click)="spstktrfMdSummary(spstktrfMdSumToLoc)">View Report</button>
                 </td>
             </tr>
+            <tr>
+                <td style="border: 1px solid black;padding-left: 5px;">Stock Ledger</td>
+                <td  style="width: 50%;border: 1px solid black;padding-left: 5px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>From&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockLegfromDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                            <td>
+                                <input type="date" class="form-control"  formControlName="stockLegtoDate"  max="{{minDate | date:'yyyy-MM-dd'}}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SubInventory&nbsp;</td>&nbsp;
+                            <td>
+                                <select formControlName="stklgrsubInv" id="stklgrsubInv" [(ngModel)]="stklgrsubInv" class="form-control">
+                                    <option>--Select--</option>
+                                    <option value="SP">SP</option>
+                                    <option value="AC">AC</option>
+                                </select>
+                         </td>
+                        </tr>
+                        <tr>
+                            <td>Item&nbsp;</td>&nbsp;
+                            <td>
+                                <input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
+                   id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                   class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
+                   style="background-color: yellow;"  />
+                  <datalist id="dynmicUserIds1" >
+                    <option *ngFor="let item of ItemIdList"  [ngValue]="item.SEGMENT">
+                      {{item.SEGMENT}} 
+                  </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>From&nbsp;Location&nbsp;</td>&nbsp;
+                               <td>
+                                <input disabled type="text" class="form-control"  formControlName="location" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>User&nbsp;Name&nbsp;</td>&nbsp;
+                               <td>
+                                <input  type="text" class="form-control"  formControlName="stkLgrUserName" [(ngModel)]="stkLgrUserName" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="border: 1px solid black;padding-left: 5px;">
+                    <button class="btn-primary" (click)="stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName)">View Report</button>
+                </td>
+            </tr>
         </table>
     </div>
         <table class="center">
