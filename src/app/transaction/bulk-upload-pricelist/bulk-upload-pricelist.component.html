@@ -47,7 +47,7 @@
         </tr>
 
         <tr>
-            <td colspan="10">
+            <!-- <td colspan="10">
             <div class="progress">
 
                 <div class="progress-bar progress-bar-success" role="progressbar"  
@@ -57,7 +57,24 @@
                 </div>
 
               </div>
-            </td>
+            </td> -->
+
+                                <!-- <h1>GeeksforGeeks</h1> -->
+                    
+                    <!-- spinnner element is 
+                        defined with id loading -->
+                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                        <ng-template #hList2> 
+
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only" id="loading"></span>
+                                </div>
+                            </div>
+                      </ng-template>
+                      <ng-template #hList1> </ng-template>
+                      <h5 style="text-align: center;color:blue" > {{dataDisplay }}</h5>
+                           
         </tr>
 
     </table>
@@ -67,9 +84,11 @@
     <table class="center">
         <tr>
 
-            <td>
+            <!-- <td>
                 <button type="submit" class="btn btn-primary" (click)="progressBarTesting()">Test</button>
-              </td>
+              </td> -->
+            <div *ngIf="closeResetButton; then showB1; else showB2"></div>
+            <ng-template #showB1> 
            
             <td>
                 <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
@@ -80,7 +99,22 @@
                 <button type="submit" class="btn btn-primary" id="closeBtn"
                 data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
             </td>
-            <td>
+            </ng-template>
+            <ng-template #showB2> 
+           
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                    data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                        
+                </td>
+                <td>
+                    <button disabled type="submit" class="btn btn-primary" id="closeBtn"
+                    data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+                </td>
+            </ng-template>
+
+
+            
 
         </tr>
     </table>

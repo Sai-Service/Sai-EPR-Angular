@@ -74,7 +74,7 @@
                           <td class="LabelFontStyle">&nbsp;Item&nbsp;Code&nbsp;:&nbsp;</td>
                           <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" 
                             formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" 
-                            class="form-control"  style="width: 200px;background-color: yellow;" />
+                            class="form-control"  style="width: 200px;background-color: yellow; text-transform: uppercase;" />
                             <datalist id="dynmicUserIds1">
                               <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">
                                 {{item.SEGMENT}} 

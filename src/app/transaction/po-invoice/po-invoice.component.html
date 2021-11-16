@@ -1281,6 +1281,7 @@
                 <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
                     <thead>
                         <tr class="GridHeader">
+                            <th scope="col" style="width: 40px;">Inv Id</th>
                             <th scope="col" style="width: 40px;">Line No</th>
                             <th scope="col" style="width: 40px;">Dist No</th>
                             <th scope="col" style="width: 230px;">Account</th>
@@ -1302,6 +1303,9 @@
                             <!-- <input hidden type="text" formControlName="invDistributionId"> -->
                             <!-- <input  type="text" formControlName="tdslineNumber" class="form-control" style="width: 40px;height: 25px;"> -->
 
+                            <td>
+                                <input  formControlName="invoiceId" class="form-control" style="width: 60px;height: 25px;">
+                            </td>
 
                             <td>
                                 <input  formControlName="invoiceLineNum" class="form-control" style="width: 30px;height: 25px;">
@@ -1321,9 +1325,14 @@
                             </td>
 
 
-                            <td>
+                            <!-- <td>
                                 <input   formControlName="accDesc"  class="form-control"  style="width: 200px;height: 25px;text-align: right;">
+                            </td> -->
+                            <td>
+                                <input   formControlName="description"  class="form-control"  style="width: 200px;height: 25px;text-align: left;">
                             </td>
+
+                            
                             <td>
                                 <select style="width: 190px;height: 25px;" formControlName="actualSectionCode" id="actualSectionCode"  class="form-control">
                                     <option>--Select--</option>
@@ -1606,11 +1615,13 @@
             <td>
                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
             </td>
+           
             <div [style.display]="isVisible1 ? 'block' : 'none'">
             <td>
-                <button type="submit" (click)="apInvCancelled()" class="btn btn-primary">AP Inv Cancelled</button>
+                <button type="submit" (click)="apInvCancelled()" class="btn btn-primary" style="width: 10rem;color: black;">AP Inv Cancelled</button>
             </td>
-        </div>
+            </div>
+
             <div [style.display]="isVisible ? 'block' : 'none'">
             <td>
                 <button type="submit" class="btn btn-primary"   (click)="apInvoiceSave()">Save</button>
@@ -1627,12 +1638,18 @@
             <td>
                 <div *ngIf="displayTdsButton; then ShowTdsButtonYes; else ShowTdsButtonNo"></div>
                 <ng-template #ShowTdsButtonYes>
+                    <td>
                     <button type="submit" class="btn btn-primary"   (click)="SaveTdsDetails()">Save Tds</button>
+                    </td>
                 </ng-template>
                 <ng-template #ShowTdsButtonNo>
+                    <td>
+                    <button  disabled type="submit" class="btn btn-primary"   (click)="SaveTdsDetails()">Save Tds</button>
+                   </td>
                 </ng-template>
            </td>
             </div>
+
         </tr>
         </table>
     <br>

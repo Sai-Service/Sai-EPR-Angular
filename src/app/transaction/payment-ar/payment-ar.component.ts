@@ -40,6 +40,8 @@ interface IPaymentRcptAr {
   reversalCategory: string;
   status: string;
 
+  tdsAmt:number;
+
 
 
 }
@@ -105,6 +107,7 @@ export class PaymentArComponent implements OnInit {
   rmStatus: string
   paymentMethod: string;
   receiptAmount: number;
+  tdsAmt:number;
   receiptStatus = 'Open';
 
   receiptMethodId: number;
@@ -130,10 +133,12 @@ export class PaymentArComponent implements OnInit {
   custPincode: string;
   CustomerGstNo: string
   customerPanNo: string
+  customerTanNo: string
   custAccountNo: number;
   custPhone: string;
   customerType: string;
   custTaxCategoryName: string;
+  custTdsPer:number;
 
   accountNo: number;
   vehRegNo: string;
@@ -290,6 +295,7 @@ export class PaymentArComponent implements OnInit {
       status: [],
       insuranceFlag: [],
       receiptAmount: [],
+      tdsAmt:[],
 
       searchByRcptNo: [],
       searchByCustNo: [],
@@ -319,10 +325,12 @@ export class PaymentArComponent implements OnInit {
       custPincode: [],
       CustomerGstNo: [],
       customerPanNo: [],
+      customerTanNo:[],
       custAccountNo: [],
       custPhone: [],
       customerType: [],
       custTaxCategoryName: [],
+      custTdsPer:[],
 
       srlNo: [],
       refType: [],
@@ -519,7 +527,12 @@ export class PaymentArComponent implements OnInit {
       alert("RECEIPT AMOUNT :  Should be above Zero.");
       this.paymentAmt = null;
       return;
-    }
+    } 
+        if(this.custTdsPer==null) {this.custTdsPer=0;}
+
+       var tdsPer=Number(this.custTdsPer);
+        this.tdsAmt = (rcptAmt*tdsPer/100);
+    
 
   }
 
@@ -692,10 +705,11 @@ export class PaymentArComponent implements OnInit {
               custPincode: this.CustomerSiteDetails.pinCd,
               customerGstNo: this.CustomerSiteDetails.gstNo,
               customerPanNo: this.CustomerSiteDetails.panNo,
+              customerTanNo: this.CustomerSiteDetails.tanNo,
               custPhone: this.CustomerSiteDetails.mobile1,
               customerType: this.CustomerSiteDetails.customerId.custType,
               custTaxCategoryName: this.CustomerSiteDetails.taxCategoryName,
-
+              customerTdsPer: this.CustomerSiteDetails.tdsPer,
             });
 
           }
@@ -717,6 +731,10 @@ export class PaymentArComponent implements OnInit {
       return;
     } else if (payType === 'CASH') {
       // alert("cash selected");
+      this.bankName=null;
+      this.bankBranch=null;
+      this.checkNo=null;
+      this.checkDate=null;
       this.service.ReceiptMethodList(payType, this.locId, rmStatus)
         .subscribe(
           data => {
@@ -1113,7 +1131,8 @@ export class PaymentArComponent implements OnInit {
         return;
       }
       this.invLineArray().controls[index].get('applAmtNew').enable();
-      this.invLineArray().controls[index].get('glDateLine').enable();
+      // this.invLineArray().controls[index].get('glDateLine').enable();
+
       if (totUnAppAmt >= lineBalDueAmt) {
         //  alert ("in if section")
 
@@ -1343,11 +1362,11 @@ export class PaymentArComponent implements OnInit {
               var invAmt = invLineArr[i].invoiceAmount.toFixed(2);
               patch.controls[i].patchValue({ invoiceAmount: invAmt })
 
-              //  var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
-              //  var z1=this.pipe.transform(this.now, 'y-MM-dd');
+               var z=this.pipe.transform(invLineArr[i].trxDate, 'y-MM-dd');
+               var z1=this.pipe.transform(this.now, 'y-MM-dd');
               // alert(invLineArr[i].trxDate);
 
-              //  patch.controls[i].patchValue({trxDate:z})
+               patch.controls[i].patchValue({trxDate:z})
               //  patch.controls[i].patchValue({glDateLine:z1})
               //  patch.controls[i].patchValue({glDate:z1})
             }

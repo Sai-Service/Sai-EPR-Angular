@@ -186,8 +186,9 @@ onhandDetailsForm:FormGroup;
  searchByItem(segment)
  {
    
-   alert(this.onhandDetailsForm.get('segment').value);
+  //  alert(this.onhandDetailsForm.get('segment').value);
    var segment1=this.onhandDetailsForm.get('segment').value
+   segment1=segment1.toUpperCase();
    if(segment1 ==undefined || segment1==null) {
     alert ("Please select Item Code ....") ;return;
    }

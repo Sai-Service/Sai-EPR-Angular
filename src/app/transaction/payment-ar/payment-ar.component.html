@@ -209,6 +209,18 @@
                                         <td>
                                             <input disabled   type="text"  formControlName="custPhone"  id="custPhone" [(ngModel)]="custPhone" class="form-control" >
                                         </td>
+
+                                        <td style="width: 15%" class="LabelFontStyle">TAN&nbsp;:&nbsp;</td>
+                
+                                        <td>
+                                            <input disabled    type="text"  formControlName="customerTanNo"  id="customerTanNo" [(ngModel)]="customerTanNo" class="form-control" >
+                                        </td>
+
+                                        <td style="width: 15%" class="LabelFontStyle">TDS&nbsp;Percentage:&nbsp;</td>
+                
+                                        <td>
+                                            <input disabled    type="text"  formControlName="custTdsPer"  id="custTdsPer" [(ngModel)]="custTdsPer" class="form-control" >
+                                        </td>
                             
                                     </tr>
                                
@@ -216,8 +228,8 @@
                 
                                         <td style="width: 5%" class="LabelFontStyle">Site&nbsp;Address:&nbsp;</td>
                     
-                                        <td>
-                                            <input disabled  style="width: 470%"  type="text"  formControlName="customerSiteAddress"  id="customerSiteAddress" [(ngModel)]="customerSiteAddress" class="form-control" >
+                                        <td colspan="5">
+                                            <input disabled  style="width: 100%"  type="text"  formControlName="customerSiteAddress"  id="customerSiteAddress" [(ngModel)]="customerSiteAddress" class="form-control" >
                                         </td>
                                     </tr>
                                     <tr>
@@ -461,8 +473,8 @@
                                     <ng-template #thenshowDet1Yes>
                                      
                                         <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Date&nbsp;</td>
-                                        <td><input   type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
-                                            max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" style="background-color: yellow;"></td>
+                                        <td><input  disabled type="date"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" 
+                                            max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" ></td>
                                         
                                         <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
                                         <td>  <input style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" style="background-color: yellow;">    </td>
@@ -488,16 +500,7 @@
                                     <div *ngIf="displayButton ,then thenshowDet2Yes; else thenshowDet2No")></div>
                                     <ng-template #thenshowDet2Yes>
 
-                                        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
-            
-                                        <td>  
-                                        <select disabled formControlName="status" id="status" [(ngModel)]="status" class="form-control" style="background-color: yellow;" >
-                                            <option disabled>--Select--</option>
-                                            <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.code"  >
-                                              {{sc.code}}
-                                            </option>
-                                        </select>
-                                        </td>
+                                      
 
                                     <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
 
@@ -531,16 +534,7 @@
 
                                     <ng-template #thenshowDet2No>
 
-                                        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
-            
-                                        <td>  
-                                        <select disabled formControlName="receiptStatus" id="receiptStatus" [(ngModel)]="receiptStatus" class="form-control" style="background-color: yellow;" >
-                                            <option disabled>--Select--</option>
-                                            <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.code"  >
-                                              {{sc.code}}
-                                            </option>
-                                        </select>
-                                        </td>
+                                       
 
                                         <td style="width: 15%" class="LabelFontStyle1">Ref.&nbsp;Type:&nbsp;</td>
     
@@ -561,13 +555,35 @@
                                         <td><input disabled  type="date"  formControlName="referenceDate"  id="referenceDate" [(ngModel)]="referenceDate" class="form-control" ></td>
                                        
                                     </ng-template>
+
+                                    <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amount:&nbsp;</td>
+                                    <td><input   style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmt"  id="tdsAmt"  [(ngModel)]="tdsAmt" class="form-control" (change)="validateAmt(paymentAmt)" style="background-color: yellow;">    </td>
+                            
+
+
                                     </tr>
 
                                     
                                     
                                     <tr>
+
+                                  
+
                                     <div *ngIf="displayButton ,then thenshowDet21Yes; else thenshowDet21No")></div>
                                     <ng-template #thenshowDet21Yes>
+
+                                        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
+        
+                                        <td>  
+                                        <select disabled type="text"  formControlName="status" id="status" [(ngModel)]="status" class="form-control" style="background-color:lightgreen;" >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.code"  >
+                                                {{sc.code}}
+                                            </option>
+                                        </select>
+                                        </td>
+
+
                                     <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
     
                                     <td>  
@@ -580,7 +596,7 @@
                                     </td>
 
                                     <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Method:&nbsp;</td>
-                                        <td colspan="2">  
+                                        <td>  
                                             <select  formControlName="receiptMethodId" id="receiptMethodId" [(ngModel)]="receiptMethodId" class="form-control"  style="background-color: yellow;width: 100%;">
                                                 <option disabled>--Select--</option>
                                                 <option *ngFor="let sc of  ReceiptMethodList " [ngValue]="sc.receiptMethodId">
@@ -594,6 +610,17 @@
 
 
                                     <ng-template #thenshowDet21No>
+
+                                        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Status:&nbsp;</td>
+            
+                                        <td>  
+                                        <select disabled type="text" formControlName="receiptStatus" id="receiptStatus" [(ngModel)]="receiptStatus" class="form-control" style="background-color:lightgreen;" >
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  ReceiptStatusList" [ngValue]="sc.code"  >
+                                              {{sc.code}}
+                                            </option>
+                                        </select>
+                                        </td>
 
                                         <td style="width: 15%" class="LabelFontStyle1">Pay&nbsp;Mode:&nbsp;</td>
     
@@ -883,12 +910,12 @@
                                     <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
                                     <ng-template #CancelButtonYes>
                                     <td>
-                                        <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
+                                        <button  type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button>
                                     </td>
                                     </ng-template>
                                     <ng-template #CancelButtonNo>
                                         <td>
-                                            <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Cancel</button>
+                                            <button disabled type="button" class="btn btn-info" (click)="reverseReceipt()">Reverse</button>
                                         </td>
                                     </ng-template>
 
@@ -1095,13 +1122,18 @@
                                                     <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
                                                     <td><input style="width: 100px;height: 25px;text-align: center;"      disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
                                                     <td><input style="width: 140px;height: 25px;" type="text"             disabled formControlName="trxNumber" class="form-control"></td>
-                                                    <td><input style="width: 130px;height: 25px;text-align: center;"       disabled type="text" formControlName="trxDate" class="form-control"></td>   
-                                                    <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
+                                                    <!-- <td><input style="width: 130px;height: 25px;text-align: center;"       disabled type="text" formControlName="trxDate" class="form-control"></td>    -->
+                                                    <td><input style="width: 145px;height: 25px;text-align: center;"       disabled type="date" formControlName="trxDate"  class="form-control"></td>   
+
+                                                     <!-- <td>{{trxDate | date:'dd-MM-y'}}</td>  -->
                                                     <td><input style="width: 95px;height: 25px;text-align: right;" disabled  type="text" formControlName="invoiceAmount" class="form-control"></td>
                                                     
                                                     <td><input style="width: 95px;height: 25px;text-align:right;"  disabled  type="text" formControlName="applAmt"  class="form-control"  > </td>
                                                     <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                                    <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control" (change)="glPrdValidateLine(k)"></td>
+                                                    <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="glDateLine" [(ngModel)]="glDateLine" class="form-control"></td>
+                                                    
+                                                    <!-- <td><input disabled style="width: 150px;height: 25px;text-align: right;background-color:yellow;"    type="date" formControlName="glDateLine"  class="form-control" (change)="glPrdValidateLine(k)"></td> -->
+
                                                     <td><input disabled style="width: 120px;height: 25px;text-align: right;background-color: yellow;"   type="number" min="0" formControlName="applAmtNew" (change)="validateLineApplAmt(k)" class="form-control" placeholder="" > </td>
                                                     <td><input style="width: 98px;height: 25px;text-align: right;"     disabled    type="text" formControlName="balDueAmt" class="form-control" placeholder="" > </td>
                                                     <td><input style="width: 100px;height: 25px;text-align: right;"   hidden disabled  type="text" formControlName="balance1" class="form-control" placeholder="balance" ></td>
@@ -1145,7 +1177,10 @@
                                                                 <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlagRefund($event,k)"></td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: center;"  disabled  type="text" formControlName="applyTo" [(ngModel)]="applyTo" class="form-control" placeholder="Appl Type"  > </td>
                                                                 <td><input style="width: 150px;height: 25px;text-align: right;" disabled  type="date" formControlName="applDate" [(ngModel)]="applDate" class="form-control"></td>
-                                                                <td><input style="width: 150px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td>
+                                                                <!-- <td><input style="width: 150px;height: 25px;text-align: right; background-color:yellow;"   type="date" formControlName="glDateLine"  class="form-control"  (change)="glPrdValidateLine(k)"></td> -->
+                                                                <td><input style="width: 145px;height: 25px;text-align: center;" disabled  type="date" formControlName="glDateLine" [(ngModel)]="glDateLine" class="form-control"></td>
+                                                   
+
                                                                 <td><input style="width: 150px;height: 25px;text-align: right;background-color: yellow;"    type="number" min="0" formControlName="applAmtNew" (change)="validateLineRefAmt(k)" class="form-control" > </td>
                                                                 <!-- <td><input style="width: 480px;height: 25px;text-align: left;background-color: yellow;"    type="text" formControlName="refReasonCode" class="form-control" > </td> -->
                                                                 <td>
