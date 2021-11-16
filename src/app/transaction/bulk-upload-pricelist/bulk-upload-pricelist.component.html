@@ -31,10 +31,18 @@
             <td>
             <input  type="file"  accept=".csv"  #fileInput class="form-control" style="vertical-align: middle;margin-top: 22px;width: 350px;background-color: yellow;">&nbsp;&nbsp;  
             </td>
-                     
+            
+            <div *ngIf ="updStatus;then ButtonNo;else ButtonYes"></div>
+            <ng-template #ButtonNo>  
             <td>
-                <button  class="btn btn-primary" (click)="uploadFile();" style="width: 5rem;font-size: 11px;">Submit&nbsp;</button>
+                <button  disabled class="btn btn-primary" (click)="uploadFile();" style="width: 5rem;font-size: 11px;">Submit&nbsp;</button>
             </td>
+            </ng-template>
+            <ng-template #ButtonYes>  
+            <td>
+                <button   class="btn btn-primary" (click)="uploadFile();" style="width: 5rem;font-size: 11px;">Submit&nbsp;</button>
+            </td>
+            </ng-template>
 
         </tr>
 

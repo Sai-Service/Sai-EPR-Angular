@@ -3145,6 +3145,12 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
       }
 
+
+    recCreditMemoType(classType) {
+          return this.http.get(this.ServerUrl +`/rcvType/typeWise/${classType}`);
+        // http://localhost:8081/rcvType/typeWise/Credit%20Memo
+      }
+
    
       
 

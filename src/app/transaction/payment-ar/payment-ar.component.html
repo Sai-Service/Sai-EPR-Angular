@@ -803,17 +803,13 @@
                                     <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!paymentArForm">Save</button>
                                 </td>
 
-                                <!-- <td>
+                                <!-- <td class="center">
                                     <button type="button" id="saveBtn" data-toggle="modal" 
-                                    data-target="#confirmAlert" class="btn btn-info" (click)="newMast()" [disabled]="!paymentArForm">Save</button>
+                                    data-target="#confirmAlert" class="btn btn-info" (click)="getMessage('Save')" >Save</button>
                                 </td> -->
 
 
-
-                                <!-- <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
-                                data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button> -->
-                                
-
+                               
                                 <!-- <td>
                                     <button type="button" class="btn btn-info" (click)="applyRcpt(searchValue)">Apply</button>
                                 </td> -->
@@ -1407,11 +1403,11 @@
                                             <td style="text-align: center;">{{i+1}}</td>
                                             <td style="width:10rem;text-align: center;">{{com.applyTo}}</td>
                                             <td style="width:10rem;text-align: center;">{{com.trxNumber}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.trxDate}}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
                                             <td style="width:10rem;text-align: right;">{{com.invoiceAmount | number:'0.00'}}</td>
                                             <td style="width:10rem;text-align: right;">{{com.applAmt | number:'0.00'}}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.applDate }}</td>
-                                            <td style="width:10rem;text-align: center;">{{com.glDate }}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.applDate |date:'dd-MM-y'}}</td>
+                                            <td style="width:10rem;text-align: center;">{{com.glDate |date:'dd-MM-y'}}</td>
                                             <!-- <td style="width:6rem;text-align: center;">{{com.balanceDue | number:'0.00'}}</td> -->
                                         </tr>
                                 </table>
@@ -1469,42 +1465,29 @@
 </div>
 </div>
 
-<div class="container">
-    <div class="row">
-    <div class ="col-xs-12">
-    
-    <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" >
-    <!-- style="width: 500px; text-align: center;" -->
-            <div class="modal-dialog1 modal-dialog-centered modal-sm "  role="document">
-            <!-- <div class="modal-dialog modal-dialog-centered modal-sm "  role="document"> -->
-        <div class="modal-content">
-            <div class="modal-header" style="background-color:cadetblue;">
-                <h5 class="modal-title"  >Alert!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                    {{message}}
-                </label>
-            </div>
-            <div class="modal-footer">
-                <table class="center">
-            <tr>
-               
-                <td>
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                </td>
-               
-            </tr>
-            </table>
-          </div>
-          </div>
-          </div>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" style="width: 500px; text-align: center;">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
         </div>
-        
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
     </div>
-    </div>
-    </div>
-

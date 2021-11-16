@@ -40,7 +40,33 @@
         <div class="form-bg">
             <div class="center" style="width: 100%;">
                 <!-- <form [formGroup]="returntoVendorForm" (ngSubmit)="returntoVendor(returntoVendorForm.value)"> -->
-
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                        SEARCH</legend>
+                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <tr>
+                        <td >
+                            <table class="center">
+                                <tr>
+                                    <td  style="background-color: #FFE4B5;">&nbsp;Receipt&nbsp;No&nbsp;:&nbsp;</td>
+                                    
+                                    <td style="background-color: #FFE4B5;">
+                                        <input type="number"  style="text-align: left;" class="form-control" formControlName="receiptNo" [(ngModel)]='receiptNo'
+                                            value={{receiptNo}} style="text-transform:uppercase;">
+                                    </td>
+    
+                                    <td style="background-color: #FFE4B5;">
+                                        <button type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td>
+                                     
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                    </table>
+                    </fieldset>
+                    
                      <table class="center">
                         <tr>
 
@@ -216,20 +242,20 @@
 
                         <td style="width: 15%" class="LabelFontStyle">Return&nbsp;Amt&nbsp;:&nbsp;</td>
                         <td>
-                            <input disabled formControlName="baseAmount" [(ngModel)]="baseAmount" value={{baseAmount}}
+                            <input disabled formControlName="baseAmount" [(ngModel)]="baseAmount" value={{baseAmount}} step ="0.01"
                                    class="form-control"  placeholder="00.00" style="text-align: right;">
                         </td>
 
                         <td style="width: 15%" class="LabelFontStyle"> Return&nbsp;Tax&nbsp;Amt&nbsp;:&nbsp;</td>
                         <td>
-                            <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt"
+                            <input disabled formControlName="taxAmt" [(ngModel)]="taxAmt" step ="0.01"
                                 value={{taxAmt}} class="form-control" placeholder="00.00" style="text-align: right;" >
                         </td>
     
                        
                             <td style="width: 15%" class="LabelFontStyle"> Return&nbsp;Total&nbsp;Amt&nbsp;:&nbsp;</td>
                             <td>
-                                <input disabled formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                <input disabled formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} step ="0.01" placeholder="00.00"
                                     class="form-control" style="text-align: right;" >
                             </td>
 
@@ -532,18 +558,18 @@
                                                 class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                         </td>
                                         <td> <input disabled type="text"
-                                                formControlName="baseAmount"
+                                                formControlName="baseAmount" step ="0.01"
                                                 class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                         </td>
 
                                        
                                     <td> <input disabled type="text"
-                                            formControlName="taxAmount"
+                                            formControlName="taxAmount" step ="0.01"
                                             class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                     </td>
                                    
                                     <td> <input disabled type="text"
-                                            formControlName="totAmount"
+                                            formControlName="totAmount" step ="0.01"
                                             class="form-control" style="height: 25px;width: 90px;text-align: right;">
                                     </td>
 
@@ -577,7 +603,13 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <div *ngIf="rtnSearch ,then rtn1; else rtn2")></div>
-                                <ng-template #rtn1> </ng-template>
+                                <ng-template #rtn1> 
+                                    <td>
+                                        <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!returntoVendorForm">Print</button>
+                                    </td>
+
+                                </ng-template>
+
                                 <ng-template #rtn2>
                                 <td>
                                 <div *ngIf="validateStatus ,then vStatusYes; else vStatusNo")></div>
@@ -997,39 +1029,7 @@
 </div>
 
 
-                <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-                    SEARCH</legend>
-                <table class="center" style="width: 100%;background-color: #FFE4B5;">
-                    <tr>
-                    <td >
-                        <table class="center">
-                            <tr>
-                                <td  style="background-color: #FFE4B5;">&nbsp;Receipt&nbsp;No&nbsp;:&nbsp;</td>
-                                
-                                <td style="background-color: #FFE4B5;">
-                                    <input type="number"  style="text-align: left;" class="form-control" formControlName="receiptNo" [(ngModel)]='receiptNo'
-                                        value={{receiptNo}} style="text-transform:uppercase;">
-                                </td>
-
-                                <td style="background-color: #FFE4B5;">
-                                    <button type="button" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
-                                            aria-hidden="true"></i></button>
-                                </td>
-
-                                <!-- <td style="background-color: #FFE4B5;">
-                                    <button type="button" id="findBtn" data-toggle="modal" 
-                                    data-target="#confirmAlert" class="btn-primary" (click)="SearchByPoRcptNumberHeader(receiptNo)"><i class="fa fa-search"
-                                            aria-hidden="true"></i></button>
-                                </td> -->
-
-                             
-                            </tr>
-                        </table>
-                    </td>
-                    </tr>
-                </table>
-                </fieldset>
+               
 
 </form>
 <br>
