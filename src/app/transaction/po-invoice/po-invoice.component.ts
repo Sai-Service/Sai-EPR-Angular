@@ -170,7 +170,7 @@ export class PoInvoiceComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   isVisible: boolean = true;
-  isVisible1:boolean=false;
+  isVisible1:boolean=true;
 
   invoiceDate = this.pipe.transform(this.now, 'yyyy-MM-ddTHH:mm');
   // accountingDate = new Date();
@@ -301,6 +301,7 @@ export class PoInvoiceComponent implements OnInit {
   displaydescription = false;
   displaydistributionSet = false;
   displayValidateButton = true;
+  displayapInvCancelled=true;
   displayModal = true;
   selectedLine = 0;
   userList1: any[] = [];
@@ -330,6 +331,7 @@ export class PoInvoiceComponent implements OnInit {
   formSumitAttempt: boolean;
   hsnsaclist: any;
   public apInvoiceTyp: string = 'MANUAL';
+  isDisabled = false;
 
   constructor(private fb: FormBuilder, private transactionService: TransactionService, private service: MasterService, private router: Router,) {
     this.poInvoiceForm = fb.group({
@@ -652,7 +654,8 @@ export class PoInvoiceComponent implements OnInit {
   get g() { return this.poInvoiceForm.controls; }
 
   ngOnInit(): void {
-   
+    this.isVisible1=false;
+    this.displayapInvCancelled=true;
     $("#wrapper").toggleClass("toggled");
     var patch = this.poInvoiceForm.get('obj') as FormArray;
     (patch.controls[0]).patchValue(
@@ -852,7 +855,7 @@ export class PoInvoiceComponent implements OnInit {
 
   onOptionsSelectedsuppName1(event: any, i) {
     var name = event.target.value;
-    alert('-change event--' + name);
+    // alert('-change event--' + name);
     this.service.supplierCodeList1()
       .subscribe(
         data => {
@@ -865,7 +868,7 @@ export class PoInvoiceComponent implements OnInit {
       );
   }
   onOptionsSelectedsuppName(name: any, i) {
-    alert('-ngmodel change event--' + name);
+    // alert('-ngmodel change event--' + name);
     this.service.supplierCodeList1()
       .subscribe(
         data => {
@@ -948,6 +951,7 @@ export class PoInvoiceComponent implements OnInit {
     if(this.poInvoiceForm.get('suppNo').value != null){searchObj.suppNo=this.poInvoiceForm.get('suppNo').value}
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
+        this.isDisabled=true;
         this.lstsearchapinv = res.obj;
        
         this.lstsearchapinv.forEach(f => {
@@ -973,7 +977,9 @@ export class PoInvoiceComponent implements OnInit {
           // alert(res.obj[i].invoiceStatus);
           if (res.obj[i].invoiceStatus===null){
             this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
-            this.isVisible1=true;
+            // alert(this.isVisible1);
+            this.isVisible1=false;
+            this.displayapInvCancelled=true;
           }
           else{
             this.poInvoiceForm.patchValue({INVStatus:res.obj[i].invoiceStatus})
@@ -994,7 +1000,8 @@ export class PoInvoiceComponent implements OnInit {
           this.lineDetailsArray().controls[i].get('currency').disable();
           this.lineDetailsArray().controls[i].get('paymentRateDate').disable();
           this.lineDetailsArray().controls[i].get('ouName').disable();
-          
+          this.lineDetailsArray().controls[i].get('invoiceAmt').disable();
+          this.lineDetailsArray().controls[i].get('taxAmt').disable();    
         }
         this.displayValidateButton = false;
        
@@ -1127,19 +1134,25 @@ export class PoInvoiceComponent implements OnInit {
 
   selectINVLineDtl(i) {
     // alert(i)
+    alert(this.isVisible1)
     this.selectedLine=i;
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var invStatus = arrayControl[this.selectedLine].INVStatus;
-    // alert(invStatus)
-    // if (arrayControl[this.selectedLine].INVStatus===null){
-    //   this.poInvoiceForm.patchValue({INVStatus:'Never Validated'})
-    // }
-    // else{
-    //   this.poInvoiceForm.patchValue({INVStatus:this.lstsearchapinv[i].invoiceStatus})
-    // }
-    // if (arrayControl[this.selectedLine].INVStatus==='Validated'){
-    //   this.poInvoiceForm.disable();
-    // }
+    alert(invStatus)
+    if (arrayControl[this.selectedLine].INVStatus===null){
+      this.poInvoiceForm.patchValue({INVStatus:'Never Validated'});
+      this.isVisible1=false;
+      this.displayapInvCancelled=true;
+      
+    }
+    else{
+      this.poInvoiceForm.patchValue({INVStatus:this.lstsearchapinv[i].invoiceStatus})
+    }
+    if (arrayControl[this.selectedLine].INVStatus==='Validated'){
+      this.poInvoiceForm.disable();
+      this.isVisible1=true;
+      this.displayapInvCancelled=false;
+    }
     var INVStatus = arrayControl[this.selectedLine].INVStatus;
     var INVStatus1=this.poInvoiceForm.get('INVStatus').value;
     // alert(INVStatus +'----'+ INVStatus1)
@@ -1154,8 +1167,9 @@ export class PoInvoiceComponent implements OnInit {
           this.poInvoiceForm.patchValue({
             invoiceNum: data.invoiceNum,
             segment1: data.invLines[0].poNumber,
-
           })
+          this.isDisabled=true;
+          // alert(this.isDisabled+'----');
           this.lstInvLineDeatails = data;
           this.lstTdsLine = data.invDisLines;
           console.log(data.invoiceStatus);
@@ -1170,19 +1184,16 @@ export class PoInvoiceComponent implements OnInit {
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.distLineDetails();
             this.lineDistributionArray().push(invLnGrp);
-
           }
 
           for (let i = 0; i < data.invDisLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.tdsLineDetails();
             this.TdsDetailsArray().push(invLnGrp);
-
           }
 
           for (let i = 0; i < data.taxLines.length - 1; i++) {
             var invLnGrp: FormGroup = this.TaxDetailsGroup();
             this.TaxDetailsArray().push(invLnGrp);
-
           }
 
 
@@ -1290,23 +1301,16 @@ export class PoInvoiceComponent implements OnInit {
         }
       )
 
-if (INVStatus1==='Validated'){
+if (INVStatus1==='Validated' || INVStatus1==='CANCELLED'){
   this.isVisible=false;
-  this.isVisible1=false;
+  // this.isVisible1=true;
+  this.displayapInvCancelled=false;
 }
 else{
   this.isVisible=true;
-   this.isVisible1=true;
+  //  this.isVisible1=false;
+  this.displayapInvCancelled=false;
 }
-if (INVStatus1==='CANCELLED'){
-  this.isVisible1=false;
-  this.isVisible=false;
-}
-else{
-  this.isVisible1=true;
-  this.isVisible=true;
-}
-
   }
 
 
@@ -1753,7 +1757,7 @@ else{
                 invLineNo: this.indexVal + 1,
               });
               console.log(new Date());
-              alert('tax deail pach');
+              alert('Tax Details Has Been Patched... Please Confirm!');
             }
 
             this.invLineNo = k + 1;
@@ -1783,7 +1787,7 @@ else{
                   // alert('dist in 1stif deail push');
                 }
               } else {
-                alert('lenght more than one')
+                // alert('lenght more than one')
                 for (let i = len - 1; i < data.invDisLines.length - 1; i++) {
                   var invLnGrp: FormGroup = this.distLineDetails();
                   this.lineDistributionArray().push(invLnGrp);
@@ -1867,7 +1871,7 @@ else{
 
       }
       else {
-        alert('lenght more than one')
+        // alert('lenght more than one')
         for (let i = len - 1; i < lstInvLineDeatails1.invDisLines.length - 1; i++) {
           var invLnGrp: FormGroup = this.distLineDetails();
           this.lineDistributionArray().push(invLnGrp);

@@ -502,7 +502,7 @@
                 </div>
             
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" [disabled]="isDisabled"
                         (click)="apInvFind(content)">Find</button>
                 </div>
             </div>
@@ -780,7 +780,7 @@
                                       <td>
                                           <input type="text" class="form-control" formControlName="lineNumber" value={{lineNumber}}
                                           data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
-                                          style="width: 50px;height: 25px;font-size: 10px;" (click)="selectDisLineDtl(k)" #val1 (change)="move(val1,val2)">
+                                          style="width: 50px;height: 25px;font-size: 10px;" (click)="selectDisLineDtl(k)" #val1 (change)="move(val1,val2)" [disabled]="isDisabled">
                                           <!-- selectINVLineDtl  -->
                                           <!-- (click)="selectDisLineDtl(i)" -->
                                       </td>
@@ -1622,6 +1622,16 @@
             </td>
             </div>
 
+            <!-- <div > -->
+            <td>
+                <div *ngIf="displayapInvCancelled; then thenapInvCancelled; else elseapInvCancelled"></div>
+                <ng-template #thenapInvCancelled>
+                </ng-template>
+                <ng-template #elseapInvCancelled>
+                <button type="submit" (click)="apInvCancelled()" class="btn btn-primary" [style.display]="isVisible1 ? 'block' : 'none'">AP Inv Cancelled</button>
+                </ng-template>
+            </td>
+        <!-- </div> -->
             <div [style.display]="isVisible ? 'block' : 'none'">
             <td>
                 <button type="submit" class="btn btn-primary"   (click)="apInvoiceSave()">Save</button>

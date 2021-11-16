@@ -452,8 +452,7 @@ export class McpEnrollmentComponent implements OnInit {
             data => {
               // this.lstMcpEnquiryList = data;
               this.lstMcpEnquiryList.push(data);
-              console.log(this.lstMcpEnquiryList);
-                                 
+              console.log(this.lstMcpEnquiryList);                          
         }
         ); }   
 
