@@ -62,7 +62,7 @@ export class PendingShipmentListComponent implements OnInit {
 
 
   viewShipDetails(shipmentNumber) {
-    this.router.navigate(['/PoReceiptForm'], { queryParams: { shipmentNumber: shipmentNumber } });
+    this.router.navigate(['/admin/master/PoReceiptForm'], { queryParams: { shipmentNumber: shipmentNumber } });
     // alert(segment1);
   }
 

@@ -2098,6 +2098,9 @@ PriceListIdList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/priceHistory/itemhist?priceListHeaderId=${priceListId}&itemId=${itemId}`);
     }
 
+    searchByItemDetails(segment): Observable<any> {
+      return this.http.get(this.ServerUrl + `/itemMst/details/${segment}`);
+    }
 
     getPriceListSearchNew(ouId,divisionId): Observable<any> {
       // alert("MS>>PL ID="+priceListId + " item id="+itemId);

@@ -289,10 +289,6 @@
                         </table>
 
                         <br>
-
-                      
-                       
-
                         <div class="center">
                             <!-- <br> -->
                            <div class="center" formArrayName="priceListDetailList">
@@ -343,18 +339,25 @@
                                             
                                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
                                                 
-                                                 <td>
-                                                      
+                                                 <td>    
+                                                   
+                                                 <!-- <input type="text" formControlName="segment" class="form-control" [(ngModel)]="segment" (keydown.tab)="onOptioninvItemIdSelectedNew(segment,i)" /> -->
+                                             
                                                     <input type="text" formControlName="segment"
                                                     (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                     list="dynmicUserIds1" class="form-control"  style="width: 16rem;"
-                                                    (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
+                                                    (ngModelChange)="onOptioninvItemIdSelectedNew($event,i)" />
                                                 <datalist id="dynmicUserIds1">
                                                     <option *ngFor="let item of invItemList" [ngValue]="item.itemId">
                                                         {{item.segment}}
                                                     </option>
-                                                </datalist>
-                                                   
+                                                </datalist> 
+                                                <!-- <select class="form-control" style="height: 20px; width: 160px;"   formControlName="frmLocatorId"
+                                                (ngModelChange)="onOptioninvItemIdSelectedNew(segment,i)">
+                                                <option *ngFor="let item of  invItemList[i]" [ngValue]="item.itemId">
+                                                    {{item.segment}}
+                                                </option>
+                                            </select> -->
                                                 </td> 
                                               
                                                 <td>

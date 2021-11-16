@@ -110,7 +110,7 @@ export class PricelistMasterComponent implements OnInit {
   lstcomments: any;
   lstcomments1: any;
   public statusList: Array<string> = [];
-  invItemList: any;
+  invItemList: any=[];
   public PriceTypeList: Array<string> = [];
   public PriceSubTypeList: Array<string> = [];
   public DepartmentList: Array<string> = [];
@@ -140,7 +140,7 @@ export class PricelistMasterComponent implements OnInit {
   display1 = true;
   displayButton = true;
   plsearch=false;
-
+  displayItemDetails=true;
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
@@ -361,7 +361,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
   onItemSelected(itemId: any) 
   {
-      alert("ITEM ID :" + itemId);
+      // alert("ITEM ID :" + itemId);
     if(itemId>0)
     {
        this.enableDesc=false
@@ -386,7 +386,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   
  onPLSelected(priceListId: any) 
  {
-     alert("price list ID :" + priceListId);
+    //  alert("price list ID :" + priceListId);
    
           this.service.priceDescList(priceListId)
           .subscribe(
@@ -458,7 +458,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
 
   addRow(index) {
-     alert('addrow index '+index);
+    //  alert('addrow index '+index);
 
      this.CheckLineValidations(index);
      if (this.lineValidation==true) 
@@ -472,10 +472,12 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   }
 
   RemoveRow(index) {
+    // alert(index)
     if (index===0){
 
     }
     else {
+      // alert(index)
       this.lineDetailsArray().removeAt(index);
     }
   
@@ -675,7 +677,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
         console.log(this.priceListLineDetails);
         
         var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-        alert(data.length);
+        // alert(data.length);
       
         this.priceListMasterForm.patchValue(data);
       }
@@ -769,10 +771,34 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     return matches;
   };
 
+
+  onOptioninvItemIdSelectedNew(segment,index){
+    // alert(segment)
+    var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+    this.service.searchByItemDetails(segment)
+      .subscribe(
+        data => {
+          // this.invItemList=data;
+            this.displayItemDetails=true;
+            (patch.controls[index]).patchValue(
+              {
+                uom: data[0].uom,
+                itemDescription: data[0].description,
+                itemCategory: data[0].itemCategory,
+                itemId: data[0].itemId,
+                itemName:data[0].segment,
+              }
+            );
+          
+       
+        }
+      );
+  }
+
   onOptioninvItemIdSelected(itemId, index) {
- 
+    // alert(itemId)
     //  alert('item function-'+itemId);
-      let selectedValue = this.invItemList.find(v => v.segment == itemId);
+      let selectedValue = this.ItemIdList.find(v => v.SEGMENT == itemId);
       console.log(selectedValue);
       
       if( selectedValue != undefined){
@@ -803,7 +829,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     //  alert('item function');
       let selectedValue = this.invItemList.find(v => v.segment == itemId);
       if( selectedValue != undefined){
-      alert(selectedValue.itemId);
+      // alert(selectedValue.itemId);
       console.log(selectedValue);
       this.searchItemId = selectedValue.itemId;
       this.searchItemName=selectedValue.description;
@@ -818,7 +844,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     // this.isVisible=true;
     // var arrayControl = this.priceListMasterForm.get('priceListDetailList').value
     var priceListHeaderId= this.priceListMasterForm.get('priceListHeaderId').value;
-    alert(priceListHeaderId);
+    // alert(priceListHeaderId);
     let select1 = this.priceListLineDetails.find(d => d.segment === searchValue);
     // console.log('(select1.priceListDetailList) ' +select1.priceListDetailList);
     console.log(select1);
@@ -1004,7 +1030,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   
     // var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
     var prcLineArr1= this.priceListLineDetails;
-    alert(prcLineArr1[i].itemId);
+    // alert(prcLineArr1[i].itemId);
     var lineValue1=prcLineArr1[i].itemId;
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;
