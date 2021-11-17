@@ -1,0 +1,306 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td class="PageHeader">
+                &nbsp;Create&nbsp;Bank&nbsp;Account&nbsp;&nbsp;
+            </td>
+        </tr>
+    </table>
+    <form [formGroup]="bankCreationForm" (ngSubmit)="bankCreation(bankCreationForm.value)">
+    <table class="center" style="width: 100;"
+    style="border-bottom: solid 1px blue;width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
+    <tr>
+        <td>
+            <table class="center" style="width: 100%;">
+                <tr style="align-items: center;">
+                    <td></td>
+                    <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Name&nbsp;:&nbsp; </td>
+                    <td>
+                        <select formControlName="bkName" id="bkName" class="form-control" [(ngModel)]="bkName" (ngModelChange)="onBankNameSelectedHeder($event)" >
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of BankNameList" >
+                                {{sc.custName}}
+                            </option>
+                        </select>
+                        
+                        <!-- <input formControlName="bkName" class="form-control" placeholder="Search by bank name"
+                            (keydown.tab)="serchByBanhName(bkName)"> -->
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Name&nbsp;:&nbsp; </td>
+                    <td>
+                        <!-- <input formControlName="bkBranchName" [(ngModel)]="bkBranchName" class="form-control" placeholder="Search by branch name"> -->
+                        <select formControlName="bkBranchName" id="bkBranchName" [(ngModel)]="bkBranchName" class="form-control"  >
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of BankBranchListHeder" >
+                                {{sc.name}}
+                            </option>
+                        </select>
+                    </td>
+                   
+                       <button type="submit" class="btn btn-primary" id="register"
+                       (click)="BreanchAccountSearch(bkBranchName,bkName)" style="width: 2rem;">
+                       <i class="fa fa-search"></i></button>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                   <td></td>
+                </tr>
+            </table>
+        </td>
+        </tr>
+        </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <!-- <form [formGroup]="bankCreationForm" (ngSubmit)="bankCreation(bankCreationForm.value)"> -->
+                    <table class="center" style="width: 100%;">
+                        
+                        <tr>
+                            <td>
+                                <table class="center">
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Name&nbsp;:&nbsp; </td>
+                                                           
+                                        <td>
+                                            <!-- <input disabled type="text" [(ngModel)]="custName" formControlName="custName"
+                                            class="form-control" > -->
+                                            <select formControlName="custName" (ngModelChange)="selectCustId($event)" id="custName" class="form-control" [(ngModel)]="custName" (ngModelChange)="onBankNameSelected1($event)" >
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of BankNameList" >
+                                                    {{sc.custName}}
+                                                </option>
+                                            </select>
+                                            <input type="text"  formControlName="customerId" [(ngModel)]="customerId">
+                                        </td>
+                                            <td style="width: 15%" class="LabelFontStyle"> Branch&nbsp;Name&nbsp;:&nbsp; </td>
+                                            <td style="border: none;color: black;">
+                                                <!-- <input type="text" formControlName="branchName"
+                                                    class="form-control" placeholder="Enter branch name"> -->
+                                                    <select formControlName="branchName" id="branchName" [(ngModel)]="branchName" class="form-control" (ngModelChange)="onbranchIdSelected($event)" >
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of BankBranchList" >
+                                                            {{sc.name}}
+                                                        </option>
+                                                    </select>
+                                            </td>  
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Number&nbsp;:&nbsp; </td>
+                                            <td>
+                                                <input formControlName="branchNumber" [(ngModel)]="branchNumber" class="form-control" placeholder="Search by branch number"
+                                                    >
+                                                    <input hidden formControlName="branchId" [(ngModel)]="branchId" class="form-control" placeholder="Search by branch number"
+                                                    >
+                                            </td>
+        
+                                    </tr>
+                                    <tr>     
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Bank&nbsp;Account&nbsp;Name&nbsp;:&nbsp;
+                                        </td>
+                                         <td 
+                                            style="border: none;color: black;">
+                                           <input type="text" formControlName="bankAccountName" class="form-control"
+                                                placeholder="">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Bank&nbsp;Account&nbsp;Number&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="bankAccountNo" class="form-control"
+                                                placeholder="">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Bank&nbsp;Account&nbsp;Type&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="bankAccountType" class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Bank&nbsp;Account&nbsp;Owner&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <!-- <input type="text"  formControlName="ownerPartyId"
+                                                           class="form-control"  > -->
+                                            <select formControlName="ownerPartyId" id="ownerPartyId" class="form-control"  >
+                                                    <option>--Select--</option>
+                                                    <option *ngFor="let sc of  BankNameList1" [ngValue]="sc.customerId">
+                                                        {{sc.custName}}
+                                                    </option>
+                                                </select>
+                                        </td>
+                                        
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Short&nbsp;Bank&nbsp;Name&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="shortAccountName" class="form-control"
+                                                placeholder="">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Currancy&nbsp;Code&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="currancyCode" class="form-control"
+                                                placeholder="">
+                                        </td>
+                                        
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Description&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="description" class="form-control"
+                                                placeholder="">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Max&nbsp;Check&nbsp;Amount&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="number" min="0"  formControlName="maxCheckAmt" class="form-control">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Min&nbsp;Check&nbsp;Amount&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="number" min="0"  formControlName="minCheckAmt" class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Status&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" [ngModel]="status" formControlName="status"
+                                                class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Start&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td> <input type="date" formControlName="startDate" class="form-control"
+                                                placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            END&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td> <input type="date" formControlName="endDate" class="form-control"
+                                                placeholder="Enter end Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                        </td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Multi&nbsp;Currency&nbsp;Allowed&nbsp;Flag&nbsp;:&nbsp;
+                                        </td>
+                                        <!-- <td><input type="checkbox" name="recoverableFlag"
+                                                formControlName="recoverableFlag" [(ngModel)]="recoverableFlag"
+                                                (change)="recoverableFlg1($event)"></td> -->
+                                        <td style="border: none;color: black;">
+                                            <input type="checkbox" formControlName="multiCurrAllowedFlag" [(ngModel)]="multiCurrAllowedFlag"  (change)="multiCurrAllowedFlagFn($event)">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Payment&nbsp;Multi&nbsp;Currency&nbsp;Flag&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="checkbox" formControlName="paymentMultiCurrFlag" [(ngModel)]="paymentMultiCurrFlag"  (change)="paymentMultiCurrFlagFn($event)">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Receipt&nbsp;Multi&nbsp;Currency&nbsp;Flag&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="checkbox" formControlName="receiptMultiCurrFlag" [(ngModel)]="receiptMultiCurrFlag"  (change)="receiptMultiCurrFlagFn($event)">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Zero&nbsp;Amount&nbsp;Allowed&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="checkbox" formControlName="zeroAmtAllowed" [(ngModel)]="zeroAmtAllowed"  (change)="zeroAmtAllowedFn($event)">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="center" style="width:100%">
+                        <tr>
+                            <td>
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register" 
+                                                (click)="refresh()">
+                                                Clear
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary"   (click)="BankCreation()">Save</button>
+                                            
+                                        </td>
+                                        <td>
+                                            <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                                        </td>
+                                       
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="modal-body">
+                        <div class="grid_scroll1">
+                        <table class="auto-style4" class="GridFont"
+                            cellspacing="0" cellpadding="4" border="0"
+                            id="ctl00_cpForm_grdActions"
+                            style="border-color:#959595;border-collapse:collapse;">
+                            <tbody>
+                                <tr class="GridHeader">
+                                    <th scope="col">Bank Name</th>
+                                    <th scope="col">Branch Name</th>
+                                    <th scope="col">Branch Number</th>
+                                    <th scope="col">Bank Account Name</th>
+                                    <th scope="col">Bank Account Number</th>
+                                    <th scope="col">Bank Account Type</th>
+                                    <th scope="col">Bank Account Owner</th>
+                                    <th scope="col">Short Bank Name</th>
+                                    <th scope="col">Currancy Code</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Max Check Amount</th>
+                                    <th scope="col">Min Check Amount</th>
+                                    <th scope="col">Multi Currency Allowed Flag</th>
+                                    <th scope="col">Payment Multi Currency Flag</th>
+                                    <th scope="col">Receipt Multi Currency Flag</th>
+                                    <th scope="col">Zero Amount Allowed</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Select one</th>
+                                </tr>
+                                <tr *ngFor="let com of BankNameList" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                                     <td>{{com.custName}}</td>
+                                     <td>{{com.branchName}}</td> 
+                                     <td>{{com.branchId}}</td> 
+                                     <td>{{com.emailId}}</td>
+                                     <td>{{com.address1}}</td>
+                                     <td>{{com.address2}}</td>
+                                     <td>{{com.address3}}</td>
+                                     <td>{{com.city}}</td>
+                                     <td>{{com.pinCode}}</td>
+                                     <td>{{com.state}}</td>
+                                     <td>{{com.contact1}}</td>
+                                     <td>{{com.contact2}}</td>
+                                     <td>{{com.bankType}}</td>
+                                     <td>{{com.startDate}}</td>
+                                     <td><button class="btn-primary" (click)="SelectbranchId(com.branchId)" data-dismiss="modal">Select</button></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</form>
+</div>

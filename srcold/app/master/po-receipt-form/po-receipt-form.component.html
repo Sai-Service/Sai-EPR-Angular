@@ -1,0 +1,1445 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;RECEIPT&nbsp;(PURCHASE&nbsp;ORDER/SHIPMENT)&nbsp;
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="center" style="width: 100%;">
+    <div class="form-bg">
+        <div class="center" style="width: 100%;">
+            <form [formGroup]="poReceiptForm" (ngSubmit)="poReceipt(poReceiptForm.value)">
+                <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Search</legend>
+                <table class="center" style="width: 100;" style="width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
+                    <tr>
+                        <td>
+                            <table class="center" style="width: 100%;">
+                                <input hidden type="text" disabled formControlName="loginArray" class="form-control">
+                                <input hidden type="text" disabled formControlName="ouName" class="form-control"  [(ngModel)]='ouName'>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Po&nbsp;No&nbsp;:&nbsp;
+                                    </td>                    
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control"
+                                   [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" placeholder="Enter PO number">
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" [disabled]="!segment1" (click)="poAllFind(segment1)" data-target="#exampleModal20" style="width: 2rem;"> <i class="fa fa-search"></i> </button>                 
+                                                    <div class="modal fade" id="exampleModal20" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <table style="width: 100%;">
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <label class="modal-title" id="exampleModalLabel" style="font-size: 12px;">PO-<input disabled formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control" style="width: 150px;border: hidden;color: black;">-Receipt</label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                              <!-- <h2 ></h2> -->
+                                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                              </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                                                    <thead>
+                                                                        <tr class="GridHeader">
+                                                                            <th scope="col" style="width: 100px;">Receipt No</th>
+                                                                            <th scope="col" style="width: 100px;">Receipt Date</th>
+                                                                            <th scope="col" style="width: 100px;">Taxable Amount</th>
+                                                                            <th scope="col" style="width: 100px;">Tax Amount</th>
+                                                                            <th scope="col" style="width: 100px;">Total Amount</th>
+                                                                            <th scope="col" style="width: 100px;">Select</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let com of poAllRecFind" class="ItemStyle" style="text-decoration:none;">
+                                                                            <td style="width: 107px;">{{com.receiptNo}}</td>
+                                                                            <td style="width: 107px;">{{com.receiptDate}}</td>
+                                                                            <td style="width: 107px;">{{com.taxableAmt}}</td>
+                                                                            <td style="width: 107px;">{{com.taxAmt}}</td>
+                                                                            <td style="width: 107px;">{{com.totAmt}}</td>
+                                                                            <td style="width: 140px;"><button class="btn btn-secondary" (click)="ReceiptFind(com.receiptNo)"data-dismiss="modal" >Select</button></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <table class="center">
+                                                                    <tr>
+                                                                        <!-- <td style="width: 15%" class="LabelFontStyle">
+                                                                            &nbsp;Generate&nbsp;New&nbsp;Receipt&nbsp;:&nbsp;
+                                                                        </td> -->
+                                                                        <!-- <td>
+                                                                            <input hidden disabled type="text" formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control" style="height: 20px;width: 150px;text-align: left;">
+                                                                         </td> -->
+                                                                        <td>
+                                                                            <button type="button" class="btn btn-primary" [disabled]="!segment1"  (click)="poFind(segment1)" style="width: 10rem;" data-dismiss="modal">Generate New Receipt</button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                             
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>                
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Receipt&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input formControlName="receiptNo" [(ngModel)]='receiptNo'
+                                                    value={{receiptNo}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                                                    placeholder="Enter Receipt No" >
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" [disabled]="!receiptNo" (click)="ReceiptFind(receiptNo)" style="width: 2rem;"><i class="fa fa-search"></i></button>
+                                                </td>
+                                            </tr>
+                                        </table>                    
+                                    </td>  
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Receipt&nbsp;Date&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr> 
+                                                <td>
+                                        
+                                                    <input type="date" formControlName="frmDate1"
+                                                    [(ngModel)]='frmDate1' value={{frmDate1}}    data-toggle="modal"  onkeydown="return false" 
+                                                    class="form-control" style="width: 130px;"  [ngModel]="frmDate1 | date:'yyyy-MM-dd'" >
+                                                    <!-- (keydown.tab)="ReceiptDateWiseFind()"   data-target="#exampleModalScrollable" -->
+                                            </td> 
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable"
+                                                    [disabled]="!frmDate1"
+                                                     (click)="ReceiptDateWiseFind()" style="width: 2rem;">
+                                                        <i class="fa fa-search"></i>
+                                                      </button>
+                                                    <div class="modal fade" id="exampleModalScrollable"
+                                                        tabindex="-1" role="dialog"
+                                                        aria-labelledby="exampleModalScrollableTitle"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-scrollable"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <!-- <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5> -->
+                                                                    <label
+                                                                        style="color: black;font-size: small;text-align: center;margin-left: 12rem;">
+                                                                       Receipt Date Wise Details
+                                                                    </label>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="grid_scroll1">
+                                                                    <table class="auto-style4" class="GridFont"
+                                                                        cellspacing="0" cellpadding="4" border="0"
+                                                                        id="ctl00_cpForm_grdActions"
+                                                                        style="border-color:#959595;border-collapse:collapse;">
+                                                                        <tbody>
+                                                                            <tr class="GridHeader">
+                                                                                <th scope="col">PO/Shipment No</th>
+                                                                                <th scope="col">PO/Shipment Date</th>
+                                                                                <th scope="col">Receipt No</th>
+                                                                                <th scope="col">Receipt Date</th>
+                                                                                <th scope="col">Supplier Acc No</th>
+                                                                                <th scope="col">Supplier</th>
+                                                                                <th scope="col">Select one</th>
+                                                                            </tr>
+                                                                            <tr *ngFor="let com of lstReceiptDateWiseData" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                                                                                 <td>{{com.segment1}}</td>
+                                                                                 <td>{{com.poDate|date:'yyyy-MM-dd'}}</td>
+                                                                                 <td>{{com.receiptNo}}</td>
+                                                                                 <td>{{com.receiptDate}}</td>
+                                                                                 <td>{{com.suppNo}}</td>
+                                                                                 <td>{{com.supplierName}}</td>
+                                                                                 <td><button class="btn-primary"  (click)="poFind1(com.segment1)" data-dismiss="modal"> Select</button></td>
+                                                                                </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    </div>
+                                                                </div>
+                                                              
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                    
+                                       </td>  
+                                       <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Supplier&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                        <input formControlName="rcvSupp1" [(ngModel)]='rcvSupp1' value={{rcvSupp1}}
+                                                        class="form-control" placeholder="Enter Supp no" style="width: 100px;">
+                                                </td>
+                                                <td>
+                                                    <!-- <div class="container"> -->
+                                                    <button type="button" class="btn btn-primary"
+                                                        style="width: 2rem;" data-toggle="modal"
+                                                        data-target="#myModal" [disabled]="!rcvSupp1" (click)="suppFind(rcvSupp1)">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                    
+                                                    <!-- The Modal -->
+                                                    <div class="modal" id="myModal">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                    
+                                                                <!-- Modal Header -->
+                                                                <div class="modal-header"
+                                                                    style="text-align: center;">
+                                                                    <!-- <h4 class="modal-title">Modal Heading</h4> -->
+                                                                    <label
+                                                                        style="color: black;font-size: small;text-align: center;margin-left: 22rem;">
+                                                                        Supplier Details
+                                                                    </label>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal">&times;</button>
+                                                                </div>
+                    
+                                                                <!-- Modal body -->
+                                                                <div class="modal-body">
+                                                                    <div class="grid_scroll1">
+                                                                    <table class="auto-style4" class="GridFont"
+                                                                        cellspacing="0" cellpadding="4" border="0"
+                                                                        id="ctl00_cpForm_grdActions"
+                                                                        style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                                                        <tbody>
+                                                                            <tr class="GridHeader">
+                                                                                <!-- <th align="left" scope="col">SR No </th> -->
+                                                                                <th scope="col">PO Number</th>
+                                                                                <th scope="col">PO Date</th>
+                                                                                <th scope="col">Total Amount</th>
+                                                                                <th scope="col">Approve Date</th>
+                                                                                <th scope="col">Select one</th>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <tr *ngFor="let com of lstSupLineDetails" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                                                                        <td>{{com.segment1}}</td>
+                                                                        <td>{{com.poDate | date:'yyyy-MM-dd'}}</td>
+                                                                        <td>{{com.totalAmt}}</td>
+                                                                        <td>{{com.approveDate}}</td>
+                                                                        <td><button class="btn-primary" (click)="poFind1(com.segment1)" data-dismiss="modal" style="width: 3rem;">Select</button></td>
+                                                                    </tr>
+                                                                    </table>
+                                                                </div>
+                    
+                                                                </div>
+                    
+                                                                <!-- Modal footer -->
+                                                                <!-- <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                                                 style="width: 5rem;height: 20px;font-size: 11px;vertical-align: middle;line-height: 10px; margin-right: 95px;">Close</button>
+                                                              </div> -->
+                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                    
+                                                    <!-- </div> -->
+                    
+                                                </td>
+                                                <!-- <td>
+                                                    <button type="submit" style="width: 2rem;"  id="register"  (click)="poFind(segment1)" >..</button>
+                                                </td>         -->
+                                            </tr>
+                                        </table>
+                                    </td>                
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Po&nbsp;Dt&nbsp;Wise&nbsp;Receipt:&nbsp;
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input type="date" formControlName="frmDate" [(ngModel)]='frmDate' value={{frmDate}} class="form-control" onkeydown="return false" >
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-toggle="modal" data-target="#exampleModalCenter"
+                                                        (click)="PODateWise()"  [disabled]="!frmDate" style="width: 2rem;">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1"
+                                                        role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <label
+                                                                        style="color: black;font-size: small;text-align: center;margin-left: 18rem;">
+                                                                        Po/Shipment&nbsp;Date&nbsp;Wise&nbsp;Details
+                                                                    </label>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="grid_scroll1">
+                                                                    <table class="auto-style4" class="GridFont"
+                                                                        cellspacing="0" cellpadding="4" border="0"
+                                                                        id="ctl00_cpForm_grdActions"
+                                                                        style="border-color:#959595;border-collapse:collapse;">
+                                                                        <tbody>
+                                                                            <tr class="GridHeader">
+                                                                                <th scope="col">PO/Shipment No</th>
+                                                                                <th scope="col">PO/Shipment Date</th>
+                                                                                <th scope="col">Receipt No</th>
+                                                                                <th scope="col">Receipt Date</th>
+                                                                                <th scope="col">Supplier Acc No</th>
+                                                                                <th scope="col">Supplier</th>
+                                                                                <th scope="col">Select one</th>
+                                                                            </tr>
+                                                                            <tr *ngFor="let com of lstPODateWiseData" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                                                                                 <td>{{com.segment1}}</td>
+                                                                                 <td>{{com.poDate | date:'yyyy-MM-dd'}}</td>
+                                                                                 <td>{{com.receiptNo}}</td>
+                                                                                 <td>{{com.receiptDate}}</td>
+                                                                                 <td>{{com.suppNo}}</td>
+                                                                                 <td>{{com.supplierName}}</td>
+                                                                                 <td><button class="btn-primary" (click)="poFind1(com.segment1)" data-dismiss="modal">Select</button></td>
+                                                                                </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Po&nbsp;Approve&nbsp;Dt&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input type="date" formControlName="poDate" [(ngModel)]='poDate' value={{poDate}}  onkeydown="return false"  class="form-control">
+                                                </td>
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
+                    [disabled]="!poDate"
+                    (click)="POApproveDateWise()" style="width: 2rem;">
+                        <i class="fa fa-search"></i>
+                      </button>
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <label
+                                style="color: black;font-size: small;text-align: center;margin-left: 18rem;">
+                                Po/Shipment&nbsp;Approve&nbsp;Date&nbsp;Wise&nbsp;Details
+                            </label>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="auto-style4" class="GridFont"
+                                cellspacing="0" cellpadding="4" border="0"
+                                id="ctl00_cpForm_grdActions"
+                                style="border-color:#959595;border-collapse:collapse;">
+                                <tbody>
+                                    <tr class="GridHeader">
+                                        <th scope="col">PO/Shipment No</th>
+                                        <th scope="col">PO/Shipment Date</th>
+                                        <th scope="col">Total Amount</th>
+                                        <th scope="col">Po Approve Date</th>
+                                        <th scope="col">Select</th>
+                                    </tr>
+                                    <tr *ngFor="let com of ApproveDateWise" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                                         <td>{{com.segment1}}</td>
+                                         <td>{{com.poDate | date:'yyyy-MM-dd'}}</td>
+                                         <td>{{com.totalAmt}}</td>
+                                         <td>{{com.approveDate}}</td>
+                                         <td><button class="btn-primary" (click)="poFind11(com.segment1)" data-dismiss="modal">Select</button></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        &nbsp;Shipment&nbsp;No&nbsp;:&nbsp;
+                                    </td> 
+                                   <td>
+                                       <table>
+                                           <tr>
+                                               <td>
+                                                <input type="text" formControlName="shipmentNumber"  [(ngModel)]='shipmentNumber' value={{shipmentNumber}} class="form-control" style="width: 130px;"  >
+                                               </td>
+                                               <td>
+                                                <table>
+                                                    <tr>  
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" 
+                                                            [disabled]="!shipmentNumber"
+                                                             (click)="shipmentNoFind(shipmentNumber)" style="width: 2rem;">
+                                                                <i class="fa fa-search"></i>
+                                                              </button>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                    
+                                           </tr>
+                                       </table>
+                                   </td>
+                                 
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>         
+                </table>
+                </fieldset>
+
+                <fieldset class="RFS" style="background-color: white;">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Receipt Headers Details</legend>
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                            <td>
+                                <table class="center">
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Division&nbsp;:&nbsp;
+                                        </td>
+                                        <td  style="border: none;color: black;">
+                                            <input type="text" disabled formControlName="loginArray"
+                                                class="form-control" [(ngModel)]="loginArray" placeholder="">
+                                            <!-- {{loginArray}} -->
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Operating&nbsp;Unit&nbsp;:&nbsp;
+                                        </td>
+                                        <!-- <td class="form-control" style="border: none;color: black;">
+                                        {{ouId}}
+
+                                   </td> -->
+                                        <td>
+                                            <input type="text" disabled formControlName="ouName"
+                                                class="form-control" [(ngModel)]="ouName" placeholder="">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Order&nbsp;Type&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" disabled formControlName="poType" class="form-control"
+                                            [(ngModel)]='poType' placeholder=""> 
+                                        </td> 
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Amount&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="number" formControlName="baseAmount"
+                                                [(ngModel)]="baseAmount" value="{{baseAmount}}"
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
+                                                placeholder="00.00" style="width: 75px;">
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                        Supplier&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" disabled formControlName="supplierName"
+                                                [(ngModel)]="supplierName" value={{supplierName}}  class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            GRR&nbsp;Number&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" disabled formControlName="receiptNo" [(ngModel)]="receiptNo"
+                                                value={{receiptNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            GRR&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <div *ngIf="displayrecDate; then thenrecDate; else elserecDate"></div>
+                                              <ng-template #thenrecDate>
+                                                <input disabled formControlName="recDate" value="{{recDate}}"   class="form-control" value={{recDate}} class="form-control">
+                                              </ng-template>
+                                              <ng-template #elserecDate>
+                                                <input type="date" disabled formControlName="recDate"  value="{{recDate}}" onkeydown="return false"   class="form-control">
+                                              </ng-template>  
+                                              <!-- value={{recDate}} [(ngModel)]="recDate" -->
+                                        </td> 
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Tax&nbsp;Amount&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="number" formControlName="taxAmt" [(ngModel)]="taxAmt"
+                                                value={{taxAmt}}  class="form-control" placeholder="00.00"  oninput="this.value = Math.abs(this.value)"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                        </td>
+
+                                    </tr>
+                                    <div *ngIf="disabled; then thenBlock1; else elseBlock1"></div>
+                                    <ng-template #thenBlock1>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Received&nbsp;By&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <!-- {{loginName}} -->
+                                            <input type="text" disabled formControlName="loginName"
+                                                class="form-control" [(ngModel)]="loginName" placeholder="">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                           GST&nbsp;Document&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" formControlName="gstDocNo" [(ngModel)]='gstDocNo'
+                                                value={{gstDocNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                           Document&nbsp;Date:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="date" formControlName="docDate"  max="{{minDate | date:'yyyy-MM-dd'}}"
+                                            onkeydown="return false"      [(ngModel)]='docDate' value={{docDate}} class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Total&nbsp;Amount&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            E-Way&nbsp;Bill&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" formControlName="ewayBillNo" [(ngModel)]='ewayBillNo'
+                                                value={{ewayBillNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            E-Way&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="date" formControlName="ewayBillDate" onkeydown="return false" 
+                                                [(ngModel)]='ewayBillDate' value={{ewayBillDate}}
+                                                class="form-control"
+                                                max="{{minDate | date:'yyyy-MM-dd'}}" >
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Supp&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" disabled formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                value={{suppInvNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="date" disabled formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                                value={{suppInvDate}} class="form-control" max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            PO&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="text" formControlName="poInvNum" [(ngModel)]='poInvNum'
+                                                value={{poInvNum}} class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            PO&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input disabled type="date" formControlName="poInvDate" [(ngModel)]='poInvDate'
+                                                value={{poInvDate}} class="form-control">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Comments&nbsp;:&nbsp;
+                                        </td>
+                                        <td>
+                                            <input type="text" formControlName="Comments" [(ngModel)]='Comments'
+                                                value={{Comments}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input hidden type="text" formControlName="shipmentNumber"  [(ngModel)]='shipmentNumber' value={{shipmentNumber}} class="form-control" style="width: 130px;"  >
+                                           </td>
+                                    </tr>
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Received&nbsp;By&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <!-- {{loginName}} -->
+                                                <input type="text" disabled formControlName="loginName"
+                                                    class="form-control" [(ngModel)]="loginName" placeholder="">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                GST&nbsp;Document&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="gstDocNo" [(ngModel)]='gstDocNo'
+                                                    value={{gstDocNo}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Document&nbsp;Date:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="docDate"
+                                                    [(ngModel)]='docDate' value={{docDate}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Total&nbsp;Amount&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="number" formControlName="totalAmt" [(ngModel)]="totalAmt" value={{totalAmt}} placeholder="00.00"
+                                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }" style="width: 75px;">
+                                            </td>
+                                        </tr>
+                                        <tr> 
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                E-Way&nbsp;Bill&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="ewayBillNo" [(ngModel)]='ewayBillNo'
+                                                    value={{ewayBillNo}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                E-Way&nbsp;Bill&nbsp;Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="ewayBillDate"
+                                                    [(ngModel)]='ewayBillDate' value={{ewayBillDate}}
+                                                    class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Supp&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled  type="text" formControlName="suppInvNo" [(ngModel)]='suppInvNo'
+                                                    value={{suppInvNo}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Supp&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="suppInvDate" [(ngModel)]='suppInvDate'
+                                                    value={{suppInvDate}} class="form-control" style="width: 170px;"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                PO&nbsp;Inv&nbsp;No&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="poInvNum" [(ngModel)]='poInvNum'
+                                                    value={{poInvNum}} class="form-control">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                PO&nbsp;Inv&nbsp;Date&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="date" formControlName="poInvDate" [(ngModel)]='poInvDate'
+                                                    value={{poInvDate}} class="form-control">
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Comments&nbsp;:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input disabled type="text" formControlName="Comments" [(ngModel)]='Comments'
+                                                    value={{Comments}} class="form-control"
+                                                    [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </td>
+                                        </tr>
+                                        </ng-template>
+                                    <tr>
+                                        <td>
+                                            <input hidden type="text" disabled formControlName="locId" class="form-control"
+                                            [(ngModel)]='locId' >
+                                            <input hidden type="number" disabled formControlName="poHeaderId" class="form-control"
+                                            [(ngModel)]='poHeaderId'> 
+                                            <input hidden  type="number" disabled formControlName="suppNo" class="form-control"> 
+                                            <input hidden type="number" disabled formControlName="supplierSiteId" class="form-control"> 
+                                            <input hidden type="number" disabled formControlName="emplId" [(ngModel)]='emplId' class="form-control"> 
+                                        </td>
+                                        
+                                        <!-- <td>
+                                            <div ng-if="ewayBillDate == null">
+                                                <input type="date" formControlName="ewayBillDate"
+                                                [(ngModel)]='ewayBillDate' value={{ewayBillDate}}
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </div>
+                                            <div ng-else ="ewayBillDate == !null">
+                                                <input disabled type="date" formControlName="ewayBillDate"
+                                                [(ngModel)]='ewayBillDate' value={{ewayBillDate}}
+                                                class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }">
+                                            </div>
+                                        </td> -->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- <table style="width: 50%;">
+                        <tr>
+                            <td>
+                           <div class="form-check">
+                            <label class="form-check-label" style="color: black;font-size: small;">
+                                Select&nbsp;All&nbsp;Receipt&nbsp;Lines&nbsp;:&nbsp;
+                            </label>
+                               <input type="checkbox" id="selectAllFlag"  [formControl]="selectAllFlag" value="selectAllFlag"
+                                 [(ngModel)]="selectAllFlag" (change)="selectAll($event)">
+                           </div>
+                          </td>
+                          <td>
+                            <input disabled formControlName="segment1" [(ngModel)]='segment1' value={{segment1}} class="form-control" style="width: 150px;border: hidden;color: black;">
+                          </td>
+                       </tr>
+                    </table> -->
+                </fieldset>
+
+                
+               
+                <fieldset class="RFS" style="background-color: white;">
+                    <div class="grid_scroll">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Receipt Lines Details</legend>
+                    
+                    <table class="auto-style4" class="GridFont" cellspacing="0"
+                    cellpadding="4" border="0" id="ctl00_cpForm_grdActions"
+                    style="border-color:#959595;width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr class="GridHeader">
+                            <th scope="col">Item</th>
+                            <th scope="col" style="width: 5rem;">Quantity Received</th>
+                            <th scope="col">Locator</th>
+                            <th scope="col">HSN/SAC code</th>
+                            <th scope="col">Item Description</th>
+                            <th scope="col">Sub-Inventory</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Base Amount</th>
+                            <th scope="col">Tax %</th>
+                            <th scope="col">SGST Amt</th>
+                            <th scope="col">CGST Amt</th>
+                            <th scope="col">IGST Amt</th>
+                            <th scope="col">Tax Amount</th>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col">UOM</th>
+                            <th scope="col">Tax Category</th>
+                            <!-- <th scope="col">Location</th> -->
+                            <th scope="col">Item Category</th>
+                            <th scope="col">Destination Type</th>
+                            <th scope="col">Tax Details</th>
+                            <!-- <th scope="col">PO&nbsp;Charge&nbsp;Account</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container class="center" formArrayName="poLines">
+                            <ng-container *ngFor="let group of lineDetailsArray.controls; let i= index"; [formGroupName]="i" class="auto-style5">
+                                <div *ngIf="disabledLine; then thenBlockLine; else elseBlockLine"></div>
+                                <ng-template #thenBlockLine>
+                                <tr>
+                                    <input hidden type="text" disabled formControlName="poHeaderId" class="form-control"> 
+                                    <input hidden type="text" disabled formControlName="polineNum" class="form-control"> 
+                                    <input hidden type="text" disabled formControlName="locatorId" class="form-control"> 
+                                    
+                                    <!-- <input hidden type="text" disabled formControlName="locId" class="form-control">  -->
+                            <!-- <td>
+                                <input hidden type="number" disabled formControlName="poHeaderId" class="form-control"> 
+                                    <input hidden  type="number" disabled formControlName="poLineId" class="form-control"> 
+                                <button type="button" class="btn btn-primary"   (click)="taxDeatils(poHeaderId,poLineId)">Tax Details</button>
+                            </td>                                                                            -->
+                           
+                           
+                            <!-- <td> -->
+                         <!-- <div *ngIf="recFagDiss">   
+                         <input  type="checkbox"  name="selectFlag" formControlName="selectFlag" ([ngModel])="selectFlag" (change)="selectFlag($event)">
+                         </div> 
+                        <div *ngIf="TRUER">
+                             <input  type="checkbox" checked   id="selectFlag" [formControl]="selectFlag"   value="selectFlag"  (change)="selectFlag=$event.target.checked?'Y':'N'">
+                             </div> -->
+                             <!-- <div *ngIf="recFagDiss; then thenBlock; else elseBlock"></div>
+                             <ng-template #thenBlock>
+                                <input  type="checkbox"  name="selectFlag" formControlName="selectFlag" ([ngModel])="selectFlag" (change)="selectFlag($event)">
+                             </ng-template>
+                             <ng-template #elseBlock>
+                                <input  type="checkbox" checked   id="selectFlag" [formControl]="selectFlag"   value="selectFlag"  (change)="selectFlag=$event.target.checked?'Y':'N'">
+                             </ng-template>
+                        </td> -->
+                        <!-- <td> -->
+                            <!-- <input type="text" class="btn btn-info btn-lg" 
+                            formControlName="poLineId"(click)="taxDeatils(i,poHeaderId,poLineId)" [(ngModel)]="poLineId"
+                            class="form-control" style="height: 20px;width: 100px;"> -->
+                            <!-- data-toggle="modal" data-target="#myModal2" -->
+                            <!-- <input  type="button"
+                            formControlName="poLineId"  (click)="taxDeatils(i,poHeaderId,poLineId)" class="form-control" style="height: 20px;width: 50px;" > -->
+                        <!-- </td> -->
+                        <td> <input disabled type="text"
+                            formControlName="itemName"
+                            class="form-control" style="height: 20px;">
+                    </td>
+                                    <td> 
+                                        <div *ngIf="DisplayqtyReceived; then thenBlockqtyReceived; else elseBlockqtyReceived"></div>
+                                        <ng-template #thenBlockqtyReceived>
+                                            <input disabled type="number"
+                                            formControlName="qtyReceived"  (change)="calculation(i,qty)" #qty
+                                            class="form-control" style="height: 20px;width: 50px;" >
+                                        </ng-template>
+                                        <ng-template #elseBlockqtyReceived>
+                                        <input disabled type="number"
+                                            formControlName="qtyReceived"  (change)="calculation(i,qty)" #qty
+                                            class="form-control" style="height: 20px;width: 50px;" >
+                                            <!-- [(ngModel)]='qtyReceived' value="qtyReceived"  -->
+                                        </ng-template>
+                                        </td>
+                                        <td> 
+                                            <div *ngIf="displaylocatorDesc[i]; then thenlocatorDesc; else elselocatorDesc"></div>
+                                            <ng-template #thenlocatorDesc>
+                                                <input disabled type="text" formControlName="locatorDesc"  value={{locatorDesc}} class="form-control" style="height: 20px;width:100px;">
+                                            </ng-template>
+                                            <ng-template #elselocatorDesc>
+                                            <input type="text" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"
+                                                formControlName="locatorDesc" (click)="openLocator(i)" 
+                                                class="form-control" style="height: 20px;width: 100px;">
+                                                <input hidden type="number" formControlName="locatorId"  >
+                                            </ng-template>                                                                            
+                                        </td>
+                                        <td> <input disabled type="text"
+                                            formControlName="sacCode"
+                                            class="form-control" style="height: 20px;width: 80px;">
+                                    </td>
+                                  
+                                    <td> <input disabled type="text"
+                                        formControlName="itemDesc"
+                                        class="form-control" style="height: 20px;">
+                                </td>
+                                <td>
+                                    <!-- <div *ngIf="displaysubInvDesc[i]; then thensubInvDesc; else elsesubInvDesc"></div>
+                                    <ng-template #thensubInvDesc>
+                                    </ng-template>
+                                    <ng-template #elsesubInvDesc>  -->
+                                        <input disabled type="text"
+                                        formControlName="subInvDesc"
+                                        class="form-control" style="height: 20px;width:60px;">
+                                        <input hidden disabled type="number"
+                                        formControlName="subInventoryId" 
+                                        class="form-control" style="height: 20px;width:60px;">
+                                        
+                                    <!-- </ng-template> -->
+                                </td>
+                                <td> <input disabled type="number"
+                                    formControlName="unitPrice"
+                                    class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                            </td>
+                            <td> <input disabled type="number" 
+                                formControlName="baseAmount" value="{{baseAmount}}"
+                                class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                        </td>
+                        <td>  <input disabled type="number"
+                                formControlName="taxPercentage" 
+                                class="form-control" style="height: 20px;width: 50px;">
+                        </td>
+                        <td> <input disabled type="number"
+                            formControlName="sgstAmt"
+                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                    </td>
+                    <td> <input disabled type="number"
+                        formControlName="cgstAmt"
+                        class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                </td>
+                <td> <input disabled type="number"
+                    formControlName="igstAmt"
+                    class="form-control" style="height: 20px;width: 80px;text-align: right;">
+            </td>
+                        <td> <input disabled type="number"
+                                formControlName="taxAmount"
+                                class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                        </td>
+                      
+                        <td> <input disabled type="number"
+                                formControlName="totAmount"
+                                class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                        </td>
+                        <td> <input disabled type="text"
+                            formControlName="uom" class="form-control"
+                            style="height: 20px;width: 40px;"></td>
+                            <td> <input disabled type="text"
+                                formControlName="taxCategoryName"
+                                class="form-control" style="height: 20px;">
+                        </td>
+                        <!-- <td>
+                            <input type="text" disabled formControlName="locId" class="form-control"
+                            [(ngModel)]='locId' style="height: 20px;width: 60px;">
+                        </td> -->
+                        <td> <input disabled type="text"
+                            formControlName="ctgDescription"
+                            class="form-control" style="height: 20px;width: 100px;">
+                    </td>
+                                    <td> <input disabled type="text"
+                                            formControlName="itemType"
+                                            class="form-control" style="height: 20px;width: 70px;">
+                                    </td>
+                                    <td>
+                                        <input hidden type="number" disabled formControlName="poLineId" class="form-control"> 
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal31"  (click)="taxDeatils(i,poHeaderId,poLineId)" style="height: fit-content;width: fit-content;">
+                                          <img id="bajajlogo" src="assets\images\tax.png">
+                                        </button>
+                                        <div class="modal fade" id="exampleModal31" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Tax&nbsp;Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                               <Table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                                  <thead>
+                                                      <tr class="GridHeader">
+                                                          <th scope="col">Tax Rate Code</th>
+                                                          <th scope="col">Tax Rate Percent</th>
+                                                          <th scope="col">Tax Amount</th>
+                                                      </tr>
+                                                  </thead> 
+                                                  <tbody>
+                                                      <tbody>
+                                                  <tr *ngFor="let com of poTaxDeatils" class="ItemStyle" style="text-decoration:none;">
+                                                      <td style="width: 107px;">{{com.taxRateCode}}</td>
+                                                      <td style="width: 107px;">{{com.taxRatePercent}}</td>
+                                                      <td style="width: 107px;">{{com.taxAmt}}</td>
+                                                  </tr>
+                                                  </tbody>
+                                               </Table>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                                                              </td> 
+                                </tr>
+                                </ng-template>
+                                <ng-template #elseBlockLine>
+                                    <tr>
+                                        <input hidden type="number" disabled formControlName="poLineId" class="form-control"> 
+                                        <input hidden type="text" disabled formControlName="polineNum" class="form-control"> 
+                                        <input hidden type="text" disabled formControlName="locatorId" class="form-control">    
+                                        <!-- <input type="number" formControlName="shipHeaderId">                                                             -->
+                                        <!-- <td>
+                                            <input type="checkbox">
+                                        </td> -->
+                                        <td> <input disabled type="text" disabled
+                                            formControlName="itemName"
+                                            class="form-control" style="height: 20px;">
+                                    </td>
+                                        <td> <input type="text" disabled
+                                                formControlName="qtyReceived" (change)="calculation(i)"
+                                                class="form-control" style="height: 20px;width: 50px;">
+                                        </td>
+                                        <td> 
+                                            <input type="text" disabled class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"
+                                                formControlName="locatorDesc"
+                                                class="form-control" style="height: 20px;width: 100px;">                                                                 
+                                        </td>
+                                        <td> <input disabled type="text"
+                                            formControlName="sacCode"
+                                            class="form-control" style="height: 20px;width: 80px;">
+                                    </td>
+                                    <td> <input disabled type="text" disabled
+                                        formControlName="itemDesc"
+                                        class="form-control" style="height: 20px;">
+                                </td>
+                                <td> <input disabled type="text" disabled
+                                    formControlName="subInvDesc"
+                                    class="form-control" style="height: 20px;width:60px;">
+                            </td>
+                            <td> <input disabled type="number"
+                                formControlName="unitPrice"
+                                class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                        </td>
+                        <td> <input disabled type="number"
+                            formControlName="baseAmount" value="{{baseAmount}}"
+                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                    </td>
+                    <td>  <input disabled type="number"
+                            formControlName="taxPercentage" 
+                            class="form-control" style="height: 20px;width: 50px;">
+                    </td>
+                    <td> <input disabled type="number"
+                        formControlName="sgstAmt"
+                        class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                </td>
+                <td> <input disabled type="number"
+                    formControlName="cgstAmt"
+                    class="form-control" style="height: 20px;width: 80px;text-align: right;">
+            </td>
+            <td> <input disabled type="number"
+                formControlName="igstAmt"
+                class="form-control" style="height: 20px;width: 80px;text-align: right;">
+        </td>
+                    <td> <input disabled type="number"
+                            formControlName="taxAmount"
+                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                    </td>
+                  
+                    <td> <input disabled type="number"
+                            formControlName="totAmount"
+                            class="form-control" style="height: 20px;width: 80px;text-align: right;">
+                    </td>
+                    <td> <input disabled type="text"
+                        formControlName="uom" class="form-control"
+                        style="height: 20px;width: 40px;"></td>
+                        <td> <input disabled type="text"
+                            formControlName="taxCategoryName"
+                            class="form-control" style="height: 20px;">
+                    </td>
+                    <td> <input disabled type="text" disabled
+                        formControlName="ctgDescription" value={{ctgDescription}}
+                        class="form-control" style="height: 20px;width: 100px;">
+                </td>
+                                        <td> <input disabled type="text" disabled
+                                                formControlName="itemType"
+                                                class="form-control" style="height: 20px;width: 70px;">
+                                        </td>
+                                        <!-- <td>
+                                            <input type="text" disabled formControlName="locId" class="form-control"
+                                            [(ngModel)]='locId' style="height: 20px;width: 60px;">
+                                        </td> -->
+                                        <td>
+                                            <input hidden disabled type="number" disabled
+                                                formControlName="shipLineId"
+                                                class="form-control" style="height: 20px;width: 70px;">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal30"  (click)="taxDeatils1(i)" style="width: fit-content;">
+                                                <img id="bajajlogo" src="assets\images\tax.png" >
+                                            </button>
+                      <div class="modal fade" id="exampleModal30" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Tax Details</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                             <Table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                                <thead>
+                                    <tr class="GridHeader">
+                                        <th scope="col">Tax Rate Code</th>
+                                        <th scope="col">Tax Rate Percent</th>
+                                        <th scope="col">Tax Amount</th>
+                                    </tr>
+                                </thead> 
+                                <tbody>
+                                    <tbody>
+                                <tr *ngFor="let com of rcvTaxDeatils" class="ItemStyle" style="text-decoration:none;">
+                                    <td style="width: 107px;">{{com.taxRateCode}}</td>
+                                    <td style="width: 107px;">{{com.taxRatePercent}}</td>
+                                    <td style="width: 107px;">{{com.taxAmt}}</td>
+                                </tr>
+                                </tbody>
+                             </Table>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                                                            </td>    
+                                    </tr>
+                                    </ng-template>
+
+                            </ng-container>
+                            <!-- </div> -->
+                        </ng-container>
+                    </tbody>
+                </table> 
+            </div>     
+                </fieldset>
+            
+
+            <!-- ================================= -->
+            <fieldset class="RFS" style="background-color: white;">
+                <table class="center" style="width:100%">
+                    <tr>
+                        <td>
+                            <table class="center">
+                                <tr>
+                                    <!-- <td>
+                                        <button type="submit" class="btn btn-primary" id="register" 
+                                            (click)="refresh()">
+                                            Clear
+                                        </button>
+                                    </td> -->
+                                  
+        
+                                    <td>
+                                        <div *ngIf="displaySaveButton; then thenBlockSave; else elseBlockSave"></div>
+                        <ng-template #thenBlockSave>
+                                        <!-- [disabled]="!poReceiptForm.valid" -->
+                                        <!-- <button type="submit" class="btn btn-primary"   (click)="poSave()">Save</button> -->
+                                        <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+           
+                                    </ng-template>
+                                        <ng-template #elseBlockSave>
+                                            <!-- <button disabled type="submit" class="btn btn-primary"   (click)="poSave()">Save</button> -->
+                                            <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
+                                            data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
+            
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary" id="resetBtn" data-toggle="modal" 
+                                        data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
+                                     </td>
+                                    <td>
+                                        <!-- <button type="submit" (click)="close()" class="btn btn-primary">Close</button> -->
+                                        <button type="submit" class="btn btn-primary" id="closeBtn"
+                                        data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
+        
+                                    </td>
+                                    <div *ngIf="disabledViewAccounting; then thenBlockViewAccounting; else elseBlockViewAccounting"></div>
+                                    <ng-template #thenBlockViewAccounting>
+                                    </ng-template>
+                                    <ng-template #elseBlockViewAccounting>
+                                        <td>
+                                            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(receiptNo)" >
+    View Accounting
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- modal-dialog-scrollable -->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="center">
+                <tr>
+                    <td style="width: 18%" class="LabelFontStyle">
+                        Desc/GRR&nbsp;No&nbsp;:&nbsp;
+                    </td> 
+                    <td>
+                        <input disabled formControlName="name1" id="name1" class="form-control" [ngModel]="name1" style="width: fit-content;">
+                    </td>
+                    <td style="width: 18%" class="LabelFontStyle">
+                        Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled formControlName="docSeqValue" class="form-control" [ngModel]="docSeqValue" >
+                    </td>
+                    
+                    <td style="width: 18%" class="LabelFontStyle">
+                        Ledger&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled formControlName="description" class="form-control" [ngModel]="description" >
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 18%" class="LabelFontStyle">
+                        Category&nbsp;:&nbsp;
+                    </td> 
+                    <td>
+                        <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                    </td>
+                    <td style="width: 18%" class="LabelFontStyle">
+                        Date&nbsp;:&nbsp;
+                    </td> 
+                    <td>
+                        <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
+                    </td>
+                    <td style="width: 18%" class="LabelFontStyle">
+                        Period&nbsp;:&nbsp;
+                    </td> 
+                    <td>
+                        <input disabled  formControlName="periodName" id="periodName" class="form-control" [ngModel]="periodName" >
+                    </td>
+                </tr>
+                <br>
+                </table>
+                <div class="grid_scroll2">
+                <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                    <thead>
+                      <tr class="GridHeader">
+                      <th>Line</th>
+                      <th>Account</th>
+                      <th>Debit(INR)</th>
+                      <th>Credit(INR)</th>
+                      <th>Description</th>
+                      <th>Account Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;">
+                          <td>{{com.jeLineNum}}</td>
+                          <td >{{com.segmentName}}</td>
+                          <td style="text-align: right;padding-right: 5px;" >{{com.enteredDr}}</td>
+                          <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}</td>
+                          <td >{{com.description}}</td>
+                          <td >{{com.accountDesc}}</td>
+                        </tr>
+                    </tbody>
+                    <tr>
+                        <td></td>
+                        <td>Total:&nbsp;</td>
+                        <td >
+                            <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                        </td>
+                        <td >
+                            <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                        </td>
+                    </tr>
+                      </table>
+                      <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                        <tr class="ItemStyle">
+                            <td style="width: 4rem;"></td>
+                            <td  style="width: 8rem;">Total:&nbsp;</td>
+                            <td style="width: 4rem;">
+                                <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;">
+                            </td>
+                            <td style="width: 2rem;">
+                                <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;">
+                            </td>
+                            <td style="width: 8rem;">
+                            </td>
+                            <td style="width: 8rem;" hidden>    SS-C-GST Liability Standard-11PU</td>
+                            <td style="width: 8rem;" hidden>    SS-C-GST Liability Standard-11PU</td>
+                        </tr>
+                       
+                     </table>  -->
+                    </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                                        </td>
+                                        <td>
+                                            <button type="submit" (click)="grrReceiptPrint()" class="btn btn-primary" style="width: 10rem;">View GRR Receipt Print</button>   
+                                        </td>
+                                        <td >
+                                            <div [style.display]="isVisible ? 'block' : 'none'">
+                                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal10" style="width: 8rem;">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PO&nbsp;Inv&nbsp;Creation
+                                            </button> -->
+                                            <button type="submit" class="btn btn-primary" id="poInvoiceCreation" style="width: fit-content;"
+                                            data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poInvoiceCreation')">PO Inv Creation</button>
+            
+                                        </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel10" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLabel10">PO Invoice Creation</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                  
+                                                </div>
+                                                <div class="modal-body">
+                                                 <table class="center">
+                                                     <tr>
+                                                         <td>
+                                                            <input disabled type="text" formControlName="segment1" class="form-control" style="height: 20px;width: 170px;text-align: right;">
+                                                         </td>&nbsp;&nbsp;&nbsp;
+                                                         <td>
+                                                            <button type="submit" (click)="poInvoiceCreation(segment1)" class="btn btn-primary" style="width: fit-content;">PO INV Creation</button>
+                                                         </td>
+                                                     </tr>
+                                                 </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                                </div>
+                                              </div>
+                                            </div>
+                                            </div>
+                                                                                    <!-- </ng-template>  -->
+                                         </td>
+                                    </ng-template>
+                                   
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                
+            </fieldset>
+
+
+
+            <div class="modal fade" id="myModal1" role="dialog">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <label style="text-align: center;margin-left: 7rem;">{{title}}</label>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                      <table class="center" style="width: 100%;">
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Floor&nbsp;:
+                            </td>
+                            <td>
+                                <input type="text" formControlName="segment11"  value={{segment11}} [(ngModel)]='segment11' class="form-control"
+                                  maxlength="1"   (keyup)="keytab($event, 1,'input2')"  #input1
+                                placeholder="Floor" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Rack&nbsp;:
+                            </td>
+                            <td>
+  <input formControlName="segment2" [(ngModel)]='segment2' value={{segment2}} class="form-control"
+  maxLength="1" (keyup)="keytab($event, 1,'input3')"  #input2
+                placeholder="Rack" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Rack&nbsp;Number&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="segment3" [(ngModel)]='segment3' value={{segment3}} class="form-control"
+                                maxlength="2" (keyup)="keytab($event, 2,'input4')"  #input3
+                                placeholder="Rack No" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%" class="LabelFontStyle1">
+                                Row&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="segment4" [(ngModel)]='segment4' value={{segment4}} class="form-control"
+                                maxlength="1" (keyup)="keytab($event, 1,'input5')"  #input4
+                                placeholder="Row" style="width: 52px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 45%" class="LabelFontStyle1">
+                                Row&nbsp;Number&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="segment5" [(ngModel)]='segment5' value={{segment5}} class="form-control"
+                                maxlength="2" (keyup)="keytab($event, 2,'input6')"  #input5
+                                placeholder="Row No" style="width: 52px;">
+                            </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"  (click)="okLocator(content)">Ok</button>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" >Confirmation!</h5>
+        </div>
+        <div class="modal-body">
+            <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                {{message}}
+            </label>
+        </div>
+        <div class="modal-footer">
+            <table class="center">
+        <tr>
+            <td>
+            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="executeAction()">Yes</button>
+            </td>
+            <td>
+            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </td>
+        </tr>
+        </table>
+        </div>
+        </div>
+        </div>
+    </div>
