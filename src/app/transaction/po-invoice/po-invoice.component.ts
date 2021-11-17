@@ -30,6 +30,7 @@ interface IpoInvoice {
   name: string;
   siteName: string;
   taxAmt: number;
+  internalSeqNum:number;
   paymentRateDate: Date;
   distributionSet: number;
   matchAction: string;
@@ -165,6 +166,7 @@ export class PoInvoiceComponent implements OnInit {
   invoiceDistId:number;
   // segment1:string
   lookupValue:string;
+  internalSeqNum:number;
 
   // invoiceDate:Date;
   pipe = new DatePipe('en-US');
@@ -569,7 +571,8 @@ export class PoInvoiceComponent implements OnInit {
       supplierSiteId: ['', [Validators.required]],
       accPayCodeCombId: [],
       amtAppToDisc: [],
-      invoiceId1: []
+      invoiceId1: [],
+      internalSeqNum:[],
     })
   }
 
@@ -969,10 +972,9 @@ export class PoInvoiceComponent implements OnInit {
         for (let i = 0; i < this.lstsearchapinv.length; i++) {
           let invDate = moment(this.lstsearchapinv[i].invoiceDate, 'dd-MM-yyyy hh:mm:ss');
           let invDtString = invDate.format('yyyy-MM-DD');
-
           let payDate = moment(this.lstsearchapinv[i].paymentRateDate, 'dd-MM-yyyy hh:mm:ss');
           let payDtString = payDate.format('yyyy-MM-DD');
-          this.lineDetailsArray().controls[i].patchValue({ invoiceDate: invDtString,  paymentRateDate:payDtString, invoiceId1:this.lstsearchapinv[i].invoiceId });
+          this.lineDetailsArray().controls[i].patchValue({ invoiceDate: invDtString,  paymentRateDate:payDtString, invoiceId1:this.lstsearchapinv[i].invoiceId ,internalSeqNum:this.lstsearchapinv[i].internalSeqNum});
           if (res.obj.paymentMethod===undefined){
             (patch.controls[i]).patchValue(
               {
@@ -1001,7 +1003,7 @@ export class PoInvoiceComponent implements OnInit {
           this.lineDetailsArray().controls[i].get('siteName').disable();
           this.lineDetailsArray().controls[i].get('invoiceDate').disable();
           this.lineDetailsArray().controls[i].get('invoiceNum').disable();
-          this.lineDetailsArray().controls[i].get('invoiceId1').disable();
+          this.lineDetailsArray().controls[i].get('internalSeqNum').disable();
           this.lineDetailsArray().controls[i].get('glDate').disable();
           this.lineDetailsArray().controls[i].get('currency').disable();
           this.lineDetailsArray().controls[i].get('paymentRateDate').disable();
@@ -1036,7 +1038,7 @@ export class PoInvoiceComponent implements OnInit {
   // }
 
   apInvFind1(content) {
-    alert(content);
+    // alert(content);
     const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
     this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -1140,11 +1142,11 @@ export class PoInvoiceComponent implements OnInit {
 
   selectINVLineDtl(i) {
     // alert(i)
-    alert(this.isVisible1)
+    // alert(this.isVisible1)
     this.selectedLine=i;
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var invStatus = arrayControl[this.selectedLine].INVStatus;
-    alert(invStatus)
+    // alert(invStatus)
     if (arrayControl[this.selectedLine].INVStatus===null){
       this.poInvoiceForm.patchValue({INVStatus:'Never Validated'});
       this.isVisible1=false;

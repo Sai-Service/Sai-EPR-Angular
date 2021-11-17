@@ -226,7 +226,8 @@
                             </span> -->
             </td>
             <td>
-                <input type="number" min="0"   class="form-control"  formControlName="invoiceId1" value={{invoiceId1}} disabled  style="width: 120px;height: 25px;font-size: 10px;">
+                <input hidden type="number" min="0"   class="form-control"  formControlName="invoiceId1" value={{invoiceId1}} disabled  style="width: 120px;height: 25px;font-size: 10px;">
+                <input disabled type="number" min="0"   class="form-control"  formControlName="internalSeqNum" value={{internalSeqNum}} disabled  style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
                 <input  type="number" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;"(change)="prepaymentData($event)" #amt>
