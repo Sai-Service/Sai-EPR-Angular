@@ -933,6 +933,7 @@ export class PoInvoiceComponent implements OnInit {
     return val;
   }
   apInvFind(content) {
+    alert(content);
     this.lineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.TdsDetailsArray().clear();
@@ -953,6 +954,7 @@ export class PoInvoiceComponent implements OnInit {
     var searchObj:InvoiceSearchObj=new InvoiceSearchObj();
     if(this.poInvoiceForm.get('segment1').value != null){searchObj.segment1=this.poInvoiceForm.get('segment1').value}
     if(this.poInvoiceForm.get('suppNo').value != null){searchObj.suppNo=this.poInvoiceForm.get('suppNo').value}
+    if(this.poInvoiceForm.get('invoiceNum').value != null){searchObj.invoiceNum=this.poInvoiceForm.get('invoiceNum').value}
     this.transactionService.getsearchByApINV(JSON.stringify(searchObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.isDisabled=true;
@@ -1034,7 +1036,7 @@ export class PoInvoiceComponent implements OnInit {
   // }
 
   apInvFind1(content) {
-    // alert(content);
+    alert(content);
     const formValue: IpoInvoice = this.transData(this.poInvoiceForm.value);
     this.transactionService.getsearchByApINV(formValue).subscribe((res: any) => {
       if (res.code === 200) {

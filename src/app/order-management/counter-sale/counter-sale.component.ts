@@ -1151,6 +1151,7 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
+              alert('hi')
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
