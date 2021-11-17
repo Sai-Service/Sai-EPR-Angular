@@ -205,7 +205,7 @@
             </ng-template>
             </td>
             <td>
-                <input type="datetime-local" formControlName="invoiceDate"  [ngModel]="invoiceDate" style="width: 150px;height: 25px;font-size: 11px;">
+                <input type="datetime-local" formControlName="invoiceDate"  [ngModel]="invoiceDate" class="form-control" style="width: 150px;height: 25px;font-size: 11px;"  >
                                <!-- <input
       type="datetime-local"
       id="completionDate"
@@ -226,7 +226,7 @@
                             </span> -->
             </td>
             <td>
-                <input type="number" min="0"   class="form-control"  formControlName="invoiceId1" value={{invoiceId1}}   style="width: 120px;height: 25px;font-size: 10px;">
+                <input type="number" min="0"   class="form-control"  formControlName="invoiceId1" value={{invoiceId1}} disabled  style="width: 120px;height: 25px;font-size: 10px;">
             </td>
             <td>
                 <input  type="number" class="form-control" formControlName="invoiceAmt" value={{invoiceAmt}} style="width: 90px;height: 25px;font-size: 10px;text-align: right;"(change)="prepaymentData($event)" #amt>

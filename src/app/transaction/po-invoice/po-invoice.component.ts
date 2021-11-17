@@ -653,6 +653,7 @@ export class PoInvoiceComponent implements OnInit {
   get g() { return this.poInvoiceForm.controls; }
 
   ngOnInit(): void {
+  //  this.isDisabled=true;
     this.isVisible1=false;
     this.displayapInvCancelled=true;
     $("#wrapper").toggleClass("toggled");
@@ -932,6 +933,9 @@ export class PoInvoiceComponent implements OnInit {
   }
   apInvFind(content) {
     this.lineDetailsArray().clear();
+    this.TaxDetailsArray().clear();
+    this.TdsDetailsArray().clear();
+    this.lineDistributionArray().clear();
     this.displayOUName = true;
     this.displaypoType = true;
     this.displaysegment1 = true;
