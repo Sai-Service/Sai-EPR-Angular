@@ -1244,7 +1244,7 @@ export class PoInvoiceComponent implements OnInit {
             // this.saveTdsDetails=true;
             this.displayTdsButton = true;
             this.showTdsLineDetails = false;
-            this.showTdsLines();
+            this.showTdsLines(0);
           } else {
             this.displayTdsButton = false;
             this.showTdsLineDetails = true;
@@ -1400,8 +1400,11 @@ else{
       if (res.code === 200) {
         alert(res.message);
         // this.poInvoiceForm.disable();
-        // alert(res.obj);
+        alert(res.obj);
         this.internalSeqNo = res.obj;
+        this.displayTdsButton=true;
+        this.showTdsLines(res.obj);
+
       } else {
         if (res.code === 400) {
           alert(res.message);
@@ -1415,6 +1418,10 @@ else{
     //   this.HeaderValidation();
     // }
   }
+
+ 
+
+
 
   close() {
     // this.router.navigate(['login']);
@@ -2433,6 +2440,7 @@ else{
         } else {
           if (res.code === 400) {
             alert(res.message);
+            this.displayTdsButton=true;
             // this.poInvoiceForm.reset();
           }
         }
@@ -2443,11 +2451,17 @@ else{
   }
 
 
-  showTdsLines() {
-    var arraybase = this.poInvoiceForm.get('obj').value;
-    var invId = arraybase[0].invoiceId;
-    console.log(arraybase);
-    this.invoiceId = arraybase[0].invoiceId;
+  showTdsLines(mInvId) {
+
+    var invId;
+    if (mInvId===0) {
+      var arraybase = this.poInvoiceForm.get('obj').value;
+      invId = arraybase[0].invoiceId;
+      console.log(arraybase);
+      this.invoiceId = arraybase[0].invoiceId;
+
+    } else { invId=mInvId; }
+   
 
     // alert("tds >> Invoice Id :"+this.invoiceId);
 
@@ -2475,9 +2489,10 @@ else{
 
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
             // alert(this.lstTdsLineDetails[i].invDistributionId);
+            (tdscontrolInv.controls[i]).patchValue({ invoiceId: invId });
             (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: this.lstTdsLineDetails[i].invDistributionId });
-            (tdscontrolInv.controls[i]).patchValue({ invoiceId: arraybase[0].invoiceId });
-
+            (tdscontrolInv.controls[i]).patchValue({ description: this.lstTdsLineDetails[i].description });
+          
           }
 
         });

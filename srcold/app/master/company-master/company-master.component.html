@@ -1,0 +1,710 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <!-- class="PageHeader" -->
+            <td class="PageHeader" >
+                &nbsp;&nbsp;Company&nbsp;Master
+            </td>
+        </tr>
+    </table>
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <form [formGroup]="CompanyMasterForm" (ngSubmit)="CompanyMaster(CompanyMasterForm.value)">
+                <table class="center">
+                    <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Company&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="compCode" value={{compCode}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.compCode.errors }"
+                                placeholder="Enter Company code" uppercase  style="text-transform: uppercase;">
+                            <div *ngIf="submitted && f.compCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.compCode.errors.required">Code cannot be blank </div>
+                                <div *ngIf="f.compCode.errors.pattern">Code cannot have spaces or special characters </div>
+                                <div *ngIf="f.compCode.errors.minlength">Minimum Length is 5 characters</div>
+                                <div *ngIf="f.compCode.errors.maxlength">Maximum Length is 10 characters</div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('compCode').valid && CompanyMasterForm.get('compCode').touched">Please
+                                Enter Company code </span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Company&nbsp;Name&nbsp;:
+                            </td>
+                            <td>
+                                <input formControlName="compName" value={{compName}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.compName.errors }"
+                                placeholder="Enter Company Name">
+                            <div *ngIf="submitted && f.compName.errors" class="invalid-feedback">
+                                <div *ngIf="f.compName.errors.required">Name cannot be blank</div>
+                                <div *ngIf="f.compName.errors.pattern">Name cannot have special characters</div>
+                                <div *ngIf="f.compName.errors.minlength">Minimum length is 5 characters</div>
+                                <div *ngIf="f.compName.errors.maxlength">Maximum length is 50 characters</div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('compName').valid && CompanyMasterForm.get('compName').touched">Name cannot be blank or have special characters</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                WebSite&nbsp;&nbsp;:
+                            </td>
+                            <td>
+                                <input type="url" formControlName="webSite" value={{webSite}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.webSite.errors }" placeholder="Enter WebSite">
+                            <div *ngIf="submitted && f.webSite.errors" class="invalid-feedback">
+                                <div *ngIf="f.webSite.errors.required">Please enter W
+                                    ebsite </div>
+                                <div *ngIf="f.webSite.errors.pattern">Please enter correct website format</div>
+                                <div *ngIf="f.webSite.errors.maxlength">WebSite must be a valid </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('webSite').valid && CompanyMasterForm.get('webSite').touched">Please
+                                Enter WebSite</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Reg&nbsp;Address1&nbsp;&nbsp;:
+                             </td>
+                             <td>
+                                 <input formControlName="address1" value={{address1}} class="form-control"
+                                 [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                 placeholder="Enter Address1">
+                             <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
+                                 <div *ngIf="f.address1.errors.required">Address 1 cannot be blank</div>
+                                 <div *ngIf="f.address1.errors.pattern">Address (Pattern error) </div>
+                                 <div *ngIf="f.address1.errors.maxlength">Maximum length is 50 characters</div>
+                             </div>
+                             <!-- <span
+                                 *ngIf="!CompanyMasterForm.get('address1').valid && CompanyMasterForm.get('address1').touched">Address 1 cannot be blank</span> -->
+                             </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address2&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address2" value={{address2}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
+                                placeholder="Enter Address2">
+                            <div *ngIf="submitted && f.address2.errors" class="invalid-feedback">
+                                <div *ngIf="f.address2.errors.required">Address 2 cannot be blank</div>
+                                <div *ngIf="f.address2.errors.pattern">Address (Pattern error)</div>
+                                <div *ngIf="f.address2.errors.maxlength">Maximum length is 50 characters</div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('address2').valid && CompanyMasterForm.get('address2').touched">Address 2 cannot be blank</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Address3&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address3" value={{address3}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address3.errors }"
+                                placeholder="Enter Address3">
+                            <div *ngIf="submitted && f.address3.errors" class="invalid-feedback">
+                                <div *ngIf="f.address3.errors.required">Please enter Address 3 </div>
+                                <div *ngIf="f.address3.errors.pattern">Address (Pattern error) </div>
+                                <div *ngIf="f.address3.errors.maxlength">Maximum length is 50 characters </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('address3').valid && CompanyMasterForm.get('address3').touched">Please
+                                Enter Address3</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Address4&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address4" value={{address4}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address4.errors }"
+                                placeholder="Enter Address4">
+                            <div *ngIf="submitted && f.address4.errors" class="invalid-feedback">
+                                <div *ngIf="f.address4.errors.required">Please enter Address 3  </div>
+                                <div *ngIf="f.address4.errors.pattern">Address (Pattern error) </div>       
+                                <div *ngIf="f.address4.errors.maxlength">Address4 must be a valid for 50 digit </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('address4').valid && CompanyMasterForm.get('address4').touched">Please
+                                Enter Address4</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                City&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="city" id="city" class="form-control" 
+                                [ngClass]="{ 'is-invalid': submitted && f.city.errors }"
+                                (change)='onOptionsSelectedCity($event)'>
+                                <!-- <option>--Select--</option> -->
+                                <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
+                                    {{sc.codeDesc}}
+                                </option>
+                                </select>
+                                <!-- <div *ngIf="f.city.errors.required">City cannot be blank</div> -->
+                                <div *ngIf= "f.city.errors" class="invalid-feedback">
+                                    <div *ngIf="f.city.errors.required">City cannot be blank</div>
+                                    <div *ngIf="f.city.errors.maxlength">City must be a valid for 50 digit</div>
+                                </div>
+                            <!-- derina -->
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('city').valid && CompanyMasterForm.get('city').touched">Please
+                                Enter City</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Pin&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="pinCd" value={{pinCd}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }" placeholder="Enter Pin Code">
+                                <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
+                                    <div *ngIf="f.pinCd.errors.required">Please enter PinCode  </div>
+                                    <div *ngIf="f.pinCd.errors.pattern">Please enter valid 6 Digit Pincode   </div>
+                                     <div *ngIf="f.pinCd.errors.maxlength">Only 6 digit Pin code is allowed  </div>
+                                   
+                                </div>
+                                <!-- <span *ngIf="!CompanyMasterForm.get('pinCd').valid && CompanyMasterForm.get('pinCd').touched">Please
+                                Enter State </span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                State&nbsp;:
+                            </td>
+                            <td>
+                                <!-- <select formControlName="state" id="state" class="form-control">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  StateList">
+                                        {{sc.codeDesc}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                                    <div *ngIf="f.status.errors.required">State is required</div>
+                                    <span
+                                        *ngIf="!CompanyMasterForm.get('state').valid && CompanyMasterForm.get('state').touched">Please
+                                        Enter State </span>
+                                </div> -->
+                                <input type="text" disabled formControlName="state" [ngModel]="state"
+                                class="form-control">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Country&nbsp;:
+                            </td>
+                            <td>
+                                <input type="text" disabled formControlName="country" [ngModel]="country"
+                                class="form-control">
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Email&nbsp;ID&nbsp;:
+                            </td>
+                            <td>
+                                <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                                placeholder="Enter email id">
+                            <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
+                                <div *ngIf="f.emailId.errors.required">Email ID cannot be blank </div>
+                                <div *ngIf="f.emailId.errors.pattern">Please enter valid email ID </div>
+                                <div *ngIf="f.emailId.errors.email">Email ID must be a valid  </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('emailId').valid && CompanyMasterForm.get('emailId').touched">Please
+                                Enter Email ID</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Start&nbsp;Date&nbsp;:
+                            </td>
+                            <td>
+                                <input type="date" formControlName="startDate" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }"
+                                placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                                    <div *ngIf="f.startDate.errors.required">Start date cannot be blank </div>
+                                </div>
+                                <!-- derina -->
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('startDate').valid && CompanyMasterForm.get('startDate').touched">Please
+                                Enter start Date </span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Status&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled type="text" [ngModel]="status" formControlName="status"
+                                class="form-control">
+                                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                                    <div *ngIf="f.status.errors.required">status is required</div>
+                                    <!-- <span
+                                        *ngIf="!CompanyMasterForm.get('status').valid && CompanyMasterForm.get('status').touched">Please
+                                        Enter valid status </span> -->
+                                </div>    
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Company&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="compCode" value={{compCode}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.compCode.errors }"
+                                placeholder="Enter Company code">
+                            <div *ngIf="submitted && f.compCode.errors" class="invalid-feedback">
+                                <div *ngIf="f.compCode.errors.required">Code1 cannot be blank, have spaces or have special characters</div>
+                                <div *ngIf="f.compCode.errors.pattern">Code2 cannot be blank, have spaces or have special characters</div>
+                                <div *ngIf="f.compCode.errors.maxlength">Code3 cannot be blank, have spaces or have special characters</div>
+                            </div>
+                            <!-- <span *ngIf="!CompanyMasterForm.get('compCode').valid && CompanyMasterForm.get('compCode').touched">Code cannot be blank, have spaces or have special characters</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Company&nbsp;Name&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled formControlName="compName" value={{compName}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.compName.errors }"
+                                placeholder="Enter Company Name">
+                            <div *ngIf="submitted && f.compName.errors" class="invalid-feedback">
+                                <div *ngIf="f.compName.errors.required">Name cannot be blank or have special characters</div>
+                                <div *ngIf="f.compName.errors?.pattern">Name cannot be blank or have special characters</div>
+                                <div *ngIf="f.compName.errors?.maxlength">Name cannot be blank or have special characters</div>
+                            </div>
+                            <!-- <span *ngIf="!CompanyMasterForm.get('compName').valid && CompanyMasterForm.get('compName').touched">Name cannot be blank or have special characters</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                WebSite&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input type="url" formControlName="webSite" value={{webSite}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.webSite.errors }" placeholder="Enter WebSite">
+                            <div *ngIf="submitted && f.webSite.errors" class="invalid-feedback">
+                                <div *ngIf="f.webSite.errors.required">WebSite must be required </div>
+                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                                <div *ngIf="f.webSite.errors?.maxlength">WebSite must be a valid
+                                </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('webSite').valid && CompanyMasterForm.get('webSite').touched">Please
+                                Enter WebSite</span> -->
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Reg&nbsp;Address&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address1" value={{address1}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address1.errors }"
+                                placeholder="Enter Address1">
+                            <div *ngIf="submitted && f.address1.errors" class="invalid-feedback">
+                                <div *ngIf="f.address1.errors.required">Address 1 cannot be blank</div>
+                                <div *ngIf="f.address1.errors.pattern">Address 1 2 cannot be blank</div>
+                                <div *ngIf="f.address1.errors.maxlength">Address 1 3 cannot be blank</div>
+                            </div>
+                            <!-- <span *ngIf="!CompanyMasterForm.get('address1').valid && CompanyMasterForm.get('address1').touched">Address 1 cannot be blank</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Address2&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address2" value={{address2}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address2.errors }"
+                                placeholder="Enter Address2">
+                            <div *ngIf="submitted && f.address2.errors" class="invalid-feedback">
+                                <div *ngIf="f.address2.errors.required">Address 2 cannot be blank</div>
+                                <div *ngIf="f.address2.errors?.pattern">Address 2 cannot be blank</div>
+                                <div *ngIf="f.address2.errors?.maxlength">Address 2 cannot be blank</div>
+                            </div>
+                            <!-- <span *ngIf="!CompanyMasterForm.get('address2').valid && CompanyMasterForm.get('address2').touched">Address 2 cannot be blank</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Address3&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address3" value={{address3}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address3.errors }"
+                                placeholder="Enter Address3">
+                            <div *ngIf="submitted && f.address3.errors" class="invalid-feedback">
+                                <div *ngIf="f.address3.errors.required">Address3 must be required and valid for 50 digit
+                                </div>
+                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                                <div *ngIf="f.address3.errors?.maxlength">Address3 must be a valid for 50 digit
+                                </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('address3').valid && CompanyMasterForm.get('address3').touched">Please
+                                Enter Address3</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Address4&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input formControlName="address4" value={{address4}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.address4.errors }"
+                                placeholder="Enter Address4">
+                            <div *ngIf="submitted && f.address4.errors" class="invalid-feedback">
+                                <div *ngIf="f.address4.errors.required">Address4 must be required and valid for 50 digit
+                                </div>
+                                <!-- <div *ngIf="f.divisionCode.errors?.pattern">orgId must be a valid for 3 digit
+                    </div> -->
+                                <div *ngIf="f.address4.errors?.maxlength">Address4 must be a valid for 50 digit
+                                </div>
+                            </div>
+                            <!-- <span
+                                *ngIf="!CompanyMasterForm.get('address4').valid && CompanyMasterForm.get('address4').touched">Please
+                                Enter Address4</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                City&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <input disabled formControlName="city" value={{city}} class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.city.errors }"
+                            placeholder="Enter City">
+                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                            <div *ngIf="f.city.errors.required">City must be required and valid for 50 digit</div>
+                            <div *ngIf="f.city.errors?.maxlength">City must be a valid for 50 digit
+                            </div>
+                        </div>
+                            <!-- <span *ngIf="!CompanyMasterForm.get('city').valid && CompanyMasterForm.get('city').touched">Please Enter City</span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Pin&nbsp;Code&nbsp;:
+                            </td>
+                            <td>
+                                <input  formControlName="pinCd" value={{pinCd}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.pinCd.errors }" placeholder="Enter Pin Code">
+                            <div *ngIf="submitted && f.pinCd.errors" class="invalid-feedback">
+                                <div *ngIf="f.pinCd.errors.required">Pincode should be 6 digits</div>
+                                <div *ngIf="f.divisionCode.errors?.pattern">Pincode should be 6 digits</div>
+                                <div *ngIf="f.pinCd.errors?.maxlength">Pincode should be 6 digits </div>
+                            </div>
+                            <!-- <span *ngIf="!CompanyMasterForm.get('pinCd').valid && CompanyMasterForm.get('pinCd').touched">Pincode should be 6 digits</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                State&nbsp;:
+                            </td>
+                            <td>
+                                <input disabled type="text" formControlName="state" value={{state}} class="form-control">
+                                <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                                    <div *ngIf="f.status.errors.required">State is required</div>
+                                    <!-- <span
+                                        *ngIf="!CompanyMasterForm.get('state').valid && CompanyMasterForm.get('state').touched">Please
+                                        Enter State </span> -->
+                                </div>    
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Country&nbsp;:
+                            </td> 
+                            <td>
+                                <input type="text" disabled formControlName="country" [ngModel]="country"
+                                class="form-control">
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Email&nbsp;ID&nbsp;:
+                            </td>
+                            <td>
+                                <input type="email" formControlName="emailId" value={{emailId}} class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && f.emailId.errors }"
+                                placeholder="Enter email id">
+                            <div *ngIf="submitted && f.emailId.errors" class="invalid-feedback">
+                                <div *ngIf="f.emailId.errors.required">Please enter Email-ID in correct format </div>
+                                <div *ngIf="f.emailId.errors?.pattern">Please enter Email-ID in correct format</div>
+                                <div *ngIf="f.emailId.errors?.email">Please enter Email-ID in correct format</div>
+                            </div>
+                            <span *ngIf="!CompanyMasterForm.get('emailId').valid && CompanyMasterForm.get('emailId').touched">Please enter Email-ID in correct format</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">
+                                Start&nbsp;Date&nbsp;:
+                            </td> 
+                            <td>
+                                <input disabled type="date" formControlName="startDate" class="form-control"
+                                placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                            <!-- <span *ngIf="!CompanyMasterForm.get('startDate').valid && CompanyMasterForm.get('startDate').touched">Please
+                                Enter start Date </span> -->
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle1">
+                                Status&nbsp;:
+                            </td> 
+                            <td>
+                                <select formControlName="status" id="status" class="form-control"
+                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                            <option>--Select--</option>
+                            <option *ngFor="let sc of  statusList">
+                                {{sc.codeDesc}}
+                            </option> 
+                        </select>
+                            <div *ngIf="submitted && f.status.errors" class="invalid-feedback">
+                                <div *ngIf="f.status.errors.required">status is required</div>
+                                <!-- <span
+                                    *ngIf="!CompanyMasterForm.get('status').valid && CompanyMasterForm.get('status').touched">Please
+                                    Enter valid status </span> -->
+                            </div>
+                            </td>
+                            <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                            <ng-template #thenBlockInactive>
+                            </ng-template>
+                            <ng-template #elseBlockInactive>
+                                <td style="width: 15%" class="LabelFontStyle1">
+                                    Inactive&nbsp;Date:&nbsp;
+                                </td> 
+                                <td>
+                                    <input disabled type="text" formControlName="endDate" class="form-control"
+                                [ngModel]="endDate | date:'yyyy-MM-dd'">
+                                </td>
+                            </ng-template>
+                        </tr>
+                    </ng-template>
+                </table>
+                <table class="center">
+                    <tr>
+                        <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                        <ng-template #thenBlock1>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="newMast()">Save</button>
+                            </td>
+                            <!-- [disabled]="!CompanyMasterForm.valid"  -->
+                            <!-- <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetMast()">Reset</button>
+                            </td> -->
+                            <td>
+                                <!-- <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> -->
+                           <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Reset
+       </button>
+       <!-- Modal -->
+       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+             </label>
+             </div>
+             <div class="modal-footer">
+                 <table class="center">
+                     <tr>
+                         <td>
+                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                         </td>
+                         <td>
+                             <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                         </td>
+                     </tr>
+                 </table>
+               </div> 
+           </div>
+         </div>
+       </div>
+                            </td>
+                            <!-- <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeMast()">Close</button>
+                            </td> -->
+                            <td>
+                                <!-- <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button> -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                    Close
+                                  </button>
+                                  
+                                  <!-- Modal -->
+                                  <!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"> -->
+                                    <div class="modal fade" id="exampleModalLong">
+                                    <!-- <div class="modal-dialog" role="document"> -->
+                                        <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <!-- <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div> -->
+                                        <div class="modal-body">
+                                            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+                                            </label>
+                                        </div>
+                                        <div class="modal-footer">
+                                         <table class="center">
+                                             <tr>
+                                                 <td>
+                                                    <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                 </td>
+                                                 <td>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                          
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="searchMast()">Search</button>
+                            </td>
+                        </ng-template>
+                        <ng-template #elseBlock1>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    [disabled]="!CompanyMasterForm.valid" (click)="updateMast()">Update</button>
+                            </td>
+                            <!-- <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="resetMast()">Reset</button>
+                            </td> -->
+                            <td>
+                                <!-- <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> -->
+                           <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Reset
+       </button>
+       <!-- Modal -->
+       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color: red;">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Reset.
+             </label>
+             </div>
+             <div class="modal-footer">
+                 <table class="center">
+                     <tr>
+                         <td>
+                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                         </td>
+                         <td>
+                             <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                         </td>
+                     </tr>
+                 </table>
+               </div> 
+           </div>
+         </div>
+       </div>
+                            </td>
+                            <!-- <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="closeMast()">Close</button>
+                            </td> -->
+                            <td>
+                                <!-- <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button> -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                                    Close
+                                  </button>
+                                  
+                                  <!-- Modal -->
+                                  <!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"> -->
+                                    <div class="modal fade" id="exampleModalLong">
+                                    <!-- <div class="modal-dialog" role="document"> -->
+                                        <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <!-- <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div> -->
+                                        <div class="modal-body">
+                                            <label style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                Please&nbsp;Confirm&nbsp;Do&nbsp;you&nbsp;want&nbsp;to&nbsp;Close.
+                                            </label>
+                                        </div>
+                                        <div class="modal-footer">
+                                         <table class="center">
+                                             <tr>
+                                                 <td>
+                                                    <button  type="submit" class="btn btn-primary" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                 </td>
+                                                 <td>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                          
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary" id="register"
+                                    (click)="searchMast()">Search</button>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </table>    
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+    <tbody>
+        <tr class="GridHeader">
+            <th scope="col">Company Id</th>
+            <th scope="col">Company Code</th>
+            <th scope="col"  style="width: 250px;">Company Name</th>
+            <th scope="col">Address1</th>
+            <th scope="col">Address2</th>
+            <th scope="col">Address3</th>
+            <th scope="col">Address4</th>
+            <th scope="col">City</th>
+            <th scope="col">Pin Code</th>
+            <th scope="col">State</th>
+            <th scope="col">WebSite</th>
+            <th scope="col">Email ID</th>
+            <th scope="col">Country</th>
+            <th scope="col">Select one</th>
+        </tr>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;">
+            <td>{{com.compId}}</td>
+            <td>{{com.compCode}}</td>
+            <td>{{com.compName}}</td>
+            <td>{{com.address1}}</td>
+            <td>{{com.address2}}</td>
+            <td>{{com.address3}}</td>
+            <td>{{com.address4}}</td>
+            <td>{{com.city}}</td>
+            <td>{{com.pinCd}}</td>
+            <td>{{com.state}}</td>
+            <td>{{com.webSite}}</td>
+            <td>{{com.emailId}}</td>
+            <td>{{com.country}}</td>
+            <td><button class="btn btn-secondary" (click)="Select(com.compId)" style="width: 4rem;">Select</button></td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+</div>
