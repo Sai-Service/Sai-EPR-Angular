@@ -181,8 +181,9 @@ declare var $: any;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
 
     var segment1=this.adminForm1.get('searchItemCode').value
+    segment1=segment1.toUpperCase();
 
-    alert("Segment :" +segment1);
+    // alert("Segment :" +segment1);
 
     if(segment1 ==undefined || segment1==null) {
       alert ("Please select Item Code ....") ;return;
@@ -220,7 +221,7 @@ declare var $: any;
         this.searchItemName=selectedValue.DESCRIPTION;
         this.searchItemCode=selectedValue.SEGMENT;
       }
-      alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+      // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
 
     }
 

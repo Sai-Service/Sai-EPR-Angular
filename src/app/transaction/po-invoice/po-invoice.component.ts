@@ -598,6 +598,7 @@ export class PoInvoiceComponent implements OnInit {
       distCodeCombSeg: [],
       baseAmount: [],
       accDesc: [],
+      description:[],
       tdsSectionCode: [],
       tdsSelectFlag: [],
       tdsTaxAmount: [],
@@ -1219,13 +1220,19 @@ export class PoInvoiceComponent implements OnInit {
             }
           }
 
+          var arraybase1 = this.poInvoiceForm.get('obj').value;
+          var invId = arraybase1[0].invoiceId;
+
+          // alert ("arraybase1[0].invoiceId :"+invId);
+
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
           for (let i = 0; i < data.invDisLines.length; i++) {
-            (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
-            (tdscontrolInv.controls[i]).patchValue({ baseAmount: data.invDisLines[i].baseAmount });
-            (tdscontrolInv.controls[i]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg });
-            (tdscontrolInv.controls[i]).patchValue({ accDesc: data.invDisLines[i].accDesc });
+            (tdscontrolInv.controls[i]).patchValue({ invoiceId: invId });
             (tdscontrolInv.controls[i]).patchValue({ invoiceLineNum: data.invDisLines[i].invoiceLineNum });
+            (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: data.invDisLines[i].invDistributionId });
+            (tdscontrolInv.controls[i]).patchValue({ distCodeCombSeg: data.invDisLines[i].distCodeCombSeg });
+            (tdscontrolInv.controls[i]).patchValue({ baseAmount: data.invDisLines[i].baseAmount });
+            (tdscontrolInv.controls[i]).patchValue({ description: data.invDisLines[i].description });
           }
 
           this.INVStatus = data.invoiceStatus;
@@ -2412,18 +2419,19 @@ else{
 
     if (this.tdsLineValidation) {
       alert("TDS data Validation Sucessfull....Posting data...")
-
+      this.displayTdsButton=false;
+      
       var tdsLines = this.poInvoiceForm.get('tdsLines').value;
+      console.log(tdsLines);
 
-      console.log();
       this.transactionService.PoInvoiceTdsDataSubmit(tdsLines).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
-          this.poInvoiceForm.reset();
+          // this.poInvoiceForm.reset();
         } else {
           if (res.code === 400) {
             alert(res.message);
-            this.poInvoiceForm.reset();
+            // this.poInvoiceForm.reset();
           }
         }
       });
@@ -2438,6 +2446,8 @@ else{
     var invId = arraybase[0].invoiceId;
     console.log(arraybase);
     this.invoiceId = arraybase[0].invoiceId;
+
+    // alert("tds >> Invoice Id :"+this.invoiceId);
 
     console.log(this.invoiceDistId);
 
@@ -2458,13 +2468,14 @@ else{
             this.TdsDetailsArray().push(tdsLnGrp);
 
           }
-
           this.poInvoiceForm.get('tdsLines').patchValue(this.lstTdsLineDetails);
-
           let tdscontrolInv = this.poInvoiceForm.get('tdsLines') as FormArray;
+
           for (let i = 0; i < this.lstTdsLineDetails.length; i++) {
             // alert(this.lstTdsLineDetails[i].invDistributionId);
             (tdscontrolInv.controls[i]).patchValue({ invoiceDistId: this.lstTdsLineDetails[i].invDistributionId });
+            (tdscontrolInv.controls[i]).patchValue({ invoiceId: arraybase[0].invoiceId });
+
           }
 
         });

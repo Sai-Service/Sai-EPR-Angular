@@ -15,6 +15,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 })
 export class BulkUploadPricelistComponent implements OnInit {
   bulkUploadPriceListForm: FormGroup;
-
+  dataDisplay: any;
+  dt: any;
 
   loginName:string;
   loginArray:string;
@@ -54,11 +56,12 @@ export class BulkUploadPricelistComponent implements OnInit {
   upldPricelistName : string;
   
   updStatus =false;
+  closeResetButton =true;
   fileValidation=false;
   
   @ViewChild('fileInput') fileInput;
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService,private http: HttpClient) {
     this.bulkUploadPriceListForm = this.fb.group({
 
      
@@ -113,6 +116,12 @@ export class BulkUploadPricelistComponent implements OnInit {
         console.log(this.PriceListIdList);
       }
     );
+
+    // ---------------------------------------Spinner----------------------------
+   
+          
+          // ---------------------------------------------------------------------------
+
   }
 
   CheckValidations() {
@@ -137,11 +146,11 @@ export class BulkUploadPricelistComponent implements OnInit {
 
   uploadFile() {
     this.CheckValidations()
-
-    if (this.fileValidation===true) {
-      this.updStatus=true;
    
-    this.progress = 0;
+    if (this.fileValidation===true) {
+      this.updStatus=true; this.closeResetButton=false;
+      this.progress = 0;
+      this.dataDisplay ='File Upload in progress....Do not refresh the Page'
 
     var upldPlName =this.bulkUploadPriceListForm.get('upldPricelistName').value;
     var event=this.fileInput.nativeElement.files[0];
@@ -153,27 +162,32 @@ export class BulkUploadPricelistComponent implements OnInit {
       // this.service.UploadExcel(formData,this.docType,upldPlName).subscribe(result => {
       // this.message = result.toString();
 
-      if (event.type === HttpEventType.UploadProgress) {
-      this.progress = Math.round(100 * event.loaded / event.total);
-      } else if (event instanceof HttpResponse) {
-        this.message = event.body.message;
-      }
+      // if (event.type === HttpEventType.UploadProgress) {
+      // this.progress = Math.round(100 * event.loaded / event.total);
+      // } else if (event instanceof HttpResponse) {
+      //   this.message = event.body.message;
+      // }
 
       // alert ( "this.message :" + this.message);
 
        this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
    
         if (res.code === 200) {
-          alert('FILE UPLOADED SUCCESSFULLY');
+          // alert('FILE UPLOADED SUCCESSFULLY');
            this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
-          
+          //  this.updStatus=false;
+           this.dataDisplay ='File Uploading done....'
+           this.closeResetButton=true;
              
         } else {
           if (res.code === 400) {
-            alert('FILE UPLOAD FAILED');
+            // alert('FILE UPLOAD FAILED');
             this.resMsg = res.message +",  Code : "+res.code;
             this.lstMessage=res.obj.priceListDetailList;
+            this.updStatus=false;
+            this.dataDisplay ='File Uploading Failed....'
+            this.closeResetButton=true;
           }
 
          
@@ -221,10 +235,54 @@ export class BulkUploadPricelistComponent implements OnInit {
 
 progressBarTesting(){
 
-  for (let i = 0; i <=100; i++) {
-    var x=0;
-    this.progress=i;
-   }
+  // for (let i = 0; i <=100; i++) {
+  //   var x=0;
+  //   this.progress=i;
+  //  }
+
+  // this.updStatus=true;
+  // var upldPlName =this.bulkUploadPriceListForm.get('upldPricelistName').value;
+  // var event=this.fileInput.nativeElement.files[0];
+  // console.log('doctype-check'+this.docType)
+  // let formData = new FormData();
+  //  formData.append('file', event)
+
+  // this.service.UploadExcel(formData,this.docType,upldPlName).subscribe((res: any) => {
+   
+
+  //   if (res.code === 200) {
+  //     alert('FILE UPLOADED SUCCESSFULLY');
+  //      this.resMsg = res.message+",  Code : "+res.code;;
+  //      this.lstMessage=res.obj.priceListDetailList;
+  //     this.updStatus=false;
+         
+  //   } else {
+  //     if (res.code === 400) {
+  //       alert('FILE UPLOAD FAILED');
+  //       this.resMsg = res.message +",  Code : "+res.code;
+  //       this.lstMessage=res.obj.priceListDetailList;
+  //       this.updStatus=false;
+  //     }
+  //   }
+  // });
+
+//  this.updStatus=true;
+//   this.http.get('http://www.mocky.io/v2/5ec6a61b3200005e00d75058')
+//   .subscribe(Response => {
+        
+//       if (Response) {
+//           hideloader();
+//       }
+//       console.log(Response)
+//       this.dt = Response;
+//       this.dataDisplay = this.dt.data;
+//   });
+
+//       function hideloader() {
+//         alert("in hide loader...")
+//        document.getElementById('loading') .style.display = 'none';
+//       }
+
 }
 
 // ------------------------------------------------------
