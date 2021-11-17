@@ -419,13 +419,8 @@
 
                 <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
                    id="invItemIdFirstWay"  list="dynmicUserIds1" 
-<<<<<<< HEAD
                    class="form-control"  uppercase  (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
                    style="width: 250px; background-color: yellow; text-transform: uppercase;"  />
-=======
-                   class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
-                   style="width: 250px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
->>>>>>> 058d498fe56876b1057fd20803987a5f33dd94ce
                   <datalist id="dynmicUserIds1" >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
                       {{item.SEGMENT}} 
