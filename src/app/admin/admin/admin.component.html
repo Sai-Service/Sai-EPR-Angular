@@ -420,7 +420,7 @@
                 <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
                    id="invItemIdFirstWay"  list="dynmicUserIds1" 
                    class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
-                   style="width: 250px; background-color: rgb(240, 240, 166);"  />
+                   style="width: 250px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
                   <datalist id="dynmicUserIds1" >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
                       {{item.SEGMENT}} 
