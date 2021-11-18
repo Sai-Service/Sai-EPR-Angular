@@ -106,8 +106,73 @@
                                                     placeholder="Enter Account number" style="width: 150px;">
                                             </td>
                                             <td>
-                                                <button type="submit" (click)="searchByAccount1(customerAcc1)"><i
+                                                <button type="submit" class="btn btn-primary" (click)="searchByAccount1(customerAcc1)" style="width: 2rem;color: white;"><i
                                                         class="fa fa-search"></i></button>
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                <td>
+                                                        <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
+                                                        class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#customerNameSearchModel">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" (click)="custNameSearch(custName)"
+                                                            data-toggle="modal" data-target="#customerNameSearchModel" style="width: 2rem;color: white;">
+                                                            <i class="fa fa-search"></i> </button>
+                                                        <div class="modal fade" id="customerNameSearchModel" tabindex="-1" role="dialog"
+                                                            aria-labelledby="customerNameSearchModel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-xl" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="customerNameSearchModel">Additional&nbsp;Details</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <table class="GridFont" id="excel-table" cellspacing="0"
+                                                                                    cellpadding="4">
+                                                                                    <tbody>
+                                                                                        <tr class="GridHeader">
+                                                                                            <th scope="col">Customer No</th>
+                                                                                            <th scope="col">Customer Name</th>
+                                                                                            <th scope="col">Address</th>
+                                                                                            <th scope="col">GST No</th>
+                                                                                            <th scope="col">Pan No</th>
+                                                                                            <th scope="col">Mobile</th>
+                                                                                            <th scope="col">Select</th>
+                                                                                        </tr>
+                                                                                        <tr *ngFor="let com of customerNameSearch" class="ItemStyle"
+                                                                                            style="text-decoration:none;">
+                                                                                            <td style="width: 195px;">{{com.accountNo}}</td>
+                                                                                            <td style="width: 195px;">{{com.custName}}</td>
+                                                                                            <td style="width: 195px;">{{com.billToAddress}}</td>
+                                                                                            <td style="width: 195px;">{{com.gstNo}}</td>
+                                                                                            <td style="width: 195px;">{{com.panNo}}</td>
+                                                                                            <td style="width: 195px;">{{com.mobile1}}</td>
+                                                                                            <td><button class="btn-primary"
+                                                                                                    (click)="searchByAccount1(com.accountNo)"
+                                                                                                    data-dismiss="modal">Select</button></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                
+                                                    </td>
+                                                </tr>
+                                                </table>
                                             </td>
                                         </tr>
                                     </table>
