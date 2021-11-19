@@ -746,6 +746,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
+    this.isVisible=true;
     this.isDisabled = true;
     this.isDisabled=true;
     // alert(this.isDisabled)
@@ -832,6 +833,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             }
             this.CounterSaleOrderBookingForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
             if (this.allDatastore.createOrderType === 'Pick Ticket' && this.allDatastore.flowStatusCode === 'BOOKED') {
+              this.isVisible=true;
               this.CounterSaleOrderBookingForm.get('custName').disable();
               this.CounterSaleOrderBookingForm.get('mobile1').disable();
               this.CounterSaleOrderBookingForm.get('refCustNo').disable();
