@@ -100,7 +100,7 @@ export class ARInvoiceComponent implements OnInit {
   public minDate = new Date();
   glDateLine = this.pipe.transform(this.now, 'y-MM-dd');
   // glDate = this.pipe.transform(this.now, 'y-MM-dd');
- 
+
   applDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
   public distributioArr: any;
@@ -145,8 +145,8 @@ export class ARInvoiceComponent implements OnInit {
   selectAllflag1 = false;
   checkValidation = false;
   applLineValidation = false;
- 
- 
+
+
 
   tApplAmt:number;
   tUapplAmt:number;
@@ -175,7 +175,7 @@ export class ARInvoiceComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.arInvoiceForm = fb.group({
       // poHeaderId: [],
-      
+
       source: [],
       class: [],
       locId: [],
@@ -381,7 +381,7 @@ export class ARInvoiceComponent implements OnInit {
   lineDetailsGroup() {
     return this.fb.group({
       // poLineId: [],
-      // polineNum: [], 
+      // polineNum: [],
       lineNum: [],
       segment: [],
       itemId: [],
@@ -459,14 +459,15 @@ export class ARInvoiceComponent implements OnInit {
 
     })
 
-    this.transactionService.invTypeListFN().subscribe(data => {
-      this.invTypeList = data;
-      console.log(this.invTypeList);
+    // this.transactionService.invTypeListFN().subscribe(data => {
+    //   this.invTypeList = data;
+    //   console.log(this.invTypeList);
 
-    })
-    this.transactionService.invItemList()
+    // })
+    this.transactionService.invItemList1(this.divisionId)
       .subscribe(
         data => {
+
           this.invItemList = data;
           console.log(this.invItemList);
         }
@@ -567,10 +568,34 @@ export class ARInvoiceComponent implements OnInit {
           }
           // alert('second emit call')
           this.arInvoiceForm.patchValue(data);
-
+          // this.taxUistatus = false;
         }
       );
+
   };
+  onOptionType(event:any){
+    if(event==='Manual'){
+    let currItemList = this.invItemList.filter((item) => (item.stockable === 'N'));
+    this.invItemList=currItemList;
+    }
+  }
+  onOptionSelectInvoice(event:any){
+    alert(event);
+    this.service.arInvoiceList(event).subscribe(
+      data => {
+          this.invTypeList = data;
+        console.log( this.invTypeList);
+
+      });
+  }
+  displayTaxDetail(i){
+    for (let i = 0; i < this.lstcomments.taxLines.length; i++) {
+      var invLnGrp: FormGroup = this.TaxDetailsGroup();
+      this.TaxDetailsArray().push(invLnGrp);
+      this.arInvoiceForm.get('taxLines').patchValue(this.lstcomments.taxLines);
+
+    }
+  }
   closeMast() {
     this.router.navigate(['admin']);
   }
@@ -579,6 +604,14 @@ export class ARInvoiceComponent implements OnInit {
   }
   onOptioninvItemIdSelected(itemId, index) {
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
+    // alert(selectedValue.stockable);
+    // if(selectedValue.stockable==='Y'){
+    //   alert('Please select Non Inventory Item');
+    //   var patch1 = this.arInvoiceForm.get('invLines') as FormArray;
+    // patch1.controls[index].patchValue({
+    //   itemId:''})
+    // }
+    // else{
     // alert(selectedValue.itemId)
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
     patch.controls[index].patchValue({
@@ -591,6 +624,7 @@ export class ARInvoiceComponent implements OnInit {
       diss1: 0,
 
     })
+  // }
   }
   getInvItemId($event) {
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
@@ -771,7 +805,7 @@ export class ARInvoiceComponent implements OnInit {
     var patch = this.arInvoiceForm.get('invLines') as FormArray;
     Array.from(this.taxarr.values());
 
-    
+
 
     this.basicAmt = 0;
     this.taxRecoverable = 0;
@@ -785,7 +819,7 @@ export class ARInvoiceComponent implements OnInit {
     if (locId == null) {
       locId = '000';
     }
-    
+
 
     // for (var i = 0; i < arrayControl.length; i++) {
     //   this.basicAmt = this.basicAmt + arrayControl[i].basicAmt;
@@ -805,10 +839,10 @@ export class ARInvoiceComponent implements OnInit {
 
 
   //}
-    
+
     console.log(this.arInvoiceForm.value);
     let jsonData = this.arInvoiceForm.value;
-    
+
     formValue.extendedAmount = (this.basicAmt + this.taxRecoverable);
     this.arInvoiceForm.patchValue({ invoiceAmount: this.extendedAmount })
     formValue.invoiceAmount = this.extendedAmount;
@@ -841,7 +875,7 @@ export class ARInvoiceComponent implements OnInit {
 
   }
   Save(){
-    
+
     let jsonData=this.arInvoiceForm.getRawValue();
     jsonData.ouId = this.ouId;
     var arrayControl = this.arInvoiceForm.get('invLines').value;
@@ -861,22 +895,22 @@ export class ARInvoiceComponent implements OnInit {
     jsonData.taxableAmount = this.basicAmt;
 
     var taxStr = [];
-     for (let taxlinval of this.taxarr.values()) {  
-      // console.log("Map Values= " +JSON.stringify(value));  
+     for (let taxlinval of this.taxarr.values()) {
+      // console.log("Map Values= " +JSON.stringify(value));
      for(let i=0 ; i< taxlinval.length; i++){
          taxStr.push(taxlinval[i]);
         }
       }
       var disStr = [];
-     for (let dislinval of this.distarr.values()) {  
-      // console.log("Map Values= " +JSON.stringify(value));  
+     for (let dislinval of this.distarr.values()) {
+      // console.log("Map Values= " +JSON.stringify(value));
      for(let i=0 ; i< dislinval.length; i++){
       disStr.push(dislinval[i]);
         }
       }
-    
+
       console.log('---' + JSON.stringify(taxStr));
-  
+
     let manArInvObj=Object.assign(new ManualARInvoiceObj(),jsonData);
     manArInvObj.setinvLines(this.arInvoiceForm.value.invLines);
     manArInvObj.setTaxLines(taxStr);
@@ -886,8 +920,8 @@ export class ARInvoiceComponent implements OnInit {
     // manArInvObj.setinvDisLines(Array.from(this.distarr.values()));
     alert(this.distarr.size+'Array')
 
-   
-  
+
+
 
     console.log(JSON.stringify(manArInvObj));
     this.transactionService.ARInvoiceSubmit(JSON.stringify(manArInvObj)).subscribe((res: any) => {
@@ -939,14 +973,17 @@ export class ARInvoiceComponent implements OnInit {
     });
   }
   onOptionTaxCatSelected(i, taxcatid, taxCategoryName, basicAmt,activeTab) {
+
     var len1 = this.TaxDetailsArray().length;
     this.invLineNo = i+1;
-    alert(this.invLineNo);
-    // alert(len1 + 'lengthUpdate' + this.taxUistatus);
+    alert(this.invLineNo+activeTab);
+    alert(len1 + 'lengthUpdate' + this.taxUistatus);
+
+    // this.taxUistatus=false;
 
     if (this.taxUistatus === false) {
 
-      // alert('If call');
+      alert('If call');
 
       this.TaxDetailsArray().clear();
       this.lineDistributionArray().clear();
@@ -978,14 +1015,16 @@ export class ARInvoiceComponent implements OnInit {
         locId = '000';
       }
       var len1 = this.TaxDetailsArray().length;
+      alert(baseAmount+'Base'+this.taxCategoryId);
       // alert(baseAmount + " baseAmount" + this.taxCategoryId + " this.taxCategoryId" + diss + " diss")
       if (baseAmount != null && this.taxCategoryId != undefined) {
+        alert(baseAmount+'Base'+this.taxCategoryId);
         this.service.taxCalforItem1(sessionStorage.getItem('ouId'), locId, baseAmount, this.taxCategoryId, diss)
           .subscribe(
             (data: any) => {
               this.taxCalforItem = data.taxLines;
               // this.taxCalforItem.invLineNo=(this.invLineNo);
-              
+
               // this.taxarr.set(i, data.taxLines);
               console.log(this.taxarr);
               console.log(this.taxCalforItem);
@@ -1015,7 +1054,7 @@ export class ARInvoiceComponent implements OnInit {
               // alert(this.TaxDetailsArray().length + ' this.TaxDetailsArray().length-')
               for (let i = 0; i < this.TaxDetailsArray().length; i++) {
                 patchtaxDetail.controls[i].patchValue({ taxItemId: this.itemId, invLineNo: this.invLineNo })
-                
+
               }
               var custTrxTypeId = this.arInvoiceForm.get('custTrxTypeId').value
               var len2 = this.lineDistributionArray().length;
@@ -1034,11 +1073,11 @@ export class ARInvoiceComponent implements OnInit {
                     for (let j = 0; j < data.invDisLines.length; j++) {
                       var invLnGrp: FormGroup = this.distLineDetails();
                       this.lineDistributionArray().push(invLnGrp);
-                      
+
                       // this.distarray.push(invLnGrp);
                     }
 
-                    
+
                     var control = this.arInvoiceForm.get('invDisLines') as FormArray;
                     for (let i = 0, z = k ; i < data.invDisLines.length; i++, z++) {
                       control.controls[z].patchValue(data.invDisLines[i]);
@@ -1046,7 +1085,7 @@ export class ARInvoiceComponent implements OnInit {
                     }
                     alert('this.lineDistributionArray().length ' + this.lineDistributionArray().length)
                     for (let i = 0; i < this.lineDistributionArray().length; i++) {
-           
+
                       control.controls[i].patchValue({ lineNum: i + 1 });
                       (control.controls[i]).patchValue({ invoiceLineNum: this.invLineNo });
                     }
@@ -1058,9 +1097,9 @@ export class ARInvoiceComponent implements OnInit {
                   }
                 );
             });
-            
+
             // this.distarr.set(i, this.arInvoiceForm.get('invDisLines').value);
-           
+
                     // console.log(this.arInvoiceForm.get('invDisLines').value);
       } else {
         alert('kindly enter the base amount and order qty')
@@ -1244,7 +1283,7 @@ export class ARInvoiceComponent implements OnInit {
     // alert('for '+this.taxCalforItem.length);
 
 
-    // index = index+1 
+    // index = index+1
     this.baseAmountCal(baseAmount);
   }
   baseAmountCal(baseAmount) {
@@ -1252,7 +1291,7 @@ export class ARInvoiceComponent implements OnInit {
     this.sum = this.sum + baseAmount;
     // alert(this.sum)
   }
- 
+
   completeInvoice()
   {
     var invno= this.arInvoiceForm.get('trxNumber').value;
@@ -1265,7 +1304,7 @@ export class ARInvoiceComponent implements OnInit {
             this.TaxDetailsArray().disable();
             this.arInvoiceForm.get('invLines').disable();
             this.lineDistributionArray().disable();
-            
+
              // window.location.reload();
           } else {
             if (res.code === 400) {
@@ -1275,8 +1314,8 @@ export class ARInvoiceComponent implements OnInit {
             }
           }
         });
-        
-      
+
+
   }
 
   addDiscount(i) {
@@ -1353,14 +1392,14 @@ export class ARInvoiceComponent implements OnInit {
             shipToSiteId: this.accountNoSearch.shipToLocId,
             billToSiteId: this.accountNoSearch.billToLocId,
             billToCustId: this.accountNoSearch.customerId,
-            billcontactNo:this.accountNoSearch.contactNo,
-            shipcontactNo:this.accountNoSearch.contactNo,
+            billcontactNo:this.accountNoSearch.mobile1,
+            shipcontactNo:this.accountNoSearch.mobile1,
             // paymentTerm:this.accountNoSearch.paymentTerm,
             paymentTerm:selectedValue.lookupValueId,
           });
-         
 
-          
+
+
         }
       );
   }
@@ -1470,7 +1509,7 @@ export class ARInvoiceComponent implements OnInit {
 
 
   // SearchInvoices(a,b,c){
-   
+
   // var custAcno= this.arInvoiceForm.get('shipToCustNo').value
   // var billToSite= this.arInvoiceForm.get('billToSiteId').value
   // var invoiceNum= this.arInvoiceForm.get('trxNumber').value
@@ -1487,7 +1526,7 @@ export class ARInvoiceComponent implements OnInit {
     var creditMemoNum= this.arInvoiceForm.get('trxNumber').value
     // var totCrAmt= this.arInvoiceForm.get('invoiceAmount').value
     // this.creditNoteAmount=Math.abs(totCrAmt);
-    
+
     this.applySaveButton=false;
     this.invLineArray().clear();
 
@@ -1529,7 +1568,7 @@ export class ARInvoiceComponent implements OnInit {
 
               this.tUapplAmt=this.totUnAppliedtAmount;
               this.tApplAmt= this.totAppliedtAmount;
-           
+
             for (let i = 0; i < this.lstinvoices.length - len; i++) {
               var invLnGrp: FormGroup = this.invLineDetails();
               this.invLineArray().push(invLnGrp);
@@ -1548,7 +1587,7 @@ export class ARInvoiceComponent implements OnInit {
               var x = invLineArr[i].applAmt.toFixed(2);
               patch.controls[i].patchValue({ applAmt: x })
               patch.controls[i].patchValue({ applyTo: 'INVOICE' })
-             
+
               var z1 = this.pipe.transform(this.now, 'y-MM-dd');
                patch.controls[i].patchValue({applDate:z1})
 
@@ -1560,15 +1599,15 @@ export class ARInvoiceComponent implements OnInit {
                 this.arInvoiceForm.get('selectAllflag1').disable();
                 this.validateStatus = false;
             }
-                     
-          }  );
-    } 
 
-     
-    
+          }  );
+    }
+
+
+
     validateLineApplAmt(index) {
 
-    
+
     var x = 0;
     var totUnAppAmt = 0;
     var totAppAmt = 0;
@@ -1589,9 +1628,9 @@ export class ARInvoiceComponent implements OnInit {
     var ytotAppAmt = Number(this.totAppliedtAmount);
 
     // patch.controls[index].patchValue({ applyrcptFlag: true })
-   
 
-   
+
+
     if (applyReceiptFlag === true) {
 
       var LineinvAmt = Number(invLineArr[index].invoiceAmount);
@@ -1617,14 +1656,14 @@ export class ARInvoiceComponent implements OnInit {
 
       /////////////////////////////////////////////////////////
       this.CalculateBalance();
-     
+
       ///////////////////////////////////////////////////////
     }
     else {
       alert("Line-" + index + " : Apply Flag not selected/disabled...Select Apply Flag First.");
       patch.controls[index].patchValue({ applAmtNew: '' });
       patch.controls[index].patchValue({ balDueAmt: invLineArr[index].balance1 });
-      
+
     }
 
   }
@@ -1690,7 +1729,7 @@ export class ARInvoiceComponent implements OnInit {
 
 
     if (e.target.checked) {
-      // alert("applyReceiptFlag-IF selected ");   
+      // alert("applyReceiptFlag-IF selected ");
       // alert("applyReceiptFlag>>> e.target.checked :"  +e.target.checked);
 
 
@@ -1739,7 +1778,7 @@ export class ARInvoiceComponent implements OnInit {
 
     }
     else {
-     
+
       this.invLineArray().controls[index].get('applAmtNew').disable();
       this.invLineArray().controls[index].get('glDateLine').disable();
       xyz = LineinvAmt;
@@ -1766,7 +1805,7 @@ export class ARInvoiceComponent implements OnInit {
   glPrdValidateLine(i: any) {
 
     alert("GL Period : " + this.pipe.transform(this.GLPeriodCheck.startDate, 'dd-MM-y') + " - " + this.pipe.transform(this.GLPeriodCheck.endDate, 'dd-MM-y'));
-    
+
 
     var patch = this.arInvoiceForm.get('invLine') as FormArray;
     var applLineArr = this.arInvoiceForm.get('invLine').value;
@@ -1798,21 +1837,21 @@ export class ARInvoiceComponent implements OnInit {
       this.validateStatus = false;
       this.applySaveButton = false;
 
-      // for (let i = 0; i < len1 ; i++) 
+      // for (let i = 0; i < len1 ; i++)
       for (let i = len1 - 1; i >= 0; i--) {
 
         if (this.invLineArray().controls[i].get('applyrcptFlag').value != true) {
           this.invLineArray().removeAt(i);
         } else { this.applySaveButton = true; }
 
-        
+
       }
-    
+
 
      for (let i = 0; i < applLineArr.length ; i++) {
       this.invLineArray().controls[i].get('applyrcptFlag').disable();
       this.CheckLineValidations(i);
-    
+
      }
 
      if(this.applLineValidation==true) {this.applySaveButton=true;} else {this.applySaveButton=false;}
@@ -1883,7 +1922,7 @@ export class ARInvoiceComponent implements OnInit {
 
     this.applLineValidation = false;
     var len1 = applLineArr.length;
-   
+
     for (let i = 0; i < len1; i++) {
         this.CheckLineValidations(i);
        }
@@ -1894,7 +1933,7 @@ export class ARInvoiceComponent implements OnInit {
     } else {alert("Data Validation Successful... ..") }
     // this.CalculateRcptBalances();
     this.applySaveButton = false;
-   
+
 
     const formValue: IArInvoice = this.transeData1(this.arInvoiceForm.value);
 
@@ -1939,10 +1978,10 @@ export class ARInvoiceComponent implements OnInit {
       }
     });
   }
-      
 
- 
- 
+
+
+
 
 }
 

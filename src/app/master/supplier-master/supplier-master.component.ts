@@ -76,6 +76,7 @@ interface IsupplierMaster {
   createDebitMemoFlag:string;
   semailId:string;
   screateDebitMemoFlag:string;
+  supTdsTyp:string;
 }
 
 
@@ -205,6 +206,7 @@ export class SupplierMasterComponent implements OnInit {
   semailId:string;
   screateDebitMemoFlag:string;
   displayenable = true;
+  supTdsTyp:string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
@@ -290,6 +292,7 @@ export class SupplierMasterComponent implements OnInit {
    createDebitMemoFlag:[],
    semailId:[],
    screateDebitMemoFlag:[],
+   supTdsTyp:[],
     });
   }
 
