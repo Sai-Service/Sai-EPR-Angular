@@ -846,13 +846,13 @@
                                     </select>
                                     <input hidden  type="number"  formControlName="gstPercentage"  style="width: 5rem;" class="form-control">
                                     </td>
-                                    <input hidden type="text" formControlName="taxCategoryId" >
+                                    <input hidden type="number" formControlName="taxCategoryId" >
                                     <td>
                                         <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)' taxCategoryName-->
                                         <select formControlName="taxCategoryName" id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected($event,k)'
                                                     class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList" value="{{sc.taxCategoryName}}">
+                                                                <option *ngFor="let sc of  taxCategoryList[k]" value="{{sc.taxCategoryName}}">
                                                                     {{sc.taxCategoryName}}
                                                             </option>
                                                             </select>

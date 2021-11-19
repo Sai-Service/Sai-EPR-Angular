@@ -41,6 +41,8 @@ export class AllReportsComponent implements OnInit {
   sppurRegiSummfromDate:Date;
   sppurRegiSummtoDate:Date;
   public BillShipList: Array<string> = [];
+  public BillShipFromList: Array<string> = [];
+  public BillShipToList: Array<string> = [];
 
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -63,6 +65,14 @@ export class AllReportsComponent implements OnInit {
   spcreditnotregfromDate:Date;
   sppurRegidetailfromDate:Date;
   sppurRegidetailtoDate:Date;
+  spstktrfRecivedfromDate:Date;
+  spstktrfRecivedToDate:Date;
+  spstktrfRecivedToLoc:number;
+  spstktrfRecivedFromLoc:number;
+  spstktrfRecivedSumfromDate:Date;
+  spstktrfRecivedSumToDate:Date;
+  spstktrfRecivedSumToLoc:number;
+  spstktrfRecivedSumFromLoc:number;
 
   constructor(private fb: FormBuilder, private router: Router,private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({ 
@@ -98,6 +108,14 @@ export class AllReportsComponent implements OnInit {
   sppurRegiSummtoDate:[],
   sppurRegidetailtoDate:[],
   sppurRegidetailfromDate:[],
+  spstktrfRecivedToDate:[],
+  spstktrfRecivedfromDate:[],
+  spstktrfRecivedToLoc:[],
+  spstktrfRecivedFromLoc:[],
+  spstktrfRecivedSumfromDate:[],
+  spstktrfRecivedSumToDate:[],
+  spstktrfRecivedSumToLoc:[],
+  spstktrfRecivedSumFromLoc:[],
     })
   }
 
@@ -122,8 +140,22 @@ export class AllReportsComponent implements OnInit {
    this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     data =>{ this.ItemIdList = data;
       console.log(this.ItemIdList);
-
 });
+
+
+this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+.subscribe(
+  data => {
+    this.BillShipToList = data;
+  }
+);
+
+this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+.subscribe(
+  data => {
+    this.BillShipFromList = data;
+  }
+);
   }
   SPdebtorsReport(){
     var invcDt2 = this.reportForm.get('invcDt1').value;
@@ -406,6 +438,45 @@ export class AllReportsComponent implements OnInit {
         printWindow.open
       })
   }
+
+
+  spstktrfRecived(){
+    var spreceiptfromDate2 = this.reportForm.get('spstktrfRecivedfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spstktrfRecivedToDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+   var shipFromLocId=this.reportForm.get('spstktrfRecivedFromLoc').value
+   var shipToLocId=this.reportForm.get('spstktrfRecivedToLoc').value
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spstktrfRecivedReport(fromDate,toDate,shipFromLocId,shipToLocId)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spstktrfRecivedSum(){
+    var spreceiptfromDate2 = this.reportForm.get('spstktrfRecivedSumfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spstktrfRecivedSumToDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+   var shipFromLocId=this.reportForm.get('spstktrfRecivedSumToLoc').value
+   var shipToLocId=this.reportForm.get('spstktrfRecivedSumFromLoc').value
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spstktrfRecivedSumReport(fromDate,toDate,shipFromLocId,shipToLocId)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
   refresh() {
     window.location.reload();
   }
