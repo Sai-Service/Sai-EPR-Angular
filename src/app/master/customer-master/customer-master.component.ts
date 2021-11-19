@@ -4,8 +4,9 @@ import { FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/f
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
-import { DatePipe } from '@angular/common'
-import { formatDate } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { formatDate } from '@angular/common';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IcustomerMaster {
   custType: string;
@@ -220,9 +221,9 @@ export class CustomerMasterComponent implements OnInit {
   aadharNo: number;
   limitData: any;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  customerNameSearch: any[];
 
-
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router,private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
       emplId: [''],
@@ -261,7 +262,7 @@ export class CustomerMasterComponent implements OnInit {
       weddingDate: [''],
       startDate: [''],
       endDate: [''],
-      gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
       tanNo: [''],
@@ -1151,5 +1152,26 @@ export class CustomerMasterComponent implements OnInit {
       alert("Please enter Pincode in proper format");
     }
   }
+
+  custNameSearch(custName) {
+    alert(custName)
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            this.customerNameSearch = data.obj;
+            // console.log(this.accountNoSearch);
+          }
+          else {
+            if (data.code === 400) {
+              alert(data.message);
+              // this.display='block'; 
+            }
+          }
+        }
+      );
+  }
+
+
 }
 

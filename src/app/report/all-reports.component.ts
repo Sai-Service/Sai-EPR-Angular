@@ -13,7 +13,13 @@ import { data, get } from 'jquery';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location, } from "@angular/common";
 import * as xlsx from 'xlsx';
+import { MasterService } from 'src/app/master/master.service';
 
+interface IAdmin {
+  searchItemId  :number;
+  searchItemCode: string;
+  searchItemName: string;
+}
 
 @Component({
   selector: 'app-all-reports',
@@ -32,13 +38,33 @@ export class AllReportsComponent implements OnInit {
   spstktrfMdSumToLoc:number;
   spIssueSummtoDate:Date;
   spstktrfMdToLoc:number;
+  sppurRegiSummfromDate:Date;
+  sppurRegiSummtoDate:Date;
   public BillShipList: Array<string> = [];
 
   pipe = new DatePipe('en-US');
   now = new Date();
   invcDt1 = this.pipe.transform(this.now, 'dd-MM-yyyy');
+  public ItemIdList:any[];
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
+  searchItemId  :number;
+  searchItemName: string;
+  searchItemCode: string;
+  stkLgrUserName:string;
+  stklgrsubInv:string;
+  stockLegfromDate:Date;
+  stockLegtoDate:Date;
+  spIssSmryfromDate:Date;
+  spIssSmrytoDate:Date; 
+  spproformafromDate:Date;
+  spproformatoDate:Date;
+  spcreditnotregtoDate:Date;
+  spcreditnotregfromDate:Date;
+  sppurRegidetailfromDate:Date;
+  sppurRegidetailtoDate:Date;
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
+  constructor(private fb: FormBuilder, private router: Router,private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({ 
       invcDt1:[],
       location:[],
@@ -57,6 +83,21 @@ export class AllReportsComponent implements OnInit {
       spstktrfMdSumfromDate:[],
       spstktrfMdSumtoDate:[],
       spstktrfMdSumToLoc:[],
+      searchItemCode: [],
+  stkLgrUserName:[],
+  stklgrsubInv:[],
+  stockLegfromDate:[],
+  stockLegtoDate:[],
+  spIssSmryfromDate:[],
+  spIssSmrytoDate:[], 
+  spproformafromDate:[],
+  spproformatoDate:[],
+  spcreditnotregfromDate:[],
+  spcreditnotregtoDate:[],
+  sppurRegiSummfromDate:[],
+  sppurRegiSummtoDate:[],
+  sppurRegidetailtoDate:[],
+  sppurRegidetailfromDate:[],
     })
   }
 
@@ -77,6 +118,12 @@ export class AllReportsComponent implements OnInit {
        console.log(this.BillShipList);
      }
    );
+
+   this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
+    data =>{ this.ItemIdList = data;
+      console.log(this.ItemIdList);
+
+});
   }
   SPdebtorsReport(){
     var invcDt2 = this.reportForm.get('invcDt1').value;
@@ -189,6 +236,169 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spstktrfMdSummaryReport(invcDt1,invcDt4,sessionStorage.getItem('locId'),spstktrfMdSumToLoc)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  getInvItemId($event)
+  {
+    // alert('in getInvItemId')
+     let userId=(<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
+     this.userList2=[];
+     if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList2 = this.searchFromArray1(this.ItemIdList, userId);
+      }
+    }
+  }
+  searchFromArray1(arr, regex) {
+    let matches = [], i;
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].match(regex)) {
+        matches.push(arr[i]);
+      }
+    }
+    return matches;
+  };
+
+
+  onOptioninvItemIdSelectedSingle(mItem) {
+    // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
+
+    let selectedValue = this.ItemIdList.find(v => v.SEGMENT == mItem);
+      if( selectedValue != undefined){
+       console.log(selectedValue);
+      this.searchItemId=selectedValue.itemId;
+      this.searchItemName=selectedValue.DESCRIPTION;
+      this.searchItemCode=selectedValue.SEGMENT;
+    }
+    // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+
+  }
+
+
+
+
+  stklgrt(stklgrsubInv,searchItemCode,stkLgrUserName){
+    // alert(stklgrsubInv,searchItemCode,stkLgrUserName);
+    var invcDt2 = this.reportForm.get('stockLegfromDate').value;
+    var invcDt1 = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
+    var invcDt3 = this.reportForm.get('stockLegtoDate').value;
+    var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
+    // var subInv =this.reportForm.get('stklgrsubInv');
+//  var segment=this.reportForm.get('searchItemCode');
+    // alert(stklgrsubInv+'----'+searchItemCode+'----'+stkLgrUserName)
+    // var spstktrfMdToLoc=this.reportForm.get('spstktrfMdSumToLoc');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.stklgrtReport(invcDt1,invcDt4,stklgrsubInv,searchItemCode,sessionStorage.getItem('locId'),stkLgrUserName)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spIssSmry(){
+    var spreceiptfromDate2 = this.reportForm.get('spIssSmryfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spIssSmrytoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spIssSmryReport(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spproforma(){
+    var spreceiptfromDate2 = this.reportForm.get('spproformafromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spproformatoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spproformaReport(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spcreditnotreg(){
+    var spreceiptfromDate2 = this.reportForm.get('spcreditnotregfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spcreditnotregtoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spcreditnotregReport(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  sppurRegiSumm(){
+    var spreceiptfromDate2 = this.reportForm.get('sppurRegiSummfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('sppurRegiSummtoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.sppurRegiSummReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  sppurRegidetail(){
+    var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.sppurRegidetailReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spclosstrock(){
+    // var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
+    // var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    // var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
+    // var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spclosstrockReport(sessionStorage.getItem('locId'))
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);

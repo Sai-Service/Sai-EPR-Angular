@@ -1,0 +1,346 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="form-bg">
+    <div class="center">
+        <form [formGroup]="taxAccountMasterForm" (ngSubmit)="taxAccountMaster(taxAccountMasterForm.value)">
+            <div id="Panel1" class="auto-style103">
+                <div class="container">
+                    <div class="row">
+                        <table style="width: 100%;background-color: white;">
+                            <tr>
+                                <td class="PageHeader">
+                                    &nbsp;&nbsp;Tax&nbsp;Account
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="center">
+                            <table style="width: fit-content;">
+                                <tr>
+                                    <td><input hidden formControlName="taxAccountId"></td></tr>
+                                  <tr>  <td style="width: 15%" class="LabelFontStyle">
+                                        Tax&nbsp;Account&nbsp;Entity&nbsp;Code:</td>
+                                    <td>
+                                        <input formControlName="taxAccountEntityCode" [(ngModel)]='taxAccountEntityCode'
+                                            value={{taxAccountEntityCode}} class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.taxAccountEntityCode.errors}"
+                                            placeholder="Enter tax Account Entity Code ">
+                                        <div *ngIf="submitted && f.taxAccountEntityCode.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="f.taxAccountEntityCode.errors.required">tax Account Entity Code
+                                                must be a valid</div>
+                                            <div *ngIf="f.taxAccountEntityCode.errors?.maxLength">tax Account Entity
+                                                Code must be a valid
+                                            </div>
+                                        </div>
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('taxAccountEntityCode').valid && taxAccountMasterForm.get('taxAccountEntityCode').touched">Please
+                                            Enter tax Account Entity Code </span>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="ouId" id="ouId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
+                                                {{sc.ouName}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && f. ouId.errors" class="invalid-feedback">
+                                            <div *ngIf="f.ouId.errors.required">OU Id is required</div>
+                                            <span
+                                                *ngIf="!taxAccountMasterForm.get('ouId').valid && taxAccountMasterForm.get('ouId').touched">Please
+                                                Enter valid Operating Unit </span>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Ledger&nbsp;iD&nbsp;:</td>
+                                    <td><input formControlName="ledgerId" value={{ledgerId}} class="form-control"
+                                            placeholder="Enter ledger Id">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('ledgerId').valid && taxAccountMasterForm.get('ledgerId').touched">Please
+                                            Enter valid Operating Unit </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Organization&nbsp;Type&nbsp;:</td>
+                                    <td><input formControlName="organizationType" value={{organizationType}}
+                                            class="form-control" placeholder="Enter organization type">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('organizationType').valid && taxAccountMasterForm.get('organizationType').touched">Please
+                                            Enter valid organization type </span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">InterimCcid&nbsp;Recovery&nbsp;Ccid:
+                                    </td>
+                                    <td><input formControlName="interimRecoveryCcid" value={{interimRecoveryCcid}}
+                                            class="form-control" placeholder="Enter interim Recovery Ccid">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('interimRecoveryCcid').valid && taxAccountMasterForm.get('interimRecoveryCcid').touched">Please
+                                            Enter valid interim Recovery Ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Location&nbsp;Name&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="locId" id="locId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  locIdList" [ngValue]="sc.locId">
+                                                {{sc.locCode}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('locId').valid && taxAccountMasterForm.get('locId').touched">Please
+                                            Enter valid location name </span>
+
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;Name&nbsp;:&nbsp;</td>
+                                    <td> <select formControlName="divisionId" id="divisionId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  DivisionIDList" [ngValue]="sc.divisionId">
+                                                {{sc.divisionName}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('divisionId').valid && taxAccountMasterForm.get('divisionId').touched">Please
+                                            Enter valid Division Name </span>
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Company&nbsp;Name&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <select formControlName="compId" id="compId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  companyCodeList" [ngValue]="sc.compId">
+                                                {{sc.compName}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('compId').valid && taxAccountMasterForm.get('compId').touched">Please
+                                            Enter valid Company Name </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">State&nbsp;:</td>
+                                    <td>
+                                        <select formControlName="mstate" id="mstate" class="form-control">
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  StateList">
+                                                {{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('mstate').valid && taxAccountMasterForm.get('mstate').touched">Please
+                                            Enter State </span>
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Recovery&nbsp;Ccid&nbsp;:</td>
+                                    <td><input formControlName="recoveryCcid" value={{recoveryCcid}}
+                                            class="form-control" placeholder="Enter recovery ccid">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('recoveryCcid').valid && taxAccountMasterForm.get('recoveryCcid').touched">Please
+                                            Enter valid recovery ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Interim&nbsp;Liablility&nbsp;Ccid:
+                                    </td>
+                                    <td><input formControlName="interimLiablilityCcid" value={{interimLiablilityCcid}}
+                                            class="form-control" placeholder="Enter interim Liablility Ccid">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('interimLiablilityCcid').valid && taxAccountMasterForm.get('interimLiablilityCcid').touched">Please
+                                            Enter valid interim Liablility Ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Liablility&nbsp;Ccid&nbsp;:</td>
+                                    <td><input formControlName="liablilityCcid" value={{liablilityCcid}}
+                                            class="form-control" placeholder="Enter liablility Ccid ">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('liablilityCcid').valid && taxAccountMasterForm.get('liablilityCcid').touched">Please
+                                            Enter valid liablility Ccid </span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">ExpenseCcid&nbsp;Ccid&nbsp;:</td>
+                                    <td><input formControlName="expenseCcid" value={{expenseCcid}} class="form-control"
+                                            placeholder="Enter expense Ccid">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('expenseCcid').valid && taxAccountMasterForm.get('expenseCcid').touched">Please
+                                            Enter valid expense Ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Rounding&nbsp;Ccid&nbsp;:</td>
+                                    <td><input formControlName="roundingCcid" value={{roundingCcid}}
+                                            class="form-control" placeholder="Enter rounding Ccid">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('roundingCcid').valid && taxAccountMasterForm.get('roundingCcid').touched">Please
+                                            Enter valid rounding Ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Suspense&nbsp;Ccid&nbsp;:</td>
+                                    <td><input formControlName="suspenseCcid" value={{suspenseCcid}}
+                                            class="form-control" placeholder="Enter suspense Ccid ">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('suspenseCcid').valid && taxAccountMasterForm.get('suspenseCcid').touched">Please
+                                            Enter valid suspense Ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Confirm&nbsp;Flag&nbsp;:</td>
+                                    <td><input formControlName="confirmFlag" value={{confirmFlag}} class="form-control"
+                                            placeholder="Enter confirm flag ">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('confirmFlag').valid && taxAccountMasterForm.get('confirmFlag').touched">Please
+                                            Enter valid confirm flag </span></td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Record&nbsp;Type&nbsp;Code:</td>
+                                    <td><input formControlName="recordTypeCode" value={{recordTypeCode}}
+                                            class="form-control" placeholder="Enter record type code ">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('recordTypeCode').valid && taxAccountMasterForm.get('recordTypeCode').touched">Please
+                                            Enter valid record type code </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">advRcpt&nbsp;Suspense&nbsp;Ccid:</td>
+                                    <td><input formControlName="advRcptSuspenseCcid" value={{advRcptSuspenseCcid}}
+                                            class="form-control" placeholder="Enter adv Rcpt Suspense Ccid ">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('advRcptSuspenseCcid').valid && taxAccountMasterForm.get('advRcptSuspenseCcid').touched">Please
+                                            Enter valid adv Rcpt Suspense Ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Iso&nbsp;Suspense&nbsp;Ccid:</td>
+                                    <td><input formControlName="isoSuspenseCcid" value={{isoSuspenseCcid}}
+                                            class="form-control" placeholder="Enter iso suspense ccid ">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('isoSuspenseCcid').valid && taxAccountMasterForm.get('isoSuspenseCcid').touched">Please
+                                            Enter valid iso suspense ccid </span></td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date&nbsp;:</td>
+                                    <td><input type="date" formControlName="startDate" class="form-control"
+                                            placeholder="Enter start Date" min="{{minDate | date:'yyyy-MM-dd'}}">
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('startDate').valid && taxAccountMasterForm.get('startDate').touched">Please
+                                            Enter start Date </span></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">uheadCeo&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <input formControlName="uheadCeo" class="form-control">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
+                                    <td>
+                                        <!-- <input disabled type="text" [ngModel]="status" formControlName="status" class="form-control" > -->
+                                        <select formControlName="status" id="status" class="form-control"
+                                            [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                            <option>--Select--</option>
+                                            <option *ngFor="let sc of  statusList">
+                                                {{sc.codeDesc}}
+                                            </option>
+                                        </select>
+                                        <span
+                                            *ngIf="!taxAccountMasterForm.get('status').valid && taxAccountMasterForm.get('status').touched">Please
+                                            Enter valid status </span>
+                                    </td>
+
+                                    <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive"></div>
+                                    <ng-template #thenBlockInactive>
+                                    </ng-template>
+                                    <ng-template #elseBlockInactive>
+                                        <td style="width: 15%" class="LabelFontStyle">Inactive&nbsp;Date&nbsp;:</td>
+                                        <td>
+                                            <input disabled type="text" formControlName="endDate" class="form-control"
+                                                [ngModel]="endDate | date:'yyyy-MM-dd'">
+                                        </td>
+                                    </ng-template>
+                                </tr>
+                            </table>
+                            <table class="center">
+                                <tr>
+                                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                                    <ng-template #thenBlock1>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                [disabled]="!taxAccountMasterForm.valid"
+                                                (click)="newMast()">Save</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="resetMast()">Reset</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="closeMast()">Close</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="searchMast()">Search</button>
+                                        </td>
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                [disabled]="!taxAccountMasterForm.valid"
+                                                (click)="updateMast()">Update</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="resetMast()">Reset</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="closeMast()">Close</button>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="searchMast()">Search</button>
+                                        </td>
+                                    </ng-template>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<br>
+<div class="container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+      <thead>
+            <tr class="GridHeader"> 
+                <th scope="col">Tax Account Id</th>
+                <th scope="col">Tax Account Entity Code</th>
+                <th scope="col">Ledger iD</th>
+                <th scope="col">Organization Type</th>
+                <th scope="col">Interim Recovery Ccid</th>
+                <th scope="col">Recovery Ccid</th>
+                <th scope="col">Interim Liablility Ccid</th>
+                <th scope="col">Liablility Ccid</th>
+                <th scope="col">Expense Ccid</th>
+                <th scope="col">Rounding Ccid</th>
+                <th scope="col">Suspense Ccid</th>
+                <th scope="col">Confirm Flag</th>
+                <th scope="col">Record Type Code</th>
+                <th scope="col">Adv Rcpt Suspense Ccid</th>
+                <th scope="col">Iso Suspense Ccid</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let com of lstcomments" style="background-color:#E3EAEB;"> 
+            <td>{{com.taxAccountId}}</td>
+            <td>{{com.taxAccountEntityCode}}</td>
+            <td>{{com.ledgerId}}</td>
+            <td>{{com.organizationType}}</td>
+            <td>{{com.interimRecoveryCcid }}</td>
+            <td>{{com.recoveryCcid}}</td>
+            <td>{{com.interimLiablilityCcid}}</td>
+            <td>{{com.liablilityCcid}}</td>
+            <td>{{com.expenseCcid}}</td>
+            <td>{{com.roundingCcid}}</td>
+            <td>{{com.suspenseCcid}}</td>
+            <td>{{com.confirmFlag}}</td>
+            <td>{{com.recordTypeCode}}</td>
+            <td>{{com.advRcptSuspenseCcid}}</td>
+            <td>{{com.isoSuspenseCcid}}</td>
+            <td>{{com.startDate}}</td>
+            <td>{{com.status}}</td>
+            <td><button class="btn btn-primary" (click)="Select(com.ouId)">Select</button></td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+</div>
+<br>
+<br>

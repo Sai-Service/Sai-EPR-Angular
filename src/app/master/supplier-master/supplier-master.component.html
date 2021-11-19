@@ -593,14 +593,15 @@
                     style="border-color:#959595;width:100%;border-collapse:collapse;">
                     <thead>
                       <tr class="GridHeader">
-                          <th scope="col">Supp Site Id</th>
-                          <th scope="col">Address1</th>
-                          <th scope="col">Address2</th>
+                        <th scope="col">OU Name</th>
+                          <th scope="col">Site Details</th>
+                          <th scope="col">Address</th>
+                          <!-- <th scope="col">Address2</th>
                           <th scope="col">Address3</th>
-                          <th scope="col">Address4</th>
+                          <th scope="col">Address4</th> 
                           <th scope="col">City</th>
                           <th scope="col">Pin Code</th>
-                          <th scope="col">State</th>
+                          <th scope="col">State</th> -->
                           <th scope="col">Mobile No 1</th>
                           <th scope="col">Mobile No 2</th>
                           <th scope="col">Email ID</th>
@@ -612,17 +613,19 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let com of lstcomments.supplierSiteMasterList" class="ItemStyle" style="text-decoration:none;">
-                          <td>{{com.suppSiteId}}</td>
-                          <td>{{com.address1}}</td>
+                      <tr *ngFor="let com of lstcomments.supplierSiteMasterList" class="ItemStyle" style="text-decoration:none; padding: 2px; ">
+                        <td>{{com.ouId}}</td> 
+                        <td>[{{com.suppSiteId}}]-{{com.siteName}}</td>
+                          <td style ="width: 260px; ">{{com.address1}},{{com.address2}},{{com.address3}},{{com.address4}},{{com.city}},{{com.state1}},{{com.pinCd}}</td>
+                          <!-- <td>{{com.address1}}</td>
                           <td>{{com.address2}}</td>
                           <td>{{com.address3}}</td>
-                          <td>{{com.address4}}</td>
-                          <td>{{com.city}}</td>
+                          <td>{{com.address4}}</td> 
                           <td>{{com.pinCd}}</td>
-                          <td>{{com.state1}}</td>
-                          <td>{{com.mobile1}}</td>
-                          <td>{{com.mobile2}}</td>
+                          <td>{{com.state1}}</td> 
+                          <td>{{com.city}}</td> -->
+                           <td style ="text-align: right;">{{com.mobile1}}</td>
+                          <td style ="text-align: right;">{{com.mobile2}}</td>
                           <td>{{com.emailId}}</td>
                           <td>{{com.gstNo}}</td>
                           <td>{{com.panNo}}</td>

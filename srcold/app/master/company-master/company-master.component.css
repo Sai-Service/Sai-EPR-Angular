@@ -1,0 +1,22 @@
+.grid_scroll{
+  overflow: auto;
+   height: 200px; 
+  width: 100%;
+  }
+
+ td{
+    padding: 6px;
+  }
+  
+ 
+
+.modal {
+  width: 20rem;
+  margin-left: 50%;
+}
+
+
+ 
+.modal-header{
+  text-align: center;
+}

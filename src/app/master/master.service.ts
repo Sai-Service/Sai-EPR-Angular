@@ -80,6 +80,9 @@ export class MasterService {
     return this.http.get(this.ServerUrl +'/itemMst');
   }
 
+  invItemListNew(divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/itemMst/itemDetails/${divisionId}`);
+  }
 
   invItemListEw(mEwType,mVariant,mPeriod): Observable<any> {
     // alert("type,varinat,period   "+ mEwType +","+mVariant +","+mPeriod)
@@ -2100,6 +2103,18 @@ PriceListIdList(): Observable<any> {
       return this.http.get(this.ServerUrl + `/priceHistory/itemhist?priceListHeaderId=${priceListId}&itemId=${itemId}`);
     }
 
+    searchByItemDetails(segment): Observable<any> {
+      return this.http.get(this.ServerUrl + `/itemMst/details/${segment}`);
+    }
+
+    getPriceListSearchNew(ouId,divisionId): Observable<any> {
+      // alert("MS>>PL ID="+priceListId + " item id="+itemId);
+      return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${ouId}&divisionId=${divisionId}`);
+    }
+
+    getLineDetails(priceListHeaderId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/pricelist/priceDtl?priceListHeaderId=${priceListHeaderId}`);
+    }
 ////////////////////////////OrderTypeMaster//////////////////
 UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
   const options = {
