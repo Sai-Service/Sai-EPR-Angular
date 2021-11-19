@@ -149,7 +149,7 @@ export class SupplierMasterComponent implements OnInit {
   public pinCodeList: Array<string>[];
   public stateList: Array<string>[];
   public taxCategoryList: Array<string>[];
-  public ouIdList: Array<string>[];
+  public ouIdList: any=[];
   public statusList: Array<string> = [];
   // public supplierSiteMasterList1 : Array<string>[][];
   public lstcommentsTax: any[];
@@ -340,7 +340,7 @@ export class SupplierMasterComponent implements OnInit {
         }
       );
 
-    this.service.OUIdList()
+    this.service.OUIdListDiv( Number(sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           this.ouIdList = data;
@@ -899,6 +899,13 @@ alert(suppSiteId);
           this.supplierMasterForm.get('prePayAcct').disable();
           this.supplierMasterForm.get('prePayAcct').disable();
           this.currentOp = 'INSERT';
+          for(let x=0; x <this.lstcomments.supplierSiteMasterList.length; x++){
+            var ouObj =  this.ouIdList.find(d => d.ouId=== this.lstcomments.supplierSiteMasterList[x].ouId);
+            if(ouObj != undefined){
+              
+            this.lstcomments.supplierSiteMasterList[x].ouId = ouObj.ouName;
+          }
+          }
         }
       );
   }
