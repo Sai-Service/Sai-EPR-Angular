@@ -602,10 +602,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let com of lstcomments.supplierSiteMasterList" class="ItemStyle" style="text-decoration:none;">
+                      <tr *ngFor="let com of lstcomments.supplierSiteMasterList" class="ItemStyle" style="text-decoration:none; padding: 2px; ">
                         <td>{{com.ouId}}</td> 
                         <td>[{{com.suppSiteId}}]-{{com.siteName}}</td>
-                          <td style ="width: 250px;">{{com.address1}},{{com.address2}},{{com.address3}},{{com.address4}},{{com.city}},{{com.state1}},{{com.pinCd}}</td>
+                          <td style ="width: 260px; ">{{com.address1}},{{com.address2}},{{com.address3}},{{com.address4}},{{com.city}},{{com.state1}},{{com.pinCd}}</td>
                           <!-- <td>{{com.address1}}</td>
                           <td>{{com.address2}}</td>
                           <td>{{com.address3}}</td>
@@ -613,8 +613,8 @@
                           <td>{{com.pinCd}}</td>
                           <td>{{com.state1}}</td> 
                           <td>{{com.city}}</td> -->
-                           <td>{{com.mobile1}}</td>
-                          <td>{{com.mobile2}}</td>
+                           <td style ="text-align: right;">{{com.mobile1}}</td>
+                          <td style ="text-align: right;">{{com.mobile2}}</td>
                           <td>{{com.emailId}}</td>
                           <td>{{com.gstNo}}</td>
                           <td>{{com.panNo}}</td>
