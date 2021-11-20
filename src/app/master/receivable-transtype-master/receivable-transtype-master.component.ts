@@ -191,15 +191,15 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
   }
 
-  onSelectClassType(event){
-  this.service.recCreditMemoType(event)
-  .subscribe(
-    data => {
-      this.creditMemoTypeList = data;
-      console.log(this.creditMemoTypeList);
-    }
-  );
-  }
+  // onSelectClassType(event){
+  // this.service.recCreditMemoType(event)
+  // .subscribe(
+  //   data => {
+  //     this.creditMemoTypeList = data;
+  //     console.log(this.creditMemoTypeList);
+  //   }
+  // );
+  // }
 
   resetMast() {
     window.location.reload();
