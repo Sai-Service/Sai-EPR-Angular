@@ -1213,6 +1213,11 @@ public completeInvoice(invoiceno)
   const url=this.ServerUrl+`/arInv/invComplete/${invoiceno}`;
   return this.http.put(url,option);
 }
+
+arInvoiceList(type):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/rcvType/typeWise/${type}`);
+}
 ////////////Subinventory Transfer////////
 getsearchBySubInvTrfNo(subtrfNo,locId):Observable<any>
 {
@@ -3149,14 +3154,8 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
 
-    recCreditMemoType(classType) {
-          return this.http.get(this.ServerUrl +`/rcvType/typeWise/${classType}`);
-        // http://localhost:8081/rcvType/typeWise/Credit%20Memo
-      }
 
-   
-      
 
-      
+
 
 }

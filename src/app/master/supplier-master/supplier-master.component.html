@@ -114,7 +114,18 @@
                            <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
                                Enter supplier No </span> -->
                           </td>
+                          <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;TDS&nbsp;Type&nbsp;:&nbsp;</td>
+                          <td>
+                              <select formControlName="supTdsTyp" id="supTdsTyp" class="form-control">
+                                <!-- <option>--Select--</option> -->
+                                <option >Company</option>
+                                <option>Individual</option>
+                            </select>
+                           <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
+                               Enter supplier No </span> -->
+                          </td>
                           </tr>
+
                           <tr *ngIf="displaySupplier">
                                          <!-- </tr> style="border-bottom-style: ridge;border-block-color: #92a8d1;width: 100%;" > -->
                           <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;Name&nbsp;:&nbsp;</td>

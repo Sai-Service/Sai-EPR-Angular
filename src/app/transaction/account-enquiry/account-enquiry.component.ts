@@ -1,4 +1,4 @@
-import { PathLocationStrategy } from '@angular/common';
+import { DatePipe, PathLocationStrategy } from '@angular/common';
 import { Component, OnInit, ViewChild, ViewEncapsulation, HostListener, ValueProvider } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ interface IAccountEnquiry
   periodNameFrm:string;
   periodNameTo:string;
   segmentNameFrm:string;
+  postedDate:string;
 }
 
 @Component({
@@ -52,8 +53,12 @@ public InterBrancList:Array<string>=[];
   jeSource:string;
   name:string;
   jeCategory:string;
-  postedDate:Date;
+  // postedDate:Date;
+  pipe = new DatePipe('en-US');
   periodName:string;
+  now = new Date();
+  postedDate = this.pipe.transform(this.now, 'dd-MMM-yyyy')
+
 
   showModal:boolean;
   JVdata: any;
@@ -134,10 +139,10 @@ public InterBrancList:Array<string>=[];
 
   openCodeCombination()
       {
-     
+
         let SegmentName1=this.AccountEnquiryForm.get('segmentNameFrm').value;
         alert(SegmentName1);
-        
+
         if(SegmentName1===null)
         {this.AccountEnquiryForm.get('segment11').reset();
         this.AccountEnquiryForm.get('segment2').reset();
@@ -186,7 +191,7 @@ public InterBrancList:Array<string>=[];
               } else {
                 console.log(this.segmentNameList);
                 this.codeCombinationId = Number(this.segmentNameList.codeCombinationId)
-                
+
               }
             } else if (this.segmentNameList.code === 400) {
               this.AccountEnquiryForm.patchValue({segmentNameFrm:''});
@@ -230,15 +235,17 @@ public InterBrancList:Array<string>=[];
                 this.lookupValueDesc1 = this.branch.lookupValueDesc;
               }
             }
-    
+
           }
         );
-    
+
           }
 
           showJournalDetail()
           {
-            const formValue:IAccountEnquiry=this.AccountEnquiryForm.value;
+            var formValue:IAccountEnquiry=this.AccountEnquiryForm.value;
+            var postedDate = this.pipe.transform(formValue.postedDate, 'dd-MMM-yyyy');
+            formValue.postedDate=postedDate;
             this.service.AccountEnquirySearch(formValue).subscribe
             ((res:any) => {
               if(res.code===200)
