@@ -438,26 +438,21 @@ voucherNo:[],
        }
      }
      const totlPayHeaderControls=this.paymentForm.get('obj1').value;
-        if(this.appAmt>totlPayHeaderControls[0].PayAmount)
+        if(this.appAmt>totlPayHeaderControls[0].PayAmount || this.appAmt<totlPayHeaderControls[0].PayAmount)
         {
+          alert('in If');
           (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
           alert("You can not apply payment where actual amount is greater than selected Amount");
 
         }
         else{
+          alert('in else');
           (document.getElementById('btnSave') as HTMLInputElement).disabled = false;
         }
 
  }
 
 paymentSave(){
-  const totlPayHeaderControls=this.paymentForm.get('obj1').value;
-  if(this.totAmount>totlPayHeaderControls[0].PayAmount)
-  {
-    (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
-    alert("You can not apply payment where actual amount is greater than selected Amount");
-
-  }
   this.totAmt=0;
   const totlCalControls=this.paymentForm.get('obj').value;
   for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
@@ -513,7 +508,7 @@ console.log(jsonData);
 
       this.PaymentReturnArr =res.obj;
       console.log(this.PaymentReturnArr);
-      patch.controls[0].patchValue({docNo: this.PaymentReturnArr.checkNumber})
+      patch.controls[0].patchValue({docNo: this.PaymentReturnArr.docSeqValue})
       this.paymentForm.get('obj1').disable();
       (document.getElementById('btnSelect') as HTMLInputElement).disabled = true;
     } else {

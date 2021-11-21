@@ -24,20 +24,20 @@
 
                     <fieldset class="RFS">
                         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Transaction Type Master Details</legend>
-                        <table class="center"> 
+                        <table class="center">
                             <tr>
 
                                 <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
                                 <td><input   type="text" formControlName="loginArray"  id="loginArray" [(ngModel)]="loginArray"  class="form-control" placeholder="Trans Type Description " style="background-color: yellow;"  > </td>
-                            
-                       
-                                
+
+
+
                                 <td style="width: 15%" class="LabelFontStyle">Op&nbsp;Unit:&nbsp;</td>
-                       
-                                <td>  
+
+                                <td>
                                     <select   formControlName="ouId" id="ouId" [(ngModel)]="ouId"  class="form-control"    style="background-color: yellow;"  >
                                         <!-- (ngModelChange)='onOuIdSelected($event)' -->
-                                       
+
                                     <option disabled >--Select--</option>
                                     <option *ngFor="let sc of  OUIdList" [ngValue]="sc.ouId">
                                        {{sc.ouId}}-{{sc.ouName}}
@@ -47,7 +47,7 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
 
-                                <td>  
+                                <td>
                                     <select formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control" style="background-color: yellow;" >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId"  >
@@ -56,7 +56,7 @@
                                     </select>
                                 </td>
 
-                              
+
 
                             </tr>
 
@@ -77,28 +77,28 @@
                                 <td><input    type="text" formControlName="transTypeName"  id="transTypeName" [(ngModel)]="transTypeName" class="form-control" placeholder="Trans Type Name" style="background-color: yellow;"   > </td>
                                 <td style="width: 15%" class="LabelFontStyle">Description:&nbsp;</td>
                                 <td><input   type="text" formControlName="transTypeDesc"  id="transTypeDesc" [(ngModel)]="transTypeDesc"  class="form-control" placeholder="Trans Type Description " style="background-color: yellow;"  > </td>
-                            
-                               
+
+
                             </tr>
 
-                         
+
 
                             <tr>
                                 <td style="width: 15%" class="LabelFontStyle">Creation&nbsp;Sign:&nbsp;</td>
                                 <td>
-                                 <select formControlName="creationSign" id="creationSign" class="form-control"  [(ngModel)]="creationSign" 
+                                 <select formControlName="creationSign" id="creationSign" class="form-control"  [(ngModel)]="creationSign"
                                      style="background-color: yellow;">
                                      <!-- (ngModelChange)="onSelectionRevStatus($event)" -->
                                       <option value="Any">Any</option>
                                       <option value="Positive">Positive</option>
                                       <option value="Negative">Negative</option>
-                                     </select> 
+                                     </select>
                                  </td>
-                               
-                               
+
+
                                 <td style="width: 15%" class="LabelFontStyle">Cr&nbsp;Memo&nbsp;Type:&nbsp;</td>
                                 <!-- <td><input   type="text" formControlName="creditMemoType"  id="creditMemoType" [(ngModel)]="creditMemoType"  class="form-control"  style="background-color: yellow;" placeholder="LOV"> </td> -->
-                                <td>  
+                                <td>
                                     <select formControlName="creditMemoTypeId" id="creditMemoTypeId" [(ngModel)]="creditMemoTypeId" class="form-control" style="background-color: yellow;" >
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  creditMemoTypeList" [ngValue]="sc.creditMemoTypeId"  >
@@ -106,12 +106,12 @@
                                         </option>
                                     </select>
                                 </td>
-                               
-                                
+
+
 
                                 <td style="width: 15%" class="LabelFontStyle">Category&nbsp;Base:&nbsp;</td>
-                                
-                                    <td>  
+
+                                    <td>
                                         <select formControlName="attributeCategory" id="attributeCategory" [(ngModel)]="attributeCategory" class="form-control" style="background-color: yellow;" >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of  categoryBaseList" [ngValue]="sc.code"  >
@@ -122,35 +122,35 @@
 
 
 
-                              
+
                                 </tr>
 
-                           
 
-                          
+
+
 
                         <tr>
                             <td  style="width: 15%" class="LabelFontStyle"> Open&nbsp;Receivable&nbsp;: </td>
                                 <td>
-                                    <div *ngIf="selfAssesedFagDiss">   
+                                    <div *ngIf="selfAssesedFagDiss">
                                        <input  type="checkbox"  name="selfAssesedFlag" formControlName="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag"  (change)="selfAssesedFlg($event)">
-                                    </div> 
+                                    </div>
                                     <div *ngIf="TRUEs">
                                         <input  type="checkbox"  name="selfAssesedFlag" [formControl]="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlag=$event.target.checked?'Y':'N'">
                                     </div>
                                     <div *ngIf="FALSEs">
                                         <input  type="checkbox" checked   id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlag=$event.target.checked?'Y':'N'">
                                     </div>
-    
+
                                 </td>
 
                                 <td  style="width: 15%" class="LabelFontStyle">Post&nbsp;To&nbsp;GL&nbsp;:</td>
                                 <td>
-                                       
-    
-                                    <div *ngIf="offsetFlagFagDiss"> 
+
+
+                                    <div *ngIf="offsetFlagFagDiss">
                                           <input  type="checkbox"  name="offsetFlag" formControlName="offsetFlag"  [(ngModel)]="offsetFlag"   (change)="offsetFlg($event)">
-                                        </div> 
+                                        </div>
                                         <div *ngIf="TRUEo">
                                             <input  type="checkbox"  name="offsetFlag" [formControl]="offsetFlag"  [(ngModel)]="offsetFlag" (change)="offsetFlag=$event.target.checked?'Y':'N'">
                                         </div>
@@ -160,13 +160,13 @@
                                 </td>
 
 
-                          
+
                             <td  style="width: 15%" class="LabelFontStyle">Allow&nbsp;Adjustment&nbsp;Posting&nbsp;:</td>
-                           
+
                             <td>
-                                <div *ngIf="recFlagDiss">   
+                                <div *ngIf="recFlagDiss">
                                     <input  type="checkbox"  name="recoverableFlag" formControlName="recoverableFlag"  [(ngModel)]="recoverableFlag"  (change)="recoverableFlg1($event)">
-                                </div> 
+                                </div>
                                 <div *ngIf="TRUER">
                                     <input  type="checkbox"  name="recoverableFlag" [formControl]="recoverableFlag"  [(ngModel)]="recoverableFlag" (change)="recoverableFlag1=$event.target.checked?'Y':'N'">
                                 </div>
@@ -174,37 +174,37 @@
                                     <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   [(ngModel)]="recoverableFlag" (change)="recoverableFlag1=$event.target.checked?'Y':'N'">
                                 </div>
 
-                            </td> 
+                            </td>
 
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Trans&nbsp;Status:&nbsp;</td>
                             <td>
-                            <select formControlName="tranStatus" id="tranStatus" class="form-control"  [(ngModel)]="tranStatus" 
+                            <select formControlName="tranStatus" id="tranStatus" class="form-control"  [(ngModel)]="tranStatus"
                                 style="background-color: yellow;"  (ngModelChange)="onOptionsSelected($event)">
                                 <option value="Open">Open</option>
                                 <option value="Closed">Closed</option>
-                            </select> 
-                            </td>    
+                            </select>
+                            </td>
 
                             <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:&nbsp;</td>
-                            <td><input    type="date" formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control"  
+                            <td><input    type="date" formControlName="startDate"  id="startDate" [(ngModel)]="startDate" class="form-control"
                             style="background-color: yellow;"  max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
-                                                    
-                        
+
+
                             <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date&nbsp;:&nbsp;</td>
                             <td><input  disabled  type="date" formControlName="endDate"  id="endDate" [(ngModel)]="endDate"  class="form-control"  > </td>
-                                
-                        
-                           
+
+
+
                         </tr>
 
                         <tr>
-                             
+
 
                             <td style="width: 15%" class="LabelFontStyle">Receivable A/c:&nbsp;</td>
-                            <td colspan="2">   
-                                <select formControlName="glIdRecAcct" id="glIdRecAcct" [(ngModel)]="glIdRecAcct" class="form-control" 
+                            <td colspan="2">
+                                <select formControlName="glIdRecAcct" id="glIdRecAcct" [(ngModel)]="glIdRecAcct" class="form-control"
                                                 (ngModelChange)='onGlRecAcctSelected($event)' style="background-color: yellow;width: 100%;" >
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  receivableAccountList" [ngValue]="sc.lookupValue"  >
@@ -215,8 +215,8 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Revenue A/c:&nbsp;</td>
-                            <td colspan="2">   
-                                <select formControlName="glIdRevAcct" id="glIdRevAcct" [(ngModel)]="glIdRevAcct" class="form-control" 
+                            <td colspan="2">
+                                <select formControlName="glIdRevAcct" id="glIdRevAcct" [(ngModel)]="glIdRevAcct" class="form-control"
                                                   (ngModelChange)='onGlRevAcctSelected($event)'style="background-color: yellow; width: 100%;" >
                                     <option disabled>--Select--</option>
                                     <option *ngFor="let sc of  revenueAccountList" [ngValue]="sc.lookupValue"  >
@@ -224,7 +224,7 @@
                                     </option>
                                 </select>
                             </td>
-                                             
+
                         </tr>
 
                     </table>
@@ -240,7 +240,7 @@
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!orderTypeMasterForm">Save</button>
                                 </td>
-                                
+
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
                                 </td>
@@ -267,7 +267,7 @@
                                         <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                        <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button>
                                     </td>
                                 </tr>
                             </table>
@@ -310,7 +310,7 @@
 
                                     </ng-template>
                                     <ng-template #elseBlock1>
-                                   
+
                                             <td>
                                                 <button type="button" class="btn btn-info" (click)="updateMast()"[disabled]="!orderTypeMasterForm">Update</button>
                                             </td>
@@ -345,7 +345,7 @@
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Yes</button> 
+                                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Yes</button>
                                 </td>
                             </tr>
                         </table>
@@ -390,7 +390,7 @@
                                     </ng-template>
                                 </tr>
                             </table>
-                            
+
 
 
                                 <!-- ============================= -->
@@ -400,5 +400,5 @@
             </div>
         </div>
     </div>
- 
+
 </div>

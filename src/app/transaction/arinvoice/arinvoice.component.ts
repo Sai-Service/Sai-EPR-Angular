@@ -94,6 +94,7 @@ export class ARInvoiceComponent implements OnInit {
   taxCat1: number;
   glDate = new Date();
   taxAmount: number;
+  billToCustName: string;
 
   public applyTo = 'INVOICE'
   now = Date.now();
@@ -164,6 +165,7 @@ export class ARInvoiceComponent implements OnInit {
   GLPeriodCheck: any;
   glPrdStartDate: string;
   glPrdEndDate: string;
+  customerNameSearch: any;
 
   search(activeTab){
     this.activeTab = activeTab;
@@ -617,7 +619,7 @@ export class ARInvoiceComponent implements OnInit {
     patch.controls[index].patchValue({
       itemId: selectedValue.itemId,
       description: selectedValue.description,
-      invCategory: selectedValue.categoryId.attribute1,
+      invCategory: selectedValue.itemCategory,
       uom: selectedValue.uom,
       hsnSacCode: selectedValue.hsnSacCode,
       poChargeAcc: selectedValue.poChargeAccount,
@@ -645,6 +647,26 @@ export class ARInvoiceComponent implements OnInit {
     }
     return matches;
   };
+
+  custNameSearch(billToCustName) {
+    alert(billToCustName)
+    this.orderManagementService.custNameSearchFn1(billToCustName, sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            this.customerNameSearch = data.obj;
+            console.log(this.accountNoSearch);
+          }
+          else {
+            if (data.code === 400) {
+              alert(data.message);
+              // this.display='block'; 
+            }
+          }
+        }
+      );
+  }
+
 
   fnCancatination(index) {
     // alert(index);

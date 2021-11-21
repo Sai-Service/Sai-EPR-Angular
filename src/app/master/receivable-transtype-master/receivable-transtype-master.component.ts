@@ -21,7 +21,7 @@ interface IRecTransTypeMaster {
 })
 export class ReceivableTranstypeMasterComponent implements OnInit {
   recTransTypeMasterForm : FormGroup;
-  
+
         pipe = new DatePipe('en-US');
         now = Date.now();
         public minDate = new Date();
@@ -48,7 +48,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         locName : string;
         orgId:number;
         ouId :number;
-        deptId:number; 
+        deptId:number;
         emplId :number;
 
         transTypeName:string;
@@ -59,7 +59,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         tranStatus:string;
         creditMemoTypeId:number;
 
-        startDate:string=this.pipe.transform(Date.now(), 'y-MM-dd');  
+        startDate:string=this.pipe.transform(Date.now(), 'y-MM-dd');
         endDate:string;
 
         recoverableFlag: string;
@@ -82,14 +82,14 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
 
         displayButton = true;
-      
 
-  
+
+
     get f() { return this.recTransTypeMasterForm.controls; }
     recTransTypeMaster(recTransTypeMasterForm:any) {  }
-  
+
     constructor(private service: MasterService,private  fb: FormBuilder, private router: Router) {
-    this.recTransTypeMasterForm = fb.group({ 
+    this.recTransTypeMasterForm = fb.group({
 
       loginArray:[''],
       loginName:[''],
@@ -118,8 +118,8 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
       recoverableFlag: ['', [Validators.required]],
       offsetFlag: ['', [Validators.required]],
       selfAssesedFlag: ['', [Validators.required]],
-  
-  
+
+
     });
   }
 
@@ -214,7 +214,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
     // alert(this.Status1);
     if (status1=== 'Closed') {
       // this.displayInactive = false;
-      this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');  
+      this.endDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     }
     else if (status1 === 'Open') {
       this.recTransTypeMasterForm.get('endDate').reset();
@@ -254,7 +254,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
   onGlRecAcctSelected(event){
     if(event >0) {
- 
+
     var rec =this.recTransTypeMasterForm.get("glIdRecAcct").value
     var rev=this.recTransTypeMasterForm.get("glIdRevAcct").value
     // alert("Receivable A/c :"+event +" ,Rec= "+rec +" ,Rev= "+rev)
@@ -267,7 +267,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
   onGlRevAcctSelected(event){
     if(event >0) {
- 
+
     var rec =this.recTransTypeMasterForm.get("glIdRecAcct").value
     var rev=this.recTransTypeMasterForm.get("glIdRevAcct").value
     // alert("Revenue A/c :"+event +" ,Rec= "+rec +" ,Rev= "+rev)
@@ -278,7 +278,7 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
   }}
 
 
-  
+
 
 
 
