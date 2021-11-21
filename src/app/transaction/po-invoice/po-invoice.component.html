@@ -717,6 +717,7 @@
                                     <!-- <th scope="col">Add New Line</th>
                                     <th scope="col">Delete</th> -->
                                     <!-- <th scope="col">Distribution</th>  -->
+                                    <th scope="col">View Tax Details</th>
                                       <th scope="col">No.</th>
                                       <th scope="col">Type</th>
                                       <th scope="col">Item</th>
@@ -759,7 +760,16 @@
                                             </td> -->
                                             <!-- <td>
                                                 <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"    (click)="distribution1(k)" >Distribution</button>
-                                            </td> -->
+                                            </td> class="tab-pane fade" (click)="onOptionTaxCatSelected($event,k)" -->
+                                      
+                                      <td>
+                                        <div *ngIf="displayViewTaxDetails; then thenViewTaxDetails; else elseViewTaxDetails"></div>
+                                        <ng-template #thenViewTaxDetails>
+                                        </ng-template>
+                                        <ng-template #elseViewTaxDetails>
+                                          <a    data-toggle="tab" href="#panel1006" (click)="onOptionViewTaxDetails(taxCategoryId,k)"> <img id="bajajlogo" src="assets\images\tax.png">  </a>
+                                        </ng-template>
+                                      </td>      
                                       <td>
                                           <input type="text" class="form-control" formControlName="lineNumber" value={{lineNumber}}
                                           data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
@@ -846,13 +856,13 @@
                                     </select>
                                     <input hidden  type="number"  formControlName="gstPercentage"  style="width: 5rem;" class="form-control">
                                     </td>
-                                    <input hidden type="text" formControlName="taxCategoryId" >
+                                    <input hidden type="number" formControlName="taxCategoryId" >
                                     <td>
                                         <!-- (ngModelChange)='onOptionTaxCatSelected(i, $event)' taxCategoryName-->
                                         <select formControlName="taxCategoryName" id="taxCategoryName"  (ngModelChange)='onOptionTaxCatSelected($event,k)'
                                                     class="form-control" style="width: 150px;height: 25px;font-size: 10px;">
                                                                 <option>--Select--</option>
-                                                                <option *ngFor="let sc of  taxCategoryList" value="{{sc.taxCategoryName}}">
+                                                                <option *ngFor="let sc of  taxCategoryList[k]" value="{{sc.taxCategoryName}}">
                                                                     {{sc.taxCategoryName}}
                                                             </option>
                                                             </select>

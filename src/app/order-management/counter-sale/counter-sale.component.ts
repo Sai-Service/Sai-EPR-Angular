@@ -1138,7 +1138,7 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
-    alert(custAccountNo);
+    // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {
@@ -1152,7 +1152,7 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
-              alert('hi')
+              // alert('hi')
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
@@ -1344,7 +1344,7 @@ export class CounterSaleComponent implements OnInit {
 
   custNameSearch(custName) {
     alert(custName)
-    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           if (data.code === 200) {

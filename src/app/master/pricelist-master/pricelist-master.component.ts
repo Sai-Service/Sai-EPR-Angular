@@ -39,14 +39,10 @@ interface IPriceList {
   priceSubType:string;
   startDate:Date;
   endDate:string;
-
-  // priceValue:number;
-
-
   priceListHeaderId:number;
   fileName :string; 
   docType :string;
-
+  itemId:number;
 }
 @Component({
   selector: 'app-pricelist-master',
@@ -235,7 +231,7 @@ export class PricelistMasterComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    this.displayLineDetails=false;
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
     this.divisionName=sessionStorage.getItem('divisionName');
@@ -530,23 +526,19 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
           alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
           return;
         }
-       
-     
       alert("Heder Validation : "+this.headerValidation +"\nLine Validation : "+this.lineValidation);
-      
       if (this.headerValidation  && this.lineValidation ) 
       {
         alert("Data Validation Sucessfull....\nPosting data  to PRICE LIST TABLE")
-           
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFULLY');
+          alert(res.message);
           // this.priceListMasterForm.reset();
           this.priceListMasterForm.disable()
         } else {
           if (res.code === 400) {
-            alert('ERROR WHILE INSERTING');
+            alert(res.message);
             // this.priceListMasterForm.reset();
           }
         }
@@ -1029,9 +1021,10 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     // alert('addrow index '+i);
   
     // var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
-    var prcLineArr1= this.priceListLineDetails;
+    var prcLineArr1= this.priceListMasterForm.get('priceListDetailList').value;
     // alert(prcLineArr1[i].itemId);
     var lineValue1=prcLineArr1[i].itemId;
+    // alert(lineValue1)
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;
   

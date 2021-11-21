@@ -323,8 +323,8 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
 
-  custNameSearchFn1(custName, ouId,divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&ouId=${ouId}&divisionId=${divisionId}`);
+  custNameSearchFn1(custName,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&divisionId=${divisionId}`);
   }
 
   custNameSearchFn(custName, ouId): Observable<any> {
