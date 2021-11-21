@@ -54,6 +54,7 @@ export class PricelistMasterComponent implements OnInit {
   isVisible1:boolean=false;
   isVisible:boolean=false;
   progress = 0;
+  cusrOpraion:string;
   // message = '';
   selectFile?: File;
 
@@ -506,7 +507,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   }
   
     newMast() {
-
+      this.cusrOpraion='Save';
       this.CheckHeaderValidations();
       if (this.headerValidation==true ) { alert("Header Validation Sucessfull...") }
       else { alert("Header Validation Failed... Please Check");  return;   }
@@ -633,6 +634,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     // this.isVisible1=false;
     this.priceListMasterForm.reset();
     this.display1= false;
+    this.displayLineDetails=true;
     let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
     this.priceListMasterForm.patchValue(select);
     // console.log(select.priceListDetailList[0]);
@@ -1019,17 +1021,22 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   CheckLineValidations(i) {
     // alert(this.priceListLineDetails[i].itemId)
     // alert('addrow index '+i);
-  
-    // var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
-    var prcLineArr1= this.priceListMasterForm.get('priceListDetailList').value;
-    // alert(prcLineArr1[i].itemId);
+    // alert(this.cusrOpraion);
+    if (this.cusrOpraion==='Save'){
+    var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
     var lineValue1=prcLineArr1[i].itemId;
-    // alert(lineValue1)
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;
-  
-    // alert("Line Value :"+lineValue1);
-     var j=i+1;
+  }
+  else{
+    var prcLineArr1=  (this.priceListLineDetails)
+    // alert(prcLineArr1[i].itemId);
+    var lineValue1=prcLineArr1[i].itemId;
+    var lineValue2=prcLineArr1[i].batchCode;
+    var lineValue3=prcLineArr1[i].priceValue;
+  }
+     
+   var j=i+1;
     if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
       alert("Line-"+j+ " ITEM NUMBER :  should not be null value/ Select valid item from the list");
       this.lineValidation=false;
