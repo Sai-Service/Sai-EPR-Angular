@@ -253,6 +253,7 @@ export class PoInvoiceComponent implements OnInit {
   disDeleteButton = true;
   dispAccountCode = true;
   displayAddNewLine = true;
+  displayViewTaxDetails=true;
   lineNumber: number;
   lineTypeLookupCode: string;
   public segmentNameList: any;
@@ -1743,6 +1744,7 @@ export class PoInvoiceComponent implements OnInit {
   onOptionTaxCatSelected(taxCategoryName, k) {
     if (this.isSearchPatch === false) {
       // this.indexVal = k;
+      this.displayViewTaxDetails=false;
       var arrayControl = this.poInvoiceForm.get('invLines').value;
       var objarray = this.poInvoiceForm.get('obj').value;
       this.indexVal=arrayControl[k].lineNumber;
@@ -1766,45 +1768,26 @@ export class PoInvoiceComponent implements OnInit {
             for (let i = 0; i < data.miscLines.length; i++) {
               var invLnGrp: FormGroup = this.invLineDetails();
               this.invLineDetailsArray().push(invLnGrp);
-              // alert/'LineDetailPush');
             }
             (controlinv.controls[0]).patchValue({ lineNumber: 1 });
-            // alert(k);
-            // alert(this.indexVal+ " indexVal")
-            // var x = k + 1;
             var x = controlinv.length + 1;
-            // alert(x+'x')
-
-            // alert(x + '"-------"' + this.invLineDetailsArray().length);
             for (let z = existlinecnt, j = 1; z < this.invLineDetailsArray().length; j++, z++) {
               controlinv.controls[z].patchValue(data.miscLines[j - 1]);
               var ln = Number(this.indexVal + "." + j);
               (controlinv.controls[z]).patchValue({ lineNumber: ln });
               (controlinv.controls[z]).patchValue({ locId: objarray[0].locationId });
-              // alert('Linedeail Patch');
             }
-
-            // var segment = (arrayControl[k].segment)
-            // let select = this.invItemList1.find(d => d.segment === segment);commen by vinita
-            // alert(select.itemId);
             let controlinv1 = this.poInvoiceForm.get('taxLines') as FormArray;
-            // var LEN = controlinv1.length;
-            // this.taxDetaileSendArr.push(data.taxLines)commen by vinita
             this.TaxDetailsArray().clear();
             for (let i = 0; i < data.taxLines.length; i++) {
               var invLnGrp: FormGroup = this.TaxDetailsGroup();
               this.TaxDetailsArray().push(invLnGrp);
-              // alert('tax deail push');
               console.log(new Date());
             }
-            // alert('data.taxLines.length ' + data.taxLines.length);
-            // alert(data.taxLines)
             this.poInvoiceForm.get('taxLines').patchValue(data.taxLines);
             for (let j = 0; j < data.taxLines.length; j++) {
-              // controlinv1.controls[j].patchValue(data.taxLines[j]);
               console.log(new Date());
               controlinv1.controls[j].patchValue({
-                // invLineItemId: select.itemId,  done by vinita
                 invLineNo: this.indexVal + 1,
               });
               console.log(new Date());
@@ -1812,13 +1795,7 @@ export class PoInvoiceComponent implements OnInit {
             }
 
             this.invLineNo = k + 1;
-            // alert(this.invLineNo);
-            // alert(this.taxarr.size+'Arraytax');
-            // this.taxarr.set(this.invLineNo,data.taxLines);
             this.taxarr.set(this.invLineNo, this.poInvoiceForm.get('taxLines').value);
-            // alert(this.taxarr.size+'afterArray');
-            //////////////Distribution////////////////
-            // this.lineDistributionArray().clear();--comment by vinita----
             let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
             var controlPatchDist = this.poInvoiceForm.get('distribution').value;
             var x1 = Number((this.lineDistributionArray().length));
@@ -1902,6 +1879,14 @@ export class PoInvoiceComponent implements OnInit {
           })
     }
   }
+
+  onOptionViewTaxDetails(taxCategoryId,k){
+    // alert(taxCategoryId+'-----'+k)
+    var arrayControl = this.poInvoiceForm.get('invLines').value;
+   var linetaxCategoryId=arrayControl[k].taxCategoryId
+   alert(linetaxCategoryId);
+  }
+
   processManuaTax(lstInvLineDeatails1: any) {
     // alert('hello');
     let controlDist = this.poInvoiceForm.get('distribution') as FormArray;
@@ -1964,8 +1949,6 @@ export class PoInvoiceComponent implements OnInit {
   }
 
   prepaymentData(event) {
-    // alert('Prepayment');
-    // alert(event);
     var headerVal = this.poInvoiceForm.get('obj').value;
     var invtype = headerVal[0].invTypeLookupCode;
     // alert(invtype);

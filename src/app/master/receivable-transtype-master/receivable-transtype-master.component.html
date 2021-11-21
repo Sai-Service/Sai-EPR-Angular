@@ -64,8 +64,8 @@
 
                                 <td style="width: 15%" class="LabelFontStyle">Class:&nbsp;</td>
                                 <td>  
-                                    <select formControlName="type" id="type" [(ngModel)]="type" class="form-control" style="background-color: yellow;" 
-                                            (ngModelChange)="onSelectClassType($event)">
+                                    <select formControlName="type" id="type" [(ngModel)]="type" class="form-control" style="background-color: yellow;" >
+                                        <!-- (ngModelChange)="onSelectClassType($event)" -->
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  classTypeList" [ngValue]="sc.code"  >
                                             {{sc.codeDesc}}-{{sc.code}}

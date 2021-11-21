@@ -1155,7 +1155,7 @@ export class CustomerMasterComponent implements OnInit {
 
   custNameSearch(custName) {
     alert(custName)
-    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           if (data.code === 200) {
