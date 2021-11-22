@@ -62,22 +62,23 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
         startDate:string=this.pipe.transform(Date.now(), 'y-MM-dd');  
         endDate:string;
 
-        recoverableFlag: string;
-        offsetFlag: string;
-        selfAssesedFlag: string;
+        defaultStatus:string;
+        postToGL:string;
+        adjPostToGL:string;
 
-        TRUER = false; FALSER = false;
-        TRUEs = false; FALSEs = false;
-        TRUEo = false; FALSEo = false;
+        TRUEd = false; FALSEd = false;
+        TRUEp = false; FALSEp = false;
+        TRUEa = false; FALSEa = false;
 
-        recFlagDiss = true;
-        offsetFlagFagDiss = true;
-        selfAssesedFagDiss = true;
+        defaultStatusFlg = true;
+        postToGLflg = true;
+        adjPostToGLflg = true;
 
         glIdRecAcct:number;
         glIdRevAcct:number;
 
         attributeCategory:number;
+        accountingBase:string;
 
 
 
@@ -114,11 +115,16 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
       glIdRecAcct:[],
       glIdRevAcct:[],
       attributeCategory:[],
+      accountingBase:[],
 
-      recoverableFlag: ['', [Validators.required]],
-      offsetFlag: ['', [Validators.required]],
-      selfAssesedFlag: ['', [Validators.required]],
-  
+      // recoverableFlag: ['', [Validators.required]],
+      // offsetFlag: ['', [Validators.required]],
+      // selfAssesedFlag: ['', [Validators.required]],
+
+      defaultStatus:[],
+      postToGL:[],
+      adjPostToGL:[],
+      
   
     });
   }
@@ -164,6 +170,17 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
       }
     );
 
+    this.service.recCreditMemoType("Credit Memo")
+    .subscribe(
+      data => {
+        this.creditMemoTypeList = data;
+        console.log(this.creditMemoTypeList);
+      }
+    );
+
+
+    
+
     this.service.recCategoryBase()
     .subscribe(
       data => {
@@ -191,15 +208,15 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
 
   }
 
-  onSelectClassType(event){
-  this.service.recCreditMemoType(event)
-  .subscribe(
-    data => {
-      this.creditMemoTypeList = data;
-      console.log(this.creditMemoTypeList);
-    }
-  );
-  }
+  // onSelectClassType(event){
+  // this.service.recCreditMemoType(event)
+  // .subscribe(
+  //   data => {
+  //     this.creditMemoTypeList = data;
+  //     console.log(this.creditMemoTypeList);
+  //   }
+  // );
+  // }
 
   resetMast() {
     window.location.reload();
@@ -222,33 +239,33 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
     }
   }
 
-  recoverableFlg1(e) {
+  defaultStatus1(e) {
     if (e.target.checked === true) {
-      this.recoverableFlag = 'Y'
+      this.defaultStatus = 'Y'
     }
     if (e.target.checked === false) {
-      this.recoverableFlag = 'N'
+      this.defaultStatus = 'N'
     }
 
     // alert ('Recoverable flag =' + this.recoverableFlag);
   }
 
   ///////////////////////Applicable for Offset  CheckBox/////////////////////////
-  offsetFlg(e) {
+  postToGL1(e) {
     if (e.target.checked === true) {
-      this.offsetFlag = 'Y'
+      this.postToGL = 'Y'
     }
     if (e.target.checked === false) {
-      this.offsetFlag = 'N'
+      this.postToGL = 'N'
     }
   }
   ///////////////////////Self Assessed /Reverse Change  CheckBox/////////////////////////
-  selfAssesedFlg(e) {
+  adjPostToGL1(e) {
     if (e.target.checked === true) {
-      this.selfAssesedFlag = 'Y'
+      this.adjPostToGL = 'Y'
     }
     if (e.target.checked === false) {
-      this.selfAssesedFlag = 'N'
+      this.adjPostToGL = 'N'
     }
   }
 
@@ -277,8 +294,39 @@ export class ReceivableTranstypeMasterComponent implements OnInit {
     }
   }}
 
+  newMast() {
 
-  
+    // this.CheckDataValidations();
+
+    // if (this.checkValidation===true) {
+    //   alert("Data Validation Sucessfull....\nPosting data  to ORDER TYPE TABLE")
+
+    // const formValue: IRecTransTypeMaster =this.recTransTypeMasterForm.value;
+    const formValue: IRecTransTypeMaster =this.transeData(this.recTransTypeMasterForm.value);
+    this.service.RecTransTypeMasterSubmit(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD INSERTED SUCCESSFULLY');
+          this.recTransTypeMasterForm.disable();
+      } else {
+        if (res.code === 400) {
+          alert('Code already present in the data base');
+          }
+      }
+    });
+  // } else{ alert("Data Validation Not Sucessfull....\nPosting Not Done...")  }
+  }
+
+
+  transeData(val) {
+    // delete val.divisionId;
+    delete val.division;
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.ouName;
+    delete val.locName;
+    delete val.orgId;
+    return val;
+  }
 
 
 

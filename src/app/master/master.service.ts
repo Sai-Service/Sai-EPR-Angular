@@ -1320,6 +1320,13 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
   // http://localhost:8081/itemMst/ItemDtlsF9?locId=121&itemId=544&ouId=110&divisionId=2
 }
 
+searchByItemDescf9(divId,itemDesc):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)
+ 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {
@@ -2252,6 +2259,11 @@ OrderCategoryList(): Observable<any> {
   }
 
 
+  viewAccountingArReceipt(receiptNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${receiptNo}`);
+    // http://localhost:8081/glHeader/docSequenceValue/212121110100075
+  }
+
   ////////////////////////// CREDIT MEMO APPLICATION /////////////////////
   public CreditMemmoApplySubmit(creditMemoApplyRecord,mCrmNo) {
     alert ("MS >> "+mCrmNo);
@@ -3121,9 +3133,6 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
      }
 
 
-
-
-
     ////////////////////////// Pending Shipment Lis///////////
 
     getShipmentList(locId,deptId,divisionId): Observable<any> {
@@ -3148,15 +3157,18 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
       }
 
-
+    
     recCreditMemoType(classType) {
           return this.http.get(this.ServerUrl +`/rcvType/typeWise/${classType}`);
         // http://localhost:8081/rcvType/typeWise/Credit%20Memo
       }
 
-   
-      
-
-      
+      public RecTransTypeMasterSubmit(RecTransTypeMasterRecord) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + '/rcvType';
+        return this.http.post(url, RecTransTypeMasterRecord, options);
+      }
 
 }

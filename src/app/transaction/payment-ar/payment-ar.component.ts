@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, NumberValueAccessor } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, NumberValueAccessor, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators, FormArray } from '@angular/forms';
 import { MasterService } from '../../master/master.service';
@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 import { escapeIdentifier } from '@angular/compiler/src/output/abstract_emitter';
+import { of } from 'rxjs';
 
 
 interface IPaymentRcptAr {
@@ -40,7 +41,9 @@ interface IPaymentRcptAr {
   reversalCategory: string;
   status: string;
 
-  tdsAmt:number;
+  tdsAmount:number;
+
+  
 
 
 
@@ -72,6 +75,8 @@ export class PaymentArComponent implements OnInit {
   public ReceiptTypeArList: Array<string> = [];
   public VehRegNoList: Array<string> = [];
   public RefReasonList: Array<string> = [];
+  viewAccountingArRcpt: Array<string> = [];
+  viewAccountingLines: Array<string> = [];
 
   receiptDetails: Array<string> = [];
   accountNoSearch: any;
@@ -107,7 +112,7 @@ export class PaymentArComponent implements OnInit {
   rmStatus: string
   paymentMethod: string;
   receiptAmount: number;
-  tdsAmt:number;
+  tdsAmount:number;
   receiptStatus = 'Open';
 
   receiptMethodId: number;
@@ -256,7 +261,10 @@ export class PaymentArComponent implements OnInit {
 
   public applyTo = 'INVOICE'
 
+  showViewActLine =false;
 
+  totalDr:number;
+  totalCr:number;
 
   // applyTo: string;
 
@@ -295,7 +303,7 @@ export class PaymentArComponent implements OnInit {
       status: [],
       insuranceFlag: [],
       receiptAmount: [],
-      tdsAmt:[],
+      tdsAmount:[],
 
       searchByRcptNo: [],
       searchByCustNo: [],
@@ -331,7 +339,7 @@ export class PaymentArComponent implements OnInit {
       customerType: [],
       custTaxCategoryName: [],
       custTdsPer:[],
-
+      
       srlNo: [],
       refType: [],
       customerSite: [],
@@ -371,6 +379,9 @@ export class PaymentArComponent implements OnInit {
 
       glPrdStartDate: [],
       glPrdEndDate: [],
+
+      totalDr:[],
+      totalCr:[],
 
       // applyrcptFlag: ['', [Validators.required]],
 
@@ -521,19 +532,34 @@ export class PaymentArComponent implements OnInit {
 
   }
 
+  onKey(event: any) {
+    
+    if(this.custAccountNo==null || this.custAccountNo==undefined) {
+      alert("CUSTOMER :  Select Customer.");
+      this.paymentAmt = null;
+      return;
+    }
+
+    this.getTdsAmount(this.custTdsPer);
+
+    }
+
   validateAmt(rcptAmt: any) {
+
+    // if(this.custAccountNo==null || this.custAccountNo==undefined) {
+    //   alert("CUSTOMER :  Select Customer.");
+    //   this.paymentAmt = null;
+    //   return;
+    // }
 
     if (rcptAmt === null || rcptAmt === undefined || rcptAmt <= 0) {
       alert("RECEIPT AMOUNT :  Should be above Zero.");
       this.paymentAmt = null;
       return;
     } 
-        if(this.custTdsPer==null) {this.custTdsPer=0;}
-
-       var tdsPer=Number(this.custTdsPer);
-        this.tdsAmt = (rcptAmt*tdsPer/100);
-    
-
+        
+        this.getTdsAmount(this.custTdsPer);
+  
   }
 
   validateChqDate(chqDate) {
@@ -694,6 +720,7 @@ export class PaymentArComponent implements OnInit {
           else {
             // this.dispCustButton=true;
             console.log(this.CustomerSiteDetails);
+            // alert("Tds% :"+this.CustomerSiteDetails.customerId.tdsPer);
             this.paymentArForm.patchValue({
               customerSiteId: this.CustomerSiteDetails.customerSiteId,
               customerSiteAddress: this.CustomerSiteDetails.address1 + "," +
@@ -709,7 +736,7 @@ export class PaymentArComponent implements OnInit {
               custPhone: this.CustomerSiteDetails.mobile1,
               customerType: this.CustomerSiteDetails.customerId.custType,
               custTaxCategoryName: this.CustomerSiteDetails.taxCategoryName,
-              customerTdsPer: this.CustomerSiteDetails.tdsPer,
+              custTdsPer: this.CustomerSiteDetails.customerId.tdsPer,
             });
 
           }
@@ -1235,8 +1262,6 @@ export class PaymentArComponent implements OnInit {
 
 
   validateLineApplAmt(index) {
-
-    
     var x = 0;
     var totUnAppAmt = 0;
     var totAppAmt = 0;
@@ -1470,12 +1495,23 @@ export class PaymentArComponent implements OnInit {
                 billToSiteId: this.accountNoSearch.billToLocId,
               });
               this.GetCustomerSiteDetails(this.accountNoSearch.customerId);
+              this.getTdsAmount(this.accountNoSearch.tdsPer)
+            
             }
 
-          }
-        );
+          });
     }
+
+          
   }
+
+      getTdsAmount(tdsP) {
+        // alert ("tdsp="+tdsP);
+        if(tdsP==null || tdsP==undefined) {this.custTdsPer=0;this.tdsAmount=0;}
+        if(Number(this.paymentAmt)>0) {
+        this.tdsAmount = (Number(this.paymentAmt)*tdsP/100);
+      } else {this.tdsAmount=0;}
+     }
 
 
 
@@ -1492,7 +1528,7 @@ export class PaymentArComponent implements OnInit {
     delete val.searchByDate;
     delete val.divisionId;
     delete val.division;
-    delete val.ouId;
+    // delete val.ouId;
     delete val.loginArray;
     delete val.loginName;
     delete val.ouName;
@@ -1522,7 +1558,7 @@ export class PaymentArComponent implements OnInit {
     delete val.customerSiteId;
     delete val.custSiteAddress;
     delete val.cancelReason;
-    delete val.cancelDate;
+    // delete val.cancelDate;
     delete val.prePayment;
     delete val.selectAllflag1;
     delete val.applyrcptFlag1;
@@ -2085,13 +2121,9 @@ export class PaymentArComponent implements OnInit {
 
     if (formValue.ouId === undefined || formValue.ouId === null) {
       this.checkValidation = false;
-      // alert("OPERATING UNIT: Should not be null....");
       msg1="OPERATING UNIT: Should not be null....";
-      // this.executeAlertMsg(msg1);
       alert(msg1);
       return;
-     
-     
     }
 
     if (formValue.locId === undefined || formValue.locId === null) {
@@ -2346,6 +2378,48 @@ export class PaymentArComponent implements OnInit {
           return;
         }
 
+      viewAccounting(receiptNo: any) {
+      this.service.viewAccountingArReceipt(receiptNo).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccountingArRcpt = res.obj;
+        // this.viewAccountingLines = res.obj[0].glLines;
+
+        console.log(this.viewAccountingArRcpt);
+        // alert(res.message);
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
+      }
+
+      ViewActSelect(index) {
+        // alert ("View Act Line ..."+index);
+        this.showViewActLine=true;
+        var rcptNo =this.paymentArForm.get("receiptNumber").value;
+        this.service.viewAccountingArReceipt(rcptNo).subscribe((res: any) => {
+          if (res.code === 200) {
+            this.viewAccountingLines = res.obj[index].glLines;
+            console.log(this.viewAccountingLines);
+            this.totalDr=res.obj[index].runningTotalDr;
+            this.totalCr=res.obj[index].runningTotalCr;
+            alert(this.totalDr +","+this.totalCr);
+            } 
+            else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+        });
+
+                  
+       
+      }
+
 
 
 }
+
+
+

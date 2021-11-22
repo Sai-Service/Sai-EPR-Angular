@@ -477,7 +477,7 @@
                                             max="{{minDate | date:'yyyy-MM-dd'}}" (change)="glPrdValidate(glDate)" ></td>
                                         
                                         <td  style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Amount:&nbsp;</td>
-                                        <td>  <input style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" style="background-color: yellow;">    </td>
+                                        <td>  <input style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="paymentAmt"  id="paymentAmt"  [(ngModel)]="paymentAmt" class="form-control" (change)="validateAmt(paymentAmt)" (keyup)="onKey($event)" style="background-color: yellow;">    </td>
                                     </ng-template>
 
                                     <ng-template #thenshowDet1No>
@@ -557,17 +557,12 @@
                                     </ng-template>
 
                                     <td  style="width: 15%" class="LabelFontStyle1">TDS&nbsp;Amount:&nbsp;</td>
-                                    <td><input   style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmt"  id="tdsAmt"  [(ngModel)]="tdsAmt" class="form-control" (change)="validateAmt(paymentAmt)" style="background-color: yellow;">    </td>
-                            
-
-
-                                    </tr>
+                                    <td><input   style="font-weight: bold;text-align: right;"   type="number"   min="1" formControlName="tdsAmount"  id="tdsAmount"  [(ngModel)]="tdsAmount" class="form-control" (change)="validateAmt(paymentAmt)" style="background-color: yellow;">    </td>
+                                  </tr>
 
                                     
                                     
                                     <tr>
-
-                                  
 
                                     <div *ngIf="displayButton ,then thenshowDet21Yes; else thenshowDet21No")></div>
                                     <ng-template #thenshowDet21Yes>
@@ -935,6 +930,11 @@
                                         </td>
                                       </ng-template>
 
+                                    <td>
+                                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(receiptNumber)" >
+                                        View Accounting
+                                     </button>
+                                    </td>     
 
                                    <!-- ==========================SEARCH & APPLY =============================== -->
 
@@ -1237,6 +1237,8 @@
                     
                 <!-- ====================Reset Dialog ======================== -->
 
+              
+
                 <td>
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button>
                 </td>
@@ -1526,3 +1528,120 @@
         </div>
         </div>
     </div>
+
+
+  
+     
+      
+      <!-- Modal -->
+      <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <!-- modal-dialog-scrollable -->
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+                   <div class="grid_scroll2">
+                    <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                        <thead>
+                          <tr class="GridHeader">
+                          <th>Line</th>
+                          <th>Doc.Seq.No</th>
+                          <th>Description</th>
+                          <th>Name</th>
+                          <th>Category</th>
+                          <th>Source</th>
+                          <th>Period</th>
+                          <th>Debit(INR)</th>
+                          <th>Credit(INR)</th>
+                          <th>Select</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let com of viewAccountingArRcpt let i=index" class="ItemStyle" style="text-decoration:none;position: initial;">
+                                <td >{{i+1}}</td>
+                                <td >{{com.docSeqValue}}</td>
+                                <td >{{com.description}}</td>
+                                <td>{{com.name}}</td>
+                                <td>{{com.jeCategory}}</td>
+                                <td>{{com.jeSource}}</td>
+                                <td>{{com.periodName}}</td>
+                                <td style="text-align: right;padding-right: 100px;">{{com.runningTotalDr}}</td>
+                                <td style="text-align: right;padding-right: 100px;">{{com.runningTotalCr}}</td>
+                                <td><button class="btn btn-secondary" (click)="ViewActSelect(i)">Select</button></td>   
+                              </tr>
+
+                          </tbody>
+                      
+                          </table>
+                       
+                </div>
+
+            </div>
+
+            
+            <div *ngIf="showViewActLine ,then showLineYes; else showLineNo")></div>
+            <ng-template #showLineYes>
+
+            <div class="modal-body">
+
+                <div class="grid_scroll2">
+                 <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                     <thead>
+                       <tr class="GridHeader">
+                       <th>Line</th>
+                       <th>GL Id</th>
+                       <th>Description</th>
+                       <th>Effective Date</th>
+                       <th>Segment</th>
+                       <th>Source</th>
+                       <th>Debit(INR)</th>
+                       <th>Credit(INR)</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr *ngFor="let va of viewAccountingLines let i=index" class="ItemStyle" style="text-decoration:none;position: initial;">
+                             <td >{{i+1}}</td>
+                             <td >{{va.codeCombinationId}}</td>
+                             <td >{{va.description}}</td>
+                             <td>{{va.effectiveDate}}</td>
+                             <td>{{va.segmentName}}</td>
+                             <td>{{va.accountDesc}}</td>
+                             <td style="text-align: right;padding-right: 100px;">{{va.enteredDr}}</td>
+                             <td style="text-align: right;padding-right: 100px;">{{va.enteredCr}}</td>
+                            </tr>
+
+                       </tbody>
+                       <tr>
+                        <td></td>
+                            <td>Total:&nbsp;</td>
+                             <td></td> <td></td> <td></td><td></td>
+                            <td >
+                                <input disabled  formControlName="totalDr" id="totalDr" class="form-control" [ngModel]="totalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                            </td>
+                            <td >
+                                <input disabled  formControlName="totalCr" id="totalCr" class="form-control" [ngModel]="totalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                            </td>
+                        </tr>
+                       </table>
+                    
+             </div>
+
+         </div>
+        </ng-template>
+        <ng-template #showLineNo></ng-template>
+       
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      

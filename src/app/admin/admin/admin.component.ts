@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {formatDate } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 export enum KEY_CODE {
@@ -17,6 +18,7 @@ interface IAdmin {
   searchItemId  :number;
   searchItemCode: string;
   searchItemName: string;
+  searchByItemDesc:string;
 }
 
 declare var $: any;
@@ -46,19 +48,50 @@ declare var $: any;
   loginArray:string;
   locId:number;
   ouId:number;
+  searchBy:string='ITEM NUMBER';
   searchItemId  :number;
   searchItemCode: string;
   searchItemName: string;
+  searchByItemDesc:string;
   userList2: any[] = [];
   lastkeydown1: number = 0;
+
+  segment:string;
+  desc:string;
+  uom:string;
+  hsnSacCode :string;
+  gstPer:number;
+  salePrice:number;
+  purchPrice:number;
+  mrp:number;
+  principleItem:number;
+
+  searchByItem =true;
+
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService){
   // constructor(private router: Router ) {
     this.todaysDataTime = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
 
     this.adminForm1 = fb.group({
+      searchBy:[],
       searchItemCode:[],
       searchItemName:[],
+      searchByItemDesc:[],
+
+      segment:[],
+      onHandQty:[''],
+      subInventoryCode:[''],
+      description:[''],
+      desc:[],
+      uom:[],
+      hsnSacCode:[],
+      gstPer:[],
+      salePrice:[],
+      purchPrice:[],
+      mrp:[],
+      principleItem:[],
 
     });
   }
@@ -158,11 +191,23 @@ declare var $: any;
   };
 
   LoadModal(){
-    // alert("loading Search form....");
     this.adminForm1.get('searchItemCode').reset();
+    this.resetDet();
+    this.searchBy='ITEM NUMBER';
+  }
+
+  resetDet() {
     this.searchItemId=null;
-    this.searchItemCode=null;
+    this.searchByItemDesc=null;
     this.searchItemName=null;
+    this.segment=null;
+    this.desc=null;
+    this.uom=null;
+    this.mrp=null;
+    this.hsnSacCode=null;
+    this.purchPrice=null;
+    this.gstPer=null;
+    this.principleItem =null;
     this.lstcomments=null;
   }
 
@@ -174,8 +219,14 @@ declare var $: any;
     $("#partSearch").modal('show');
   }
 
-
   F9Search() {
+    var sType=this.adminForm1.get('searchBy').value
+    if(sType =='ITEM NUMBER') { this.F9SearchItemCode()}
+    if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc()}
+  }
+
+
+  F9SearchItemCode() {
 
     // const formValue: IAdmin = this.adminForm1.value;
     // alert ("WIP...." + this.adminForm1.get('searchItemName').value);
@@ -198,18 +249,47 @@ declare var $: any;
       data =>{
         this.lstcomments= data;
         console.log(data);
+        // alert("Length :"+this.lstcomments.length);
+        // if(this.lstcomments !=null){
+          if(this.lstcomments.length>0){
+          this.segment=this.lstcomments[0].SEGMENT;
+          this.desc=this.lstcomments[0].DESCRIPTION;
+          this.uom=this.lstcomments[0].UOM;
+          this.mrp=this.lstcomments[0].MRP;
+          this.hsnSacCode=this.lstcomments[0].HSNSACCODE;
+          this.purchPrice=this.lstcomments[0].NDP;
+          this.gstPer=this.lstcomments[0].GSTPERCENTAGE;
+          this.principleItem =this.lstcomments[0].PRINCPLEITEM;
+          this.adminForm1.patchValue(data);
+        }else { alert ( "Stock Details not availabe for item - "+segment1);}
       })
 
   }
 
-    // var segment1=this.onhandDetailsForm.get('searchItemCode').value
-    // let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
-    // this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
-    //   data =>{
-    //     this.lstcomments= data;
-    //     console.log(data);
-    //   })
-    // }
+
+
+  
+  F9SearchItemDesc(){
+
+    var itemDesc=this.adminForm1.get('searchByItemDesc').value
+    itemDesc=itemDesc.toUpperCase();
+
+    // alert("Segment :" +segment1);
+
+    if(itemDesc ==undefined || itemDesc==null) {
+      alert ("Enter Item Description ....") ;return;
+     }
+   
+    this.service.searchByItemDescf9(this.divisionId,itemDesc).subscribe(
+      data =>{
+        this.lstcomments= data;
+        console.log(data);
+
+      })
+
+  }
+
+  
 
     onOptioninvItemIdSelectedSingle(mItem) {
       // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
@@ -222,6 +302,51 @@ declare var $: any;
         this.searchItemCode=selectedValue.SEGMENT;
       }
       // alert(selectedValue.itemId+","+selectedValue.DESCRIPTION+","+selectedValue.SEGMENT);
+
+    }
+
+    onSearchTypeSelected(evnt) {
+      // alert ("in onSearchTypeSelected ")
+    //  this.LoadModal();
+    this.resetDet();
+
+      if(evnt=='ITEM NUMBER') {this.searchByItem=true;}
+      if(evnt=='ITEM DESCRIPTION') {this.searchByItem=false;}
+    }
+
+
+    Select(itemNumber: any) {
+
+      // alert ("Item Number :" +itemNumber);
+      this.searchByItem=true;
+      let select1=this.ItemIdList.find(d=>d.SEGMENT===itemNumber);
+      this.searchBy='ITEM NUMBER';
+      // this.searchItemCode=itemNumber;
+      this.searchItemName=select1.DESCRIPTION;
+      this.adminForm1.patchValue({ searchItemCode: itemNumber,});
+
+      if (select1==undefined) {
+        alert ("Please select valid Item Code ....") ;return;
+       }
+       
+      this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+        data =>{
+          this.lstcomments= data;
+          console.log(data);
+          // alert("Length :"+this.lstcomments.length);
+          if(this.lstcomments.length>0){
+            this.segment=this.lstcomments[0].SEGMENT;
+            this.desc=this.lstcomments[0].DESCRIPTION;
+            this.uom=this.lstcomments[0].UOM;
+            this.mrp=this.lstcomments[0].MRP;
+            this.hsnSacCode=this.lstcomments[0].HSNSACCODE;
+            this.purchPrice=this.lstcomments[0].NDP;
+            this.gstPer=this.lstcomments[0].GSTPERCENTAGE;
+            this.principleItem =this.lstcomments[0].PRINCPLEITEM;
+            this.adminForm1.patchValue(data);
+          } else { alert ( "Stock Details not availabe for item - "+itemNumber);}
+         })
+
 
     }
 
