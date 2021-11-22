@@ -38,7 +38,11 @@ export class AllReportsComponent implements OnInit {
   spstktrfMdSumToLoc:number;
   spIssueSummtoDate:Date;
   spstktrfMdToLoc:number;
+  sppurRegiSummfromDate:Date;
+  sppurRegiSummtoDate:Date;
   public BillShipList: Array<string> = [];
+  public BillShipFromList: Array<string> = [];
+  public BillShipToList: Array<string> = [];
 
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -53,7 +57,22 @@ export class AllReportsComponent implements OnInit {
   stklgrsubInv:string;
   stockLegfromDate:Date;
   stockLegtoDate:Date;
- 
+  spIssSmryfromDate:Date;
+  spIssSmrytoDate:Date; 
+  spproformafromDate:Date;
+  spproformatoDate:Date;
+  spcreditnotregtoDate:Date;
+  spcreditnotregfromDate:Date;
+  sppurRegidetailfromDate:Date;
+  sppurRegidetailtoDate:Date;
+  spstktrfRecivedfromDate:Date;
+  spstktrfRecivedToDate:Date;
+  spstktrfRecivedToLoc:number;
+  spstktrfRecivedFromLoc:number;
+  spstktrfRecivedSumfromDate:Date;
+  spstktrfRecivedSumToDate:Date;
+  spstktrfRecivedSumToLoc:number;
+  spstktrfRecivedSumFromLoc:number;
 
   constructor(private fb: FormBuilder, private router: Router,private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.reportForm = this.fb.group({ 
@@ -79,6 +98,24 @@ export class AllReportsComponent implements OnInit {
   stklgrsubInv:[],
   stockLegfromDate:[],
   stockLegtoDate:[],
+  spIssSmryfromDate:[],
+  spIssSmrytoDate:[], 
+  spproformafromDate:[],
+  spproformatoDate:[],
+  spcreditnotregfromDate:[],
+  spcreditnotregtoDate:[],
+  sppurRegiSummfromDate:[],
+  sppurRegiSummtoDate:[],
+  sppurRegidetailtoDate:[],
+  sppurRegidetailfromDate:[],
+  spstktrfRecivedToDate:[],
+  spstktrfRecivedfromDate:[],
+  spstktrfRecivedToLoc:[],
+  spstktrfRecivedFromLoc:[],
+  spstktrfRecivedSumfromDate:[],
+  spstktrfRecivedSumToDate:[],
+  spstktrfRecivedSumToLoc:[],
+  spstktrfRecivedSumFromLoc:[],
     })
   }
 
@@ -103,8 +140,22 @@ export class AllReportsComponent implements OnInit {
    this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     data =>{ this.ItemIdList = data;
       console.log(this.ItemIdList);
-
 });
+
+
+this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+.subscribe(
+  data => {
+    this.BillShipToList = data;
+  }
+);
+
+this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+.subscribe(
+  data => {
+    this.BillShipFromList = data;
+  }
+);
   }
   SPdebtorsReport(){
     var invcDt2 = this.reportForm.get('invcDt1').value;
@@ -278,6 +329,146 @@ export class AllReportsComponent implements OnInit {
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.stklgrtReport(invcDt1,invcDt4,stklgrsubInv,searchItemCode,sessionStorage.getItem('locId'),stkLgrUserName)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spIssSmry(){
+    var spreceiptfromDate2 = this.reportForm.get('spIssSmryfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spIssSmrytoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spIssSmryReport(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spproforma(){
+    var spreceiptfromDate2 = this.reportForm.get('spproformafromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spproformatoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spproformaReport(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spcreditnotreg(){
+    var spreceiptfromDate2 = this.reportForm.get('spcreditnotregfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spcreditnotregtoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spcreditnotregReport(fromDate,toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  sppurRegiSumm(){
+    var spreceiptfromDate2 = this.reportForm.get('sppurRegiSummfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('sppurRegiSummtoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.sppurRegiSummReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  sppurRegidetail(){
+    var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.sppurRegidetailReport(fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spclosstrock(){
+    // var spreceiptfromDate2 = this.reportForm.get('sppurRegidetailfromDate').value;
+    // var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    // var spreceipttoDate2 = this.reportForm.get('sppurRegidetailtoDate').value;
+    // var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spclosstrockReport(sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spstktrfRecived(){
+    var spreceiptfromDate2 = this.reportForm.get('spstktrfRecivedfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spstktrfRecivedToDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+   var shipFromLocId=this.reportForm.get('spstktrfRecivedFromLoc').value
+   var shipToLocId=this.reportForm.get('spstktrfRecivedToLoc').value
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spstktrfRecivedReport(fromDate,toDate,shipFromLocId,shipToLocId)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+  }
+
+
+  spstktrfRecivedSum(){
+    var spreceiptfromDate2 = this.reportForm.get('spstktrfRecivedSumfromDate').value;
+    var fromDate = this.pipe.transform(spreceiptfromDate2, 'dd-MMM-yyyy');
+    var spreceipttoDate2 = this.reportForm.get('spstktrfRecivedSumToDate').value;
+    var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
+   var shipFromLocId=this.reportForm.get('spstktrfRecivedSumToLoc').value
+   var shipToLocId=this.reportForm.get('spstktrfRecivedSumFromLoc').value
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spstktrfRecivedSumReport(fromDate,toDate,shipFromLocId,shipToLocId)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);

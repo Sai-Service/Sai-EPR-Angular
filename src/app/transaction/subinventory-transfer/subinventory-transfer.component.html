@@ -54,7 +54,7 @@
               To subinventory:
             </td>
             <td>
-                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" #myinput >
+                  <select class="form-control"  formControlName="transferSubInv" style="width: 110px" (ngModelChange)="onOptionSubInv($event)" #myinput >
                           <option>--Select--</option>
 
           <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>

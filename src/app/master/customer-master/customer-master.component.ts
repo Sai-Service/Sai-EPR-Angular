@@ -4,8 +4,9 @@ import { FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/f
 import { Router } from '@angular/router';
 import { MasterService } from '../master.service';
 import { Location } from "@angular/common";
-import { DatePipe } from '@angular/common'
-import { formatDate } from '@angular/common'
+import { DatePipe } from '@angular/common';
+import { formatDate } from '@angular/common';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 interface IcustomerMaster {
   custType: string;
@@ -220,9 +221,9 @@ export class CustomerMasterComponent implements OnInit {
   aadharNo: number;
   limitData: any;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  customerNameSearch: any[];
 
-
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router,private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
       customerId1: [''],
       emplId: [''],
@@ -1151,5 +1152,26 @@ export class CustomerMasterComponent implements OnInit {
       alert("Please enter Pincode in proper format");
     }
   }
+
+  custNameSearch(custName) {
+    alert(custName)
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            this.customerNameSearch = data.obj;
+            // console.log(this.accountNoSearch);
+          }
+          else {
+            if (data.code === 400) {
+              alert(data.message);
+              // this.display='block'; 
+            }
+          }
+        }
+      );
+  }
+
+
 }
 

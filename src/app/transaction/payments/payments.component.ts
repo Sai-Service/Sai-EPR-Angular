@@ -86,7 +86,7 @@ export class PaymentsComponent implements OnInit {
   TRUER=false; recFagDiss=true;
   public bankAccountNumList: any;
   public paymentDocNameList:Array<string>=[];
-  public statusLookupCodeList:Array<string>=[];
+  public statusLookupCodeList:any=[];
 public paymentIdListList:Array<string>=[];
 public PaymentReturnArr:any;
 appAmt:number;
@@ -186,7 +186,16 @@ voucherNo:[],
       data => {
         this.statusLookupCodeList = data;
         console.log(this.statusLookupCodeList);
-      }
+
+      let selectStatus = this.statusLookupCodeList.find(v => v.lookupValue === 'NEGOTIABLE');
+          console.log(selectStatus);
+          var patch = this.paymentForm.get('obj1') as FormArray;
+          (patch.controls[0]).patchValue(
+            {
+              statusLookupCode: selectStatus.lookupValue,
+            }
+          );
+          }
     );
     this.transactionService.paymentIdListList()
     .subscribe(
@@ -251,7 +260,7 @@ voucherNo:[],
 
 
      paymentInvoiceFind(suppNo:number,ouId:number){
-       
+
       var suppNo1=this.paymentForm.get('obj1').value;
       this.payInvoiceLineDtlArray().clear();
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
@@ -273,8 +282,8 @@ voucherNo:[],
       }
       );
       (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
-        
-      
+
+
     }
 
  changeAmount(i){
@@ -418,37 +427,32 @@ voucherNo:[],
          this.appAmt=0;
          var arrayControle=this.paymentForm.get('obj').value;
          for (let i=0;i<this.payInvoiceLineDtlArray().length;i++){
-          alert(arrayControle[i].selectFlag+'SelectFlag');
+          // alert(arrayControle[i].selectFlag+'SelectFlag');
        if (arrayControle[i].selectFlag==true)
       {
-        alert('yyyy '+arrayControle[i].invoiceAmt)
+        // alert('yyyy '+arrayControle[i].invoiceAmt)
        this.appAmt = this.appAmt + Number(arrayControle[i].invoiceAmt);
-       alert(this.appAmt);
+      //  alert(this.appAmt);
          // invPayment.push(id)
        //
        }
      }
      const totlPayHeaderControls=this.paymentForm.get('obj1').value;
-        if(this.appAmt>totlPayHeaderControls[0].PayAmount)
+        if(this.appAmt>totlPayHeaderControls[0].PayAmount || this.appAmt<totlPayHeaderControls[0].PayAmount)
         {
-          // (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+          alert('in If');
+          (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
           alert("You can not apply payment where actual amount is greater than selected Amount");
-          
+
         }
         else{
+          alert('in else');
           (document.getElementById('btnSave') as HTMLInputElement).disabled = false;
         }
-      
+
  }
 
 paymentSave(){
-  const totlPayHeaderControls=this.paymentForm.get('obj1').value;
-  if(this.totAmount>totlPayHeaderControls[0].PayAmount)
-  {
-    (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
-    alert("You can not apply payment where actual amount is greater than selected Amount");
-    
-  }
   this.totAmt=0;
   const totlCalControls=this.paymentForm.get('obj').value;
   for (var k=0;k<this.payInvoiceLineDtlArray.length;k++)   {
@@ -487,8 +491,9 @@ paymentSave(){
     })
   }
   }
- 
+
   jsonData.totAmount = this.totAmount;
+  jsonData.appAmt=this.appAmt;
   // alert(this.totAmount);
   jsonData.invPayment=invPayment;
   // let paymentObject=Object.assign(new PaymentObj(),jsonData);
@@ -503,14 +508,19 @@ console.log(jsonData);
 
       this.PaymentReturnArr =res.obj;
       console.log(this.PaymentReturnArr);
-      patch.controls[0].patchValue({docNo: this.PaymentReturnArr.checkNumber})
+      patch.controls[0].patchValue({docNo: this.PaymentReturnArr.docSeqValue})
+      this.paymentForm.get('obj1').disable();
+      (document.getElementById('btnSelect') as HTMLInputElement).disabled = true;
     } else {
       if (res.code === 400) {
-        alert('Data already present in the data base');
+        alert(res.msg);
         // this.poReceiptForm.reset();
       }
     }
   });
+}
+closeRefresh(){
+  this.paymentForm.get('appAmt').reset();
 }
 
 close(){
@@ -521,5 +531,7 @@ refresh()
       {
         window.location.reload();
       }
+      Validate(){
 
+      }
     }

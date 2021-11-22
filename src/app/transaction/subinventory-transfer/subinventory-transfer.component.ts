@@ -274,12 +274,12 @@ export class SubinventoryTransferComponent implements OnInit {
       .subscribe((data) => {
         this.tosubInvCode = data;
       });
-    this.service
-      .issueByList(this.locId, this.deptId, this.divisionId)
-      .subscribe((data) => {
-        this.issueByList = data;
-        console.log(this.issueByList);
-      });
+    // this.service
+    //   .issueByList(this.locId, this.deptId, this.divisionId)
+    //   .subscribe((data) => {
+    //     this.issueByList = data;
+    //     console.log(this.issueByList);
+    //   });
 
     // this.service.ItemIdList().subscribe(
     //   data => {
@@ -295,6 +295,17 @@ export class SubinventoryTransferComponent implements OnInit {
     // this.SubNo="12PU";
   }
 
+
+  onOptionSubInv(event:any){
+    var seltoSubInv = this.tosubInvCode.find(d =>d.subInventoryCode ===event);
+    this.service
+    .issueByList(this.locId, seltoSubInv.deptId, this.divisionId)
+    .subscribe((data) => {
+      this.issueByList = data;
+      console.log(this.issueByList);
+    });
+  
+  }
   subinventoryTransfer(SubinventoryTransferForm: any) {}
 
   keytab(event, maxLength, nxtEle) {

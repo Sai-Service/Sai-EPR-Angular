@@ -323,10 +323,13 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
   }
 
 
+  custNameSearchFn1(custName,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&divisionId=${divisionId}`);
+  }
+
   custNameSearchFn(custName, ouId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&ouId=${ouId}`);
   }
-
 
   VariantSearchFn(mainModel): Observable<any> {
     // alert("MS>> "+mainModel);

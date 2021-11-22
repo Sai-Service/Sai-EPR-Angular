@@ -12,20 +12,20 @@ export class TransactionService {
   headers: any;
   receiptNumber:number;
   ServerUrl :string;
-    
+
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
     this.ServerUrl = AppConstants.ServerUrl;
    }
 
-  
+
 
   public getsearchByApINV(content) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/apInv/Search';  
+    const url = this.ServerUrl + '/apInv/Search';
     return this.http.post(url, content, options);
   }
 
@@ -33,7 +33,7 @@ export class TransactionService {
   //   const options = {
   //     headers: this.headers
   //   };
-  //   const url = this.ServerUrl + '/apInvPayment/paymentSupp';  
+  //   const url = this.ServerUrl + '/apInvPayment/paymentSupp';
   //   return this.http.post(url, content, options);
   // }
 //////////////////poInvoice////////////////
@@ -67,7 +67,7 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
 
   paymentMethodList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
-  } 
+  }
 
   DistributionDataList(distributionSet,amount): Observable<any> {
     // return this.http.get(this.ServerUrl +`/ApDistSetAll/distSetAmount?distributionSetName=${distributionSet}&distributionAmt=${amount}`);
@@ -75,13 +75,13 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
   }
   prepayTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/locationMst');
-  } 
+  }
 
    public apInvSaveSubmit(poRecord) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/apInv';  
+    const url = this.ServerUrl + '/apInv';
     return this.http.post(url, poRecord, options);
   }
 
@@ -96,7 +96,7 @@ apInvoiceCancellation(invoiceNum,emplId): Observable<any> {
   getTaxDetails(taxCategoryId,invItemId, disAm,amount): Observable<any> {
     return this.http.get(this.ServerUrl +`/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
   }
-  
+
   // ============================ PO INVOICE  TDS SAVE=======================
   public PoInvoiceTdsDataSubmit(poTdsRecord) {
     const options = {
@@ -117,27 +117,27 @@ getsearchByInvDtls(suppNo,ouId): Observable<any> {
 
 bankAccountNumList(ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/ceBankAccounts/BankList/${ouId}`);
-}  
+}
 statusLookupCodeList(): Observable<any> {
   return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayStatus');
-} 
+}
 paymentIdListList(): Observable<any> {
   return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
-} 
+}
 docCategoryCodeList(bankAccountId): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/PayDoc/${bankAccountId}`);
-} 
+}
 
 
 paymentDocNameList(docCategoryCode): Observable<any> {
   return this.http.get(this.ServerUrl +`/cePaymentDoc/DocName/${docCategoryCode}`);
-} 
+}
 
 public paymentSaveSubmit(poRecord) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/apInvPayment/NewPost';  
+  const url = this.ServerUrl + '/apInvPayment/NewPost';
   return this.http.post(url, poRecord, options);
 }
 
@@ -200,16 +200,19 @@ invTypeListFN():Observable<any>{
 invItemList():Observable<any>{
   return this.http.get(this.ServerUrl +`/itemMst`)
 }
+invItemList1(divId):Observable<any>{
+  return this.http.get(this.ServerUrl +`/itemMst/nonInvList/${divId}`)
+}
 
 public ARInvoiceSubmit(Record) {
   const options = {
     headers: this.headers
   };
-  const url = this.ServerUrl + '/arInv';  
+  const url = this.ServerUrl + '/arInv';
   return this.http.post(url, Record, options);
 }
 
- 
+
 
 ///////////////////////////AVERAGE COST UPDATE//////////////////////////
 

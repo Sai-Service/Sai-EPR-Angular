@@ -41,6 +41,8 @@ declare var $: any;
   todaysDataTime = '';
   divisionId:number;
   displayMaruti: boolean;
+  isVisible1: boolean = true;
+  isVisible2: boolean = true;
   fullName:string;
   deptName:string;
   locName:string;
@@ -55,6 +57,7 @@ declare var $: any;
   searchByItemDesc:string;
   userList2: any[] = [];
   lastkeydown1: number = 0;
+  displayMarutiMenu:Boolean;
 
   segment:string;
   desc:string;
@@ -151,11 +154,19 @@ declare var $: any;
     });
 
     if (this.divisionId===1){
-      this.displayMaruti=true;
+    
     }
    else if (this.divisionId===2){
       this.displayMaruti=false;
     }
+
+if (Number(sessionStorage.getItem('divisionId'))===2){
+this.isVisible1=false;
+}
+else if (Number(sessionStorage.getItem('divisionId'))===1){
+this.isVisible1=true;
+}
+
   }
 
 

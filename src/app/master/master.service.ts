@@ -1213,6 +1213,11 @@ public completeInvoice(invoiceno)
   const url=this.ServerUrl+`/arInv/invComplete/${invoiceno}`;
   return this.http.put(url,option);
 }
+
+arInvoiceList(type):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/rcvType/typeWise/${type}`);
+}
 ////////////Subinventory Transfer////////
 getsearchBySubInvTrfNo(subtrfNo,locId):Observable<any>
 {
@@ -1947,6 +1952,10 @@ viewAccounting1(receiptNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
+viewAPAccounting(invoiceNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/apInv/${invoiceNum}`);
+}
+
 getsearchByshipmentNo(shipmentNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
 }
@@ -1993,6 +2002,11 @@ getInterBranch(InterBranch1, lType):Observable<any>{
 
     });
   }
+
+  getInterBranchNatural(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
+  }
+
 
 lookupNameList(mlookupValue, mlookupType) {
   // alert('servie=call');
@@ -3170,5 +3184,9 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         const url = this.ServerUrl + '/rcvType';
         return this.http.post(url, RecTransTypeMasterRecord, options);
       }
+
+
+
+
 
 }

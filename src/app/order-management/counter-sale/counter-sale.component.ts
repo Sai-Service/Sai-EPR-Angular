@@ -1138,6 +1138,7 @@ export class CounterSaleComponent implements OnInit {
   };
 
   accountNoSearch(custAccountNo) {
+    // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
         data => {
@@ -1151,6 +1152,7 @@ export class CounterSaleComponent implements OnInit {
             this.CounterSaleOrderBookingForm.get('custName').disable();
             this.CounterSaleOrderBookingForm.get('mobile1').disable();
             if (this.custSiteList.length === 1) {
+              // alert('hi')
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
@@ -1341,31 +1343,18 @@ export class CounterSaleComponent implements OnInit {
   }
 
   custNameSearch(custName) {
-    // alert(custName)
-    this.orderManagementService.custNameSearchFn(custName, this.ouId)
+    alert(custName)
+    this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
           if (data.code === 200) {
             this.customerNameSearch = data.obj;
             console.log(this.accountNoSearch);
-            // alert(data.obj.length);
-            for (let i = 0; data.obj.length; i++) {
-              // alert(data.obj.length);
-              this.CounterSaleOrderBookingForm.patchValue(data.obj[i]);
-              this.custAddress = data.obj[i].billToAddress;
-              this.custAccountNo = data.obj[i].accountNo;
-              this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-              this.CounterSaleOrderBookingForm.get('mobile1').disable();
-            }
-
           }
           else {
             if (data.code === 400) {
               alert(data.message);
-              this.displaycreateCustomer = false;
-              this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-              this.CounterSaleOrderBookingForm.get('custName').disable();
-              this.CounterSaleOrderBookingForm.get('mobile1').disable();
+              this.display='block'; 
             }
           }
         }
@@ -1533,7 +1522,7 @@ export class CounterSaleComponent implements OnInit {
                     orderedItem: data.obj[i].description,
                     hsnSacCode: data.obj[i].hsnSacCode,
                     uom: data.obj[i].uom,
-                    unitSellingPrice: data.obj[i].priceValue,
+                    unitSellingPrice: data.obj[0].priceValue,
                   });
                   this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                     .subscribe(
@@ -1610,7 +1599,7 @@ export class CounterSaleComponent implements OnInit {
                     orderedItem: data.obj[i].description,
                     hsnSacCode: data.obj[i].hsnSacCode,
                     uom: data.obj[i].uom,
-                    unitSellingPrice: data.obj[i].priceValue,
+                    unitSellingPrice: data.obj[0].priceValue,
                   });
                 
                   this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)

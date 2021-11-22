@@ -39,14 +39,10 @@ interface IPriceList {
   priceSubType:string;
   startDate:Date;
   endDate:string;
-
-  // priceValue:number;
-
-
   priceListHeaderId:number;
   fileName :string; 
   docType :string;
-
+  itemId:number;
 }
 @Component({
   selector: 'app-pricelist-master',
@@ -58,6 +54,7 @@ export class PricelistMasterComponent implements OnInit {
   isVisible1:boolean=false;
   isVisible:boolean=false;
   progress = 0;
+  cusrOpraion:string;
   // message = '';
   selectFile?: File;
 
@@ -235,7 +232,7 @@ export class PricelistMasterComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    this.displayLineDetails=false;
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
     this.divisionName=sessionStorage.getItem('divisionName');
@@ -510,7 +507,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   }
   
     newMast() {
-
+      this.cusrOpraion='Save';
       this.CheckHeaderValidations();
       if (this.headerValidation==true ) { alert("Header Validation Sucessfull...") }
       else { alert("Header Validation Failed... Please Check");  return;   }
@@ -530,23 +527,19 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
           alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
           return;
         }
-       
-     
       alert("Heder Validation : "+this.headerValidation +"\nLine Validation : "+this.lineValidation);
-      
       if (this.headerValidation  && this.lineValidation ) 
       {
         alert("Data Validation Sucessfull....\nPosting data  to PRICE LIST TABLE")
-           
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.PriceListMasterSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFULLY');
+          alert(res.message);
           // this.priceListMasterForm.reset();
           this.priceListMasterForm.disable()
         } else {
           if (res.code === 400) {
-            alert('ERROR WHILE INSERTING');
+            alert(res.message);
             // this.priceListMasterForm.reset();
           }
         }
@@ -641,6 +634,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     // this.isVisible1=false;
     this.priceListMasterForm.reset();
     this.display1= false;
+    this.displayLineDetails=true;
     let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
     this.priceListMasterForm.patchValue(select);
     // console.log(select.priceListDetailList[0]);
@@ -1027,16 +1021,22 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   CheckLineValidations(i) {
     // alert(this.priceListLineDetails[i].itemId)
     // alert('addrow index '+i);
-  
-    // var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
-    var prcLineArr1= this.priceListLineDetails;
+    // alert(this.cusrOpraion);
+    if (this.cusrOpraion==='Save'){
+    var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
+    var lineValue1=prcLineArr1[i].itemId;
+    var lineValue2=prcLineArr1[i].batchCode;
+    var lineValue3=prcLineArr1[i].priceValue;
+  }
+  else{
+    var prcLineArr1=  (this.priceListLineDetails)
     // alert(prcLineArr1[i].itemId);
     var lineValue1=prcLineArr1[i].itemId;
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;
-  
-    // alert("Line Value :"+lineValue1);
-     var j=i+1;
+  }
+     
+   var j=i+1;
     if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
       alert("Line-"+j+ " ITEM NUMBER :  should not be null value/ Select valid item from the list");
       this.lineValidation=false;

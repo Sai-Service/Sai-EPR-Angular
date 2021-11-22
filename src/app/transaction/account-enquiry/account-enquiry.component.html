@@ -60,7 +60,7 @@
                                                             <td style="width: 15%"class="LabelFontStyle">
                                                                     From&nbsp;Period:
                                                             </td>
-                                                            
+
                                                                     <td >
                                                                             <select class="form-control"  formControlName="periodNameFrm" >
                                                                                 <option>--Select--</option>
@@ -69,11 +69,11 @@
                                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                            
+
                                                             <td style="width: 15%"class="LabelFontStyle">
                                                                     To&nbsp;Period:
                                                             </td>
-                                                            
+
                                                                     <td >
                                                                             <select class="form-control"  formControlName="periodNameTo" >
                                                                                 <option>--Select--</option>
@@ -101,16 +101,16 @@
                                                             <td style="width: 15%"class="LabelFontStyle">
                                                                     From&nbsp;Account:
                                                             </td>
-                                                            
+
                                                                     <td >
                                                                             <input formControlName="segmentNameFrm" value={{segmentNameFrm}}
                                                                             data-toggle="modal" data-target="#myModel"
                                                                             placeholder="Select Account Code" class="form-control"
                                                                             (click)="openCodeCombination()"[(ngModel)]="segmentNameFrm">
-                
+
                         <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
                         aria-hidden="true" style="width: 500px; margin-left:350px">
-                
+
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -208,7 +208,7 @@
                                         <tr>
                                             <td style="width: 15%" class="LabelFontStyle">
                                                 Inter&nbsp;Branch&nbsp;:
-                
+
                                             </td>
                                             <td>
                                                 <select formControlName="segment5" id="segment5" class="form-control"
@@ -227,25 +227,34 @@
                                                 <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
                                             </td>
                                         </tr>
-                
+
                                     </table>
                                     <div class="modal-footer">
                                       <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination()" >&times;</button> -->
                                       <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
                                       [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
                                           (click)="fnCancatination()">OK</button>
-                
+
                                   </div>
-                
+
                                 </div>
-                
+
                             </div>
                         </div>
                     </div>
                                                                         </td>
                                                     </tr>
-                                                 
-                                                            
+                                                    <tr>
+                                                                        <td style="width: 15%"class="LabelFontStyle">
+                                                                          Transaction&nbsp;Date:
+                                                                  </td>
+
+                                                                          <td >
+                                                                                  <input type="date" class="form-control"  formControlName="postedDate" >
+                                                                          </td>
+                                                    </tr>
+
+
                                                 </table>
                                                 </fieldset>
                                         </td>
@@ -254,10 +263,10 @@
                     </td>
                 </tr>
             </table>
-                                          
+
         </div>
        </div>
-      
+
 
 </div>
         </div>
@@ -278,18 +287,18 @@
             <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;border-collapse:collapse;font-size: 14px;">
                <thead>
                    <tr class="GridHeader">
-  
+
                         <th scope="col">Document Sequence</th>
                         <th scope="col">Journal Type</th>
                         <th scope="col">Name</th>
-  
+
                         <th scope="col">Entered Debit</th>
                         <th scope="col">Entered Credit</th>
-                        
-  
+
+
                               </tr>
                       </thead>
-  
+
                           <tr *ngFor="let com of JVdata" class="ItemStyle" style="text-decoration:none;color: black;text-align: center;font-size: 12px;">
                           <td><a href="" data-toggle="modal" data-target="#exampleModalCenter5" (click)='viewAccounting(com.docSequenceValue)' value="{{com.docSequenceValue}}">  {{com.docSequenceValue}}</a> </td>
                           <!-- <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter5"
@@ -299,12 +308,12 @@
                           <!-- <td><a href="http://localhost:8081/glHeader/receiptNoWise/{{com.docSequenceValue}}"> {{com.docSequenceValue}}</a></td> -->
                           <td>{{com.jeCategory}}</td>
                           <td>{{com.name}}</td>
-                          
+
                           <td style="text-align: right;padding-right: 15px;">{{com.enteredDr}}</td>
                           <td style="text-align: right;padding-right: 15px;">{{com.enteredCr}}</td>
-                          
+
                         </tr>
-  
+
           </table>
           </div>
           <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -321,7 +330,7 @@
                 <tr>
                     <td style="width: 18%" class="LabelFontStyle">
                         Journal&nbsp;:&nbsp;
-                    </td> 
+                    </td>
                     <td>
                         <input disabled formControlName="jeSource" id="jeSource" class="form-control" [ngModel]="jeSource" >
                     </td>
@@ -330,7 +339,7 @@
                     </td>
                     <td>
                         <input disabled formControlName="name" class="form-control" [ngModel]="name" >
-                    </td> 
+                    </td>
                     <td style="width: 18%" class="LabelFontStyle">
                         Ledger&nbsp;:&nbsp;
                     </td>
@@ -341,19 +350,19 @@
                 <tr>
                     <td style="width: 18%" class="LabelFontStyle">
                         Category&nbsp;:&nbsp;
-                    </td> 
+                    </td>
                     <td>
                         <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
                     </td>
                     <td style="width: 18%" class="LabelFontStyle">
                         Date&nbsp;:&nbsp;
-                    </td> 
+                    </td>
                     <td>
                         <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
                     </td>
                     <td style="width: 18%" class="LabelFontStyle">
                         Period&nbsp;:&nbsp;
-                    </td> 
+                    </td>
                     <td>
                         <input disabled  formControlName="periodName" id="periodName" class="form-control" [ngModel]="periodName" >
                     </td>
@@ -409,7 +418,7 @@
                             <td style="width: 8rem;" hidden>	SS-C-GST Liability Standard-11PU</td>
                             <td style="width: 8rem;" hidden>	SS-C-GST Liability Standard-11PU</td>
                         </tr>
-                       
+
                      </table>  -->
                 </div>
                 <div class="modal-footer">
