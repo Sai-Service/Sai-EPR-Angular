@@ -1945,6 +1945,10 @@ viewAccounting1(receiptNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
+viewAPAccounting(invoiceNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/apInv/${invoiceNum}`);
+}
+
 getsearchByshipmentNo(shipmentNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
 }
@@ -1991,6 +1995,11 @@ getInterBranch(InterBranch1, lType):Observable<any>{
 
     });
   }
+
+  getInterBranchNatural(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
+  }
+
 
 lookupNameList(mlookupValue, mlookupType) {
   // alert('servie=call');
