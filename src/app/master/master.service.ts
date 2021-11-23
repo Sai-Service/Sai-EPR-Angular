@@ -1961,6 +1961,13 @@ getsearchByshipmentNo(shipmentNo): Observable<any> {
 }
 
 
+viewAccountingCSRev(ordNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/arInv/${ordNum}`);
+  // http://localhost:8081/glHeader/arInv/202110112239
+}
+
+
+
 public poinvCre(segment1) {
   const options = {
     headers: this.headers

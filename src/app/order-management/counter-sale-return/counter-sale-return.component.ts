@@ -25,6 +25,8 @@ export class CounterSaleReturnComponent implements OnInit {
 
   lstOrderHeader: any;
   lstOrderItemLines:any;
+  viewAccounting1: any[];
+  viewAccounting2: any[];
   
   lstOrderLines: any;
   lstCntrRtnDetails:any;
@@ -108,6 +110,17 @@ export class CounterSaleReturnComponent implements OnInit {
   customerSiteId :number;
   custPoNumber :string;
   custPoDate :Date
+
+  ledgerId:number;
+  docSeqValue:string;
+  description: string;
+  periodName: string;
+  postedDate: Date;
+  jeCategory: string;
+  name1: string;
+  runningTotalCr: number;
+  runningTotalDr: number;
+
 
   displayButton = true;
   validateStatus = false;
@@ -198,6 +211,17 @@ export class CounterSaleReturnComponent implements OnInit {
       customerSiteId :[],
       custPoNumber :[],
       custPoDate :[],
+
+      ledgerId:[],
+      docSeqValue:[],
+      description: [],
+      periodName: [],
+      postedDate: [],
+      jeCategory: [],
+      name1: [],
+      runningTotalCr: [],
+      runningTotalDr:[],
+    
 
 
 
@@ -928,6 +952,33 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
               
           } );    
           
+        }
+
+        viewAccounting(ordNumber: any) {
+          // alert(receiptNo);
+          this.service.viewAccountingCSRev(ordNumber).subscribe((res: any) => {
+            if (res.code === 200) {
+              this.viewAccounting2 = res.obj;
+              this.description = res.obj.description;
+              this.periodName = res.obj.periodName;
+              this.postedDate = res.obj.postedDate;
+              this.jeCategory = res.obj.jeCategory;
+              this.name1 = res.obj.name;
+              this.ledgerId = res.obj.ledgerId;
+              this.runningTotalDr = res.obj.runningTotalDr;
+              this.runningTotalCr = res.obj.runningTotalCr;
+              this.docSeqValue=res.obj.docSeqValue;
+              console.log(this.description);
+      
+              this.viewAccounting1 = res.obj.glLines;
+              console.log(this.viewAccounting1);
+              // alert(res.message);
+            } else {
+              if (res.code === 400) {
+                alert(res.message);
+              }
+            }
+          });
         }
 
 }
