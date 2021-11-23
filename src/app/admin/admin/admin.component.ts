@@ -36,6 +36,7 @@ declare var $: any;
 
   public ItemIdList:any[];
   lstcomments: any;
+  lstcomments1: any;
   ticketNo:string;
   today= new Date();
   todaysDataTime = '';
@@ -70,6 +71,7 @@ declare var $: any;
   principleItem:number;
 
   searchByItem =true;
+  searchByDesc=false;
 
 
 
@@ -220,6 +222,7 @@ this.isVisible1=true;
     this.gstPer=null;
     this.principleItem =null;
     this.lstcomments=null;
+    this.lstcomments1=null;
   }
 
   f9Key() {
@@ -293,7 +296,7 @@ this.isVisible1=true;
    
     this.service.searchByItemDescf9(this.divisionId,itemDesc).subscribe(
       data =>{
-        this.lstcomments= data;
+        this.lstcomments1= data;
         console.log(data);
 
       })
@@ -321,17 +324,20 @@ this.isVisible1=true;
     //  this.LoadModal();
     this.resetDet();
 
-      if(evnt=='ITEM NUMBER') {this.searchByItem=true;}
-      if(evnt=='ITEM DESCRIPTION') {this.searchByItem=false;}
+      if(evnt=='ITEM NUMBER') {this.searchByItem=true;this.searchByDesc=false;}
+      if(evnt=='ITEM DESCRIPTION') {this.searchByDesc=true; this.searchByItem=false;}
     }
 
 
     Select(itemNumber: any) {
 
       // alert ("Item Number :" +itemNumber);
-      this.searchByItem=true;
+     
+
       let select1=this.ItemIdList.find(d=>d.SEGMENT===itemNumber);
-      this.searchBy='ITEM NUMBER';
+      // this.searchBy='ITEM NUMBER';
+      this.searchByItem=true;
+      this.searchByDesc=true;
       // this.searchItemCode=itemNumber;
       this.searchItemName=select1.DESCRIPTION;
       this.adminForm1.patchValue({ searchItemCode: itemNumber,});
@@ -339,6 +345,8 @@ this.isVisible1=true;
       if (select1==undefined) {
         alert ("Please select valid Item Code ....") ;return;
        }
+
+
        
       this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
         data =>{

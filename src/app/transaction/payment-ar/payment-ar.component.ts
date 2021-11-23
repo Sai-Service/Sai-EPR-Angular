@@ -2379,6 +2379,11 @@ export class PaymentArComponent implements OnInit {
         }
 
       viewAccounting(receiptNo: any) {
+
+        this.viewAccountingArRcpt=null;
+        this.viewAccountingLines=null;
+        this.showViewActLine=false;
+
       this.service.viewAccountingArReceipt(receiptNo).subscribe((res: any) => {
       if (res.code === 200) {
         this.viewAccountingArRcpt = res.obj;
@@ -2404,7 +2409,7 @@ export class PaymentArComponent implements OnInit {
             console.log(this.viewAccountingLines);
             this.totalDr=res.obj[index].runningTotalDr;
             this.totalCr=res.obj[index].runningTotalCr;
-            alert(this.totalDr +","+this.totalCr);
+            // alert(this.totalDr +","+this.totalCr);
             } 
             else {
             if (res.code === 400) {
