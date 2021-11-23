@@ -289,9 +289,6 @@ export class CounterSaleReturnComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
-
-
-
   }
 
   onKey(event: any) {}
@@ -410,9 +407,15 @@ export class CounterSaleReturnComponent implements OnInit {
         .subscribe(
           data => {
             this.lstOrderLines = data.obj.oeOrderLinesAllList;
-              if(this.lstOrderLines==null ) {
+            // alert("this.lstOrderLines :"+this.lstOrderLines.length);
+              if(this.lstOrderLines.length==0 ) {
+               alert(" Order Fully Returned....");
+                // alert("in if part...");
                this.lineStatus=false;
+               this.validateStatus=false;
+               this.checkBoxAllItem=false;
              } else {
+              //  alert("in else part...");
                 console.log(this.lstOrderLines);
                 this.lineStatus=true;
                 this.validateStatus=true;
@@ -914,13 +917,18 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
        this.rtnDocNo=select.trxNumber;
        this.rtnDocDate=select.trxDate;
        this.rtnTotAmt=select.invoiceAmount;
-      // alert( "Rtn date : "+this.rtnDocDate);
+      
+
+      // alert( "Rtn taxableAmount : "+select.taxableAmount);
       
        this.transactionService.searchByInvoiceNoAR(mrtnNo)
        .subscribe(
          data => {
            if(data.invLines.length >0) {
             this.lstCntrRtnDetails = data.invLines;
+            this.rtnBaseAmt=data.taxableAmount;
+            this.rtnDisAmt=data.discount;
+            this.rtnTaxAmt=data.taxAmount;
             console.log(this.lstCntrRtnDetails);
               } else {alert ( "No Line Items Found.");}
               
