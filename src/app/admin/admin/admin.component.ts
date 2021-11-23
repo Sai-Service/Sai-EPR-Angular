@@ -322,7 +322,10 @@ this.isVisible1=true;
     onSearchTypeSelected(evnt) {
       // alert ("in onSearchTypeSelected ")
     //  this.LoadModal();
-    this.resetDet();
+    // this.resetDet();
+    this.lstcomments=null;
+    this.lstcomments1=null;
+    this.searchByItemDesc=null;
 
       if(evnt=='ITEM NUMBER') {this.searchByItem=true;this.searchByDesc=false;}
       if(evnt=='ITEM DESCRIPTION') {this.searchByDesc=true; this.searchByItem=false;}
@@ -335,9 +338,10 @@ this.isVisible1=true;
      
 
       let select1=this.ItemIdList.find(d=>d.SEGMENT===itemNumber);
-      // this.searchBy='ITEM NUMBER';
+      // this.searchBy='ITEM DESCRIPTION';
       this.searchByItem=true;
       this.searchByDesc=true;
+      // this.searchBy='ITEM NUMBER';
       // this.searchItemCode=itemNumber;
       this.searchItemName=select1.DESCRIPTION;
       this.adminForm1.patchValue({ searchItemCode: itemNumber,});

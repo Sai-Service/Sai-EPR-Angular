@@ -341,18 +341,23 @@ export class CounterSaleReturnComponent implements OnInit {
       .subscribe(
         data => {
           this.lstOrderHeader = data.obj;
+            if (data.code==400 && data.message=="Order Number Not Found ") {
+            alert(data.message + "-" + data.obj);
+            this.dispOrderDetails=false;
+             this.headerFound=false;
+            return;
+          } else {
+
+           
           this.lstOrderItemLines=data.obj.oeOrderLinesAllList;
           this.lstCreditNotes=data.obj.cmList;
           console.log(this.lstOrderHeader);
-         if(data.code===200){
-          this.dispOrderDetails=true;
-          this.searchButton=false;
-          // if(this.lstOrderHeader !=null) {
+            this.dispOrderDetails=true;
+            this.searchButton=false;
             this.showLineLov(this.lstOrderHeader.orderNumber);
             this.orderedDate=this.lstOrderHeader.orderedDate;
             this.headerFound=true;
             this.orderNumber=this.lstOrderHeader.orderNumber;
-            // this.orderedDate=this.lstOrderHeader.orderedDate;
             this.transactionTypeName=this.lstOrderHeader.transactionTypeName;
             this.trxNumber=this.lstOrderHeader.trxNumber;
             this.orderStatus=this.lstOrderHeader.orderStatus;
@@ -367,7 +372,6 @@ export class CounterSaleReturnComponent implements OnInit {
             this.disPer=this.lstOrderHeader.disPer;
             this.disAmt=this.lstOrderHeader.disAmt;
             this.discType=this.lstOrderHeader.discType;
-
             this.billToLocId=this.lstOrderHeader.billToLocId;
             this.shipToLocId=this.lstOrderHeader.shipToLocId;
             this.compId=this.lstOrderHeader.compId;
@@ -385,24 +389,14 @@ export class CounterSaleReturnComponent implements OnInit {
             this.customerSiteId=this.lstOrderHeader.customerSiteId;
             this.siteName=this.lstOrderHeader.siteName;
             this.mobile1=this.lstOrderHeader.mobile1;
-            
-            // this.counterSaleReturnOrderForm.patchValue(this.lstOrderHeader);
-            // this.shipHeaderId=null;
-          // } 
           
-            
-          //   this.resetMast();
-            // this.returntoVendorForm.get("showAllItem").disable();
-            // this.returntoVendorForm.get("rcvLines").disable();
-        }else{alert ("Order Number : "+mOrderNumber +" Not Found in this Location\nOr Return process already done for this Order No.");
-        this.dispOrderDetails=false;
-        this.headerFound=false;
-        }
+           }
           
       } );  }
 
 
       showLineLov(mOrderNumber) {
+        // alert("Line details :"+mOrderNumber);
           this.orderManagementService.counterSaleReturnSearchLines(mOrderNumber)
         .subscribe(
           data => {
