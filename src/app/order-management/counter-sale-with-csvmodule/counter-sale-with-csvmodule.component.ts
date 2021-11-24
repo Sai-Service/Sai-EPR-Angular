@@ -654,16 +654,13 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         }
       );
 
-    this.orderManagementService.orderTypeList(this.deptId, this.locId, this.ouId)
+    this.orderManagementService.orderTypeList(this.deptId,this.ouId)
       .subscribe(
         data => {
           this.orderTypeList = data;
           console.log(this.orderTypeList);
         }
       );
-
-
-
 
     this.service.cityList()
       .subscribe(

@@ -6,14 +6,35 @@
         (click)="dashboard()">&nbsp;&nbsp;Dashboard&nbsp;&nbsp;</a>
     </li>
     <li class="nav-item dropdown">
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
+    </li>
+    <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
         Customer Master
       </a>
     </li>
-     <li class="nav-item dropdown">
-      <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false"> Items Master </a>
+      <ul class="dropdown-menu">
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemCategory']">Item Category master</a> </li>
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a> </li>
+        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/LocatorMaster']">Locator Master</a> </li>
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/SubinventoryMaster']">Subinventory</a> </li>
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMasterLocator']">Item Master Locator</a> </li>
+      </ul>
     </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Price Master
+      </a>
+      <ul class="dropdown-menu">
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
+        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadPricelist']">Bulk Upload PriceList</a></li>
+      </ul>
+    </li>     
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -22,11 +43,10 @@
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li> 
-            <li><a class="dropdown-item" [routerLink]="['/admin/master/PendingShipmentList']">Pending Shipment List</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>  
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/PoReceiptForm']">PO Receipt</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/TdsInvoice']">TDS Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
           </ul>
         </li>
@@ -44,7 +64,7 @@
         </li>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Avg Cost Upadte</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Average Cost Update</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/OnHandDetails']">Stock Details</a></li>
@@ -132,16 +152,11 @@
       </ul>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
-        Bulk Upload
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true"  [routerLink]="['/admin/master/PendingShipmentList']" aria-expanded="false">
+        Pending Shipment List
       </a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadPricelist']">Bulk Upload PriceList</a></li>
-      </ul>
-    </li>
+    </li>  
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -174,22 +189,11 @@
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/FlexField']">FlexField Master</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/DocumentSequenceMaster']">Document Sequence Master</a></li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeeMaster']">Employee Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/orderType']">Order Type Master</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master-Workshop</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMaster']">Variant Master</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/ReceivableTranstypeMaster']">Receivable Trans Type Master</a> </li>
              
-              </ul>
-            </li>
-            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Items Master</a>
-              <ul class="dropdown-menu">
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemCategory']">Item Category master</a>
-                </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/LocatorMaster']">Locator Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/SubinventoryMaster']">Subinventory</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMasterLocator']">Item Master Locator</a> </li>
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supplier Master</a>

@@ -2079,7 +2079,7 @@
                                                 <td>
                                                     <input type="text"
                                                         style="width: 150px; background-color: white; border: none;"
-                                                        formControlName="lookupValueDesc1" class="form-control">
+                                                        formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1" class="form-control">
                                             </tr>
                                             <tr>
                                                 <td style="width: 15%" class="LabelFontStyle">
@@ -2087,7 +2087,7 @@
                                                 </td>
                                                 <td>
                                                     <select formControlName="segment2" id="segment2"
-                                                        class="form-control"
+                                                        class="form-control" 
                                                         (ngModelChange)="onOptionsSelectedBranch($event,'SS_Location')">
                                                         <option>--Select--</option>
                                                         <option *ngFor="let sc of  locIdList1">
@@ -2096,7 +2096,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text"
+                                                    <input type="text" [(ngModel)]="lookupValueDesc2"
                                                         style="width: 150px; background-color: white; border: none;"
                                                         formControlName="lookupValueDesc2" class="form-control">
                                                 </td>
@@ -2116,7 +2116,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text"
+                                                    <input type="text" [(ngModel)]="lookupValueDesc3"
                                                         style="width: 150px; background-color: white; border: none;"
                                                         formControlName="lookupValueDesc3" class="form-control">
                                                 </td>
@@ -2128,7 +2128,7 @@
                                                 <td>
                                                     <select formControlName="segment4" id="segment4"
                                                         class="form-control"
-                                                        (ngModelChange)="onOptionsSelectedNatural()">
+                                                        (ngModelChange)="onOptionsSelectedNatural($event)">
                                                         <option>--Select--</option>
                                                         <option *ngFor="let sc of  NaturalAccountList">
                                                             {{sc.naturalaccount}}
@@ -2136,8 +2136,8 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text"
-                                                        style="width: 150px; background-color: white; border: none;"
+                                                    <input type="text" [(ngModel)]="lookupValueDesc4"
+                                                        style="width: 150px; background-color: white; border: none;color: black;"
                                                         formControlName="lookupValueDesc4" class="form-control">
                                                 </td>
                                             </tr>
@@ -2149,7 +2149,7 @@
                                                 <td>
                                                     <select formControlName="segment5" id="segment5"
                                                         class="form-control"
-                                                        (ngModelChange)="onOptionsSelectedBranch($event,'SS_Interbranch')">
+                                                        (ngModelChange)="onOptionsSelectedBranchNew($event)">
                                                         <option>--Select--</option>
                                                         <option *ngFor="let sc of  InterBrancList">
                                                             {{sc.lookupValue}}
@@ -2159,7 +2159,7 @@
                                                 <td>
                                                     <input type="text"
                                                         style="width: 150px; background-color: white; border: none;"
-                                                        formControlName="lookupValueDesc5" class="form-control">
+                                                        formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" class="form-control">
                                                 </td>
                                             </tr>
                                         </table>

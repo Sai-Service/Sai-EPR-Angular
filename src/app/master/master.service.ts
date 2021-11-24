@@ -1954,6 +1954,7 @@ getsearchByshipmentNo(shipmentNo): Observable<any> {
 }
 
 
+
 public poinvCre(segment1) {
   const options = {
     headers: this.headers
@@ -1998,6 +1999,10 @@ getInterBranch(InterBranch1, lType):Observable<any>{
 
   getInterBranchNatural(): Observable<any> {
     return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
+  }
+
+  getInterBranchNewApi(naturalAccout): Observable<any> {
+    return this.http.get(this.ServerUrl +`/naturalAcc/interBranch/${naturalAccout}`);
   }
 
 
