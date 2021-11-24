@@ -2357,6 +2357,11 @@ bulkpouploadSales(formData: FormData) {
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
   }
 
+
+  getOrderByUser(locId, startDt, endDt){
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}`)
+  }
+
   bulkpouploadSpares(formData: FormData) {
       return this.http.post(this.ServerUrl + `/fileImport/uploadSpAcPO`, formData)
   }
