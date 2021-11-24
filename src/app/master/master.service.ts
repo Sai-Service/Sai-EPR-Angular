@@ -1333,6 +1333,13 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
   // http://localhost:8081/itemMst/ItemDtlsF9?locId=121&itemId=544&ouId=110&divisionId=2
 }
 
+searchByItemDescf9(divId,itemDesc):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)
+ 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {
@@ -1953,9 +1960,20 @@ viewAccounting1(receiptNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
 }
 
+viewAPAccounting(invoiceNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/apInv/${invoiceNum}`);
+}
+
 getsearchByshipmentNo(shipmentNo): Observable<any> {
   return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
 }
+
+
+viewAccountingCSRev(ordNum): Observable<any> {
+  return this.http.get(this.ServerUrl + `/glHeader/arInv/${ordNum}`);
+  // http://localhost:8081/glHeader/arInv/202110112239
+}
+
 
 
 public poinvCre(segment1) {
@@ -1999,6 +2017,15 @@ getInterBranch(InterBranch1, lType):Observable<any>{
 
     });
   }
+
+  getInterBranchNatural(): Observable<any> {
+    return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
+  }
+
+  getInterBranchNewApi(naturalAccout): Observable<any> {
+    return this.http.get(this.ServerUrl +`/naturalAcc/interBranch/${naturalAccout}`);
+  }
+
 
 lookupNameList(mlookupValue, mlookupType) {
   // alert('servie=call');
@@ -2265,6 +2292,11 @@ OrderCategoryList(): Observable<any> {
   }
 
 
+  viewAccountingArReceipt(receiptNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${receiptNo}`);
+    // http://localhost:8081/glHeader/docSequenceValue/212121110100075
+  }
+
   ////////////////////////// CREDIT MEMO APPLICATION /////////////////////
   public CreditMemmoApplySubmit(creditMemoApplyRecord,mCrmNo) {
     alert ("MS >> "+mCrmNo);
@@ -2331,6 +2363,11 @@ bulkpouploadSales(formData: FormData) {
 
   getPOByUser(emplId, startDt, endDt){
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
+  }
+
+
+  getOrderByUser(locId, startDt, endDt){
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}`)
   }
 
   bulkpouploadSpares(formData: FormData) {
@@ -3134,9 +3171,6 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
      }
 
 
-
-
-
     ////////////////////////// Pending Shipment Lis///////////
 
     getShipmentList(locId,deptId,divisionId): Observable<any> {
@@ -3161,6 +3195,19 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
       }
 
+    
+    recCreditMemoType(classType) {
+          return this.http.get(this.ServerUrl +`/rcvType/typeWise/${classType}`);
+        // http://localhost:8081/rcvType/typeWise/Credit%20Memo
+      }
+
+      public RecTransTypeMasterSubmit(RecTransTypeMasterRecord) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + '/rcvType';
+        return this.http.post(url, RecTransTypeMasterRecord, options);
+      }
 
 
 

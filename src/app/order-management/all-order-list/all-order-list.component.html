@@ -10,7 +10,7 @@
         <div style="padding-bottom: 10px;padding-top: 10px;">
             <div class="row">
                 <div class="col-sm-12">
-                    <button (click)="exportToExcel()" class="btn btn-success">Export To Excel</button>
+                    <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
                 </div>
             </div>
         </div>
@@ -45,42 +45,42 @@
         <div class="grid_scroll">
         <table  class="GridFont"  style="border-color:#959595;border-collapse:collapse;width: 100%;">
             <tr class="GridHeader" style="font-size: 14px;">
-                <th >PO No.</th>
-                <th >PO Date</th>
-                <th >Supp Invoice No.</th>
-                <th >Supp Inv Date</th>
-                <th >GRR No.</th>
-                <th >GRR Date</th>
-                <th >Base Amt</th>
-                <th >Tax Amt</th>
-                <th >Total Amt</th>
-                <th>PO Status</th>
+                <th >Order No.</th>
+                <th >Order Date</th>
+                <th >Invoice No.</th>
+                <th >Invoice Date</th>
+                <th >Receipt No.</th>
+                <th >Receipt Date</th>
+                <th >Receipt Amt</th>
+                <th >Invoice Amt</th>
+                <th >Receipt Status</th>
+                <th>Invoice Status</th>
 
             </tr>
-            <tr *ngFor="let com of poDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
+            <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
                 <td style="border: 1px solid #000000;padding-left: 5px;padding-top: 10px;">
-                    <a [routerLink]="['/admin/master/OPMasterDto',com.segment1]"
-                        href="{{segment1}}">{{com.segment1}}</a>
+                    <a [routerLink]="['/admin/OrderManagement/CounterSaleOrder',com.orNum]"
+                        href="{{orNum}}">{{com.orNum}}</a>
                 </td>
-                <td style="padding-left: 5px; text-align: center;">{{com.poDate}}</td>
-                <td style="padding-left: 5px; text-align: center;">{{com.suppInvNo}}</td>
-                <td style="padding-left: 5px; text-align: center;">{{com.suppInvDate}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.orDate}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.invNum}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.invDate}}</td>
                 <td *ngIf="isPending[i]" style="padding-left: 5px; text-align: center; background-color:orangered ;" >
-                    {{com.rcvLines[0].receiptNo}}
+                    {{com.reNum}}
                 </td>
                     <td *ngIf="!isPending[i]" style="padding-left: 5px; text-align: center;">
-                     {{com.rcvLines[0].receiptNo}}
+                     {{com.reNum}}
                     </td>              
                  
                 <td style="padding-left: 5px; text-align: center;">
-                    {{com.rcvLines[0].receiptDate}}</td>
-                <td style="padding-left: 5px; text-align: right;">{{com.baseAmount}}&nbsp;&nbsp;
+                    {{com.reDate}}</td>
+                <td style="padding-left: 5px; text-align: right;">{{com.reAmt}}&nbsp;&nbsp;
                 </td>
-                <td style="padding-left: 5px; text-align: right;">{{com.totTaxAmt}}&nbsp;&nbsp;
+                <td style="padding-left: 5px; text-align: right;">{{com.invAmt}}&nbsp;&nbsp;
                 </td>
-                <td style="padding-left: 5px; text-align: right;">{{com.totalAmt}}&nbsp;&nbsp;
+                <td style="padding-left: 5px; text-align: right;">{{com.reStatus}}&nbsp;&nbsp;
                 </td>
-                <td style="padding-left: 5px; text-align: center;">{{com.authorizationStatus}}
+                <td style="padding-left: 5px; text-align: center;">{{com.orStatus}}
                 </td>
 
             </tr>

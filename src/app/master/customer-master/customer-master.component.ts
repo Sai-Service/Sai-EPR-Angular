@@ -321,7 +321,7 @@ export class CustomerMasterComponent implements OnInit {
   get f() { return this.customerMasterForm.controls; }
 
   ngOnInit(): void {
-
+    $("#wrapper").toggleClass("toggled");
     this.lstcomments = [];
     this.lstcomments.customerSiteMasterList = [];
     this.name = sessionStorage.getItem('name');

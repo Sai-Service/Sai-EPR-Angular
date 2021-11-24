@@ -254,6 +254,16 @@ export class PoInvoiceComponent implements OnInit {
   dispAccountCode = true;
   displayAddNewLine = true;
   displayViewTaxDetails=true;
+  viewAccounting2: any[];
+  viewAccounting1: any[];
+  periodName:string;
+postedDate:Date;
+jeCategory:string;
+name1:string;
+ledgerId:number;
+runningTotalDr:number;
+runningTotalCr:number;
+docSeqValue:number;
   lineNumber: number;
   lineTypeLookupCode: string;
   public segmentNameList: any;
@@ -280,8 +290,8 @@ export class PoInvoiceComponent implements OnInit {
   public locIdList1: Array<string> = [];
   public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
-  public NaturalAccountList: Array<string> = [];
-  public InterBrancList: Array<string> = [];
+  public NaturalAccountList: any = [];
+  public InterBrancList: any=[];
   paymentMethodList: any = [];
   public prepayTypeList: Array<string> = [];
   public poTypeList: Array<string> = [];
@@ -372,6 +382,13 @@ export class PoInvoiceComponent implements OnInit {
 
       thresHoldHdrId: [],
       thresHoldTypeId: [],
+      runningTotalDr:[],
+      periodName:[],
+      postedDate:[],
+      jeCategory:[],
+      docSeqValue:[],
+      runningTotalCr:[],
+      name1:[],
 
       obj: this.fb.array([this.lineDetailsGroup()]),
       invLines: this.fb.array([this.invLineDetails()]),
@@ -811,19 +828,21 @@ export class PoInvoiceComponent implements OnInit {
           console.log(this.locIdList1);
         }
       );
-    this.service.NaturalAccountList()
+    this.service.getInterBranchNatural()
       .subscribe(
         data => {
-          this.NaturalAccountList = data;
+          this.NaturalAccountList = data.obj;
+          console.log(data.obj);
           console.log(this.NaturalAccountList);
         }
-      ); this.service.InterBrancList()
-        .subscribe(
-          data => {
-            this.InterBrancList = data;
-            console.log(this.InterBrancList);
-          }
-        );
+      ); 
+      // this.service.InterBrancList()
+      //   .subscribe(
+      //     data => {
+      //       this.InterBrancList = data;
+      //       console.log(this.InterBrancList);
+      //     }
+      //   );
 
     this.service.hsnSacCodeList()
       .subscribe(
@@ -1999,8 +2018,9 @@ export class PoInvoiceComponent implements OnInit {
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var arrayControl1 = this.poInvoiceForm.get('invLines').value;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
-    var amount = arrayControl[this.selectedLine].invoiceAmt;
-    // alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
+    // var amount = arrayControl[this.selectedLine].invoiceAmt;
+    var amount =this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
+     alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
       totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
@@ -2370,11 +2390,11 @@ export class PoInvoiceComponent implements OnInit {
           if (lType === 'SS_Interbranch') {
             this.lookupValueDesc5 = this.branch.lookupValueDesc;
           }
-          if (lType === 'NaturalAccount') {
-            this.lookupValueDesc4 = this.branch.lookupValueDesc;
-            //   // this.GlCodeCombinaionForm.patchValue(this.branch);
-            //  this.accountType=this.branch.accountType;
-          }
+          // if (lType === 'NaturalAccount') {
+          //   this.lookupValueDesc4 = this.branch.lookupValueDesc;
+          //   //   // this.GlCodeCombinaionForm.patchValue(this.branch);
+          //   //  this.accountType=this.branch.accountType;
+          // }
           if (lType === 'CostCentre') {
             this.lookupValueDesc3 = this.branch.lookupValueDesc;
           }
@@ -2385,15 +2405,29 @@ export class PoInvoiceComponent implements OnInit {
             this.lookupValueDesc1 = this.branch.lookupValueDesc;
           }
         }
-        // }else if(this.branch.code === 400){
-        //   alert(this.branch.message);
-
-        // }
-
-
       }
     );
 
+  }
+
+  onOptionsSelectedNatural(event){
+    alert(event+'-----'+this.selectedLine)
+    // this.lookupValueDesc4= this.NaturalAccountList.description;
+    let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
+    console.log(selectnaturalaccount);
+    this.lookupValueDesc4= selectnaturalaccount.description;
+    this.service.getInterBranchNewApi(event).subscribe(
+      data => {
+       this.InterBrancList= data.obj
+      })
+    
+  }
+
+  onOptionsSelectedBranchNew(event){
+    alert(event)
+    let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
+    console.log(selectinterbranch);
+    this.lookupValueDesc5= selectinterbranch.lookupValueDesc;
   }
 
   CheckTdsLineValidations(i) {
@@ -2641,5 +2675,33 @@ export class PoInvoiceComponent implements OnInit {
       // }
     }
   }
+
+  viewAccounting() {
+    var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
+    this.service.viewAPAccounting(invoiceNum).subscribe((res: any) => {
+      if (res.code === 200) {
+        this.viewAccounting2 = res.obj;
+        this.description = res.obj.description;
+        this.periodName = res.obj.periodName;
+        this.postedDate = res.obj.postedDate;
+        this.jeCategory = res.obj.jeCategory;
+        this.name1 = res.obj.name;
+        this.ledgerId = res.obj.ledgerId;
+        this.runningTotalDr = res.obj.runningTotalDr;
+        this.runningTotalCr = res.obj.runningTotalCr;
+        this.docSeqValue=res.obj.docSeqValue;
+        console.log(this.description);
+
+        this.viewAccounting1 = res.obj.glLines;
+        console.log(this.viewAccounting1);
+        // alert(res.message);
+      } else {
+        if (res.code === 400) {
+          alert(res.message);
+        }
+      }
+    });
+  }
+
 
 }

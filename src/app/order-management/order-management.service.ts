@@ -50,8 +50,8 @@ export class OrderManagementService {
   }
 
 
-  orderTypeList(deptId,locId,ouId): Observable<any> {
-    return this.http.get(this.ServerUrl +`/OrderTrnType/otAccSpList?deptId=${deptId}&locId=${locId}&ouId=${ouId}`);
+  orderTypeList(deptId,ouId): Observable<any> {
+    return this.http.get(this.ServerUrl +`/OrderTrnType/otAccSpList?deptId=${deptId}&ouId=${ouId}`);
   }
 
 
@@ -558,5 +558,7 @@ printCSRtndocument(mRtnNumber){
     headers: this.headers,
   });
 }
+
+
 
 }
