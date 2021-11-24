@@ -67,6 +67,7 @@ export class ARInvoiceComponent implements OnInit {
   displayTaxDetailForm = true;
   ouId: number;
   trxNumber1: string;
+  trxNumber:string;
   lstcomments: any;
   selectedLine = 0;
   content: number;
@@ -90,6 +91,7 @@ export class ARInvoiceComponent implements OnInit {
   invCurrancyCode = 'INR';
   charges = 0.00;
   freight = 0.00;
+  balance:number;
   status = "Open"
   taxCat1: number;
   glDate = new Date();
@@ -166,6 +168,17 @@ export class ARInvoiceComponent implements OnInit {
   glPrdStartDate: string;
   glPrdEndDate: string;
   customerNameSearch: any;
+  viewAccountingArdata: any;
+
+  jeSource:string;
+  name:string;
+  ledgerName:string;
+  jeCategory:string;
+  postedDate:Date;
+  periodName:string;
+  runningTotalDr:number;
+  runningTotalCr:number;
+  disabledViewAccounting = false;
 
   search(activeTab){
     this.activeTab = activeTab;
@@ -190,6 +203,7 @@ export class ARInvoiceComponent implements OnInit {
       paymentTerm: [],
       invCurrancyCode: [],
       freight: [],
+      balance:[],
       charges: [],
       taxAmount: [],
       invoiceDate: [],
@@ -236,6 +250,16 @@ export class ARInvoiceComponent implements OnInit {
       custName:[],
       glPrdStartDate: [],
       glPrdEndDate: [],
+
+      jeSource:[],
+      name:[],
+      ledgerName:[],
+      jeCategory:[],
+      postedDate:[],
+      periodName:[],
+      runningTotalDr:[],
+      runningTotalCr:[],
+
 
       invLines: this.fb.array([this.lineDetailsGroup()]),
       invDisLines: this.fb.array([this.distLineDetails()]),
@@ -488,7 +512,7 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.CostCenterList);
         }
       );
-    this.service.NaturalAccountList()
+    this.service.NaturalAccountListRec()
       .subscribe(
         data => {
           this.NaturalAccountList = data;
@@ -570,6 +594,7 @@ export class ARInvoiceComponent implements OnInit {
           }
           // alert('second emit call')
           this.arInvoiceForm.patchValue(data);
+          this.disabledViewAccounting = true;
           // this.taxUistatus = false;
         }
       );
@@ -660,7 +685,7 @@ export class ARInvoiceComponent implements OnInit {
           else {
             if (data.code === 400) {
               alert(data.message);
-              // this.display='block'; 
+              // this.display='block';
             }
           }
         }
@@ -884,6 +909,7 @@ export class ARInvoiceComponent implements OnInit {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY');
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
+        this.disabledViewAccounting = true;
 
         // window.location.reload();
       } else {
@@ -1405,6 +1431,7 @@ export class ARInvoiceComponent implements OnInit {
           console.log(this.accountNoSearch);
           let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
           this.arInvoiceForm.patchValue({
+            billToCustNo:this.accountNoSearch.accountNo,
             billToCustName: this.accountNoSearch.custName,
             billToCustAdd: this.accountNoSearch.billToAddress,
             shipToCustNo: this.accountNoSearch.accountNo,
@@ -2018,10 +2045,35 @@ export class ARInvoiceComponent implements OnInit {
 
         }
       }
+
     });
+
   }
 
+  viewAccounting(trxNumber){
+    // var tranNo=this.arInvoiceForm.get('transactionNo').value;
+    this.service.viewAccountingAR(trxNumber)
+      .subscribe((res:any) =>{
+        if (res.code === 200) {
+          this.viewAccountingArdata=res.obj;
+          // this.name=res.obj.name;
+          // this.periodName=res.obj.periodName;
+          // this.postedDate=res.obj.postedDate;
+          // this.jeCategory=res.obj.jeCategory;
+          // this.jeSource=res.obj.jeSource;
+          // this.runningTotalDr=res.obj.runningTotalDr.toFixed(2);
+          // this.runningTotalCr=res.obj.runningTotalCr.toFixed(2);
 
+
+              alert(res.message);
+            } else {
+              if (res.code === 400) {
+                alert(res.message);
+              }
+            }
+      });
+
+  }
 
 
 

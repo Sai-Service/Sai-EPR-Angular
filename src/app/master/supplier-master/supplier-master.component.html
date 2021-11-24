@@ -217,13 +217,14 @@
                       <tr>
                           <td style="width: 10%" class="LabelFontStyle1">&nbsp;City&nbsp;:&nbsp;</td>
                           <td>
-                              <select formControlName="city" id="city" class="form-control" [ngModel]="city"
+                              <!-- <select formControlName="city" id="city" class="form-control" [ngModel]="city"
                               (ngModelChange)='onOptionsSelectedCity($event)'>
                               <option>--Select--</option>
                               <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
                                   {{sc.codeDesc}}
                               </option>
-                          </select>
+                          </select> -->
+                          <input type="text" formControlName="city" id="city" class="form-control" [ngModel]="city">
                           <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
                               <div *ngIf="f.city.errors.required">City must be required
                               </div>
@@ -249,7 +250,16 @@
                       </td>
                       <td style="width: 15%" class="LabelFontStyle">&nbsp;State&nbsp;:&nbsp;</td>
                       <td>
-                          <input type="text" disabled formControlName="state" [ngModel]="state" class="form-control">
+                          <!-- <input type="text" disabled formControlName="state" [ngModel]="state" class="form-control"> -->
+                          <select formControlName="state" id="state" [(ngModel)]='state'
+                          class="form-control" (ngModelChange)='onOptionStateSeleted($event)'
+                          [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                          <option></option>
+                          <option *ngFor="let sc of stateList">
+                              {{sc.codeDesc}}
+                          </option>
+                      </select>
+
                       </td>
 
                       <td style="width: 15%" class="LabelFontStyle">&nbsp;Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
@@ -275,7 +285,7 @@
                           </td>
                           <!-- dinesh -->
 
-                          <td style="width: 15%" class="LabelFontStyle">&nbsp;Mobile2&nbsp;:&nbsp;</td>
+                          <td style="width: 15%" class="LabelFontStyle">&nbsp;Landline&nbsp;No:&nbsp;</td>
                           <td>
                               <input type="number" formControlName="mobile2" value={{mobile2}} class="form-control"
                               [ngClass]="{ 'is-invalid': submitted && f.mobile2.errors }"
@@ -598,7 +608,7 @@
                           <th scope="col">Address</th>
                           <!-- <th scope="col">Address2</th>
                           <th scope="col">Address3</th>
-                          <th scope="col">Address4</th> 
+                          <th scope="col">Address4</th>
                           <th scope="col">City</th>
                           <th scope="col">Pin Code</th>
                           <th scope="col">State</th> -->
@@ -614,15 +624,15 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let com of lstcomments.supplierSiteMasterList" class="ItemStyle" style="text-decoration:none; padding: 2px; ">
-                        <td>{{com.ouId}}</td> 
+                        <td>{{com.ouId}}</td>
                         <td>[{{com.suppSiteId}}]-{{com.siteName}}</td>
                           <td style ="width: 260px; ">{{com.address1}},{{com.address2}},{{com.address3}},{{com.address4}},{{com.city}},{{com.state1}},{{com.pinCd}}</td>
                           <!-- <td>{{com.address1}}</td>
                           <td>{{com.address2}}</td>
                           <td>{{com.address3}}</td>
-                          <td>{{com.address4}}</td> 
+                          <td>{{com.address4}}</td>
                           <td>{{com.pinCd}}</td>
-                          <td>{{com.state1}}</td> 
+                          <td>{{com.state1}}</td>
                           <td>{{com.city}}</td> -->
                            <td style ="text-align: right;">{{com.mobile1}}</td>
                           <td style ="text-align: right;">{{com.mobile2}}</td>
@@ -794,12 +804,13 @@
                         </td>
                           <td style="width: 15%" class="LabelFontStyle">City&nbsp;:&nbsp;</td>
                           <td>
-                              <select formControlName="scity" id="scity" [(ngModel)]='scity' (ngModelChange)='onOptionsSelectedCity1($event)' class="form-control">
+                            <input type="text" formControlName="scity" id="scity" [(ngModel)]='scity'  class="form-control">
+                              <!-- <select formControlName="scity" id="scity" [(ngModel)]='scity' (ngModelChange)='onOptionsSelectedCity1($event)' class="form-control">
                                   <option>--Select--</option>
                                   <option *ngFor="let sc of  cityList">
                                       {{sc.codeDesc}}
                                   </option>
-                              </select>
+                              </select> -->
                               <div *ngIf="submitted && f.scity.errors" class="invalid-feedback">
                                   <div *ngIf="f.scity.errors.required">Enter City </div>
                                   <div *ngIf="f.scity.errors.maxLength">Enter City </div>
@@ -823,7 +834,15 @@
                        <tr>
                         <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                         <td>
-                            <input type="text" disabled formControlName="sstate" class="form-control">
+                            <!-- <input type="text" disabled formControlName="sstate" class="form-control"> -->
+                            <select formControlName="state" id="state" [(ngModel)]='state'
+                            class="form-control" (ngModelChange)='onOptionSiteStateSeleted($event)'
+                            [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
+                            <option></option>
+                            <option *ngFor="let sc of stateList">
+                                {{sc.codeDesc}}
+                            </option>
+                        </select>
                         </td>
                         <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;:&nbsp;</td>
                         <td>
