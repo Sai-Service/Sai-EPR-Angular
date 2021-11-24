@@ -15,10 +15,11 @@
                      <table class="center">
                         <tr>
                        <td> <input  style="width:50px ;" hidden disabled type="text"  formControlName="loginArray" class="form-control" [(ngModel)]="loginArray"></td>
-                       <td> <input  style="width:30px ;" hidden disabled type="text"  formControlName="ouId"       class="form-control" [(ngModel)]="ouId" ></td>
-                       <td> <input  style="width:30px ;" hidden disabled type="text"  formControlName="locId"      class="form-control" [(ngModel)]="locId" ></td>
-                       <td> <input  style="width:30px ;" hidden disabled type="text"  formControlName="deptId"     class="form-control" [(ngModel)]="deptId"></td>
-                       <td> <input  style="width: 30px;" hidden disabled type="text"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"> </td>
+                       <td> <input  style="width:30px ;" hidden disabled type="number"  formControlName="divisionId" class="form-control" [(ngModel)]="divisionId" ></td>
+                       <td> <input  style="width:30px ;" hidden disabled type="number"  formControlName="ouId"       class="form-control" [(ngModel)]="ouId" ></td>
+                       <td> <input  style="width:30px ;" hidden disabled type="number"  formControlName="locId"      class="form-control" [(ngModel)]="locId" ></td>
+                       <td> <input  style="width:30px ;" hidden disabled type="number"  formControlName="deptId"     class="form-control" [(ngModel)]="deptId"></td>
+                       <td> <input  style="width: 30px;" hidden disabled type="number"  formControlName="emplId"     class="form-control" [(ngModel)]="emplId"> </td>
                        </tr>
                     </table>
 
@@ -110,6 +111,9 @@
 
 
                                 <td style="width: 15%" class="LabelFontStyle">Category&nbsp;Base:&nbsp;</td>
+                                
+                                    <!-- <td>  
+                                        <select formControlName="accountingBase" id="accountingBase" [(ngModel)]="accountingBase" class="form-control" style="background-color: yellow;" >
 
                                     <td>
                                         <select formControlName="attributeCategory" id="attributeCategory" [(ngModel)]="attributeCategory" class="form-control" style="background-color: yellow;" >
@@ -118,7 +122,13 @@
                                                 {{sc.codeDesc}}-{{sc.code}}
                                             </option>
                                         </select>
-                                    </td>
+                                    </td> -->
+
+                                    <select  formControlName="accountingBase"  id ="accountingBase"  [(ngModel)]="accountingBase"  class="form-control"  >
+                                        <!-- <option>--Select--</option> -->
+                                        <option value="ITEM CATEGORY">ITEM CATEGORY</option>
+                                        <option value="TRANSACTION TYPE">TRANSACTION TYPE</option>
+                                    </select>
 
 
 
@@ -132,30 +142,30 @@
                         <tr>
                             <td  style="width: 15%" class="LabelFontStyle"> Open&nbsp;Receivable&nbsp;: </td>
                                 <td>
-                                    <div *ngIf="selfAssesedFagDiss">
-                                       <input  type="checkbox"  name="selfAssesedFlag" formControlName="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag"  (change)="selfAssesedFlg($event)">
+                                    <div *ngIf="defaultStatusFlg">   
+                                       <input  type="checkbox"  name="defaultStatus" formControlName="defaultStatus"  [(ngModel)]="defaultStatus"  (change)="defaultStatus1($event)">
+                                    </div> 
+                                    <div *ngIf="TRUEd">
+                                        <input  type="checkbox"  name="defaultStatus" [formControl]="defaultStatus"  [(ngModel)]="defaultStatus" (change)="defaultStatus1=$event.target.checked?'Y':'N'">
                                     </div>
-                                    <div *ngIf="TRUEs">
-                                        <input  type="checkbox"  name="selfAssesedFlag" [formControl]="selfAssesedFlag"  [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlag=$event.target.checked?'Y':'N'">
-                                    </div>
-                                    <div *ngIf="FALSEs">
-                                        <input  type="checkbox" checked   id="selfAssesedFlag" [formControl]="selfAssesedFlag"   value="selfAssesedFlag" [(ngModel)]="selfAssesedFlag" (change)="selfAssesedFlag=$event.target.checked?'Y':'N'">
+                                    <div *ngIf="FALSEd">
+                                        <input  type="checkbox" checked   id="defaultStatus" [formControl]="defaultStatus"   value="defaultStatus" [(ngModel)]="defaultStatus" (change)="defaultStatus1=$event.target.checked?'Y':'N'">
                                     </div>
 
                                 </td>
 
                                 <td  style="width: 15%" class="LabelFontStyle">Post&nbsp;To&nbsp;GL&nbsp;:</td>
                                 <td>
-
-
-                                    <div *ngIf="offsetFlagFagDiss">
-                                          <input  type="checkbox"  name="offsetFlag" formControlName="offsetFlag"  [(ngModel)]="offsetFlag"   (change)="offsetFlg($event)">
+                                       
+    
+                                    <div *ngIf="postToGLflg"> 
+                                          <input  type="checkbox"  name="postToGL" formControlName="postToGL"  [(ngModel)]="postToGL"   (change)="postToGL1($event)">
+                                        </div> 
+                                        <div *ngIf="TRUEp">
+                                            <input  type="checkbox"  name="postToGL" [formControl]="postToGL"  [(ngModel)]="postToGL" (change)="postToGL1=$event.target.checked?'Y':'N'">
                                         </div>
-                                        <div *ngIf="TRUEo">
-                                            <input  type="checkbox"  name="offsetFlag" [formControl]="offsetFlag"  [(ngModel)]="offsetFlag" (change)="offsetFlag=$event.target.checked?'Y':'N'">
-                                        </div>
-                                        <div *ngIf="FALSEo">
-                                            <input  type="checkbox" checked   id="offsetFlag" [formControl]="offsetFlag"   value="offsetFlag" [(ngModel)]="offsetFlag" (change)="offsetFlag=$event.target.checked?'Y':'N'">
+                                        <div *ngIf="FALSEp">
+                                            <input  type="checkbox" checked   id="postToGL" [formControl]="postToGL"   value="postToGL" [(ngModel)]="postToGL" (change)="postToGL1=$event.target.checked?'Y':'N'">
                                         </div>
                                 </td>
 
@@ -164,14 +174,14 @@
                             <td  style="width: 15%" class="LabelFontStyle">Allow&nbsp;Adjustment&nbsp;Posting&nbsp;:</td>
 
                             <td>
-                                <div *ngIf="recFlagDiss">
-                                    <input  type="checkbox"  name="recoverableFlag" formControlName="recoverableFlag"  [(ngModel)]="recoverableFlag"  (change)="recoverableFlg1($event)">
+                                <div *ngIf="adjPostToGLflg">   
+                                    <input  type="checkbox"  name="adjPostToGL" formControlName="adjPostToGL"  [(ngModel)]="adjPostToGL"  (change)="adjPostToGL1($event)">
+                                </div> 
+                                <div *ngIf="TRUEa">
+                                    <input  type="checkbox"  name="adjPostToGL" [formControl]="adjPostToGL"  [(ngModel)]="adjPostToGL" (change)="adjPostToGL1=$event.target.checked?'Y':'N'">
                                 </div>
-                                <div *ngIf="TRUER">
-                                    <input  type="checkbox"  name="recoverableFlag" [formControl]="recoverableFlag"  [(ngModel)]="recoverableFlag" (change)="recoverableFlag1=$event.target.checked?'Y':'N'">
-                                </div>
-                                <div *ngIf="FALSER">
-                                    <input  type="checkbox" checked   id="recoverableFlag" [formControl]="recoverableFlag"   [(ngModel)]="recoverableFlag" (change)="recoverableFlag1=$event.target.checked?'Y':'N'">
+                                <div *ngIf="FALSEa">
+                                    <input  type="checkbox" checked   id="adjPostToGL" [formControl]="adjPostToGL"   [(ngModel)]="adjPostToGL" (change)="adjPostToGL1=$event.target.checked?'Y':'N'">
                                 </div>
 
                             </td>
@@ -238,7 +248,8 @@
                             <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
                                 <td>
-                                    <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!orderTypeMasterForm">Save</button>
+                                    <!-- <button type="button" class="btn btn-info" (click)="newMast()" [disabled]="!orderTypeMasterForm">Save</button> -->
+                                    <button type="button" class="btn btn-info" (click)="newMast()" >Save</button>
                                 </td>
 
                                 <td>

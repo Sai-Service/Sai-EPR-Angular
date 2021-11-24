@@ -177,7 +177,7 @@ export class BulkUploadPricelistComponent implements OnInit {
            this.resMsg = res.message+",  Code : "+res.code;;
            this.lstMessage=res.obj.priceListDetailList;
           //  this.updStatus=false;
-           this.dataDisplay ='File Uploading done....'
+           this.dataDisplay ='File Uploaded Sucessfully....'
            this.closeResetButton=true;
              
         } else {

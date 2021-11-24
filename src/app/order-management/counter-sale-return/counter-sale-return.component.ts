@@ -25,6 +25,8 @@ export class CounterSaleReturnComponent implements OnInit {
 
   lstOrderHeader: any;
   lstOrderItemLines:any;
+  viewAccounting1: any[];
+  viewAccounting2: any[];
   
   lstOrderLines: any;
   lstCntrRtnDetails:any;
@@ -108,6 +110,17 @@ export class CounterSaleReturnComponent implements OnInit {
   customerSiteId :number;
   custPoNumber :string;
   custPoDate :Date
+
+  ledgerId:number;
+  docSeqValue:string;
+  description: string;
+  periodName: string;
+  postedDate: Date;
+  jeCategory: string;
+  name1: string;
+  runningTotalCr: number;
+  runningTotalDr: number;
+
 
   displayButton = true;
   validateStatus = false;
@@ -199,6 +212,17 @@ export class CounterSaleReturnComponent implements OnInit {
       custPoNumber :[],
       custPoDate :[],
 
+      ledgerId:[],
+      docSeqValue:[],
+      description: [],
+      periodName: [],
+      postedDate: [],
+      jeCategory: [],
+      name1: [],
+      runningTotalCr: [],
+      runningTotalDr:[],
+    
+
 
 
 
@@ -289,9 +313,6 @@ export class CounterSaleReturnComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
-
-
-
   }
 
   onKey(event: any) {}
@@ -344,18 +365,23 @@ export class CounterSaleReturnComponent implements OnInit {
       .subscribe(
         data => {
           this.lstOrderHeader = data.obj;
+            if (data.code==400 && data.message=="Order Number Not Found ") {
+            alert(data.message + "-" + data.obj);
+            this.dispOrderDetails=false;
+             this.headerFound=false;
+            return;
+          } else {
+
+           
           this.lstOrderItemLines=data.obj.oeOrderLinesAllList;
           this.lstCreditNotes=data.obj.cmList;
           console.log(this.lstOrderHeader);
-         if(data.code===200){
-          this.dispOrderDetails=true;
-          this.searchButton=false;
-          // if(this.lstOrderHeader !=null) {
+            this.dispOrderDetails=true;
+            this.searchButton=false;
             this.showLineLov(this.lstOrderHeader.orderNumber);
             this.orderedDate=this.lstOrderHeader.orderedDate;
             this.headerFound=true;
             this.orderNumber=this.lstOrderHeader.orderNumber;
-            // this.orderedDate=this.lstOrderHeader.orderedDate;
             this.transactionTypeName=this.lstOrderHeader.transactionTypeName;
             this.trxNumber=this.lstOrderHeader.trxNumber;
             this.orderStatus=this.lstOrderHeader.orderStatus;
@@ -370,7 +396,6 @@ export class CounterSaleReturnComponent implements OnInit {
             this.disPer=this.lstOrderHeader.disPer;
             this.disAmt=this.lstOrderHeader.disAmt;
             this.discType=this.lstOrderHeader.discType;
-
             this.billToLocId=this.lstOrderHeader.billToLocId;
             this.shipToLocId=this.lstOrderHeader.shipToLocId;
             this.compId=this.lstOrderHeader.compId;
@@ -388,31 +413,27 @@ export class CounterSaleReturnComponent implements OnInit {
             this.customerSiteId=this.lstOrderHeader.customerSiteId;
             this.siteName=this.lstOrderHeader.siteName;
             this.mobile1=this.lstOrderHeader.mobile1;
-            
-            // this.counterSaleReturnOrderForm.patchValue(this.lstOrderHeader);
-            // this.shipHeaderId=null;
-          // } 
           
-            
-          //   this.resetMast();
-            // this.returntoVendorForm.get("showAllItem").disable();
-            // this.returntoVendorForm.get("rcvLines").disable();
-        }else{alert ("Order Number : "+mOrderNumber +" Not Found in this Location\nOr Return process already done for this Order No.");
-        this.dispOrderDetails=false;
-        this.headerFound=false;
-        }
+           }
           
       } );  }
 
 
       showLineLov(mOrderNumber) {
+        // alert("Line details :"+mOrderNumber);
           this.orderManagementService.counterSaleReturnSearchLines(mOrderNumber)
         .subscribe(
           data => {
             this.lstOrderLines = data.obj.oeOrderLinesAllList;
-              if(this.lstOrderLines==null ) {
+            // alert("this.lstOrderLines :"+this.lstOrderLines.length);
+              if(this.lstOrderLines.length==0 ) {
+               alert(" Order Fully Returned....");
+                // alert("in if part...");
                this.lineStatus=false;
+               this.validateStatus=false;
+               this.checkBoxAllItem=false;
              } else {
+              //  alert("in else part...");
                 console.log(this.lstOrderLines);
                 this.lineStatus=true;
                 this.validateStatus=true;
@@ -914,18 +935,50 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
        this.rtnDocNo=select.trxNumber;
        this.rtnDocDate=select.trxDate;
        this.rtnTotAmt=select.invoiceAmount;
-      // alert( "Rtn date : "+this.rtnDocDate);
+      
+
+      // alert( "Rtn taxableAmount : "+select.taxableAmount);
       
        this.transactionService.searchByInvoiceNoAR(mrtnNo)
        .subscribe(
          data => {
            if(data.invLines.length >0) {
             this.lstCntrRtnDetails = data.invLines;
+            this.rtnBaseAmt=data.taxableAmount;
+            this.rtnDisAmt=data.discount;
+            this.rtnTaxAmt=data.taxAmount;
             console.log(this.lstCntrRtnDetails);
               } else {alert ( "No Line Items Found.");}
               
           } );    
           
+        }
+
+        viewAccounting(ordNumber: any) {
+          // alert(receiptNo);
+          this.service.viewAccountingCSRev(ordNumber).subscribe((res: any) => {
+            if (res.code === 200) {
+              this.viewAccounting2 = res.obj;
+              this.description = res.obj.description;
+              this.periodName = res.obj.periodName;
+              this.postedDate = res.obj.postedDate;
+              this.jeCategory = res.obj.jeCategory;
+              this.name1 = res.obj.name;
+              this.ledgerId = res.obj.ledgerId;
+              this.runningTotalDr = res.obj.runningTotalDr;
+              this.runningTotalCr = res.obj.runningTotalCr;
+              this.docSeqValue=res.obj.docSeqValue;
+              console.log(this.description);
+      
+              this.viewAccounting1 = res.obj.glLines;
+              console.log(this.viewAccounting1);
+              // alert(res.message);
+            } else {
+              if (res.code === 400) {
+                alert(res.message);
+              }
+            }
+          });
         }
 
 }
