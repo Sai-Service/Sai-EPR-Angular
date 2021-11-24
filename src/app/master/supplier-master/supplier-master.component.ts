@@ -391,9 +391,9 @@ export class SupplierMasterComponent implements OnInit {
   currentAcctTyp:string;
   openCodeCombination(accountType:string)
   {
-    alert(accountType);
+    // alert(accountType);
     let SegmentName1=this.supplierMasterForm.get(accountType).value;
-    alert(SegmentName1);
+    // alert(SegmentName1);
     this.currentAcctTyp=accountType;
     if(SegmentName1===null)
     {this.supplierMasterForm.get('segment11').reset();
@@ -430,14 +430,14 @@ export class SupplierMasterComponent implements OnInit {
                      this.supplierMasterForm.get('segment4').value+'.'+
                      this.supplierMasterForm.get('segment5').value;
 
-    alert(AcctCode);
+    // alert(AcctCode);
 
     this.service.segmentNameList(AcctCode)
     .subscribe(
       data => {
 
         this.segmentNameList = data.obj;
-        alert(this.currentAcctTyp+'type')
+        // alert(this.currentAcctTyp+'type')
         if (data.code=== 200) {
           // this.AccountEnquiryForm.patchValue({codeCombinationId:this.segmentNameList.obj.codeCombinationId});
           if (data.obj.length == 0) {
@@ -460,7 +460,7 @@ export class SupplierMasterComponent implements OnInit {
             if(this.currentAcctTyp==='prePayAcct')
             {
               this.prepayCodeCombId = Number(this.segmentNameList.codeCombinationId);
-              alert(this.segmentNameList.codeCombinationId);
+              // alert(this.segmentNameList.codeCombinationId);
               this.supplierMasterForm.patchValue({'prepayCodeCombId': Number(this.segmentNameList.codeCombinationId)});
               this.prePayAcct=AcctCode;
             }
@@ -472,6 +472,7 @@ export class SupplierMasterComponent implements OnInit {
             }
           }
         } else if (data.code=== 400) {
+          alert(data.message);
           // this.supplierMasterForm.patchValue({liabilityAcct:''});
           if(this.currentAcctTyp==='liabilityAcct')
             {
@@ -550,7 +551,7 @@ export class SupplierMasterComponent implements OnInit {
     this.type = this.supplierMasterForm.get('type').value;
 
     if (event === 'Employee') {
-      alert('Hi')
+      // alert('Hi')
       this.displaySupplier = false;
       this.displayEmployee = true;
       } if (event === 'Supplier') {
@@ -603,7 +604,7 @@ export class SupplierMasterComponent implements OnInit {
   newsupplierMast() {
     var isvaliddata = this.validation();
     if (isvaliddata === false) {
-      alert('In Validation (v)');
+      // alert('In Validation (v)');
       return;
     }
 
@@ -786,7 +787,7 @@ export class SupplierMasterComponent implements OnInit {
 
   Select(suppSiteId: number) {
     this.displaysite=false;
-alert(suppSiteId);
+// alert(suppSiteId);
     this.lstcomments2 = this.lstcomments.supplierSiteMasterList;
     console.log(this.lstcomments2);
     let select = this.lstcomments2.find(d => d.suppSiteId === suppSiteId);
@@ -905,7 +906,7 @@ alert(suppSiteId);
           for(let x=0; x <this.lstcomments.supplierSiteMasterList.length; x++){
             var ouObj =  this.ouIdList.find(d => d.ouId=== this.lstcomments.supplierSiteMasterList[x].ouId);
             if(ouObj != undefined){
-              
+
             this.lstcomments.supplierSiteMasterList[x].ouId = ouObj.ouName;
           }
           }
@@ -926,7 +927,7 @@ alert(suppSiteId);
     console.log(ouId);
     // if(ouId!=undefined){
       var siteState=this.supplierMasterForm.get('sstate').value;
-      alert(siteState+'state');
+      // alert(siteState+'state');
       if(ouId!=undefined && siteState!=undefined){
       this.service.taxCategorySiteList1(ouId,siteState)
   .subscribe(
@@ -981,23 +982,13 @@ alert(suppSiteId);
     }
   }
 
-  onOptionsSelectedCity (city: any){
+  onOptionStateSeleted(event: any){
     // alert(city);
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    // this.service.cityList1(city)
-    // .subscribe(
-    //   data => {
-    //     this.cityList1 = data;
-        // console.log(this.cityList1);
-        // this.state=this.cityList1.attribute1;
-        let select = this.cityList.find(d => d.codeDesc=== city);
-        this.supplierMasterForm.patchValue({state:select.attribute1});
-        // console.log(this.cityList1.attribute1);
-        // this.country = 'INDIA';
-        if(this.ouId!=undefined && select.attribute1!=undefined){
-         this.service.taxCategorySiteList1(this.ouId,select.attribute1)
+      if(this.ouId!=undefined && event!=undefined ){
+         this.service.taxCategorySiteList1(this.ouId,event)
         .subscribe(
           data => {
             // this.taxCategoryNameList = data;
@@ -1016,29 +1007,17 @@ alert(suppSiteId);
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    // this.service.cityList1(event)
-    // .subscribe(
-    //   data => {
-    //     this.cityList1 = data;
-    //     // console.log(this.cityList1);
-        // this.sstate=this.cityList1.attribute1;
-        let select = this.cityList.find(d => d.codeDesc=== event);
-        this.supplierMasterForm.patchValue({sstate:select.attribute1});
+    if(this.ouId!=undefined && event!=undefined ){
+         this.service.taxCategoryList1(this.souId,event)
+        .subscribe(
+          data => {
+            // this.taxCategoryNameList = data;
+            this.staxCatName=data.taxCategoryName;
+            // console.log(this.taxCategoryNameList);
 
-        // console.log(this.cityList1.attribute1);
-        // this.country = 'INDIA';
-
-        //  this.service.taxCategoryList1(this.souId,this.state)
-        // .subscribe(
-        //   data => {
-        //     // this.taxCategoryNameList = data;
-        //     this.staxCatName=data.taxCategoryName;
-        //     // console.log(this.taxCategoryNameList);
-
-        //   }
-        // );
-      // }
-    // );
+          }
+        );
+        }
   }
   onKey(event: any) {
     const gstNo1 = this.gstNo.substr(3,10);

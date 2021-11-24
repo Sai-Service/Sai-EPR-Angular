@@ -384,7 +384,7 @@ export class StockTransferComponent implements OnInit {
             this.CostDetail=data;
             trxLnArr1.controls[i].patchValue({transCost:this.CostDetail.rate});
             if(this.CostDetail.rate===0.0){
-              alert(this.CostDetail.segment);
+              // alert(this.CostDetail.segment);
             }
             // this.transCost[i]=this.CostDetail.rate;
           });
@@ -445,8 +445,8 @@ export class StockTransferComponent implements OnInit {
     // var trxLnArr=this.stockTranferForm.get('trxLinesList').value;
     let onHand=data.obj;
   let reserve=trxLnArr[i].resveQty;
-  alert(onHand+'OnHand');
-  alert(reserve+'reserve');
+  // alert(onHand+'OnHand');
+  // alert(reserve+'reserve');
   let avlqty1=0;
   avlqty1= onHand-reserve;
 
@@ -471,12 +471,12 @@ EwayUpdate(){
 //  debugger;
     this.service.UpdateStkEway(formValue).subscribe((res: any) => {
     if (res.code === 200) {
-      alert('RECORD UPDATED SUCCESSFULLY');
+      alert(res.message);
       this.displayUp=true;
       // window.location.reload();
     } else {
       if (res.code === 400) {
-        alert('ERROR OCCOURED IN PROCEESS');
+        alert(res.message);
         // this.customerMasterForm.reset();
       }
     }
@@ -790,7 +790,7 @@ onlocationissueselect(event){
        }
        else{
         if(res.code === 400) {
-          alert(res.message);
+          // alert(res.message);
           // this.stockTranferForm.reset();
           // window.location.reload();
         }

@@ -290,8 +290,8 @@ docSeqValue:number;
   public locIdList1: Array<string> = [];
   public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
-  public NaturalAccountList: Array<string> = [];
-  public InterBrancList: Array<string> = [];
+  public NaturalAccountList: any = [];
+  public InterBrancList: any=[];
   paymentMethodList: any = [];
   public prepayTypeList: Array<string> = [];
   public poTypeList: Array<string> = [];
@@ -835,13 +835,14 @@ docSeqValue:number;
           console.log(data.obj);
           console.log(this.NaturalAccountList);
         }
-      ); this.service.InterBrancList()
-        .subscribe(
-          data => {
-            this.InterBrancList = data;
-            console.log(this.InterBrancList);
-          }
-        );
+      ); 
+      // this.service.InterBrancList()
+      //   .subscribe(
+      //     data => {
+      //       this.InterBrancList = data;
+      //       console.log(this.InterBrancList);
+      //     }
+      //   );
 
     this.service.hsnSacCodeList()
       .subscribe(
@@ -2409,8 +2410,24 @@ docSeqValue:number;
 
   }
 
-  onOptionsSelectedNatural(){
-    // this.= this.NaturalAccountList.
+  onOptionsSelectedNatural(event){
+    alert(event+'-----'+this.selectedLine)
+    // this.lookupValueDesc4= this.NaturalAccountList.description;
+    let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
+    console.log(selectnaturalaccount);
+    this.lookupValueDesc4= selectnaturalaccount.description;
+    this.service.getInterBranchNewApi(event).subscribe(
+      data => {
+       this.InterBrancList= data.obj
+      })
+    
+  }
+
+  onOptionsSelectedBranchNew(event){
+    alert(event)
+    let selectinterbranch = this.InterBrancList.find(v => v.lookupValue == event);
+    console.log(selectinterbranch);
+    this.lookupValueDesc5= selectinterbranch.lookupValueDesc;
   }
 
   CheckTdsLineValidations(i) {
@@ -2660,13 +2677,7 @@ docSeqValue:number;
   }
 
   viewAccounting() {
-    // alert(receiptNo);
-    // var invoiceNum=this.lineDetailsArray().get('invoiceNum').value;
-    // alert(invoiceNum)
-    // var arrayControl = this.poInvoiceForm.get('obj').value;
-    // var invoiceNum = arrayControl[this.selectedLine].invoiceNum;
     var invoiceNum = this.lineDetailsArray().controls[this.selectedLine].get('invoiceNum').value;
-    alert(invoiceNum +'-----'+ this.selectedLine)
     this.service.viewAPAccounting(invoiceNum).subscribe((res: any) => {
       if (res.code === 200) {
         this.viewAccounting2 = res.obj;

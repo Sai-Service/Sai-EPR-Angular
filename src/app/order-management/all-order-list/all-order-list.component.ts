@@ -19,7 +19,7 @@ export class AllOrderListComponent implements OnInit {
   orderListForm: FormGroup;
   poPendingListForm: FormGroup;
   pipe = new DatePipe('en-US');
-  poDetails: any = [];
+  orderListDetails: any = [];
   today = new Date();
   startDt = this.pipe.transform(this.today, 'dd-MMM-yyyy');
   minDate = new Date();
@@ -43,25 +43,25 @@ export class AllOrderListComponent implements OnInit {
     var endDt1 = new Date(this.today);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
-      this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
+      this.service.getOrderByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
         if (res.code === 200) {
-          this.poDetails = res.obj;
+          this.orderListDetails = res.obj;
           for (let i = 0; i < res.obj.length; i++) {
-            var poDt = this.poDetails[i].poDate;
-            var supInvDt = this.poDetails[i].suppInvDate;
-            this.poDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
-            this.poDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
-            if (this.poDetails[i].rcvLines.length > 0) {
-              var recDt = this.poDetails[i].rcvLines[0].receiptDate;
-              this.poDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
+            var poDt = this.orderListDetails[i].poDate;
+            var supInvDt = this.orderListDetails[i].suppInvDate;
+            this.orderListDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
+            this.orderListDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
+            if (this.orderListDetails[i].rcvLines.length > 0) {
+              var recDt = this.orderListDetails[i].rcvLines[0].receiptDate;
+              this.orderListDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
               this.isPending[i] = false;
             }else{
-                this.poDetails[i].rcvLines.push({receiptNo : "Pending"});
+                this.orderListDetails[i].rcvLines.push({receiptNo : "Pending"});
                 this.isPending[i] = true;
             }
   
           }
-          console.log(this.poDetails);
+          console.log(this.orderListDetails);
         }
         else {
           if (res.code === 400) {
@@ -82,26 +82,25 @@ export class AllOrderListComponent implements OnInit {
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
 
-    this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
+    this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
-        this.poDetails = res.obj;
-        for (let i = 0; i < res.obj.length; i++) {
-          //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
-          var poDt = this.poDetails[i].poDate;
-          var supInvDt = this.poDetails[i].suppInvDate;
-          this.poDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
-          this.poDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
-          if (this.poDetails[i].rcvLines.length > 0) {
-            var recDt = this.poDetails[i].rcvLines[0].receiptDate;
-            this.poDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
-            this.isPending[i] = false;
-          }else{
-              this.poDetails[i].rcvLines.push({receiptNo : "Pending"});
-              this.isPending[i] = true;
-          }
+        this.orderListDetails = res.obj;
+        // for (let i = 0; i < res.obj.length; i++) {
+        //   var poDt = this.orderListDetails[i].orDate;
+        //   var supInvDt = this.orderListDetails[i].invDate;
+        //   this.orderListDetails[i].orDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
+        //   this.orderListDetails[i].invDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
+        //   if (this.orderListDetails[i].length > 0) {
+        //     var recDt = this.orderListDetails[i].reDate;
+        //     this.orderListDetails[i].reDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
+        //     this.orderListDetails[i] = false;
+        //   }else{
+        //       this.orderListDetails[i].push({reNum : "Pending"});
+        //       this.isPending[i] = true;
+        //   }
 
-        }
-        console.log(this.poDetails);
+        // }
+        // console.log(this.orderListDetails);
       }
       else {
         if (res.code === 400) {

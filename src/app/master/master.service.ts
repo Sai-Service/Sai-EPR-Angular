@@ -295,6 +295,9 @@ NaturalAccountList(): Observable<any> {
 NaturalAccountList1():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
 }
+NaturalAccountListRec():Observable<any>{
+  return this.http.get(this.ServerUrl+`/naturalAcc/Receivable`);
+}
 NaturalAccountListJV():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/JV');
 }
@@ -999,6 +1002,11 @@ public AccountEnquirySearch(AccountEnquiryRecord):Observable<any>{
 public viewAccountingjv(JVNO):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/glHeader/receiptNoWise/${JVNO}`);
+}
+////Receivable///////////
+public viewAccountingAR(tranNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/glHeader/arInv/${tranNo}`);
 }
 /////////////////////////////HSN-SAC CODE//////////////////////
 getHsnSacSearch(): Observable<any> {
@@ -2014,6 +2022,10 @@ getInterBranch(InterBranch1, lType):Observable<any>{
     return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
   }
 
+  getInterBranchNewApi(naturalAccout): Observable<any> {
+    return this.http.get(this.ServerUrl +`/naturalAcc/interBranch/${naturalAccout}`);
+  }
+
 
 lookupNameList(mlookupValue, mlookupType) {
   // alert('servie=call');
@@ -2351,6 +2363,11 @@ bulkpouploadSales(formData: FormData) {
 
   getPOByUser(emplId, startDt, endDt){
     return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
+  }
+
+
+  getOrderByUser(locId, startDt, endDt){
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}`)
   }
 
   bulkpouploadSpares(formData: FormData) {

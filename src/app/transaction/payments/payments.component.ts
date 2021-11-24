@@ -34,6 +34,9 @@ invoiceId:number,
 amount:number;
 statusLookupCode:string;
 appAmt:number;
+searchByToDate:Date;
+searchByFrmDate:Date;
+searchBySuppName:string;
 }
 
 @Component({
@@ -90,6 +93,12 @@ export class PaymentsComponent implements OnInit {
 public paymentIdListList:Array<string>=[];
 public PaymentReturnArr:any;
 appAmt:number;
+searchByToDate:Date;
+searchByFrmDate:Date;
+searchBySuppName:string;
+  paymentData:any[]=[];
+  displayselect:boolean=false;
+  pipe = new DatePipe('en-US');
 // public invAmtArr : any [];
   constructor(private fb: FormBuilder, private transactionService :TransactionService,private location: Location,private service :MasterService,private router: Router) {
     this.paymentForm = fb.group({
@@ -99,6 +108,9 @@ appAmt:number;
       totAmt:[],
       INVNO:[],
       appAmt:[],
+      searchByToDate:[],
+searchByFrmDate:[],
+searchBySuppName:[],
       obj1: this.fb.array([this.payHeaderLineDtl()]),
       obj: this.fb.array([this.payInvoiceLineDtl()]),
     })
@@ -257,10 +269,42 @@ voucherNo:[],
       this.paymentForm.get('obj1').patchValue(this.lstsearchpayminv);
      }
      )}
+selectedPayment:any;
 
+     paymentdispSearch(docNo,i){
+
+alert(docNo);
+
+   var arr=this.paymentForm.get('obj1').value;
+       console.log(arr);
+       var docNo1=arr[i].docNo;
+
+
+      this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) =>
+      {
+        if (res.code === 200) {
+         alert(res.message);
+         this.PaymentReturnArr=res.obj;
+
+        } else {
+          if (res.code === 400) {
+            alert(res.msg);
+            // this.poReceiptForm.reset();
+          }
+        }
+      });
+
+
+     }
 
      paymentInvoiceFind(suppNo:number,ouId:number){
-
+      //  alert(i)
+      //  var arr=this.paymentForm.get('obj1').value;
+      //  console.log(arr);
+      //  var docNo1=arr[i].docNo;
+      //  alert(docNo1)
+      // console.log(docNo1);
+      // if(docNo1===''){
       var suppNo1=this.paymentForm.get('obj1').value;
       this.payInvoiceLineDtlArray().clear();
       this.transactionService.getsearchByInvDtls(suppNo1[0].suppNo,this.ouId).subscribe((res: any) => {
@@ -282,7 +326,23 @@ voucherNo:[],
       }
       );
       (document.getElementById('btnSave') as HTMLInputElement).disabled = true;
+    // }
+    // else{
+    //   // this.transactionService.paymentDocSearch(docNo1).subscribe((res: any) =>
+      // {
+      //   if (res.code === 200) {
+      //    alert(res.message);
+      //    this.PaymentReturnArr=res.obj;
 
+      //   } else {
+      //     if (res.code === 400) {
+      //       alert(res.msg);
+      //       // this.poReceiptForm.reset();
+      //     }
+      //   }
+      // });
+
+    // }
 
     }
 
@@ -531,7 +591,68 @@ refresh()
       {
         window.location.reload();
       }
-      Validate(){
+      cancelPayment(){
+        var arr=this.paymentForm.get('obj1').value;
+        alert(this.PaymentReturnArr[0].documentNo);
+        console.log(this.paymentData);
+        this.selectedPayment=this.paymentData.find(d=>Number(d.docNo)===this.PaymentReturnArr[0].documentNo);
+        console.log(this.selectedPayment);
+        this.transactionService.paymentCancel(this.selectedPayment).subscribe((res: any) => {
+          if (res.code === 200) {
+            // alert(res.message);
+            // alert(res.obj);
+            console.log(res.obj);
+             } else {
+            if (res.code === 400) {
+              alert(res.msg);
+              // this.poReceiptForm.reset();
+            }
+          }
+        });
 
       }
+      searchPayment(searchBySuppName,searchByFrmDate,searchByToDate){
+        // frmDate = this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy');
+        // toDate = this.pipe.transform(searchByToDate, 'dd-MMM-yyyy');
+        var suppNo=this.supplierCodeList.find(d=>d.name===searchBySuppName)
+        console.log(suppNo);
+        var suppNo1=suppNo.suppNo;
+        console.log(suppNo1);
+
+        this.transactionService.paymentSearch(suppNo1,this.pipe.transform(searchByFrmDate, 'dd-MMM-yyyy'),this.pipe.transform(searchByToDate, 'dd-MMM-yyyy'),sessionStorage.getItem('divisionId'))
+        .subscribe((res: any) => {
+          if (res.code === 200) {
+            alert(res.message);
+           this.paymentData=res.obj;
+           for (let i = 0; i < this.paymentData.length; i++) {
+            var payLnGrp: FormGroup = this.payHeaderLineDtl();
+            this.payHeaderLineDtlArray().push(payLnGrp);
+          }
+
+          this.paymentForm.get('obj1').patchValue(this.paymentData);
+          // this.paymentForm.patchValue(this.paymentData);
+            console.log(this.paymentData);
+
+          } else {
+            if (res.code === 400) {
+              alert(res.msg);
+              // this.poReceiptForm.reset();
+            }
+          }
+        });
+      }
+
+      Select(documentNo: number) {
+        // alert ("receipt Number :" +receiptNumber);
+
+        let select = this.paymentData.find(d => d.documentNo === documentNo);
+        console.log(select);
+        if (select!=undefined) {
+          alert('In select');
+          this.paymentForm.patchValue(select);
+          this.paymentForm.patchValue({paymentTypeFlag:select.paymentTypeFlag});
+          this.paymentForm.disable();
+        }
+      }
+
     }
