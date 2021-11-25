@@ -1189,6 +1189,7 @@ docSeqValue:number;
     this.invLineDetailsArray().clear();
     this.TaxDetailsArray().clear();
     this.dispaccountingDate = true;
+    this.displayapInvCancelled=true;
     this.selectedLine = i;
     var arrayControl = this.poInvoiceForm.get('obj').value;
     var invStatus = arrayControl[this.selectedLine].INVStatus;
@@ -1307,7 +1308,7 @@ docSeqValue:number;
             this.poInvoiceForm.disable();
             this.displayAddNewLine = false;
             this.INVStatus = data.invoiceStatus;
-
+            this.displayapInvCancelled=false;
           }
           if (data.source == 'MANUAL') {
             this.apInvoiceTyp = 'MANUAL';
@@ -2020,17 +2021,20 @@ docSeqValue:number;
     var arrayCaontrolOfDistribution = this.poInvoiceForm.get('distribution').value;
     // var amount = arrayControl[this.selectedLine].invoiceAmt;
     var amount =this.lineDetailsArray().controls[this.selectedLine].get('invoiceAmt').value;
-     alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
+    //  alert(this.selectedLine +' '+ 'Amount --' + ' ' + amount)
     var totalOfInvLineAmout = 0;
     for (let i = 0; i < this.invLineDetailsArray().length; i++) {
-      totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
+      // totalOfInvLineAmout = totalOfInvLineAmout + arrayControl1[i].amount
+      totalOfInvLineAmout=  Math.round(((totalOfInvLineAmout + arrayControl1[i].amount) + Number.EPSILON) * 100) / 100;
     }
+
+    
     // alert(totalOfInvLineAmout);
     var totalOfDistributionAmout = 0;
     for (let j = 0; j < this.lineDistributionArray().length; j++) {
-      totalOfDistributionAmout = totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)
+      totalOfDistributionAmout =  Math.round(((totalOfDistributionAmout + Number(arrayCaontrolOfDistribution[j].amount)) + Number.EPSILON) * 100) / 100;
     }
-
+   
     // alert('Dist Amt'+ ' '+ totalOfDistributionAmout)
     // alert('totalOfDistributionAmout ' + totalOfDistributionAmout);
 
@@ -2411,7 +2415,7 @@ docSeqValue:number;
   }
 
   onOptionsSelectedNatural(event){
-    alert(event+'-----'+this.selectedLine)
+    // alert(event+'-----'+this.selectedLine)
     // this.lookupValueDesc4= this.NaturalAccountList.description;
     let selectnaturalaccount = this.NaturalAccountList.find(v => v.naturalaccount == event);
     console.log(selectnaturalaccount);
