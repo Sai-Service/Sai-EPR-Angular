@@ -141,7 +141,22 @@ public paymentSaveSubmit(poRecord) {
   return this.http.post(url, poRecord, options);
 }
 
+public paymentCancel(paymentRecord){
+  const options = {
+    headers: this.headers
+  };
+  const url = this.ServerUrl + '/apInvPayment/paymentCancel';
+  return this.http.post(url, paymentRecord, options);
+}
 
+paymentSearch(suppNo,fromDate,toDate,divId):Observable<any>{
+  return this.http.get(this.ServerUrl+`/apInvPayment/apPaymentDetail?suppNo=${suppNo}&frmDt=${fromDate}&toDate1=${toDate}&divisionId=${divId}`)
+}
+
+paymentDocSearch(docNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/apInvPayment/documentNo/${docNo}`);
+}
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {

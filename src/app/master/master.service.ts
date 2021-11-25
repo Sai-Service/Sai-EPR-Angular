@@ -295,6 +295,9 @@ NaturalAccountList(): Observable<any> {
 NaturalAccountList1():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
 }
+NaturalAccountListRec():Observable<any>{
+  return this.http.get(this.ServerUrl+`/naturalAcc/Receivable`);
+}
 NaturalAccountListJV():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/JV');
 }
@@ -999,6 +1002,11 @@ public AccountEnquirySearch(AccountEnquiryRecord):Observable<any>{
 public viewAccountingjv(JVNO):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/glHeader/receiptNoWise/${JVNO}`);
+}
+////Receivable///////////
+public viewAccountingAR(tranNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/glHeader/arInv/${tranNo}`);
 }
 /////////////////////////////HSN-SAC CODE//////////////////////
 getHsnSacSearch(): Observable<any> {

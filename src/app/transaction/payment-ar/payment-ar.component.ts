@@ -75,6 +75,7 @@ export class PaymentArComponent implements OnInit {
   public ReceiptTypeArList: Array<string> = [];
   public VehRegNoList: Array<string> = [];
   public RefReasonList: Array<string> = [];
+  
   viewAccountingArRcpt: Array<string> = [];
   viewAccountingLines: Array<string> = [];
 
@@ -265,6 +266,8 @@ export class PaymentArComponent implements OnInit {
 
   totalDr:number;
   totalCr:number;
+  runningTotalCr:number;
+  runningTotalDr:number;
 
   // applyTo: string;
 
@@ -382,6 +385,8 @@ export class PaymentArComponent implements OnInit {
 
       totalDr:[],
       totalCr:[],
+      runningTotalCr:[],
+      runningTotalDr:[],
 
       // applyrcptFlag: ['', [Validators.required]],
 
@@ -2390,6 +2395,7 @@ export class PaymentArComponent implements OnInit {
         // this.viewAccountingLines = res.obj[0].glLines;
 
         console.log(this.viewAccountingArRcpt);
+      
         // alert(res.message);
       } else {
         if (res.code === 400) {
@@ -2407,9 +2413,11 @@ export class PaymentArComponent implements OnInit {
           if (res.code === 200) {
             this.viewAccountingLines = res.obj[index].glLines;
             console.log(this.viewAccountingLines);
-            this.totalDr=res.obj[index].runningTotalDr;
-            this.totalCr=res.obj[index].runningTotalCr;
-            // alert(this.totalDr +","+this.totalCr);
+            this.runningTotalDr=res.obj[index].runningTotalDr;
+            this.runningTotalCr=res.obj[index].runningTotalCr;
+            // this.paymentArForm.patchValue({totalDr:res.obj[index].runningTotalDr})
+            // this.paymentArForm.patchValue({totalCr:res.obj[index].runningTotalCr})
+            // alert(this.runningTotalDr +","+this.runningTotalCr);
             } 
             else {
             if (res.code === 400) {

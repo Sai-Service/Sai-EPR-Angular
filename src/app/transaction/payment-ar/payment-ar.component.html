@@ -1461,16 +1461,16 @@
                 <!-- </ng-template>
                 <ng-template #hList2></ng-template> -->
                 <!-- ------------------------------------------------------------------------------------------------------- -->
-               </form>
+               <!-- </form>
 
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="container1">
     <div class="grid_scroll">
-    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;font-size: small;">
    <tbody>
         <tr class="GridHeader">
             <th style="width:6rem" scope="col">Srl No</th>
@@ -1563,7 +1563,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let com of viewAccountingArRcpt let i=index" class="ItemStyle" style="text-decoration:none;position: initial;">
+                            <tr *ngFor="let com of viewAccountingArRcpt let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
                                 <td >{{i+1}}</td>
                                 <td >{{com.docSeqValue}}</td>
                                 <td >{{com.description}}</td>
@@ -1595,37 +1595,32 @@
                      <thead>
                        <tr class="GridHeader">
                        <th>Line</th>
-                       <th>GL Id</th>
-                       <th>Description</th>
-                       <th>Effective Date</th>
-                       <th>Segment</th>
-                       <th>Source</th>
+                       <th>Account</th>
                        <th>Debit(INR)</th>
                        <th>Credit(INR)</th>
-                         </tr>
+                       <th>Description</th>
+                       <th>Account Description</th>
+                      </tr>
                      </thead>
                      <tbody>
-                         <tr *ngFor="let va of viewAccountingLines let i=index" class="ItemStyle" style="text-decoration:none;position: initial;">
-                             <td >{{i+1}}</td>
-                             <td >{{va.codeCombinationId}}</td>
-                             <td >{{va.description}}</td>
-                             <td>{{va.effectiveDate}}</td>
-                             <td>{{va.segmentName}}</td>
-                             <td>{{va.accountDesc}}</td>
-                             <td style="text-align: right;padding-right: 100px;">{{va.enteredDr}}</td>
-                             <td style="text-align: right;padding-right: 100px;">{{va.enteredCr}}</td>
-                            </tr>
-
-                       </tbody>
+                        <tr *ngFor="let com of viewAccountingLines" class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
+                          <td>{{com.jeLineNum}}</td>
+                          <td style="width: 200px;">{{com.segmentName}}</td>
+                          <td style="text-align: right;padding-right: 5px; width:150px ;" >{{com.enteredDr}}</td>
+                          <td style="text-align: right;padding-right: 5px; width:150px">{{com.enteredCr}}</td>
+                          <td >{{com.description}}</td>
+                          <td >{{com.accountDesc}}</td>
+                        </tr>
+                    </tbody>
                        <tr>
                         <td></td>
-                            <td>Total:&nbsp;</td>
-                             <td></td> <td></td> <td></td><td></td>
+                            <td style="font-size: small;">Total:&nbsp;</td>
+                             <!-- <td></td> <td></td> <td></td><td></td> -->
                             <td >
-                                <input disabled  formControlName="totalDr" id="totalDr" class="form-control" [ngModel]="totalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                                <input disabled formControlName="runningTotalDr" id="runningTotalDr" [(ngModel)]="runningTotalDr" class="form-control"  style="text-align: right;height: 22px;width: 150px;font-weight:bold;">
                             </td>
                             <td >
-                                <input disabled  formControlName="totalCr" id="totalCr" class="form-control" [ngModel]="totalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                                <input disabled   formControlName="runningTotalCr" id="runningTotalCr" [(ngModel)]="runningTotalDr" class="form-control"  style="text-align: right;height: 22px;width: 150px;font-weight: bold;">
                             </td>
                         </tr>
                        </table>
@@ -1635,7 +1630,7 @@
          </div>
         </ng-template>
         <ng-template #showLineNo></ng-template>
-       
+            
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -1643,5 +1638,10 @@
         </div>
       </div>
 
+    </form>
 
+</div>
+</div>
+</div>
+</div>
       

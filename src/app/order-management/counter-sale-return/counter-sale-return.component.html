@@ -430,7 +430,7 @@
                                         <button type="button" class="btn btn-info" (click)="printDoc()"[disabled]="!counterSaleReturnOrderForm">Print</button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(searchCntrSaleOrderNo)" >
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting()" >
                                           View Accounting
                                     </button>
 
@@ -865,7 +865,7 @@
     </div>
 
   
-</form>
+<!-- </form> -->
 
 <br>
 
@@ -912,7 +912,7 @@
             <table class="center">
                 <tr>
                     <td style="width: 18%" class="LabelFontStyle">
-                        Desc/Order&nbsp;No&nbsp;:&nbsp;
+                        CreditNote&nbsp;No&nbsp;:&nbsp;
                     </td> 
                     <td>
                         <input disabled formControlName="name1" id="name1" class="form-control" [ngModel]="name1" >
@@ -944,7 +944,8 @@
                         Date&nbsp;:&nbsp;
                     </td> 
                     <td>
-                        <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
+                        <input  disabled formControlName="postedDate" id="postedDate" class="form-control"
+                                                    [ngModel]="postedDate"  >
                     </td>
                     <td style="width: 18%" class="LabelFontStyle">
                         Period&nbsp;:&nbsp;
@@ -968,28 +969,28 @@
                       </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;">
+                        <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;font-size: small;">
                           <td>{{com.jeLineNum}}</td>
-                          <td >{{com.segmentName}}</td>
-                          <td style="text-align: right;padding-right: 5px;" >{{com.enteredDr}}</td>
-                          <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}</td>
+                          <td style="width: 200px;">{{com.segmentName}}</td>
+                          <td style="text-align: right;padding-right: 5px; width:150px ;" >{{com.enteredDr}}</td>
+                          <td style="text-align: right;padding-right: 5px; width:150px">{{com.enteredCr}}</td>
                           <td >{{com.description}}</td>
                           <td >{{com.accountDesc}}</td>
                         </tr>
                     </tbody>
                     <tr>
                         <td></td>
-                        <td>Total:&nbsp;</td>
+                        <td style="font-size: small;">Total:&nbsp;</td>
                         <td >
-                            <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                            <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 150px;font-weight: bold;">
                         </td>
                         <td >
-                            <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                            <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 150px;font-weight: bold;">
                         </td>
                     </tr>
-                      </table>
+                </table>
                      
-                    </div>
+                </div>
         </div>
         
         <div class="modal-footer">
@@ -999,3 +1000,5 @@
     </div>
   </div>
 
+</form>
+  

@@ -3,9 +3,9 @@
         <td class="PageHeader">
             &nbsp;&nbsp;Payments&nbsp;
         </td>
-        <td colspan="4" style="width: 100%;text-align: center;">
+        <!-- <td colspan="4" style="width: 100%;text-align: center;">
             <button data-toggle="modal" class="btn-primary" data-target="#myModel" style="text-align: center;">Find</button>
-        </td>
+        </td> -->
        <!-- <td>
         <table class="center" style="width: 10rem; background-color: #FFE4B5;">
             <tr>
@@ -21,11 +21,52 @@
 <div class="form-bg">
     <!-- <form [formGroup]="paymentForm" (ngSubmit)="payment(paymentForm.value)"> -->
         <form [formGroup]="paymentForm" (ngSubmit)="payment(paymentForm.value)">
+          <br>
+          <table style="width: 100%; background-color: #FFE4B5;" >
+            <tr>
+                <td style="text-align: center;" class="SubHeading2">Search&nbsp;Payment&nbsp;</td>
+            </tr>
+        </table>
+
+
+            <table class="center" style="width:100%; background-color:beige" >
+               <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Supplier&nbsp;Name:&nbsp;</td>
+                    <td>
+                        <!-- <input   type="text" formControlName="searchBySuppNo" [(ngModel)]="searchBySuppNo"   class="form-control" placeholder="Enter Supplier Name" > -->
+                        <select formControlName="searchBySuppName" id="searchBySuppName" class="form-control" [(ngModel)]="searchBySuppName"
+                             style="width: 160px;height: 25px;font-size: 10px;">
+                            <option>--Select--</option>
+                            <option *ngFor="let sup of  supplierCodeList" [value]="sup.name" >
+                                {{sup.name}}
+                            </option>
+                        </select>
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date:&nbsp;</td>
+                    <td>
+                        <input   type="date" formControlName="searchByFrmDate"   [(ngModel)]="searchByFrmDate"   class="form-control"  >
+                    </td>
+
+                    <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date:&nbsp;</td>
+                    <td>
+                        <input   type="date" formControlName="searchByToDate" [(ngModel)]="searchByToDate"   class="form-control" >
+                    </td>
+
+                    <td colspan="8" style="text-align: left; width: 100%;">
+                        <button type="submit"  (click)="searchPayment(searchBySuppName,searchByFrmDate,searchByToDate)" class="btn btn-primary"><i
+                                class="fa fa-search"></i></button>
+
+                </tr>
+            </table>
+<br>
+<br>
         <div class="grid_scroll2">
             <table class="GridFont" cellspacing="0" cellpadding="4" border="0"  style="width:100%;border-collapse:collapse;">
             <thead>
                 <tr class="GridHeader">
                     <th scope="col">Select</th>
+                    <th scope="col">Document Number</th>
                     <th scope="col">Type</th>
                     <th scope="col">Operating Unit</th>
                     <th scope="col">Supplier Name</th>
@@ -40,9 +81,9 @@
                     <th scope="col">Bank Account</th>
                     <th scope="col">Payment Process profile</th>
                     <th scope="col">Payment Document</th>
-                    <th scope="col">Document Number</th>
+                    <!-- <th scope="col">Document Number</th> -->
                     <th scope="col">Payment Address</th>
-                    <!-- <th scope="col">Document Category</th> -->
+                    <th scope="col">Document Category</th>
                     <th scope="col">Voucher Number</th>
                     <th scope="col">Status</th>
                     <th scope="col">Payment Narration</th>
@@ -52,14 +93,26 @@
                 <ng-container  class="center" formArrayName="obj1">
 <ng-container   *ngFor="let group of payHeaderLineDtlArray().controls; let i= index" [formGroupName]="i" class="auto-style5">
                 <tr>
-                    <td>
+                      <td>
                         <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"
                                 (click)="paymentInvoiceFind(suppNo,ouId)" id="btnSelect">Select</button>
+                    </td>
+                       <td>
+                      <table>
+                          <tr>
+                              <td>
+                                <input  class="form-control" disabled formControlName="docNo" style="width: 60px;height: 25px;font-size: 10px;">
+                              </td>
+                              <td>
+                                     <button type="button" class="btn btn-primary"style="width:1rem ; text-align: right;"(click)="paymentdispSearch(docNo,i)">..</button>
+                              </td>
+                          </tr>
+                      </table>
                     </td>
                     <td>
             <div *ngIf="displaytype; then thentype; else elsetype"></div>
             <ng-template #thentype>
-                        <input type="text" class="form-control" formControlName="paymentTypeFlag" value={{paymentTypeFlag}} style="width: 100px;height: 25px;font-size: 10px;">
+                        <input type="text" class="form-control" [(ngModel)]="paymentTypeFlag" formControlName="paymentTypeFlag" value={{paymentTypeFlag}} style="width: 100px;height: 25px;font-size: 10px;">
             </ng-template>
             <ng-template #elsetype>
                 <select formControlName="paymentTypeFlag" id="paymentTypeFlag" class="form-control" style="width: 120px;height: 25px;font-size: 10px;">
@@ -82,14 +135,14 @@
                     <td>
                         <div *ngIf="displayname; then thenname; else elsename"></div>
                         <ng-template #thenname>
-                      <input disabled type="text" class="form-control" formControlName="name"  style="width: 160px;height: 25px;font-size: 10px;"> -->
+                      <input disabled type="text" class="form-control" formControlName="name"  style="width: 160px;height: 25px;font-size: 10px;">
                      </ng-template>
                          <ng-template #elsename>
                         <select formControlName="name" id="name" class="form-control"
                         (ngModelChange)='onOptionsSelectedsuppName($event)'
                         style="width: 160px;height: 25px;font-size: 10px;">
                             <option>--Select--</option>
-                            <option *ngFor="let item of  supplierCodeList" >
+                            <option *ngFor="let item of  supplierCodeList" [value]="item.name" >
                                 {{item.name}}
                             </option>
                         </select>
@@ -199,15 +252,15 @@
                         </select>
                         <!-- <input class="form-control" formControlName="paymentDocName" value={{paymentDocName}} style="width: 60px;height: 25px;font-size: 10px;"> -->
                     </td>
-                    <td>
+                    <!-- <td>
                         <input  class="form-control" disabled formControlName="docNo" style="width: 60px;height: 25px;font-size: 10px;">
-                    </td>
+                    </td> -->
                     <td>
                         <input class="form-control" formControlName="payAddress" style="width: 200px;height: 25px;font-size: 10px;">
                     </td>
-                    <!-- <td>
+                    <td>
                         <input class="form-control" formControlName="docCategory" style="width: 60px;height: 25px;font-size: 10px;">
-                    </td> -->
+                    </td>
                     <td>
                         <input class="form-control" formControlName="voucherNo" style="width: 60px;height: 25px;font-size: 10px;">
                     </td>
@@ -359,6 +412,24 @@
       </div>
     </div>
   </div>
+  <br>
+  <table style="width: 100%; background-color: #FFE4B5;">
+    <tr>
+
+        <td style="width: 15%" class="LabelFontStyle">Document&nbsp;Number&nbsp;:</td>
+        <td>
+            <input disabled type="text" formControlName="docNo"  class="form-control">
+        </td>
+        <td style="width: 15%" class="LabelFontStyle">Payment&nbsp;Status&nbsp;:</td>
+        <td style="font-weight: bold;">
+            <!-- {{INVStatus}} -->
+            <input disabled type="text" formControlName="payStatus"  class="form-control">
+        </td>
+
+    </tr>
+
+</table>
+<br>
 
   <!--======================================== After Save respose display  ==================================-->
 
@@ -395,8 +466,8 @@
         </td>
         <td>
           <button type="submit" class="btn btn-primary" id="register"
-              (click)="Validate()">
-              Validate
+              (click)="cancelPayment()">
+              Cancel
           </button>
       </td>
       </tr>
@@ -432,6 +503,13 @@
             </div>
         </div>
          <!-- Modal End Here  -->
+
+<br><br>
+
+
+
+
+
     </form>
 </div>
 </div>
