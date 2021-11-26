@@ -2068,6 +2068,11 @@ PriceSubTypeList(): Observable<any> {
 }
 
 
+// PriceListIdList(): Observable<any> {
+//   return this.http.get(this.ServerUrl +'/pricelist');
+ 
+// }
+
 
 PriceListIdList(mOuId,mDivId): Observable<any> {
     // return this.http.get(this.ServerUrl +'/pricelist');
