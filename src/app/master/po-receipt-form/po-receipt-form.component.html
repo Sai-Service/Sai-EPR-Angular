@@ -1171,10 +1171,11 @@
                                     <ng-template #elseBlockViewAccounting>
                                         <td>
                                             <!-- Button trigger modal -->
+                                            
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(receiptNo)" >
     View Accounting
   </button>
-  
+  <div class="grid_scroll2">
   <!-- Modal -->
   <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -1290,6 +1291,7 @@
       </div>
     </div>
   </div>
+</div>    
                                         </td>
                                         <td>
                                             <button type="submit" (click)="grrReceiptPrint()" class="btn btn-primary" style="width: 10rem;">View GRR Receipt Print</button>   

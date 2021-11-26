@@ -110,7 +110,7 @@
         </td>
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Invoice&nbsp;Number&nbsp;:&nbsp;</td>
         <td>
-            <input disabled type="text" formControlName="trxNumber" class="form-control">
+            <input disabled type="text" formControlName="trxNumber" [(ngModel)]="trxNumber" class="form-control">
         </td>
         <td style="width: 15%" class="LabelFontStyle">&nbsp;Line&nbsp;:&nbsp;</td>
         <td>
@@ -124,7 +124,7 @@
                 <select
                 formControlName="custTrxTypeId" name="custTrxTypeId" id="custTrxTypeId" class="form-control">
                                         <option disabled>--Select--</option>
-                                        <option *ngFor="let sc of invTypeList">
+                                        <option *ngFor="let sc of invTypeList"[value]=sc.custTrxTypeId>
                                             {{sc.name}}
                                         </option>
                 </select>
@@ -174,9 +174,9 @@
             <td>
                 <input type="text" disabled class="form-control">
             </td>
-            <td style="width: 15%" class="LabelFontStyle">&nbsp;Freight&nbsp;:&nbsp;</td>
+            <td style="width: 15%" class="LabelFontStyle">&nbsp;Balance&nbsp;:&nbsp;</td>
             <td>
-                <input type="text" formControlName="freight" [(ngModel)]="freight" disabled class="form-control">
+                <input type="text" formControlName="balance" [(ngModel)]="balance" disabled class="form-control">
             </td>
         </tr>
         <tr>
@@ -268,13 +268,13 @@
                 <tr>
                     <td style="width: 15%"  class="LabelFontStyle1">&nbsp;Customer&nbsp;Account&nbsp;:&nbsp;</td>
             <td>
-                <input type="number" min="0"  style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control">
-            </td>
+                <!-- <input type="number" min="0"  style="width: 5rem;" [(ngModel)]="billToCustNo" formControlName="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control"> -->
+                <input type="number" formControlName="billToCustNo" value={{billToCustNo}} [(ngModel)]="billToCustNo" (keydown.tab)="accountNoSearchfn(billToCustNo)"  class="form-control" style="width: 170px;">
+              </td>
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Name&nbsp;:&nbsp;</td>
             <td>
                 <!-- <input type="text" formControlName="billToCustName" class="form-control"> -->
-                <input type="text" formControlName="billToCustName" value={{billToCustName}}
-                class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#customerNameSearchModel">
+                <input type="text" formControlName="billToCustName" value={{billToCustName}} [(ngModel)]="billToCustName"                class="form-control" style="width: 170px;" data-bs-toggle="modal" data-bs-target="#customerNameSearchModel">
             </td>
             <td>
                 <button type="button" class="btn btn-primary" (click)="custNameSearch(billToCustName)"
@@ -330,7 +330,7 @@
                     </div>
                 </div>
 
-            
+
             </td>
 
             <td style="width: 15%"  class="LabelFontStyle">&nbsp;Address&nbsp;:&nbsp;</td>
@@ -1013,7 +1013,15 @@
 
 
                         <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="completeInvoice()">Complete</button></td>
-                        <td><button type="button" class="btn btn-primary"  style="width: 8rem;">All Distribution</button></td>
+                        <div *ngIf="disabledViewAccounting; then thenBlockViewAccounting; else elseBlockViewAccounting"></div>
+                        <ng-template #thenBlockViewAccounting>
+                          <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(trxNumber)" >
+                            View Accounting</button></td>
+                        </ng-template>
+                        <ng-template #elseBlockViewAccounting>
+
+                          </ng-template>
                         <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;">Line Destribution</button></td> -->
                         <td>
                             <button type="button" class="btn btn-primary" (click)="clearFormArray()"
@@ -1321,6 +1329,121 @@
 
 
                 <!-- ------------------------apply modal end-------------------- -->
+
+                <!--------------View Accounting Modal start-------------------->
+                <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Ledger Detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                       <table class="center">
+                      <tr>
+                          <td style="width: 18%" class="LabelFontStyle">
+                              Journal&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                              <input disabled formControlName="jeSource" id="jeSource" class="form-control" [ngModel]="jeSource" >
+                          </td>
+                          <td style="width: 18%" class="LabelFontStyle">
+                              Description&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                              <input disabled formControlName="name" class="form-control" [ngModel]="name" >
+                          </td>
+                          <td style="width: 18%" class="LabelFontStyle">
+                              Ledger&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                              <input disabled formControlName="ledgerName" class="form-control" [ngModel]="ledgerName" >
+                          </td>
+                      </tr>
+                      <tr>
+                          <td style="width: 18%" class="LabelFontStyle">
+                              Category&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                              <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                          </td>
+                          <td style="width: 18%" class="LabelFontStyle">
+                              Date&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                              <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
+                          </td>
+                          <td style="width: 18%" class="LabelFontStyle">
+                              Period&nbsp;:&nbsp;
+                          </td>
+                          <td>
+                              <input disabled  formControlName="periodName" id="periodName" class="form-control" [ngModel]="periodName" >
+                          </td>
+                      </tr>
+                      <br>
+                      </table>
+                      <div class="grid_scroll2">
+                      <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                          <thead>
+                            <tr class="GridHeader">
+                            <th>Line</th>
+                            <th>Account</th>
+                            <th>Debit(INR)</th>
+                            <th>Credit(INR)</th>
+                            <th>Description</th>
+                            <th>Account Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let com of viewAccountingArdata" class="ItemStyle" style="text-decoration:none;">
+                                <td>{{com.jeLineNum}}</td>
+                                <td>{{com.segmentName}}</td>
+                                <td style="text-align: right;">{{com.enteredDr}}</td>
+                                <td style="text-align: right;">{{com.enteredCr}}</td>
+                                <td>{{com.description}}</td>
+                                <td>{{com.accountDesc}}</td>
+                              </tr>
+                              <tr>
+                                  <td></td>
+                                  <td>Total:&nbsp;</td>
+                                  <td>
+                                      <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr"  style="text-align: right;height: 22px;width: 100px;padding-right: 5px;">
+                                  </td>
+                                  <td >
+                                      <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;padding-right: 5px;">
+                                  </td>
+                              </tr>
+                          </tbody>
+                            </table>
+                          </div>
+                            <!-- <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+                              <tr class="ItemStyle">
+                                  <td style="width: 4rem;"></td>
+                                  <td  style="width: 8rem;">Total:&nbsp;</td>
+                                  <td style="width: 4rem;">
+                                      <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;">
+                                  </td>
+                                  <td style="width: 2rem;">
+                                      <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;">
+                                  </td>
+                                  <td style="width: 8rem;">
+                                  </td>
+                                  <td style="width: 8rem;" hidden>	SS-C-GST Liability Standard-11PU</td>
+                                  <td style="width: 8rem;" hidden>	SS-C-GST Liability Standard-11PU</td>
+                              </tr>
+
+                           </table>  -->
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                <!--------------View Accounting Modal end---------------------->
         </form>
         <!-- </form> -->
     </div>

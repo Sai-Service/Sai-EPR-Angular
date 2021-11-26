@@ -295,6 +295,9 @@ NaturalAccountList(): Observable<any> {
 NaturalAccountList1():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/Payable');
 }
+NaturalAccountListRec():Observable<any>{
+  return this.http.get(this.ServerUrl+`/naturalAcc/Receivable`);
+}
 NaturalAccountListJV():Observable<any>{
   return this.http.get(this.ServerUrl +'/naturalAcc/JV');
 }
@@ -999,6 +1002,11 @@ public AccountEnquirySearch(AccountEnquiryRecord):Observable<any>{
 public viewAccountingjv(JVNO):Observable<any>
 {
   return this.http.get(this.ServerUrl+`/glHeader/receiptNoWise/${JVNO}`);
+}
+////Receivable///////////
+public viewAccountingAR(tranNo):Observable<any>
+{
+  return this.http.get(this.ServerUrl+`/glHeader/arInv/${tranNo}`);
 }
 /////////////////////////////HSN-SAC CODE//////////////////////
 getHsnSacSearch(): Observable<any> {
@@ -2060,9 +2068,16 @@ PriceSubTypeList(): Observable<any> {
 }
 
 
+// PriceListIdList(): Observable<any> {
+//   return this.http.get(this.ServerUrl +'/pricelist');
+ 
+// }
 
-PriceListIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/pricelist');
+
+PriceListIdList(mOuId,mDivId): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/pricelist');
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${mOuId}&divisionId=${mDivId}`);
+    // http://localhost:8081/pricelist/priceHdr?ouId=101&divisionId=2
   }
 
 
@@ -3202,6 +3217,27 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
 
+      //////////////////////bank recon/////////////////////
+
+      bankList(mouId): Observable<any> {
+        // alert ("OU Id :"+mouId);
+        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        // http://localhost:8081/ceBankAccounts/BankList/101
+      }
+
+     
+
+      getBankReconStatement1(bnkId,ouId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+         return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
+      }
+
+
+      getBankStatementDetails(sHeaderId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+        return this.http.get(this.ServerUrl+`/ceStateHdr/${sHeaderId}`);
+        // http://localhost:8081/ceStateHdr/161273
+      }
 
 
 

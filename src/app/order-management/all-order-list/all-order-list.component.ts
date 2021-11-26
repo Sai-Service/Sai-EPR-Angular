@@ -43,25 +43,25 @@ export class AllOrderListComponent implements OnInit {
     var endDt1 = new Date(this.today);
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
-      this.service.getOrderByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
+      this.service.getOrderByUser(Number(sessionStorage.getItem('locId')), this.startDt, this.endDt).subscribe((res: any) => {
         if (res.code === 200) {
           this.orderListDetails = res.obj;
-          for (let i = 0; i < res.obj.length; i++) {
-            var poDt = this.orderListDetails[i].poDate;
-            var supInvDt = this.orderListDetails[i].suppInvDate;
-            this.orderListDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
-            this.orderListDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
-            if (this.orderListDetails[i].rcvLines.length > 0) {
-              var recDt = this.orderListDetails[i].rcvLines[0].receiptDate;
-              this.orderListDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
-              this.isPending[i] = false;
-            }else{
-                this.orderListDetails[i].rcvLines.push({receiptNo : "Pending"});
-                this.isPending[i] = true;
-            }
+          // for (let i = 0; i < res.obj.length; i++) {
+          //   var poDt = this.orderListDetails[i].poDate;
+          //   var supInvDt = this.orderListDetails[i].suppInvDate;
+          //   this.orderListDetails[i].poDate = this.pipe.transform(poDt, 'dd-MM-yyyy');
+          //   this.orderListDetails[i].suppInvDate = this.pipe.transform(supInvDt, 'dd-MM-yyyy');
+          //   if (this.orderListDetails[i].rcvLines.length > 0) {
+          //     var recDt = this.orderListDetails[i].rcvLines[0].receiptDate;
+          //     this.orderListDetails[i].rcvLines[0].receiptDate = this.pipe.transform(recDt, 'dd-MM-yyyy');
+          //     this.isPending[i] = false;
+          //   }else{
+          //       this.orderListDetails[i].rcvLines.push({receiptNo : "Pending"});
+          //       this.isPending[i] = true;
+          //   }
   
-          }
-          console.log(this.orderListDetails);
+          // }
+          // console.log(this.orderListDetails);
         }
         else {
           if (res.code === 400) {

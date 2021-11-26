@@ -46,12 +46,6 @@
                         <div class="modal-body">
                             <table class="center" style="width: 100%;">
                                 <tr>
-                                    <!-- <td style="width: 15%" class="LabelFontStyle">
-                                        Contact&nbsp;No&nbsp;:&nbsp;
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" style="width: 150px;">
-                                    </td> -->
                                     <td style="width: 15%" class="LabelFontStyle">
                                         State&nbsp;:&nbsp;
                                     </td>
@@ -126,18 +120,12 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="submit" class="btn btn-success" id="resetBtn" data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Navigate')" style="width: fit-content;">New Customer Creation</button> -->
         </legend>
-      
         <table class="center" style="width: 100%;">
-            <!-- <div *ngIf="displaycreateCustomer; then thencreateCustomer; else elsecreateCustomer"></div>
-            <ng-template #thencreateCustomer> -->
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1">
                         Customer&nbsp;No&nbsp;:&nbsp;
@@ -335,8 +323,27 @@
                             [(ngModel)]='custAddress' value={{custAddress}} style="width:100%;">
                     </td>
                 </tr>
-               
-               
+               <!--  ******* Additional Details FOR WALKING Customer********   -->
+               <div *ngIf="displaywalkingCustomer; then thenwalkingCustomer; else elsewalkingCustomer"></div>
+               <ng-template #thenwalkingCustomer></ng-template>
+               <ng-template #elsewalkingCustomer>
+                  <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Name&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="text" class="form-control" formControlName="cntrOrdCustName"
+                            [(ngModel)]='cntrOrdCustName' value={{cntrOrdCustName}} style="width:100%;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Customer&nbsp;Pan&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input  type="text" class="form-control" formControlName="cntrOrdPan"
+                            [(ngModel)]='cntrOrdPan' value={{cntrOrdPan}} style="width:100%;">
+                    </td>
+                  </tr>
+               </ng-template>
                 <div *ngIf="displayDMSCDMS; then thenDMSCDMS; else elseDMSCDMS"></div>
                 <ng-template #thenDMSCDMS>
                     <tr>
@@ -785,14 +792,14 @@
                         <option value="Header Level Discount">Header Level Discount</option>
                         <option value="Line Level Discount">Line Level Discount</option>
                         <option value="No Discount">No Discount</option>
-                    </select>  (ngModelChange)='onOptionsSelectedDiscountPer($event)' -->
+                    </select>  (ngModelChange)='onOptionsSelectedDiscountPer($event)'(keydown.tab)='onOptionsSelecteddisPer($event)' -->
                         </td>
                         <div *ngIf="displaydisPer; then thendisPer; else elsedisPer"> </div>
                         <ng-template #thendisPer>
                         </ng-template>
                         <ng-template #elsedisPer>
                             <td>
-                                <input disabled type="number" formControlName="disPer" value={{disPer}}
+                                <input  type="number" formControlName="disPer" value={{disPer}} (keydown.tab)='onOptionsSelecteddisPer()'
                                     class="form-control" style="width: 160px;font-weight: bold;">
                             </td>
                         </ng-template>

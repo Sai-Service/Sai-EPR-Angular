@@ -196,7 +196,7 @@ export class OrderTypeMasterComponent implements OnInit {
               }
             );
 
-            this.service.PriceListIdList()
+            this.service.PriceListIdList(this.ouId,this.divisionId)
             .subscribe(
               data => {
                 this.PriceListIdList = data;
