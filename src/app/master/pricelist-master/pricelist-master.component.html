@@ -353,12 +353,7 @@
                                                         {{item.segment}}
                                                     </option>
                                                 </datalist> 
-                                                <!-- <select class="form-control" style="height: 20px; width: 160px;"   formControlName="frmLocatorId"
-                                                (ngModelChange)="onOptioninvItemIdSelectedNew(segment,i)">
-                                                <option *ngFor="let item of  invItemList[i]" [ngValue]="item.itemId">
-                                                    {{item.segment}}
-                                                </option>
-                                            </select> -->
+                                               
                                                 </td> 
                                               
                                                 <td>
@@ -798,7 +793,7 @@
         <tbody>
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No</th>
-                <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th>
+                <!-- <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th> -->
                 <th style="width:10rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
                 <!-- <th style="width:10rem" scope="col">Price&nbsp;List&nbsp;Description</th> -->
                 <th style="width:6rem" scope="col">PL&nbsp;Type</th>
@@ -807,12 +802,13 @@
                 <th style="width:12rem" scope="col">Start&nbsp;Date</th>
                 <th style="width:10rem" scope="col">Status</th>
                 <th style="width:6rem" scope="col">Select</th>
+                <th style="width:6rem" scope="col">Export</th>
             </tr>
         </tbody>
         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
                
                 <td style="text-align: center;">{{i+1}}</td>
-                <td>{{com.priceListHeaderId}}</td>
+                <!-- <td>{{com.priceListHeaderId}}</td> -->
                 <td>{{com.priceListName}}</td>
                 <!-- <td>{{com.description}}</td>    -->
                 <td>{{com.priceListType}}</td>   
@@ -820,7 +816,8 @@
                 <td>{{com.divisionName}}</td> 
                 <td style="text-align: center;">{{com.startDate |date:'dd-MM-y'}}</td>
                 <td style="text-align: center;">{{com.status}}</td>
-                <td><button class="btn btn-info" (click)="Select(com.priceListHeaderId)">Select</button></td>   
+                <td><button class="btn btn-info" (click)="Select(com.priceListHeaderId)">Select</button></td> 
+                <td><button class="btn btn-info" (click)="exportToExcel(com.priceListHeaderId)">Excel</button></td>    
         </tr>
     </table>
 </div>
