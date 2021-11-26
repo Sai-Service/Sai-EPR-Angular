@@ -76,6 +76,8 @@ interface ISalesBookingForm {
   mobile1: number;
   paymentType: string;
   issuedBy: string;
+  cntrOrdPan:string;
+  cntrOrdCustName:string;
 }
 
 interface CustomerCreationInterface {
@@ -186,7 +188,8 @@ export class CounterSaleComponent implements OnInit {
   location: string;
   displaydisAmt = false;
   displayDMSCDMS: boolean;
-
+  cntrOrdPan:string;
+  cntrOrdCustName:string;
 
   trxNumber: number;
   orderStatus: string;
@@ -314,6 +317,7 @@ export class CounterSaleComponent implements OnInit {
   // displaytaxCategoryName=true;
   displaycreateCustomer = true;
   displayCounterSaleLine: Array<boolean> = [];
+  displaywalkingCustomer=true;
 
   selCustomer: any;
   boxQty: number;
@@ -431,9 +435,8 @@ export class CounterSaleComponent implements OnInit {
       state: [''],
       gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
-      // orderType:[''],
-      // createOrderType:[''],
-      billToAddress: [''],
+      cntrOrdPan:['', [Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
+      cntrOrdCustName:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
       taxAmounts: this.fb.array([this.TaxDetailsGroup()]),
       ouName: [''],
@@ -1156,6 +1159,16 @@ export class CounterSaleComponent implements OnInit {
               this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
               this.onOptionsSelectedcustSiteName(this.custSiteList[0].siteName);
             }
+            var custName=data.obj.custName;
+            if (custName.includes(('Walk'))) {
+              alert(custName);
+              this.displaywalkingCustomer=false;
+              this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
+              this.displaydisPer=false;
+              // var disperNew=this.CounterSaleOrderBookingForm.get('disPer').value;
+              // alert(disperNew)
+              // this.orderlineDetailsGroup[0].patchValue({ disPer: disperNew })
+            }
           }
           else {
             if (data.code === 400) {
@@ -1165,6 +1178,13 @@ export class CounterSaleComponent implements OnInit {
             }
           }
         });
+  }
+
+  onOptionsSelecteddisPer(){
+  var disPer1=this.CounterSaleOrderBookingForm.get('disPer').value
+  alert(disPer1);
+  // this.orderlineDetailsArray[0].controls.patchValue({ disPer: disPer1 }) 
+  this.orderlineDetailsArray().controls[0].patchValue({ disPer: disPer1});
   }
 
 
@@ -1283,9 +1303,7 @@ export class CounterSaleComponent implements OnInit {
             this.contactNoSearchData = data.obj;
             console.log(this.contactNoSearchData);
             this.CounterSaleOrderBookingForm.patchValue(this.contactNoSearchData);
-            // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-            // this.CounterSaleOrderBookingForm.get('custName').disable();
-            // this.CounterSaleOrderBookingForm.get('mobile1').disable();
+           
             this.custAddress = data.obj.billToAddress;
             this.custAccountNo = data.obj.accountNo;
           }
@@ -1293,35 +1311,10 @@ export class CounterSaleComponent implements OnInit {
             if (data.code === 400) {
               alert(data.message);
               this.displaycreateCustomer = false;
-              // this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-              // this.CounterSaleOrderBookingForm.get('custName').disable();
-              // this.CounterSaleOrderBookingForm.get('mobile1').disable();
+              
             }
           }
-          //   for (let i=0; i <= this.contactNoSearchData.length ; i++){
-          //     // alert(this.contactNoSearchData.length );
-          //   if (this.contactNoSearchData.length >= 1){
-          //   this.CounterSaleOrderBookingForm.patchValue(this.contactNoSearchData);
-          //   this.custAddress=data.obj.billToAddress;
-          //   console.log( this.custAddress);
-
-          //   this.custAccountNo=this.contactNoSearchData[i].accountNo;
-          //   this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-          //   this.CounterSaleOrderBookingForm.get('custName').disable();
-          // }
-          // else{
-          //   if (this.contactNoSearchData.length <= 1){
-          //   alert('Customer Not Found! Please create New Customer.')
-          //   this.displaycreateCustomer=false;
-          //   this.CounterSaleOrderBookingForm.get('custAccountNo').disable();
-          //   this.CounterSaleOrderBookingForm.get('custName').disable();
-          //   this.CounterSaleOrderBookingForm.get('mobile1').disable();
-          //   }
-          //   else{
-          //   alert('Multiple Customer Available please contact to IT.')
-          // }
-          // }
-          // }
+         
         }
       );
   }
