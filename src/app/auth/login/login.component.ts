@@ -60,6 +60,16 @@ export class LoginComponent implements OnInit {
   // }
 
   login() {
+    
+    if(this.username == undefined || this.username =="" ){
+      alert('Please enter valid Username !');
+      return;
+    }
+
+    if(this.password == undefined || this.password ==""){
+      alert('Please enter valid Password !');
+      return;
+    }
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
@@ -94,9 +104,12 @@ console.log(users.locCode);
 
       // }
        else if (res.code === 400) {
-        alert('Incorrect username or password');
+        alert('Incorrect Username or Password');
+      }else {
+        alert('Login Error - Application is not responsding properly!');
       }
     });
+  
   }
 
 
