@@ -102,6 +102,9 @@
                 <button type="submit" class="btn btn-primary" id="closeBtn"
                 data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
             </td>
+
+           
+
             </ng-template>
             <ng-template #showB2> 
            
@@ -114,7 +117,17 @@
                     <button disabled type="submit" class="btn btn-primary" id="closeBtn"
                     data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('Close')">Close</button>
                 </td>
+         
             </ng-template>
+
+            <div *ngIf="viewLogFile; then vYes; else vNo"></div>
+            <ng-template #vYes> 
+            <td>
+                <button (click)="exportToExcel()" class="btn btn-primary" >View Log</button> 
+            </td>
+            </ng-template>
+            <ng-template #vNo> </ng-template>
+
 
 
             
@@ -122,6 +135,8 @@
         </tr>
     </table>
 </fieldset>
+
+
 
 <div class="container1">
     <div class="grid_scroll_3">

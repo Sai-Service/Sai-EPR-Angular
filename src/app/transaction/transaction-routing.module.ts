@@ -34,7 +34,7 @@ import { BulkItemUploadCSVComponent } from './bulk-item-upload-csv/bulk-item-upl
 import { InternalConsumptionComponent } from './internal-consumption/internal-consumption.component';
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
 import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-upload-pricelist.component';
-
+import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 const routes: Routes = [
@@ -73,7 +73,7 @@ const routes: Routes = [
 {path:'InternalConsumption',component:InternalConsumptionComponent},
 {path:'pendingPoList',component:PoUploadListComponent},
 {path:'BulkUploadPricelist',component:BulkUploadPricelistComponent},
-
+{path :'BankReconcillation',component:BankReconcillationComponent},
 
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
  {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
