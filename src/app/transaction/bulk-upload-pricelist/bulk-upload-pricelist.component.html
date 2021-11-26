@@ -120,13 +120,13 @@
          
             </ng-template>
 
-            <div *ngIf="viewLogFile; then vYes; else vNo"></div>
-            <ng-template #vYes> 
-            <td>
+            <!-- <div *ngIf="viewLogFile; then vYes; else vNo"></div>
+            <ng-template #vYes>  -->
+            <!-- <td>
                 <button (click)="exportToExcel()" class="btn btn-primary" >View Log</button> 
             </td>
             </ng-template>
-            <ng-template #vNo> </ng-template>
+            <ng-template #vNo> </ng-template> -->
 
 
 
@@ -137,9 +137,20 @@
 </fieldset>
 
 
-
+<div class="col-md-12 table-responsive" #epltable1>
 <div class="container1">
     <div class="grid_scroll_3">
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+             <div class="col-sm-12">
+                <div *ngIf="viewLogFile; then vYes; else vNo"></div>
+                <ng-template #vYes> 
+              <button (click)="exportToExcel1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button> 
+                </ng-template> 
+                <ng-template #vNo> </ng-template>
+            </div>
+            </div>
+           </div>
       <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
    
        <tbody>
@@ -164,7 +175,7 @@
      </table>
    </div>
  </div>
-
+</div>
 </form>
 <!-- --------------------------------------------------------------------------------------------- -->
 
