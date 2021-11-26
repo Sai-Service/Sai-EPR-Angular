@@ -271,7 +271,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
 });
 
-    this.service.PriceListIdList()
+    this.service.PriceListIdList(this.ouId,this.divisionId)
     .subscribe(
       data => {
         this.PriceListIdList = data;
