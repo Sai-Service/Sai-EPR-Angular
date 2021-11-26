@@ -644,42 +644,19 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     }
     this.lineDetailsArray().clear();
    
-    // if(select.priceListDetailList.length>0){
-
-    //    
-
-    //   if (select) {
-
-    //       this.priceListType = select.priceListType+ "-" + select.priceListName;
-        
-    //       var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-         
-    //       for (let i=0; i<select.priceListDetailList.length;i++) 
-    //         {
-    //           var priceListDetailList:FormGroup=this.lineDetailsGroup();
-    //           control.push(priceListDetailList);
-    //         }
-    
-    //     }
-    // }
-
     this.service.getLineDetails(priceListHeaderId)  .subscribe(
       data => {
         console.log(data);
-        // this.displayLineDetails=true;
         this.priceListLineDetails=data;
         console.log(this.priceListLineDetails);
         
         var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-        // alert(data.length);
-      
+     
         this.priceListMasterForm.patchValue(data);
       }
      
     )
-   
-      // this.priceListHeaderId = select.priceListHeaderId;
-      this.displayButton = false;
+       this.displayButton = false;
       this.display = false;
       this.showItemSearch=true;
      
@@ -1057,6 +1034,10 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
      
     this.lineValidation=true;
   
+    }
+
+    exportToExcel(plHeader){
+      alert("Export Price List to Excel...wip..."+plHeader);
     }
 
 

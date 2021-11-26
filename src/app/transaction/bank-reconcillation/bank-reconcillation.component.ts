@@ -57,6 +57,9 @@ export class BankReconcillationComponent implements OnInit {
         controlTotalCr:number;
         controlTotalDr:number=0;
         controlEndBalance:number;
+        controlDrLineCount:number;
+        controlCrLineCount:number;
+        currencyCode:string;
 
         stDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
         glDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
@@ -80,8 +83,7 @@ export class BankReconcillationComponent implements OnInit {
             emplId:[''],
             orgId:[''],
 
-            bankAccountId:[],
-            bankAccountNo:[],
+           
             stDate:[],
             docNumber:[],
             stNumber:[],
@@ -91,6 +93,9 @@ export class BankReconcillationComponent implements OnInit {
             bankAccountName:[],
             branchName :[],
             statementHeaderId:[],
+            bankAccountId:[],
+            bankAccountNo:[],
+
             statementNumber:[],
             statementDate:[],
             autoLoadedFlag:[],
@@ -98,6 +103,12 @@ export class BankReconcillationComponent implements OnInit {
             controlTotalCr:[],
             controlTotalDr:[],
             controlEndBalance:[],
+            controlDrLineCount:[],
+            controlCrLineCount:[],
+           
+            currencyCode:[],
+
+
             ceLineList: this.fb.array([this.invLineDetails()]),
           });
         }
@@ -106,9 +117,16 @@ export class BankReconcillationComponent implements OnInit {
           return this.fb.group({
             statementLineId:[],
             trxType:[],
-            status:[],
-            bankTrxNumber:[],
             trxCode:[],
+            bankTrxNumber:[],
+            transDate:[],
+            valueDate:[],
+            amount:[],
+            amtRecon:[],
+            charges:[],
+            status:[],
+           
+           
       
           })
         }
@@ -186,6 +204,7 @@ export class BankReconcillationComponent implements OnInit {
         //  alert("Statement Header Id :"+hdrId);
 
         let select = this.lstStatementList.find(d => d.statementHeaderId === hdrId);
+        this.branchName=select.branchName;
         this.bankAccountName=select.bankAccountName;
         this.bankAccountNo=select.bankAccountNo;
         this.branchName=select.branchName;
@@ -193,7 +212,11 @@ export class BankReconcillationComponent implements OnInit {
         this.statementDate=select.statementDate;
         this.controlBeginBalance=select.controlBeginBalance;
         this.controlTotalCr=select.controlTotalCr;
+        this.controlTotalDr=select.controlTotalDr;
         this.controlEndBalance=select.controlEndBalance;
+        this.controlDrLineCount=select.controlDrLineCount;
+        this.controlCrLineCount=select.controlCrLineCount;
+        this.currencyCode=select.currencyCode;
 
         this.invLineArray().reset();
            this.service.getBankStatementDetails(hdrId)
@@ -201,7 +224,6 @@ export class BankReconcillationComponent implements OnInit {
               data => {
                 this.lstStatementLines = data.obj.ceLineList;
                 console.log(this.lstStatementLines);
-
                 var len = this.invLineArray().length;
                 for (let i = 0; i < this.lstStatementLines.length - len; i++) {
                   var invLnGrp: FormGroup = this.invLineDetails();
