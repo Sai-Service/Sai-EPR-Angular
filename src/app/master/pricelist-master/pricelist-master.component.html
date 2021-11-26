@@ -651,11 +651,11 @@
                             </div>
 
 
-                            <td>
+                            <!-- <td>
                                 <button disabled type="button"  class="btn btn-primary"  (click)="plUpload()"
                                 data-toggle="modal" data-target="#exampleModal3" style="width: 8rem;color: black;">
                                 Price&nbsp;List&nbsp;Upload</button>
-                            </td>
+                            </td> -->
 
                             <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true" >
                                 <div class="modal-dialog modal-lg" role="document">
@@ -798,8 +798,8 @@
                 <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No</th>
                 <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th>
-                <th style="width:5rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
-                <th style="width:10rem" scope="col">Price&nbsp;List&nbsp;Description</th>
+                <th style="width:10rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
+                <!-- <th style="width:10rem" scope="col">Price&nbsp;List&nbsp;Description</th> -->
                 <th style="width:6rem" scope="col">PL&nbsp;Type</th>
                 <th style="width:10rem" scope="col">Operating&nbsp;Unit</th>
                 <th style="width:10rem" scope="col">Division&nbsp;</th>
@@ -813,12 +813,12 @@
                 <td style="text-align: center;">{{i+1}}</td>
                 <td>{{com.priceListHeaderId}}</td>
                 <td>{{com.priceListName}}</td>
-                <td>{{com.description}}</td>   
+                <!-- <td>{{com.description}}</td>    -->
                 <td>{{com.priceListType}}</td>   
                 <td>{{com.ouName}}</td> 
                 <td>{{com.divisionName}}</td> 
-                <td>{{com.startDate}}</td>
-                <td>{{com.status}}</td>
+                <td style="text-align: center;">{{com.startDate |date:'dd-MM-y'}}</td>
+                <td style="text-align: center;">{{com.status}}</td>
                 <td><button class="btn btn-info" (click)="Select(com.priceListHeaderId)">Select</button></td>   
         </tr>
     </table>

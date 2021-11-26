@@ -3210,6 +3210,27 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
 
+      //////////////////////bank recon/////////////////////
+
+      bankList(mouId): Observable<any> {
+        // alert ("OU Id :"+mouId);
+        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        // http://localhost:8081/ceBankAccounts/BankList/101
+      }
+
+     
+
+      getBankReconStatement1(bnkId,ouId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+         return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
+      }
+
+
+      getBankStatementDetails(sHeaderId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+        return this.http.get(this.ServerUrl+`/ceStateHdr/${sHeaderId}`);
+        // http://localhost:8081/ceStateHdr/161273
+      }
 
 
 

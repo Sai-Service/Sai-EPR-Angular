@@ -25,6 +25,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BulkUploadPricelistComponent implements OnInit {
   bulkUploadPriceListForm: FormGroup;
+
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
+  @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
+
   dataDisplay: any;
   dt: any;
 
@@ -58,6 +62,7 @@ export class BulkUploadPricelistComponent implements OnInit {
   updStatus =false;
   closeResetButton =true;
   fileValidation=false;
+  viewLogFile=false;
   
   @ViewChild('fileInput') fileInput;
 
@@ -179,6 +184,7 @@ export class BulkUploadPricelistComponent implements OnInit {
           //  this.updStatus=false;
            this.dataDisplay ='File Uploaded Sucessfully....'
            this.closeResetButton=true;
+           this.viewLogFile=true;
              
         } else {
           if (res.code === 400) {
@@ -188,6 +194,7 @@ export class BulkUploadPricelistComponent implements OnInit {
             this.updStatus=false;
             this.dataDisplay ='File Uploading Failed....'
             this.closeResetButton=true;
+            this.viewLogFile=false;
           }
 
          
@@ -198,6 +205,14 @@ export class BulkUploadPricelistComponent implements OnInit {
     } 
    
   }
+
+  exportToExcel() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.epltable.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'epltable.xlsx');
+   }
 
   refresh() {
     window.location.reload();
