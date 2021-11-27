@@ -322,6 +322,10 @@ public pickTicketInvoiceFun(pickTicketInvDels) {
     return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrderInfo/${othRefNo}`);
   }
 
+  searchByPanNumber(panNo): Observable<any>{
+    return this.http.get(this.ServerUrl + `/Customer/findByPanNo?panNo=${panNo}`);
+  }
+
 
   custNameSearchFn1(custName,divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/custName?custName=${custName}&divisionId=${divisionId}`);
