@@ -75,7 +75,11 @@ export class LoginComponent implements OnInit {
       if (res.code === 200) {
         this.router.navigate(['/admin']);
         var users=res.obj;
-        sessionStorage.setItem('divisionName',users.divisionName);
+        var divisionName = users.divisionName.split(" - ", 3); 
+        divisionName = divisionName[1];
+       
+        sessionStorage.setItem('CompName',users.divisionName);
+        sessionStorage.setItem('divisionName',divisionName);
         sessionStorage.setItem('divisionId',users.divisionId);
         console.log(users.divisionName);
         sessionStorage.setItem('ticketNo',users.ticketNo);
