@@ -2068,9 +2068,16 @@ PriceSubTypeList(): Observable<any> {
 }
 
 
+// PriceListIdList(): Observable<any> {
+//   return this.http.get(this.ServerUrl +'/pricelist');
+ 
+// }
 
-PriceListIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/pricelist');
+
+PriceListIdList(mOuId,mDivId): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/pricelist');
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${mOuId}&divisionId=${mDivId}`);
+    // http://localhost:8081/pricelist/priceHdr?ouId=101&divisionId=2
   }
 
 
