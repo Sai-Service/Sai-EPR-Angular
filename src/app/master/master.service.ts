@@ -1683,6 +1683,17 @@ priceDescList(priceListId): Observable<any>
 {
   return this.http.get(this.ServerUrl +`/pricelist/${priceListId}`);
 }
+
+// http://localhost:8081/itemMst/itemName/HCL
+
+
+
+getItemDetailsByCode(itmCode): Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/itemMst/itemName/${itmCode}`);
+}
+
+/////////////////////////////////////////////////////////
 taxTypeNameList(taxTypeId): Observable<any>
 {
    if(taxTypeId>0) {
@@ -2156,6 +2167,11 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
 
     getLineDetails(priceListHeaderId): Observable<any> {
       return this.http.get(this.ServerUrl + `/pricelist/priceDtl?priceListHeaderId=${priceListHeaderId}`);
+    }
+
+    getLineDetailsSingleItem(plName,itmId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=${plName}&itemId=${itmId}`);
+      // http://localhost:8081/pricelist/ItmPrcList/?priceListName=Bajaj Regular MRP&itemId=544
     }
 ////////////////////////////OrderTypeMaster//////////////////
 UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {

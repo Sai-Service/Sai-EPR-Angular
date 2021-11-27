@@ -43,6 +43,7 @@ interface IPriceList {
   fileName :string; 
   docType :string;
   itemId:number;
+  searchByItemCode:string;
 }
 @Component({
   selector: 'app-pricelist-master',
@@ -85,7 +86,7 @@ export class PricelistMasterComponent implements OnInit {
   priceDesc:string;
   segment :string;
 
-  searchBy : string;
+  // searchBy : string;
   searchValue : string;
 
   startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -123,6 +124,8 @@ export class PricelistMasterComponent implements OnInit {
   public itemNameList: any;
   public priceListNameList: any;
 
+  itemDetailsList :any;
+
   // priceValue:number;
 
   // public emplId =6;
@@ -155,9 +158,15 @@ export class PricelistMasterComponent implements OnInit {
 
   searchItemId:string;
   searchItemName :string;
+  searchBy:string='ITEM NUMBER';
+  searchByItemDesc:string;
+  searchByItemCode:string;
+  searchByItem=true;
+  searchByDesc=false;
 
   @ViewChild('fileInput') fileInput;
   message: string;
+ 
 
   public ItemIdList:any[];
 
@@ -200,6 +209,10 @@ export class PricelistMasterComponent implements OnInit {
         searchBy:['', [Validators.required]],
         searchValue:['', [Validators.required]],
         upldPricelistName:[],
+
+        searchByItemDesc:[],
+        searchByItemCode:[],
+        searchByItem:[],
 
         priceListDetailList: this.fb.array([this.lineDetailsGroup()])   
       });
@@ -463,7 +476,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       //  this.isVisible1=true;
         // this.isVisible=false;
         this.displayLineDetails=false;
-          this.lineDetailsArray().push(this.lineDetailsGroup());
+        this.lineDetailsArray().push(this.lineDetailsGroup());
       }
 
   }
@@ -575,11 +588,12 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFULLY');
-          window.location.reload();
+          // window.location.reload();
+          this.priceListMasterForm.disable();
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
-            this.priceListMasterForm.reset();
+            // this.priceListMasterForm.reset();
           }
         }
       });
@@ -656,24 +670,20 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       }
      
     )
-       this.displayButton = false;
+      this.displayButton = false;
       this.display = false;
       this.showItemSearch=true;
      
     }
+
+
+    
+ 
   
 
 
   
   searchMast() {
-    // this.service.getPriceListSearch(999,this.divisionId)
-    //   .subscribe(
-    //     data => {
-    //       this.lstcomments = data;
-    //       console.log(this.lstcomments);
-    //     }
-    //   );
-
     this.service.getPriceListSearchNew(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
@@ -1040,6 +1050,139 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       alert("Export Price List to Excel...wip..."+plHeader);
     }
 
+    onSearchTypeSelected(evnt) {
+      //  this.lstcomments=null;
+      //  this.lstcomments1=null;
+       this.searchByItemDesc=null;
+
+      if(evnt=='ITEM NUMBER') {this.searchByItem=true;this.searchByDesc=false;}
+      if(evnt=='ITEM DESCRIPTION') {this.searchByDesc=true; this.searchByItem=false;}
+    }
+   
+
+    F9Search() {
+      var sType=this.priceListMasterForm.get('searchBy').value
+     
+      if(sType =='ITEM NUMBER') { this.F9SearchItemCode();}
+      if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc();}
+    }
+
+    SelectPL(priceListHeaderId: number) {
+      // alert ("priceListHeaderId :"+priceListHeaderId);
+      this.priceListMasterForm.reset();
+      this.display1= false;
+      this.displayLineDetails=false;
+      let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
+      this.priceListMasterForm.patchValue(select);
+       
+        this.displayButton = false;
+        this.display = false;
+        this.showItemSearch=true;
+       
+      }
+
+  
+  
+    F9SearchItemCode() {
+      const formValue: IPriceList = this.priceListMasterForm.value;
+    
+      var plId =this.priceListMasterForm.get('priceListHeaderId').value 
+      var plName =this.priceListMasterForm.get('priceListName').value 
+      var segment1=this.priceListMasterForm.get('searchByItemCode').value
+      // var segment2=segment1.toUpperCase();
+      //  alert ("plid/plname/segment1 : "+plId+" , "+plName +" , "+segment1 +"," + formValue.searchByItemCode);
+      if(segment1 ==undefined || segment1==null) { alert ("Please select Item Code ....") ;return; }
+      
+     
+      let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+
+      if (select1==undefined) { alert ("Please select valid Item Code ....") ;return; }
+       var mItemId=select1.itemId;
+
+        // alert ("plid/plname/segment1/itemid : "+plId+" , "+plName +" , "+segment1 +"," + mItemId);
+    
+
+       
+      for(let i=0; i<this.lineDetailsArray.length; i++){ 
+        this.lineDetailsArray().removeAt(i);
+      }
+      this.lineDetailsArray().reset();
+
+
+      this.service.getLineDetailsSingleItem(plName,mItemId)  .subscribe(
+        data => {
+          console.log(data);
+          this.priceListLineDetails=data;
+          if(this.priceListLineDetails.length<=0){
+            alert (segment1+" - Item Number not found in Price List - "+plName);return;
+          } 
+          console.log(this.priceListLineDetails);
+
+
+          var len = this.lineDetailsArray.length;
+          // alert (" len =" +len +" , "+this.priceListLineDetails.length); 
+
+          for (let i = 0; i < this.priceListLineDetails.length-1; i++) {
+            var invLnGrp: FormGroup = this.lineDetailsGroup();
+            this.lineDetailsArray().push(invLnGrp);
+          }
+          
+           this.priceListMasterForm.get('priceListDetailList').patchValue(this.priceListLineDetails);
+          // var control = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+       
+          // this.priceListMasterForm.patchValue(data);
+        }
+      );
+
+
+
+     
+      // this.service.getItemDetail(mItemId).subscribe(
+      //   data =>{
+      //     this.itemDetailsList= data;
+      //     console.log(data);
+          // var len = this.lineDetailsArray.length;
+
+          // for (let i = 0; i < this.itemDetailsList.length - len; i++) {
+          //   var invLnGrp: FormGroup = this.lineDetailsGroup();
+          //   this.lineDetailsArray().push(invLnGrp);
+          // }
+
+          // var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
+          // var invLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+
+          // for (let i = 0; i < this.itemDetailsList.length - len; i++) {
+          //   patch.controls[i].patchValue({ segment: this.itemDetailsList.segment })
+          //   patch.controls[i].patchValue({ itemDescription: this.itemDetailsList.description })
+           
+          // }
+
+          // this.priceListMasterForm.get('priceListDetailList').patchValue(this.itemDetailsList);
+        
+       
+  
+    }
+  
+  
+  
+    
+    F9SearchItemDesc(){
+  
+      var itemDesc=this.priceListMasterForm.get('searchByItemDesc').value
+      itemDesc=itemDesc.toUpperCase();
+  
+      if(itemDesc ==undefined || itemDesc==null) {
+        alert ("Enter Item Description ....") ;return;
+       }
+     
+      this.service.searchByItemDescf9(this.divisionId,itemDesc).subscribe(
+        data =>{
+          this.lstcomments1= data;
+          console.log(data);
+  
+        })
+  
+    }
 
  
   

@@ -115,11 +115,12 @@ export class BankReconcillationComponent implements OnInit {
       
         invLineDetails() {
           return this.fb.group({
+            lineNumber:[],
             statementLineId:[],
             trxType:[],
             trxCode:[],
             bankTrxNumber:[],
-            transDate:[],
+            trxDate:[],
             valueDate:[],
             amount:[],
             amtRecon:[],
