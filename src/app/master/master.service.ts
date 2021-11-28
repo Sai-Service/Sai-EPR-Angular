@@ -1975,8 +1975,8 @@ viewAPAccounting(invoiceNum): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/apInv/${invoiceNum}`);
 }
 
-getsearchByshipmentNo(shipmentNo): Observable<any> {
-  return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
+getsearchByshipmentNo(shipmentNo,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo?shipmentNumber=${shipmentNo}&shipFromLocId=${locId}`);
 }
 
 

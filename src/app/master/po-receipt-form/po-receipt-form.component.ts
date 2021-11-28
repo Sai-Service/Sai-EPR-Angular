@@ -417,7 +417,9 @@ export class PoReceiptFormComponent implements OnInit {
       this.shipmentNumber = this.router1.snapshot.queryParamMap.get('shipmentNumber');
       // alert(this.shipmentNumber);
       this.poReceiptForm.patchValue({ shipmentNumber: this.shipmentNumber })
+      if (this.shipmentNumber != null){
       this.shipmentNoFind(this.shipmentNumber);
+    }
     })
 
 
@@ -733,7 +735,7 @@ export class PoReceiptFormComponent implements OnInit {
   
   shipmentNoFind(shipmentNumber: String) {
     console.log(this.poReceiptForm.value);
-    this.service.getsearchByshipmentNo(shipmentNumber)
+    this.service.getsearchByshipmentNo(shipmentNumber,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           if (data.code === 400) {

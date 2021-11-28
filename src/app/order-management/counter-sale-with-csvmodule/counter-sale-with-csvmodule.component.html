@@ -30,11 +30,16 @@
             <li class="nav-item waves-effect waves-light">
               <a class="nav-link active" id="header-tab-md" data-toggle="tab" href="#header-md" role="tab" aria-controls="home-md" aria-selected="true">Header&nbsp;Details</a>
             </li>&nbsp;&nbsp;&nbsp;
-            <div [style.display]="isVisible ? 'block' : 'none'">
+            <!-- <div [style.display]="isVisible ? 'block' : 'none'"> -->
+                <div *ngIf="displayShowLinseTab; then thenShowLinseTab; else elseShowLinseTab">  </div>
+                <ng-template #thenShowLinseTab>
+                </ng-template>
+                <ng-template #elseShowLinseTab>
             <li class="nav-item waves-effect waves-light">
               <a class="nav-link" id="lineDetails-tab-md" data-toggle="tab" href="#lineDetails-md" role="tab" aria-controls="profile-md" aria-selected="false">Lines&nbsp;Details</a>
             </li>
-            </div>
+                </ng-template>
+            <!-- </div> -->
           </ul>
           <div style="border: 0px;" class="tab-content card " id="myTabContentMD">
             <div class="tab-pane fade show active" id="header-md" role="tabpanel" aria-labelledby="header-tab-md">
@@ -1070,7 +1075,7 @@
                                                             </td>
                                                             <td>
                                                                 <input disabled type="number" formControlName="orderedQty"
-                                                                    class="form-control" style="height: 20px;width: 70px;"
+                                                                 value="orderedQty"   class="form-control" style="height: 20px;width: 70px;"
                                                                     min="0" oninput="this.value = Math.abs(this.value)">
                                                             </td>
                                                             <td>
@@ -1131,7 +1136,7 @@
                                                                     {{sc.taxCategoryName}}
                                                                 </option>
                                                             </select>
-                                                                <input  type="number" formControlName="taxCategoryId"
+                                                                <input hidden type="number" formControlName="taxCategoryId"
                                                                     class="form-control" style="height: 20px;width: 70px;">
                                                             </td>
     
