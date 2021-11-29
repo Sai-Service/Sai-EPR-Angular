@@ -678,7 +678,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         }
       );
 
-    this.orderManagementService.priceListNameList1((sessionStorage.getItem('divisionId')))
+    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'),(sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           this.priceListNameList = data;

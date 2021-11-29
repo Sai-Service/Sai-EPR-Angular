@@ -419,8 +419,8 @@
                     <td>
 
                         <!-- (ngModelChange)='onOptionsSelectedlncategoryType'  (ngModelChange)="onOptionsSelectedTransactionType($event)"-->
-                        <select formControlName="transactionTypeName" 
-                                        id="transactionTypeName" (change)="onOptionsSelectedTransactionType($event)" class="form-control"
+                        <select formControlName="transactionTypeName"  [(ngModel)]="transactionTypeName"
+                                        id="transactionTypeName" (change)="onOptionsSelectedTransactionType(transactionTypeName)" class="form-control"
                                         style="width: fit-content;">
                                         <option>--Select--</option>
                                         <option *ngFor="let orderType of orderTypeList" [value]="orderType.transactionTypeName">
@@ -1064,6 +1064,9 @@
                                                                 style="height: 20px;width: fit-content;">
                                                         </td>
                                                         <td>
+                                                            <input disabled type="text"  class="form-control" style="height: 20px;width: 50px;">
+                                                        </td>
+                                                        <td>
                                                             <input disabled type="text" formControlName="segment"
                                                                 value="segment" [ngValue]="segment" class="form-control"
                                                                 style="height: 20px;width: 160px;">
@@ -1612,6 +1615,9 @@
 
     <!-- ******************** Customer Creation Modal Start *************************************-->
     <!-- Modal -->
+    <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+        <p style="color: white">Please Wait. </p>  
+        </ngx-spinner> -->
 
 </form>
 
@@ -1655,3 +1661,4 @@
         </div>
     </div>
 </div>
+
