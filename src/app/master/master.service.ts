@@ -1336,6 +1336,13 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
   // http://localhost:8081/itemMst/ItemDtlsF9?locId=121&itemId=544&ouId=110&divisionId=2
 }
 
+searchByItemSegmentDiv(divId,itemSeg):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/details/${divId}/${itemSeg}`)
+ 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)

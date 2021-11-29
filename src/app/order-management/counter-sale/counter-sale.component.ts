@@ -1157,6 +1157,8 @@ export class CounterSaleComponent implements OnInit {
       );
   
   }
+
+  
   onOptionsSelectedCategory(itemType: string, lnNo: number) {
 
     // if (this.itemMap2.get(lnNo) != undefined) {

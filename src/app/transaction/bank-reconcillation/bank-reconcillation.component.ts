@@ -60,6 +60,10 @@ export class BankReconcillationComponent implements OnInit {
         controlDrLineCount:number;
         controlCrLineCount:number;
         currencyCode:string;
+        unreconamt:number;
+        unreconcnt:number;
+        avlBalance:number;
+        valueDtdBalance:number;
 
         stDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
         glDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
@@ -105,8 +109,11 @@ export class BankReconcillationComponent implements OnInit {
             controlEndBalance:[],
             controlDrLineCount:[],
             controlCrLineCount:[],
-           
             currencyCode:[],
+            unreconamt:[],
+            unreconcnt:[],
+            avlBalance:[],
+            valueDtdBalance:[],
 
 
             ceLineList: this.fb.array([this.invLineDetails()]),
@@ -221,12 +228,16 @@ export class BankReconcillationComponent implements OnInit {
         this.controlDrLineCount=select.controlDrLineCount;
         this.controlCrLineCount=select.controlCrLineCount;
         this.currencyCode=select.currencyCode;
-
+       
+      
         this.invLineArray().reset();
            this.service.getBankStatementDetails(hdrId)
             .subscribe(
               data => {
                 this.lstStatementLines = data.obj.ceLineList;
+                this.unreconamt=data.obj.unreconamt;
+                this.unreconcnt=data.obj.unreconcnt;
+
                 console.log(this.lstStatementLines);
                 var len = this.invLineArray().length;
                 for (let i = 0; i < this.lstStatementLines.length - len; i++) {
@@ -242,5 +253,8 @@ export class BankReconcillationComponent implements OnInit {
 
 
        LoadValues(){}
+
+       reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
+       availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
 }
