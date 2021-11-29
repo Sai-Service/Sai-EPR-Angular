@@ -44,6 +44,7 @@ interface IPriceList {
   docType :string;
   itemId:number;
   searchByItemCode:string;
+  searchByItemDesc:string;
 }
 @Component({
   selector: 'app-pricelist-master',
@@ -161,6 +162,7 @@ export class PricelistMasterComponent implements OnInit {
   searchBy:string='ITEM NUMBER';
   searchByItemDesc:string;
   searchByItemCode:string;
+  selectItemName:string;
   searchByItem=true;
   searchByDesc=false;
 
@@ -213,6 +215,7 @@ export class PricelistMasterComponent implements OnInit {
         searchByItemDesc:[],
         searchByItemCode:[],
         searchByItem:[],
+        selectItemName:[],
 
         priceListDetailList: this.fb.array([this.lineDetailsGroup()])   
       });
@@ -564,7 +567,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
     //  ------------------------Line updattion..........................
     updateMastLine() {
-
+   
       this.lineValidation=false;
       var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
       var len1=prcLineArr.length;
@@ -1017,7 +1020,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   }
   else{
     var prcLineArr1=  (this.priceListLineDetails)
-    // alert(prcLineArr1[i].itemId);
+    alert(prcLineArr1[i].itemId);
     var lineValue1=prcLineArr1[i].itemId;
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;
@@ -1046,6 +1049,8 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   
     }
 
+
+
     exportToExcel(plHeader){
       alert("Export Price List to Excel...wip..."+plHeader);
     }
@@ -1061,9 +1066,11 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
    
 
     F9Search() {
+      this.selectItemName=null;
+      this.lstcomments1=null;
       var sType=this.priceListMasterForm.get('searchBy').value
      
-      if(sType =='ITEM NUMBER') { this.F9SearchItemCode();}
+      if(sType =='ITEM NUMBER') { this.F9SearchItemCode("itmCode");}
       if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc();}
     }
 
@@ -1083,12 +1090,25 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
   
   
-    F9SearchItemCode() {
+    F9SearchItemCode(mSegment) {
       const formValue: IPriceList = this.priceListMasterForm.value;
     
+      var sType=this.priceListMasterForm.get('searchBy').value
+
       var plId =this.priceListMasterForm.get('priceListHeaderId').value 
       var plName =this.priceListMasterForm.get('priceListName').value 
+      if(sType =='ITEM NUMBER') {
       var segment1=this.priceListMasterForm.get('searchByItemCode').value
+      
+      segment1=segment1.toUpperCase();
+      // alert("Segment1: "+segment1);
+      }
+      if(sType =='ITEM DESCRIPTION'){
+        var segment1=mSegment;
+      }
+
+      this.selectItemName=segment1;
+
       // var segment2=segment1.toUpperCase();
       //  alert ("plid/plname/segment1 : "+plId+" , "+plName +" , "+segment1 +"," + formValue.searchByItemCode);
       if(segment1 ==undefined || segment1==null) { alert ("Please select Item Code ....") ;return; }
@@ -1167,9 +1187,15 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   
     
     F9SearchItemDesc(){
-  
+    
+      const formValue: IPriceList = this.priceListMasterForm.value;
+      // this.lstcomments1=null;
       var itemDesc=this.priceListMasterForm.get('searchByItemDesc').value
       itemDesc=itemDesc.toUpperCase();
+      // alert(formValue.searchByItemDesc);
+
+      // var dlen=itemDesc.length();
+      // alert(dlen);
   
       if(itemDesc ==undefined || itemDesc==null) {
         alert ("Enter Item Description ....") ;return;
@@ -1183,6 +1209,8 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
         })
   
     }
+
+    SelectByDesc(segment){}
 
  
   

@@ -190,13 +190,16 @@ export class BankReconcillationComponent implements OnInit {
         }
 
 
-        bnkFind(){
+        bnkStatementFind(){
 
           var bnkAcId=this.bankReconcillationForm.get("bankAccountId").value
           this.service.getBankReconStatement1(bnkAcId, this.ouId)
             .subscribe(
               data => {
                 this.lstStatementList = data;
+                if(this.lstStatementList.length==0) {
+                  alert (bnkAcId +" - " + "No Record Found.");return;
+                }
                 console.log(this.lstStatementList);
           });
        }
