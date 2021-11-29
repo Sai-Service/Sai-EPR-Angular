@@ -96,6 +96,7 @@ export class PricelistMasterComponent implements OnInit {
   upldPricelistName : string;
   public PriceListIdList : Array<string> = [];
   priceListLineDetails : any=[];
+  priceListLineDetails1 : any=[];
   displayLineDetails=true;
   // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
 
@@ -142,6 +143,7 @@ export class PricelistMasterComponent implements OnInit {
   displayButton = true;
   plsearch=false;
   displayItemDetails=true;
+  addNew=true;
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
@@ -478,6 +480,8 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       {
       //  this.isVisible1=true;
         // this.isVisible=false;
+        this.addNew=true;
+       
         this.displayLineDetails=false;
         this.lineDetailsArray().push(this.lineDetailsGroup());
       }
@@ -1012,6 +1016,12 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     // alert(this.priceListLineDetails[i].itemId)
     // alert('addrow index '+i);
     // alert(this.cusrOpraion);
+    // var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+    // let select1=this.priceListLineDetails1.find(d=>d.itemId===prcLineArr1[i].itemId);
+    //  if (select1!=undefined) { alert ("Please select valid Item Code ....") ;return; }
+     
+
+
     if (this.cusrOpraion==='Save'){
     var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
     var lineValue1=prcLineArr1[i].itemId;
@@ -1072,6 +1082,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     F9Search() {
       this.selectItemName=null;
       this.lstcomments1=null;
+      this.addNew=false;
       var sType=this.priceListMasterForm.get('searchBy').value
      
       if(sType =='ITEM NUMBER') { this.F9SearchItemCode("itmCode");}
@@ -1080,11 +1091,19 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
     SelectPL(priceListHeaderId: number) {
       // alert ("priceListHeaderId :"+priceListHeaderId);
+      // this.addNew=false;
       this.priceListMasterForm.reset();
       this.display1= false;
       this.displayLineDetails=false;
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
+
+      this.service.getLineDetails(priceListHeaderId)  .subscribe(
+        data => {
+          console.log(data);
+          this.priceListLineDetails1=data;
+          console.log(this.priceListLineDetails1);
+       });
        
         this.displayButton = false;
         this.display = false;
@@ -1118,7 +1137,9 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       if(segment1 ==undefined || segment1==null) { alert ("Please select Item Code ....") ;return; }
       
      
-      let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+      // let select1=this.ItemIdList.find(d=>d.SEGMENT===segment1);
+
+      let select1=this.priceListLineDetails1.find(d=>d.segment===segment1);
 
       if (select1==undefined) { alert ("Please select valid Item Code ....") ;return; }
        var mItemId=select1.itemId;
@@ -1215,6 +1236,8 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     }
 
     SelectByDesc(segment){}
+
+    LoadPList(){}
 
  
   
