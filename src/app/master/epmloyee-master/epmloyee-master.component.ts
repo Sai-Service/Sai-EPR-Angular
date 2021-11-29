@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild,ElementRef} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { style } from '@angular/animations';
 import { NgModule } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import * as xlsx from 'xlsx';
 
 
 interface IEmployeeMaster {
@@ -40,6 +41,7 @@ interface IEmployeeMaster {
   styleUrls: ['./epmloyee-master.component.css']
 })
 export class EpmloyeeMasterComponent implements OnInit {
+  @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
   employeeMasterForm: FormGroup;
   submitted = false;
   emplId: number;
@@ -437,6 +439,14 @@ export class EpmloyeeMasterComponent implements OnInit {
       }
       return;
     }
-  
+
+  exportToExcel1() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.epltable1.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'epltable1.xlsx');
+   }
+
   }
   
