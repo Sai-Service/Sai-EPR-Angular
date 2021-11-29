@@ -556,7 +556,21 @@ export class CounterSaleComponent implements OnInit {
     else if (Number(sessionStorage.getItem('divisionId')) === 2) {
       this.displayDMSCDMS = false;
       this.showApplyDiscount = true;
+      if (sessionStorage.getItem('deptName')==='Spares'){
+        this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName : 'Spares Sale - Cash' });
+        this.CounterSaleOrderBookingForm.patchValue({createOrderType:'Direct Invoice'})
+        this.CounterSaleOrderBookingForm.patchValue({issueCodeType:'Regular Sales'}) ;
+      }
+     else if (sessionStorage.getItem('deptName')==='Accessories'){
+      this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName : 'Accessories Sale - Credit' });
+      this.CounterSaleOrderBookingForm.patchValue({issueCodeType:'Regular Sales'}) ;
+     }
+     else{
+      this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName : '--Select--' });
+      this.CounterSaleOrderBookingForm.patchValue({issueCodeType:'--Select--'}) ;
+     }
     }
+
     this.orderlineDetailsArray().controls[0].patchValue({ invType: 'SS_SPARES' });
     this.CounterSaleOrderBookingForm.patchValue({ disAmt: 0 })
     this.CounterSaleOrderBookingForm.patchValue({ discType: 'No Discount' })
@@ -1887,6 +1901,12 @@ export class CounterSaleComponent implements OnInit {
     // return;
     // } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    for (let j=0 ;j<orderLines.length;j++){
+      if ( orderLines[j].segment ==='' && orderLines[j].taxCategoryName==='' && orderLines[j].pricingQty===''){
+        alert('First Select Line Details..!');
+        return;
+      }
+    }
     for (let i = 0; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
     }

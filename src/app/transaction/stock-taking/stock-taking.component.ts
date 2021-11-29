@@ -766,6 +766,11 @@ export class StockTakingComponent implements OnInit {
 
   }
 
+  close() {
+    this.router.navigate(['admin']);
+  }
+
+
 }
 
 // search(compNo)
