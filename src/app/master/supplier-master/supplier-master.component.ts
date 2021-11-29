@@ -8,7 +8,7 @@ import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
-import { valHooks } from 'jquery';
+import { data, valHooks } from 'jquery';
 
 interface IsupplierMaster {
   suppId: number;
@@ -77,6 +77,10 @@ interface IsupplierMaster {
   semailId:string;
   screateDebitMemoFlag:string;
   supTdsTyp:string;
+  supTds:string;
+  sbankName:string;
+   sacctNo:string;
+   sifscCode:string;
 }
 
 
@@ -141,6 +145,7 @@ export class SupplierMasterComponent implements OnInit {
   endDate: Date;
   sstatus: string;
   displayInactive = true;
+  displayTdsTyp=true;
   type:string;
   Status1: any;
   // aadharNo:string;
@@ -207,7 +212,11 @@ export class SupplierMasterComponent implements OnInit {
   screateDebitMemoFlag:string;
   displayenable = true;
   supTdsTyp:string;
-
+  getTdsType: any;
+  supTds:string;
+  sbankName:string;
+   sacctNo:string;
+   sifscCode:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
     this.supplierMasterForm = fb.group({
@@ -293,6 +302,10 @@ export class SupplierMasterComponent implements OnInit {
    semailId:[],
    screateDebitMemoFlag:[],
    supTdsTyp:[],
+   supTds:[],
+   sbankName:[],
+   sacctNo:[],
+   sifscCode:[],
     });
   }
 
@@ -864,6 +877,20 @@ export class SupplierMasterComponent implements OnInit {
           console.log(this.lstcomments);
         }
       );
+  }
+
+  onOptionTdsSelect(event:any){
+alert(event);
+if(event==='Yes')
+{
+  this.displayTdsTyp=false;
+  this.service.getTdsType()
+    .subscribe(data => {
+      this.getTdsType = data;
+    }
+      );
+
+}
   }
 
   searchBySuppCode(suppno) {
