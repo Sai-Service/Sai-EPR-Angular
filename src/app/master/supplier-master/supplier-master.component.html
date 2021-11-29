@@ -114,16 +114,31 @@
                            <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
                                Enter supplier No </span> -->
                           </td>
+                          <td style="width: 15%" class="LabelFontStyle1">TDS&nbsp;:&nbsp;</td>
+                          <td>
+                            <select formControlName="supTds" id="supTds" class="form-control" (ngModelChange)="onOptionTdsSelect($event)">
+                              <!-- <option>--Select--</option> -->
+                              <option >Yes</option>
+                              <option>No</option>
+                          </select>
+                         <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
+                             Enter supplier No </span> -->
+                        </td>
+                        <div *ngIf="displayTdsTyp; then thenBlockTdsTyp; else elseBlockTdsTyp"></div>
+                        <ng-template #thenBlockTdsTyp>
+                        </ng-template>
+                        <ng-template  #elseBlockTdsTyp>
                           <td style="width: 15%" class="LabelFontStyle1">Supplier&nbsp;TDS&nbsp;Type&nbsp;:&nbsp;</td>
                           <td>
                               <select formControlName="supTdsTyp" id="supTdsTyp" class="form-control">
                                 <!-- <option>--Select--</option> -->
-                                <option >Company</option>
-                                <option>Individual</option>
+                                <option *ngFor="let sc of  getTdsType">{{sc.code}}</option>
+                                <!-- <option>Individual</option> -->
                             </select>
                            <!-- <span *ngIf="!supplierMasterForm.get('suppNo').valid && supplierMasterForm.get('suppNo').touched">Please
                                Enter supplier No </span> -->
                           </td>
+                        </ng-template>
                           </tr>
 
                           <tr *ngIf="displaySupplier">
@@ -339,7 +354,7 @@
                         <!-- <span *ngIf="!supplierMasterForm.get('emailId').valid && supplierMasterForm.get('emailId').touched">Please
                             Enter email Id </span>  -->
                         </td>
-                        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;Name&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Contact&nbsp;Person&nbsp;Name&nbsp;:&nbsp;</td>
                         <td colspan="3">
                             <input formControlName="contactPerson" value={{contactPerson}} [(ngModel)]='contactPerson' class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.contactPerson.errors }"
@@ -353,7 +368,7 @@
                             Contact Person Name </span> -->
                         </td>
                         <!-- <td></td> -->
-                        <td style="width: 15%" class="LabelFontStyle1">&nbsp;Contact&nbsp;Person&nbsp;Number&nbsp;:&nbsp;</td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Contact&nbsp;Person&nbsp;Number&nbsp;:&nbsp;</td>
                         <td>
                             <input  type="number" formControlName="contactNo" value={{contactNo}} [(ngModel)]='contactNo' class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }"
@@ -848,6 +863,26 @@
                         <td>
                             <input type="text" disabled formControlName="staxCatName" class="form-control">
                         </td>
+                       </tr>
+                       <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
+                        <td style="width: 15%" class="LabelFontStyle">Bank&nbsp;Name&nbsp;:&nbsp;</td>
+                          <td>
+                              <input formControlName="sbankName" value={{sbankName}} class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.sbankName.errors }" [(ngModel)]="sbankName"
+                              placeholder="Enter Bank Name" >
+                          </td>
+                          <td style="width: 15%" class="LabelFontStyle">Account&nbsp;Number&nbsp;:&nbsp;</td>
+                          <td>
+                              <input formControlName="sacctNo" value={{sacctNo}} class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.sacctNo.errors }" [(ngModel)]="sacctNo"
+                              placeholder="Enter Account Number" >
+                          </td>
+                          <td style="width: 15%" class="LabelFontStyle">IFSC&nbsp;<Code></Code>;:&nbsp;</td>
+                          <td>
+                              <input formControlName="sifscCode" value={{sifscCode}} class="form-control"
+                              [ngClass]="{ 'is-invalid': submitted && f.sifscCode.errors }" [(ngModel)]="sifscCode"
+                              placeholder="Enter Account Number" >
+                          </td>
                        </tr>
                        <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                           <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>

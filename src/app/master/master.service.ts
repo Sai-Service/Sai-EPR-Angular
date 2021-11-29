@@ -178,6 +178,9 @@ export class MasterService {
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
   }
+  getTdsType():Observable<any>{
+    return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/SuppTdsType`);
+  }
 
   supplierCodeList1(): Observable<any> {
     return this.http.get(this.ServerUrl +'/supp');
@@ -1336,6 +1339,13 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)
+
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
+searchByItemBYSegment(divId,itemDesc):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/segment/${itemDesc}`)
  
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
@@ -3218,7 +3228,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/NaturalAccount');
       }
 
-    
+
     recCreditMemoType(classType) {
           return this.http.get(this.ServerUrl +`/rcvType/typeWise/${classType}`);
         // http://localhost:8081/rcvType/typeWise/Credit%20Memo
