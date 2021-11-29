@@ -5,6 +5,7 @@ import {formatDate } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { identifierModuleUrl } from '@angular/compiler';
 
 
 export enum KEY_CODE {
@@ -33,6 +34,10 @@ declare var $: any;
     adminForm1:FormGroup;
 
     // @ViewChild('partSearch') partSearch: any;
+ 
+  public itemMap = new Map<string, any[]>();
+  public itemMap2 = new Map<number, any[]>();
+  itemSeg: string = "";
 
   public ItemIdList:any[];
   lstcomments: any;
@@ -235,10 +240,10 @@ this.isVisible1=true;
     $("#partSearch").modal('show');
   }
 
-  F9Search() {
+  F9Search(itemDesc) {
     var sType=this.adminForm1.get('searchBy').value
-    if(sType =='ITEM NUMBER') { this.F9SearchItemCode()}
-    if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc()}
+    if(sType =='ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc)}
+    if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc)}
   }
 
 
@@ -285,9 +290,9 @@ this.isVisible1=true;
 
 
   
-  F9SearchItemDesc(){
+  F9SearchItemDesc(itemDesc){
 
-    var itemDesc=this.adminForm1.get('searchByItemDesc').value
+   //var itemDesc=this.adminForm1.get('searchByItemDesc').value
     itemDesc=itemDesc.toUpperCase();
 
     // alert("Segment :" +segment1);
@@ -301,9 +306,11 @@ this.isVisible1=true;
         this.lstcomments1= data;
         console.log(data);
 
-      })
+      });
 
   }
+
+
 
   
 
@@ -375,7 +382,22 @@ this.isVisible1=true;
 
     }
 
+    searchByItemSegmentDiv(itemDesc: string) {
+      
+      if(itemDesc.length == 8){
+      this.service.searchByItemSegmentDiv(this.divisionId, itemDesc)
+        .subscribe(
+          data => {
+            this.F9SearchItemDesc(data[0].description);
 
 
 
+          }
+        );
+    
+    }else{
+      alert("Please Enter full item number!!")
+      return;
+    }
 }
+  }

@@ -444,7 +444,7 @@
             <ng-template #itemYes>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Number&nbsp;:</td>
 
-                <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
+                <!-- <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchItemCode" 
                    id="invItemIdFirstWay"  list="dynmicUserIds1" 
                    class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
                    style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
@@ -453,7 +453,38 @@
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
                       {{item.SEGMENT}} 
                       </datalist>
-                  </td>
+                  </td> -->
+<!-- 
+                  <td>
+
+                    <input type="text" style="height: 20px;width: 90px;"
+                        formControlName="itemSeg" [(ngModel)]='itemSeg'
+                        (keydown.tab)="F9Search(itemSeg)" />
+
+                </td> -->
+                <!-- <td>
+                    <input type="text" formControlName="segment"
+                        id="invItemIdFirstWay" list="dynmicUserIds1"
+                        class="form-control" style="height: 20px;width: 100px;"
+                        (ngModelChange)='onOptionsSelectedDescription($event,i)'>
+                    <datalist id="dynmicUserIds1">
+               
+                        <option *ngFor="let item of  itemMap2.get(i)"
+                            [value]="item.segment">
+                            {{item.segment}}
+                        </option>
+                    </datalist>
+                    
+
+                <input hidden type="number" formControlName="itemId">
+                </td> -->
+
+                <td>
+                  <input   type="text"  formControlName="searchByItemDesc"  id="searchByItemDesc" 
+                           [(ngModel)]="searchByItemDesc" class="form-control"  placeholder="Enter Item Description"
+                           style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
+               </td>
+
             </ng-template>
             <ng-template #descYes>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Description&nbsp;:</td>
@@ -466,7 +497,7 @@
 
                 
                 <td style="text-align: left; width: 100%;">
-                  <button type="submit" class="btn btn-primary" (click)="F9Search()" style="width: 4em;" ><i class="fa fa-search"></i></button>
+                  <button type="submit" class="btn btn-primary" (click)="F9Search(searchByItemDesc)" style="width: 4em;" ><i class="fa fa-search"></i></button>
                 </td>
 
 
