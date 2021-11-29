@@ -204,25 +204,39 @@
             <fieldset class="RFS">
                 <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Control Total</legend>
                 <table class="center" style="width: 100%;">
-              
+                    <!-- <tr>
+                        <td></td>
+                        <td style="text-align: right;">Amount&nbsp;</td> 
+                        <td style="text-align: right;">Lines&nbsp;</td> 
+                    </tr> -->
+                     <tr>
+                        <td >Opening&nbsp;Balance&nbsp;:</td> 
+                        <td><input   type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;background-color: yellow;"></td>
+                        <td>Receipts&nbsp;:&nbsp;</td> 
+                        <td><input   type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;background-color: yellow;" ></td>
+                        <td><input disabled  type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:55px ;"></td>
+                    </tr>   
+
+                     
+                    
                     <tr>
-                        <td >Opening&nbsp;Balance&nbsp;:&nbsp;</td> 
-                        <td><input   type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="background-color: yellow; width: 130px;"></td>
-                        <td >Receipts&nbsp;:&nbsp;</td> 
-                        <td><input   type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="background-color: yellow;width: 130px;"></td>
-                        <td >Lines&nbsp;:</td>
-                        <td><input  disabled type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:52px ;"></td>
-                   
-                    </tr>  
-                    <tr>
-                        <td >Closing&nbsp;Balance:&nbsp;</td> 
-                        <td><input   type="number" class="form-control" formControlName="controlEndBalance"  [(ngModel)]="controlEndBalance" style="background-color: yellow;width: 130px;"></td>
-                        <td >Payments&nbsp;:&nbsp;</td>
-                        <td><input   type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="background-color: yellow;width: 130px;"></td>
-                        <td >Lines&nbsp;:</td>
-                        <td><input  disabled type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:52px ;"></td>
+                    <td >Closing&nbsp;Balance&nbsp;:</td> 
+                    <td><input disabled  type="number" class="form-control" formControlName="controlEndBalance"  [(ngModel)]="controlEndBalance" style="width: 130px;" ></td>
+                       
+                       <td >Payments&nbsp;:&nbsp;</td>
+                        <td><input   type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;background-color: yellow;" ></td>
+                        <td><input disabled  type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:55px ;"></td>
                    
                     </tr>
+                    <tr>
+                        <td >Available&nbsp;Balance&nbsp;:</td> 
+                        <td><input disabled  type="number" class="form-control" formControlName="avlBalance"  [(ngModel)]="avlBalance" style="width: 130px;" ></td>
+                        <td >Value&nbsp;Dated&nbsp;Balance&nbsp;:</td> 
+                        <td><input disabled  type="number" class="form-control" formControlName="valueDtdBalance"  [(ngModel)]="valueDtdBalance" style="width: 130px;" ></td>
+                    </tr>
+                   
+    
+                   
 
             </table>
             </fieldset>
@@ -234,28 +248,38 @@
                     <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Line Total</legend>
                     <table class="center" style="width: 100%;">
                   
-                    <tr>
-                        <td >Opening&nbsp;Balance&nbsp;:</td> 
-                        <td><input  disabled type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;"></td>
-                        <td >Receipts&nbsp;:&nbsp;</td> 
-                        <td><input disabled  type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;" ></td>
-                        <td >Lines&nbsp;:</td>
-                        <td><input disabled  type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:52px ;"></td>
-                   
-                    </tr>  
-                    <tr>
+                        <tr>
+                            <td >Opening&nbsp;Balance&nbsp;:</td> 
+                            <td><input   type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;background-color: yellow;"></td>
+                            <td>Receipts&nbsp;:&nbsp;</td> 
+                            <td><input  disabled type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;background-color: yellow;" ></td>
+                            <td><input disabled  type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:52px ;"></td>
+                        </tr>   
+    
+                        <tr>
                         <td >Closing&nbsp;Balance&nbsp;:</td> 
                         <td><input disabled  type="number" class="form-control" formControlName="controlEndBalance"  [(ngModel)]="controlEndBalance" style="width: 130px;" ></td>
-                        <td >Payments&nbsp;:&nbsp;</td>
-                        <td><input disabled  type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;" ></td>
-                        <td >Lines&nbsp;:</td>
-                        <td><input disabled  type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:52px ;"></td>
-                   
-                    </tr>
+                           
+                           <td >Payments&nbsp;:&nbsp;</td>
+                            <td><input disabled  type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;background-color: yellow;" ></td>
+                            <td><input disabled  type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:52px ;"></td>
+                       
+                        </tr>
+                        <tr>
+                            <td><td></td>
+                            <td >Unreconcilled&nbsp;&nbsp;:</td> 
+                            <td><input disabled  type="number" class="form-control" formControlName="unreconamt"  [(ngModel)]="unreconamt" style="width: 130px;" ></td>
+                            <td><input disabled  type="number" class="form-control" formControlName="unreconcnt"  [(ngModel)]="unreconcnt" style=" width:52px ;"></td>
+                       
+                        </tr>
+                  
     
                 </table>
                 </fieldset>
                 </td>
+
+
+            
 
 
 
@@ -293,15 +317,15 @@
                             <!-- <td style="border: 1px solid black;padding-left: 5px;">{{k+1}}</td> -->
                             <!-- <td><input disabled style="width: 210px;height: 25px;" type="text"    formControlName="statementLineId" class="form-control"></td> -->
                             <td><input disabled style="width: 50px;height: 25px; text-align: center;" type="text"    formControlName="lineNumber" class="form-control"></td>
-                            <td><input style="width: 120px;height: 25px;" type="text"    formControlName="trxType" class="form-control"></td>
-                            <td><input style="width: 120px;height: 25px;" type="text"    formControlName="trxCode" class="form-control"></td>
+                            <td><input disabled style="width: 120px;height: 25px;" type="text"    formControlName="trxType" class="form-control"></td>
+                            <td><input disabled style="width: 120px;height: 25px;" type="text"    formControlName="trxCode" class="form-control"></td>
                             <td><input disabled style="width: 170px;height: 25px;" type="text"    formControlName="bankTrxNumber" class="form-control"></td>
                             <td><input disabled style="width: 140px;height: 25px;" type="text"    formControlName="trxDate" class="form-control"></td>
-                            <td><input style="width: 140px;height: 25px;" type="date"    formControlName="valueDate" class="form-control"></td>
-                            <td><input style="width: 130px;height: 25px;" type="number"    formControlName="amount" class="form-control"></td>
+                            <td><input disabled style="width: 140px;height: 25px;" type="date"    formControlName="valueDate" class="form-control"></td>
+                            <td><input disabled style="width: 130px;height: 25px;" type="number"    formControlName="amount" class="form-control"></td>
                             <td><input disabled style="width: 130px;height: 25px;" type="number"    formControlName="amtRecon" class="form-control"></td>
-                            <td><input style="width: 100px;height: 25px;" type="number"    formControlName="charges" class="form-control"></td>
-                            <td><input style="width: 140px;height: 25px;" type="text"    formControlName="status" class="form-control"></td>
+                            <td><input disabled style="width: 100px;height: 25px;" type="number"    formControlName="charges" class="form-control"></td>
+                            <td><input disabled style="width: 140px;height: 25px;" type="text"    formControlName="status" class="form-control"></td>
 
                            
                            </tr>
@@ -317,8 +341,10 @@
          </div>
 
          <div class="modal-footer">
+            <button  style="width: 8em;" type="button" class="btn btn-info" (click)="reconciledBnk()">Reconciled</button>
+            <button  style="width: 8em;" type="button" class="btn btn-info" (click)="availableBnk()">Available</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+        </div>
         </div>
     </div>
 </div>

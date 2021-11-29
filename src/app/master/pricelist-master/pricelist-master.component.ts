@@ -1019,8 +1019,12 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     var lineValue3=prcLineArr1[i].priceValue;
   }
   else{
-    var prcLineArr1=  (this.priceListLineDetails)
-    alert(prcLineArr1[i].itemId);
+    // var prcLineArr1=  (this.priceListLineDetails)
+    // alert(prcLineArr1[i].itemId);
+    // var lineValue1=prcLineArr1[i].itemId;
+    // var lineValue2=prcLineArr1[i].batchCode;
+    // var lineValue3=prcLineArr1[i].priceValue;
+    var prcLineArr1 = this.priceListMasterForm.get('priceListDetailList').value;
     var lineValue1=prcLineArr1[i].itemId;
     var lineValue2=prcLineArr1[i].batchCode;
     var lineValue3=prcLineArr1[i].priceValue;
