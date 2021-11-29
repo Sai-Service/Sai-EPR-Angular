@@ -1340,6 +1340,13 @@ searchByItemDescf9(divId,itemDesc):Observable<any>
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
+searchByItemBYSegment(divId,itemDesc):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/segment/${itemDesc}`)
+ 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 //////////Move Order//////////////
 public moveOrderSubmit(MoveOrderRecord)
 {
