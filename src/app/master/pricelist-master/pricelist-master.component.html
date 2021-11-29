@@ -309,8 +309,10 @@
                                    style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
                                  
                                   <datalist id="dynmicUserIds1" >
-                                    <option *ngFor="let item of ItemIdList"  [(ngValue)]="item.itemId">
-                                      {{item.SEGMENT}} 
+                                    <!-- <option *ngFor="let item of ItemIdList"  [(ngValue)]="item.itemId"> -->
+                                    <option *ngFor="let item of priceListLineDetails1"  [(ngValue)]="item.itemId">
+                                      <!-- {{item.SEGMENT}}  -->
+                                      {{item.segment}}
                                       </datalist>
                                   </td>
 
@@ -332,6 +334,12 @@
                               </td>
 
                             </ng-template>
+
+                            <td>
+                                <button type="button"  class="btn btn-primary" 
+                                data-toggle="modal" data-target="#showpListData" style="width: 5rem;color: black;"  (click)="LoadPList()">
+                                Show&nbsp;List</button>
+                            </td>
                 
                                 
                                
@@ -402,8 +410,8 @@
                                             
                                                 <td style="text-align: center;width: 4rem;">{{i+1}}</td>
 
-                                                <!-- <div *ngIf="displayButton; then B1; else B2"></div>
-                                                <ng-template #B1> -->
+                                                <div *ngIf="addNew; then B1; else B2"></div>
+                                                <ng-template #B1>
                                                 
                                                     <td><input type="text" formControlName="segment"
                                                         (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
@@ -416,10 +424,10 @@
                                                         </datalist> 
                                                     </td> 
 
-                                                <!-- </ng-template>
+                                                </ng-template>
                                                 <ng-template #B2>
                                                  <td><input disabled style="width:16rem;" type="text" formControlName="segment" class="form-control"  /></td> 
-                                                </ng-template> -->
+                                                </ng-template>
 
 
                                                 
@@ -428,6 +436,7 @@
                                                 <td>
                                                     <input disabled style="width:22rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
                                                 </td>
+
                                                 <td>
                                                     <input style="width:7rem;" disabled  type="text" formControlName="itemCategory"  class="form-control" placeholder="Item Category "  >
                                                 </td>
@@ -441,15 +450,16 @@
                                                     <input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
                                                 </td>
                                                
-                                                <!-- <div *ngIf="showItemSearch; then  showyes; else showNo"> </div>
-                                                <ng-template #showyes>
-                                                <td><button disabled type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
-                                                <td><button disabled type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
+                                                <div *ngIf="addNew; then  showyes; else showNo"> </div>
+                                                <ng-template #showyes> 
+                                                    <td><button  type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                                                    <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
                                                 </ng-template>
-                                                <ng-template #showNo> -->
-                                                    <td><button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
-                                                    <td><button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
-                                                <!-- </ng-template> -->
+                                                <ng-template #showNo>
+                                                    <td><button disabled type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                                                    <td><button disabled type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
+                                                </ng-template>
+
 
                                               </tr>
                                             <!-- </div> -->
@@ -935,6 +945,67 @@
             <br>
 
            <table> <tr> <td></td> <td>Item Selected : </td> <td style="font-weight: bold;"> {{this.selectItemName}} </td> </tr>  </table>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+            <!-- -------------------------- -->
+        </div>
+
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="showpListData" tabindex="-1" role="dialog" aria-labelledby="showpListDataLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="showpListDataLabel" style="text-align: center;" >Price&nbsp;List&nbsp;Items - {{this.priceListName}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+        <!-- -------------------------- -->
+        <div class="container1">
+            <div class="grid_scroll_3">
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+          
+                     <tbody>
+                        <tr class="GridHeader">
+                     
+                            <th style="width:4rem" scope="col">Srl No.</th>
+                            <th style="width:15rem" scope="col">Item Code</th>
+                            <th style="width:20rem" scope="col">Item Description</th>
+                            <th style="width:6rem" scope="col">Item Category</th>
+                            <th style="width:3rem" scope="col">UOM</th>
+                            <th style="width:6rem" scope="col">Batch Code</th>
+                            <th style="width:6rem" scope="col">Price</th>
+
+                       </tr>
+                    </tbody>
+                  <tr *ngFor="let com of priceListLineDetails1 let i=index" class="ItemStyle" style="text-decoration:none;">
+                        <td style="width:3rem;text-align: center;">{{i+1}}</td>
+                        <td style="width:10rem;text-align: left;">{{com.segment}}</td>
+                        <td style="width:20rem;text-align: left;">{{com.itemDescription}}</td>
+                        <td style="width:10rem;text-align: center;">{{com.itemCategory}}</td>      
+                        <td style="width:8rem;text-align: center;">{{com.uom}}</td> 
+                        <td style="width:8rem;text-align: center;">{{com.batchCode}}</td>      
+                        <td style="width:8rem;text-align: right;">{{com.priceValue}}</td> 
+
+                        <!-- <td><button class="btn btn-secondary" (click)="F9SearchItemCode(com.segment)">Select</button></td>    -->
+                      
+                       </tr>
+            </table>
+            </div>
+            </div>
+            <br>
+
+           <!-- <table> <tr> <td></td> <td>Item Selected : </td> <td style="font-weight: bold;"> {{this.selectItemName}} </td> </tr>  </table> -->
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
