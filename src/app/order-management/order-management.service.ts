@@ -49,6 +49,12 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
   }
 
+  searchByItemSegmentDiv(divId,itemSeg):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/details/${divId}/${itemSeg}`)
+ 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
 
   orderTypeList(deptId,ouId): Observable<any> {
     return this.http.get(this.ServerUrl +`/OrderTrnType/otAccSpList?deptId=${deptId}&ouId=${ouId}`);
