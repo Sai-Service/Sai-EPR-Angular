@@ -1686,6 +1686,17 @@ priceDescList(priceListId): Observable<any>
 {
   return this.http.get(this.ServerUrl +`/pricelist/${priceListId}`);
 }
+
+// http://localhost:8081/itemMst/itemName/HCL
+
+
+
+getItemDetailsByCode(itmCode): Observable<any>
+{
+  return this.http.get(this.ServerUrl +`/itemMst/itemName/${itmCode}`);
+}
+
+/////////////////////////////////////////////////////////
 taxTypeNameList(taxTypeId): Observable<any>
 {
    if(taxTypeId>0) {
@@ -1967,8 +1978,8 @@ viewAPAccounting(invoiceNum): Observable<any> {
   return this.http.get(this.ServerUrl + `/glHeader/apInv/${invoiceNum}`);
 }
 
-getsearchByshipmentNo(shipmentNo): Observable<any> {
-  return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo/${shipmentNo}`);
+getsearchByshipmentNo(shipmentNo,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo?shipmentNumber=${shipmentNo}&shipFromLocId=${locId}`);
 }
 
 
@@ -2071,9 +2082,16 @@ PriceSubTypeList(): Observable<any> {
 }
 
 
+// PriceListIdList(): Observable<any> {
+//   return this.http.get(this.ServerUrl +'/pricelist');
+ 
+// }
 
-PriceListIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/pricelist');
+
+PriceListIdList(mOuId,mDivId): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/pricelist');
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${mOuId}&divisionId=${mDivId}`);
+    // http://localhost:8081/pricelist/priceHdr?ouId=101&divisionId=2
   }
 
 
@@ -2152,6 +2170,11 @@ PriceListIdList(): Observable<any> {
 
     getLineDetails(priceListHeaderId): Observable<any> {
       return this.http.get(this.ServerUrl + `/pricelist/priceDtl?priceListHeaderId=${priceListHeaderId}`);
+    }
+
+    getLineDetailsSingleItem(plName,itmId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=${plName}&itemId=${itmId}`);
+      // http://localhost:8081/pricelist/ItmPrcList/?priceListName=Bajaj Regular MRP&itemId=544
     }
 ////////////////////////////OrderTypeMaster//////////////////
 UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
@@ -3213,6 +3236,27 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
 
+      //////////////////////bank recon/////////////////////
+
+      bankList(mouId): Observable<any> {
+        // alert ("OU Id :"+mouId);
+        return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
+        // http://localhost:8081/ceBankAccounts/BankList/101
+      }
+
+     
+
+      getBankReconStatement1(bnkId,ouId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+         return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
+      }
+
+
+      getBankStatementDetails(sHeaderId): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+        return this.http.get(this.ServerUrl+`/ceStateHdr/${sHeaderId}`);
+        // http://localhost:8081/ceStateHdr/161273
+      }
 
 
 

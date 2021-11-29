@@ -300,6 +300,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   public addonDescList: any[];
   displaycustAccountNo = true;
   displaycounterSaleOrderSave = true;
+  displayShowLinseTab=true;
   displayaddRow = true;
   // displayRemoveRow=true;
   displaysalesRepName = true;
@@ -539,8 +540,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.minDate=this.service.getCurrentDate();
-    // tkkhis.orderedDate = this.pipe.transform(this.minDate, 'dd-MM-yyyy');
+    this.displayShowLinseTab=true;
     $("#wrapper").toggleClass("toggled");
 
 
@@ -552,7 +552,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       this.displayDMSCDMS = false;
       this.showApplyDiscount = true;
       if (sessionStorage.getItem('deptName')==='Spares'){
-        this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName : 'Spares Sale - Credit' });
+        this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName : 'Spares Sale - Cash' });
         this.CounterSaleOrderBookingForm.patchValue({issueCodeType:'Regular Sales'}) ;
       }
      else if (sessionStorage.getItem('deptName')==='Accessories'){
@@ -743,6 +743,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
+    this.displayShowLinseTab=false;
     this.isVisible=true;
     this.isDisabled = true;
     this.isDisabled=true;
@@ -1161,7 +1162,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code === 200) {
-            this.isVisible=true;
+           this.displayShowLinseTab=false;
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.CounterSaleOrderBookingForm.patchValue(data.obj);
@@ -1804,6 +1805,12 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     // return;
     // } 
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    for (let j=0 ;j<orderLines.length;j++){
+    if ( orderLines[j].segment ==='' && orderLines[j].taxCategoryName==='' && orderLines[j].pricingQty===''){
+      alert('First Select Line Details..!');
+      return;
+    }
+  }
     for (let i = 0; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
     }
@@ -2366,7 +2373,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             frmLocatorId: res.obj[k].onhandList,
           })
           this.locData[k] = res.obj[k].onhandList;
-          this.onOptionsSelectedDescriptionNew(res.obj[k].segment, k)
+          this.onOptionsSelectedDescriptionNew(res.obj[k].segment, res.obj[k].itemId,k)
         }
       }
       else {
@@ -2383,7 +2390,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
 
-  onOptionsSelectedDescriptionNew(segment: any, k) {
+  onOptionsSelectedDescriptionNew(segment: any,itemId:any, k) {
     this.displayorderHedaerDetails = false;
     var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
     this.CounterSaleOrderBookingForm.patchValue({ orderedDate: orderedDate });
@@ -2425,7 +2432,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     else {
       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var itemType = (controlinv.controls[k]).get('invType').value;
-      let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
+      // let select = (this.itemMap.get(itemType)).find(d => d.segment === segment);
       var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
       let selSite = this.custSiteList.find(d => d.siteName === siteName1);
       const custtaxCategoryName = selSite.taxCategoryName;
@@ -2484,10 +2491,10 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                     );
                 }
               }
-              if (select.itemId != null) {
+              if (itemId != null) {
                 let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                 var invTp = controlinv.controls[k].get('invType').value;
-                this.service.getfrmSubLoc(this.locId, select.itemId, this.subInventoryId).subscribe(
+                this.service.getfrmSubLoc(this.locId, itemId, this.subInventoryId).subscribe(
                   data => {
                     console.log(data);
                     if (data.length === 0) {
@@ -2514,11 +2521,11 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                         controlinv.controls[k].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty })
                         controlinv.controls[k].patchValue({ id: getfrmSubLoc[0].id });
                       }
-                      this.service.getreserqty(this.locId, select.itemId).subscribe
+                      this.service.getreserqty(this.locId, itemId).subscribe
                         (data => {
                           this.resrveqty = data;
                           controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
-                          this.AvailQty(k, select.itemId);
+                          this.AvailQty(k, itemId);
                         });
                     }
                   });

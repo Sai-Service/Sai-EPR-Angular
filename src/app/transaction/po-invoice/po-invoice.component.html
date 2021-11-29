@@ -1916,15 +1916,14 @@
             </div> -->
 
                             <!-- <div > -->
-                            <td>
-                                <div *ngIf="displayapInvCancelled; then thenapInvCancelled; else elseapInvCancelled">
-                                </div>
+                                <div *ngIf="displayapInvCancelled; then thenapInvCancelled; else elseapInvCancelled"> </div>
                                 <ng-template #thenapInvCancelled>
                                 </ng-template>
                                 <ng-template #elseapInvCancelled>
+                                <td>
                                     <button type="submit" (click)="apInvCancelled()" class="btn btn-primary"
                                         style="width: fit-content;">AP Inv Cancelled</button>
-                                </ng-template>
+                                
                             </td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -1932,6 +1931,8 @@
                                     View Accounting
                                 </button>
                             </td>
+                        </ng-template>
+                           
                             <!-- </div> -->
                             <div [style.display]="isVisible ? 'block' : 'none'">
                                 <td>

@@ -60,12 +60,26 @@ export class LoginComponent implements OnInit {
   // }
 
   login() {
+    
+    if(this.username == undefined || this.username =="" ){
+      alert('Please enter valid Username !');
+      return;
+    }
+
+    if(this.password == undefined || this.password ==""){
+      alert('Please enter valid Password !');
+      return;
+    }
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
         this.router.navigate(['/admin']);
         var users=res.obj;
-        sessionStorage.setItem('divisionName',users.divisionName);
+        var divisionName = users.divisionName.split(" - ", 3); 
+        divisionName = divisionName[1];
+       
+        sessionStorage.setItem('CompName',users.divisionName);
+        sessionStorage.setItem('divisionName',divisionName);
         sessionStorage.setItem('divisionId',users.divisionId);
         console.log(users.divisionName);
         sessionStorage.setItem('ticketNo',users.ticketNo);
@@ -94,9 +108,12 @@ console.log(users.locCode);
 
       // }
        else if (res.code === 400) {
-        alert('Incorrect username or password');
+        alert('Incorrect Username or Password');
+      }else {
+        alert('Login Error - Application is not responsding properly!');
       }
     });
+  
   }
 
 

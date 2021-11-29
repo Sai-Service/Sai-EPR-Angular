@@ -25,6 +25,7 @@ export class CounterSaleReturnComponent implements OnInit {
 
   lstOrderHeader: any;
   lstOrderItemLines:any;
+
   viewAccounting1: any[];
   viewAccounting2: any[];
   
@@ -954,9 +955,26 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
           
         }
 
-        viewAccounting(ordNumber: any) {
+        resetValue(){
+          this.viewAccounting1=null;
+          this.viewAccounting2=null;
+          this.description = null;
+          this.periodName = null;
+          this.postedDate = null;
+          this.jeCategory = null;
+          this.name1 = null;
+          this.ledgerId = null;
+          this.runningTotalDr = null;
+          this.runningTotalCr = null;
+          this.docSeqValue=null;
+        }
+
+        viewAccounting() {
           // alert(receiptNo);
-          this.service.viewAccountingCSRev(ordNumber).subscribe((res: any) => {
+          this.resetValue();
+          var crMemoNo=this.counterSaleReturnOrderForm.get("rtnDocNo").value;
+          // alert(crMemoNo);
+          this.service.viewAccountingCSRev(crMemoNo).subscribe((res: any) => {
             if (res.code === 200) {
               this.viewAccounting2 = res.obj;
               this.description = res.obj.description;
@@ -968,8 +986,8 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
               this.runningTotalDr = res.obj.runningTotalDr;
               this.runningTotalCr = res.obj.runningTotalCr;
               this.docSeqValue=res.obj.docSeqValue;
-              console.log(this.description);
-      
+              // console.log(this.description);
+              // alert (" this.docSeqValue :"+ this.docSeqValue);
               this.viewAccounting1 = res.obj.glLines;
               console.log(this.viewAccounting1);
               // alert(res.message);
@@ -980,5 +998,10 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
             }
           });
         }
+
+
+
+
+      
 
 }

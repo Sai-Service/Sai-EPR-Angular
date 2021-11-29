@@ -128,7 +128,9 @@ declare var $: any;
     this.deptName=(sessionStorage.getItem('deptName'));
     this.locName=(sessionStorage.getItem('locName'));
     this.ouName=(sessionStorage.getItem('ouName'));
-    this.loginArray=sessionStorage.getItem('divisionName');
+   // 
+   this.loginArray=sessionStorage.getItem('CompName');
+   
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
     // $('[data-submenu]').submenupicker();

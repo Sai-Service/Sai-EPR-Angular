@@ -38,6 +38,7 @@ import { InternalConsumptionComponent } from './internal-consumption/internal-co
 import { PoUploadListComponent } from './po-upload-list/po-upload-list.component';
 import { RelatedItemPartComponent } from './related-item-part/related-item-part.component';
 import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-upload-pricelist.component';
+import { BankReconcillationComponent } from './bank-reconcillation/bank-reconcillation.component';
 // import { CounterSaleReturnComponent } from './counter-sale-return/counter-sale-return.component';
 
 
@@ -80,6 +81,7 @@ import { BulkUploadPricelistComponent } from './bulk-upload-pricelist/bulk-uploa
     PoUploadListComponent,
     RelatedItemPartComponent,
     BulkUploadPricelistComponent,
+    BankReconcillationComponent,
     // CounterSaleReturnComponent
   ],
   

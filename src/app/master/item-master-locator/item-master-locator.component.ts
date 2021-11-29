@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
@@ -8,6 +8,7 @@ import { Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from '../master.service';
+import * as xlsx from 'xlsx';
 
 interface IItemLocatorMaster {
   locatorId: number;
@@ -39,6 +40,7 @@ interface IItemLocatorMaster {
   styleUrls: ['./item-master-locator.component.css']
 })
 export class ItemMasterLocatorComponent implements OnInit {
+  @ViewChild('epltable1', { static: false }) epltable1: ElementRef;
   ItemlocatorMasterForm: FormGroup;
   submitted = false;
   locatorId: number;
@@ -423,6 +425,12 @@ export class ItemMasterLocatorComponent implements OnInit {
   }
 
 
-
+  exportToExcel1() {
+    const ws: xlsx.WorkSheet =   
+    xlsx.utils.table_to_sheet(this.epltable1.nativeElement);
+    const wb: xlsx.WorkBook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+    xlsx.writeFile(wb, 'epltable1.xlsx');
+   }
 
 }
