@@ -153,7 +153,8 @@ export class BulkUploadPricelistComponent implements OnInit {
     this.CheckValidations()
    
     if (this.fileValidation===true) {
-      this.updStatus=true; this.closeResetButton=false;
+      this.updStatus=true; 
+      this.closeResetButton=false;
       this.progress = 0;
       this.dataDisplay ='File Upload in progress....Do not refresh the Page'
 
