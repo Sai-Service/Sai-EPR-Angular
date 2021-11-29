@@ -68,6 +68,14 @@ export class BankReconcillationComponent implements OnInit {
         stDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
         glDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
 
+        transNo1:string;
+        transNo2:string;
+        date1=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
+        date2=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
+        amount1:number;
+        amount2:number;
+
+
 
 
         get f() { return this.bankReconcillationForm.controls; }
@@ -114,6 +122,13 @@ export class BankReconcillationComponent implements OnInit {
             unreconcnt:[],
             avlBalance:[],
             valueDtdBalance:[],
+
+            transNo1:[],
+            transNo2:[],
+            date1:[],
+            date2:[],
+            amount1:[],
+            amount2:[],
 
 
             ceLineList: this.fb.array([this.invLineDetails()]),
@@ -256,5 +271,18 @@ export class BankReconcillationComponent implements OnInit {
 
        reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
+
+       avlTrans(){}
+       FindAvl(){}
+
+       getTrans(index){
+         var patch = this.bankReconcillationForm.get('ceLineList') as FormArray;
+         var LineArr = this.bankReconcillationForm.get('ceLineList').value;
+         var tranNum = LineArr[index].bankTrxNumber;
+         var tranAmt = LineArr[index].amount;
+         alert ("Line selected :"+index +","+tranNum);
+         this.transNo1=tranNum;this.transNo2=tranNum
+         this.amount1=tranAmt;this.amount2=tranAmt
+      }
 
 }
