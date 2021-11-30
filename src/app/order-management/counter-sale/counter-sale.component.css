@@ -1,136 +1,98 @@
-td{
-    padding: 0px;
-}
-
 .grid_scroll{
-    overflow: auto;
-     height: 300px; 
-    width: 100%;
-    }
+  overflow: auto;
+   height: 300px; 
+  width: 100%;
+  }
 
 
 legend {
-    display: block;
-    padding-inline-start: 1px;
-    padding-inline-end: 1px;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    width: fit-content;
+  display: block;
+  padding-inline-start: 1px;
+  padding-inline-end: 1px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  width: fit-content;
 }
 
 
 
 
 fieldset {
-    display: block;
-    margin-inline-start: 1px;
-    margin-inline-end: 1px;
-    padding-block-start: 0.35em;
-    padding-inline-start: 0.75em;
-    padding-inline-end: 0.75em;
-    padding-block-end: 0.625em;
-    min-inline-size: min-content;
-    border-width: 2px;
-    border-style: groove;
-    border-color: threedface;
-    border-image: initial;
+  display: block;
+  margin-inline-start: 1px;
+  margin-inline-end: 1px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: threedface;
+  border-image: initial;
 }
 
 .RFS legend {
-    font-size: 1em;
-    letter-spacing: 0.05em;
-    color: #000 !important;
-    
-    padding: 2px 5px;
-    background: #fefeff;
-    border-radius: 3px;
-    border: #608cb0 solid 1px;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  color: #000 !important;
+  
+  padding: 2px 5px;
+  background: #fefeff;
+  border-radius: 3px;
+  border: #608cb0 solid 1px;
 }
 
 .RFS {
-    margin: 1px auto;
-    border: 1px solid #608cb0;
-    /* padding-bottom: 10px; */
-    -moz-border-radius-bottomleft: 7px;
-    -moz-border-radius-bottomright: 7px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 7px;
-    -webkit-border-radius: 7px;
-    border-radius: 3px;
-    min-height: 30px;
+  margin: 1px auto;
+  border: 1px solid #608cb0;
+  /* padding-bottom: 10px; */
+  -moz-border-radius-bottomleft: 7px;
+  -moz-border-radius-bottomright: 7px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 3px;
+  min-height: 30px;
 }
 
 
+
 .LabelFontStyle1:before{
-    content:"*";
-    color:rgb(252, 29, 29);
-  }
+  content:"*";
+  color:rgb(252, 29, 29);
+}
 
-  /* .LabelFontStyle {
-    font-family: Verdana,Sans-serif, Arial, Helvetica;
-    font-weight: normal;
-    color: Black;
-    font-size: 11px;
-    text-align: right;
-    vertical-align: middle;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-color: Gray;
-    height: 15px;
-  } */
+td{
+  padding: 0px;
+}
+
+/* .currency:after{ content: '.00'; } */
+
+.nav-link{
+    padding: 0%;
+}
   
-  /* .LabelFontStyle1 {
-    font-family: Verdana,Sans-serif, Arial, Helvetica;
-    font-weight: normal;
-    color: Black;
-    font-size: 11px;
-    text-align: right;
-    vertical-align: middle;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-color: Gray;
-    height: 15px;
-  }
-   */
 
-  /* .currency:after{ content: '.00'; } */
-
-  .nav-link{
-      padding: 0%;
-  }
-
-
-
-
-
-
-  /* #loading{
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    z-index: 1;
-    width: 50px;
-    height: 50px;
-    margin: -75px 0 0 -75px;
-    margin: auto;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 50px;
-    height: 50px;
-    animation: spin 2s linear infinite;
-    } */
-        
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    /* .modal-dialog {
-        margin-left: 55%;
-        margin-right: auto;
-      } */
-
-  
+      #loading{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 150px;
+        height: 150px;
+        margin: -75px 0 0 -75px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        }
+          
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }

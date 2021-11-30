@@ -1342,10 +1342,24 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
   // http://localhost:8081/itemMst/ItemDtlsF9?locId=121&itemId=544&ouId=110&divisionId=2
 }
 
+searchByItemSegmentDiv(divId,itemSeg):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/details/${divId}/${itemSeg}`)
+ 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)
 
+  // http://localhost:8081/itemMst/searchBydesc/2/ring
+}
+
+searchByItemBYSegment(divId,itemDesc):Observable<any>
+{
+    return this.http.get(this.ServerUrl+`/itemMst/segment/${itemDesc}`)
+ 
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
@@ -3256,6 +3270,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // alert("ms >>account no:"+bnkId+","+ouId );
          return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
       }
+
+      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+         return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+         }
 
 
       getBankStatementDetails(sHeaderId): Observable<any> {

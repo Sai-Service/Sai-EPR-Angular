@@ -32,6 +32,10 @@ export class PoUploadListComponent implements OnInit {
 
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
+  closeResetButton =true;
+  dataDisplay: any;
+  progress = 0;
+
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.poPendingListForm = this.fb.group({
       startDt: [],
@@ -50,9 +54,14 @@ export class PoUploadListComponent implements OnInit {
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
 
     // this.service.pendingPOList(Number(sessionStorage.getItem('emplId'))).subscribe((res: any) => {
+       this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
       this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
         if (res.code === 200) {
           this.poDetails = res.obj;
+          this.dataDisplay ='Data Display Sucessfully....'
+          this.closeResetButton=true;
           for (let i = 0; i < res.obj.length; i++) {
             //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
             var poDt = this.poDetails[i].poDate;
@@ -74,6 +83,8 @@ export class PoUploadListComponent implements OnInit {
         else {
           if (res.code === 400) {
             alert(res.message);
+            this.dataDisplay ='Data Display Failed....'
+            this.closeResetButton=true;
           }
         }
       })
@@ -89,9 +100,14 @@ export class PoUploadListComponent implements OnInit {
     endDt1.setDate(endDt1.getDate() + 1);
     this.endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
 
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
     this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
       if (res.code === 200) {
         this.poDetails = res.obj;
+        this.dataDisplay ='Data Display Sucessfully....'
+          this.closeResetButton=true;
         for (let i = 0; i < res.obj.length; i++) {
           //this.poPendingListForm.patchValue({ segment1: res[i].obj.segment1 })
           var poDt = this.poDetails[i].poDate;
@@ -113,6 +129,8 @@ export class PoUploadListComponent implements OnInit {
       else {
         if (res.code === 400) {
           alert(res.message);
+          this.dataDisplay ='Data Display Failed....'
+          this.closeResetButton=true;
         }
       }
     })
