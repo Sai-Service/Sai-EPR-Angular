@@ -75,7 +75,7 @@ export class BankReconcillationComponent implements OnInit {
         date2=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
         amount1:number;
         amount2:number;
-
+        showReconButton3=false;
 
 
 
@@ -297,7 +297,7 @@ export class BankReconcillationComponent implements OnInit {
        reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
-       avlTrans(){}
+      
 
        FindAvl(){
 
@@ -309,7 +309,9 @@ export class BankReconcillationComponent implements OnInit {
             data => {
               this.lstAvlBnkLines = data.obj;
               if(this.lstAvlBnkLines.length==0) {
-                alert (bnkAcNo +" - " + "No Record Found.");return;
+                alert (bnkAcNo +" - " + "No Record Found.");
+                this.showReconButton3=false;
+                return;
               }
               console.log(this.lstAvlBnkLines);
 
@@ -319,16 +321,25 @@ export class BankReconcillationComponent implements OnInit {
                 this.avlLineArray().push(avlLnGrp);
               }
               this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
+              this.showReconButton3=true;
         });
 
        }
 
+
+       avlTrans(){
+        this.getTrans(0);
+      }
+
        getTrans(index){
+         this.showReconButton3=false;
+         this.avlLineArray().clear();
+         this.date1=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
+         this.date2=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
          var patch = this.bankReconcillationForm.get('ceLineList') as FormArray;
          var LineArr = this.bankReconcillationForm.get('ceLineList').value;
          var tranNum = LineArr[index].bankTrxNumber;
          var tranAmt = LineArr[index].amount;
-        //  alert ("Line selected :"+index +","+tranNum);
          this.transNo1=tranNum;this.transNo2=tranNum
          this.amount1=tranAmt;this.amount2=tranAmt
       }

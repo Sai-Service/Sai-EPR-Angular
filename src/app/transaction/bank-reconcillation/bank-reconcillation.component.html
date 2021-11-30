@@ -459,7 +459,14 @@
          </div>
 
          <div class="modal-footer">
-            <button  style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
+
+            
+            <div *ngIf="showReconButton3; then RYes; else RNo"></div>
+            <ng-template #RYes>
+                <button  style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
+            </ng-template>
+            <ng-template #RNo></ng-template>
+
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
         </div>

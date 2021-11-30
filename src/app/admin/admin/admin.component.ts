@@ -389,9 +389,6 @@ this.isVisible1=true;
         .subscribe(
           data => {
             this.F9SearchItemDesc(data[0].description);
-
-
-
           }
         );
     
