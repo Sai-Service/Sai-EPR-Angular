@@ -133,6 +133,7 @@ export class BankReconcillationComponent implements OnInit {
 
 
             ceLineList: this.fb.array([this.invLineDetails()]),
+            avlList: this.fb.array([this.avlLineDetails()]),
           });
         }
       
@@ -154,9 +155,32 @@ export class BankReconcillationComponent implements OnInit {
       
           })
         }
+
+        avlLineDetails() {
+          return this.fb.group({
+            selectFlag:[],
+            checkId:[],
+            invTypeLookupCode:[],
+            bankAccountNo:[],
+            appAmt:[],
+            glDate:[],
+            date1:[],
+            docNo:[],
+            voucherNo:[],
+           
+                
+          })
+        }
+
+
+
       
         invLineArray(): FormArray {
           return <FormArray>this.bankReconcillationForm.get('ceLineList')
+        }
+
+        avlLineArray(): FormArray {
+          return <FormArray>this.bankReconcillationForm.get('avlList')
         }
   
 
@@ -280,17 +304,21 @@ export class BankReconcillationComponent implements OnInit {
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
         var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
-
-        
-
         this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2)
           .subscribe(
             data => {
-              this.lstAvlBnkLines = data;
+              this.lstAvlBnkLines = data.obj;
               if(this.lstAvlBnkLines.length==0) {
                 alert (bnkAcNo +" - " + "No Record Found.");return;
               }
               console.log(this.lstAvlBnkLines);
+
+              var len = this.avlLineArray().length;
+              for (let i = 0; i < this.lstAvlBnkLines.length - len; i++) {
+                var avlLnGrp: FormGroup = this.avlLineDetails();
+                this.avlLineArray().push(avlLnGrp);
+              }
+              this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
         });
 
        }
@@ -300,9 +328,19 @@ export class BankReconcillationComponent implements OnInit {
          var LineArr = this.bankReconcillationForm.get('ceLineList').value;
          var tranNum = LineArr[index].bankTrxNumber;
          var tranAmt = LineArr[index].amount;
-         alert ("Line selected :"+index +","+tranNum);
+        //  alert ("Line selected :"+index +","+tranNum);
          this.transNo1=tranNum;this.transNo2=tranNum
          this.amount1=tranAmt;this.amount2=tranAmt
+      }
+
+      bnkReconcilePost(){
+
+        alert ("Bank Reconcile -Post -wip");
+
+      }
+
+      selectAvlFlag(evnt,index){
+        alert("Selected ...avl..."+evnt +" , "+index);
       }
 
 }
