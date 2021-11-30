@@ -28,6 +28,7 @@ export class BankReconcillationComponent implements OnInit {
         public BankList            : Array<string> = [];
         lstStatementList :any;
         lstStatementLines:any
+        lstAvlBnkLines:any;
         lstcomments:any;
         loginName:string;
         divisionId:number;
@@ -273,7 +274,26 @@ export class BankReconcillationComponent implements OnInit {
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
        avlTrans(){}
-       FindAvl(){}
+
+       FindAvl(){
+
+        var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
+        var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
+        var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
+
+        
+
+        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2)
+          .subscribe(
+            data => {
+              this.lstAvlBnkLines = data;
+              if(this.lstAvlBnkLines.length==0) {
+                alert (bnkAcNo +" - " + "No Record Found.");return;
+              }
+              console.log(this.lstAvlBnkLines);
+        });
+
+       }
 
        getTrans(index){
          var patch = this.bankReconcillationForm.get('ceLineList') as FormArray;

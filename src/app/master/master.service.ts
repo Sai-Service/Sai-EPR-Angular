@@ -3265,6 +3265,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
          return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
       }
 
+      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+         return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+         }
+
 
       getBankStatementDetails(sHeaderId): Observable<any> {
         // alert("ms >>account no:"+bnkId+","+ouId );

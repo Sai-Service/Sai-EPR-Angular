@@ -250,9 +250,9 @@
                   
                         <tr>
                             <td >Opening&nbsp;Balance&nbsp;:</td> 
-                            <td><input   type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;background-color: yellow;"></td>
+                            <td><input disabled  type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;"></td>
                             <td>Receipts&nbsp;:&nbsp;</td> 
-                            <td><input  disabled type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;background-color: yellow;" ></td>
+                            <td><input  disabled type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;" ></td>
                             <td><input disabled  type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:52px ;"></td>
                         </tr>   
     
@@ -261,7 +261,7 @@
                         <td><input disabled  type="number" class="form-control" formControlName="controlEndBalance"  [(ngModel)]="controlEndBalance" style="width: 130px;" ></td>
                            
                            <td >Payments&nbsp;:&nbsp;</td>
-                            <td><input disabled  type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;background-color: yellow;" ></td>
+                            <td><input disabled  type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;" ></td>
                             <td><input disabled  type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:52px ;"></td>
                        
                         </tr>
@@ -314,7 +314,7 @@
                 <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                                 <tr>
                                     
-                            <td><button  style="width: 1rem;" type="button" class="btn btn-info1" data-toggle="modal" data-target="#bankStmtAvailable" (click)="getTrans(k)"></button></td>
+                            <td><button  style="width: 1rem;height: 25px;" type="button" class="btn btn-info1" data-toggle="modal" data-target="#bankStmtAvailable" (click)="getTrans(k)"></button></td>
                             <td><input disabled style="width: 50px;height: 25px; text-align: center;" type="text"    formControlName="lineNumber" class="form-control"></td>
                             <td><input disabled style="width: 120px;height: 25px;" type="text"    formControlName="trxType" class="form-control"></td>
                             <td><input disabled style="width: 80px;height: 25px;" type="text"    formControlName="trxCode" class="form-control"></td>
@@ -360,7 +360,7 @@
          <div class="modal-header" >
             <!-- style="background-color: darkcyan;" -->
           <!-- <h5 class="modal-title" id="exampleModal2Label">AR&nbsp;Receipt&nbsp;Application&nbsp;-&nbsp;Receipt&nbsp;No:&nbsp;{{this.receiptNumber}}&nbsp;BillToSite:&nbsp;{{this.billToSiteId}} </h5> -->
-          <h5 class="modal-title" id="bankStmtAvailableLabel" style="text-align: center;color:blue"  >Bank&nbsp;Statement&nbsp;Available&nbsp;Transaction&nbsp; </h5>
+          <h5 class="modal-title" id="bankStmtAvailableLabel" style="text-align: center;color:blue"  >Bank&nbsp;Statement&nbsp;Available&nbsp;Transaction:Account&nbsp;No-&nbsp;{{this.bankAccountNo}} </h5>
          
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -398,7 +398,7 @@
 
             <!-- ------------------------------------------------ -->
             <fieldset class="RFS">
-            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Bank Statement Lines</legend>
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Available Transaction Lines</legend>
            
             <div class="container1">
                 <div class="grid_scroll">
