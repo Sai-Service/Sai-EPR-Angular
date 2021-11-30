@@ -319,7 +319,7 @@ iotOrderTypeList(ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder/${ouId}`);
 }
 getShiptoLoc(locId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
+  return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoInterState/${locId}`);
 }
   /////////////////////////////////////////Division Master////////////////////////////////////////////
    public divisionMasterSubmit(divMasterRecord) {
@@ -773,6 +773,9 @@ getItemCodePach(segment): Observable<any> {
 GetCustomerSiteDetails(mCustomerId,mOuId): Observable<any> {
   // alert("customerId ,OuId :" +mCustomerId +" ,"+mOuId);
   return this.http.get(this.ServerUrl +`/Customer/custsite?customerId=${mCustomerId}&ouId=${mOuId}`);
+}
+getTDSPercentage():Observable<any>{
+  return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/TDSPer`)
 }
 
 ////////////////////////////////Supplier Master///////////////////////////
@@ -2084,7 +2087,7 @@ PriceSubTypeList(): Observable<any> {
 
 // PriceListIdList(): Observable<any> {
 //   return this.http.get(this.ServerUrl +'/pricelist');
- 
+
 // }
 
 
@@ -3244,7 +3247,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/ceBankAccounts/BankList/101
       }
 
-     
+
 
       getBankReconStatement1(bnkId,ouId): Observable<any> {
         // alert("ms >>account no:"+bnkId+","+ouId );

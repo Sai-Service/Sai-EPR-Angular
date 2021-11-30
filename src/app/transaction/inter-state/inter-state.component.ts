@@ -221,7 +221,7 @@ taxCategoryId:number;
     this.paymentType='IMMEDIATE';
     this.emplId = Number(sessionStorage.getItem('emplId'));
 
-  
+
      this.service.iotOrderTypeList(this.ouId)
     .subscribe(
       data1 => {
@@ -314,20 +314,20 @@ taxCategoryId:number;
      }
    );
     }
-  
+
     RemoveRow(OrderLineIndex){
       this.orderlineDetailsArray().removeAt(OrderLineIndex);
     }
-  
-  
+
+
   onOptiongetItem(event){
     alert(event);
-    
+    if(this.subInventoryId!=undefined){
     this.service.ItemIdListDept(this.deptName,this.locId,this.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;
         console.log(this.ItemIdList);
-      });
+      });}
       var select1=this.getshiplist.find(d=>d.toLocation===event);
       // alert(select1.custAccountNo);
       this.custAccountNo=select1.custAccountNo;
@@ -511,7 +511,7 @@ taxCategoryId:number;
             this.resrveqty=data;
             controlinv.controls[k].patchValue({resveQty:this.resrveqty});
           });
-          
+
       }
    AvailQty(event:any,i)
 {
@@ -701,7 +701,7 @@ taxCategoryId:number;
           // this.displaycustAccountNo=false;
           // // this.displaysegment=false;
           // this.displaycreateOrderType=false;
-      
+
           // this.displaysegmentInvType[0]=false;
           this.orderManagementService.counterSaleOrderSearch(orderNumber)
           .subscribe(
@@ -735,9 +735,9 @@ taxCategoryId:number;
           //   let selectInvType = this.categoryList.find(d => d.type === data.obj.oeOrderLinesAllList[k].invType);
           //   this.CounterSaleOrderBookingForm.patchValue({invType:selectInvType.invType});
           //   var curInvType=selectInvType.invType;
-      
+
           // }
-      
+
           for (let k=0; k<this.lstgetOrderLineDetails.length; k++){
             // alert(this.lstgetOrderLineDetails[k].baseAmt);
             this.InterStateForm.patchValue({baseAmt:this.lstgetOrderLineDetails[k].baseAmt});
@@ -745,9 +745,9 @@ taxCategoryId:number;
           this.InterStateForm.patchValue({orderedDate:data.obj.orderedDate});
           this.InterStateForm.get('orderedDate').disable();
           this.InterStateForm.controls['emplId'].patchValue(Number(sessionStorage.getItem('emplId')));
-      
-      
-      
+
+
+
          if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice' || this.allDatastore.createOrderType === 'Sales Order') {
           // alert('Pick to Invoice');
           // this.displaycounterSaleOrderSave=false;
@@ -785,9 +785,9 @@ taxCategoryId:number;
         //   this.PaymentButton=false;
         // }
             }});
-      
+
       }
-      
+
       reservePos(i)
 {
   // alert("Hello");
@@ -798,7 +798,7 @@ var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList').value;
     var transtypeid = this.InterStateForm.get('transactionTypeName').value
     var toloc=this.InterStateForm.get('BillLocName').value;
     var locId1=this.locId;
-   
+
       let variantFormGroup = <FormGroup>variants.controls[i];
       variantFormGroup.addControl('transactionType', new FormControl(transtypeid, Validators.required));
       variantFormGroup.addControl('locId', new FormControl(locId1, Validators.required));
@@ -806,7 +806,7 @@ var trxLnArr1 = this.InterStateForm.get('oeOrderLinesAllList').value;
       variantFormGroup.addControl('reservedQty', new FormControl(trxLnArr1[i].pricingQty, Validators.required));
       variantFormGroup.addControl('onHandId', new FormControl(trxLnArr1[i].id, Validators.required));
       variantFormGroup.addControl('transactionNumber', new FormControl(toloc, Validators.required));
-   
+
   // var reserveinfo=formValue[0];
 
   this.service.reservePost(variants.value[i]).subscribe((res:any)=>{
