@@ -2018,6 +2018,9 @@ export class CounterSaleComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.closeResetButton=true;
+          this.dataDisplay =''
+          this.isDisabled=false;
           // this.SpinnerService.hide();
           // this.SalesOrderBookingForm.reset();
         }
