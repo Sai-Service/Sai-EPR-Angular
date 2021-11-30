@@ -232,8 +232,8 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/pricelist`);
   }
 
-  priceListNameList1(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/prin/${divisionId}`);
+  priceListNameList1(ouId,divisionId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${ouId}&divisionId=${divisionId}`);
   }
   public OrderBook(BookRecord) {
     const options = {
