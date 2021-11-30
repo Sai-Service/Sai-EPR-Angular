@@ -98,6 +98,7 @@ export class PricelistMasterComponent implements OnInit {
   priceListLineDetails : any=[];
   priceListLineDetails1 : any=[];
   displayLineDetails=true;
+  lineItemRepeated=false;
   // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
 
   // startDate= Date.now();
@@ -141,6 +142,7 @@ export class PricelistMasterComponent implements OnInit {
   Status1: any;
   display1 = true;
   displayButton = true;
+  updateButton=false;
   plsearch=false;
   displayItemDetails=true;
   addNew=true;
@@ -478,15 +480,36 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
      this.CheckLineValidations(index);
      if (this.lineValidation==true) 
       {
-      //  this.isVisible1=true;
-        // this.isVisible=false;
         this.addNew=true;
-       
-        this.displayLineDetails=false;
-        this.lineDetailsArray().push(this.lineDetailsGroup());
-      }
 
+        var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+        this.lineItemRepeated=false;
+        var mItemId =prcLineArr[index].itemId;
+        var mSegment=prcLineArr[index].segment;
+        this.duplicateLineCheck(mItemId,index,mSegment)
+        if(this.lineItemRepeated) { 
+            this.lineDetailsArray().removeAt(index);
+        } else {
+        this.displayLineDetails=false;
+        this.lineDetailsArray().push(this.lineDetailsGroup()); }
+      }
   }
+
+  duplicateLineCheck(mItem,index,itemSeg) {
+    // alert ("index/itemid/segment,this.lineDetailsArray().length :" +index +","+mItem+","+itemSeg +","+this.lineDetailsArray().length);
+    var varLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+    for (let i = 0; i <  this.lineDetailsArray().length ; i++) 
+    {
+       var x=varLineArr[i].itemId;
+       if( i !=index && x===mItem) {
+        alert(itemSeg+" - Item Already in the List .Check Line :"+(i+1));
+        this.lineItemRepeated=true;
+        this.lineValidation=false;
+        break;
+      } 
+      }
+    }
+
 
   RemoveRow(index) {
     // alert(index)
@@ -571,7 +594,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
     //  ------------------------Line updattion..........................
     updateMastLine() {
-   
+      this.updateButton=false;
       this.lineValidation=false;
       var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
       var len1=prcLineArr.length;
@@ -580,9 +603,19 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
         {
           this.CheckLineValidations(i);
         }
+
+        for (let i = 0; i < len1 ; i++) 
+        {
+          var prcLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+          this.lineItemRepeated=false;
+          var mItemId =prcLineArr[i].itemId;
+          var mSegment=prcLineArr[i].segment;
+          this.duplicateLineCheck(mItemId,i,mSegment)
+        }
+
  
         if(this.lineValidation===false) { 
-          alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
+          alert("Line Validation Failed...\nPlease check all  line data fields are updated properly..\nCheck for Duplicate line items.")
           return;
         }
 
@@ -590,7 +623,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
         {
           alert("Line Validation Sucessfull....\nPutting Line data  to PRICE LIST TABLE")
 
-  
+          
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
@@ -601,6 +634,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
             // this.priceListMasterForm.reset();
+            this.updateButton=true;
           }
         }
       });
@@ -627,20 +661,22 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
     //  ------------------------Header updattion..........................
     updateMastHeader() {
-      
+      this.updateButton=false;
          this.CheckHeaderValidations();
         if (this.headerValidation===true) {
           alert("Data Validation Sucessfull....\nPutting data to PRICE LIST MASTER  TABLE") 
-
+         
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFUILY');
-          window.location.reload();
+          // window.location.reload();
+          
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
-            this.priceListMasterForm.reset();
+            // this.priceListMasterForm.reset();
+            this.updateButton=true;
           }
         }
       });
@@ -691,6 +727,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
   
   searchMast() {
+  
     this.service.getPriceListSearchNew(sessionStorage.getItem('ouId'),sessionStorage.getItem('divisionId'))
       .subscribe(
         data => {
@@ -762,6 +799,24 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
   onOptioninvItemIdSelectedNew(segment,index){
     // alert(segment)
+    if(segment==null || segment==undefined  || segment.trim() == '') {return; }
+
+    this.lineDetailsArray().controls[index].get('batchCode').enable();
+    this.lineDetailsArray().controls[index].get('priceValue').enable();
+    let select1=this.priceListLineDetails1.find(d=>d.segment===segment);
+   
+    if( select1 != undefined){ 
+      var bcode =select1.batchCode
+       alert (segment + " - Item Already exists in the Price List Master  with Batch Code : "+bcode) ;
+       this.lineDetailsArray().controls[index].get('batchCode').disable();
+       this.lineDetailsArray().controls[index].get('priceValue').disable();
+       this.lineDetailsArray().controls[index].get('itemDescription').reset();
+       this.lineDetailsArray().controls[index].get('itemCategory').reset();
+       this.lineDetailsArray().controls[index].get('uom').reset();
+       return; 
+      } 
+     
+
     var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
     this.service.searchByItemDetails(segment)
       .subscribe(
@@ -1095,6 +1150,7 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       this.priceListMasterForm.reset();
       this.display1= false;
       this.displayLineDetails=false;
+      this.updateButton=true;
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
 
