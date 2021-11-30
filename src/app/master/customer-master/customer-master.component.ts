@@ -7,6 +7,7 @@ import { Location } from "@angular/common";
 import { DatePipe } from '@angular/common';
 import { formatDate } from '@angular/common';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { data } from 'jquery';
 
 interface IcustomerMaster {
   custType: string;
@@ -84,6 +85,7 @@ interface IcustomerMaster {
   siteName: string;
   tcs: string;
   aadharNo: number;
+  tdsApplDate:Date;
 }
 
 @Component({
@@ -222,6 +224,8 @@ export class CustomerMasterComponent implements OnInit {
   limitData: any;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   customerNameSearch: any[];
+  tdsPercentage: any;
+  tdsApplDate:Date;
 
   constructor(private fb: FormBuilder, private router: Router,private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
@@ -262,7 +266,7 @@ export class CustomerMasterComponent implements OnInit {
       weddingDate: [''],
       startDate: [''],
       endDate: [''],
-      gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      gstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
       // gstNo:['', [Validators.required, Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.maxLength(15)]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
       tanNo: [''],
@@ -314,6 +318,7 @@ export class CustomerMasterComponent implements OnInit {
       siteName: [],
       tcs: [],
       aadharNo: [],
+      tdsApplDate:[],
     })
 
   }
@@ -425,6 +430,12 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.payTermDescList);
         }
       );
+      this.service.getTDSPercentage().subscribe(
+        data=>{
+          this.tdsPercentage=data;
+        }
+
+      )
     // this.PersonType='Person';
   }
 
@@ -1165,7 +1176,7 @@ export class CustomerMasterComponent implements OnInit {
           else {
             if (data.code === 400) {
               alert(data.message);
-              // this.display='block'; 
+              // this.display='block';
             }
           }
         }
