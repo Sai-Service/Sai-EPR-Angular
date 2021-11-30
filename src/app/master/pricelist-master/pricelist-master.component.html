@@ -548,15 +548,19 @@
 
                             </ng-template>
                             <ng-template #elseBlock1>
-                                        <td>
-                                            <button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()"[disabled]="!priceListMasterForm">Update Item</button>
-                                        </td>
-                                        <td>
-                                            <button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()"[disabled]="!priceListMasterForm">Update Header</button>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
-                                        </td>
+                                <div *ngIf="updateButton; then U1; else U2"></div>
+                                <ng-template #U1>
+                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()"[disabled]="!priceListMasterForm">Update Item</button> </td>
+                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()"[disabled]="!priceListMasterForm">Update Header</button> </td>
+                                </ng-template>
+                                <ng-template #U2>
+                                    <td><button disabled style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()">Update Item</button> </td>
+                                    <td><button disabled style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td>
+                                </ng-template>
+
+                                <td>
+                                    <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
+                                </td>
                                     
                                         <!-- ====================Reset Dialog ======================== -->
 
