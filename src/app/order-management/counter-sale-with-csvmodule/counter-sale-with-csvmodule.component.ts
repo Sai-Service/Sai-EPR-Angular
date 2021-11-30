@@ -368,6 +368,11 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
 
+  closeResetButton =true;
+  dataDisplay: any;
+  progress = 0;
+
+
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
     this.CounterSaleOrderBookingForm = fb.group({
       emplId: [''],
@@ -683,8 +688,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         data => {
           this.priceListNameList = data;
           console.log(this.priceListNameList);
-          this.CounterSaleOrderBookingForm.patchValue({ priceListName: data.priceListName })
-          this.CounterSaleOrderBookingForm.patchValue({ priceListId: data.priceListHeaderId })
+          this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[0].priceListName })
+          this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[0].priceListHeaderId })
         }
       );
 
@@ -961,6 +966,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
   pickTicketupdateFunction() {
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Order Save in progress....Do not refresh the Page';
     const formValue: ISalesBookingForm = this.CounterSaleOrderBookingForm.value;
     // var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // for (let i=0;i<orderLines.length; i++){
@@ -969,11 +977,15 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.orderManagementService.UpdateCounterSaleInv(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message + 'res.message');
+        this.dataDisplay =''
+        this.closeResetButton=true;
         this.OrderFind(this.orderNumber);
         // window.location.reload();
       } else {
         if (res.code === 400) {
           alert(res.message + 'res.message');
+          this.dataDisplay =''
+          this.closeResetButton=true;
           this.CounterSaleOrderBookingForm.reset();
         }
       }
@@ -1774,6 +1786,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
   pickTicketInvoiceFunction() {
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Invoice Generating....Do not refresh the Page';
     const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
@@ -1781,6 +1796,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         this.InvoiceNumber = res.obj;
+        this.dataDisplay =''
+        this.closeResetButton=true;
         console.log(this.orderNumber);
         alert(res.message);
         this.OrderFind(this.orderNumber);
@@ -1804,6 +1821,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     // if(this.CounterSaleOrderBookingForm.invalid){
     // return;
     // } 
+
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     for (let j=0 ;j<orderLines.length;j++){
     if ( orderLines[j].segment ==='' && orderLines[j].taxCategoryName==='' && orderLines[j].pricingQty===''){
@@ -1811,6 +1829,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       return;
     }
   }
+  this.closeResetButton=false;
+  this.progress = 0;
+  this.dataDisplay ='Order Save in progress....Do not refresh the Page';
     for (let i = 0; i < orderLines.length; i++) {
       orderLines[i].taxCategoryName = orderLines[i].taxCategoryName.taxCategoryName;
     }
@@ -1833,6 +1854,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.orderManagementService.SaveCounterSaleOrder(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
+        this.dataDisplay =''
+        this.closeResetButton=true;
         console.log(this.orderNumber);
         alert(res.message);
         this.orderNumber = res.obj;
@@ -2330,6 +2353,9 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
   uploadFile(event: any) {
     // alert(event)
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='File Upload in progress....Do not refresh the Page';
     event.target.disabled = true;
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
@@ -2342,6 +2368,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
     this.service.bulkPickTickCSV(formData, priceListName, taxCategoryName, subInvID, sessionStorage.getItem('locId')).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.dataDisplay =''
+        this.closeResetButton=true;
         this.orderlineDetailsArray().clear();
         let control = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         let control1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -2379,6 +2407,8 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       else {
         if (res.code === 400) {
           alert(res.message);
+          this.dataDisplay ='File Uploading given error...'
+          this.closeResetButton=true;
         }
       }
     })

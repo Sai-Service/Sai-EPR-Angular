@@ -970,6 +970,10 @@ export class CounterSaleComponent implements OnInit {
 
 
   pickTicketupdateFunction() {
+
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Order Update in progress....Do not refresh the Page';
     // const formValue: ISalesBookingForm = this.CounterSaleOrderBookingForm.value;
     var orderLines = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     // for (let i = 0; i < orderLines.length; i++) {
@@ -995,10 +999,13 @@ export class CounterSaleComponent implements OnInit {
         }
       }
       salesObj.settaxAmounts(taxStr);
-      this.orderManagementService.SaveCounterSaleOrder(JSON.stringify(salesObj)).subscribe((res: any) => {
+      this.orderManagementService.UpdateCounterSaleInv(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message + 'res.message');
+        this.dataDisplay =''
+        this.closeResetButton=true;
         this.OrderFind(this.orderNumber);
+
         // window.location.reload();
       } else {
         if (res.code === 400) {

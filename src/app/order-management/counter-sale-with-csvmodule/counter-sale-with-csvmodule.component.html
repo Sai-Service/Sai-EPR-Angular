@@ -713,6 +713,24 @@
                         </table>
                     </ng-template>
                 </fieldset>
+                <!-- <fieldset class="RFS"> -->
+                    <table class="center">
+                        <tr>
+                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                            <ng-template #hList2> 
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status" >
+                                          <span class="sr-only" id="loading"></span>
+                                   
+                                    </div>
+                                </div>
+                          </ng-template>
+                          <ng-template #hList1> </ng-template>
+                        
+                           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
+                        </tr>
+                    </table>
+                <!-- </fieldset> -->
                 <fieldset class="RFS">
                     <div *ngIf="displaycounterSaleAllButtons; then thencounterSaleAllButtons; else elsecounterSaleAllButtons"></div>
                     <ng-template #thencounterSaleAllButtons>
@@ -918,6 +936,20 @@
                             <td>
                                 <button  class="btn btn-primary" [disabled]="isDisabled" (click)="reloadlineAndTaxArray()" style="width: 100%;font-size: 11px;">Refresh</button>    
                             </td>
+                        </tr>
+                        <tr>
+                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                            <ng-template #hList2> 
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-primary" role="status" >
+                                          <span class="sr-only" id="loading"></span>
+                                   
+                                    </div>
+                                </div>
+                          </ng-template>
+                          <ng-template #hList1> </ng-template>
+                        
+                           <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
                         </tr>
                     </table>
                 </fieldset>
