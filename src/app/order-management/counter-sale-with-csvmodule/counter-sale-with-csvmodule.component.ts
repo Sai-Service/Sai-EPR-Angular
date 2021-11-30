@@ -371,6 +371,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   closeResetButton =true;
   dataDisplay: any;
   progress = 0;
+  PaymentViewReceipt=true;
 
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService) {
@@ -909,10 +910,12 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
             //   this.PaymentButton = false;
             // }
             if (data.obj.transactionTypeName === 'Accessories Sale - Cash' || data.obj.transactionTypeName === 'Spares Sale - Cash') {
-              this.paymentButton.nativeElement.hidden = true;
+              // this.paymentButton.nativeElement.hidden = true;
+              this.PaymentViewReceipt=false;
             }
             else if (data.obj.transactionTypeName === 'Accessories Sale - Credit' || data.obj.transactionTypeName === 'Spares Sale - Credit') {
               this.PaymentButton = false;
+              this.PaymentViewReceipt=true;
             }
 
           }
