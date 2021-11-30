@@ -304,11 +304,11 @@
                               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Number&nbsp;:</td>
                 
                                 <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchByItemCode" 
-                                   id="invItemIdFirstWay"  list="dynmicUserIds1" 
+                                   id="invItemIdFirstWay"  list="dynmicUserIds2" 
                                    class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
                                    style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
                                  
-                                  <datalist id="dynmicUserIds1" >
+                                  <datalist id="dynmicUserIds2" >
                                     <!-- <option *ngFor="let item of ItemIdList"  [(ngValue)]="item.itemId"> -->
                                     <option *ngFor="let item of priceListLineDetails1"  [(ngValue)]="item.itemId">
                                       <!-- {{item.SEGMENT}}  -->
@@ -418,8 +418,9 @@
                                                         list="dynmicUserIds1" class="form-control"  style="width: 16rem;"
                                                         (ngModelChange)="onOptioninvItemIdSelectedNew($event,i)" />
                                                         <datalist id="dynmicUserIds1">
-                                                            <option *ngFor="let item of invItemList" [ngValue]="item.itemId">
-                                                                {{item.segment}}
+                                                            <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">
+                                                                <!-- {{item.segment}} -->
+                                                                {{item.SEGMENT}}
                                                             </option>
                                                         </datalist> 
                                                     </td> 
