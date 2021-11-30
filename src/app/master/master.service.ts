@@ -315,11 +315,14 @@ SubAccountList(): Observable<any> {
 }
 /////////////IOT Transfer/////////////////////
 
-iotOrderTypeList(ouId): Observable<any> {
+iotOrderTypeList1(ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder/${ouId}`);
 }
+iotOrderTypeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder1`);
+}
 getShiptoLoc(locId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
+  return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoInterState/${locId}`);
 }
   /////////////////////////////////////////Division Master////////////////////////////////////////////
    public divisionMasterSubmit(divMasterRecord) {
@@ -773,6 +776,9 @@ getItemCodePach(segment): Observable<any> {
 GetCustomerSiteDetails(mCustomerId,mOuId): Observable<any> {
   // alert("customerId ,OuId :" +mCustomerId +" ,"+mOuId);
   return this.http.get(this.ServerUrl +`/Customer/custsite?customerId=${mCustomerId}&ouId=${mOuId}`);
+}
+getTDSPercentage():Observable<any>{
+  return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/TDSPer`)
 }
 
 ////////////////////////////////Supplier Master///////////////////////////
@@ -2098,7 +2104,7 @@ PriceSubTypeList(): Observable<any> {
 
 // PriceListIdList(): Observable<any> {
 //   return this.http.get(this.ServerUrl +'/pricelist');
- 
+
 // }
 
 
@@ -3258,12 +3264,17 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/ceBankAccounts/BankList/101
       }
 
-     
+
 
       getBankReconStatement1(bnkId,ouId): Observable<any> {
         // alert("ms >>account no:"+bnkId+","+ouId );
          return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
       }
+
+      getAvlBankReconLines(bnkNo,vchNo,dt1,dt2,amt1,amt2): Observable<any> {
+        // alert("ms >>account no:"+bnkId+","+ouId );
+         return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+         }
 
 
       getBankStatementDetails(sHeaderId): Observable<any> {

@@ -91,7 +91,10 @@ export class BulkUploadWithCsvComponent implements OnInit {
   
   @ViewChild("myinput") myInputField: ElementRef;
 
-  progress: number = 0;
+  // progress: number = 0;
+  closeResetButton =true;
+  dataDisplay: any;
+  progress = 0;
 
   constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: MasterService) {
     this.bulkUploadCSVForm = this.fb.group({
@@ -151,6 +154,9 @@ export class BulkUploadWithCsvComponent implements OnInit {
 
   uploadFile(event) {
     // event.target.disabled = true;
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='File Upload in progress....Do not refresh the Page'
     let formData = new FormData();
     formData.append('file', this.fileInput.nativeElement.files[0])
     // alert(this.deptName);
@@ -158,19 +164,16 @@ export class BulkUploadWithCsvComponent implements OnInit {
       this.service.bulkpouploadSales(formData).subscribe((res: any) => {  
        if (res.code === 200) {        
           this.poDetails = res.obj;
-          for (let i = 0; i < res.obj; i++) {
-            this.bulkUploadCSVForm.patchValue({ segment1: res[i].obj.segment1 })
-          }
-          // this.segment1=res.obj.segment1;
-          // this.Search(this.segment1);
+          // for (let i = 0; i < res.obj; i++) {
+          //   this.bulkUploadCSVForm.patchValue({ segment1: res[i].obj.segment1 })
+          // }
+          this.dataDisplay ='File Uploaded Sucessfully....'
+          this.closeResetButton=true;
         } else {
           if (res.code === 400) {
             alert('Error In File : \n' + res.obj);
-            // this.bulkUploadCSVForm.get('invcDt1').reset();
-            // this.bulkUploadCSVForm.get('invcNo').reset();
-            // this.bulkUploadCSVForm.get('supplierNo').reset();
-            // this.bulkUploadCSVForm.get('supplierSite').reset();
-            // this.bulkUploadCSVForm.get('file').reset();
+            this.dataDisplay ='File Uploading Failed....'
+            this.closeResetButton=true;
           }
         }
       });
@@ -181,20 +184,13 @@ export class BulkUploadWithCsvComponent implements OnInit {
         this.service.bulkpouploadSpares(formData).subscribe((res: any) => {
           if (res.code === 200) {
             alert(res.obj);
-            // this.bulkUploadCSVForm.get('invcDt1').reset();
-            // this.bulkUploadCSVForm.get('invcNo').reset();
-            // this.bulkUploadCSVForm.get('supplierNo').reset();
-            // this.bulkUploadCSVForm.get('supplierSite').reset();
-            // this.bulkUploadCSVForm.get('file').reset();
+            this.dataDisplay ='File Uploaded Sucessfully....'
+            this.closeResetButton=true;
           } else {
             if (res.code === 400) {
               alert('Error In File : \n' + res.obj);
-              // window.location.reload();
-              // this.bulkUploadCSVForm.get('invcDt1').reset();
-              // this.bulkUploadCSVForm.get('invcNo').reset();
-              // this.bulkUploadCSVForm.get('supplierNo').reset();
-              // this.bulkUploadCSVForm.get('supplierSite').reset();
-              // this.bulkUploadCSVForm.get('file').reset();
+              this.dataDisplay ='File Uploading Failed....'
+              this.closeResetButton=true;
             }
           }
         });
@@ -214,11 +210,8 @@ export class BulkUploadWithCsvComponent implements OnInit {
             alert(res.message);
             this.poDetails[0] = res.obj;
             console.log(this.poDetails);
-            // this.bulkUploadCSVForm.get('invcDt1').reset();
-            // this.bulkUploadCSVForm.get('invcNo').reset();
-            // this.bulkUploadCSVForm.get('supplierNo').reset();
-            // this.bulkUploadCSVForm.get('supplierSite').reset();
-            // this.bulkUploadCSVForm.get('file').reset();
+            this.dataDisplay ='File Uploaded Sucessfully....'
+            this.closeResetButton=true;
           } else {
             if (res.code === 400) {
               alert(res.message);
@@ -226,20 +219,13 @@ export class BulkUploadWithCsvComponent implements OnInit {
               if (res.message.includes('101')) {
                 this.itemList = res.obj;
                 this.itemButton1 = false;
-                // this.bulkUploadCSVForm.get('invcDt1').reset();
-                // this.bulkUploadCSVForm.get('invcNo').reset();
-                // this.bulkUploadCSVForm.get('supplierNo').reset();
-                // this.bulkUploadCSVForm.get('supplierSite').reset();
-                // this.bulkUploadCSVForm.get('file').reset();
+                this.dataDisplay ='File Uploading Failed....'
+              this.closeResetButton=true;
               }
               else {
                 this.itemButton1 = true;
-                // window.location.reload();
-                // this.bulkUploadCSVForm.get('invcDt1').reset();
-                // this.bulkUploadCSVForm.get('invcNo').reset();
-                // this.bulkUploadCSVForm.get('supplierNo').reset();
-                // this.bulkUploadCSVForm.get('supplierSite').reset();
-                // this.bulkUploadCSVForm.get('file').reset();
+                this.dataDisplay ='File Uploading Failed....'
+                this.closeResetButton=true;
               }
             }
           }

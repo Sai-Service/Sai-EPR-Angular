@@ -390,9 +390,7 @@ this.isVisible1=true;
             var desc = data[0].description;
             this.ItemIdList =data;  
             this.F9SearchItemDesc( desc);
-     
- 
-          }
+               }
         );
     
     }else{
