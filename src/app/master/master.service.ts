@@ -315,8 +315,11 @@ SubAccountList(): Observable<any> {
 }
 /////////////IOT Transfer/////////////////////
 
-iotOrderTypeList(ouId): Observable<any> {
+iotOrderTypeList1(ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder/${ouId}`);
+}
+iotOrderTypeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder1`);
 }
 getShiptoLoc(locId): Observable<any> {
   return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoInterState/${locId}`);

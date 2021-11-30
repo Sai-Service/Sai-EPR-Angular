@@ -634,6 +634,7 @@ deleteReserveLinewise(i)
         this.shipmentNumber =res.obj[0].shipmentNumber;
         this.transferLoc=res.obj[0].transReference;
         this.stockTranferForm.patchValue({transDate:res.obj[0].transDate})
+        this.status=res.obj[0].status;
         // this.search(this.shipmentNumber);
         //  this.stockTranferForm.patchValue({
         //    'transferLoc':res.obj[0].transReference,

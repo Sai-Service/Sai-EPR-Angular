@@ -212,7 +212,7 @@ taxCategoryId:number;
   ngOnInit(): void {
     this.issuedBy=(sessionStorage.getItem('ticketNo'));
     this.locId = Number(sessionStorage.getItem('locId'));
-    this.deptId = Number(sessionStorage.getItem('dept'));
+    this.deptId = Number(sessionStorage.getItem('deptId'));
     this.locationId=Number(sessionStorage.getItem('locId'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.deptName=(sessionStorage.getItem('deptName'));
@@ -222,7 +222,7 @@ taxCategoryId:number;
     this.emplId = Number(sessionStorage.getItem('emplId'));
 
 
-     this.service.iotOrderTypeList(this.ouId)
+     this.service.iotOrderTypeList()
     .subscribe(
       data1 => {
         this.createOrderTypeList = data1;
@@ -323,7 +323,7 @@ taxCategoryId:number;
   onOptiongetItem(event){
     alert(event);
     if(this.subInventoryId!=undefined){
-    this.service.ItemIdListDept(this.deptName,this.locId,this.subInventoryId).subscribe(
+    this.service.ItemIdListDept(this.deptId,this.locId,this.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;
         console.log(this.ItemIdList);
