@@ -28,6 +28,7 @@ export class BankReconcillationComponent implements OnInit {
         public BankList            : Array<string> = [];
         lstStatementList :any;
         lstStatementLines:any
+        lstAvlBnkLines:any;
         lstcomments:any;
         loginName:string;
         divisionId:number;
@@ -67,6 +68,14 @@ export class BankReconcillationComponent implements OnInit {
 
         stDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
         glDate=this.pipe.transform(Date.now(), 'y-MM-dd');  
+
+        transNo1:string;
+        transNo2:string;
+        date1=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
+        date2=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
+        amount1:number;
+        amount2:number;
+
 
 
 
@@ -114,6 +123,13 @@ export class BankReconcillationComponent implements OnInit {
             unreconcnt:[],
             avlBalance:[],
             valueDtdBalance:[],
+
+            transNo1:[],
+            transNo2:[],
+            date1:[],
+            date2:[],
+            amount1:[],
+            amount2:[],
 
 
             ceLineList: this.fb.array([this.invLineDetails()]),
@@ -256,5 +272,37 @@ export class BankReconcillationComponent implements OnInit {
 
        reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
+
+       avlTrans(){}
+
+       FindAvl(){
+
+        var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
+        var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
+        var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
+
+        
+
+        this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2)
+          .subscribe(
+            data => {
+              this.lstAvlBnkLines = data;
+              if(this.lstAvlBnkLines.length==0) {
+                alert (bnkAcNo +" - " + "No Record Found.");return;
+              }
+              console.log(this.lstAvlBnkLines);
+        });
+
+       }
+
+       getTrans(index){
+         var patch = this.bankReconcillationForm.get('ceLineList') as FormArray;
+         var LineArr = this.bankReconcillationForm.get('ceLineList').value;
+         var tranNum = LineArr[index].bankTrxNumber;
+         var tranAmt = LineArr[index].amount;
+         alert ("Line selected :"+index +","+tranNum);
+         this.transNo1=tranNum;this.transNo2=tranNum
+         this.amount1=tranAmt;this.amount2=tranAmt
+      }
 
 }
