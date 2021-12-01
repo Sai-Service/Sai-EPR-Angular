@@ -804,6 +804,7 @@ export class SupplierMasterComponent implements OnInit {
     this.lstcomments2 = this.lstcomments.supplierSiteMasterList;
     console.log(this.lstcomments2);
     let select = this.lstcomments2.find(d => d.suppSiteId === suppSiteId);
+    let ouName=this.ouIdList.find(d=>d.ouId===select.ouId);
     // let select = this.lstcomments.find(d => d.suppSiteId === suppSiteId);
     if (select) {
       this.suppSiteId = select.suppSiteId
@@ -881,6 +882,7 @@ export class SupplierMasterComponent implements OnInit {
 
   onOptionTdsSelect(event:any){
 alert(event);
+
 if(event==='Yes')
 {
   this.displayTdsTyp=false;
@@ -890,6 +892,9 @@ if(event==='Yes')
     }
       );
 
+}
+else{
+  this.displayTdsTyp=true;
 }
   }
 
@@ -1034,7 +1039,7 @@ if(event==='Yes')
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    if(this.ouId!=undefined && event!=undefined ){
+    if(this.souId!=undefined && event!=undefined ){
          this.service.taxCategoryList1(this.souId,event)
         .subscribe(
           data => {
