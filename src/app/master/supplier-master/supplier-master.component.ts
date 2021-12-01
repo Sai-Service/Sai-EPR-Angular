@@ -93,6 +93,7 @@ interface IsupplierMaster {
 export class SupplierMasterComponent implements OnInit {
 
   supplierMasterForm: FormGroup;
+  isDisabled=false;
   suppId: number;
   suppNo: number;
   suppno:number;
@@ -784,14 +785,16 @@ export class SupplierMasterComponent implements OnInit {
     const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
     this.service.SupliMasterSubmitForSite(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        this.isDisabled=true;
+        alert(res.message);
         this.displayadditional=false;
         var acctNo=this.supplierMasterForm.get('suppNo').value;
         this.searchBySuppCode(acctNo);
         // this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert(res.message);
+          this.isDisabled=false;
           // this.supplierMasterForm.reset();s
         }
       }

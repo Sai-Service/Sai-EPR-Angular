@@ -390,8 +390,8 @@ export class CounterSaleComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private location1: Location, private router1: ActivatedRoute, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService,) {
     this.CounterSaleOrderBookingForm = fb.group({
-
       emplId: [''],
+      taxCategoryName:[''],
       disPer: [''],
       refCustNo: [''],
       transactionTypeId: [''],
@@ -752,7 +752,6 @@ export class CounterSaleComponent implements OnInit {
 
   OrderFind(orderNumber) {
     this.op = 'Search';
-    // alert(this.op);
     this.displayCSOrderAndLineDt=false;
     this.emplId = Number(sessionStorage.getItem('emplId'))
     this.orderlineDetailsArray().clear();
@@ -760,7 +759,6 @@ export class CounterSaleComponent implements OnInit {
     this.displaycustAccountNo = false;
     this.displaycreateOrderType = false;
     this.displayCustomerSite = false;
-    // alert(this.displayCustomerSite);
     this.orderManagementService.counterSaleOrderSearch(orderNumber)
       .subscribe(
         data => {
@@ -1322,6 +1320,7 @@ export class CounterSaleComponent implements OnInit {
         + this.selCustomer.state);
       this.birthDate = this.selCustomer.birthDate;
       this.weddingDate = this.selCustomer.weddingDate;
+      this.taxCategoryName=this.selCustomer.taxCategoryName;
       if (selSite.disPer != null) {
         // alert(selSite.disPer)
         this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' })
@@ -1580,29 +1579,6 @@ export class CounterSaleComponent implements OnInit {
     var itemId1 = arrayControl[index].itemId;
     // alert(itemId1)
     if (itemId1 != null) {
-      //   this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
-      //   var len = this.orderlineDetailsArray().length;
-      //   var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray
-      //   (patch.controls[len - 1]).patchValue(
-      //     {
-      //       lineNumber: len,
-      //       flowStatusCode: 'BOOKED',
-      //       disPer: disPer,
-      //       invType: 'SS_SPARES',
-      //     }
-      //   );
-      //   if (disPer === null) {
-      //     (patch.controls[len - 1]).patchValue(
-      //       {
-      //         disPer: 0,
-      //       }
-      //     );
-      //   }
-      //   this.displaysegmentInvType.push(true);
-      //   this.displayRemoveRow.push(false);
-      //   this.displayCounterSaleLine.push(true);
-      //   this.displayLineflowStatusCode.push(true);
-      //   this.taxCategoryList = this.allTaxCategoryList;
       this.addRow(index + 1);
 
     }
@@ -1638,18 +1614,19 @@ export class CounterSaleComponent implements OnInit {
         let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
         var itemType = (controlinv.controls[k]).get('invType').value;
         // alert(itemType)
+        // debugger;
         let select = (this.itemMap2.get(k)).find(d => d.segment === segment);
         //this.CounterSaleOrderBookingForm.patchValue({ itemId: select.itemId })
         if (segment != undefined) {
           this.itemId = select.itemId;
-          var siteName1 = this.CounterSaleOrderBookingForm.get('name').value;
-          let selSite = this.custSiteList.find(d => d.siteName === siteName1);
-          const custtaxCategoryName = selSite.taxCategoryName;
-          console.log(selSite);
+          var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
+          // let selSite = this.custSiteList.find(d => d.siteName === siteName1);
+          // const custtaxCategoryName = selSite.taxCategoryName;
+          // console.log(selSite);
           var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
           console.log(priceListId);
           if (custtaxCategoryName === 'Sales-IGST') {
-            this.orderManagementService.addonDescList1(segment, selSite.taxCategoryName, priceListId)
+            this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
               .subscribe(
                 data => {
                   if (data.code === 200) {
@@ -1726,7 +1703,7 @@ export class CounterSaleComponent implements OnInit {
               ;
           }
           else {
-            this.orderManagementService.addonDescList1(segment, selSite.taxCategoryName, priceListId)
+            this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
               .subscribe(
                 data => {
                   if (data.code === 200) {
@@ -1944,12 +1921,17 @@ export class CounterSaleComponent implements OnInit {
 
 
   pickTicketInvoiceFunction() {
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='Invoice Genration in progress....Do not refresh the Page';
     const formValue: ISalesBookingForm = this.transData(this.CounterSaleOrderBookingForm.value);
     formValue.ouId = Number(sessionStorage.getItem('ouId'));
     formValue.emplId = Number(sessionStorage.getItem('emplId'));
     formValue.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.orderManagementService.pickTicketInvoiceFun(formValue).subscribe((res: any) => {
       if (res.code === 200) {
+        this.dataDisplay =''
+        this.closeResetButton=true;
         this.InvoiceNumber = res.obj;
         console.log(this.orderNumber);
         alert(res.message);
@@ -1962,6 +1944,8 @@ export class CounterSaleComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.dataDisplay =''
+          this.closeResetButton=true;
           // this.SalesOrderBookingForm.reset();
         }
       }
@@ -2063,9 +2047,8 @@ export class CounterSaleComponent implements OnInit {
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.taxCategoryList = this.allTaxCategoryList;
-
-
-
+    this.itemSeg='';
+    this.setFocus('itemSeg'+i);
   }
 
   updateTotAmtPerline(lineIndex) {

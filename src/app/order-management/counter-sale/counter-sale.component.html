@@ -160,12 +160,17 @@
                         </div>
                         <input hidden disabled type="number" class="form-control" formControlName="customerSiteId"
                             [(ngModel)]='customerSiteId' value={{customerSiteId}} style="width: 160px;">
+                            <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
+                            [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
+                            
                     </td>
                 </ng-template>
                 <ng-template #elseCustomerSite>
                     <td>
-                        <input disabled type="text" class="form-control" formControlName="name" [(ngModel)]='name'
+                        <input disabled type="text" class="form-control" formControlName="name" 
                             value={{name}} style="width: 160px;">
+                            <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
+                            [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
                     </td>
                 </ng-template>
                 <!-- </td> -->
@@ -842,16 +847,10 @@
                         <li class="nav-item"></li>
                     </ul>
 
-                    <!-- <ul class="nav nav-tabs">
-                        <li class="nav-link active"><a id="lineTab" data-toggle="tab" href="#panel1002">Lines</a></li>
-                        <li><a id="taxTab" data-toggle="tab" href="#panel1006">Tax-Details</a></li>
-                    </ul> -->
-                    <!-- <div class="grid_scroll"> -->
                     <div class="tab-content rounded-bottom">
                         <div class="tab-pane fade in show active" id="panel1002">
-                            <div class="grid_scroll">
-                                <table class="auto-style4" class="GridFont"
-                                    style="border-color:#959595;width:100%;border-collapse:collapse;">
+                            <!-- <div class="grid_scroll"> -->
+                                <table style="width: 100%; border: solid 1px Gray" class="auto-style4" cellspacing="0" cellpadding="4" rules="all" class="center">
                                     <thead>
                                         <tr class="GridHeader">
                                             <th scope="col" >Line No</th>
@@ -910,7 +909,7 @@
                                                         <td>
 
                                                             <input type="text" style="height: 20px;width: 100px;" class="form-control"
-                                                                formControlName="itemSeg" [(ngModel)]='itemSeg' name="itemSeg"
+                                                                formControlName="itemSeg" [(ngModel)]='itemSeg' name="itemSeg{{i}}"
                                                                 (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
  
                                                         </td>
@@ -1175,7 +1174,7 @@
                                         </ng-container>
                                     </tbody>
                                 </table>
-                            </div>
+                            <!-- </div> -->
                         </div>
                         <div class="tab-pane fade" id="panel1006">
                             <!-- role="tabpanel" -->
