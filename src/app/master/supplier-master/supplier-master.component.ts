@@ -955,17 +955,18 @@ else{
         }
       );
   }
-  onOuIdSelected(ouId: any) {
-    console.log(ouId);
+  onOuIdSelected(souId: any) {
+    console.log(souId);
     // if(ouId!=undefined){
       var siteState=this.supplierMasterForm.get('sstate').value;
       // alert(siteState+'state');
-      if(ouId!=undefined && siteState!=undefined){
-      this.service.taxCategorySiteList1(ouId,siteState)
+      if(souId!=undefined && siteState!=undefined){
+        // alert(' if');
+      this.service.taxCategorySiteList1(souId,siteState)
   .subscribe(
     data => {
       // this.taxCategoryNameList = data;
-      // this.staxCatName=data.taxCategoryName;
+      this.staxCatName=data.taxCategoryName;
       this.supplierMasterForm.patchValue({staxCatName:data.taxCategoryName});
       // console.log(this.taxCategoryNameList);
 
