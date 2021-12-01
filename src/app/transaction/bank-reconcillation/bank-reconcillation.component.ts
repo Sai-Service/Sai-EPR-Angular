@@ -77,6 +77,7 @@ export class BankReconcillationComponent implements OnInit {
         amount2:number;
         showReconButton3=false;
         showValidateButton=false;
+        fndButton3=true;
 
 
 
@@ -323,6 +324,7 @@ export class BankReconcillationComponent implements OnInit {
               }
               this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
               this.showValidateButton=true;
+              this.fndButton3=false;
         });
 
        }
@@ -333,6 +335,7 @@ export class BankReconcillationComponent implements OnInit {
       }
 
        getTrans(index){
+         this.fndButton3=true;
          this.showReconButton3=false;
          this.showValidateButton=false
          this.avlLineArray().clear();
@@ -361,15 +364,12 @@ export class BankReconcillationComponent implements OnInit {
           if (this.avlLineArray().controls[i].get('selectFlag').value != true) {
             this.avlLineArray().removeAt(i);
             lrm=lrm+1;
-        
-          } }
+          } 
+        }
 
-          if (lrm===len1) { } 
-          else {
-             this.showReconButton3 = true; 
-             this.showValidateButton=false;
-        
-            }
+          if (lrm===len1) {  
+            this.showReconButton3 = false; this.showValidateButton=false;this.fndButton3=true; } 
+          else { this.showReconButton3 = true; this.showValidateButton=false; }
 
             var avlLineArr1 = this.bankReconcillationForm.get('avlList').value;
             var len2 = avlLineArr1.length;
@@ -378,12 +378,11 @@ export class BankReconcillationComponent implements OnInit {
             this.avlLineArray().controls[i].get('selectFlag').disable();     
           }
 
-          this.showReconButton3=true;
+          // this.showReconButton3=true;
+          // this.fndButton3=false;
 
       }
 
-
-     
 
       selectAvlFlag(evnt,index){
         alert("Selected ...avl..."+evnt +" , "+index);

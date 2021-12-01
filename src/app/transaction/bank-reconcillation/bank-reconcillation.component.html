@@ -48,6 +48,7 @@
                                 <input type="number" class="form-control" formControlName="docNumber" [(ngModel)]='docNumber'
                                     value={{docNumber}} >
                             </td>
+
                             <td> <button type="button" class="btn btn-info" (click)="bnkStatementFind()" >Find</button> </td> 
                            
                            
@@ -396,12 +397,12 @@
                      <td><input   type="number" class="form-control" formControlName="amount1"  [(ngModel)]="amount1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
                      <td><input   type="number" class="form-control" formControlName="amount2"  [(ngModel)]="amount2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
 
-                     <div *ngIf="showValidateButton; then FYes; else FNo"></div>
-                     <ng-template #FYes>
-                         <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
+                     <div *ngIf="fndButton3; then FndYes; else FndNo"></div>
+                     <ng-template #FndYes>
+                         <button  style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
                      </ng-template>
-                     <ng-template #FNo>
-                          <button  style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
+                     <ng-template #FndNo>
+                          <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
                     </ng-template>
 
                     </tr>   
