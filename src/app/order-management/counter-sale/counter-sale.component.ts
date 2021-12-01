@@ -312,6 +312,7 @@ export class CounterSaleComponent implements OnInit {
   displaycreateCustomer = true;
   displayCounterSaleLine: Array<boolean> = [];
   displaywalkingCustomer = true;
+  PaymentViewReceipt=true;
 
   selCustomer: any;
   boxQty: number;
@@ -907,18 +908,18 @@ export class CounterSaleComponent implements OnInit {
               this.displayAfterGatePass = true;
               this.isVisible = true;
             }
-            // if (this.allDatastore.flowStatusCode === 'BOOKED' && this.allDatastore.paymentType === 'IMMEDIATE') {
-            //   this.PaymentButton = false;
-            // }
             if (data.obj.transactionTypeName === 'Accessories Sale - Cash' || data.obj.transactionTypeName === 'Spares Sale - Cash') {
-              this.paymentButton.nativeElement.hidden = true;
+              // this.paymentButton.nativeElement.hidden = true;
+            //  alert(this.PaymentViewReceipt)
+              this.PaymentViewReceipt=false;
             }
             else if (data.obj.transactionTypeName === 'Accessories Sale - Credit' || data.obj.transactionTypeName === 'Spares Sale - Credit') {
+            //  alert('hi')
               this.PaymentButton = false;
+              this.isDisabled=true;
+              // alert(this.PaymentViewReceipt);
+              this.PaymentViewReceipt=true;
             }
-
-
-
           }
           else {
             if (data.code) {
@@ -1607,7 +1608,7 @@ export class CounterSaleComponent implements OnInit {
     }
     else {
       this.displayRemoveRow.push(true);
-      alert(this.displayRemoveRow)
+      // alert(this.displayRemoveRow)
     }
     this.updateTotAmtPerline(index);
   }
@@ -2004,7 +2005,7 @@ export class CounterSaleComponent implements OnInit {
     this.orderManagementService.SaveCounterSaleOrder(JSON.stringify(salesObj)).subscribe((res: any) => {
       if (res.code === 200) {
         this.orderNumber = res.obj;
-        alert(this.isDisabled)
+        // alert(this.isDisabled)
         this.isDisabled=true;
         this.dataDisplay =''
         this.closeResetButton=true;
@@ -2017,6 +2018,9 @@ export class CounterSaleComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert(res.message);
+          this.closeResetButton=true;
+          this.dataDisplay =''
+          this.isDisabled=false;
           // this.SpinnerService.hide();
           // this.SalesOrderBookingForm.reset();
         }
