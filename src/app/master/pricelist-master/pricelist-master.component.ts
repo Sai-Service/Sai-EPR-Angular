@@ -146,6 +146,7 @@ export class PricelistMasterComponent implements OnInit {
   plsearch=false;
   displayItemDetails=true;
   addNew=true;
+  itemFoundInPLmaster=false;
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
@@ -797,46 +798,92 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   };
 
 
-  onOptioninvItemIdSelectedNew(segment,index){
-    // alert(segment)
-    if(segment==null || segment==undefined  || segment.trim() == '') {return; }
+  onOptioninvItemIdSelectedNew(mSegment,index){  
 
-    this.lineDetailsArray().controls[index].get('batchCode').enable();
-    this.lineDetailsArray().controls[index].get('priceValue').enable();
-    let select1=this.priceListLineDetails1.find(d=>d.segment===segment);
+    this.CheckHeaderValidations();
+    if (this.headerValidation ==false) {
+      alert('Please Select Header Deatils !');
+      return;
+    }
+
+    this.itemFoundInPLmaster=false;
+
+    var priceLineArr = this.priceListMasterForm.get('priceListDetailList').value;
+    var mSegment = priceLineArr[index].segment;
+    mSegment=mSegment.toUpperCase();
+    var plName =this.priceListMasterForm.get("priceListName").value
+    
+
+    if(mSegment==null || mSegment==undefined  || mSegment.trim() == '') {
+       alert("Please Enter Item Code");
+        this.lineDetailsArray().controls[index].get('batchCode').disable();
+        this.lineDetailsArray().controls[index].get('priceValue').disable();
+        this.lineDetailsArray().controls[index].get('itemDescription').reset();
+        this.lineDetailsArray().controls[index].get('itemCategory').reset();
+        this.lineDetailsArray().controls[index].get('uom').reset();
+      return; 
+    }
+
    
-    if( select1 != undefined){ 
-      var bcode =select1.batchCode
-       alert (segment + " - Item Already exists in the Price List Master  with Batch Code : "+bcode) ;
-       this.lineDetailsArray().controls[index].get('batchCode').disable();
-       this.lineDetailsArray().controls[index].get('priceValue').disable();
-       this.lineDetailsArray().controls[index].get('itemDescription').reset();
-       this.lineDetailsArray().controls[index].get('itemCategory').reset();
-       this.lineDetailsArray().controls[index].get('uom').reset();
-       return; 
-      } 
-     
-
+    var segId ; var bCode; var x;
     var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-    this.service.searchByItemDetails(segment)
+    // this.service.searchByItemDetails(mSegment)
+    this.service.getItemDetailsByCode(mSegment)
       .subscribe(
         data => {
-          // this.invItemList=data;
-            this.displayItemDetails=true;
-            (patch.controls[index]).patchValue(
+           if (data !=null){
+             segId =data.itemId;
+             (patch.controls[index]).patchValue(
               {
-                uom: data[0].uom,
-                itemDescription: data[0].description,
-                itemCategory: data[0].itemCategory,
-                itemId: data[0].itemId,
-                itemName:data[0].segment,
+                uom: data.uom,
+                itemDescription: data.description,
+                itemCategory: data.categoryId.description,
+                itemId: data.itemId,
+                itemName:data.segment,
               }
             );
-          
-       
+
+             
+             this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
+              data1 => {
+                console.log(data1);
+                if(data1.length>0){
+                  this.itemFoundInPLmaster =true;
+
+                  alert (mSegment +"(" +segId + ") - Item Already exists in the Price List Master.\nBatch Code : "+data1[0].batchCode + " , "+this.itemFoundInPLmaster) ;
+                   x=1;
+                   this.lineDetailsArray().controls[index].get('batchCode').disable();
+                   this.lineDetailsArray().controls[index].get('priceValue').disable();
+
+                  return;
+              }  else 
+              {
+                this.lineDetailsArray().controls[index].get('batchCode').enable();
+                this.lineDetailsArray().controls[index].get('priceValue').enable();
+              }
+              });
+
+
+        } else {
+            alert (mSegment + " - Item Not Found in Master"); 
+            this.lineDetailsArray().controls[index].get('batchCode').disable();
+            this.lineDetailsArray().controls[index].get('priceValue').disable();
+            this.lineDetailsArray().controls[index].get('itemDescription').reset();
+            this.lineDetailsArray().controls[index].get('itemCategory').reset();
+            this.lineDetailsArray().controls[index].get('uom').reset();
+
+           return;}
         }
       );
+
+     
+       
   }
+
+ 
+
+
+  
 
   onOptioninvItemIdSelected(itemId, index) {
     // alert(itemId)
