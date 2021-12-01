@@ -1506,11 +1506,16 @@
                         <td>
                             <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
                         </td>
+                        <div *ngIf="PaymentViewReceipt; then thenBlockViewReceipt; else elseBlockViewReceipt"></div>
+                        <ng-template #thenBlockViewReceipt>
+                        </ng-template>
+                        <ng-template #elseBlockViewReceipt>
                         <td>
-                            <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
+                            <button type="button" class="btn btn-primary" (click)="viewReceipt()"  style="width: 6rem;">
                                 View&nbsp;Receipt
                             </button>
                         </td>
+                    </ng-template>
                         <td>
                             <div [style.display]="isVisible ? 'block' : 'none'">
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -1596,11 +1601,16 @@
                             View&nbsp;Invoice
                         </button>
                     </td>
+                    <div *ngIf="PaymentViewReceipt; then thenBlockViewReceipt; else elseBlockViewReceipt"></div>
+                        <ng-template #thenBlockViewReceipt>
+                        </ng-template>
+                        <ng-template #elseBlockViewReceipt>
                     <td>
                         <button type="button" class="btn btn-primary" (click)="viewReceipt()" style="width: 6rem;">
                             View&nbsp;Receipt
                         </button>
                     </td>
+                        </ng-template>
                     <td>
                         <button type="button" class="btn btn-primary" (click)="gatePassViewFn()" style="width: 8rem;">
                             View&nbsp;Gate&nbsp;Pass

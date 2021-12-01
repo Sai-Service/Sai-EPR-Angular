@@ -41,7 +41,7 @@ declare var $: any;
 
   public ItemIdList:any[];
   lstcomments: any;
-  lstcomments1: any;
+  lstcomments1: any =[];
   ticketNo:string;
   today= new Date();
   todaysDataTime = '';
@@ -140,11 +140,11 @@ declare var $: any;
     this.locId=Number(sessionStorage.getItem('locId'));
     // $('[data-submenu]').submenupicker();
 // alert('In admin');
-    this.service.ItemIdDivisionList(this.divisionId).subscribe(
-          data =>{ this.ItemIdList = data;
-            console.log(this.ItemIdList);
+    // this.service.ItemIdDivisionList(this.divisionId).subscribe(
+    //       data =>{ this.ItemIdList = data;
+    //         console.log(this.ItemIdList);
 
-      });
+    //   });
 
     $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
       if (!$(this).next().hasClass('show')) {
@@ -294,8 +294,7 @@ this.isVisible1=true;
 
    //var itemDesc=this.adminForm1.get('searchByItemDesc').value
     itemDesc=itemDesc.toUpperCase();
-
-    // alert("Segment :" +segment1);
+//alert("Segment :" +itemDesc);
 
     if(itemDesc ==undefined || itemDesc==null) {
       alert ("Enter Item Description ....") ;return;
@@ -336,7 +335,7 @@ this.isVisible1=true;
     this.lstcomments1=null;
     this.searchByItemDesc=null;
 
-      if(evnt=='ITEM NUMBER') {this.searchByItem=true;this.searchByDesc=false;}
+      if(evnt=='ITEM NUMBER') {this.searchByItem=false;this.searchByDesc=true;}
       if(evnt=='ITEM DESCRIPTION') {this.searchByDesc=true; this.searchByItem=false;}
     }
 
@@ -346,22 +345,22 @@ this.isVisible1=true;
       // alert ("Item Number :" +itemNumber);
      
 
-      let select1=this.ItemIdList.find(d=>d.SEGMENT===itemNumber);
-      // this.searchBy='ITEM DESCRIPTION';
+    //   let select1=this.ItemIdList.find(d=>d.segment===itemNumber);
+    //   // this.searchBy='ITEM DESCRIPTION';
       this.searchByItem=true;
       this.searchByDesc=true;
-      // this.searchBy='ITEM NUMBER';
-      // this.searchItemCode=itemNumber;
-      this.searchItemName=select1.DESCRIPTION;
-      this.adminForm1.patchValue({ searchItemCode: itemNumber,});
+    //   // this.searchBy='ITEM NUMBER';
+    //   // this.searchItemCode=itemNumber;
+    //  // this.searchItemName=select1.DESCRIPTION;
+    //   this.adminForm1.patchValue({ searchItemCode: itemNumber,});
 
-      if (select1==undefined) {
-        alert ("Please select valid Item Code ....") ;return;
-       }
+    //   if (select1==undefined) {
+    //     alert ("Please select valid Item Code ....") ;return;
+    //    }
 
 
        
-      this.service.searchByItemf9(select1.itemId,this.locId, this.ouId,this.divisionId).subscribe(
+      this.service.searchByItemf9(itemNumber,this.locId, this.ouId,this.divisionId).subscribe(
         data =>{
           this.lstcomments= data;
           console.log(data);
@@ -388,8 +387,10 @@ this.isVisible1=true;
       this.service.searchByItemSegmentDiv(this.divisionId, itemDesc)
         .subscribe(
           data => {
-            this.F9SearchItemDesc(data[0].description);
-          }
+            var desc = data[0].description;
+            this.ItemIdList =data;  
+            this.F9SearchItemDesc( desc);
+               }
         );
     
     }else{

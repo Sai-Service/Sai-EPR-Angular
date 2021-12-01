@@ -1351,7 +1351,7 @@ searchByItemSegmentDiv(divId,itemSeg):Observable<any>
 
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
-    return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)
+    return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
 
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }

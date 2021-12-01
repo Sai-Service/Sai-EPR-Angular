@@ -1347,7 +1347,7 @@
                                               class="form-control" min="0" pattern = "[0-9]" (keypress)="omit_special_char($event)"
                                               [ngClass]="{ 'is-invalid': submitted && f.screditAmt.errors }"
                                               placeholder="Enter  Credit Amount" oninput="this.value = Math.abs(this.value)"
-                                              onKeyPress="if(this.value.length==3) return false;">
+                                              onKeyPress="if(this.value.length==6) return false;">
                                           <div *ngIf="submitted && f.screditAmt.errors" class="invalid-feedback">
                                               <div *ngIf="f.creditAmt.errors.required">Enter Credit Amount </div>
                                               <div *ngIf="f.creditAmt.errors.maxLength">Enter Credit Amount
