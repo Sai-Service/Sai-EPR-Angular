@@ -1222,11 +1222,19 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
           alert('Please Select Header Deatils !');
           return;
         }
+        var sType=this.priceListMasterForm.get('searchBy').value
+        var mSegment;
+        if(sType =='ITEM NUMBER') {
+          mSegment=this.priceListMasterForm.get('searchByItemCode').value
+         }
+        if(sType =='ITEM DESCRIPTION'){
+            mSegment=itemSeg;
+            this.selectItemName=mSegment;
+          }
     
       
-        var mSegment = this.priceListMasterForm.get('searchByItemCode').value;
-        mSegment=mSegment.toUpperCase();
-        // alert ("Item Entered  : "+mSegment)  ;
+         mSegment=mSegment.toUpperCase();
+    
         var plName =this.priceListMasterForm.get("priceListName").value
         if(mSegment==null || mSegment==undefined  || mSegment.trim() == '') {
           alert("Please Enter valid Item Code");
