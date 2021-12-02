@@ -97,6 +97,7 @@ export class PricelistMasterComponent implements OnInit {
   public PriceListIdList : Array<string> = [];
   priceListLineDetails : any=[];
   priceListLineDetails1 : any=[];
+  priceListLineDetails2 : any=[];
   displayLineDetails=true;
   lineItemRepeated=false;
   // startDate = this.pipe.transform(this.now, 'dd-MM-y h:mm:ss');
@@ -875,9 +876,6 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
            return;}
         }
       );
-
-     
-       
   }
 
  
@@ -1181,15 +1179,8 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     }
    
 
-    F9Search() {
-      this.selectItemName=null;
-      this.lstcomments1=null;
-      this.addNew=false;
-      var sType=this.priceListMasterForm.get('searchBy').value
-     
-      if(sType =='ITEM NUMBER') { this.F9SearchItemCode("itmCode");}
-      if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc();}
-    }
+    
+
 
     SelectPL(priceListHeaderId: number) {
       // alert ("priceListHeaderId :"+priceListHeaderId);
@@ -1214,7 +1205,74 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
        
       }
 
-  
+      F9Search() {
+        this.selectItemName=null;
+        this.lstcomments1=null;
+        this.addNew=false;
+        var sType=this.priceListMasterForm.get('searchBy').value
+       
+        if(sType =='ITEM NUMBER') { this.F9SearchItemCodeNew("itmCode");}
+        if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc();}
+      }
+
+      F9SearchItemCodeNew(itemSeg) {
+
+        this.CheckHeaderValidations();
+        if (this.headerValidation ==false) {
+          alert('Please Select Header Deatils !');
+          return;
+        }
+        var sType=this.priceListMasterForm.get('searchBy').value
+        var mSegment;
+        if(sType =='ITEM NUMBER') {
+          mSegment=this.priceListMasterForm.get('searchByItemCode').value
+         }
+        if(sType =='ITEM DESCRIPTION'){
+            mSegment=itemSeg;
+            this.selectItemName=mSegment;
+          }
+    
+      
+         mSegment=mSegment.toUpperCase();
+    
+        var plName =this.priceListMasterForm.get("priceListName").value
+        if(mSegment==null || mSegment==undefined  || mSegment.trim() == '') {
+          alert("Please Enter valid Item Code");
+          return; 
+       }
+       
+       var segId;
+       this.service.getItemDetailsByCode(mSegment)
+       .subscribe(
+         data => {
+      
+            if (data !=null)
+            {
+              segId =data.itemId;
+              this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
+                    data1 => {
+                      console.log(data1);
+                      if(data1.length>0){
+                        this.priceListLineDetails2=data1;
+                        this.itemFoundInPLmaster =true;
+                        console.log(data1);
+
+                        var len = this.lineDetailsArray().length;
+                        for (let i = 0; i < this.priceListLineDetails2.length - len; i++) {
+                          var avlLnGrp: FormGroup = this.lineDetailsGroup();
+                          this.lineDetailsArray().push(avlLnGrp);
+                        }
+                        this.priceListMasterForm.get('priceListDetailList').patchValue(this.priceListLineDetails2);
+
+                      } else { alert (mSegment+" - Item Not Found in Price List Master - "+plName)}
+                    }); 
+
+                    } else { alert (mSegment + " - Item Not Found in Master");return;}
+                    
+                      
+            });
+              }
+
   
     F9SearchItemCode(mSegment) {
       const formValue: IPriceList = this.priceListMasterForm.value;
@@ -1285,29 +1343,6 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
 
 
      
-      // this.service.getItemDetail(mItemId).subscribe(
-      //   data =>{
-      //     this.itemDetailsList= data;
-      //     console.log(data);
-          // var len = this.lineDetailsArray.length;
-
-          // for (let i = 0; i < this.itemDetailsList.length - len; i++) {
-          //   var invLnGrp: FormGroup = this.lineDetailsGroup();
-          //   this.lineDetailsArray().push(invLnGrp);
-          // }
-
-          // var patch = this.priceListMasterForm.get('priceListDetailList') as FormArray;
-          // var invLineArr = this.priceListMasterForm.get('priceListDetailList').value;
-
-          // for (let i = 0; i < this.itemDetailsList.length - len; i++) {
-          //   patch.controls[i].patchValue({ segment: this.itemDetailsList.segment })
-          //   patch.controls[i].patchValue({ itemDescription: this.itemDetailsList.description })
-           
-          // }
-
-          // this.priceListMasterForm.get('priceListDetailList').patchValue(this.itemDetailsList);
-        
-       
   
     }
   
