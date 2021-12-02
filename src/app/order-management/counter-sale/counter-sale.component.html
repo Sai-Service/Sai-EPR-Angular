@@ -1,4 +1,4 @@
-<form [formGroup]="CounterSaleOrderBookingForm" 
+<form [formGroup]="CounterSaleOrderBookingForm"
 (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)" #aForm>
     <input hidden type="number" class="form-control" formControlName="emplId" [(ngModel)]='emplId' style="width: 40px;">
     <input hidden class="form-control" formControlName="locCode" [(ngModel)]='locCode'>
@@ -160,12 +160,17 @@
                         </div>
                         <input hidden disabled type="number" class="form-control" formControlName="customerSiteId"
                             [(ngModel)]='customerSiteId' value={{customerSiteId}} style="width: 160px;">
+                            <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
+                            [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
+
                     </td>
                 </ng-template>
                 <ng-template #elseCustomerSite>
                     <td>
-                        <input disabled type="text" class="form-control" formControlName="name" [(ngModel)]='name'
+                        <input disabled type="text" class="form-control" formControlName="name"
                             value={{name}} style="width: 160px;">
+                            <input hidden disabled type="text" class="form-control" formControlName="taxCategoryName"
+                            [(ngModel)]='taxCategoryName' value={{taxCategoryName}} style="width: 160px;">
                     </td>
                 </ng-template>
                 <!-- </td> -->
@@ -842,16 +847,10 @@
                         <li class="nav-item"></li>
                     </ul>
 
-                    <!-- <ul class="nav nav-tabs">
-                        <li class="nav-link active"><a id="lineTab" data-toggle="tab" href="#panel1002">Lines</a></li>
-                        <li><a id="taxTab" data-toggle="tab" href="#panel1006">Tax-Details</a></li>
-                    </ul> -->
-                    <!-- <div class="grid_scroll"> -->
                     <div class="tab-content rounded-bottom">
                         <div class="tab-pane fade in show active" id="panel1002">
-                            <div class="grid_scroll">
-                                <table class="auto-style4" class="GridFont"
-                                    style="border-color:#959595;width:100%;border-collapse:collapse;">
+                            <!-- <div class="grid_scroll"> -->
+                                <table style="width: 100%; border: solid 1px Gray" class="auto-style4" cellspacing="0" cellpadding="4" rules="all" class="center">
                                     <thead>
                                         <tr class="GridHeader">
                                             <th scope="col" >Line No</th>
@@ -910,9 +909,9 @@
                                                         <td>
 
                                                             <input type="text" style="height: 20px;width: 100px;" class="form-control"
-                                                                formControlName="itemSeg" [(ngModel)]='itemSeg' name="itemSeg"
+                                                                formControlName="itemSeg" [(ngModel)]='itemSeg' name="itemSeg{{i}}"
                                                                 (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
- 
+
                                                         </td>
                                                         <td>
                                                             <input type="text" formControlName="segment"
@@ -926,7 +925,7 @@
                                                                     {{item.segment}}
                                                                 </option>
                                                             </datalist>
-                                                            
+
 
                                                         <input hidden type="number" formControlName="itemId">
                                                         </td>
@@ -975,13 +974,13 @@
                                             style="height: 20px;width: 70px;"  > -->
                                                         <!-- </td> -->
                                                         <!-- <td>
-                                            <input  type="number" formControlName="pricingQty" class="form-control" 
+                                            <input  type="number" formControlName="pricingQty" class="form-control"
                                                 (change)="onKey(i)"   style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
-                                       
+
                                     </td> -->
                                                         <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" (keypress)="validateNumber($event)"-->
                                                         <td>
-                                                            <input disabled type="number"
+                                                            <input  type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
                                                                 style="height: 20px;width:80px;" (change)="onKey(i)">
                                                         </td>
@@ -1086,7 +1085,7 @@
                                                     (change)="onKey(i)" style="height: 20px;width: 70px;">
                                             </td> -->
                                                         <td>
-                                                            <input disabled type="number"
+                                                            <input  type="number"
                                                                 formControlName="unitSellingPrice" class="form-control"
                                                                 style="height: 20px;width: 80px;" (change)="onKey(i)">
                                                         </td>
@@ -1175,7 +1174,7 @@
                                         </ng-container>
                                     </tbody>
                                 </table>
-                            </div>
+                            <!-- </div> -->
                         </div>
                         <div class="tab-pane fade" id="panel1006">
                             <!-- role="tabpanel" -->
@@ -1398,16 +1397,16 @@
     <table class="center">
         <tr>
             <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-            <ng-template #hList2> 
+            <ng-template #hList2>
                 <div class="d-flex justify-content-center">
                     <div class="spinner-border text-primary" role="status" >
                           <span class="sr-only" id="loading"></span>
-                   
+
                     </div>
                 </div>
           </ng-template>
           <ng-template #hList1> </ng-template>
-        
+
            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
         </tr>
     </table>
@@ -1619,14 +1618,14 @@
                 </tr>
             </table>
         </ng-template>
-      
+
     </fieldset>
 
 
     <!-- ******************** Customer Creation Modal Start *************************************-->
     <!-- Modal -->
-    <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-        <p style="color: white">Please Wait. </p>  
+    <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+        <p style="color: white">Please Wait. </p>
         </ngx-spinner> -->
 
 </form>

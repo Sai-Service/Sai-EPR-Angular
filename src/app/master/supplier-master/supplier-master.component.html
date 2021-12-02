@@ -956,7 +956,7 @@
                         <ng-template #thenBlocksitebtn>
                           <td>
                             <!-- [disabled]="!supplierMasterForm.valid" -->
-                              <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                              <button type="submit" [disabled]="isDisabled"  class="btn btn-primary" id="register" style="width: fit-content;"
                                    (click)="createSitesupplierMast()">Create EXSite</button>
                           </td>
                           <td>
