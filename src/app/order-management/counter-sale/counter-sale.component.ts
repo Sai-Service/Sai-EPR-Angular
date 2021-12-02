@@ -2019,8 +2019,8 @@ export class CounterSaleComponent implements OnInit {
     // }
     // this.displaysegmentInvType.push(true);
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
-    // alert(this.CounterSaleOrderBookingForm.get('disPer').value)
-
+    // this.itemSeg='';
+    // this.setFocus('itemSeg'+i);
     this.displayRemoveRow.push(true);
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
