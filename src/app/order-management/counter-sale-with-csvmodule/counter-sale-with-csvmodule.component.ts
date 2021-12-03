@@ -546,6 +546,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.errList[0]='';
     this.displayShowLinseTab=true;
     $("#wrapper").toggleClass("toggled");
 
@@ -2352,7 +2353,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
   }
 
 
-
+  errList : any =[];
 
   uploadFile(event: any) {
     // alert(event)
@@ -2409,13 +2410,17 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
       }
       else {
         if (res.code === 400) {
-          alert(res.message);
+          alert(res.message + "--" + res.obj.length);
+          
+         if(res.obj != undefined && res.obj.length >0){
+           this.errList = res.obj;
+         }
           this.dataDisplay ='File Uploading given error...'
           this.closeResetButton=true;
         }
       }
     })
-
+  
     setTimeout(() => {
       event.target.disabled = false;
     }, 60000);

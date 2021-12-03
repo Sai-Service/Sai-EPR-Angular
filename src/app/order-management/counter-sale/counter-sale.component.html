@@ -810,7 +810,7 @@
                         <option value="Line Level Discount">Line Level Discount</option>
                         <option value="No Discount">No Discount</option>
                     </select>  (ngModelChange)='onOptionsSelectedDiscountPer($event)'(keydown.tab)='onOptionsSelecteddisPer($event)' -->
-                        </td>
+                        </td>&nbsp;&nbsp;
                         <div *ngIf="displaydisPer; then thendisPer; else elsedisPer"> </div>
                         <ng-template #thendisPer>
                         </ng-template>
@@ -819,7 +819,28 @@
                                 <input type="number" formControlName="disPer" value={{disPer}}
                                     (keydown.tab)='onOptionsSelecteddisPer()' class="form-control"
                                     style="width: 160px;font-weight: bold;">
-                            </td>
+                            </td>&nbsp;&nbsp;
+                        </ng-template>
+                        <div *ngIf="displaytcsYN; then thentcsYN; else elsetcsYN"> </div>
+                        <ng-template #thentcsYN>
+                        </ng-template>
+                        <ng-template #elsetcsYN>
+                        <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
+                            TCS&nbsp;:&nbsp;
+                        </td>
+                        </ng-template>
+                        <td>
+                            <input type="text" disabled formControlName="tcsYN" value={{tcsYN}} class="form-control"
+                            style="width:50px;font-weight: bold;"> 
+                        </td>
+                        <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
+                        <ng-template #thentcsBuuton>
+                        </ng-template>
+                        <ng-template #elsetcsBuuton>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                            (click)="tcsCalculationAdd()">Add TCS</button>
+                        </td>
                         </ng-template>
                     </tr>
                 </table>
@@ -900,8 +921,7 @@
                                                                 (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                                                 class="form-control"
                                                                 style="height: 20px;font-size: 10px;width: 120px;">
-                                                                <option *ngFor="let cate of  categoryList"
-                                                                    [value]="cate.codeDesc">
+                                                                <option *ngFor="let cate of  categoryList"  [value]="cate.codeDesc">
                                                                     {{cate.codeDesc}}
                                                                 </option>
                                                             </select>
@@ -980,8 +1000,7 @@
                                     </td> -->
                                                         <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" (keypress)="validateNumber($event)"-->
                                                         <td>
-                                                            <input  type="number"
-                                                                formControlName="unitSellingPrice" class="form-control"
+                                                            <input  type="number"  formControlName="unitSellingPrice" class="form-control" min="0" oninput="this.value = Math.abs(this.value)"
                                                                 style="height: 20px;width:80px;" (change)="onKey(i)">
                                                         </td>
                                                         <td>
@@ -1040,6 +1059,12 @@
                                                             <a id="line{{i}}" data-toggle="tab" href="#panel1006" style="width: fit-content;"
                                                                 [value]="i+1"
                                                                 (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a>
+                                                                <!-- <a id="lineNumber" data-toggle="tab" href="#panel1006" style="width: fit-content;"
+                                                                formControlName="lineNumber"
+                                                                (click)="taxDetails('Search', i, taxCategoryId)">{{i+1}}</a> -->
+                                                                <!-- <input disabled type="number" formControlName="lineNumber"
+                                                                value="lineNumber" class="form-control"
+                                                                style="height: 20px;width: fit-content">   -->
                                                         </td>
                                                         <td>
                                                             <input disabled type="text" formControlName="invType"
@@ -1086,7 +1111,7 @@
                                             </td> -->
                                                         <td>
                                                             <input  type="number"
-                                                                formControlName="unitSellingPrice" class="form-control"
+                                                                formControlName="unitSellingPrice" class="form-control" min="0" oninput="this.value = Math.abs(this.value)"
                                                                 style="height: 20px;width: 80px;" (change)="onKey(i)">
                                                         </td>
                                                         <td>
@@ -1410,6 +1435,7 @@
            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
         </tr>
     </table>
+    
     <fieldset class="RFS">
         <div *ngIf="displaycounterSaleAllButtons; then thencounterSaleAllButtons; else elsecounterSaleAllButtons"></div>
         <ng-template #thencounterSaleAllButtons>
