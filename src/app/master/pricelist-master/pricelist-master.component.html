@@ -555,15 +555,36 @@
 
                             </ng-template>
                             <ng-template #elseBlock1>
+
                                 <div *ngIf="updateButton; then U1; else U2"></div>
                                 <ng-template #U1>
                                     <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()">Update Item</button> </td>
-                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td>
+                                    <!-- <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td> -->
                                 </ng-template>
-                                <ng-template #U2>
+                                <ng-template #U1></ng-template>
+
+                                <div *ngIf="updateHeaderButton; then H1; else H2"></div>
+                                <ng-template #H1>
+                                   <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td>
+                                </ng-template>
+                                <ng-template #U2></ng-template>
+
+                                
+                                <div *ngIf="addNew; then A1; else A2"></div>
+                                <ng-template #A1>
+                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()">Add Item</button> </td>
+                                    <!-- <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td> -->
+                                </ng-template>
+                                <ng-template #A2></ng-template>
+
+
+
+                                <!-- <ng-template #U2>
                                     <td><button disabled style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()">Update Item</button> </td>
                                     <td><button disabled style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td>
-                                </ng-template>
+                                </ng-template> -->
+
+
 
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="searchMast()">Search</button>
