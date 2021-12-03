@@ -847,7 +847,7 @@ export class CounterSaleComponent implements OnInit {
               this.displayViewGatePass = true;
               this.displaycounterSaleOrderSave = false;
               if (this.allDatastore.tcsYN==='Y'){
-                alert(this.allDatastore.tcsYN)
+                // alert(this.allDatastore.tcsYN)
                 this.displaytcsYN=false;
                 this.isDisabled=true;
                 for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
