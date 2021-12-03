@@ -111,6 +111,7 @@ export class PricelistMasterComponent implements OnInit {
   display=true;
   lstcomments: any;
   lstcomments1: any;
+  lstcomments2: any;
   public statusList: Array<string> = [];
   invItemList: any=[];
   public PriceTypeList: Array<string> = [];
@@ -164,6 +165,7 @@ export class PricelistMasterComponent implements OnInit {
   primaryPriceListId:number;
 
   searchItemId:string;
+  searchByItemNumber:string;
   searchItemName :string;
   searchBy:string='ITEM NUMBER';
   searchByItemDesc:string;
@@ -171,6 +173,7 @@ export class PricelistMasterComponent implements OnInit {
   selectItemName:string;
   searchByItem=true;
   searchByDesc=false;
+  showDescList=false;
 
   @ViewChild('fileInput') fileInput;
   message: string;
@@ -199,6 +202,7 @@ export class PricelistMasterComponent implements OnInit {
       primaryPriceListId :[],
       searchItemId:[],
       searchItemName:[],
+      searchByItemNumber:[],
         
         priceListHeaderId: [],
         priceListType:[],
@@ -287,11 +291,12 @@ export class PricelistMasterComponent implements OnInit {
 //         }
 //       );
  
-this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
-  data =>{ this.ItemIdList = data;
-    console.log(this.ItemIdList);
+// this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
+//   data =>{ this.ItemIdList = data;
+//     console.log(this.ItemIdList);
 
-});
+// });
+
 
     this.service.PriceListIdList(this.ouId,this.divisionId)
     .subscribe(
@@ -632,6 +637,9 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
           alert('RECORD UPDATED SUCCESSFULLY');
           // window.location.reload();
           this.priceListMasterForm.disable();
+          this.priceListMasterForm.get('searchByItemNumber').enable();
+          this.priceListMasterForm.get('primaryPriceListId').enable();
+
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
@@ -740,17 +748,53 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
   }
 
 
+  loadHistModal() {
+    this.primaryPriceListId=null;
+    this.searchByItemNumber=null;
+    this.searchItemName=null;
+    this.lstcomments2=null;
 
-  priceHistory(priceListId,itemId) {
-    this.service.getPriceListHistorySearch(priceListId,itemId)
-      .subscribe(
-        data => {
-          this.lstcomments1 = data;
-          console.log(this.lstcomments1);
-        }
-      );
+  }
 
-    alert("price history -wip -"+priceListId+","+itemId);
+  priceHistory(priceListId,itemSeg) {
+
+    this.lstcomments2=null;
+
+    if (this.primaryPriceListId===undefined || this.primaryPriceListId===null)
+    {
+       alert ("PRICE LIST NAME : Select Price List Name");
+        return;
+    } 
+
+    if (this.searchByItemNumber===undefined || this.searchByItemNumber===null ||  this.searchByItemNumber.trim() == '')
+    {
+   
+       alert ("ITEM NUMBER : Enter Valid Item Code");
+        return;
+    } 
+
+
+    var segId;
+    this.service.getItemDetailsByCode(itemSeg)
+    .subscribe(
+      data => {
+         if (data !=null){
+           segId =data.itemId;
+           this.searchItemName=data.description;
+          // -----------------------------------------------
+           this.service.getPriceListHistorySearch(priceListId,segId)
+           .subscribe(
+             data1 => {
+              if (data1.length>0){
+               this.lstcomments2 = data1;
+               console.log(this.lstcomments2);
+              } else {alert (itemSeg+ " - No Price Revision History Available");}
+             }
+           );
+          // -----------------------------------------------
+          
+          } else {alert (itemSeg+ "- Item Number Not Found");}
+         });
   }
 
 
@@ -1147,11 +1191,11 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       return;
     } 
   
-    if(lineValue2===undefined || lineValue2===null || lineValue2.trim()===''){
-      alert("Line-"+j+ " BATCH CODE :  should not be null value");
-      this.lineValidation=false;
-      return;
-    } 
+    // if(lineValue2===undefined || lineValue2===null || lineValue2.trim()===''){
+    //   alert("Line-"+j+ " BATCH CODE :  should not be null value");
+    //   this.lineValidation=false;
+    //   return;
+    // } 
   
     if(lineValue3===undefined || lineValue3===null  || lineValue3 <=0){
       alert("Line-"+j+ " PRICE :  should be above Zero");
@@ -1192,12 +1236,12 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
 
-      this.service.getLineDetails(priceListHeaderId)  .subscribe(
-        data => {
-          console.log(data);
-          this.priceListLineDetails1=data;
-          console.log(this.priceListLineDetails1);
-       });
+      // this.service.getLineDetails(priceListHeaderId)  .subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.priceListLineDetails1=data;
+      //     console.log(this.priceListLineDetails1);
+      //  });
        
         this.displayButton = false;
         this.display = false;
@@ -1352,14 +1396,9 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
     F9SearchItemDesc(){
     
       const formValue: IPriceList = this.priceListMasterForm.value;
-      // this.lstcomments1=null;
       var itemDesc=this.priceListMasterForm.get('searchByItemDesc').value
       itemDesc=itemDesc.toUpperCase();
-      // alert(formValue.searchByItemDesc);
-
-      // var dlen=itemDesc.length();
-      // alert(dlen);
-  
+     
       if(itemDesc ==undefined || itemDesc==null) {
         alert ("Enter Item Description ....") ;return;
        }
@@ -1367,9 +1406,13 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       this.service.searchByItemDescf9(this.divisionId,itemDesc).subscribe(
         data =>{
           this.lstcomments1= data;
+          if(this.lstcomments1.length<=0){
+            this.showDescList=false;
+            alert ("Item Description contains " + itemDesc +  " not found in Master");return;
+          } 
+          this.showDescList=true;
           console.log(data);
-  
-        })
+        });
   
     }
 
