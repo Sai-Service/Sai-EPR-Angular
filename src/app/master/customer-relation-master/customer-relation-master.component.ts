@@ -28,6 +28,7 @@ export class CustomerRelationMasterComponent implements OnInit {
     public PriceListIdList : Array<string> = [];
     // public EmployeeList : Array<string> = [];
     EmployeeList : any=[];
+    CustomerMapList :any[];
     priceListLineDetails1 : any=[];
 
     loginName:string;
@@ -42,7 +43,8 @@ export class CustomerRelationMasterComponent implements OnInit {
     orgId:number;
     divisionId : number;
     divisionName:string;
-
+    
+    employeeId:number;
     ticketNo:string;
     empTktNo:string;
     custName:string;
@@ -66,6 +68,7 @@ export class CustomerRelationMasterComponent implements OnInit {
       divisionId :[''],
       divisionName:[''],
 
+      employeeId:[],
       ticketNo:[],
       empTktNo:[],
       custName:[],
@@ -141,13 +144,34 @@ export class CustomerRelationMasterComponent implements OnInit {
     this.emplName=selectedValue.fullName;
     this.empDesig=selectedValue.designation;
     this.empStatus=selectedValue.status;
-    
+    this.employeeId=selectedValue.emplId
+    // alert ("Employee Id :"+employeeId);
 
-  }}
+    // this.service.customerEmpMapList(employeeId,0,1)
+    // .subscribe(
+    //   data => {
+    //     this.CustomerMapList = data;
+    //     console.log(this.CustomerMapList);
+    //   }
+    // );
 
-  SearchByEmpTktNo (tktNo){
-    alert("Search Employee...TktNo :"+tktNo);
+    }
   }
+
+
+  SearchByEmpTktNo (){
+    var mEmpId=this.custRelationMasterForm.get('employeeId').value;
+    alert ("Cust-emp Id :"+mEmpId)
+
+    this.service.customerEmpMapList(mEmpId,0,1)
+    .subscribe(
+      data => {
+        this.CustomerMapList = data;
+        console.log(this.CustomerMapList);
+      });
+    }
+
+  
 
 
   SearchByCust (cust){
