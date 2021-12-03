@@ -850,10 +850,12 @@ export class CounterSaleComponent implements OnInit {
                 // alert(this.allDatastore.tcsYN)
                 this.displaytcsYN=false;
                 this.isDisabled=true;
-                for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
-                  if (data.obj.oeOrderLinesAllList[i].segment === 'TCS') {
-                    this.displaytcsBuuton=false;
-                  }}
+                this.displaytcsBuuton=false;
+                // for (let i = 0; data.obj.oeOrderLinesAllList.length; i++) {
+                //   alert(data.obj.oeOrderLinesAllList[i].segment)
+                //   if (data.obj.oeOrderLinesAllList[i].segment === 'TCS') {
+                //     this.displaytcsBuuton=false;
+                //   }}
               }
               else{
                 this.displaytcsYN=true;

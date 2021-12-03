@@ -1049,8 +1049,8 @@ purchaseLocationList(temp): Observable<any> {
 
 }
 
-getsearchByPOHeder(poNo): Observable<any> {
-  return this.http.get(this.ServerUrl + `/poHdr/poNum/${poNo}`);
+getsearchByPOHeder(poNo,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/poHdr/poNum?segment1=${poNo}&locId=${locId}`);
 }
 
 
@@ -2407,8 +2407,8 @@ bulkpouploadSales(formData: FormData) {
     return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
   }
 
-  getPOByUser(emplId, startDt, endDt){
-    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
+  getPOByUser(emplId, startDt, endDt,locId){
+    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
 
 
