@@ -26,7 +26,8 @@ export class CustomerRelationMasterComponent implements OnInit {
     
 
     public PriceListIdList : Array<string> = [];
-    priceListLineDetails : any=[];
+    // public EmployeeList : Array<string> = [];
+    EmployeeList : any=[];
     priceListLineDetails1 : any=[];
 
     loginName:string;
@@ -42,6 +43,7 @@ export class CustomerRelationMasterComponent implements OnInit {
     divisionId : number;
     divisionName:string;
 
+    ticketNo:string;
     empTktNo:string;
     custName:string;
     emplName:string;
@@ -64,6 +66,7 @@ export class CustomerRelationMasterComponent implements OnInit {
       divisionId :[''],
       divisionName:[''],
 
+      ticketNo:[],
       empTktNo:[],
       custName:[],
 
@@ -116,7 +119,31 @@ export class CustomerRelationMasterComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
+
+   
+
+    this.service.employeeLst(this.locId,this.divisionId,this.deptId)
+    .subscribe(
+      data => {
+        this.EmployeeList = data;
+        console.log(this.EmployeeList);
+      }
+    );
+
   }
+
+  onSelectEmpTktNo(tktNo){
+
+    let selectedValue = this.EmployeeList.find(d => d.ticketNo === tktNo);
+    if( selectedValue != undefined){
+    console.log(selectedValue);
+
+    this.emplName=selectedValue.fullName;
+    this.empDesig=selectedValue.designation;
+    this.empStatus=selectedValue.status;
+    
+
+  }}
 
   SearchByEmpTktNo (tktNo){
     alert("Search Employee...TktNo :"+tktNo);

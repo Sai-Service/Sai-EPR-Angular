@@ -3293,6 +3293,11 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.post(url, BankReconRecord, options);
       }
 
+        ////////////////////customer relation manager master //////////////////////
+        employeeLst(locId,divId,deptId): Observable<any> {
+             return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
+          // http://localhost:8081/empMst/EmpLocDept?locId=2103&divisionId=2&deptId=5
+        }
 
 
 
