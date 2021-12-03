@@ -35,6 +35,7 @@ import { SubinventoryMasterComponent } from './subinventory-master/subinventory-
 import { PendingShipmentListComponent } from './pending-shipment-list/pending-shipment-list.component';
 import { ItemMasterLocatorComponent } from './item-master-locator/item-master-locator.component';
 import { ReceivableTranstypeMasterComponent } from './receivable-transtype-master/receivable-transtype-master.component';
+import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
 
@@ -82,6 +83,7 @@ const routes: Routes = [
   {path:'PoReceiptForm/:shipmentNumber',component:PoReceiptFormComponent},
   {path:'ItemMasterLocator',component:ItemMasterLocatorComponent},
   {path:'ReceivableTranstypeMaster',component:ReceivableTranstypeMasterComponent},
+  {path:'CustomerRelationMaster',component:CustomerRelationMasterComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

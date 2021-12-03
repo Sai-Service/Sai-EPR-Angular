@@ -48,6 +48,7 @@
                                 <input type="number" class="form-control" formControlName="docNumber" [(ngModel)]='docNumber'
                                     value={{docNumber}} >
                             </td>
+
                             <td> <button type="button" class="btn btn-info" (click)="bnkStatementFind()" >Find</button> </td> 
                            
                            
@@ -347,8 +348,6 @@
 </div>
 
 <!-- ------------------------------------------------------------------------------- -->
-
-
 <div class="modal fade" id="bankStmtAvailable" tabindex="-1" role="dialog" aria-labelledby="bankStmtAvailableLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -387,8 +386,8 @@
                  <tr> 
                   
                     <td > Date &nbsp;&nbsp;:&nbsp;</td> 
-                    <td ><input   type="date" class="form-control" formControlName="date1"  [(ngModel)]="date1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
-                    <td ><input   type="date" class="form-control" formControlName="date2"  [(ngModel)]="date2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
+                    <td ><input   type="date" class="form-control" formControlName="date1"  [(ngModel)]="date1" (change)="validateDate()"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;background-color: yellow;text-align: center;" ></td>
+                    <td ><input   type="date" class="form-control" formControlName="date2"  [(ngModel)]="date2" (change)="validateDate()"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;background-color: yellow;text-align: center;" ></td>
                 </tr>  
                 <tr>
 
@@ -397,8 +396,15 @@
                      <td > Amount &nbsp;:&nbsp;</td> 
                      <td><input   type="number" class="form-control" formControlName="amount1"  [(ngModel)]="amount1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
                      <td><input   type="number" class="form-control" formControlName="amount2"  [(ngModel)]="amount2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
-                     <button  style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
-        
+
+                     <div *ngIf="fndButton3; then FndYes; else FndNo"></div>
+                     <ng-template #FndYes>
+                         <button  style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
+                     </ng-template>
+                     <ng-template #FndNo>
+                          <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
+                    </ng-template>
+
                     </tr>   
 
                   
@@ -438,7 +444,7 @@
                     <ng-container  class="center" formArrayName="avlList">
                     <ng-container   *ngFor="let group of avlLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                             <tr>
-                                <td><input type="checkbox"  style="text-align:  center;width: 3rem;"                     formControlName="selectFlag" (change)="selectAvlFlag($event,k)"></td>
+                                <td><input type="checkbox"  style="text-align:  center;width: 3rem;"                     formControlName="selectFlag" (change)="LineSelectFlag($event,k)"></td>
                                 <td><input disabled style="width: 100px;height: 25px;text-align: center;" type="text"    formControlName="checkId" class="form-control"></td>
                                 <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="docNo" class="form-control"></td>
                                 <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="text"    formControlName="voucherNo" class="form-control"></td>
@@ -461,11 +467,20 @@
          <div class="modal-footer">
 
             
+            <div *ngIf="showValidateButton; then vYes; else vNo"></div>
+            <ng-template #vYes>
+                <button  style="width: 8em;" type="button" class="btn btn-info" (click)="ValidatebnkRecon()">Validate</button>
+              </ng-template>
+            <ng-template #vNo></ng-template>
+
             <div *ngIf="showReconButton3; then RYes; else RNo"></div>
             <ng-template #RYes>
-                <button  style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
+            <button  style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
             </ng-template>
-            <ng-template #RNo></ng-template>
+            <ng-template #RNo>
+                <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
+            </ng-template>
+
 
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>

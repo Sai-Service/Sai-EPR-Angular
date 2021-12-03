@@ -303,18 +303,22 @@
                             <ng-template #itemYes>
                               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Number&nbsp;:</td>
                 
-                                <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchByItemCode" 
+                                <!-- <td ><input class="form-control" type="text" (keyup)="getInvItemId($event)" formControlName="searchByItemCode" 
                                    id="invItemIdFirstWay"  list="dynmicUserIds2" 
                                    class="form-control"    (ngModelChange)="onOptioninvItemIdSelectedSingle($event)"
                                    style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  />
                                  
                                   <datalist id="dynmicUserIds2" >
-                                    <!-- <option *ngFor="let item of ItemIdList"  [(ngValue)]="item.itemId"> -->
-                                    <option *ngFor="let item of priceListLineDetails1"  [(ngValue)]="item.itemId">
-                                      <!-- {{item.SEGMENT}}  -->
-                                      {{item.segment}}
-                                      </datalist>
-                                  </td>
+                                     <option *ngFor="let item of priceListLineDetails1"  [(ngValue)]="item.itemId">
+                                       {{item.segment}}
+                                </datalist>
+                                </td> -->
+
+                                  <td>
+                                    <input  style="width:22rem;background-color: yellow; text-transform: uppercase;"  type="text" formControlName="searchByItemCode" class="form-control"  
+                                                      placeholder="Enter Item Code"  >
+                                                      <!-- (change)="onOptioninvItemIdSelectedNew(searchByItemCode,i)"  -->
+                                </td>
 
                                    
                                 <td style="text-align: left; width: 100%;">
@@ -364,8 +368,8 @@
                                               <thead>
                                                 <tr class="GridHeader">
                                                       <th style="width:4rem" scope="col">Srl No.</th>
-                                                      <th style="width:15rem" scope="col">Item Code</th>
                                                       <!-- <th style="width:5rem" scope="col">Item Id</th> -->
+                                                      <th style="width:15rem" scope="col">Item Code</th>
                                                       <th style="width:20rem" scope="col">Item Description</th>
                                                       <th style="width:6rem" scope="col">Item Category</th>
                                                       <th style="width:3rem" scope="col">UOM</th>
@@ -379,8 +383,8 @@
                                               <ng-template #thenLineDetails>
                                                 <tr *ngFor="let com of priceListLineDetails let i= index" class="ItemStyle" style="text-decoration:none;font-size: 14px;">
                                                     <td style="border: 1px solid black;padding-left: 5px;">{{i+1}}</td>
-                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.segment}}</td>
                                                     <!-- <td style="border: 1px solid black;padding-left: 5px;"> {{com.itemId}}</td> -->
+                                                    <td style="border: 1px solid black;padding-left: 5px;"> {{com.segment}}</td>
                                                     <td style="border: 1px solid black;padding-left: 5px;"> {{com.itemDescription}}</td>
                                                     <td style="border: 1px solid black;padding-left: 5px;"> {{com.itemCategory}}</td>
                                                     <td style="border: 1px solid black;padding-left: 5px;"> {{com.uom}}</td>
@@ -404,35 +408,37 @@
                                             <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
                                                 
                                             <input type="text" hidden formControlName="priceListLineId">
-                                            <input hidden disabled style="width:5rem;"  type="text" formControlName="itemId"    >
-                                            
-                                           
-                                            
-                                                <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                            <input type="text" hidden  formControlName="itemId" >
+                                             
+                                            <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                             
+                                      
 
                                                 <div *ngIf="addNew; then B1; else B2"></div>
                                                 <ng-template #B1>
                                                 
-                                                    <td><input type="text" formControlName="segment"
+                                                    <!-- <td><input type="text" formControlName="segment"
                                                         (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                         list="dynmicUserIds1" class="form-control"  style="width: 16rem;"
                                                         (ngModelChange)="onOptioninvItemIdSelectedNew($event,i)" />
                                                         <datalist id="dynmicUserIds1">
                                                             <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId">
-                                                                <!-- {{item.segment}} -->
-                                                                {{item.SEGMENT}}
+                                                                    {{item.SEGMENT}}
                                                             </option>
                                                         </datalist> 
-                                                    </td> 
+                                                    </td>  -->
+                                                <td>
+                                                    <input  style="width:22rem;background-color: yellow; text-transform: uppercase;"  type="text" formControlName="segment" class="form-control"  
+                                                                     (change)="onOptioninvItemIdSelectedNew(segment,i)"  placeholder="Enter Item Code"  >
+                                                </td>
+
+                                                <!-- <td><input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  > </td> -->
+ 
 
                                                 </ng-template>
                                                 <ng-template #B2>
                                                  <td><input disabled style="width:16rem;" type="text" formControlName="segment" class="form-control"  /></td> 
                                                 </ng-template>
-
-
-                                                
-                                              
                                               
                                                 <td>
                                                     <input disabled style="width:22rem;"  type="text" formControlName="itemDescription" class="form-control"   placeholder="Item Description "  >
@@ -941,7 +947,7 @@
                         <td style="width:30rem;text-align: left;">{{com.description}}</td>
                         <td style="width:8rem;text-align: center;">{{com.itemCategory}}</td>      
                         <td style="width:8rem;text-align: center;">{{com.uom}}</td> 
-                        <td><button class="btn btn-secondary" (click)="F9SearchItemCode(com.segment)">Select</button></td>   
+                        <td><button class="btn btn-secondary" (click)="F9SearchItemCodeNew(com.segment)">Select</button></td>   
                       
                        </tr>
             </table>

@@ -3283,6 +3283,17 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/ceStateHdr/161273
       }
 
+     
+
+      public bankReconPostSubmit(BankReconRecord) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + '/ceStateHdr';
+        return this.http.post(url, BankReconRecord, options);
+      }
+
+
 
 
 }

@@ -93,6 +93,7 @@ interface IsupplierMaster {
 export class SupplierMasterComponent implements OnInit {
 
   supplierMasterForm: FormGroup;
+  isDisabled=false;
   suppId: number;
   suppNo: number;
   suppno:number;
@@ -784,14 +785,16 @@ export class SupplierMasterComponent implements OnInit {
     const formValue: IsupplierMaster = this.transDataforS(this.supplierMasterForm.value);
     this.service.SupliMasterSubmitForSite(formValue).subscribe((res: any) => {
       if (res.code === 200) {
-        alert('RECORD INSERTED SUCCESSFULLY');
+        this.isDisabled=true;
+        alert(res.message);
         this.displayadditional=false;
         var acctNo=this.supplierMasterForm.get('suppNo').value;
         this.searchBySuppCode(acctNo);
         // this.supplierMasterForm.reset();
       } else {
         if (res.code === 400) {
-          alert('Code already present in the data base');
+          alert(res.message);
+          this.isDisabled=false;
           // this.supplierMasterForm.reset();s
         }
       }
@@ -804,6 +807,7 @@ export class SupplierMasterComponent implements OnInit {
     this.lstcomments2 = this.lstcomments.supplierSiteMasterList;
     console.log(this.lstcomments2);
     let select = this.lstcomments2.find(d => d.suppSiteId === suppSiteId);
+    let ouName=this.ouIdList.find(d=>d.ouId===select.ouId);
     // let select = this.lstcomments.find(d => d.suppSiteId === suppSiteId);
     if (select) {
       this.suppSiteId = select.suppSiteId
@@ -881,6 +885,7 @@ export class SupplierMasterComponent implements OnInit {
 
   onOptionTdsSelect(event:any){
 alert(event);
+
 if(event==='Yes')
 {
   this.displayTdsTyp=false;
@@ -890,6 +895,9 @@ if(event==='Yes')
     }
       );
 
+}
+else{
+  this.displayTdsTyp=true;
 }
   }
 
@@ -950,17 +958,18 @@ if(event==='Yes')
         }
       );
   }
-  onOuIdSelected(ouId: any) {
-    console.log(ouId);
+  onOuIdSelected(souId: any) {
+    console.log(souId);
     // if(ouId!=undefined){
       var siteState=this.supplierMasterForm.get('sstate').value;
       // alert(siteState+'state');
-      if(ouId!=undefined && siteState!=undefined){
-      this.service.taxCategorySiteList1(ouId,siteState)
+      if(souId!=undefined && siteState!=undefined){
+        // alert(' if');
+      this.service.taxCategorySiteList1(souId,siteState)
   .subscribe(
     data => {
       // this.taxCategoryNameList = data;
-      // this.staxCatName=data.taxCategoryName;
+      this.staxCatName=data.taxCategoryName;
       this.supplierMasterForm.patchValue({staxCatName:data.taxCategoryName});
       // console.log(this.taxCategoryNameList);
 
@@ -1034,7 +1043,7 @@ if(event==='Yes')
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    if(this.ouId!=undefined && event!=undefined ){
+    if(this.souId!=undefined && event!=undefined ){
          this.service.taxCategoryList1(this.souId,event)
         .subscribe(
           data => {
