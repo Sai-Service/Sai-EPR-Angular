@@ -287,11 +287,12 @@ export class PricelistMasterComponent implements OnInit {
 //         }
 //       );
  
-this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
-  data =>{ this.ItemIdList = data;
-    console.log(this.ItemIdList);
+// this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
+//   data =>{ this.ItemIdList = data;
+//     console.log(this.ItemIdList);
 
-});
+// });
+
 
     this.service.PriceListIdList(this.ouId,this.divisionId)
     .subscribe(
@@ -1192,12 +1193,12 @@ this.service.ItemIdDivisionList(sessionStorage.getItem('divisionId')).subscribe(
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
 
-      this.service.getLineDetails(priceListHeaderId)  .subscribe(
-        data => {
-          console.log(data);
-          this.priceListLineDetails1=data;
-          console.log(this.priceListLineDetails1);
-       });
+      // this.service.getLineDetails(priceListHeaderId)  .subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.priceListLineDetails1=data;
+      //     console.log(this.priceListLineDetails1);
+      //  });
        
         this.displayButton = false;
         this.display = false;
