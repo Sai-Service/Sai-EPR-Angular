@@ -1591,6 +1591,7 @@ export class CounterSaleComponent implements OnInit {
     var invLineNo1 = index + 1;
     console.log(invLineNo1);
     var sum = 0;
+    var lineTotAmt =0;
     // alert(itemId+'---'+ taxCategoryId+'----'+disAmt1+'----'+baseAmt);
     this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
       .subscribe(
@@ -1604,6 +1605,8 @@ export class CounterSaleComponent implements OnInit {
               sum = sum + this.taxCalforItem[i].totTaxAmt
             }
           }
+          lineTotAmt =Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
+          
           (patch.controls[index]).patchValue({
             // baseAmt: baseAmt,
             baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
@@ -1634,20 +1637,20 @@ export class CounterSaleComponent implements OnInit {
           }
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
+          this.updateTotAmtPerline(index, lineTotAmt);
         });
 
     var itemId1 = arrayControl[index].itemId;
     // alert(itemId1)
     if (itemId1 != null) {
       this.addRow(index + 1);
+     
     }
     else {
       this.displayRemoveRow.push(true);
       // alert(this.displayRemoveRow)
     }
-    // this.updateTotAmtPerline(index);
-    // this.updateTotAmtPerline(index);
-    this.updateTotAmtPerline(index,)
+   
   }
 
 
@@ -2118,18 +2121,21 @@ export class CounterSaleComponent implements OnInit {
     // this.updateTotAmtPerline(i)
   }
 
-  updateTotAmtPerline(lineIndex) {
-    var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    this.tmpTotAmt= this.tmpTotAmt+formVal[lineIndex-1].totAmt;
-  }
+  updateTotAmtPerline(lineIndex, totAmt){
+      this.tmpTotAmt = Math.round(((this.tmpTotAmt + totAmt) + Number.EPSILON) * 100) / 100;
+      
+      this.CounterSaleOrderBookingForm.patchValue({'totAmt':this.tmpTotAmt});
+   }
 
 
   RemoveRow(OrderLineIndex) {
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     this.tmpTotAmt = this.tmpTotAmt - formVal[OrderLineIndex].totAmt;
+    this.tmpTotAmt = Math.round(((this.tmpTotAmt) + Number.EPSILON) * 100) / 100;
+
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
-   
+    this.CounterSaleOrderBookingForm.patchValue({'totAmt':this.tmpTotAmt});
   }
 
 

@@ -339,11 +339,11 @@
 
                             </ng-template>
 
-                            <td>
+                            <!-- <td>
                                 <button type="button"  class="btn btn-primary" 
                                 data-toggle="modal" data-target="#showpListData" style="width: 5rem;color: black;"  (click)="LoadPList()">
                                 Show&nbsp;List</button>
-                            </td>
+                            </td> -->
                 
                                 
                                
@@ -556,8 +556,8 @@
                             <ng-template #elseBlock1>
                                 <div *ngIf="updateButton; then U1; else U2"></div>
                                 <ng-template #U1>
-                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()"[disabled]="!priceListMasterForm">Update Item</button> </td>
-                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()"[disabled]="!priceListMasterForm">Update Header</button> </td>
+                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()">Update Item</button> </td>
+                                    <td><button style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastHeader()">Update Header</button> </td>
                                 </ng-template>
                                 <ng-template #U2>
                                     <td><button disabled style="width: 8rem;color: black;" type="button" class="btn btn-info" (click)="updateMastLine()">Update Item</button> </td>
@@ -633,7 +633,7 @@
 
                             <td>
                                 <button type="button"  class="btn btn-primary" 
-                                data-toggle="modal" data-target="#exampleModal2" style="width: 8rem;color: black;">
+                                data-toggle="modal" data-target="#exampleModal2" style="width: 8rem;color: black;" (click)="loadHistModal()" >
                                 Price&nbsp;History</button>
                             </td>
 
@@ -643,7 +643,7 @@
                                     
                                     <div class="modal-header">
 
-                                      <h5 class="modal-title" id="exampleModal2Label" style="text-align: center;" >PRICE&nbsp;REVISION&nbsp;HISTORY</h5>
+                                      <h5 class="modal-title" id="exampleModal2Label" style="text-align: center;" >Price&nbsp;Revision&nbsp;List</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
@@ -658,7 +658,7 @@
 
                                             <td>  
                                                 <select formControlName="primaryPriceListId" id="primaryPriceListId" [(ngModel)]="primaryPriceListId" class="form-control">
-                                                    <option>--Select--</option>
+                                                    <option disabled>--Select--</option>
                                                     <option *ngFor="let sc of  PriceListIdList" [ngValue]="sc.priceListHeaderId" >
                                                         <!-- {{sc.priceListHeaderId}}- -->
                                                         {{sc.priceListName}}
@@ -666,10 +666,10 @@
                                                 </select>
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">
-                                                Item &nbsp;Number&nbsp;:&nbsp;
+                                                Item&nbsp;Number:&nbsp;
                                             </td>
 
-                                            <td>
+                                            <!-- <td>
                                                 <input type="text" formControlName="searchItemId"
                                                 (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
                                                 list="dynmicUserIds1" class="form-control"
@@ -681,14 +681,27 @@
                                                     </option>
                                                 </datalist>
                                             </td> 
+                                             -->
+
+                                             <td>
+                                                <input  style="width:200px;background-color: yellow; text-transform: uppercase;"  type="text" formControlName="searchByItemNumber" id="searchByItemNumber"  [(ngModel)]="searchByItemNumber"  class="form-control"  
+                                                                  placeholder="Enter Item Code"  >
+                                                                  <!-- (change)="onOptioninvItemIdSelectedNew(searchByItemCode,i)"  -->
+                                            </td>
+
+                                            <td> 
+                                                <button style="width: 6em;" type="button" class="btn btn-info" (click)="priceHistory(primaryPriceListId,searchByItemNumber)" >Search</button>
+                                            </td>
+            
 
                                             <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                                             <td>
-                                                <input style="width: 250px;" disabled  type="text" formControlName="searchItemName" id="searchItemName"  [(ngModel)]="searchItemName"   class="form-control" placeholder="item description" >
+                                                <input style="width: 300px;" disabled  type="text" formControlName="searchItemName" id="searchItemName"  [(ngModel)]="searchItemName"   class="form-control" placeholder="Item description" >
                                             </td>
-                                            <td> 
-                                                <button style="width: 8em;" type="button" class="btn btn-info" (click)="priceHistory(primaryPriceListId,searchItemId)" >Search</button>
-                                            </td>
+
+                                            <!-- <td>{{this.searchItemName}}</td> -->
+                                            
+                                           
                                         </tr>
                                         </table>
                                         <!-- -------------------------- -->
@@ -698,10 +711,11 @@
                                         <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size: small;  border-color:#959595;border-collapse:collapse;width: 100%;">
                                             <tbody>
                                                     <tr class="GridHeader">
-                                                    <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th>
+                                                    <!-- <th style="width:5rem" scope="col">PL&nbsp;Header&nbsp;Id</th> -->
+                                                    <th style="width:3rem" scope="col"> Srl&nbsp;#&nbsp;</th>
                                                     <th style="width:7rem" scope="col"> Price&nbsp;List&nbsp;Name</th>
                                                     <th style="width:5rem" scope="col"> Price&nbsp;List&nbsp;Type</th>
-                                                    <th style="width:20rem" scope="col">Item&nbsp; Deescreption</th>
+                                                    <th style="width:20rem" scope="col">Item&nbsp; Code</th>
                                                     <th style="width:7rem" scope="col">Rate&nbsp;</th>
                                                     <th style="width:7rem" scope="col">Old&nbsp;Rate</th>
                                                     <th style="width:12rem" scope="col">Revision&nbsp;Date</th>
@@ -709,13 +723,14 @@
                                                     <!-- <th style="width:6rem" scope="col">Select</th> -->
                                                 </tr>
                                             </tbody>
-                                            <tr *ngFor="let com of lstcomments1" class="ItemStyle" style="text-decoration:none;">
-                                                    <td>{{com.priceListHeaderId}}</td>
-                                                    <td>{{com.priceListName}}</td>
-                                                    <td>{{com.priceListType}}</td>
-                                                    <td>{{com.itemId}}-{{searchItemName}}</td>      
-                                                    <td style="width:10rem;text-align: right;">{{com.newValue}}</td> 
-                                                    <td style="width:10rem;text-align: right;">{{com.oldValue}}</td>
+                                            <tr *ngFor="let com of lstcomments2 let i=index" class="ItemStyle" style="text-decoration:none;">
+                                                    <!-- <td>{{com.priceListHeaderId}}</td> -->
+                                                    <td style="text-align: center;">{{i+1}}</td>
+                                                    <td style="width:10rem;text-align: center;">{{com.priceListName}}</td>
+                                                    <td style="width:10rem;text-align: center;">{{com.priceListType}}</td>
+                                                    <td style="width:10rem;text-align: center;">{{this.searchByItemNumber}}</td>      
+                                                    <td style="width:7rem;text-align: right;">{{com.newValue}}</td> 
+                                                    <td style="width:7rem;text-align: right;">{{com.oldValue}}</td>
                                                     <!-- <td> this.pipe.transform({{com.lastUpdatedDate}},'dd-MM-y')</td> -->
                                                     <td style="width:10rem;text-align: center;">{{com.lastUpdatedDate | date:'dd-MM-y hh:mm:ss'}}</td>
                                                     <!-- this.pipe.transform(this.now, 'dd-MM-y'); -->
@@ -912,6 +927,9 @@
 </div>
 
 <!-- ------------------------------------------- -->
+<div *ngIf="showDescList; then showDescYes; else showDescNo"></div>
+<ng-template #showDescYes>
+
 <div class="modal fade" id="PlDescSearch" tabindex="-1" role="dialog" aria-labelledby="PlDescSearchLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -1027,4 +1045,8 @@
       </div>
     </div>
 </div>
+</ng-template>
+<ng-template #showDescNo> </ng-template>
+
+
 
