@@ -324,7 +324,7 @@ export class CounterSaleComponent implements OnInit {
   driverName: string;
   vehNo: string;
 
-  tmpTotAmt: number = 0.0;
+  tmpTotAmt: number = 0;
 
   // @ViewChild("paymentButton") myInputField: ElementRef;
 
@@ -846,6 +846,20 @@ export class CounterSaleComponent implements OnInit {
               this.displaypickTicketUpdate = false;
               this.displayViewGatePass = true;
               this.displaycounterSaleOrderSave = false;
+              if (this.allDatastore.tcsYN==='Y'){
+                // alert(this.allDatastore.tcsYN)
+                this.displaytcsYN=false;
+                this.isDisabled=true;
+                for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
+                  if (data.obj.oeOrderLinesAllList[i].segment === 'TCS') {
+                    this.displaytcsBuuton=false;
+                  }}
+              }
+              else{
+                this.displaytcsYN=true;
+                this.displaytcsBuuton=true;
+                this.isDisabled=false;
+              }
               for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
                 if (data.obj.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
                   this.displayLineflowStatusCode[i] = false;
@@ -856,7 +870,7 @@ export class CounterSaleComponent implements OnInit {
                 //   this.displayLineflowStatusCode[i] = true;
                 // }
               }
-
+            
             }
             else if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice' || this.allDatastore.createOrderType === 'Sales Order') {
               // alert('Pick to Invoice');
@@ -1488,15 +1502,15 @@ export class CounterSaleComponent implements OnInit {
     var Avalqty = trxLnArr[index].Avalqty;
     let uomCode = trxLnArr[index].uom;
     let unitSellingPrice = trxLnArr[index].unitSellingPrice;
-    // alert(unitSellingPrice)
+    if (this.orderNumber ===undefined && Avalqty != null || Avalqty != undefined){
     if (qty1 > Avalqty) {
       alert("You can not enter more than available quantity!..");
       trxLnArr1.controls[index].patchValue({ pricingQty: '' });
       // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
       return false;
     }
+  }
     if (qty1 <= 0) {
-      // alert(qty1);
       alert("Please enter quantity more than zero");
       trxLnArr1.controls[index].patchValue({ quantity: '' });
       (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
@@ -1520,10 +1534,10 @@ export class CounterSaleComponent implements OnInit {
       (<any>trxLnArr[index].get('unitSellingPrice')).nativeElement.focus(); 
       return false;
     }
+ 
   }
 
   onKey(index) {
-
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var pricingQty = arrayControl[index].pricingQty;
     var isvalidqty = this.validate(index, pricingQty);
@@ -1537,11 +1551,26 @@ export class CounterSaleComponent implements OnInit {
     console.log(arrayControl);
     var itemId = arrayControl[index].itemId;
     var taxcatName = arrayControl[index].taxCategoryName;
+    // alert(taxcatName)
     console.log(taxcatName);
-    let select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
-    var taxCategoryId = select.taxCategoryId;
-    patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
-    patch.controls[index].patchValue({ taxCategoryName: select });
+    let select ;
+    var taxCategoryId=arrayControl[index].taxCategoryId;
+    // alert(taxCategoryId);
+    if ( taxCategoryId === null){
+      
+     select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
+     taxCategoryId = select.taxCategoryId;
+     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+     patch.controls[index].patchValue({ taxCategoryName: select });
+    }else{
+      // alert("2" + taxCategoryId)
+      // select = [{ taxCategoryId: taxCategoryId, taxCategoryName: taxcatName }];
+      // console.log(select);
+      // taxCategoryId = select.taxCategoryId;
+      patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+      patch.controls[index].patchValue({ taxCategoryName: taxcatName });
+    }
+ 
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
 
@@ -1562,6 +1591,7 @@ export class CounterSaleComponent implements OnInit {
     var invLineNo1 = index + 1;
     console.log(invLineNo1);
     var sum = 0;
+    var lineTotAmt =0;
     // alert(itemId+'---'+ taxCategoryId+'----'+disAmt1+'----'+baseAmt);
     this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
       .subscribe(
@@ -1575,6 +1605,8 @@ export class CounterSaleComponent implements OnInit {
               sum = sum + this.taxCalforItem[i].totTaxAmt
             }
           }
+          lineTotAmt =Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100;
+          
           (patch.controls[index]).patchValue({
             // baseAmt: baseAmt,
             baseAmt: Math.round((baseAmt + Number.EPSILON) * 100) / 100,
@@ -1605,19 +1637,20 @@ export class CounterSaleComponent implements OnInit {
           }
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
+          this.updateTotAmtPerline(index, lineTotAmt);
         });
 
     var itemId1 = arrayControl[index].itemId;
     // alert(itemId1)
     if (itemId1 != null) {
       this.addRow(index + 1);
+     
     }
     else {
       this.displayRemoveRow.push(true);
       // alert(this.displayRemoveRow)
     }
-    this.updateTotAmtPerline(index);
-    // this.updateTotAmtPerline(index);
+   
   }
 
 
@@ -2085,24 +2118,24 @@ export class CounterSaleComponent implements OnInit {
     this.taxCategoryList = this.allTaxCategoryList;
     this.itemSeg='';
     this.setFocus('itemSeg'+i);
+    // this.updateTotAmtPerline(i)
   }
 
-  updateTotAmtPerline(lineIndex) {
-    // debugger;
-    var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-    // alert('totAmt'+ formVal[lineIndex].totAmt);
-    this.tmpTotAmt = this.tmpTotAmt + formVal[lineIndex].totAmt;
-    // alert(this.tmpTotAmt)
-  //  alert(lineIndex + "-tot-" + this.tmpTotAmt);
-  }
+  updateTotAmtPerline(lineIndex, totAmt){
+      this.tmpTotAmt = Math.round(((this.tmpTotAmt + totAmt) + Number.EPSILON) * 100) / 100;
+      
+      this.CounterSaleOrderBookingForm.patchValue({'totAmt':this.tmpTotAmt});
+   }
 
 
   RemoveRow(OrderLineIndex) {
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     this.tmpTotAmt = this.tmpTotAmt - formVal[OrderLineIndex].totAmt;
+    this.tmpTotAmt = Math.round(((this.tmpTotAmt) + Number.EPSILON) * 100) / 100;
+
     this.orderlineDetailsArray().removeAt(OrderLineIndex);
     this.TaxDetailsArray().removeAt(OrderLineIndex);
-   
+    this.CounterSaleOrderBookingForm.patchValue({'totAmt':this.tmpTotAmt});
   }
 
 
@@ -2612,6 +2645,8 @@ export class CounterSaleComponent implements OnInit {
             (patch.controls[lnNo-1]).patchValue({ 'baseAmt': tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'taxAmt':'0' });
             (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
+            (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
+            (patch.controls[lnNo-1]).patchValue({ 'invType':'SS_LABOR'});
           }
           
         }
@@ -2620,5 +2655,19 @@ export class CounterSaleComponent implements OnInit {
      this.displaytcsBuuton=true;
      this.isDisabled=false;
   }
-  
+ 
+  deleteReserveLinewise(i)
+{
+  var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+  var orderNumber=this.orderNumber;
+  alert(orderNumber);
+  var itemid=trxLnArr1[i].itemId;
+  this.service.reserveDeleteLine(orderNumber,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
+    //  var obj=res.obj;
+     if(res.code===200)
+     {
+      // alert(res.message);
+     }});
+}
+
 }
