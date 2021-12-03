@@ -19,9 +19,18 @@
                                 <tr>
                                     <td  style="background-color: #FFE4B5;">&nbsp;Employee&nbsp;Ticket&nbsp;No:&nbsp;</td>
                                     
-                                    <td style="background-color: #FFE4B5;">
+                                    <!-- <td style="background-color: #FFE4B5;">
                                         <input type="number" class="form-control" formControlName="empTktNo" [(ngModel)]='empTktNo'
                                             value={{empTktNo}} style="text-transform:uppercase;">
+                                    </td> -->
+
+                                    <td>  
+                                        <select style="width: 200px;"  formControlName="empTktNo" id="empTktNo" [(ngModel)]="empTktNo" class="form-control" (ngModelChange)='onSelectEmpTktNo($event)'>
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  EmployeeList" [ngValue]="sc.ticketNo"  >
+                                             {{sc.ticketNo}}-{{sc.fullName}}
+                                            </option>
+                                        </select>
                                     </td>
 
                                     <td style="background-color: #FFE4B5;">

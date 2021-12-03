@@ -628,7 +628,7 @@ export class PricelistMasterComponent implements OnInit {
 
         if (this.lineValidation ) 
         {
-          alert("Line Validation Sucessfull....\nPutting Line data  to PRICE LIST TABLE")
+          // alert("Line Validation Sucessfull....\nPutting Line data  to PRICE LIST TABLE")
 
           
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
@@ -636,9 +636,12 @@ export class PricelistMasterComponent implements OnInit {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFULLY');
           // window.location.reload();
-          this.priceListMasterForm.disable();
-          this.priceListMasterForm.get('searchByItemNumber').enable();
-          this.priceListMasterForm.get('primaryPriceListId').enable();
+          // this.priceListMasterForm.disable();
+          // this.priceListMasterForm.get('searchByItemNumber').enable();
+          // this.priceListMasterForm.get('primaryPriceListId').enable();
+          // this.priceListMasterForm.get('searchBy').enable();
+          // this.priceListMasterForm.get('searchByItemCode').enable();
+          // this.priceListMasterForm.get('searchByItemDesc').enable();
 
         } else {
           if (res.code === 400) {
@@ -1299,6 +1302,7 @@ export class PricelistMasterComponent implements OnInit {
                       if(data1.length>0){
                         this.priceListLineDetails2=data1;
                         this.itemFoundInPLmaster =true;
+                        this.updateButton=true;
                         console.log(data1);
 
                         var len = this.lineDetailsArray().length;
@@ -1311,11 +1315,10 @@ export class PricelistMasterComponent implements OnInit {
                       } else { alert (mSegment+" - Item Not Found in Price List Master - "+plName)}
                     }); 
 
-                    } else { alert (mSegment + " - Item Not Found in Master");return;}
+            } else { alert (mSegment + " - Item Not Found in Master");return;}
                     
-                      
             });
-              }
+          }
 
   
     F9SearchItemCode(mSegment) {

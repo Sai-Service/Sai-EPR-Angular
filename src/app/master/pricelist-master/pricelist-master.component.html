@@ -330,7 +330,8 @@
                             <td>
                                 <input   type="text"  formControlName="searchByItemDesc"  id="searchByItemDesc" 
                                          [(ngModel)]="searchByItemDesc" class="form-control"  placeholder="Enter Item Description"
-                                         style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
+                                         style="width: 300px; background-color:yellow; text-transform: uppercase;"  >
+                                         <!-- style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;" -->
                              </td>
 
                              <td style="text-align: left; width: 100%;">
@@ -343,8 +344,8 @@
                                 <button type="button"  class="btn btn-primary" 
                                 data-toggle="modal" data-target="#showpListData" style="width: 5rem;color: black;"  (click)="LoadPList()">
                                 Show&nbsp;List</button>
-                            </td> -->
-                
+                            </td>
+                 -->
                                 
                                
                                 
@@ -985,6 +986,8 @@
     </div>
 </div>
 
+</ng-template>
+<ng-template #showDescNo> </ng-template>
 
 <div class="modal fade" id="showpListData" tabindex="-1" role="dialog" aria-labelledby="showpListDataLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -1045,8 +1048,6 @@
       </div>
     </div>
 </div>
-</ng-template>
-<ng-template #showDescNo> </ng-template>
 
 
 
