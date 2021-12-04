@@ -2488,7 +2488,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                 for (let i = 0; i < data.obj.length; i++) {
                   var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                   if (itemtaxCatNm.includes('Sale-I-GST')) {
-                    alert(itemtaxCatNm);
+                    // alert(itemtaxCatNm);
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
                       orderedItem: data.obj[i].description,

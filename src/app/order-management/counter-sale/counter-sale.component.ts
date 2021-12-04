@@ -1698,7 +1698,7 @@ export class CounterSaleComponent implements OnInit {
           var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
           console.log(priceListId);
           if (custtaxCategoryName === 'Sales-IGST') {
-            alert(custtaxCategoryName);
+            // alert(custtaxCategoryName);
             this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
               .subscribe(
                 data => {
@@ -1707,7 +1707,7 @@ export class CounterSaleComponent implements OnInit {
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                       if (itemtaxCatNm.includes('Sale-I-GST')) {
-                        alert(itemtaxCatNm);
+                        // alert(itemtaxCatNm);
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
