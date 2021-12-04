@@ -2119,15 +2119,9 @@ export class CounterSaleComponent implements OnInit {
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.taxCategoryList = this.allTaxCategoryList;
-<<<<<<< HEAD
-    this.itemSeg = '';
-    this.setFocus('itemSeg' + i);
-    
-=======
     this.itemSeg='';
     this.setFocus('itemSeg'+i);
     // this.updateTotAmtPerline(i)
->>>>>>> 2bc2a84088be0263a71f4152551d88af6c57213d
   }
 
   public tempTotMap = new Map<string, number>();
@@ -2691,17 +2685,6 @@ export class CounterSaleComponent implements OnInit {
           console.log(data);
           var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           var arrayctrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-<<<<<<< HEAD
-          if (data.length == 1) {
-            (patch.controls[lnNo - 1]).patchValue({ 'segment': data[0].segment });
-            (patch.controls[lnNo - 1]).patchValue({ 'pricingQty': '1' });
-            (patch.controls[lnNo - 1]).patchValue({ 'orderedItem': data[0].description });
-            (patch.controls[lnNo - 1]).patchValue({ 'disPer': '0' });
-            (patch.controls[lnNo - 1]).patchValue({ 'unitSellingPrice': tcsCal });
-            (patch.controls[lnNo - 1]).patchValue({ 'baseAmt': tcsCal });
-            (patch.controls[lnNo - 1]).patchValue({ 'taxAmt': '0' });
-            (patch.controls[lnNo - 1]).patchValue({ 'totAmt': tcsCal });
-=======
           if(data.length ==1 ){
             (patch.controls[lnNo-1]).patchValue({ 'segment': data[0].segment });
             (patch.controls[lnNo-1]).patchValue({ 'pricingQty': '1' });
@@ -2713,7 +2696,6 @@ export class CounterSaleComponent implements OnInit {
             (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'invType':'SS_LABOR'});
->>>>>>> 2bc2a84088be0263a71f4152551d88af6c57213d
           }
 
         }
@@ -2722,8 +2704,6 @@ export class CounterSaleComponent implements OnInit {
     this.displaytcsBuuton = true;
     this.isDisabled = false;
   }
-<<<<<<< HEAD
-=======
  
   deleteReserveLinewise(i)
 {
@@ -2738,6 +2718,5 @@ export class CounterSaleComponent implements OnInit {
       // alert(res.message);
      }});
 }
->>>>>>> 2bc2a84088be0263a71f4152551d88af6c57213d
 
 }
