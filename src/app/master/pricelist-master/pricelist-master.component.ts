@@ -672,7 +672,7 @@ export class PricelistMasterComponent implements OnInit {
       this.updateButton=false;
          this.CheckHeaderValidations();
         if (this.headerValidation===true) {
-          alert("Data Validation Sucessfull....\nPutting data to PRICE LIST MASTER  TABLE") 
+          // alert("Data Validation Sucessfull....\nPutting data to PRICE LIST MASTER  TABLE") 
          
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListByIdHeader(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
