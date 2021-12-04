@@ -848,19 +848,20 @@ export class CounterSaleComponent implements OnInit {
               this.displaypickTicketUpdate = false;
               this.displayViewGatePass = true;
               this.displaycounterSaleOrderSave = false;
-              if (this.allDatastore.tcsYN==='Y'){
+              if (this.allDatastore.tcsYN === 'Y') {
                 // alert(this.allDatastore.tcsYN)
-                this.displaytcsYN=false;
-                this.isDisabled=true;
+                this.displaytcsYN = false;
+                this.isDisabled = true;
                 for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
                   if (data.obj.oeOrderLinesAllList[i].segment === 'TCS') {
-                    this.displaytcsBuuton=false;
-                  }}
+                    this.displaytcsBuuton = false;
+                  }
+                }
               }
-              else{
-                this.displaytcsYN=true;
-                this.displaytcsBuuton=true;
-                this.isDisabled=false;
+              else {
+                this.displaytcsYN = true;
+                this.displaytcsBuuton = true;
+                this.isDisabled = false;
               }
               for (let i = 0; this.allDatastore.oeOrderLinesAllList.length; i++) {
                 if (data.obj.oeOrderLinesAllList[i].flowStatusCode === 'BOOKED') {
@@ -872,7 +873,7 @@ export class CounterSaleComponent implements OnInit {
                 //   this.displayLineflowStatusCode[i] = true;
                 // }
               }
-            
+
             }
             else if (this.allDatastore.createOrderType === 'Pick Ticket Invoice' || this.allDatastore.createOrderType === 'Direct Invoice' || this.allDatastore.createOrderType === 'Sales Order') {
               // alert('Pick to Invoice');
@@ -1504,14 +1505,14 @@ export class CounterSaleComponent implements OnInit {
     var Avalqty = trxLnArr[index].Avalqty;
     let uomCode = trxLnArr[index].uom;
     let unitSellingPrice = trxLnArr[index].unitSellingPrice;
-    if (this.orderNumber ===undefined && Avalqty != null || Avalqty != undefined){
-    if (qty1 > Avalqty) {
-      alert("You can not enter more than available quantity!..");
-      trxLnArr1.controls[index].patchValue({ pricingQty: '' });
-      // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
-      return false;
+    if (this.orderNumber === undefined && Avalqty != null || Avalqty != undefined) {
+      if (qty1 > Avalqty) {
+        alert("You can not enter more than available quantity!..");
+        trxLnArr1.controls[index].patchValue({ pricingQty: '' });
+        // (<any>trxLnArr1.controls[index].get('pricingQty')).nativeElement.focus();
+        return false;
+      }
     }
-  }
     if (qty1 <= 0) {
       alert("Please enter quantity more than zero");
       trxLnArr1.controls[index].patchValue({ quantity: '' });
@@ -1536,7 +1537,7 @@ export class CounterSaleComponent implements OnInit {
       (<any>trxLnArr[index].get('unitSellingPrice')).nativeElement.focus();
       return false;
     }
- 
+
   }
 
   onKey(index) {
@@ -1555,16 +1556,16 @@ export class CounterSaleComponent implements OnInit {
     var taxcatName = arrayControl[index].taxCategoryName;
     // alert(taxcatName)
     console.log(taxcatName);
-    let select ;
-    var taxCategoryId=arrayControl[index].taxCategoryId;
+    let select;
+    var taxCategoryId = arrayControl[index].taxCategoryId;
     // alert(taxCategoryId);
-    if ( taxCategoryId === null){
-      
-     select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
-     taxCategoryId = select.taxCategoryId;
-     patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
-     patch.controls[index].patchValue({ taxCategoryName: select });
-    }else{
+    if (taxCategoryId === null) {
+
+      select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
+      taxCategoryId = select.taxCategoryId;
+      patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
+      patch.controls[index].patchValue({ taxCategoryName: select });
+    } else {
       // alert("2" + taxCategoryId)
       // select = [{ taxCategoryId: taxCategoryId, taxCategoryName: taxcatName }];
       // console.log(select);
@@ -1572,10 +1573,10 @@ export class CounterSaleComponent implements OnInit {
       patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
       patch.controls[index].patchValue({ taxCategoryName: taxcatName });
     }
- 
+
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
-
+    alert('--baseAmt-' + baseAmt)
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
     if (disPer > 0) {
@@ -1639,7 +1640,7 @@ export class CounterSaleComponent implements OnInit {
           }
           let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
           this.taxMap.set(index, taxMapData);
-           this.updateTotAmtPerline(index)
+          this.updateTotAmtPerline(index);
 
         });
 
@@ -2119,8 +2120,8 @@ export class CounterSaleComponent implements OnInit {
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.taxCategoryList = this.allTaxCategoryList;
-    this.itemSeg='';
-    this.setFocus('itemSeg'+i);
+    this.itemSeg = '';
+    this.setFocus('itemSeg' + i);
     // this.updateTotAmtPerline(i)
   }
 
@@ -2129,23 +2130,35 @@ export class CounterSaleComponent implements OnInit {
   public tempTaxTotMap = new Map<string, number>();
 
   updateTotAmtPerline(lineIndex) {
-    
+
     var formVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
 
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
-    alert(formVal.length)
-    for (let i=0; i<formVal.length;i++) {
-      if(formVal[i].taxAmt !=undefined && formVal[i].taxAmt !=undefined && formVal[i].totAmt !=undefined){
+    //alert(formVal.length)
+    for (let i = 0; i < formVal.length; i++) {
+     // alert(i+'--b--'+formVal[i].baseAmt + '-t--' + formVal[i].taxAmt + '--tot--' + formVal[i].totAmt);
+      if (formVal[i].baseAmt == undefined || formVal[i].baseAmt == null ||formVal[i].baseAmt == '') {
+        
+      }else{
+        basicAmt = basicAmt + formVal[i].baseAmt;
+      }
+    
+      if (formVal[i].taxAmt == undefined || formVal[i].taxAmt == null || formVal[i].taxAmt == '') {
        
-      basicAmt = basicAmt + formVal[i].baseAmt;
-      taxAmt1 = taxAmt1 + formVal[i].taxAmt;
-      totAmt = totAmt + formVal[i].totAmt;
-      alert(taxAmt1 +'----'+totAmt);
+      }else{
+        taxAmt1 = taxAmt1 + formVal[i].taxAmt;
+      }
+      if (formVal[i].totAmt == undefined || formVal[i].totAmt == null || formVal[i].totAmt == '') {
+        
+      }else{
+        totAmt = totAmt + formVal[i].totAmt;
+      }
+      //alert("final-"+i +"----"+basicAmt + '----' + taxAmt1 + '----' + totAmt);
+
     }
-  }
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'subtotal': basicAmt });
     taxAmt1 = Math.round(((taxAmt1) + Number.EPSILON) * 100) / 100;
@@ -2168,14 +2181,14 @@ export class CounterSaleComponent implements OnInit {
     var taxAmt1 = 0;
     var totAmt = 0;
     alert(formVal.length)
-    for (let i=0; i<formVal.length;i++) {
-      if(formVal[i].taxAmt !=undefined && formVal[i].totAmt !=undefined){
+    for (let i = 0; i < formVal.length; i++) {
+      if (formVal[i].taxAmt != undefined && formVal[i].totAmt != undefined) {
 
-      basicAmt = basicAmt + formVal[i].baseAmt;
-      taxAmt1 = taxAmt1 + formVal[i].taxAmt;
-      totAmt = totAmt + formVal[i].totAmt;
+        basicAmt = basicAmt + formVal[i].baseAmt;
+        taxAmt1 = taxAmt1 + formVal[i].taxAmt;
+        totAmt = totAmt + formVal[i].totAmt;
+      }
     }
-  }
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'subtotal': basicAmt });
     taxAmt1 = Math.round(((taxAmt1) + Number.EPSILON) * 100) / 100;
@@ -2184,7 +2197,7 @@ export class CounterSaleComponent implements OnInit {
     this.CounterSaleOrderBookingForm.patchValue({ 'totAmt': totAmt });
 
 
-   
+
   }
 
 
@@ -2685,38 +2698,37 @@ export class CounterSaleComponent implements OnInit {
           console.log(data);
           var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
           var arrayctrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-          if(data.length ==1 ){
-            (patch.controls[lnNo-1]).patchValue({ 'segment': data[0].segment });
-            (patch.controls[lnNo-1]).patchValue({ 'pricingQty': '1' });
-            (patch.controls[lnNo-1]).patchValue({ 'orderedItem': data[0].description });
-            (patch.controls[lnNo-1]).patchValue({ 'disPer': '0' });
-            (patch.controls[lnNo-1]).patchValue({ 'unitSellingPrice': tcsCal});
-            (patch.controls[lnNo-1]).patchValue({ 'baseAmt': tcsCal});
-            (patch.controls[lnNo-1]).patchValue({ 'taxAmt':'0' });
-            (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
-            (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
-            (patch.controls[lnNo-1]).patchValue({ 'invType':'SS_LABOR'});
+          if (data.length == 1) {
+            (patch.controls[lnNo - 1]).patchValue({ 'segment': data[0].segment });
+            (patch.controls[lnNo - 1]).patchValue({ 'pricingQty': '1' });
+            (patch.controls[lnNo - 1]).patchValue({ 'orderedItem': data[0].description });
+            (patch.controls[lnNo - 1]).patchValue({ 'disPer': '0' });
+            (patch.controls[lnNo - 1]).patchValue({ 'unitSellingPrice': tcsCal });
+            (patch.controls[lnNo - 1]).patchValue({ 'baseAmt': tcsCal });
+            (patch.controls[lnNo - 1]).patchValue({ 'taxAmt': 0 });
+            (patch.controls[lnNo - 1]).patchValue({ 'totAmt': tcsCal });
+            (patch.controls[lnNo - 1]).patchValue({ 'totAmt': tcsCal });
+            (patch.controls[lnNo - 1]).patchValue({ 'invType': 'SS_LABOR' });
           }
-
+          this.updateTotAmtPerline(arrayctrl.length);
         }
       );
     this.orderlineDetailsArray().disable();
     this.displaytcsBuuton = true;
     this.isDisabled = false;
   }
- 
-  deleteReserveLinewise(i)
-{
-  var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-  var orderNumber=this.orderNumber;
-  alert(orderNumber);
-  var itemid=trxLnArr1[i].itemId;
-  this.service.reserveDeleteLine(orderNumber,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
-    //  var obj=res.obj;
-     if(res.code===200)
-     {
-      // alert(res.message);
-     }});
-}
+
+  deleteReserveLinewise(i) {
+    var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var orderNumber = this.orderNumber;
+    alert(orderNumber);
+    var itemid = trxLnArr1[i].itemId;
+    this.service.reserveDeleteLine(orderNumber, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
+      //  var obj=res.obj;
+      if (res.code === 200) {
+        // alert(res.message);
+      }
+    });
+  }
 
 }
