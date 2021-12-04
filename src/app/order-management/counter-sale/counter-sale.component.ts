@@ -19,6 +19,8 @@ import { escapeRegExp } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver';
 import { SelectorMatcher } from '@angular/compiler';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 // import { NgxSpinnerService } from "ngx-spinner";
 
 
@@ -514,11 +516,11 @@ export class CounterSaleComponent implements OnInit {
       orderedItem: [''],
       pricingQty: ['', [Validators.required]],
       orderedQty: [''],
-      unitSellingPrice: [''],
+      unitSellingPrice: ['0'],
       taxCategoryName: ['', [Validators.required]],
-      baseAmt: [''],
-      taxAmt: [''],
-      totAmt: [''],
+      baseAmt: ['0'],
+      taxAmt: ['0'],
+      totAmt: ['0'],
       flowStatusCode: [''],
       category: [''],
       invType: ['', [Validators.required]],
@@ -573,7 +575,9 @@ export class CounterSaleComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    // this.CounterSaleOrderBookingForm.patchValue({refCustNo:uuidv4()});
+    // console.log(uuidv4());
+    // alert(uuidv4())
     $("#wrapper").toggleClass("toggled");
     if (Number(sessionStorage.getItem('divisionId')) === 1) {
       this.displayDMSCDMS = true;
@@ -2141,18 +2145,23 @@ export class CounterSaleComponent implements OnInit {
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
+    var disAmt=0;
     // alert(formVal.length)
     for (let i=0; i<formVal.length;i++) {
-      alert(formVal[i].taxAmt);
+      // alert(formVal[i].disAmt);
       if(formVal[i].taxAmt !=undefined && formVal[i].taxAmt !=undefined && formVal[i].totAmt !=undefined){
-      basicAmt = basicAmt + formVal[i].baseAmt;
+      basicAmt = basicAmt + (formVal[i].baseAmt-formVal[i].disAmt);
+      disAmt= disAmt + formVal[i].disAmt;
       taxAmt1 = taxAmt1 + formVal[i].taxAmt;
       totAmt = totAmt + formVal[i].totAmt;
-      alert(taxAmt1 +'----'+totAmt);
+      // alert(taxAmt1 +'----'+totAmt);
     }
   }
+  // alert(taxAmt1+'----'+ 'check tax amt')
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'subtotal': basicAmt });
+    disAmt = Math.round(((disAmt) + Number.EPSILON) * 100) / 100;
+    this.CounterSaleOrderBookingForm.patchValue({ 'discAmt': disAmt });
     taxAmt1 = Math.round(((taxAmt1) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'totTax': taxAmt1 });
     totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
@@ -2170,7 +2179,7 @@ export class CounterSaleComponent implements OnInit {
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
-    alert(formVal.length)
+    // alert(formVal.length)
     for (let i=0; i<formVal.length;i++) {
       if(formVal[i].taxAmt !=undefined && formVal[i].totAmt !=undefined){
 
@@ -2690,10 +2699,11 @@ export class CounterSaleComponent implements OnInit {
             (patch.controls[lnNo-1]).patchValue({ 'segment': data[0].segment });
             (patch.controls[lnNo-1]).patchValue({ 'pricingQty': '1' });
             (patch.controls[lnNo-1]).patchValue({ 'orderedItem': data[0].description });
-            (patch.controls[lnNo-1]).patchValue({ 'disPer': '0' });
+            (patch.controls[lnNo-1]).patchValue({ 'disPer': 0});
+            (patch.controls[lnNo-1]).patchValue({ 'disAmt': 0});
             (patch.controls[lnNo-1]).patchValue({ 'unitSellingPrice': tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'baseAmt': tcsCal});
-            (patch.controls[lnNo-1]).patchValue({ 'taxAmt':'0' });
+            (patch.controls[lnNo-1]).patchValue({ 'taxAmt':0 });
             (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'invType':'SS_LABOR'});
@@ -2710,7 +2720,7 @@ export class CounterSaleComponent implements OnInit {
 {
   var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
   var orderNumber=this.orderNumber;
-  alert(orderNumber);
+  // alert(orderNumber);
   var itemid=trxLnArr1[i].itemId;
   this.service.reserveDeleteLine(orderNumber,Number(sessionStorage.getItem('locId')),itemid).subscribe((res:any)=>{
     //  var obj=res.obj;
