@@ -827,18 +827,18 @@
                         <ng-template #elsetcsYN>
                         <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                             TCS&nbsp;:&nbsp;
-                        </td>
-                        </ng-template>
+                        </td>&nbsp;&nbsp;
                         <td>
                             <input type="text" disabled formControlName="tcsYN" value={{tcsYN}} class="form-control"
                             style="width:50px;font-weight: bold;"> 
-                        </td>
+                        </td>&nbsp;&nbsp;
+                    </ng-template>
                         <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
                         <ng-template #thentcsBuuton>
                         </ng-template>
                         <ng-template #elsetcsBuuton>
                         <td>
-                            <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                            <button type="submit" class="btn btn-primary" id="register" style="width: 5rem;"
                             (click)="tcsCalculationAdd()">Add TCS</button>
                         </td>
                         </ng-template>
@@ -1111,9 +1111,10 @@
                                             </td> -->
                                                         <td>
                                                             <input  type="number"
-                                                                formControlName="unitSellingPrice" class="form-control" min="0" oninput="this.value = Math.abs(this.value)"
+                                                                formControlName="unitSellingPrice" class="form-control" min="0.00" 
                                                                 style="height: 20px;width: 80px;" (change)="onKey(i)">
                                                         </td>
+                                                        <!-- oninput="this.value = Math.abs(this.value)" -->
                                                         <td>
                                                             <input disabled type="number" formControlName="baseAmt"
                                                                 class="form-control" (change)="onKey(i)"
