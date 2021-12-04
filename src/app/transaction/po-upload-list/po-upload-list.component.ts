@@ -57,7 +57,7 @@ export class PoUploadListComponent implements OnInit {
        this.closeResetButton=false;
     this.progress = 0;
     this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
-      this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
+      this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt,sessionStorage.getItem('locId')).subscribe((res: any) => {
         if (res.code === 200) {
           this.poDetails = res.obj;
           this.dataDisplay ='Data Display Sucessfully....'
@@ -103,7 +103,7 @@ export class PoUploadListComponent implements OnInit {
     this.closeResetButton=false;
     this.progress = 0;
     this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
-    this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt).subscribe((res: any) => {
+    this.service.getPOByUser(Number(sessionStorage.getItem('emplId')), this.startDt, this.endDt,sessionStorage.getItem('locId')).subscribe((res: any) => {
       if (res.code === 200) {
         this.poDetails = res.obj;
         this.dataDisplay ='Data Display Sucessfully....'
