@@ -1669,7 +1669,6 @@ export class CounterSaleComponent implements OnInit {
 
 
   onOptionsSelectedDescription(segment: string, k) {
-
     if (segment != undefined && segment != "") {
       this.displayorderHedaerDetails = false;
       var orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
@@ -1696,12 +1695,10 @@ export class CounterSaleComponent implements OnInit {
         if (segment != undefined) {
           this.itemId = select.itemId;
           var custtaxCategoryName = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
-          // let selSite = this.custSiteList.find(d => d.siteName === siteName1);
-          // const custtaxCategoryName = selSite.taxCategoryName;
-          // console.log(selSite);
           var priceListId = this.CounterSaleOrderBookingForm.get('priceListId').value;
           console.log(priceListId);
           if (custtaxCategoryName === 'Sales-IGST') {
+            alert(custtaxCategoryName);
             this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
               .subscribe(
                 data => {
@@ -1710,6 +1707,7 @@ export class CounterSaleComponent implements OnInit {
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                       if (itemtaxCatNm.includes('Sale-I-GST')) {
+                        alert(itemtaxCatNm);
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -1718,18 +1716,21 @@ export class CounterSaleComponent implements OnInit {
                           unitSellingPrice: data.obj[0].priceValue,
                         });
                         this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
-                          .subscribe(
-                            data1 => {
-                              this.taxCategoryList[k] = data1;
-                              this.allTaxCategoryList[k] = data1;
-                              let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data[i].taxCategoryName);
-                              (controlinv.controls[k]).patchValue({
-                                taxCategoryId: itemCateNameList.taxCategoryId,
-                                taxCategoryName: itemCateNameList,
-                              })
-                            }
-                          );
-
+                        .subscribe(
+                          data1 => {
+                            this.taxCategoryList[k] = data1;
+                            console.log( this.taxCategoryList[k]);
+                            console.log(data.obj[i].taxCategoryName);    
+                            this.allTaxCategoryList[k] = data1;
+                          let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
+                          console.log(itemCateNameList);
+                           
+                          (controlinv.controls[k]).patchValue({
+                              taxCategoryId: itemCateNameList.taxCategoryId,
+                              taxCategoryName: itemCateNameList,
+                            })
+                          }
+                        );
                       }
                     }
                     if (select.itemId != null) {
@@ -1800,7 +1801,6 @@ export class CounterSaleComponent implements OnInit {
                             data1 => {
                               this.taxCategoryList[k] = data1;
                               this.allTaxCategoryList[k] = data1;
-
                               let itemCateNameList = this.taxCategoryList[k].find(d => d.taxCategoryName === data.obj[i].taxCategoryName);
                               (controlinv.controls[k]).patchValue({
                                 taxCategoryId: itemCateNameList.taxCategoryId,
@@ -2729,5 +2729,10 @@ export class CounterSaleComponent implements OnInit {
       // alert(res.message);
      }});
 }
+
+
+
+
+
 
 }
