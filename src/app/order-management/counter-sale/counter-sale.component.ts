@@ -506,7 +506,7 @@ export class CounterSaleComponent implements OnInit {
       onHandQty: [],
       discType: [],
       disPer: ['0'],
-      disAmt: ['0'],
+      disAmt: [0],
       uom: [],
       lnflowStatusCode: [''],
       Avalqty: [],
@@ -1584,7 +1584,7 @@ export class CounterSaleComponent implements OnInit {
 
     patch.controls[index].patchValue({ disAmt: 0 });
     var baseAmt = arrayControl[index].unitSellingPrice * arrayControl[index].pricingQty;
-    alert('--baseAmt-' + baseAmt)
+    
     var disAmt1 = arrayControl[index].disAmt;
     var disPer = arrayControl[index].disPer;
     if (disPer > 0) {
@@ -2147,30 +2147,31 @@ export class CounterSaleComponent implements OnInit {
     var totAmt = 0;
     var disAmt =0;
     //alert(formVal.length)
+   // debugger;
     for (let i = 0; i < formVal.length; i++) {
      // alert(i+'--b--'+formVal[i].baseAmt + '-t--' + formVal[i].taxAmt + '--tot--' + formVal[i].totAmt);
       if (formVal[i].baseAmt == undefined || formVal[i].baseAmt == null ||formVal[i].baseAmt == '') {
         
       }else{
-        basicAmt = basicAmt + formVal[i].baseAmt;
+        basicAmt = basicAmt + Number(formVal[i].baseAmt);
       }
     
-      if (formVal[i].discAmt == undefined || formVal[i].discAmt == null ||formVal[i].discAmt == '') {
+      if (formVal[i].disAmt == undefined || formVal[i].disAmt == null || formVal[i].disAmt == '') {
         
       }else{
-        disAmt = disAmt + formVal[i].discAmt;
+        disAmt = disAmt + Number(formVal[i].disAmt);
       }
       if (formVal[i].taxAmt == undefined || formVal[i].taxAmt == null || formVal[i].taxAmt == '') {
        
       }else{
-        taxAmt1 = taxAmt1 + formVal[i].taxAmt;
+        taxAmt1 = taxAmt1 + Number(formVal[i].taxAmt);
       }
       if (formVal[i].totAmt == undefined || formVal[i].totAmt == null || formVal[i].totAmt == '') {
         
       }else{
-        totAmt = totAmt + formVal[i].totAmt;
+        totAmt = totAmt + Number(formVal[i].totAmt);
       }
-      //alert("final-"+i +"----"+basicAmt + '----' + taxAmt1 + '----' + totAmt);
+     // alert("final-"+i +"----"+basicAmt + '----' + taxAmt1 + '----' + totAmt);
 
     }
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
@@ -2194,7 +2195,7 @@ export class CounterSaleComponent implements OnInit {
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
-    alert(formVal.length)
+    //alert(formVal.length)
     for (let i = 0; i < formVal.length; i++) {
       if (formVal[i].taxAmt != undefined && formVal[i].totAmt != undefined) {
 
