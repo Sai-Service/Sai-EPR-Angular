@@ -565,14 +565,6 @@
                             <div *ngIf="f.issueCodeType.errors.required">Code cannot be blank</div>
                         </div>
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        Subtotal&nbsp;Amount&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input disabled type="number" formControlName="subtotal" [(ngModel)]='subtotal'
-                            value={{subtotal}} class="form-control" placeholder="0.00"
-                            style="width: 160px;text-align: right;">
-                    </td>
                 </tr>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -589,27 +581,36 @@
                         <input disabled type="text" formControlName="orderStatus" class="form-control"
                             style="width: 160px;">
                     </td>
-
-                    <td></td>
-                    <td></td>
-
-                    <td style="width: 15%" class="LabelFontStyle">
-                        Tax&nbsp;Amount&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input disabled type="number" formControlName="totTax" [(ngModel)]="totTax" value={{totTax}}
-                            class="form-control" placeholder="0.00" style="width: 160px;text-align: right;">
-                    </td>
-                </tr>
-                <tr>
                     <td style="width: 15%" class="LabelFontStyle">
                         Remark&nbsp;:&nbsp;
                     </td>
                     <td colspan="5">
                         <input type="text" formControlName="remarks"  value={{remarks}}
                             class="form-control" placeholder="Enter Remark" style="width: 100%;" >
+                    </td>  
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Subtotal&nbsp;Amount&nbsp;:&nbsp;
                     </td>
-                    <!-- <td></td><td></td> -->
+                    <td>
+                        <input disabled type="number" formControlName="subtotal" [(ngModel)]='subtotal' value={{subtotal}} class="form-control" placeholder="0.00"
+                            style="width: 160px;text-align: right;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Discount&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="discAmt" [(ngModel)]='discAmt' value={{discAmt}} class="form-control" placeholder="0.00"
+                            style="width: 160px;text-align: right;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Tax&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}} class="form-control" placeholder="0.00"
+                        style="width: 160px;text-align: right;">
+                    </td>
                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                         Total&nbsp;Amount&nbsp;:&nbsp;
                     </td>
@@ -731,13 +732,6 @@
                         <input disabled type="text" formControlName="issueCodeType" class="form-control"
                             style="width: 160px;">
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        Subtotal&nbsp;Amount&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input disabled type="text" formControlName="subtotal" [(ngModel)]='subtotal' value={{subtotal}}
-                            class="form-control" style="width: 160px;text-align: right;">
-                    </td>
                 </tr>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -754,32 +748,42 @@
                         <input disabled type="text" formControlName="orderStatus" class="form-control"
                             style="width: 160px;">
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        Tax&nbsp;Amount&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
-                            class="form-control" style="width: 160px;text-align: right;">
-                    </td>
-                </tr>
-                <tr>
                     <td style="width: 15%" class="LabelFontStyle">
                         Remark&nbsp;:&nbsp;
                     </td>
                     <td colspan="5">
-                        <input disabled type="text" formControlName="remarks" [(ngModel)]='remarks' (keydown.tab)="setFocus('itemSeg')" value={{remarks}}
-                            class="form-control" style="width: 100%;">
+                        <input type="text" formControlName="remarks"  value={{remarks}}
+                            class="form-control" placeholder="Enter Remark" style="width: 100%;" >
+                    </td>  
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Subtotal&nbsp;Amount&nbsp;:&nbsp;
                     </td>
-                    <!-- <td></td><td></td> -->
-
+                    <td>
+                        <input disabled type="number" formControlName="subtotal" [(ngModel)]='subtotal' value={{subtotal}} class="form-control" placeholder="0.00"
+                            style="width: 160px;text-align: right;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Discount&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="discAmt" [(ngModel)]='discAmt' value={{discAmt}} class="form-control" placeholder="0.00"
+                            style="width: 160px;text-align: right;">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        Tax&nbsp;Amount&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}} class="form-control" placeholder="0.00"
+                        style="width: 160px;text-align: right;">
+                    </td>
                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                         Total&nbsp;Amount&nbsp;:&nbsp;
                     </td>
                     <td>
                         <input disabled type="number" formControlName="totAmt" [(ngModel)]='totAmt' value={{totAmt}}
-                            class="form-control" style="width: 160px;font-weight: bold;">
+                            class="form-control" placeholder="0.00" style="width: 160px;font-weight: bold;">
                     </td>
                 </tr>
             </table>

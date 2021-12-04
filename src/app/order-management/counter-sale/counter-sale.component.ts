@@ -233,6 +233,7 @@ export class CounterSaleComponent implements OnInit {
   segment: string;
   dept: number;
   baseAmt: number;
+  discAmt:number;
   issuedBy: string;
   orderedItem: string;
   emplId: number;
@@ -401,6 +402,7 @@ export class CounterSaleComponent implements OnInit {
       taxCategoryName: [''],
       disPer: [''],
       refCustNo: [''],
+      discAmt:[''],
       tcsYN: [''],
       transactionTypeId: [''],
       InvoiceNumber: [''],
@@ -514,7 +516,7 @@ export class CounterSaleComponent implements OnInit {
       orderedQty: [''],
       unitSellingPrice: [''],
       taxCategoryName: ['', [Validators.required]],
-      baseAmt: [],
+      baseAmt: [''],
       taxAmt: [''],
       totAmt: [''],
       flowStatusCode: [''],
@@ -926,6 +928,7 @@ export class CounterSaleComponent implements OnInit {
             if (data.obj.orderStatus === 'INVOICED' && data.obj.gatePassYN === 'Y') {
               this.displayAfterGatePass = false;
               this.isVisible = false;
+              this.CounterSaleOrderBookingForm.disable();
             } else {
               this.displayAfterGatePass = true;
               this.isVisible = true;
@@ -2138,10 +2141,10 @@ export class CounterSaleComponent implements OnInit {
     var basicAmt = 0;
     var taxAmt1 = 0;
     var totAmt = 0;
-    alert(formVal.length)
+    // alert(formVal.length)
     for (let i=0; i<formVal.length;i++) {
+      alert(formVal[i].taxAmt);
       if(formVal[i].taxAmt !=undefined && formVal[i].taxAmt !=undefined && formVal[i].totAmt !=undefined){
-       
       basicAmt = basicAmt + formVal[i].baseAmt;
       taxAmt1 = taxAmt1 + formVal[i].taxAmt;
       totAmt = totAmt + formVal[i].totAmt;
@@ -2154,8 +2157,6 @@ export class CounterSaleComponent implements OnInit {
     this.CounterSaleOrderBookingForm.patchValue({ 'totTax': taxAmt1 });
     totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'totAmt': totAmt });
-
-
   }
 
 
@@ -2667,9 +2668,7 @@ export class CounterSaleComponent implements OnInit {
 
 
   tcsCalculationAdd() {
-    //  alert(this.tmpTotAmt);
     var arrayctrl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
-
     for (var i = 0; i < arrayctrl.length; i++) {
       this.allLineTotalAmt += arrayctrl[i].totAmt
     }
@@ -2699,7 +2698,7 @@ export class CounterSaleComponent implements OnInit {
             (patch.controls[lnNo-1]).patchValue({ 'totAmt':tcsCal});
             (patch.controls[lnNo-1]).patchValue({ 'invType':'SS_LABOR'});
           }
-
+          this.updateTotAmtPerline(arrayctrl.length)
         }
       );
     this.orderlineDetailsArray().disable();
