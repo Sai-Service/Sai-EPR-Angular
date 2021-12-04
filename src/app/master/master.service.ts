@@ -3299,6 +3299,13 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           // http://localhost:8081/empMst/EmpLocDept?locId=2103&divisionId=2&deptId=5
         }
 
+        customerEmpMapList(empId,p1,s1): Observable<any> {
+          return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
+       // http://localhost:8081/empCust?emplId=334&page=0&size=1
+     }
+
+        
+
 
 
 }
