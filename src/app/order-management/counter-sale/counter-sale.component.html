@@ -833,15 +833,6 @@
                             style="width:50px;font-weight: bold;"> 
                         </td>&nbsp;&nbsp;
                     </ng-template>
-                        <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
-                        <ng-template #thentcsBuuton>
-                        </ng-template>
-                        <ng-template #elsetcsBuuton>
-                        <td>
-                            <button type="submit" class="btn btn-primary" id="register" style="width: 5rem;"
-                            (click)="tcsCalculationAdd()">Add TCS</button>
-                        </td>
-                        </ng-template>
                     </tr>
                 </table>
                 <div>
@@ -1484,6 +1475,15 @@
 
                         </ng-template>
                     </td>
+                    <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
+                    <ng-template #thentcsBuuton>
+                    </ng-template>
+                    <ng-template #elsetcsBuuton>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" style="width: 5rem;"
+                        (click)="tcsCalculationAdd()">Add TCS</button>
+                    </td>
+                    </ng-template>
                     <td>
                         <div
                             *ngIf="displaycounterSaleOrderSave; then thencounterSaleOrderSave; else elsecounterSaleOrderSave">
