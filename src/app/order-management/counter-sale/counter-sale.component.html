@@ -830,7 +830,7 @@
                         </td>&nbsp;&nbsp;
                         <td>
                             <input type="text" disabled formControlName="tcsYN" value={{tcsYN}} class="form-control"
-                            style="width:50px;font-weight: bold;"> 
+                            style="width:50px;font-weight: bold;">
                         </td>&nbsp;&nbsp;
                     </ng-template>
                         <div *ngIf="displaytcsBuuton; then thentcsBuuton; else elsetcsBuuton"> </div>
@@ -979,12 +979,13 @@
                                                         </td>
                                                         <td>
                                                             <select class="form-control"
-                                                                style="height: 20px; width: 120px;"
+                                                                style="height: 20px; width: 160px; "
                                                                 formControlName="frmLocatorId"
-                                                                (ngModelChange)="AvailQty(i)">
+                                                                 (ngModelChange)="onSelLocaPrice($event,i)">
+                                                                 <!-- (ngModelChange)="AvailQty(i)"  -->
                                                                 <option *ngFor="let locId of  locData[i]"
-                                                                    [ngValue]="locId.locatorId">
-                                                                    {{locId.segmentName}}--{{locId.onHandQty}}</option>
+                                                                     [value]="locId.locatorId">
+                                                                    {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}</option>
                                                             </select>
                                                             <input hidden formControlName="frmLocatorId">
                                                         </td>
@@ -1111,7 +1112,7 @@
                                             </td> -->
                                                         <td>
                                                             <input  type="number"
-                                                                formControlName="unitSellingPrice" class="form-control" min="0.00" 
+                                                                formControlName="unitSellingPrice" class="form-control" min="0.00"
                                                                 style="height: 20px;width: 80px;" (change)="onKey(i)">
                                                         </td>
                                                         <!-- oninput="this.value = Math.abs(this.value)" -->
@@ -1436,7 +1437,7 @@
            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp; </td>
         </tr>
     </table>
-    
+
     <fieldset class="RFS">
         <div *ngIf="displaycounterSaleAllButtons; then thencounterSaleAllButtons; else elsecounterSaleAllButtons"></div>
         <ng-template #thencounterSaleAllButtons>
