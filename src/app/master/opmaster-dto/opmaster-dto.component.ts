@@ -356,6 +356,7 @@ displaySecondButtonDisplay=true;
 displayThirdButtonDisplay=true;
 
 isVisible :Boolean= false;
+isVisible1:Boolean=false;
 @ViewChild('poCancel1') poCancel1:ElementRef;
 // @ViewChild("poCancel1") myInputField1: ElementRef;
 @ViewChild("hsnSacCode1") hsnSacCode1: ElementRef;
@@ -887,7 +888,7 @@ displaypoCancel=true;
     // alert(poNo);
     this.currentOp = 'Search';
     console.log(this.poMasterDtoForm.value);
-    this.service.getsearchByPOHeder(poNo)
+    this.service.getsearchByPOHeder(poNo,(sessionStorage.getItem('locId')))
       .subscribe(
         data => {
           console.log(data);
@@ -1030,12 +1031,77 @@ displaypoCancel=true;
               if (data.obj.rcvLines.length >0){
                 // alert(data.obj.rcvLines.length);
                 this.isVisible=false;
+                this.isVisible1=true;
               // this.poCancel1.nativeElement.hidden=true;
               }
               else{
                 this.isVisible=true;
+                this.isVisible1=true;
                 // this.poCancel1.nativeElement.hidden=false;
               }
+              let control = this.poMasterDtoForm.get('poLines') as FormArray;
+              for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
+                var poLine: FormGroup = this.lineDetailsGroup();
+                let control1 = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
+                this.displayPoLine[i] = false;
+                this.hideArray[i] = true;
+                control.push(poLine);
+              }
+              var len = this.lstcomments1.poLines.length - 1
+              this.lineDetailsArray.removeAt(len);
+              this.poMasterDtoForm.patchValue(this.lstcomments1);
+
+              for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
+                let taxControl = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
+                taxControl.clear();
+                var taxItems: any[] = this.lstcomments1.poLines[i].taxAmounts;
+                taxItems.forEach(x => {
+                  console.log('in patch' + taxItems);
+                  console.log(x.totTaxAmt);
+                  taxControl.push(this.fb.group({
+                    totTaxAmt: x.totTaxAmt,
+                    lineNumber: x.lineNumber,
+                    taxRateName: x.taxRateName,
+                    taxTypeName: x.taxTypeName,
+                    taxPointBasis: x.taxPointBasis,
+                    precedence1: x.precedence1,
+                    precedence2: x.precedence2,
+                    precedence3: x.precedence3,
+                    precedence4: x.precedence4,
+                    precedence5: x.precedence5,
+                    precedence6: x.precedence6,
+                    precedence7: x.precedence7,
+                    precedence8: x.precedence8,
+                    precedence9: x.precedence9,
+                    precedence10: x.precedence10,
+                    currencyCode: x.currencyCode,
+                    totTaxPer: x.totTaxPer,
+                    recoverableFlag: x.recoverableFlag,
+                    selfAssesedFlag: x.selfAssesedFlag,
+                    inclusiveFlag: x.inclusiveFlag,
+
+                  }));
+                });
+                // this.taxDetails('Search',i, 'taxCategoryId');
+              }
+             
+            }
+            if (status === "CANCELLED") {
+              this.displaySecondButtonDisplay=true;
+              this.displayFirstButtonDisplay=true;
+              this.displayThirdButtonDisplay=false;
+              this.displayOnStatus = false;
+              this.displayButton = false;
+              this.dispbut = false;
+              this.displayLine = false;
+              this.displayNewButton = false;
+              this.displaygoReceiptForm = false;
+              this.poMasterDtoForm.disable();
+              this.approvedArray = this.lstcomments1.poLines;
+              console.log(this.approvedArray);
+                this.isVisible=false;
+                this.isVisible1=false;
+                // this.poCancel1.nativeElement.hidden=false;
               let control = this.poMasterDtoForm.get('poLines') as FormArray;
               for (let i = 0; i <= this.lstcomments1.poLines.length - lenC; i++) {
                 var poLine: FormGroup = this.lineDetailsGroup();
