@@ -1556,8 +1556,6 @@ export class CounterSaleComponent implements OnInit {
     if (isvalidqty == false) {
       return;
     }
-    // this.validateNumUnitPrice(index,pricingQty);
-    // this.validateNumUnitPrice(index);
     console.log(index);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     console.log(arrayControl);
