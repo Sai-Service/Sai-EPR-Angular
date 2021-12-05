@@ -8,8 +8,16 @@ import { NgForm } from '@angular/forms';
 import { ThemeService } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
-interface ICustRelMaster { }
+interface ICustRelMaster { 
+  employeeId:number;
+  ticketNo:string;
+  empTktNo:string;
+  custName:string;
+  emplName:string;
+  empDesig:string;
+}
 
 @Component({
   selector: 'app-customer-relation-master',
@@ -26,10 +34,10 @@ export class CustomerRelationMasterComponent implements OnInit {
     
 
     public PriceListIdList : Array<string> = [];
-    // public EmployeeList : Array<string> = [];
     EmployeeList : any=[];
     CustomerMapList :any[];
-    priceListLineDetails1 : any=[];
+    lstcomments: any[];
+    lstCustDetails: any;
 
     loginName:string;
     loginArray:string;
@@ -47,12 +55,18 @@ export class CustomerRelationMasterComponent implements OnInit {
     employeeId:number;
     ticketNo:string;
     empTktNo:string;
+    customerNo:number;
     custName:string;
     emplName:string;
     empDesig:string;
     empStatus:string ='Active';
     startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     endDate:Date;
+
+    displayButton=true;
+    lineItemRepeated=false;
+    headerValidation=true;
+    lineValidation=true;
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) 
     {
@@ -71,6 +85,7 @@ export class CustomerRelationMasterComponent implements OnInit {
       employeeId:[],
       ticketNo:[],
       empTktNo:[],
+      customerNo:[],
       custName:[],
 
       emplName:[],
@@ -87,12 +102,15 @@ export class CustomerRelationMasterComponent implements OnInit {
     lineDetailsGroup() {
       return this.fb.group({ 
         customerId:[''],
+        // custAccountNo:[],
         custAccountNo :['', [Validators.required]],    
         custName:['', [Validators.required]],
-        custAddr: ['', [Validators.required]],
-        custMobile: ['', [Validators.required]],
+        address1: ['', [Validators.required]],
+        contactNo: ['', [Validators.required]],
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
+        emplId:[],
+        locId:[],
        });
     }
   
@@ -145,38 +163,210 @@ export class CustomerRelationMasterComponent implements OnInit {
     this.empDesig=selectedValue.designation;
     this.empStatus=selectedValue.status;
     this.employeeId=selectedValue.emplId
-    // alert ("Employee Id :"+employeeId);
-
-    // this.service.customerEmpMapList(employeeId,0,1)
-    // .subscribe(
-    //   data => {
-    //     this.CustomerMapList = data;
-    //     console.log(this.CustomerMapList);
-    //   }
-    // );
-
+    this.lineDetailsArray().reset();
+    this.displayButton=true;
     }
   }
 
 
   SearchByEmpTktNo (){
-    var mEmpId=this.custRelationMasterForm.get('employeeId').value;
-    alert ("Cust-emp Id :"+mEmpId)
-
-    this.service.customerEmpMapList(mEmpId,0,1)
-    .subscribe(
-      data => {
-        this.CustomerMapList = data;
-        console.log(this.CustomerMapList);
-      });
+    // var mEmpId=this.custRelationMasterForm.get('employeeId').value;
+   
+    // this.service.getCustomerEmpMapList(mEmpId,0,1)
+    // .subscribe(
+    //   data => {
+    //     this.CustomerMapList = data;
+    //     console.log(this.CustomerMapList);
+    //   });
     }
-
-  
-
 
   SearchByCust (cust){
     alert("Search Cust...TktNo :"+cust);
   }
+
+        newMast()  {
+      
+          this.CheckHeaderValidations();
+          if (this.headerValidation==false ) {alert("Header Validation Failed... Please Check");  return;}
+    
+          this.lineValidation=false;
+          var custLineArr = this.custRelationMasterForm.get('custList').value;
+          var len1=custLineArr.length;
+          
+          for (let i = 0; i < len1 ; i++) 
+            {
+              this.CheckLineValidations(i);
+              if(this.lineValidation==false){break;}
+            }
+
+        if(this.lineValidation===false) { 
+          alert("Line Validation Failed...\nPlease check all line data fields are updated properly..")
+          return;
+        }
+          this.displayButton=false;
+          var custLines = this.custRelationMasterForm.get('custList').value;
+           var len1 = custLines.length;
+            console.log(custLines);
+            this.service.custRelationPostSubmit(custLines).subscribe((res: any) => {
+              if (res.code === 200) {
+
+                alert(res.message);
+                } else {
+                if (res.code === 400) {
+                  this.displayButton=true;
+                  alert(res.message);
+                ;
+                }
+              }
+            });
+            
+
+        }
+
+
+  searchMast(pageNo) {
+    this.CheckHeaderValidations();
+    if (this.headerValidation==false ) {return;}
+
+    this.service.getCustomerEmpMapList(this.employeeId,pageNo,50)
+      .subscribe(
+        data => {
+          this.lstcomments = data;
+          console.log(this.lstcomments);
+        }
+      );
+  };
+
+  resetMast() {
+    window.location.reload();
+  }
+
+  closeMast() {
+    this.router.navigate(['admin']);
+  }
+
+  
+  searchCustomer(index) {
+
+    this.CheckHeaderValidations();
+    var patch = this.custRelationMasterForm.get('custList') as FormArray;
+    if(this.headerValidation==false) {
+      patch.controls[index].patchValue({custAccountNo: '' });return;}
+  
+    var custLineArr = this.custRelationMasterForm.get('custList').value;
+    
+    var custAcNo = custLineArr[index].custAccountNo;
+    // alert("Customer AcNo :" +custAcNo +" , "+index)
+    this.service.searchCustomerByAccount(custAcNo)
+      .subscribe(
+        data => {
+          this.lstCustDetails = data.obj;
+
+          if(data.code===400){
+
+            (patch.controls[index]).patchValue(
+              {
+                customerId:  '',
+                custAccountNo:'',
+                custName:  '',
+                address1: '',
+                contactNo: '',
+                startDate: '',
+                endDate:'',
+                emplId:'',
+                locId:','
+              }
+            ); alert (custAcNo+ " - Customer Account Not found in Customer Master");return;
+          }
+
+          if(data.code===200 && data.obj !=null){
+          console.log(this.lstCustDetails);
+
+          // this.duplicateLineCheck(this.lstCustDetails.customerId,index,this.lstCustDetails.custAccountNo)
+          this.duplicateLineCheck(this.lstCustDetails.customerId,index,this.lstCustDetails.custAccountNo);
+            
+          (patch.controls[index]).patchValue(
+            {
+              customerId:  this.lstCustDetails.customerId,
+              custName:  this.lstCustDetails.custName,
+              address1: this.lstCustDetails.address1,
+              contactNo: this.lstCustDetails.contactNo,
+              startDate: this.lstCustDetails.startDate,
+              endDate:this.lstCustDetails.endDate,
+              emplId:this.employeeId,
+              locId:this.locId,
+            }
+          );
+          if (this.lineItemRepeated){ this.lineDetailsArray().removeAt(index);}
+
+          } 
+        }
+      ); 
+  }
+
+
+    addRow(index) {
+          // alert("Adding new Line..."+index);
+        
+          var custLineArr = this.custRelationMasterForm.get('custList').value;
+         if( custLineArr[index].customerId>0) {
+          this.lineDetailsArray().push(this.lineDetailsGroup()); 
+         }else {alert ("Incomplete Line ");}
+    }
+
+    RemoveRow(index) {
+      if (index===0){ }
+      else {
+         this.lineDetailsArray().removeAt(index);
+      }
+    
+    }
+
+    duplicateLineCheck(mCustId,index,custNo) {
+      var varLineArr = this.custRelationMasterForm.get('custList').value;
+      for (let i = 0; i <  this.lineDetailsArray().length ; i++) 
+      {
+         var x=varLineArr[i].customerId;
+         if( i !=index && x===mCustId) {
+          alert(custNo+" - Customer No Already in the List .Check Line :"+(i+1));
+          this.lineItemRepeated=true;
+          return;
+        } 
+        }
+        this.lineItemRepeated=false;
+      }
+
+      CheckHeaderValidations(){
+    
+        const formValue: ICustRelMaster = this.custRelationMasterForm.value;
+    
+            if (formValue.employeeId<=0 || formValue.employeeId===null || formValue.employeeId===undefined)
+            {
+              this.headerValidation=false; 
+              alert ("Header Details Not Found...Select Employee.");
+                return;
+            } 
+          this.headerValidation=true;
+    
+        }
+
+        CheckLineValidations(i) {
+
+          var custLineArr1 = this.custRelationMasterForm.get('custList').value;
+          var lineValue1=custLineArr1[i].customerId;
+          var lineValue2=custLineArr1[i].custAccountNo;
+          var lineValue3=custLineArr1[i].emplId;
+          var j=i+1;
+        if(lineValue1<=0 || lineValue2<=0 || lineValue3<=0) {
+            alert("Line-"+j+ " : Incomplete Line Details.Please Check");
+            this.lineValidation=false;
+            return;
+          } 
+          this.lineValidation=true;
+
+        }
+  
+
   
 
 }

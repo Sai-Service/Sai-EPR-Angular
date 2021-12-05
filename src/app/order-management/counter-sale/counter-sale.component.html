@@ -138,7 +138,7 @@
                         (keydown.tab)="accountNoSearch(custAccountNo)" #myinput>
                     <div *ngIf="submitted && f.custAccountNo.errors" class="invalid-feedback">
                         <div *ngIf="f.custAccountNo.errors.required">Code cannot be blank</div>
-                    </div>
+                    </div> 
                 </td>
                 <td style="width: 15%" class="LabelFontStyle">
                     Customer&nbsp;Site&nbsp;:&nbsp;
@@ -836,6 +836,9 @@
                             <input type="text" disabled formControlName="tcsYN" value={{tcsYN}} class="form-control"
                             style="width:50px;font-weight: bold;">
                         </td>&nbsp;&nbsp;
+                        <td>
+                            <input disabled type="number" style="width: 50px;" class="form-control" formControlName="tcsPer" value={{tcsPer}}>
+                        </td>
                     </ng-template>
                     </tr>
                 </table>

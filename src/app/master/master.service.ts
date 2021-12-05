@@ -2300,22 +2300,22 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
-  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
+  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate,ouId): Observable<any>
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
       // alert ("receipt date only");
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
+        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}`)
       }
       if( rcptNumber !=undefined || rcptNumber !=null) {
         // alert ("receipt number only");
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
       }
 
       if(custActNo !=undefined || custActNo !=null){
         // alert("cust account no");
-         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
+         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}`);}
     }
 
 
@@ -3302,13 +3302,19 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
           // http://localhost:8081/empMst/EmpLocDept?locId=2103&divisionId=2&deptId=5
         }
 
-        customerEmpMapList(empId,p1,s1): Observable<any> {
+        getCustomerEmpMapList(empId,p1,s1): Observable<any> {
           return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
        // http://localhost:8081/empCust?emplId=334&page=0&size=1
      }
 
-        
+     public custRelationPostSubmit(custRelationRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/empCust';
+      return this.http.post(url, custRelationRecord, options);
+    }
 
-
+    
 
 }
