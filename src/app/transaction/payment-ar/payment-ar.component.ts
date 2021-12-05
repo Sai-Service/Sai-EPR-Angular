@@ -831,7 +831,7 @@ export class PaymentArComponent implements OnInit {
     // alert("SearchByRcptNo-Receipt No : "+ rcptNo+","+custActNo +","+ rcptdate );
     this.status = null;
     var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    this.service.getArReceiptSearchByRcptNo(rcptNo, custActNo, mDate)
+    this.service.getArReceiptSearchByRcptNo(rcptNo, custActNo, mDate,sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.lstcomments = data.obj;
@@ -2072,9 +2072,9 @@ export class PaymentArComponent implements OnInit {
   }
 
 
-  ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any) {
+  ReceiptArApplication(rcptNumber: any, custActNo: any, rcptDate: any,ouId:any) {
     alert(this.receiptNumber);
-    this.service.getArReceiptSearchByRcptNo(rcptNumber, custActNo, rcptDate)
+    this.service.getArReceiptSearchByRcptNo(rcptNumber, custActNo, rcptDate,ouId)
       .subscribe(
         data => {
           this.lstcomments = data.obj;

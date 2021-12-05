@@ -145,6 +145,7 @@ export class CounterSaleComponent implements OnInit {
   lineNumber: number;
   private allLineTotalAmt = 0;
   tcsYN: string;
+  tcsPer:number;
   transactionTypeId: number;
   customerSiteId: number;
   reservedQty: number;
@@ -406,6 +407,7 @@ export class CounterSaleComponent implements OnInit {
       refCustNo: [''],
       discAmt:[''],
       tcsYN: [''],
+      tcsPer:[''],
       transactionTypeId: [''],
       InvoiceNumber: [''],
       name: ['', [Validators.required]],
@@ -855,15 +857,9 @@ export class CounterSaleComponent implements OnInit {
               this.displayViewGatePass = true;
               this.displaycounterSaleOrderSave = false;
               if (this.allDatastore.tcsYN === 'Y') {
-                // alert(this.allDatastore.tcsYN)
                 this.displaytcsYN=false;
                 this.isDisabled=true;
                 this.displaytcsBuuton=false;
-                // for (let i = 0; data.obj.oeOrderLinesAllList.length; i++) {
-                //   alert(data.obj.oeOrderLinesAllList[i].segment)
-                //   if (data.obj.oeOrderLinesAllList[i].segment === 'TCS') {
-                //     this.displaytcsBuuton=false;
-                //   }}
               }
               else {
                 this.displaytcsYN = true;
@@ -941,6 +937,11 @@ export class CounterSaleComponent implements OnInit {
               // this.paymentButton.nativeElement.hidden = true;
               //  alert(this.PaymentViewReceipt)
               this.PaymentViewReceipt = false;
+              if (data.obj.tcsYN === 'Y') {
+                this.displaytcsYN=false;
+                // this.isDisabled=true;
+                // this.displaytcsBuuton=false;
+              }
             }
             else if (data.obj.transactionTypeName === 'Accessories Sale - Credit' || data.obj.transactionTypeName === 'Spares Sale - Credit') {
               //  alert('hi')
@@ -1272,7 +1273,9 @@ export class CounterSaleComponent implements OnInit {
               this.isDisabled = true;
             }
             // alert(data.obj.tcsYN);
-            this.CounterSaleOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
+            this.CounterSaleOrderBookingForm.patchValue({tcsYN: data.obj.tcsYN });
+            this.CounterSaleOrderBookingForm.patchValue({tcsPer: data.obj.tcsPer}); 
+            // alert(data.obj.tcsPer)
             // this.CounterSaleOrderBookingForm.patchValue({ name: this.custSiteList[0].siteName });
             let select = this.payTermDescList.find(d => d.lookupValueId === this.selCustomer.termId);
             this.paymentType = select.lookupValue;
@@ -1285,13 +1288,11 @@ export class CounterSaleComponent implements OnInit {
             }
             var custName = data.obj.custName;
             if (custName.includes(('CSCash Customer')) && Number(sessionStorage.getItem('divisionId')) === 2) {
-              // alert(custName);
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
             }
             else {
-              // this.displaydisPer=true;
               this.CounterSaleOrderBookingForm.get('disPer').disable();
             }
             if (data.obj.tcsYM === 'Y') {
@@ -2700,7 +2701,8 @@ export class CounterSaleComponent implements OnInit {
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var lnNo = Number(patch.length + 1);
     // alert(this.allLineTotalAmt)
-    var tcsCal = Math.round((this.allLineTotalAmt * 0.1 / 100 + Number.EPSILON) * 100) / 100;
+    var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
+    var tcsCal = Math.round((this.allLineTotalAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
     this.addRow(arrayctrl.length);
     var itemDesc = 'TCS'
     //  alert(tcsCal);

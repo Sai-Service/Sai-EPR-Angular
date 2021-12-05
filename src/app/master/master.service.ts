@@ -2297,22 +2297,22 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
-  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
+  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate,ouId): Observable<any>
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
       // alert ("receipt date only");
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
+        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}`)
       }
       if( rcptNumber !=undefined || rcptNumber !=null) {
         // alert ("receipt number only");
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
       }
 
       if(custActNo !=undefined || custActNo !=null){
         // alert("cust account no");
-         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
+         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}`);}
     }
 
 
