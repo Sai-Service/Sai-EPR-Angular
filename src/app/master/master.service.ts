@@ -1049,8 +1049,8 @@ purchaseLocationList(temp): Observable<any> {
 
 }
 
-getsearchByPOHeder(poNo): Observable<any> {
-  return this.http.get(this.ServerUrl + `/poHdr/poNum/${poNo}`);
+getsearchByPOHeder(poNo,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/poHdr/poNum?segment1=${poNo}&locId=${locId}`);
 }
 
 
@@ -2410,8 +2410,8 @@ bulkpouploadSales(formData: FormData) {
     return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
   }
 
-  getPOByUser(emplId, startDt, endDt){
-    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
+  getPOByUser(emplId, startDt, endDt,locId){
+    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
 
 
@@ -3296,6 +3296,18 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         return this.http.post(url, BankReconRecord, options);
       }
 
+        ////////////////////customer relation manager master //////////////////////
+        employeeLst(locId,divId,deptId): Observable<any> {
+             return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
+          // http://localhost:8081/empMst/EmpLocDept?locId=2103&divisionId=2&deptId=5
+        }
+
+        customerEmpMapList(empId,p1,s1): Observable<any> {
+          return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
+       // http://localhost:8081/empCust?emplId=334&page=0&size=1
+     }
+
+        
 
 
 

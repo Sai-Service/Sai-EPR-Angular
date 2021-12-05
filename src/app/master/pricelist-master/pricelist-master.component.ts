@@ -145,9 +145,10 @@ export class PricelistMasterComponent implements OnInit {
   display1 = true;
   displayButton = true;
   updateButton=false;
+  updateHeaderButton=false;
   plsearch=false;
   displayItemDetails=true;
-  addNew=true;
+  addNew=false;
   itemFoundInPLmaster=false;
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -628,18 +629,15 @@ export class PricelistMasterComponent implements OnInit {
 
         if (this.lineValidation ) 
         {
-          alert("Line Validation Sucessfull....\nPutting Line data  to PRICE LIST TABLE")
+          // alert("Line Validation Sucessfull....\nPutting Line data  to PRICE LIST TABLE")
 
           
       const formValue: IPriceList =this.transeData(this.priceListMasterForm.value);
       this.service.UpdatePriceListById(formValue, formValue.priceListHeaderId).subscribe((res: any) => {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFULLY');
-          // window.location.reload();
-          this.priceListMasterForm.disable();
-          this.priceListMasterForm.get('searchByItemNumber').enable();
-          this.priceListMasterForm.get('primaryPriceListId').enable();
-
+          this.addNew=false;
+         
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
@@ -681,12 +679,13 @@ export class PricelistMasterComponent implements OnInit {
         if (res.code === 200) {
           alert('RECORD UPDATED SUCCESSFUILY');
           // window.location.reload();
+          this.updateHeaderButton=false;
           
         } else {
           if (res.code === 400) {
             alert('ERROR OCCOURED IN PROCEESS');
             // this.priceListMasterForm.reset();
-            this.updateButton=true;
+            this.updateHeaderButton=true;
           }
         }
       });
@@ -1230,9 +1229,11 @@ export class PricelistMasterComponent implements OnInit {
       // alert ("priceListHeaderId :"+priceListHeaderId);
       // this.addNew=false;
       this.priceListMasterForm.reset();
+      this.updateHeaderButton=true;
       this.display1= false;
       this.displayLineDetails=false;
-      this.updateButton=true;
+      this.updateButton=false;
+      this.addNew=true;
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
 
@@ -1299,6 +1300,9 @@ export class PricelistMasterComponent implements OnInit {
                       if(data1.length>0){
                         this.priceListLineDetails2=data1;
                         this.itemFoundInPLmaster =true;
+                        this.updateButton=true;
+                        this.updateHeaderButton=false;
+                        this.addNew=false;
                         console.log(data1);
 
                         var len = this.lineDetailsArray().length;
@@ -1311,11 +1315,10 @@ export class PricelistMasterComponent implements OnInit {
                       } else { alert (mSegment+" - Item Not Found in Price List Master - "+plName)}
                     }); 
 
-                    } else { alert (mSegment + " - Item Not Found in Master");return;}
+            } else { alert (mSegment + " - Item Not Found in Master");return;}
                     
-                      
             });
-              }
+          }
 
   
     F9SearchItemCode(mSegment) {

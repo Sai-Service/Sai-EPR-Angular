@@ -26,7 +26,9 @@ export class CustomerRelationMasterComponent implements OnInit {
     
 
     public PriceListIdList : Array<string> = [];
-    priceListLineDetails : any=[];
+    // public EmployeeList : Array<string> = [];
+    EmployeeList : any=[];
+    CustomerMapList :any[];
     priceListLineDetails1 : any=[];
 
     loginName:string;
@@ -41,7 +43,9 @@ export class CustomerRelationMasterComponent implements OnInit {
     orgId:number;
     divisionId : number;
     divisionName:string;
-
+    
+    employeeId:number;
+    ticketNo:string;
     empTktNo:string;
     custName:string;
     emplName:string;
@@ -64,6 +68,8 @@ export class CustomerRelationMasterComponent implements OnInit {
       divisionId :[''],
       divisionName:[''],
 
+      employeeId:[],
+      ticketNo:[],
       empTktNo:[],
       custName:[],
 
@@ -116,11 +122,56 @@ export class CustomerRelationMasterComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
+
+   
+
+    this.service.employeeLst(this.locId,this.divisionId,this.deptId)
+    .subscribe(
+      data => {
+        this.EmployeeList = data;
+        console.log(this.EmployeeList);
+      }
+    );
+
   }
 
-  SearchByEmpTktNo (tktNo){
-    alert("Search Employee...TktNo :"+tktNo);
+  onSelectEmpTktNo(tktNo){
+
+    let selectedValue = this.EmployeeList.find(d => d.ticketNo === tktNo);
+    if( selectedValue != undefined){
+    console.log(selectedValue);
+
+    this.emplName=selectedValue.fullName;
+    this.empDesig=selectedValue.designation;
+    this.empStatus=selectedValue.status;
+    this.employeeId=selectedValue.emplId
+    // alert ("Employee Id :"+employeeId);
+
+    // this.service.customerEmpMapList(employeeId,0,1)
+    // .subscribe(
+    //   data => {
+    //     this.CustomerMapList = data;
+    //     console.log(this.CustomerMapList);
+    //   }
+    // );
+
+    }
   }
+
+
+  SearchByEmpTktNo (){
+    var mEmpId=this.custRelationMasterForm.get('employeeId').value;
+    alert ("Cust-emp Id :"+mEmpId)
+
+    this.service.customerEmpMapList(mEmpId,0,1)
+    .subscribe(
+      data => {
+        this.CustomerMapList = data;
+        console.log(this.CustomerMapList);
+      });
+    }
+
+  
 
 
   SearchByCust (cust){
