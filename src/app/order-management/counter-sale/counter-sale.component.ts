@@ -1852,23 +1852,14 @@ export class CounterSaleComponent implements OnInit {
                               controlinv.controls[k].patchValue({unitSellingPrice:selLocator[0].prc});
                             }
                             else {
-<<<<<<< HEAD
-                              // alert('2')
-                              controlinv.controls[k].patchValue({ frmLocator: this.getfrmSubLoc[0].segmentName });
-                              controlinv.controls[k].patchValue({ frmLocatorId: this.getfrmSubLoc[0].locatorId });
-                              controlinv.controls[k].patchValue({ onHandQty: this.getfrmSubLoc[0].onHandQty })
-                              controlinv.controls[k].patchValue({ id: this.getfrmSubLoc[0].id });
-                              controlinv.controls[k].patchValue({unitSellingPrice:this.getfrmSubLoc[0].prc});
-=======
-                              alert('2');
-                              alert(selLocator[0].segmentName);
+                              // alert('2');
+                              // alert(selLocator[0].segmentName);
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({unitSellingPrice:selLocator[0].prc});
->>>>>>> 0d1b5839869ff3509ebc332f2fd7bec90a8a6e10
                             }
                             this.service.getreserqty(this.locId, select.itemId).subscribe
                               (data => {
