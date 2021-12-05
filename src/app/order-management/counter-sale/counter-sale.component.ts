@@ -1530,7 +1530,7 @@ export class CounterSaleComponent implements OnInit {
     if (qty1 <= 0) {
       alert("Please enter quantity more than zero");
       trxLnArr1.controls[index].patchValue({ quantity: '' });
-      (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
+      // (<any>trxLnArr[index].get('pricingQty')).nativeElement.focus();
       return false;
     }
     if (uomCode === 'NO') {
@@ -1756,6 +1756,7 @@ export class CounterSaleComponent implements OnInit {
                             return;
                           } else {
                             var getfrmSubLoc = data;
+
                             this.locData[k] = data;
                             controlinv.controls[k].get('frmLocatorId').enable();
                             if (getfrmSubLoc.length == 1) {
@@ -1840,23 +1841,27 @@ export class CounterSaleComponent implements OnInit {
                             return;
                           } else {
                             this.getfrmSubLoc = data;
+                            console.log(this.getfrmSubLoc);
                             this.locData[k] = data;
+                            var  selLocator=this.locData[k];
                             controlinv.controls[k].get('frmLocatorId').enable();
                             if (this.getfrmSubLoc.length == 1) {
-                              controlinv.controls[k].patchValue({ onHandId: this.getfrmSubLoc[0].segmentName });
-                              controlinv.controls[k].patchValue({ frmLocatorId:this.getfrmSubLoc[0].locatorId });
-                              controlinv.controls[k].patchValue({ frmLocator:this.getfrmSubLoc[0].segmentName });
-                              controlinv.controls[k].patchValue({ onHandQty: this.getfrmSubLoc[0].onHandQty });
-                              controlinv.controls[k].patchValue({ id: this.getfrmSubLoc[0].id });
-                              controlinv.controls[k].patchValue({unitSellingPrice:this.getfrmSubLoc[0].prc});
+                              controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
+                              controlinv.controls[k].patchValue({ frmLocatorId:selLocator[0].locatorId });
+                              controlinv.controls[k].patchValue({ frmLocator:selLocator[0].segmentName });
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
+                              controlinv.controls[k].patchValue({ id: selLocator[0].id });
+                              controlinv.controls[k].patchValue({unitSellingPrice:selLocator[0].prc});
                             }
                             else {
-                              alert('2')
-                              controlinv.controls[k].patchValue({ frmLocator: this.getfrmSubLoc[0].segmentName });
-                              controlinv.controls[k].patchValue({ frmLocatorId: this.getfrmSubLoc[0].locatorId });
-                              controlinv.controls[k].patchValue({ onHandQty: this.getfrmSubLoc[0].onHandQty })
-                              controlinv.controls[k].patchValue({ id: this.getfrmSubLoc[0].id });
-                              controlinv.controls[k].patchValue({unitSellingPrice:this.getfrmSubLoc[0].prc});
+                              alert('2');
+                              alert(selLocator[0].segmentName);
+                              controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
+                              controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
+                              // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
+                              controlinv.controls[k].patchValue({ id: selLocator[0].id });
+                              controlinv.controls[k].patchValue({unitSellingPrice:selLocator[0].prc});
                             }
                             this.service.getreserqty(this.locId, select.itemId).subscribe
                               (data => {
@@ -1968,7 +1973,9 @@ export class CounterSaleComponent implements OnInit {
     // alert( locId+'locId');
     var locId ;
     if(calledFrom === 'Item'){
-       locId = trxLnArr[i].frmLocatorId;
+      var linLocData=this.locData[i];
+      let sellocId=linLocData.find(d=>Number(d.ROWNUM)=== trxLnArr[i].frmLocatorId);
+      locId = sellocId.locatorId;
     }
     if(calledFrom === 'locator'){
       locId=trxLnArr[i].frmLocatorName;
