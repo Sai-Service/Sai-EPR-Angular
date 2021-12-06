@@ -1,0 +1,224 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader"> &nbsp;Customer&nbsp;Relation&nbsp;Manager&nbsp;Master</td>
+        </tr>
+    </table>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+              <form [formGroup]="custRelationMasterForm" (ngSubmit)="custRelationMaster(custRelationMasterForm.value)">
+                   
+                <fieldset class="RFS">
+                    <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend> -->
+                    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <tr>
+                        <td >
+                            <table class="center">
+                                <tr>
+                                    <td  style="background-color: #FFE4B5;">&nbsp;Employee&nbsp;Ticket&nbsp;No:&nbsp;</td>
+                                    
+                                    <!-- <td style="background-color: #FFE4B5;">
+                                        <input type="number" class="form-control" formControlName="empTktNo" [(ngModel)]='empTktNo'
+                                            value={{empTktNo}} style="text-transform:uppercase;">
+                                    </td> -->
+
+                                    <td>  
+                                        <select style="width: 200px;"  formControlName="empTktNo" id="empTktNo" [(ngModel)]="empTktNo" class="form-control" (ngModelChange)='onSelectEmpTktNo($event)'>
+                                            <option disabled>--Select--</option>
+                                            <option *ngFor="let sc of  EmployeeList" [ngValue]="sc.ticketNo"  >
+                                            {{sc.emplId}}-{{sc.ticketNo}}-{{sc.fullName}}
+                                            </option>
+                                        </select>
+                                    </td>
+
+                                    <td style="background-color: #FFE4B5;">
+                                        <button type="button" class="btn-primary" (click)="SearchByEmpTktNo()"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td>
+
+                                    <td  style="background-color: #FFE4B5;">&nbsp;Customer&nbsp;No&nbsp;&nbsp;</td>
+                                    
+                                    <td style="background-color: #FFE4B5;">
+                                        <input type="number" class="form-control" formControlName="customerNo" [(ngModel)]='customerNo'
+                                            value={{customerNo}} >
+                                    </td>
+
+                                    <td style="background-color: #FFE4B5;">
+                                        <button type="button" class="btn-primary" (click)="SearchByCust(customerNo)"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td>
+                
+                                </tr>
+                            </table>
+                        </td>
+                        </tr>
+                    </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Employee Information</legend>
+                        <table class="center">
+                            <tr>
+                               
+                                <input hidden type="text"  formControlName="employeeId" id="employeeId"  [(ngModel)]="employeeId" class="form-control">
+                            
+                             <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Ticket&nbsp;No:</td>
+                                <td>
+                                    <input disabled type="text"  formControlName="empTktNo" id="empTktNo"  [(ngModel)]="empTktNo" class="form-control">
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Name&nbsp;:</td>
+                                <td>
+                                    <input disabled  style="width: 300px;"  type="text"  formControlName="emplName" id="emplName"  [(ngModel)]="emplName" class="form-control">
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date&nbsp;:</td>
+                                <td>
+                                    <input disabled type="date"  formControlName="startDate" id="startDate"  [(ngModel)]="startDate" class="form-control">
+                                </td>
+                               
+                               </tr>
+                               <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Status&nbsp;:</td>
+                                <td>
+                                    <input disabled type="text"  formControlName="empStatus" id="empStatus"  [(ngModel)]="empStatus" class="form-control">
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Designation&nbsp;:</td>
+                                <td>
+                                    <input disabled style="width: 300px;" type="text"  formControlName="empDesig" id="empDesig"  [(ngModel)]="empDesig" class="form-control">
+                                </td>
+
+                                
+
+                                <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date&nbsp;:</td>
+                                <td>
+                                    <input disabled type="date"  formControlName="endDate" id="endDate"  [(ngModel)]="endDate" class="form-control">
+                                </td>
+
+                               </tr>
+
+                        </table>
+                    </fieldset>
+
+                    <div class="center">
+                        <!-- <br> -->
+                       <div class="center" formArrayName="custList">
+  
+                            <div class="grid_scroll">
+
+                             <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
+                                          cellspacing="0" cellpadding="4" rules="all" class="center">
+
+                                          <thead>
+                                            <tr class="GridHeader">
+                                                  <th style="width:3rem" scope="col">Srl&nbsp;No.</th>
+                                                  <th style="width:5rem" scope="col">Customer&nbsp;No</th>
+                                                  <!-- <th style="width:3rem" scope="col">Customer&nbsp;Id</th>
+                                                  <th style="width:3rem" scope="col">Empl&nbsp;Id</th> -->
+                                                  <th style="width:15rem" scope="col">Customer Name</th>
+                                                  <th style="width:20rem" scope="col">Address</th>
+                                                  <th style="width:6rem" scope="col">Contact No</th>
+                                                  <th style="width:6rem" scope="col">Start Date</th>
+                                                  <th style="width:6rem" scope="col">End Date</th>
+                                                   <th style="width:2rem" scope="col">Add+</th>
+                                                  <th style="width:2rem" scope="col">Del-</th>
+                                              </tr>
+                                          </thead>
+
+                                          <tr *ngFor="let group of lineDetailsArray().controls; let i= index" [formGroupName]="i" >
+
+                                            <input  hidden style="width:5rem;"  type="number" formControlName="customerId" class="form-control">
+                                            <input  hidden style="width:5rem;"  type="number" formControlName="emplId" class="form-control">
+                                            <input  hidden style="width:5rem;"  type="number" formControlName="locId" class="form-control">    
+
+                                            <td style="text-align: center;width: 4rem;">{{i+1}}</td>
+                                            <td><input   style="width:6rem;"  type="number" formControlName="custAccountNo" (change)="searchCustomer(i)" class="form-control"></td>
+                                            <td><input   disabled style="width:15rem;"  type="text" formControlName="custName" class="form-control"></td>
+                                            <td> <input  disabled style="width:20rem;"  type="text" formControlName="address1" class="form-control"></td>
+                                            <td> <input  disabled style="width:8rem;"  type="text" formControlName="contactNo" class="form-control"></td>
+                                            <td> <input  disabled style="width:10rem;"  type="date" formControlName="startDate" class="form-control"></td>
+                                            <td> <input  disabled style="width:10rem;"  type="date" formControlName="endDate" class="form-control"></td>
+                                           
+                                            <td><button  type="submit" class="btn btn-info" (click)="addRow(i)"  style="width: min-content;"><i class="fa fa-plus"></i></button>  </td>
+                                            <td><button  type="submit" class="btn btn-info" (click)="RemoveRow(i)"  style="width: min-content;"><i class="fa fa-trash"></i></button>  </td>
+                                            <!-- (keydown.shift.arrowdown)="addRow(i)" -->
+                                        </tr>
+
+
+
+                             </table>
+                            </div>
+                       </div>
+                    </div>
+
+                    <table class="center">
+                        <tr>
+                            <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                            <ng-template #thenBlock1>
+                            <td> <button type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                            <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td>
+                            <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                            <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                           
+                            </ng-template>
+                            <ng-template #elseBlock1>
+                                <td> <button disabled type="submit" class="btn btn-info" id="register" (click)="newMast()">Save</button></td>
+                                <td> <button type="submit" class="btn btn-info" id="register" (click)="searchMast(0)">Search</button></td>
+                                <td> <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                                <td> <button type="submit" class="btn btn-info" id="register" (click)="closeMast()">Close</button></td>
+                            </ng-template>
+                            
+                        </tr>
+                    </table>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container1" >
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(0)">Previous</a></li>
+          <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(1)">1</a></li>
+          <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(2)">2</a></li>
+          <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(3)">3</a></li>
+          <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(4)">4</a></li>
+          <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(5)">Next</a></li>
+        </ul>
+      </nav>
+      <div id="ouTable">
+     <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+        <thead>
+            <tr class="GridHeader">
+            <th scope="col" style="width: 100px;">Srl#</th>    
+            <th scope="col" style="width: 100px;">Customer No</th>
+            <th scope="col"style="width: 160px;">Customer Name</th>
+            <th scope="col" style="width: 250px;">Address</th>
+            <th scope="col" style="width: 100px;">Contact No</th>
+            <th scope="col" style="width: 100px;">Start Date</th>
+            <th scope="col" style="width: 100px;">End Date</th>
+            <!-- <th scope="col" style="width: 100px;">Emp TktNo</th> -->
+            <th scope="col" style="width: 80px;">Select</th>
+            </tr>
+        </thead>
+        <tbody>
+         <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;">
+            <td style="width: 50px; text-align: center;">{{i+1}}</td>
+            <td style="width: 107px;text-align: center;">{{com.custAccountNo}}</td>
+            <td style="width: 180px;">{{com.custName}}</td>
+            <td style="width: 450px;">{{com.address1}}</td>
+            <td style="width: 190px;">{{com.contactNo}}</td>
+             <!-- <td style="width: 170px;">{{com.emplId}}</td> -->
+            <td style="width: 170px;">{{com.startdate}}</td>
+            <td style="width: 170px;">{{com.enddate}}</td>
+            <td style="width: 140px;"><button class="btn btn-secondary" (click)="Select(com.custAccountNo)" >Select</button></td>
+        </tr>
+      </tbody>
+     </table>
+    </div>
+    </div>

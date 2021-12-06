@@ -850,7 +850,7 @@
                         <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                         <td>
                             <!-- <input type="text" disabled formControlName="sstate" class="form-control"> -->
-                            <select formControlName="state" id="state" [(ngModel)]='state'
+                            <select formControlName="sstate" id="sstate" [(ngModel)]='sstate'
                             class="form-control" (ngModelChange)='onOptionSiteStateSeleted($event)'
                             [ngClass]="{ 'is-invalid': submitted && f.state.errors }">
                             <option></option>
@@ -956,7 +956,7 @@
                         <ng-template #thenBlocksitebtn>
                           <td>
                             <!-- [disabled]="!supplierMasterForm.valid" -->
-                              <button type="submit" class="btn btn-primary" id="register" style="width: fit-content;"
+                              <button type="submit" [disabled]="isDisabled"  class="btn btn-primary" id="register" style="width: fit-content;"
                                    (click)="createSitesupplierMast()">Create EXSite</button>
                           </td>
                           <td>

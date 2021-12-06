@@ -169,7 +169,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                
+
                                                     </td>
                                                 </tr>
                                                 </table>
@@ -815,6 +815,7 @@
                                       Enter mobile2 </span> -->
                               </td>
                           </tr>
+                        </ng-template>
                             <tr>
                                     <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Applicable&nbsp;:&nbsp;</td>
                                     <!-- <td> -->
@@ -824,21 +825,23 @@
                                     <!-- </td> -->
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Percentage&nbsp;:&nbsp;</td>
                                     <td>
-                                        <input type="number" formControlName="tdsPer" value={{tdsPer}} [(ngModel)]='tdsPer' type="number"
+                                        <!-- <input type="number" formControlName="tdsPer" value={{tdsPer}} [(ngModel)]='tdsPer' type="number"
                                             class="form-control" min='0.0' max='99' oninput="this.value = Math.abs(this.value)"
                                             [ngClass]="{ 'is-invalid': submitted && f.disPer.errors }"
-                                            placeholder="Enter Tds Percentage" >
-                                        <div *ngIf="submitted && f.disPer.errors" class="invalid-feedback">
-                                            <div *ngIf="f.disPer.errors.required">Enter discount Percentage </div>
-                                            <div *ngIf="f.disPer.errors.maxLength">Enter discount Percentage
-                                            </div>
-                                        </div>
-                                        <!-- <span
-                                            *ngIf="!customerMasterForm.get('smobile3').valid && customerMasterForm.get('smobile3').touched">Please
-                                            Enter mobile2 </span> -->
+                                            placeholder="Enter Tds Percentage" > -->
+                                            <select formControlName="tdsPer" value={{tdsPer}} [(ngModel)]='tdsPer'
+                                            class="form-control" >
+                                            <option *ngFor="let per of tdsPercentage">{{per.code}}</option>
+                                              </select>
+                                        </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Applicable&nbsp;:&nbsp;</td>
+                                      <td>
+                                         <input type="date" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
+                                              class="form-control"
+                                              [ngClass]="{ 'is-invalid': submitted && f.tdsApplDate.errors }">
                                     </td>
                             </tr>
-                            </ng-template>
+                            <!-- </ng-template> -->
                             <ng-template #elseBlockdisable>
 
                             </ng-template>
@@ -1347,7 +1350,7 @@
                                               class="form-control" min="0" pattern = "[0-9]" (keypress)="omit_special_char($event)"
                                               [ngClass]="{ 'is-invalid': submitted && f.screditAmt.errors }"
                                               placeholder="Enter  Credit Amount" oninput="this.value = Math.abs(this.value)"
-                                              onKeyPress="if(this.value.length==3) return false;">
+                                              onKeyPress="if(this.value.length==6) return false;">
                                           <div *ngIf="submitted && f.screditAmt.errors" class="invalid-feedback">
                                               <div *ngIf="f.creditAmt.errors.required">Enter Credit Amount </div>
                                               <div *ngIf="f.creditAmt.errors.maxLength">Enter Credit Amount
@@ -1490,7 +1493,7 @@
         </div>
     </div>
 </div>
-<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true" 
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true"
 style="width: 500px; text-align: center;margin-left: 35%;">
     <div class="modal-dialog modal-dialog-centered modal-sm"  role="document">
     <div class="modal-content">

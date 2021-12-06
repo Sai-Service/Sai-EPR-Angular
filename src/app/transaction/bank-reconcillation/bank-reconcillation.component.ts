@@ -75,7 +75,9 @@ export class BankReconcillationComponent implements OnInit {
         date2=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
         amount1:number;
         amount2:number;
-
+        showReconButton3=false;
+        showValidateButton=false;
+        fndButton3=true;
 
 
 
@@ -133,6 +135,7 @@ export class BankReconcillationComponent implements OnInit {
 
 
             ceLineList: this.fb.array([this.invLineDetails()]),
+            avlList: this.fb.array([this.avlLineDetails()]),
           });
         }
       
@@ -154,9 +157,32 @@ export class BankReconcillationComponent implements OnInit {
       
           })
         }
+
+        avlLineDetails() {
+          return this.fb.group({
+            selectFlag:[],
+            checkId:[],
+            invTypeLookupCode:[],
+            bankAccountNo:[],
+            appAmt:[],
+            glDate:[],
+            date1:[],
+            docNo:[],
+            voucherNo:[],
+           
+                
+          })
+        }
+
+
+
       
         invLineArray(): FormArray {
           return <FormArray>this.bankReconcillationForm.get('ceLineList')
+        }
+
+        avlLineArray(): FormArray {
+          return <FormArray>this.bankReconcillationForm.get('avlList')
         }
   
 
@@ -273,36 +299,125 @@ export class BankReconcillationComponent implements OnInit {
        reconciledBnk(){alert ("Bank Statement -Reconciled -wip");}
        availableBnk(){alert ("Bank Statement -Availiable -wip");}
 
-       avlTrans(){}
+      
 
        FindAvl(){
 
         var bnkAcNo=this.bankReconcillationForm.get("bankAccountNo").value
         var dt1=this.pipe.transform(this.date1, 'dd-MMM-y');
         var dt2=this.pipe.transform(this.date2, 'dd-MMM-y');
-
-        
-
         this.service.getAvlBankReconLines(bnkAcNo, this.transNo1,dt1,dt2,this.amount1,this.amount2)
           .subscribe(
             data => {
-              this.lstAvlBnkLines = data;
+              this.lstAvlBnkLines = data.obj;
               if(this.lstAvlBnkLines.length==0) {
-                alert (bnkAcNo +" - " + "No Record Found.");return;
+                alert (bnkAcNo +" - " + "No Record Found.");
+                this.showValidateButton=false;
+                return;
               }
               console.log(this.lstAvlBnkLines);
+
+              var len = this.avlLineArray().length;
+              for (let i = 0; i < this.lstAvlBnkLines.length - len; i++) {
+                var avlLnGrp: FormGroup = this.avlLineDetails();
+                this.avlLineArray().push(avlLnGrp);
+              }
+              this.bankReconcillationForm.get('avlList').patchValue(this.lstAvlBnkLines);
+              this.showValidateButton=true;
+              this.fndButton3=false;
         });
 
        }
 
+
+       avlTrans(){
+        this.getTrans(0);
+      }
+
        getTrans(index){
+         this.fndButton3=true;
+         this.showReconButton3=false;
+         this.showValidateButton=false
+         this.avlLineArray().clear();
+         this.date1=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
+         this.date2=this.pipe.transform(Date.now(), 'y-MM-dd');  ;
          var patch = this.bankReconcillationForm.get('ceLineList') as FormArray;
          var LineArr = this.bankReconcillationForm.get('ceLineList').value;
          var tranNum = LineArr[index].bankTrxNumber;
          var tranAmt = LineArr[index].amount;
-         alert ("Line selected :"+index +","+tranNum);
          this.transNo1=tranNum;this.transNo2=tranNum
          this.amount1=tranAmt;this.amount2=tranAmt
+        //  this.showValidateButton=true;
+      }
+
+      LineSelectFlag(e,index){ }
+
+      ValidatebnkRecon(){
+     
+        var avlLineArr = this.bankReconcillationForm.get('avlList').value;
+        var len1 = avlLineArr.length;
+        // alert ("avlLineArr.length :"+ avlLineArr.length);
+
+  
+        var lrm=0;
+        for (let i = len1 - 1; i >= 0; i--) {
+          if (this.avlLineArray().controls[i].get('selectFlag').value != true) {
+            this.avlLineArray().removeAt(i);
+            lrm=lrm+1;
+          } 
+        }
+
+          if (lrm===len1) {  
+            this.showReconButton3 = false; this.showValidateButton=false;this.fndButton3=true; } 
+          else { this.showReconButton3 = true; this.showValidateButton=false; }
+
+            var avlLineArr1 = this.bankReconcillationForm.get('avlList').value;
+            var len2 = avlLineArr1.length;
+              
+          for (let i = 0; i < len2; i++) {
+            this.avlLineArray().controls[i].get('selectFlag').disable();     
+          }
+
+          // this.showReconButton3=true;
+          // this.fndButton3=false;
+
+      }
+
+
+      selectAvlFlag(evnt,index){
+        alert("Selected ...avl..."+evnt +" , "+index);
+      }
+
+      validateDate(){
+        var frmDate =this.bankReconcillationForm.get("date1").value
+        var toDate =this.bankReconcillationForm.get("date2").value
+
+        if(frmDate > toDate) { this.date1=this.date2;}
+        if(toDate  < frmDate) { this.date2=this.date1;}
+
+      }
+
+
+      bnkReconcilePost() {
+        // alert("SAVE TDS DETAILS.....WIP")
+        this.showReconButton3=false;
+        var avlLines = this.bankReconcillationForm.get('avlList').value;
+        var len1 = avlLines.length;
+          console.log(avlLines);
+          this.service.bankReconPostSubmit(avlLines).subscribe((res: any) => {
+            if (res.code === 200) {
+              alert(res.message);
+              // this.poInvoiceForm.reset();
+            } else {
+              if (res.code === 400) {
+                alert(res.message);
+                // this.displayTdsButton = true;
+                // this.poInvoiceForm.reset();
+              }
+            }
+          });
+           
+    
       }
 
 }

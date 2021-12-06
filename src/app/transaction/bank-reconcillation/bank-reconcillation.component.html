@@ -48,6 +48,7 @@
                                 <input type="number" class="form-control" formControlName="docNumber" [(ngModel)]='docNumber'
                                     value={{docNumber}} >
                             </td>
+
                             <td> <button type="button" class="btn btn-info" (click)="bnkStatementFind()" >Find</button> </td> 
                            
                            
@@ -214,7 +215,7 @@
                         <td><input   type="number" class="form-control" formControlName="controlBeginBalance"  [(ngModel)]="controlBeginBalance" style="width: 130px;background-color: yellow;"></td>
                         <td>Receipts&nbsp;:&nbsp;</td> 
                         <td><input   type="number" class="form-control" formControlName="controlTotalCr"  [(ngModel)]="controlTotalCr" style="width: 130px;background-color: yellow;" ></td>
-                        <td><input disabled  type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:55px ;"></td>
+                        <td><input   type="number" class="form-control" formControlName="controlCrLineCount"  [(ngModel)]="controlCrLineCount" style=" width:55px ;background-color: yellow;"></td>
                     </tr>   
 
                      
@@ -225,7 +226,7 @@
                        
                        <td >Payments&nbsp;:&nbsp;</td>
                         <td><input   type="number" class="form-control" formControlName="controlTotalDr"  [(ngModel)]="controlTotalDr" style="width: 130px;background-color: yellow;" ></td>
-                        <td><input disabled  type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:55px ;"></td>
+                        <td><input   type="number" class="form-control" formControlName="controlDrLineCount"  [(ngModel)]="controlDrLineCount"  style=" width:55px ;background-color: yellow;"></td>
                    
                     </tr>
                     <tr>
@@ -277,11 +278,6 @@
                 </table>
                 </fieldset>
                 </td>
-
-
-            
-
-
 
             </tr>
             </table>
@@ -352,8 +348,6 @@
 </div>
 
 <!-- ------------------------------------------------------------------------------- -->
-
-
 <div class="modal fade" id="bankStmtAvailable" tabindex="-1" role="dialog" aria-labelledby="bankStmtAvailableLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -368,31 +362,56 @@
          </div>
         
          <div class="modal-body">
+
+               
+               
              <fieldset class="RFS">
-                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Find&nbsp;Transactions</legend>
+                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Search&nbsp;Parameters</legend>
              
             <table class="center" >
+
+                <tr>
+                    <td style="font-weight:bold;"><input type="radio" id="arPymt"   name="optType" value="arPymt"  checked>&nbsp;AR&nbsp;Payment&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight:bold;"><input type="radio" id="arRcpt"   name="optType" value="arRcpt">&nbsp;AR&nbsp;Receipt&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td style="font-weight:bold;"><input type="radio" id="cashFlow" name="optType" value="cashFlow" >&nbsp;Cash&nbsp;Payment&nbsp;Cash&nbsp;Flow</td>
+                </tr>
+                    <br>
                  <tr>
+                    
+
                     <td > Transaction &nbsp;No&nbsp;:&nbsp;</td> 
-                    <td ><input   type="text" class="form-control" formControlName="transNo1"  [(ngModel)]="transNo1"  style="width: 150px;background-color: yellow;text-align: center;" ></td>
-                    <td ><input   type="text" class="form-control" formControlName="transNo2"  [(ngModel)]="transNo2"  style="width: 150px;background-color: yellow;text-align: center;" ></td>
+                    <td ><input   type="text" class="form-control" formControlName="transNo1"  [(ngModel)]="transNo1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
+                    <td ><input   type="text" class="form-control" formControlName="transNo2"  [(ngModel)]="transNo2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
                  </tr>
                  <tr> 
+                  
                     <td > Date &nbsp;&nbsp;:&nbsp;</td> 
-                    <td ><input   type="date" class="form-control" formControlName="date1"  [(ngModel)]="date1"  style="width: 150px;background-color: yellow;text-align: center;" ></td>
-                    <td ><input   type="date" class="form-control" formControlName="date2"  [(ngModel)]="date2"  style="width: 150px;background-color: yellow;text-align: center;" ></td>
+                    <td ><input   type="date" class="form-control" formControlName="date1"  [(ngModel)]="date1" (change)="validateDate()"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;background-color: yellow;text-align: center;" ></td>
+                    <td ><input   type="date" class="form-control" formControlName="date2"  [(ngModel)]="date2" (change)="validateDate()"  max="{{minDate | date:'yyyy-MM-dd'}}" style="width: 170px;background-color: yellow;text-align: center;" ></td>
                 </tr>  
                 <tr>
+
+                 
+
                      <td > Amount &nbsp;:&nbsp;</td> 
-                     <td><input   type="number" class="form-control" formControlName="amount1"  [(ngModel)]="amount1"  style="width: 150px;background-color: yellow;text-align: center;" ></td>
-                     <td><input   type="number" class="form-control" formControlName="amount2"  [(ngModel)]="amount2"  style="width: 150px;background-color: yellow;text-align: center;" ></td>
-                     <button  style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
-        
+                     <td><input   type="number" class="form-control" formControlName="amount1"  [(ngModel)]="amount1"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
+                     <td><input   type="number" class="form-control" formControlName="amount2"  [(ngModel)]="amount2"  style="width: 170px;background-color: yellow;text-align: center;" ></td>
+
+                     <div *ngIf="fndButton3; then FndYes; else FndNo"></div>
+                     <ng-template #FndYes>
+                         <button  style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
+                     </ng-template>
+                     <ng-template #FndNo>
+                          <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="FindAvl()">Find</button>
+                    </ng-template>
+
                     </tr>   
 
                   
             </table>
             </fieldset>
+                
+                    
 
             
 
@@ -406,41 +425,38 @@
                <tbody>
                     <tr class="GridHeader">
                         <th style="width:3rem" scope="col">Select</th>
-                        <!-- <th style="width:6rem" scope="col">LineId</th> -->
+                        <th style="width:6rem" scope="col">CheckId</th>
+                        <th style="width:6rem" scope="col">Doc No</th>
+                        <th style="width:6rem" scope="col">VoucherNo</th>
                         <th style="width:6rem" scope="col">Type</th>
                         <th style="width:10rem" scope="col">Number</th>
-                        <th style="width:10rem" scope="col">Currency</th>
+                        <!-- <th style="width:10rem" scope="col">Currency</th> -->
                         <th style="width:10rem" scope="col">Amount</th>
-                        <th style="width:10rem" scope="col">Amount</th>
+                        <!-- <th style="width:10rem" scope="col">Amount</th>
                         <th style="width:10rem" scope="col">Amount Cleared</th>
                         <th style="width:10rem" scope="col">Cleared Date</th>
-                        <th style="width:10rem" scope="col">Value Date</th>
+                        <th style="width:10rem" scope="col">Value Date</th> -->
                         <th style="width:10rem" scope="col">GL Date</th>
-                        <th style="width:10rem" scope="col">Date</th>
-
-                    </tr>
+                        <!-- <th style="width:10rem" scope="col">Date</th> -->
+                   </tr>
                </tbody>
-               
-               <!-- <ng-container  class="center" formArrayName="ceLineList">
-                <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+                                
+                    <ng-container  class="center" formArrayName="avlList">
+                    <ng-container   *ngFor="let group of avlLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
                             <tr>
-                            <td><input  type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="applyrcptFlag" (change)="applyReceiptFlag($event,k)"></td>
-                                                  
-                            <td><input disabled style="width: 50px;height: 25px; text-align: center;" type="text"    formControlName="lineNumber" class="form-control"></td>
-                            <td><input disabled style="width: 120px;height: 25px;" type="text"    formControlName="trxType" class="form-control"></td>
-                            <td><input disabled style="width: 100px;height: 25px;" type="text"    formControlName="trxCode" class="form-control"></td>
-                            <td><input disabled style="width: 170px;height: 25px;" type="text"    formControlName="bankTrxNumber" class="form-control"></td>
-                            <td><input disabled style="width: 140px;height: 25px;" type="text"    formControlName="trxDate" class="form-control"></td>
-                            <td><input disabled style="width: 140px;height: 25px;" type="date"    formControlName="valueDate" class="form-control"></td>
-                            <td><input disabled style="width: 130px;height: 25px;" type="number"    formControlName="amount" class="form-control"></td>
-                            <td><input disabled style="width: 130px;height: 25px;" type="number"    formControlName="amtRecon" class="form-control"></td>
-                            <td><input disabled style="width: 100px;height: 25px;" type="number"    formControlName="charges" class="form-control"></td>
-                            <td><input disabled style="width: 140px;height: 25px;" type="text"    formControlName="status" class="form-control"></td>
-                           </tr>
-                        </ng-container>
-                        </ng-container> -->
+                                <td><input type="checkbox"  style="text-align:  center;width: 3rem;"                     formControlName="selectFlag" (change)="LineSelectFlag($event,k)"></td>
+                                <td><input disabled style="width: 100px;height: 25px;text-align: center;" type="text"    formControlName="checkId" class="form-control"></td>
+                                <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="docNo" class="form-control"></td>
+                                <td><input disabled style="width: 160px;height: 25px;text-align: center;" type="text"    formControlName="voucherNo" class="form-control"></td>
+                                <td><input disabled style="width: 200px;height: 25px;text-align: center;" type="text"    formControlName="invTypeLookupCode" class="form-control"></td>
+                                <td><input disabled style="width: 210px;height: 25px;text-align: center;" type="text"    formControlName="bankAccountNo" class="form-control"></td>
+                                <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="text"    formControlName="appAmt" class="form-control"></td>
+                                <td><input disabled style="width: 150px;height: 25px;text-align: center;" type="date"    formControlName="glDate" class="form-control"></td>
+                            </tr>
+                    </ng-container>
+                    </ng-container>
                 </table>
-                    </div>
+                </div>
             </div>
             </fieldset>
 
@@ -449,7 +465,24 @@
          </div>
 
          <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            
+            <div *ngIf="showValidateButton; then vYes; else vNo"></div>
+            <ng-template #vYes>
+                <button  style="width: 8em;" type="button" class="btn btn-info" (click)="ValidatebnkRecon()">Validate</button>
+              </ng-template>
+            <ng-template #vNo></ng-template>
+
+            <div *ngIf="showReconButton3; then RYes; else RNo"></div>
+            <ng-template #RYes>
+            <button  style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
+            </ng-template>
+            <ng-template #RNo>
+                <button disabled style="width: 8em;" type="button" class="btn btn-info" (click)="bnkReconcilePost()">Reconcile</button>
+            </ng-template>
+
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
         </div>
     </div>

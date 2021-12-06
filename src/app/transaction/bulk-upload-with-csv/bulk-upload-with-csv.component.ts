@@ -153,6 +153,7 @@ export class BulkUploadWithCsvComponent implements OnInit {
     // }
 
   uploadFile(event) {
+    // alert(event)
     // event.target.disabled = true;
     this.closeResetButton=false;
     this.progress = 0;
@@ -199,11 +200,25 @@ export class BulkUploadWithCsvComponent implements OnInit {
         // let location=this.bulkUploadCSVForm.get('locCode').value;
         var location = (sessionStorage.getItem('locCode'));
         var invcNo = this.bulkUploadCSVForm.get('invcNo').value;
+        var fileName = this.bulkUploadCSVForm.get('file').value;
+        console.log(fileName);
+        // indexOf
+        var fileNameNew = fileName.substring(fileName.lastIndexOf('\\') + 1, fileName.length);
+        var value = fileNameNew.split('.');
+        var value1 = value[0];
+        // var value2 = value[1];
+        // alert(value1+'---' + value2)
         var supplierNo = this.bulkUploadCSVForm.get('supplierNo').value;
         var supplierSite = this.bulkUploadCSVForm.get('supplierSite').value;
         var userName = (sessionStorage.getItem('ticketNo'));
         var invcDt2 = this.bulkUploadCSVForm.get('invcDt1').value;
         var invcDt1 = this.pipe.transform(invcDt2, 'dd-MM-yyyy');
+        if (invcNo != value1){
+          alert('Invoice Number & File Name missmatch... Please Confirm..!');
+          this.dataDisplay ='Invoice Number & File Name missmatch....'
+          this.closeResetButton=true;
+          return;
+        }
         // alert(location+'  '+invcNo+' '+supplierNo+' '+ supplierSite+' '+ userName+' '+ invcDt1)
         this.service.bulkpouploadSparesBajaj(formData, location, invcNo, supplierNo, supplierSite, userName, invcDt1).subscribe((res: any) => {
           if (res.code === 200) {

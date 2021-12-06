@@ -315,11 +315,14 @@ SubAccountList(): Observable<any> {
 }
 /////////////IOT Transfer/////////////////////
 
-iotOrderTypeList(ouId): Observable<any> {
+iotOrderTypeList1(ouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder/${ouId}`);
 }
+iotOrderTypeList(): Observable<any> {
+  return this.http.get(this.ServerUrl +`/OrderTrnType/stkorder1`);
+}
 getShiptoLoc(locId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoloc/${locId}`);
+  return this.http.get(this.ServerUrl +`/shippingNetwork/shiptoInterState/${locId}`);
 }
   /////////////////////////////////////////Division Master////////////////////////////////////////////
    public divisionMasterSubmit(divMasterRecord) {
@@ -774,6 +777,9 @@ GetCustomerSiteDetails(mCustomerId,mOuId): Observable<any> {
   // alert("customerId ,OuId :" +mCustomerId +" ,"+mOuId);
   return this.http.get(this.ServerUrl +`/Customer/custsite?customerId=${mCustomerId}&ouId=${mOuId}`);
 }
+getTDSPercentage():Observable<any>{
+  return this.http.get(this.ServerUrl+`/cmnLookup/CmnType/TDSPer`)
+}
 
 ////////////////////////////////Supplier Master///////////////////////////
 
@@ -1043,8 +1049,8 @@ purchaseLocationList(temp): Observable<any> {
 
 }
 
-getsearchByPOHeder(poNo): Observable<any> {
-  return this.http.get(this.ServerUrl + `/poHdr/poNum/${poNo}`);
+getsearchByPOHeder(poNo,locId): Observable<any> {
+  return this.http.get(this.ServerUrl + `/poHdr/poNum?segment1=${poNo}&locId=${locId}`);
 }
 
 
@@ -1339,13 +1345,13 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
 searchByItemSegmentDiv(divId,itemSeg):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/details/${divId}/${itemSeg}`)
- 
+
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
 searchByItemDescf9(divId,itemDesc):Observable<any>
 {
-    return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}/${itemDesc}`)
+    return this.http.get(this.ServerUrl+`/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
 
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
@@ -1353,7 +1359,7 @@ searchByItemDescf9(divId,itemDesc):Observable<any>
 searchByItemBYSegment(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/segment/${itemDesc}`)
- 
+
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
@@ -1440,6 +1446,9 @@ ItemIdDivisionList(divisionId):Observable<any>{
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
   // alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+}
+getfrmSubLocPrice(locId,invItemId,subInventoryId):Observable<any>{
+  return this.http.get(this.ServerUrl+ `/onhandqty/onhandlocPrc?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
 }
 getItemLoc(locId,subInventoryId,invItemId):Observable<any>{
   // alert ("ms >> subInventoryId :" +subInventoryId);
@@ -2098,7 +2107,7 @@ PriceSubTypeList(): Observable<any> {
 
 // PriceListIdList(): Observable<any> {
 //   return this.http.get(this.ServerUrl +'/pricelist');
- 
+
 // }
 
 
@@ -2291,22 +2300,22 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
-  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
+  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate,ouId): Observable<any>
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
       // alert ("receipt date only");
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
+        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}`)
       }
       if( rcptNumber !=undefined || rcptNumber !=null) {
         // alert ("receipt number only");
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
       }
 
       if(custActNo !=undefined || custActNo !=null){
         // alert("cust account no");
-         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
+         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}`);}
     }
 
 
@@ -2401,8 +2410,8 @@ bulkpouploadSales(formData: FormData) {
     return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
   }
 
-  getPOByUser(emplId, startDt, endDt){
-    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}`)
+  getPOByUser(emplId, startDt, endDt,locId){
+    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
   }
 
 
@@ -3258,7 +3267,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/ceBankAccounts/BankList/101
       }
 
-     
+
 
       getBankReconStatement1(bnkId,ouId): Observable<any> {
         // alert("ms >>account no:"+bnkId+","+ouId );
@@ -3278,5 +3287,34 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
       }
 
 
+
+      public bankReconPostSubmit(BankReconRecord) {
+        const options = {
+          headers: this.headers
+        };
+        const url = this.ServerUrl + '/ceStateHdr';
+        return this.http.post(url, BankReconRecord, options);
+      }
+
+        ////////////////////customer relation manager master //////////////////////
+        employeeLst(locId,divId,deptId): Observable<any> {
+             return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
+          // http://localhost:8081/empMst/EmpLocDept?locId=2103&divisionId=2&deptId=5
+        }
+
+        getCustomerEmpMapList(empId,p1,s1): Observable<any> {
+          return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
+       // http://localhost:8081/empCust?emplId=334&page=0&size=1
+     }
+
+     public custRelationPostSubmit(custRelationRecord) {
+      const options = {
+        headers: this.headers
+      };
+      const url = this.ServerUrl + '/empCust';
+      return this.http.post(url, custRelationRecord, options);
+    }
+
+    
 
 }
