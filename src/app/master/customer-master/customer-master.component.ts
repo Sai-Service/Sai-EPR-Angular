@@ -301,7 +301,8 @@ export class CustomerMasterComponent implements OnInit {
       staxCatName: [],
       stanNo: [],
       spanNo: ['', [Validators.pattern("^[A-Z]{5}[0-9]{4}[A-Z]{1}$"), Validators.minLength(10), Validators.maxLength(10)]],
-      sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$"), Validators.minLength(15), Validators.maxLength(15)]],
+      // sGstNo: ['', [Validators.pattern("^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{2}$"), Validators.minLength(15), Validators.maxLength(15)]],
       souId: [],
       souName: [],
       slocation: ['', [Validators.minLength(3), Validators.maxLength(100), Validators.pattern('[a-zA-Z,. 0-9/-]*')]],
@@ -625,6 +626,60 @@ export class CustomerMasterComponent implements OnInit {
 
   }
 
+  gstVerification2(event: any) {
+    var sGstno = this.customerMasterForm.get('sGstNo').value
+    const sGstNo1 = sGstno.substr(2, 10);
+    this.panNo = sGstNo1;
+    //  alert('Gst verificaition2');
+    this.customerMasterForm.patchValue({'spanNo':sGstNo1});
+    var res = sGstno.substr(0, 2);
+    console.log(res);
+    const state = this.customerMasterForm.get('sstate').value;
+    console.log(state);
+    console.log(this.sstate === 'MAHARASHTRA' && res === 27);
+    switch (state.toUpperCase()) {
+      case 'MAHARASHTRA':
+        if (res != 27) {
+          alert('Kindly entered correct GST No Start with 27');
+          this.customerMasterForm.get('sGstnNo').reset();
+        }
+        break;
+      case 'GOA':
+        if (res != 30) {
+          alert('Kindly entered correct GST No Start with 30');
+          this.customerMasterForm.get('sGstnNo').reset();
+        }
+        break;
+      case 'ANDHRA PRADESH':
+        if (res != 28) {
+          alert('Kindly entered correct GST No Start with 28');
+          this.customerMasterForm.get('sGstnNo').reset();
+        }
+        break;
+      case 'KARNATAKA':
+        if (res != 29) {
+          alert('Kindly entered correct GST No Start with 29');
+          this.customerMasterForm.get('sGstnNo').reset();
+        }
+        break;
+      case 'KERALA':
+        if (res != 32) {
+          alert('Kindly entered correct GST No Start with 32');
+          this.customerMasterForm.get('sGstnNo').reset();
+        }
+        break;
+      case 'TELANGANA':
+        if (res != 36) {
+          alert('Kindly entered correct GST No Start with 36');
+          this.customerMasterForm.get('sGstnNo').reset();
+        }
+        break;
+    }
+
+
+
+  }
+
   onKey(event: any) {
     // const aaa = this.title + '. ' + this.fName + ' ' + this.mName + ' ' + this.lName;
 
@@ -674,7 +729,6 @@ export class CustomerMasterComponent implements OnInit {
     return val;
   }
   newOnlySiteMast() {
-
     this.submitted = true;
     if (this.customerMasterForm.invalid) {
       // alert ('new site click validation error');
@@ -1128,6 +1182,25 @@ export class CustomerMasterComponent implements OnInit {
 
     }
 
+    if (msgType.includes("NewSite")) {
+      var isvaliddata = this.validation();
+      if (isvaliddata === false) {
+        alert('Validation Errors New Site !!');
+        this.msgType ='Error';
+        (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.submitted = true;
+      // (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      if (this.customerMasterForm.invalid) {
+        //this.submitted = false;
+        (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '');
+        return;
+      }
+      this.message = "Do you want to SAVE New Site(Yes/No)?"
+
+    }
+
     if (msgType.includes("Reset")) {
       this.message = "Do you want to Reset the changes(Yes/No)?"
     }
@@ -1154,6 +1227,11 @@ export class CustomerMasterComponent implements OnInit {
     if (this.msgType.includes("Close")) {
       // this.closeItemCatMast();
       this.router.navigate(['admin']);
+    }
+
+    if (this.msgType.includes("NewSite")) {
+       this.newOnlySiteMast();
+      // this.router.navigate(['admin']);
     }
     return;
   }

@@ -1054,10 +1054,13 @@
                                                </td>
                                         <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
                                         <td>
-                                            <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
+                                               <!-- <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
                                                 class="form-control"
                                                 placeholder="Enter GSTN"
-                                                [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }">
+                                                [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }"> -->
+                                                <input formControlName="sGstNo" value={{sGstNo}} class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }" (keyup)="gstVerification2($event)"
+                                                placeholder="Enter GSTN no">
 
                                                 <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
                                                     <div *ngIf="f.sGstNo.errors.pattern">Invalid GSTIN number format</div>
@@ -1404,8 +1407,15 @@
                                                     EX Site</button>
                                             </td>
                                             <td>
-                                                <button type="submit"  class="btn btn-primary" id="register"
-                                                    (click)="newOnlySiteMast()">New Site</button>
+                                                <!-- <button type="submit"  class="btn btn-primary" id="register"
+                                                    (click)="newOnlySiteMast()">New Site</button> -->
+
+                                                    <button type="submit" class="btn btn-primary" id="newSiteBtn" data-toggle="modal"
+                                                    data-target="#confirmAlert" (click)="getMessage('NewSite')" >New Site</button>
+
+                                                    <!-- data-target="#confirmAlert" (click)="newOnlySiteMast()" >New Site</button> -->
+                                                 
+                                                                
                                             </td>
 
                                         </ng-template>

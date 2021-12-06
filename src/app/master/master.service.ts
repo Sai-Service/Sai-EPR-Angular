@@ -1345,7 +1345,7 @@ searchByItemf9(itemid,locId,ouId,divId):Observable<any>
 searchByItemSegmentDiv(divId,itemSeg):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/details/${divId}/${itemSeg}`)
- 
+
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
@@ -1359,7 +1359,7 @@ searchByItemDescf9(divId,itemDesc):Observable<any>
 searchByItemBYSegment(divId,itemDesc):Observable<any>
 {
     return this.http.get(this.ServerUrl+`/itemMst/segment/${itemDesc}`)
- 
+
   // http://localhost:8081/itemMst/searchBydesc/2/ring
 }
 
@@ -1446,6 +1446,9 @@ ItemIdDivisionList(divisionId):Observable<any>{
 getfrmSubLoc(locId,invItemId,subInventoryId):Observable<any>{
   // alert ("ms >> subInventoryId :" +subInventoryId);
   return this.http.get(this.ServerUrl+`/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+}
+getfrmSubLocPrice(locId,invItemId,subInventoryId):Observable<any>{
+  return this.http.get(this.ServerUrl+ `/onhandqty/onhandlocPrc?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
 }
 getItemLoc(locId,subInventoryId,invItemId):Observable<any>{
   // alert ("ms >> subInventoryId :" +subInventoryId);
@@ -2297,22 +2300,22 @@ OrderCategoryList(): Observable<any> {
      return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
-  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
+  getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate,ouId): Observable<any>
   {
     // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
 
     if(rcptDate !=undefined || rcptDate !=null){
       // alert ("receipt date only");
-        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'`)
+        return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}`)
       }
       if( rcptNumber !=undefined || rcptNumber !=null) {
         // alert ("receipt number only");
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
       }
 
       if(custActNo !=undefined || custActNo !=null){
         // alert("cust account no");
-         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}`);}
+         return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}`);}
     }
 
 
@@ -3283,7 +3286,7 @@ getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
         // http://localhost:8081/ceStateHdr/161273
       }
 
-     
+
 
       public bankReconPostSubmit(BankReconRecord) {
         const options = {
