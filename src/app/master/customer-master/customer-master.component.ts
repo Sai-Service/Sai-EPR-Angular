@@ -741,6 +741,8 @@ export class CustomerMasterComponent implements OnInit {
         alert(res.message);
         var acctNo = this.customerMasterForm.get('custAccountNo').value;
         this.searchByAccount1(acctNo);
+        // this.customerMasterForm.disable();
+        this.displayNewButton1=false;
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
