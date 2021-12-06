@@ -242,7 +242,7 @@ this.isVisible1=true;
 
   F9Search(itemDesc) {
     var sType=this.adminForm1.get('searchBy').value
-    if(sType =='ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc)}
+    if(sType =='ITEM NUMBER') { this.searchByItemSegmentDiv(itemDesc) }
     if(sType =='ITEM DESCRIPTION') { this.F9SearchItemDesc(itemDesc)}
   }
 
@@ -384,12 +384,12 @@ this.isVisible1=true;
     searchByItemSegmentDiv(itemDesc: string) {
       
       if(itemDesc.length == 8){
-      this.service.searchByItemSegmentDiv(this.divisionId, itemDesc)
+      this.service.searchByItemSegmentDiv(this.divisionId, itemDesc.toUpperCase())
         .subscribe(
           data => {
             var desc = data[0].description;
             this.ItemIdList =data;  
-            this.F9SearchItemDesc( desc);
+            this.Select( data[0].itemId);
                }
         );
     
