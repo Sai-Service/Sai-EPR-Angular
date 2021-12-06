@@ -1845,7 +1845,7 @@ export class CounterSaleComponent implements OnInit {
                             controlinv.controls[k].get('frmLocatorId').enable();
                             if (this.getfrmSubLoc.length == 1) {
                               controlinv.controls[k].patchValue({ onHandId: selLocator[0].segmentName });
-                              controlinv.controls[k].patchValue({ frmLocatorId:selLocator[0].locatorId });
+                              controlinv.controls[k].patchValue({ frmLocatorId:selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator:selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
@@ -1963,6 +1963,7 @@ export class CounterSaleComponent implements OnInit {
   AvailQty(i, itemId, calledFrom) {
     // alert('Hi***' + i);
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
+    var trxLnFormArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     if (itemId === undefined) {
       itemId = trxLnArr[i].itemId;
     }
@@ -1974,9 +1975,16 @@ export class CounterSaleComponent implements OnInit {
       var linLocData=this.locData[i];
       let sellocId=linLocData.find(d=>Number(d.ROWNUM)=== trxLnArr[i].frmLocatorId);
       locId = sellocId.locatorId;
+      (trxLnFormArr.controls[i]).patchValue({
+        frmLocatorName: locId,
+      });
     }
     if(calledFrom === 'locator'){
       locId=trxLnArr[i].frmLocatorName;
+      trxLnArr[i].frmLocatorId=trxLnArr[i].frmLocatorName;
+      // (trxLnFormArr.controls[i]).patchValue({
+      //   frmLocatorId: locId,
+      // });
    }
     // var locId = trxLnArr[i].frmLocatorId;
     // var locId=trxLnArr[i].frmLocatorName;
@@ -2259,6 +2267,9 @@ export class CounterSaleComponent implements OnInit {
         taxAmt1 = taxAmt1 + formVal[i].taxAmt;
         totAmt = totAmt + formVal[i].totAmt;
       }
+      (formArr.controls[i]).patchValue({
+        lineNumber: i+1,
+      });
     }
     basicAmt = Math.round(((basicAmt) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'subtotal': basicAmt });
@@ -2266,9 +2277,6 @@ export class CounterSaleComponent implements OnInit {
     this.CounterSaleOrderBookingForm.patchValue({ 'totTax': taxAmt1 });
     totAmt = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'totAmt': totAmt });
-
-
-
   }
 
 
