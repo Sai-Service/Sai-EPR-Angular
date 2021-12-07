@@ -304,29 +304,29 @@
                         <input   type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
                     </td> -->
 
-                    <td>
-                        <select   formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control">
+                    <td >
+                        <select  formControlName="dealerCode" id="dealerCode" [ngModel]="dealerCode" class="form-control"
                             (ngModelChange)='onSelectedDealer($event)'>
                             <!-- style="width:fit-content"  -->
                             <option>--Select--</option>
-                            <option *ngFor="let sc of dealerCodeList"
-                                [ngValue]="sc.dealerCode">
-                                {{sc.dealerCode}}-{{sc.dealerDesc}}
+                            <option *ngFor="let sc of dealerCodeList"  [ngValue]="sc.dealerCode">
+                                {{sc.dealerCode}}
+                                <!-- -{{sc.dealerDesc}} -->
                             </option>
                         </select>
                     </td>
 
                     <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Name:&nbsp;</td>
 
-                    <td>
-                        <input    disabled   type="text"  formControlName="dealerName"  id="dealerName" [(ngModel)]="dealerName" class="form-control" >
+                    <td colspan="4">
+                        <input  style="width: 100%"  disabled   type="text"  formControlName="dealerName"  id="dealerName" [(ngModel)]="dealerName" class="form-control" >
                     </td>
 
-                    <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
+                    <!-- <td style="width: 12%" class="LabelFontStyle">Dealer&nbsp;Site:&nbsp;</td>
 
                     <td>
                         <input    type="text"  formControlName="dealerSite"  id="dealerSite" [(ngModel)]="dealerSite" class="form-control" >
-                    </td>
+                    </td> -->
 
                 </tr>
 
