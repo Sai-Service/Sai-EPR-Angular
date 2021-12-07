@@ -1408,6 +1408,11 @@ searchallatother(locId):Observable<any>
 getreserqty(locId,itemID):Observable<any>{
   return this.http.get(this.ServerUrl+`/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}`)
 }
+
+getreserqtyNew(locId,itemID,locatorId,rate):Observable<any>{
+  return this.http.get(this.ServerUrl+`/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}&rate=${rate}`)
+}
+
 transType():Observable<any>{
   return this.http.get(this.ServerUrl +'/mtlTrxTypes/IPO');
 }
