@@ -185,13 +185,13 @@ export class WsVehicleMasterComponent implements OnInit {
   city: string;
   state: string;
   pinCd: string;
-  custPhone1: string;
-  custPhone2: string;
-  custPhone3: string;
-  custEmail: string;
+  mobile1: string;
+  mobile2: string;
+  contactNo: string;
+  emailId1: string;
   custTaxCategoryName: string;
   customerSiteId: number;
-  customerType: string;
+  custType: string;
   billToAddress: string;
   shipToAddress: string;
   // contractEndDate:string;
@@ -355,14 +355,14 @@ export class WsVehicleMasterComponent implements OnInit {
       custAddress4: [],
       city: [],
       state: [],
-      custPhone1: [],
-      custPhone2: [],
-      custPhone3: [],
+      mobile1: [],
+      mobile2: [],
+      contactNo: [],
       pinCd: [],
-      custEmail: [],
+      emailId1: [],
       custTaxCategoryName: [],
       customerSiteId: [],
-      customerType: [],
+      custType: [],
       contractEndDate: [],
       billToAddress: [],
       shipToAddress: [],
@@ -544,7 +544,7 @@ export class WsVehicleMasterComponent implements OnInit {
   newMast() {
 
     const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
-
+    this.CreateItemCode();
     this.CheckDataValidations()
 
     if (this.checkValidation) {
@@ -677,8 +677,8 @@ export class WsVehicleMasterComponent implements OnInit {
               custPhone1: this.CustomerDetailsList.mobile1,
               custPhone2: this.CustomerDetailsList.mobile2,
               custPhone3: this.CustomerDetailsList.mobile3,
-              custEmail: this.CustomerDetailsList.emailId,
-              customerType: this.CustomerDetailsList.custType,
+              emailId1: this.CustomerDetailsList.emailId,
+              custType: this.CustomerDetailsList.custType,
               custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList.taxCategoryName,
 
             });
@@ -688,7 +688,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   GetCustomerSiteDetails(mCustId: any) {
-    alert("Customer Id: " + mCustId);
+    // alert("Customer Id: " + mCustId);
     this.service.GetCustomerSiteDetails(mCustId, this.ouId)
       .subscribe(
         data1 => {
@@ -789,24 +789,44 @@ export class WsVehicleMasterComponent implements OnInit {
             custPhone3: this.CustomerDetailsList.mobile3,
             customerType: this.CustomerDetailsList.custType,
             custTaxCategoryName:this.CustomerDetailsList.customerSiteMasterList[0].taxCategoryName,
-            
-
+        
           });
         }
       );
   }
+
+  SearchByCustNo(accountNo) {
+       this.service.searchCustomerByAccount(accountNo)
+      .subscribe(
+        data => {
+          this.CustomerDetailsList = data.obj;
+          console.log(this.CustomerDetailsList);
+          this.wsVehicleMasterForm.patchValue(this.CustomerDetailsList);
+        
+        });
+  }
+
   SearchByCustName(mName) { alert("Search by Cust Name..... wip :" + mName); }
+
+ 
 
   CreateNewItem(mCode, mColor, mChassis) {
     alert("Creating new item code ....wip:" + mCode + "-" + mColor + "-" + mChassis);
   }
 
   CreateItemCode() {
-
+  
     var colorCode1 = this.wsVehicleMasterForm.get('colorCode').value;
     this.segment = this.variantCode + "-" + colorCode1 + "-" + this.chassisNo
     this.wsVehicleMasterForm.patchValue({segment:this.segment});
 
+  }
+
+  SetToDefault(){
+    // alert ("Model selected");
+    // this.colorCode=''
+    // this.variantCode='';
+    this.wsVehicleMasterForm.patchValue({segment:''});
   }
 
   CreateNewCustomer() {
@@ -817,6 +837,7 @@ export class WsVehicleMasterComponent implements OnInit {
   onOptionsSelectedModel(mainModel) {
 
     if (mainModel != null) {
+      this.segment=null;
       this.variantDesc = null;
       this.service.VariantSearchFn(mainModel)
         .subscribe(
@@ -825,8 +846,10 @@ export class WsVehicleMasterComponent implements OnInit {
             console.log(this.VariantSearch);
           }
         );
+        
     }
     else { }
+    
   }
 
 
@@ -845,6 +868,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   onOptionsSelectedVariant(modelVariant) {
     if(modelVariant != undefined){
+     
     this.service.variantDetailsList(modelVariant)
       .subscribe(
         data => {
@@ -864,10 +888,7 @@ export class WsVehicleMasterComponent implements OnInit {
               console.log(this.colorCodeList);
             }
           );
-          
-        }
-      );
-
+        });
       }
   }
 
@@ -945,8 +966,8 @@ export class WsVehicleMasterComponent implements OnInit {
     this.address1 = null; this.address2 = null;
     this.address3 = null; this.custAddress4 = null;
     this.city = null; this.state = null;
-    this.pinCd = null; this.rfId = this.custEmail = null;
-    this.custPhone1 = null; this.custPhone2 = null; this.custPhone3 = null;
+    this.pinCd = null; this.rfId = this.emailId1 = null;
+    this.mobile1 = null; this.mobile2 = null; this.contactNo = null;
     this.dmsInvoiceNo = null; this.dlrInvoiceNo = null;
 
   }
@@ -1092,7 +1113,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   LoadCustDetails(){
-    alert ("Customer details....");
+    // alert ("Customer details....");
     // this.GetCustomerDetails(this.lstcomments.customerId);
     // this.GetCustomerSiteDetails(this.lstcomments.customerId);
 

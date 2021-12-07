@@ -340,12 +340,12 @@
 
                             </ng-template>
 
-                            <!-- <td>
+                             <td>
                                 <button type="button"  class="btn btn-primary" 
                                 data-toggle="modal" data-target="#showpListData" style="width: 5rem;color: black;"  (click)="LoadPList()">
                                 Show&nbsp;List</button>
                             </td>
-                 -->
+                 
                                 
                                
                                 
@@ -452,7 +452,7 @@
                                                     <input style="width: 3rem;" disabled  type="text" formControlName="uom"  class="form-control" placeholder="Uom "  >
                                                 </td>
                                                 <td>
-                                                    <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  >
+                                                    <input style="width:6rem;"  type="text" formControlName="batchCode"  class="form-control" placeholder="Batch Code "  (change)="onOptioninvItemIdSelectedNew(segment,i)" >
                                                 </td>
                                                 <td>
                                                     <input style="text-align: right;width:6rem;"  type="number" formControlName="priceValue"  class="form-control" (change)="validatePrice(i)" placeholder="Price "  >
