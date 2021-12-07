@@ -116,7 +116,8 @@ export class EpmloyeeMasterComponent implements OnInit {
       designation: [''],
       dob: ['', [Validators.required]],
       panNo: ['', [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-Za-z]$"), Validators.maxLength(10)]],
-      emailId: ['', [Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      // emailId: ['', [Validators.required,Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      emailId: ['', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       contact1: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern('[0-9]*'), ]],
       contact2: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]*'), ]],
       loginPass: ['', [Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
@@ -225,7 +226,7 @@ export class EpmloyeeMasterComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('Error while data insertion');
-          this.employeeMasterForm.reset();
+          // this.employeeMasterForm.reset();
         }
       }
     });
