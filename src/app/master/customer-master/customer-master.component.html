@@ -820,7 +820,12 @@
                                     <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Applicable&nbsp;:&nbsp;</td>
                                     <!-- <td> -->
                                             <td style="border: none;color: black;">
-                                                    <input type="checkbox" formControlName="tcs" [(ngModel)]="tcs"  (change)="tcssel($event)">
+                                                    <input type="checkbox" formControlName="tcsYN" [(ngModel)]="tcsYN"  (change)="tcssel($event)">
+                                                </td>
+                                                <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Percentage&nbsp;:&nbsp;</td>
+                                    <!-- <td> -->
+                                            <td style="border: none;color: black;">
+                                                    <input type="checkbox" formControlName="tcsPer" [(ngModel)]="tcsPer">
                                                 </td>
                                     <!-- </td> -->
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Percentage&nbsp;:&nbsp;</td>
@@ -834,6 +839,9 @@
                                             <option *ngFor="let per of tdsPercentage">{{per.code}}</option>
                                               </select>
                                         </td>
+                                        </tr>
+
+                                        <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Applicable&nbsp;:&nbsp;</td>
                                       <td>
                                          <input type="date" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
