@@ -887,14 +887,19 @@ export class PricelistMasterComponent implements OnInit {
               }
             );
 
-             
+           
+
+            var mbCode = this.lineDetailsArray().controls[index].get('batchCode').value;
+            // if(mbCode ===null || mbCode ===undefined || mbCode.trim()==='') {mbCode='';}
+            alert("Pl,itmid,bcode : "+plName+" , "+segId +" , "+mbCode);
              this.service.getLineDetailsSingleItem(plName,segId)  .subscribe(
+              // this.service.getLineDetailsWithItemBatchCode(plName,segId,mbCode)  .subscribe(
               data1 => {
                 console.log(data1);
                 if(data1.length>0){
                   this.itemFoundInPLmaster =true;
 
-                  alert (mSegment +"(" +segId + ") - Item Already exists in the Price List Master.\nBatch Code : "+data1[0].batchCode + " , "+this.itemFoundInPLmaster) ;
+                  alert (mSegment +"(" +segId + ") - Item Already exists in the Price List Master.\nBatch Code : "+data1[0].batchCode) ;
                    x=1;
                    this.lineDetailsArray().controls[index].get('batchCode').disable();
                    this.lineDetailsArray().controls[index].get('priceValue').disable();
@@ -1237,12 +1242,12 @@ export class PricelistMasterComponent implements OnInit {
       let select = this.lstcomments.find(d => d.priceListHeaderId === priceListHeaderId);
       this.priceListMasterForm.patchValue(select);
 
-      // this.service.getLineDetails(priceListHeaderId)  .subscribe(
-      //   data => {
-      //     console.log(data);
-      //     this.priceListLineDetails1=data;
-      //     console.log(this.priceListLineDetails1);
-      //  });
+      this.service.getLineDetails(priceListHeaderId)  .subscribe(
+        data => {
+          console.log(data);
+          this.priceListLineDetails1=data;
+          console.log(this.priceListLineDetails1);
+       });
        
         this.displayButton = false;
         this.display = false;

@@ -2199,6 +2199,13 @@ PriceListIdList(mOuId,mDivId): Observable<any> {
       return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=${plName}&itemId=${itmId}`);
       // http://localhost:8081/pricelist/ItmPrcList/?priceListName=Bajaj Regular MRP&itemId=544
     }
+
+    getLineDetailsWithItemBatchCode(plName,itmId,bCode): Observable<any> {
+      alert("Pl,itmid,bcode : "+plName+" , "+itmId +" , "+bCode);
+      return this.http.get(this.ServerUrl + `/pricelist/ItmPrcBatch/?priceListName=${plName}&itemId=${itmId}&batchCode=${bCode}`);
+      // http://localhost:8081/pricelist/ItmPrcBatch/?priceListName=Bajaj%20Regular%20MRP&itemId=3382&batchCode=
+    }
+
 ////////////////////////////OrderTypeMaster//////////////////
 UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
   const options = {
