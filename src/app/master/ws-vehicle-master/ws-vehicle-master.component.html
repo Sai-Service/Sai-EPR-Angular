@@ -102,7 +102,8 @@
                                         <button type="button" class="btn-primary" (click)="SearchByRegNo(vehRegNo)"><i class="fa fa-search"
                                                 aria-hidden="true"></i></button>
                                     </td>
-                    
+
+                                                     
                                     <td style="width: 12%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
                         
                                     <td>  
@@ -167,7 +168,7 @@
 
                     <td>  
                         <select formControlName="mainModel" id="mainModel" [(ngModel)]="mainModel" class="form-control"  
-                            (ngModelChange)="onOptionsSelectedModel($event)" style="background-color: yellow" >
+                            (ngModelChange)="onOptionsSelectedModel($event)"  style="background-color: yellow" >
                             <option disabled>--Select--</option>
                             <option *ngFor="let mm of mainModelList"  [ngValue]="mm.code">
                                 {{mm.code}}
@@ -179,8 +180,8 @@
 
                    <td>
                     <select formControlName="variantCode" id="variantCode" class="form-control" [(ngModel)]="variantCode" 
-                    (ngModelChange)="onOptionsSelectedVariant($event)"  (change)="onOptionsSelectedVariant(variantCode)" style="background-color: yellow" >
-                     
+                    (ngModelChange)="onOptionsSelectedVariant($event)"  (change)="onOptionsSelectedVariant(variantCode)"  style="background-color: yellow" >
+                    
                        <option >--Select--</option>
                         <option *ngFor="let mv of VariantSearch" [ngValue]="mv.variant">
                             {{mv.variant}}-{{mv.varDescription}}
@@ -201,7 +202,7 @@
                     <td style="width: 12%" class="LabelFontStyle">Colour&nbsp;:&nbsp;</td>
 
                     <td>
-                        <select formControlName="colorCode" id="colorCode" class="form-control" 
+                        <select formControlName="colorCode" id="colorCode" class="form-control" (change)="CreateItemCode()"
                          style="background-color: yellow"  >
                            <option >--Select--</option>
                             <option *ngFor="let mc of colorCodeList" [ngValue]="mc.ColorCode">
@@ -363,6 +364,11 @@
                                 {{sc.attribute1}}
                             </option>
                         </select>
+                    </td>
+
+                    <td style="width: 12%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
+                    <td>
+                        <input   disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control"  >
                     </td>
 
                 </tr>
@@ -664,12 +670,26 @@
                                         <td style="width: 12%" class="LabelFontStyle">Phone&nbsp;No:&nbsp;</td>
                             
                                         <td>
-                                            <input class="form-control" formControlName="custPhone1" [(ngModel)]='custPhone1'
-                                                value={{custPhone1}} style="text-transform:uppercase;">
+                                            <input class="form-control" formControlName="mobile1" [(ngModel)]='mobile1'
+                                                value={{mobile1}} >
+                                        </td>
+
+                                        <td style="background-color: #FFE4B5;">
+                                            <button type="button" class="btn-primary" (click)="SearchByCustPhone(mobile1)"><i class="fa fa-search"
+                                                    aria-hidden="true"></i></button>
+                                        </td>
+
+
+
+                                        <td style="width: 12%" class="LabelFontStyle">Customer&nbsp;No:&nbsp;</td>
+                            
+                                        <td>
+                                            <input class="form-control" formControlName="custAccountNo" [(ngModel)]='custAccountNo'
+                                                value={{custAccountNo}} >
                                         </td>
         
                                         <td style="background-color: #FFE4B5;">
-                                            <button type="button" class="btn-primary" (click)="SearchByCustPhone(custPhone1)"><i class="fa fa-search"
+                                            <button type="button" class="btn-primary" (click)="SearchByCustNo(custAccountNo)"><i class="fa fa-search"
                                                     aria-hidden="true"></i></button>
                                         </td>
                                         <td>&nbsp;Customer&nbsp;Name:&nbsp;</td>
@@ -776,12 +796,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
+                                              <input  disabled  type="text"  formControlName="emailId1"  id="emailId1" [(ngModel)]="emailId1" class="form-control" >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
+                                              <input disabled   type="text"  formControlName="mobile1"  id="mobile1" [(ngModel)]="mobile1" class="form-control" style="width: 130px;background-color: greenyellow;">
                                           </td>
                                       </tr>
               
@@ -793,13 +813,13 @@
                                           <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
+                                              <input disabled    type="text"  formControlName="custType"  id="custType" [(ngModel)]="custType" class="form-control" >
                                           </td>
               
                                           <td style="width: 12%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
+                                              <input  disabled  type="text"  formControlName="mobile2"  id="mobile2" [(ngModel)]="mobile2" class="form-control" style="width: 130px;" >
                                           </td>
                                          
                                     </tr>
@@ -813,7 +833,7 @@
                                       <td style="width: 12%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
+                                              <input  disabled  type="text"  formControlName="contactNo"  id="contactNo" [(ngModel)]="contactNo" class="form-control" style="width: 130px;">
                                           </td>
                           
                                     </tr>
@@ -932,12 +952,12 @@
                                           <td style="width: 12%" class="LabelFontStyle">E-mail&nbsp;:&nbsp;</td>
                           
                                           <td>
-                                              <input  disabled  type="text"  formControlName="custEmail"  id="custEmail" [(ngModel)]="custEmail" class="form-control" >
+                                              <input  disabled  type="text"  formControlName="emailId1"  id="emailId1" [(ngModel)]="emailId1" class="form-control" >
                                           </td>
                                           <td style="width: 12%" class="LabelFontStyle">Phone1&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input disabled   type="text"  formControlName="custPhone1"  id="custPhone1" [(ngModel)]="custPhone1" class="form-control" style="width: 130px;background-color: greenyellow;">
+                                              <input disabled   type="text"  formControlName="mobile1"  id="mobile1" [(ngModel)]="mobile1" class="form-control" style="width: 130px;background-color: greenyellow;">
                                           </td>
                                       </tr>
               
@@ -949,13 +969,13 @@
                                           <td style="width: 12%" class="LabelFontStyle">Cust&nbsp;Type:&nbsp;</td>
                           
                                           <td>
-                                              <input disabled    type="text"  formControlName="customerType"  id="customerType" [(ngModel)]="customerType" class="form-control" >
+                                              <input disabled    type="text"  formControlName="custType"  id="custType" [(ngModel)]="custType" class="form-control" >
                                           </td>
               
                                           <td style="width: 12%" class="LabelFontStyle">Phone2&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="custPhone2"  id="custPhone2" [(ngModel)]="custPhone2" class="form-control" style="width: 130px;" >
+                                              <input  disabled  type="text"  formControlName="mobile2"  id="mobile2" [(ngModel)]="mobile2" class="form-control" style="width: 130px;" >
                                           </td>
                                          
                                     </tr>
@@ -969,7 +989,7 @@
                                       <td style="width: 12%" class="LabelFontStyle">Phone3&nbsp;:&nbsp;</td>
               
                                           <td>
-                                              <input  disabled  type="text"  formControlName="custPhone3"  id="custPhone3" [(ngModel)]="custPhone3" class="form-control" style="width: 130px;">
+                                              <input  disabled  type="text"  formControlName="contactNo"  id="contactNo" [(ngModel)]="contactNo" class="form-control" style="width: 130px;">
                                           </td>
                           
                                     </tr>

@@ -945,6 +945,7 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
   }
+  
   searchByAccount1(accountNo) {
 
     this.displayNewButton = false;
@@ -987,6 +988,8 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
   }
+
+
   Select(customerSiteId: number) {
 
     this.displayNewButton1 = false;
