@@ -83,9 +83,11 @@ interface IcustomerMaster {
   dealerCode: string;
   dealerType: string;
   siteName: string;
-  tcs: string;
+  tcsYN: string;
+  tcsPer:number;
   aadharNo: number;
   tdsApplDate:Date;
+  staxCategoryName:string;
 }
 
 @Component({
@@ -219,13 +221,15 @@ export class CustomerMasterComponent implements OnInit {
   accountNoSearchdata: any;
   displaytanaadhar: boolean;
   displayenable = true;
-  tcs: string;
+  tcsYN: string;
   aadharNo: number;
   limitData: any;
   // startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   customerNameSearch: any[];
   tdsPercentage: any;
   tdsApplDate:Date;
+  staxCategoryName:string;
+  tcsPer:number;
 
   constructor(private fb: FormBuilder, private router: Router,private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
@@ -317,9 +321,10 @@ export class CustomerMasterComponent implements OnInit {
       dealerCode: [],
       dealerType: [],
       siteName: [],
-      tcs: [],
+      tcsYN: [],
       aadharNo: [],
       tdsApplDate:[],
+      tcsPer:[],
     })
 
   }
@@ -514,7 +519,12 @@ export class CustomerMasterComponent implements OnInit {
   }
   onOptionSiteStateSeleted(event: any) {
 
-    if (event != undefined) {
+
+    // this.lstcomments2 = this.lstcomments.customerSiteMasterList;
+    // console.log(this.lstcomments2);
+    // let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
+
+    if (event != undefined && this.customerSiteId ===undefined) {
       this.service.taxCategoryList1(this.locId, event)
         .subscribe(
           data => {
@@ -741,6 +751,8 @@ export class CustomerMasterComponent implements OnInit {
         alert(res.message);
         var acctNo = this.customerMasterForm.get('custAccountNo').value;
         this.searchByAccount1(acctNo);
+        // this.customerMasterForm.disable();
+        this.displayNewButton1=false;
         // this.customerMasterForm.reset();
       } else {
         if (res.code === 400) {
@@ -800,6 +812,7 @@ export class CustomerMasterComponent implements OnInit {
 
     const formValue: IcustomerMaster = this.customerMasterForm.value;
     formValue.termId = this.customerMasterForm.get('paymentType').value;
+    formValue.staxCategoryName=this.customerMasterForm.get('staxCatName').value;
     this.service.UpdateCustExeSiteMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD UPDATED SUCCESSFULLY');
@@ -943,7 +956,7 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
   }
-  
+
   searchByAccount1(accountNo) {
 
     this.displayNewButton = false;
@@ -1023,6 +1036,7 @@ export class CustomerMasterComponent implements OnInit {
       this.customerMasterForm.patchValue({ screditAmt: select.creditAmt });
       this.customerMasterForm.patchValue({ shighAmt: select.highAmt });
       this.customerMasterForm.patchValue({ sdisPer: select.disPer });
+      this.customerMasterForm.patchValue({staxCatName:select.taxCategoryName});
       // this.sstatus=select.status
       // ticketNo not in  json
       let selstatus = this.statusList.find(d => d.codeDesc === select.status);
@@ -1052,10 +1066,10 @@ export class CustomerMasterComponent implements OnInit {
   }
   tcssel(e) {
     if (e.target.checked === true) {
-      this.tcs = 'Y'
+      this.tcsYN = 'Y'
     }
     if (e.target.checked === false) {
-      this.tcs = 'N'
+      this.tcsYN = 'N'
     }
   }
   onOptionSelOuLimit(event) {

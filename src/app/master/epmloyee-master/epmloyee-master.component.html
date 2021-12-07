@@ -362,7 +362,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.ticketNo.errors }"
                             placeholder="Enter ticket No">
                         <div *ngIf="submitted && f.ticketNo.errors" class="invalid-feedback">
-                            <div *ngIf="f.ticketNo.errors.required">Ticke tNo must be a valid</div>
+                            <div *ngIf="f.ticketNo.errors.required">Ticket No must be a valid</div>
                             <!-- <div *ngIf="f.divisionCode.errors.pattern">orgId must be a valid for 3 digit
                     </div> -->
                             <div *ngIf="f.ticketNo.errors.maxLength">Ticket number must be a valid 

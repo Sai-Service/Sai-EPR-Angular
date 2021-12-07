@@ -820,7 +820,12 @@
                                     <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Applicable&nbsp;:&nbsp;</td>
                                     <!-- <td> -->
                                             <td style="border: none;color: black;">
-                                                    <input type="checkbox" formControlName="tcs" [(ngModel)]="tcs"  (change)="tcssel($event)">
+                                                    <input type="checkbox" formControlName="tcsYN" [(ngModel)]="tcsYN"  (change)="tcssel($event)">
+                                                </td>
+                                                <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Percentage&nbsp;:&nbsp;</td>
+                                    <!-- <td> -->
+                                            <td style="border: none;color: black;">
+                                                    <input type="checkbox" formControlName="tcsPer" [(ngModel)]="tcsPer">
                                                 </td>
                                     <!-- </td> -->
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Percentage&nbsp;:&nbsp;</td>
@@ -834,6 +839,9 @@
                                             <option *ngFor="let per of tdsPercentage">{{per.code}}</option>
                                               </select>
                                         </td>
+                                        </tr>
+
+                                        <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Tds&nbsp;Applicable&nbsp;:&nbsp;</td>
                                       <td>
                                          <input type="date" formControlName="tdsApplDate" value={{tdsApplDate}} [(ngModel)]='tdsApplDate'
@@ -1052,45 +1060,8 @@
                                                         <div *ngIf="f.customerSiteId.errors.required">Site ID cannot be blank</div>
                                                     </div>
                                                </td>
-                                        <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
-                                        <td>
-                                               <!-- <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
-                                                class="form-control"
-                                                placeholder="Enter GSTN"
-                                                [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }"> -->
-                                                <input formControlName="sGstNo" value={{sGstNo}} class="form-control"
-                                                [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }" (keyup)="gstVerification2($event)"
-                                                placeholder="Enter GSTN no">
 
-                                                <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
-                                                    <div *ngIf="f.sGstNo.errors.pattern">Invalid GSTIN number format</div>
-                                                    <div *ngIf="f.sGstNo.errors.required">GST number cannot be blank</div>
-                                                    <!-- <div *ngIf="f.sGstNo.errors.maxLength">GSTIN Max length error</div> -->
-                                                </div>
-                                            </td>
-                                        <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
-                                        <td>
-                                            <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
-                                                class="form-control"
-                                             placeholder="Enter Pan No"
-                                             [ngClass]="{ 'is-invalid': submitted && f.spanNo.errors }">
-                                             <div *ngIf="submitted && f.spanNo.errors" class="invalid-feedback">
-                                                <div *ngIf="f.spanNo.errors.required">PAN numbher cannot be blank</div>
-                                                <div *ngIf="f.spanNo.errors.pattern">Invalid PAN format</div>
-                                                <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
-                                            </div>
-                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 15%" class="LabelFontStyle">Tan&nbsp;No&nbsp;:&nbsp;</td>
-                                        <td>
-                                            <input formControlName="stanNo" value={{stanNo}} [(ngModel)]='stanNo'
-                                                class="form-control"
-                                             placeholder="Enter Tan No">
-                                         </td>
-
-                                    </tr>
-                                    <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
+                                    <!-- <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;"> -->
                                         <td style="width: 15%" class="LabelFontStyle">Address1&nbsp;:&nbsp;</td>
                                         <td>
                                             <input formControlName="saddress1" value={{saddress1}} [(ngModel)]='saddress1'
@@ -1121,6 +1092,8 @@
                                                 *ngIf="!customerMasterForm.get('saddress2').valid && customerMasterForm.get('saddress2').touched">Please
                                                 Enter address </span> -->
                                         </td>
+                                        </tr>
+                                        <tr>
                                         <td style="width: 15%" class="LabelFontStyle">Address3&nbsp;:&nbsp;</td>
                                         <td>
                                             <input formControlName="saddress3" value={{saddress3}} [(ngModel)]='saddress3'
@@ -1135,9 +1108,7 @@
                                                 *ngIf="!customerMasterForm.get('saddress3').valid && customerMasterForm.get('saddress3').touched">Please
                                                 Enter address </span> -->
                                         </td>
-                                    </tr>
-                                    <tr>
-                                            <td style="width: 15%" class="LabelFontStyle1">
+                                        <td style="width: 15%" class="LabelFontStyle1">
                                                     Area&nbsp;&nbsp;&nbsp;:&nbsp;
                                             </td>
                                             <td>
@@ -1171,6 +1142,7 @@
                                                 *ngIf="!customerMasterForm.get('scity').valid && customerMasterForm.get('scity').touched">Please
                                                 Enter Item Category </span> -->
                                         </td>
+                                        <tr>
                                         <td style="width: 15%" class="LabelFontStyle">Pin&nbsp;Code&nbsp;:&nbsp;</td>
                                         <td>
                                             <input  formControlName="spinCd" value={{spinCd}} [(ngModel)]='spinCd'
@@ -1186,9 +1158,7 @@
                                                 Enter pin code </span> -->
                                         </td>
 
-                                    </tr>
-                                    <tr>
-                                            <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
+                                         <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                                             <td>
                                                     <select formControlName="sstate" id="sstate" [(ngModel)]='sstate'
                                                     class="form-control" (ngModelChange)='onOptionSiteStateSeleted($event)'
@@ -1217,6 +1187,43 @@
                                                 </select> -->
                                           </td>
                                     </tr>
+                                    <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;"></tr>
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                           <!-- <input formControlName="sGstNo" value={{sGstNo}} [(ngModel)]='sGstNo'
+                                            class="form-control"
+                                            placeholder="Enter GSTN"
+                                            [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }"> -->
+                                            <input formControlName="sGstNo" value={{sGstNo}} class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.sGstNo.errors }" (keyup)="gstVerification2($event)"
+                                            placeholder="Enter GSTN no">
+
+                                            <div *ngIf="submitted && f.sGstNo.errors" class="invalid-feedback">
+                                                <div *ngIf="f.sGstNo.errors.pattern">Invalid GSTIN number format</div>
+                                                <div *ngIf="f.sGstNo.errors.required">GST number cannot be blank</div>
+                                                <!-- <div *ngIf="f.sGstNo.errors.maxLength">GSTIN Max length error</div> -->
+                                            </div>
+                                        </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
+                                            class="form-control"
+                                         placeholder="Enter Pan No"
+                                         [ngClass]="{ 'is-invalid': submitted && f.spanNo.errors }">
+                                         <div *ngIf="submitted && f.spanNo.errors" class="invalid-feedback">
+                                            <div *ngIf="f.spanNo.errors.required">PAN numbher cannot be blank</div>
+                                            <div *ngIf="f.spanNo.errors.pattern">Invalid PAN format</div>
+                                            <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
+                                        </div>
+                                     </td>
+                                     <td style="width: 15%" class="LabelFontStyle">Tan&nbsp;No&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input formControlName="stanNo" value={{stanNo}} [(ngModel)]='stanNo'
+                                            class="form-control"
+                                         placeholder="Enter Tan No">
+                                     </td>
+
+                                <!-- </tr> -->
                                     <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                         <td style="width: 15%" class="LabelFontStyle">Mobile1&nbsp;:&nbsp;</td>
                                         <td>
@@ -1414,8 +1421,8 @@
                                                     data-target="#confirmAlert" (click)="getMessage('NewSite')" >New Site</button>
 
                                                     <!-- data-target="#confirmAlert" (click)="newOnlySiteMast()" >New Site</button> -->
-                                                 
-                                                                
+
+
                                             </td>
 
                                         </ng-template>
