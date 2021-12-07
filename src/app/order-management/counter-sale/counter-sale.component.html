@@ -876,11 +876,11 @@
                                             <th scope="col" >Type Category</th>
                                             <th scope="col" >Item Search</th>
                                             <th scope="col" >Item code</th>
+                                            <th scope="col" >Locator</th>
                                             <th scope="col" >Available QTY</th>
                                             <th scope="col" >Qty</th>
                                             <th scope="col" >Back Order Qty</th>
-                                            <th scope="col" >Description</th>
-                                            <th scope="col" >Locator</th>
+                                            <th scope="col" >Description</th>      
                                             <th scope="col" >Unit Price</th>
                                             <th scope="col" >Base Amount</th>
                                             <th scope="col" >Disc %</th>
@@ -951,15 +951,27 @@
                                                         <input hidden formControlName="id">
                                                         <input hidden type="number" formControlName="resveQty">
                                                         <td>
+                                                            <select class="form-control"
+                                                                style="height: 20px; width: 160px; "
+                                                                formControlName="frmLocatorId"
+                                                                 (ngModelChange)="onSelLocaPrice($event,i)">
+                                                                <option *ngFor="let locId of  locData[i]"
+                                                                     [value]="locId.ROWNUM">
+                                                                    {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}</option>
+                                                            </select>
+                                                            <input hidden formControlName="frmLocatorId">
+                                                        </td>
+                                                        <td>
                                                             <input disabled type="number" formControlName="Avalqty"
                                                                 [ngValue]="Avalqty" class="form-control"
                                                                 style="height: 20px;width: 50px;">
 
                                                         </td>
+                                                      
                                                         <td>
                                                             <input type="number" formControlName="pricingQty" name="pricingQty"
                                                                 class="form-control" (change)="onKey(i,'prc')"
-                                                                style="height: 20px;width:80px;" min="0"
+                                                                style="height: 20px;width:50px;" min="0"
                                                                 oninput="this.value = Math.abs(this.value)">
                                                             <input hidden type="text" formControlName="uom"
                                                                 class="form-control" style="height: 20px;width: 70px;"
@@ -975,18 +987,7 @@
                                                                 value="orderedItem" [ngValue]="orderedItem"
                                                                 class="form-control" style="height: 20px;width:120px;">
                                                         </td>
-                                                        <td>
-                                                            <select class="form-control"
-                                                                style="height: 20px; width: 160px; "
-                                                                formControlName="frmLocatorId"
-                                                                 (ngModelChange)="onSelLocaPrice($event,i)">
-                                                                 <!-- (ngModelChange)="AvailQty(i)"  -->
-                                                                <option *ngFor="let locId of  locData[i]"
-                                                                     [value]="locId.ROWNUM">
-                                                                    {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}</option>
-                                                            </select>
-                                                            <input hidden formControlName="frmLocatorId">
-                                                        </td>
+                                                        
 
                                                         <!-- <td> -->
                                                         <!-- <input hidden type="text" formControlName="uom" class="form-control" [(ngModel)]="uom"
@@ -1079,6 +1080,14 @@
                                                                 style="height: 20px;width: 120px;">
                                                         </td>
                                                         <td>
+                                                            <input disabled formControlName="frmLocatorName"
+                                                                [ngValue]="frmLocatorName" class="form-control"
+                                                                style="height: 20px;width: 160px;">
+                                                                <input disabled hidden type="number" formControlName="frmLocatorId"
+                                                                [ngValue]="frmLocatorId" class="form-control"
+                                                                style="height: 20px;width: 120px;">
+                                                        </td>
+                                                        <td>
                                                             <input disabled type="number" formControlName="Avalqty"
                                                                 [ngValue]="Avalqty" class="form-control"
                                                                 style="height: 20px;width: 50px;">
@@ -1098,11 +1107,7 @@
                                                                 value="orderedItem" [ngValue]="orderedItem"
                                                                 class="form-control" style="height: 20px;width: 120px;">
                                                         </td>
-                                                        <td>
-                                                            <input disabled formControlName="frmLocatorName"
-                                                                [ngValue]="frmLocatorName" class="form-control"
-                                                                style="height: 20px;width: 120px;">
-                                                        </td>
+                                                       
 
                                                         <!-- <td>
                                                 <input disabled  type="number" formControlName="pricingQty" class="form-control"
