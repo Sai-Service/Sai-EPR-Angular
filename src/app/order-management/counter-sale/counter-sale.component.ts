@@ -1039,6 +1039,8 @@ export class CounterSaleComponent implements OnInit {
         if (res.code === 400) {
           alert(res.message + 'res.message');
           this.CounterSaleOrderBookingForm.reset();
+          this.dataDisplay = ''
+          this.closeResetButton = true;
         }
       }
     });
