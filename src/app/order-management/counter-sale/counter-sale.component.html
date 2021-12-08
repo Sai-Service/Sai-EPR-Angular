@@ -225,9 +225,7 @@
                                                                     <td style="width: 195px;">{{com.gstNo}}</td>
                                                                     <td style="width: 195px;">{{com.panNo}}</td>
                                                                     <td style="width: 195px;">{{com.mobile1}}</td>
-                                                                    <td><button class="btn-primary"
-                                                                            (click)="accountNoSearch(com.accountNo)"
-                                                                            data-dismiss="modal">Select</button></td>
+                                                                    <td><button class="btn-primary" style="width: fit-content;"  (click)="accountNoSearch(com.accountNo)" data-dismiss="modal">Select</button></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -943,8 +941,6 @@
                                                                     {{item.segment}}
                                                                 </option>
                                                             </datalist>
-
-
                                                         <input hidden type="number" formControlName="itemId">
                                                         </td>
                                                         <input hidden type="number" formControlName="onHandQty">
