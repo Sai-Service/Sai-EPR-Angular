@@ -34,7 +34,7 @@ declare var $: any;
     adminForm1:FormGroup;
 
     // @ViewChild('partSearch') partSearch: any;
- 
+
   public itemMap = new Map<string, any[]>();
   public itemMap2 = new Map<number, any[]>();
   itemSeg: string = "";
@@ -133,9 +133,9 @@ declare var $: any;
     this.deptName=(sessionStorage.getItem('deptName'));
     this.locName=(sessionStorage.getItem('locName'));
     this.ouName=(sessionStorage.getItem('ouName'));
-   // 
+   //
    this.loginArray=sessionStorage.getItem('CompName');
-   
+
     this.ouId=Number(sessionStorage.getItem('ouId'));
     this.locId=Number(sessionStorage.getItem('locId'));
     // $('[data-submenu]').submenupicker();
@@ -162,8 +162,10 @@ declare var $: any;
       return false;
     });
 
+
+
     if (this.divisionId===1){
-    
+
     }
    else if (this.divisionId===2){
       this.displayMaruti=false;
@@ -176,11 +178,15 @@ else if (Number(sessionStorage.getItem('divisionId'))===1){
 this.isVisible1=true;
 }
 
+if(sessionStorage.getItem('ticketNo')===undefined||sessionStorage.getItem('ticketNo')===null||sessionStorage.getItem('ticketNo')==='')
+{
+  this.router.navigate(['login']);
+}
   }
 
 
 
- 
+
   close(){
     this.router.navigate(['login']);
   }
@@ -289,7 +295,7 @@ this.isVisible1=true;
 
 
 
-  
+
   F9SearchItemDesc(itemDesc){
 
    //var itemDesc=this.adminForm1.get('searchByItemDesc').value
@@ -299,7 +305,7 @@ this.isVisible1=true;
     if(itemDesc ==undefined || itemDesc==null) {
       alert ("Enter Item Description ....") ;return;
      }
-   
+
     this.service.searchByItemDescf9(this.divisionId,itemDesc).subscribe(
       data =>{
         this.lstcomments1= data;
@@ -311,7 +317,7 @@ this.isVisible1=true;
 
 
 
-  
+
 
     onOptioninvItemIdSelectedSingle(mItem) {
       // alert ("in fn onOptioninvItemIdSelectedSingle "+mItem);
@@ -343,7 +349,7 @@ this.isVisible1=true;
     Select(itemNumber: any) {
 
       // alert ("Item Number :" +itemNumber);
-     
+
 
     //   let select1=this.ItemIdList.find(d=>d.segment===itemNumber);
     //   // this.searchBy='ITEM DESCRIPTION';
@@ -359,7 +365,7 @@ this.isVisible1=true;
     //    }
 
 
-       
+
       this.service.searchByItemf9(itemNumber,this.locId, this.ouId,this.divisionId).subscribe(
         data =>{
           this.lstcomments= data;
@@ -382,17 +388,17 @@ this.isVisible1=true;
     }
 
     searchByItemSegmentDiv(itemDesc: string) {
-      
+
       if(itemDesc.length == 8){
       this.service.searchByItemSegmentDiv(this.divisionId, itemDesc.toUpperCase())
         .subscribe(
           data => {
             var desc = data[0].description;
-            this.ItemIdList =data;  
+            this.ItemIdList =data;
             this.Select( data[0].itemId);
                }
         );
-    
+
     }else{
       alert("Please Enter full item number!!")
       return;
