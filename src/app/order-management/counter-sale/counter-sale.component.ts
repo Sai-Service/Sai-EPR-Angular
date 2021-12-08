@@ -1896,7 +1896,7 @@ export class CounterSaleComponent implements OnInit {
                             //     this.AvailQty(k, select.itemId,'Item');
                             //     this.setFocus('pricingQty');
                             //   });
-                            debugger;
+                         
                             this.service.getreserqtyNew(this.locId, select.itemId,selLocator[0].locatorId,selLocator[0].prc).subscribe
                             (data => {
                               this.resrveqty = data;
@@ -1982,7 +1982,7 @@ export class CounterSaleComponent implements OnInit {
     console.log(selloc);
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    alert(selloc.onHandQty+'..onSelLocaPrice');
+   
     // let selPrice=event.prc;
     if(trxLnArr[i].frmLocatorId!=''){
       if(trxLnArr[i].pricingQty!=undefined){
@@ -2292,8 +2292,8 @@ export class CounterSaleComponent implements OnInit {
 
       } else {
         totAmt = totAmt + Number(formVal[i].totAmt);
-        tcsAmt1 = Math.round((totAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
-        totAmt = totAmt + tcsAmt1;
+         tcsAmt1 = Math.round((totAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
+        //totAmt = totAmt + tcsAmt1;
       }
       }}
     //   for (let i = 0; i < formVal.length; i++) {
@@ -2838,7 +2838,7 @@ updateLineOnCancel(event, i){
   }
 
   setFocus(name) {
-    alert(name)
+   // alert(name)
     const ele = this.aForm.nativeElement[name];
     console.log(ele);
     if (ele) {
