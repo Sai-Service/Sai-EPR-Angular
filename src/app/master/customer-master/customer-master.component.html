@@ -249,7 +249,8 @@
                                     <!-- <input formControlName="classCodeType"  value={{classCodeType}} class="form-control"> -->
                                     <!-- [ngValue]="cmnTypeId" -->
                                     <select formControlName="classCodeType" id="classCodeType" class="form-control" style="width: fit-content;"
-                                    [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }" (ngModelChange)="onOptionClassCode($event)">
+                                    [ngClass]="{ 'is-invalid': submitted && f.classCodeType.errors }" 
+                                    (ngModelChange)="onOptionClassCode($event)">
                                         <option></option>
                                         <option *ngFor="let sc of  classCodeTypeList">
                                             {{sc.code}}
@@ -286,8 +287,10 @@
                                     </table>
                                     </td>
                                 <td>
-                                    <select formControlName="paymentType" id="paymentType"  (ngModelChange)="onOptionsPaymentTyp($event)" class="form-control"  style="width: fit-content;">
-                                    <option></option>
+                                    <select formControlName="paymentType" id="paymentType" class="form-control"  style="width: fit-content;"  
+                                    [ngClass]="{ 'is-invalid': submitted && f.paymentType.errors }"
+                                    (ngModelChange)="onOptionsPaymentTyp($event)">
+                                      <option></option>
                                     <option *ngFor="let sc of  payTermDescList" [ngValue]="sc.lookupValueId">
                                         {{sc.lookupValue}}
                                     </option>
@@ -734,17 +737,17 @@
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Pan&nbsp;No&nbsp;:&nbsp;</td>
                                 <td>
                                     <!-- (keyup)="onKey($event)"  -->
-                                    <input formControlName="panNo"  value={{panNo}}
-                                        class="form-control" type="text" maxlength="10"
-                                        placeholder="Enter panNo" pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" >
-                                    <!-- <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback"> -->
-                                      <!-- [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }" -->
-                                        <!-- <div *ngIf="f.panNo.errors.pattern">Invalid PAN format</div> -->
-                                        <!-- <div *ngIf="f.panNo.errors.maxLength">pan No must</div> -->
-                                    <!-- </div> -->
-                                    <!-- <span
-                                        *ngIf="!customerMasterForm.get('panNo').valid && customerMasterForm.get('panNo').touched">Please
-                                        Enter pan no must</span> -->
+                                    <input formControlName="panNo"  value={{panNo}} class="form-control" type="text" maxlength="10"
+                                        [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
+                                        placeholder="Enter panNo" 
+                                        >
+                                        <!-- pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" -->
+                                    <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback"> 
+                                        <div *ngIf="f.panNo.errors.pattern">Invalid PAN No format</div>
+                                        <div *ngIf="f.panNo.errors.required">PAN No cannot be blank</div>
+                                        <!-- <div *ngIf="f.panNo.errors.maxLength">Invalid PAN No format</div> -->
+                                    </div>
+                               
                                 </td>
                                 <div *ngIf="displaytanaadhar; then thenBlockaadharInfo; else elseBlocktanInfo"></div>
                                 <ng-template #thenBlockaadharInfo>
